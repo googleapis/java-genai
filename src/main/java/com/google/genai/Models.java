@@ -931,6 +931,32 @@ public final class Models {
     return toObject;
   }
 
+  ObjectNode ThinkingConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"includeThoughts"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"includeThoughts"},
+          Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode ThinkingConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"includeThoughts"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"includeThoughts"},
+          Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
+    }
+
+    return toObject;
+  }
+
   ObjectNode GenerateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -1103,6 +1129,17 @@ public final class Models {
                   Transformers.tSpeechConfig(
                       this.apiClient,
                       Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thinkingConfig"},
+          ThinkingConfigToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"thinkingConfig"})),
               toObject));
     }
 
@@ -1287,6 +1324,17 @@ public final class Models {
                   Transformers.tSpeechConfig(
                       this.apiClient,
                       Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thinkingConfig"},
+          ThinkingConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"thinkingConfig"})),
               toObject));
     }
 

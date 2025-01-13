@@ -121,6 +121,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   /** The speech generation configuration. */
   public abstract Optional<SpeechConfig> getSpeechConfig();
 
+  /** The thinking features configuration. */
+  public abstract Optional<ThinkingConfig> getThinkingConfig();
+
   /** Instantiates a builder for GenerateContentConfig. */
   public static Builder builder() {
     return new AutoValue_GenerateContentConfig.Builder();
@@ -194,6 +197,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
 
     @JsonProperty("speechConfig")
     public abstract Builder setSpeechConfig(SpeechConfig speechConfig);
+
+    @JsonProperty("thinkingConfig")
+    public abstract Builder setThinkingConfig(ThinkingConfig thinkingConfig);
 
     public abstract GenerateContentConfig build();
   }
