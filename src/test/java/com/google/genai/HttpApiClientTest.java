@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class HttpApiClientTest {
 
@@ -97,5 +98,18 @@ public class HttpApiClientTest {
     Field configField = client.getClass().getDeclaredField("defaultConfig");
     configField.setAccessible(true);
     return (RequestConfig) configField.get(client);
+  }
+
+  @Test
+  public void testHttpClientWithCustomCredentials() throws Exception {
+    GoogleCredentials credentials = Mockito.mock(GoogleCredentials.class);
+    HttpOptions httpOptions = HttpOptions.builder().build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of("project"),
+            Optional.of("us-central1"),
+            Optional.of(credentials),
+            Optional.of(httpOptions));
+    assertEquals(credentials, client.credentials.get());
   }
 }
