@@ -38,7 +38,8 @@ public abstract class JsonSerializable {
   }
 
   /** Deserializes a Json string to an object of the given type. */
-  public static <T extends JsonSerializable> T fromJsonString(String jsonString, Class<T> clazz) {
+  protected static <T extends JsonSerializable> T fromJsonString(
+      String jsonString, Class<T> clazz) {
     try {
       return objectMapper.readValue(jsonString, clazz);
     } catch (JsonProcessingException e) {
@@ -47,7 +48,7 @@ public abstract class JsonSerializable {
   }
 
   /** Deserializes a JsonNode to an object of the given type. */
-  public static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
+  protected static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
     try {
       return objectMapper.treeToValue(jsonNode, clazz);
     } catch (JsonProcessingException e) {
