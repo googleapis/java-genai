@@ -27,6 +27,9 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
     return new AutoValue_VertexRagStoreRagResource.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for VertexRagStoreRagResource. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -37,11 +40,6 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
     public abstract Builder setRagFileIds(List<String> ragFileIds);
 
     public abstract VertexRagStoreRagResource build();
-  }
-
-  /** Serializes the VertexRagStoreRagResource object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a VertexRagStoreRagResource object. */

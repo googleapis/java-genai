@@ -27,6 +27,7 @@ public abstract class JsonSerializable {
     }
   }
 
+  /** Serializes the instance to a Json string. */
   public String toJson() {
     return toJsonString(this);
   }

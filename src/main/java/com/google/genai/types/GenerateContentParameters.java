@@ -30,6 +30,9 @@ public abstract class GenerateContentParameters extends JsonSerializable {
     return new AutoValue_GenerateContentParameters.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateContentParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -43,11 +46,6 @@ public abstract class GenerateContentParameters extends JsonSerializable {
     public abstract Builder setConfig(GenerateContentConfig config);
 
     public abstract GenerateContentParameters build();
-  }
-
-  /** Serializes the GenerateContentParameters object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateContentParameters object. */

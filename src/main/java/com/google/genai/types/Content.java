@@ -30,6 +30,9 @@ public abstract class Content extends JsonSerializable {
     return new AutoValue_Content.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Content. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -40,11 +43,6 @@ public abstract class Content extends JsonSerializable {
     public abstract Builder setRole(String role);
 
     public abstract Content build();
-  }
-
-  /** Serializes the Content object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Content object. */

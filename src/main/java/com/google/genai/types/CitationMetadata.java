@@ -24,6 +24,9 @@ public abstract class CitationMetadata extends JsonSerializable {
     return new AutoValue_CitationMetadata.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for CitationMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -31,11 +34,6 @@ public abstract class CitationMetadata extends JsonSerializable {
     public abstract Builder setCitations(List<Citation> citations);
 
     public abstract CitationMetadata build();
-  }
-
-  /** Serializes the CitationMetadata object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a CitationMetadata object. */

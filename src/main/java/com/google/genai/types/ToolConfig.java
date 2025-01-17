@@ -24,6 +24,9 @@ public abstract class ToolConfig extends JsonSerializable {
     return new AutoValue_ToolConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ToolConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -31,11 +34,6 @@ public abstract class ToolConfig extends JsonSerializable {
     public abstract Builder setFunctionCallingConfig(FunctionCallingConfig functionCallingConfig);
 
     public abstract ToolConfig build();
-  }
-
-  /** Serializes the ToolConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ToolConfig object. */

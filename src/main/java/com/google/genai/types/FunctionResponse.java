@@ -37,6 +37,9 @@ public abstract class FunctionResponse extends JsonSerializable {
     return new AutoValue_FunctionResponse.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for FunctionResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -50,11 +53,6 @@ public abstract class FunctionResponse extends JsonSerializable {
     public abstract Builder setResponse(Map<String, Object> response);
 
     public abstract FunctionResponse build();
-  }
-
-  /** Serializes the FunctionResponse object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a FunctionResponse object. */

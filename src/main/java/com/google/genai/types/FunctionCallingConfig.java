@@ -28,6 +28,9 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     return new AutoValue_FunctionCallingConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for FunctionCallingConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -38,11 +41,6 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     public abstract Builder setAllowedFunctionNames(List<String> allowedFunctionNames);
 
     public abstract FunctionCallingConfig build();
-  }
-
-  /** Serializes the FunctionCallingConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a FunctionCallingConfig object. */

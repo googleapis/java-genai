@@ -105,6 +105,9 @@ public abstract class Schema extends JsonSerializable {
     return new AutoValue_Schema.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Schema. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -175,11 +178,6 @@ public abstract class Schema extends JsonSerializable {
     public abstract Builder setRequired(List<String> required);
 
     public abstract Schema build();
-  }
-
-  /** Serializes the Schema object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Schema object. */

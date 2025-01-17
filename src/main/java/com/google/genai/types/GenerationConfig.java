@@ -74,6 +74,9 @@ public abstract class GenerationConfig extends JsonSerializable {
     return new AutoValue_GenerationConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerationConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -123,11 +126,6 @@ public abstract class GenerationConfig extends JsonSerializable {
     public abstract Builder setTopP(Float topP);
 
     public abstract GenerationConfig build();
-  }
-
-  /** Serializes the GenerationConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerationConfig object. */

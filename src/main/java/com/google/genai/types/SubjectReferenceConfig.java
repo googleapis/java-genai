@@ -23,6 +23,9 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
     return new AutoValue_SubjectReferenceConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for SubjectReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
     public abstract Builder setSubjectDescription(String subjectDescription);
 
     public abstract SubjectReferenceConfig build();
-  }
-
-  /** Serializes the SubjectReferenceConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a SubjectReferenceConfig object. */

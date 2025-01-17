@@ -20,6 +20,9 @@ public abstract class SpeechConfig extends JsonSerializable {
     return new AutoValue_SpeechConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for SpeechConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -27,11 +30,6 @@ public abstract class SpeechConfig extends JsonSerializable {
     public abstract Builder setVoiceConfig(VoiceConfig voiceConfig);
 
     public abstract SpeechConfig build();
-  }
-
-  /** Serializes the SpeechConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a SpeechConfig object. */

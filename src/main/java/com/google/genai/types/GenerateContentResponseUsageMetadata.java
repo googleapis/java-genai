@@ -32,6 +32,9 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     return new AutoValue_GenerateContentResponseUsageMetadata.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateContentResponseUsageMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -48,11 +51,6 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     public abstract Builder setTotalTokenCount(Integer totalTokenCount);
 
     public abstract GenerateContentResponseUsageMetadata build();
-  }
-
-  /** Serializes the GenerateContentResponseUsageMetadata object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateContentResponseUsageMetadata object. */

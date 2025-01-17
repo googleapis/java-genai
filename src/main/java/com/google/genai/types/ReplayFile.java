@@ -24,6 +24,9 @@ public abstract class ReplayFile extends JsonSerializable {
     return new AutoValue_ReplayFile.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ReplayFile. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -34,11 +37,6 @@ public abstract class ReplayFile extends JsonSerializable {
     public abstract Builder setInteractions(List<ReplayInteraction> interactions);
 
     public abstract ReplayFile build();
-  }
-
-  /** Serializes the ReplayFile object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ReplayFile object. */

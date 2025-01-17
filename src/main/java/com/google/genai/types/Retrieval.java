@@ -29,6 +29,9 @@ public abstract class Retrieval extends JsonSerializable {
     return new AutoValue_Retrieval.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Retrieval. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -42,11 +45,6 @@ public abstract class Retrieval extends JsonSerializable {
     public abstract Builder setVertexRagStore(VertexRagStore vertexRagStore);
 
     public abstract Retrieval build();
-  }
-
-  /** Serializes the Retrieval object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Retrieval object. */

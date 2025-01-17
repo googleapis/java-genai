@@ -45,6 +45,9 @@ public abstract class TestTableItem extends JsonSerializable {
     return new AutoValue_TestTableItem.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for TestTableItem. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -70,11 +73,6 @@ public abstract class TestTableItem extends JsonSerializable {
     public abstract Builder setSkipInApiMode(String skipInApiMode);
 
     public abstract TestTableItem build();
-  }
-
-  /** Serializes the TestTableItem object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a TestTableItem object. */

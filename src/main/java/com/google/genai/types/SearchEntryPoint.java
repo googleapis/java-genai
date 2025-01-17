@@ -23,6 +23,9 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     return new AutoValue_SearchEntryPoint.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for SearchEntryPoint. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     public abstract Builder setSdkBlob(String sdkBlob);
 
     public abstract SearchEntryPoint build();
-  }
-
-  /** Serializes the SearchEntryPoint object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a SearchEntryPoint object. */

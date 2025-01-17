@@ -71,6 +71,9 @@ public abstract class GenerateImageConfig extends JsonSerializable {
     return new AutoValue_GenerateImageConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateImageConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -120,11 +123,6 @@ public abstract class GenerateImageConfig extends JsonSerializable {
     public abstract Builder setAspectRatio(String aspectRatio);
 
     public abstract GenerateImageConfig build();
-  }
-
-  /** Serializes the GenerateImageConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateImageConfig object. */

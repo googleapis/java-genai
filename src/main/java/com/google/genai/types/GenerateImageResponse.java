@@ -21,6 +21,9 @@ public abstract class GenerateImageResponse extends JsonSerializable {
     return new AutoValue_GenerateImageResponse.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateImageResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -28,11 +31,6 @@ public abstract class GenerateImageResponse extends JsonSerializable {
     public abstract Builder setGeneratedImages(List<GeneratedImage> generatedImages);
 
     public abstract GenerateImageResponse build();
-  }
-
-  /** Serializes the GenerateImageResponse object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateImageResponse object. */

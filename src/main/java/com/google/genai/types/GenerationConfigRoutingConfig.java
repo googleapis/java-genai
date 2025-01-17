@@ -23,6 +23,9 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
     return new AutoValue_GenerationConfigRoutingConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerationConfigRoutingConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -34,11 +37,6 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
         GenerationConfigRoutingConfigManualRoutingMode manualMode);
 
     public abstract GenerationConfigRoutingConfig build();
-  }
-
-  /** Serializes the GenerationConfigRoutingConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfig object. */

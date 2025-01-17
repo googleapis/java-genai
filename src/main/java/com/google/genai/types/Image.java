@@ -29,6 +29,9 @@ public abstract class Image extends JsonSerializable {
     return new AutoValue_Image.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Image. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -39,11 +42,6 @@ public abstract class Image extends JsonSerializable {
     public abstract Builder setImageBytes(String imageBytes);
 
     public abstract Image build();
-  }
-
-  /** Serializes the Image object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Image object. */

@@ -31,6 +31,9 @@ public abstract class RawReferenceImage extends JsonSerializable {
     return new AutoValue_RawReferenceImage.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for RawReferenceImage. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -44,11 +47,6 @@ public abstract class RawReferenceImage extends JsonSerializable {
     public abstract Builder setReferenceType(String referenceType);
 
     public abstract RawReferenceImage build();
-  }
-
-  /** Serializes the RawReferenceImage object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a RawReferenceImage object. */

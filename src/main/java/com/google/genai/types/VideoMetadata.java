@@ -23,6 +23,9 @@ public abstract class VideoMetadata extends JsonSerializable {
     return new AutoValue_VideoMetadata.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for VideoMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class VideoMetadata extends JsonSerializable {
     public abstract Builder setStartOffset(String startOffset);
 
     public abstract VideoMetadata build();
-  }
-
-  /** Serializes the VideoMetadata object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a VideoMetadata object. */

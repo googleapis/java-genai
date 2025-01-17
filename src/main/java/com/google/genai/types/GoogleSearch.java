@@ -15,15 +15,13 @@ public abstract class GoogleSearch extends JsonSerializable {
     return new AutoValue_GoogleSearch.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GoogleSearch. */
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract GoogleSearch build();
-  }
-
-  /** Serializes the GoogleSearch object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GoogleSearch object. */

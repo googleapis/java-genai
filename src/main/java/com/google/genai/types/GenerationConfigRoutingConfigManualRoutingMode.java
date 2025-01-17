@@ -20,6 +20,9 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
     return new AutoValue_GenerationConfigRoutingConfigManualRoutingMode.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerationConfigRoutingConfigManualRoutingMode. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -27,11 +30,6 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
     public abstract Builder setModelName(String modelName);
 
     public abstract GenerationConfigRoutingConfigManualRoutingMode build();
-  }
-
-  /** Serializes the GenerationConfigRoutingConfigManualRoutingMode object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfigManualRoutingMode object. */

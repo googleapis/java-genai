@@ -31,6 +31,9 @@ public abstract class ReplayRequest extends JsonSerializable {
     return new AutoValue_ReplayRequest.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ReplayRequest. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -47,11 +50,6 @@ public abstract class ReplayRequest extends JsonSerializable {
     public abstract Builder setBodySegments(List<Map<String, Object>> bodySegments);
 
     public abstract ReplayRequest build();
-  }
-
-  /** Serializes the ReplayRequest object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ReplayRequest object. */

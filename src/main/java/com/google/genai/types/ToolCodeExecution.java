@@ -19,15 +19,13 @@ public abstract class ToolCodeExecution extends JsonSerializable {
     return new AutoValue_ToolCodeExecution.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ToolCodeExecution. */
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract ToolCodeExecution build();
-  }
-
-  /** Serializes the ToolCodeExecution object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ToolCodeExecution object. */

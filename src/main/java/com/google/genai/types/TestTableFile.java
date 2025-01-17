@@ -30,6 +30,9 @@ public abstract class TestTableFile extends JsonSerializable {
     return new AutoValue_TestTableFile.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for TestTableFile. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -46,11 +49,6 @@ public abstract class TestTableFile extends JsonSerializable {
     public abstract Builder setTestTable(List<TestTableItem> testTable);
 
     public abstract TestTableFile build();
-  }
-
-  /** Serializes the TestTableFile object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a TestTableFile object. */

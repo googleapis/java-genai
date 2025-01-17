@@ -37,6 +37,9 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     return new AutoValue_GenerateContentResponse.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateContentResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -53,11 +56,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     public abstract Builder setUsageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
 
     public abstract GenerateContentResponse build();
-  }
-
-  /** Serializes the GenerateContentResponse object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateContentResponse object. */

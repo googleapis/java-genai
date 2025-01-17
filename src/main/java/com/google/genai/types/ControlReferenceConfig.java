@@ -26,6 +26,9 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
     return new AutoValue_ControlReferenceConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ControlReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -36,11 +39,6 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
     public abstract Builder setEnableControlImageComputation(boolean enableControlImageComputation);
 
     public abstract ControlReferenceConfig build();
-  }
-
-  /** Serializes the ControlReferenceConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ControlReferenceConfig object. */

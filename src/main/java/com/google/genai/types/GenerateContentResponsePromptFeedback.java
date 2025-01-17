@@ -27,6 +27,9 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     return new AutoValue_GenerateContentResponsePromptFeedback.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateContentResponsePromptFeedback. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -40,11 +43,6 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     public abstract Builder setSafetyRatings(List<SafetyRating> safetyRatings);
 
     public abstract GenerateContentResponsePromptFeedback build();
-  }
-
-  /** Serializes the GenerateContentResponsePromptFeedback object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateContentResponsePromptFeedback object. */

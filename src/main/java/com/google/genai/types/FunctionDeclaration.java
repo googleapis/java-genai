@@ -47,6 +47,9 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     return new AutoValue_FunctionDeclaration.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for FunctionDeclaration. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -63,11 +66,6 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     public abstract Builder setParameters(Schema parameters);
 
     public abstract FunctionDeclaration build();
-  }
-
-  /** Serializes the FunctionDeclaration object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a FunctionDeclaration object. */

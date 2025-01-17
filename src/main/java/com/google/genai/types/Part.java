@@ -56,6 +56,9 @@ public abstract class Part extends JsonSerializable {
     return new AutoValue_Part.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Part. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -87,11 +90,6 @@ public abstract class Part extends JsonSerializable {
     public abstract Builder setText(String text);
 
     public abstract Part build();
-  }
-
-  /** Serializes the Part object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Part object. */

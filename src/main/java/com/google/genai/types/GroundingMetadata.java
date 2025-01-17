@@ -36,6 +36,9 @@ public abstract class GroundingMetadata extends JsonSerializable {
     return new AutoValue_GroundingMetadata.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GroundingMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -58,11 +61,6 @@ public abstract class GroundingMetadata extends JsonSerializable {
     public abstract Builder setWebSearchQueries(List<String> webSearchQueries);
 
     public abstract GroundingMetadata build();
-  }
-
-  /** Serializes the GroundingMetadata object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GroundingMetadata object. */

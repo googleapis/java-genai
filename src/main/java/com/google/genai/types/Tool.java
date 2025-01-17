@@ -45,6 +45,9 @@ public abstract class Tool extends JsonSerializable {
     return new AutoValue_Tool.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Tool. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -64,11 +67,6 @@ public abstract class Tool extends JsonSerializable {
     public abstract Builder setCodeExecution(ToolCodeExecution codeExecution);
 
     public abstract Tool build();
-  }
-
-  /** Serializes the Tool object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Tool object. */

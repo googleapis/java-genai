@@ -26,6 +26,9 @@ public abstract class SafetySetting extends JsonSerializable {
     return new AutoValue_SafetySetting.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for SafetySetting. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -39,11 +42,6 @@ public abstract class SafetySetting extends JsonSerializable {
     public abstract Builder setThreshold(String threshold);
 
     public abstract SafetySetting build();
-  }
-
-  /** Serializes the SafetySetting object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a SafetySetting object. */

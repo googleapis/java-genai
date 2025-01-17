@@ -23,6 +23,9 @@ public abstract class FileData extends JsonSerializable {
     return new AutoValue_FileData.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for FileData. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class FileData extends JsonSerializable {
     public abstract Builder setMimeType(String mimeType);
 
     public abstract FileData build();
-  }
-
-  /** Serializes the FileData object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a FileData object. */

@@ -34,6 +34,9 @@ public abstract class GroundingSupport extends JsonSerializable {
     return new AutoValue_GroundingSupport.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GroundingSupport. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -47,11 +50,6 @@ public abstract class GroundingSupport extends JsonSerializable {
     public abstract Builder setSegment(Segment segment);
 
     public abstract GroundingSupport build();
-  }
-
-  /** Serializes the GroundingSupport object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GroundingSupport object. */

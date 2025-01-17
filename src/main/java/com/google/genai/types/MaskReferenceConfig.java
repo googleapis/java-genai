@@ -33,6 +33,9 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
     return new AutoValue_MaskReferenceConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for MaskReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -46,11 +49,6 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
     public abstract Builder setMaskDilation(Float maskDilation);
 
     public abstract MaskReferenceConfig build();
-  }
-
-  /** Serializes the MaskReferenceConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a MaskReferenceConfig object. */

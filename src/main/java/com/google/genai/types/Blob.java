@@ -23,6 +23,9 @@ public abstract class Blob extends JsonSerializable {
     return new AutoValue_Blob.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Blob. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class Blob extends JsonSerializable {
     public abstract Builder setMimeType(String mimeType);
 
     public abstract Blob build();
-  }
-
-  /** Serializes the Blob object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Blob object. */

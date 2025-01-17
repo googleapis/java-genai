@@ -35,6 +35,9 @@ public abstract class SafetyRating extends JsonSerializable {
     return new AutoValue_SafetyRating.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for SafetyRating. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -57,11 +60,6 @@ public abstract class SafetyRating extends JsonSerializable {
     public abstract Builder setSeverityScore(Float severityScore);
 
     public abstract SafetyRating build();
-  }
-
-  /** Serializes the SafetyRating object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a SafetyRating object. */

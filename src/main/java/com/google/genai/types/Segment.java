@@ -35,6 +35,9 @@ public abstract class Segment extends JsonSerializable {
     return new AutoValue_Segment.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Segment. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -51,11 +54,6 @@ public abstract class Segment extends JsonSerializable {
     public abstract Builder setText(String text);
 
     public abstract Segment build();
-  }
-
-  /** Serializes the Segment object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Segment object. */

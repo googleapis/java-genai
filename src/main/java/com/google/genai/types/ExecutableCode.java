@@ -27,6 +27,9 @@ public abstract class ExecutableCode extends JsonSerializable {
     return new AutoValue_ExecutableCode.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for ExecutableCode. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -37,11 +40,6 @@ public abstract class ExecutableCode extends JsonSerializable {
     public abstract Builder setLanguage(String language);
 
     public abstract ExecutableCode build();
-  }
-
-  /** Serializes the ExecutableCode object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a ExecutableCode object. */

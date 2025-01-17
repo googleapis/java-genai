@@ -20,6 +20,9 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
     return new AutoValue_PrebuiltVoiceConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for PrebuiltVoiceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -27,11 +30,6 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
     public abstract Builder setVoiceName(String voiceName);
 
     public abstract PrebuiltVoiceConfig build();
-  }
-
-  /** Serializes the PrebuiltVoiceConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a PrebuiltVoiceConfig object. */

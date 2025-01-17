@@ -23,6 +23,9 @@ public abstract class GroundingChunk extends JsonSerializable {
     return new AutoValue_GroundingChunk.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GroundingChunk. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class GroundingChunk extends JsonSerializable {
     public abstract Builder setWeb(GroundingChunkWeb web);
 
     public abstract GroundingChunk build();
-  }
-
-  /** Serializes the GroundingChunk object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GroundingChunk object. */

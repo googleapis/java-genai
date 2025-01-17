@@ -36,6 +36,9 @@ public abstract class StyleReferenceImage extends JsonSerializable {
     return new AutoValue_StyleReferenceImage.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for StyleReferenceImage. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -52,11 +55,6 @@ public abstract class StyleReferenceImage extends JsonSerializable {
     public abstract Builder setConfig(StyleReferenceConfig config);
 
     public abstract StyleReferenceImage build();
-  }
-
-  /** Serializes the StyleReferenceImage object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a StyleReferenceImage object. */

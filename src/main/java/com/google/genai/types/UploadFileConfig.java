@@ -36,6 +36,9 @@ public abstract class UploadFileConfig extends JsonSerializable {
     return new AutoValue_UploadFileConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for UploadFileConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -52,11 +55,6 @@ public abstract class UploadFileConfig extends JsonSerializable {
     public abstract Builder setDisplayName(String displayName);
 
     public abstract UploadFileConfig build();
-  }
-
-  /** Serializes the UploadFileConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a UploadFileConfig object. */

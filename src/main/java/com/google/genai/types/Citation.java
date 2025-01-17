@@ -35,6 +35,9 @@ public abstract class Citation extends JsonSerializable {
     return new AutoValue_Citation.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for Citation. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -57,11 +60,6 @@ public abstract class Citation extends JsonSerializable {
     public abstract Builder setUri(String uri);
 
     public abstract Citation build();
-  }
-
-  /** Serializes the Citation object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a Citation object. */

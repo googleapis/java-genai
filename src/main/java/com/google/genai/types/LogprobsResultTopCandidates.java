@@ -21,6 +21,9 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
     return new AutoValue_LogprobsResultTopCandidates.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for LogprobsResultTopCandidates. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -28,11 +31,6 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
     public abstract Builder setCandidates(List<LogprobsResultCandidate> candidates);
 
     public abstract LogprobsResultTopCandidates build();
-  }
-
-  /** Serializes the LogprobsResultTopCandidates object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a LogprobsResultTopCandidates object. */

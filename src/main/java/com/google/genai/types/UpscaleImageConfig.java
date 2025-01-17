@@ -35,6 +35,9 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
     return new AutoValue_UpscaleImageConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for UpscaleImageConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -51,11 +54,6 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
     public abstract Builder setOutputCompressionQuality(Integer outputCompressionQuality);
 
     public abstract UpscaleImageConfig build();
-  }
-
-  /** Serializes the UpscaleImageConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a UpscaleImageConfig object. */

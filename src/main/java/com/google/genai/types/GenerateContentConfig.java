@@ -132,6 +132,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     return new AutoValue_GenerateContentConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GenerateContentConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -208,11 +211,6 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     public abstract Builder setThinkingConfig(ThinkingConfig thinkingConfig);
 
     public abstract GenerateContentConfig build();
-  }
-
-  /** Serializes the GenerateContentConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GenerateContentConfig object. */

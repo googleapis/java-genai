@@ -26,6 +26,9 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     return new AutoValue_DynamicRetrievalConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for DynamicRetrievalConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -36,11 +39,6 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     public abstract Builder setDynamicThreshold(Float dynamicThreshold);
 
     public abstract DynamicRetrievalConfig build();
-  }
-
-  /** Serializes the DynamicRetrievalConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a DynamicRetrievalConfig object. */

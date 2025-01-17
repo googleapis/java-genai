@@ -21,6 +21,9 @@ public abstract class DownloadFileConfig extends JsonSerializable {
     return new AutoValue_DownloadFileConfig.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for DownloadFileConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -28,11 +31,6 @@ public abstract class DownloadFileConfig extends JsonSerializable {
     public abstract Builder setHttpOptions(Map<String, Object> httpOptions);
 
     public abstract DownloadFileConfig build();
-  }
-
-  /** Serializes the DownloadFileConfig object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a DownloadFileConfig object. */

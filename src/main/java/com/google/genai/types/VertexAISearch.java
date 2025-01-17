@@ -26,6 +26,9 @@ public abstract class VertexAISearch extends JsonSerializable {
     return new AutoValue_VertexAISearch.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for VertexAISearch. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -33,11 +36,6 @@ public abstract class VertexAISearch extends JsonSerializable {
     public abstract Builder setDatastore(String datastore);
 
     public abstract VertexAISearch build();
-  }
-
-  /** Serializes the VertexAISearch object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a VertexAISearch object. */

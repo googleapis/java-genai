@@ -34,6 +34,9 @@ public abstract class VertexRagStore extends JsonSerializable {
     return new AutoValue_VertexRagStore.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for VertexRagStore. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -50,11 +53,6 @@ public abstract class VertexRagStore extends JsonSerializable {
     public abstract Builder setVectorDistanceThreshold(Double vectorDistanceThreshold);
 
     public abstract VertexRagStore build();
-  }
-
-  /** Serializes the VertexRagStore object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a VertexRagStore object. */

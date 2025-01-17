@@ -37,6 +37,9 @@ public abstract class GoogleTypeDate extends JsonSerializable {
     return new AutoValue_GoogleTypeDate.Builder();
   }
 
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
   /** Builder for GoogleTypeDate. */
   @AutoValue.Builder
   public abstract static class Builder {
@@ -50,11 +53,6 @@ public abstract class GoogleTypeDate extends JsonSerializable {
     public abstract Builder setYear(Integer year);
 
     public abstract GoogleTypeDate build();
-  }
-
-  /** Serializes the GoogleTypeDate object to a JSON string. */
-  public String toJson() {
-    return JsonSerializable.toJsonString(this);
   }
 
   /** Deserializes a JSON string to a GoogleTypeDate object. */
