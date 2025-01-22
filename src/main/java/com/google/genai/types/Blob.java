@@ -8,7 +8,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Content blob. It's preferred to send as text directly rather than raw bytes. */
+/** Content blob. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
