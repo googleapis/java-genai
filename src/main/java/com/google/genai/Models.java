@@ -990,6 +990,7 @@ public final class Models {
   ObjectNode GenerateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1198,6 +1199,7 @@ public final class Models {
   ObjectNode GenerateContentConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1489,12 +1491,6 @@ public final class Models {
   ObjectNode GenerateImageConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"httpOptions"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"httpOptions"},
-          Common.getValueByPath(fromObject, new String[] {"httpOptions"}));
-    }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
       throw new Error("output_gcs_uri parameter is not supported in Google AI.");
@@ -1591,12 +1587,6 @@ public final class Models {
   ObjectNode GenerateImageConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"httpOptions"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"httpOptions"},
-          Common.getValueByPath(fromObject, new String[] {"httpOptions"}));
-    }
 
     if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
       Common.setValueByPath(

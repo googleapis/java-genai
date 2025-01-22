@@ -6,16 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
-import java.util.Map;
 import java.util.Optional;
 
 /** Used to override the default configuration. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_UploadFileConfig.Builder.class)
 public abstract class UploadFileConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  public abstract Optional<Map<String, Object>> getHttpOptions();
-
   /**
    * The name of the file in the destination (e.g., 'files/sample-image'. If not provided one will
    * be generated.
@@ -42,9 +38,6 @@ public abstract class UploadFileConfig extends JsonSerializable {
   /** Builder for UploadFileConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    @JsonProperty("httpOptions")
-    public abstract Builder setHttpOptions(Map<String, Object> httpOptions);
-
     @JsonProperty("name")
     public abstract Builder setName(String name);
 

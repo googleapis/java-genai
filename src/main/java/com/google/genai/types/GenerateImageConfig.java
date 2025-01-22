@@ -6,16 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
-import java.util.Map;
 import java.util.Optional;
 
 /** Class that represents the config for generating an image. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_GenerateImageConfig.Builder.class)
 public abstract class GenerateImageConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  public abstract Optional<Map<String, Object>> getHttpOptions();
-
   /** Cloud Storage URI used to store the generated images. */
   public abstract Optional<String> getOutputGcsUri();
 
@@ -77,9 +73,6 @@ public abstract class GenerateImageConfig extends JsonSerializable {
   /** Builder for GenerateImageConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    @JsonProperty("httpOptions")
-    public abstract Builder setHttpOptions(Map<String, Object> httpOptions);
-
     @JsonProperty("outputGcsUri")
     public abstract Builder setOutputGcsUri(String outputGcsUri);
 

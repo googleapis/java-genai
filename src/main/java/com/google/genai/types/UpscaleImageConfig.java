@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -18,9 +17,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = AutoValue_UpscaleImageConfig.Builder.class)
 public abstract class UpscaleImageConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  public abstract Optional<Map<String, Object>> getHttpOptions();
-
   /** Whether to include a reason for filtered-out images in the response. */
   public abstract Optional<Boolean> getIncludeRaiReason();
 
@@ -41,9 +37,6 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
   /** Builder for UpscaleImageConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    @JsonProperty("httpOptions")
-    public abstract Builder setHttpOptions(Map<String, Object> httpOptions);
-
     @JsonProperty("includeRaiReason")
     public abstract Builder setIncludeRaiReason(boolean includeRaiReason);
 
