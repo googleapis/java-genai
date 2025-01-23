@@ -3,8 +3,8 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.genai.types.HttpOptions;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -19,11 +19,8 @@ import java.util.Optional;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicStatusLine;
-import org.apache.http.util.EntityUtils;
 import org.mockito.Mockito;
 
 // TODO(b/369384123): Currently the ReplayApiClient mirrors the HttpApiClient. We will refactor the

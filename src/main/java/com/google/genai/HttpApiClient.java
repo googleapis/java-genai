@@ -2,6 +2,8 @@ package com.google.genai;
 
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +40,8 @@ final class HttpApiClient extends ApiClient {
                 "%s/%s/%s",
                 httpOptions.getBaseUrl().get(), httpOptions.getApiVersion().get(), path));
 
-    for (Map.Entry<String, String> header : httpOptions.getHeaders().entrySet()) {
+    for (Map.Entry<String, String> header :
+        httpOptions.getHeaders().orElse(ImmutableMap.of()).entrySet()) {
       httpPost.setHeader(header.getKey(), header.getValue());
     }
     if (apiKey.isPresent()) {

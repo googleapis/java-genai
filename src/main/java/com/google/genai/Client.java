@@ -3,6 +3,7 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.util.Optional;
 

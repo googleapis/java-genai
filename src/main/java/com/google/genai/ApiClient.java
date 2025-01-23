@@ -3,7 +3,11 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpOptions.Builder;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,7 +23,7 @@ abstract class ApiClient {
   final Optional<String> project;
   final Optional<String> location;
   final Optional<GoogleCredentials> credentials;
-  final HttpOptions httpOptions;
+  HttpOptions httpOptions;
   final boolean vertexAI;
 
   /** Constructs an ApiClient for Google AI APIs. */
@@ -35,24 +39,17 @@ abstract class ApiClient {
           e);
     }
 
-    HttpOptions httpOptions = customHttpOptions.orElse(HttpOptions.builder().build());
-    this.httpOptions =
-        HttpOptions.builder()
-            .setBaseUrl(
-                httpOptions.getBaseUrl().orElse("https://generativelanguage.googleapis.com/"))
-            .setApiVersion(httpOptions.getApiVersion().orElse("v1beta"))
-            .setHeaders(httpOptions.getHeaders())
-            // Add Content-Type header
-            .addHeader("Content-Type", "application/json")
-            // Add library version headers
-            .addHeader("user-agent", getLibraryVersion())
-            .addHeader("x-goog-api-client", getLibraryVersion())
-            .build();
-
     this.project = Optional.empty();
     this.location = Optional.empty();
     this.credentials = Optional.empty();
     this.vertexAI = false;
+
+    this.httpOptions = getDefaultHttpOptions(/* isVertexAI= */ false, this.location);
+
+    if (customHttpOptions.isPresent()) {
+      applyHttpOptions(customHttpOptions.get());
+    }
+
     this.httpClient = createHttpClient(httpOptions.getTimeout());
   }
 
@@ -98,24 +95,11 @@ abstract class ApiClient {
           e);
     }
 
-    HttpOptions httpOptions = customHttpOptions.orElse(HttpOptions.builder().build());
-    this.httpOptions =
-        HttpOptions.builder()
-            .setBaseUrl(
-                httpOptions
-                    .getBaseUrl()
-                    .orElse(
-                        String.format(
-                            "https://%s-aiplatform.googleapis.com/", this.location.get())))
-            .setApiVersion(httpOptions.getApiVersion().orElse("v1beta1"))
-            .setHeaders(httpOptions.getHeaders())
-            // Add Content-Type header
-            .addHeader("Content-Type", "application/json")
-            // Add library version headers
-            .addHeader("user-agent", getLibraryVersion())
-            .addHeader("x-goog-api-client", getLibraryVersion())
-            .build();
+    this.httpOptions = getDefaultHttpOptions(/* isVertexAI= */ true, this.location);
 
+    if (customHttpOptions.isPresent()) {
+      applyHttpOptions(customHttpOptions.get());
+    }
     this.apiKey = Optional.empty();
     this.vertexAI = true;
     this.httpClient = createHttpClient(httpOptions.getTimeout());
@@ -168,5 +152,50 @@ abstract class ApiClient {
   /** Returns the HttpClient for API calls. */
   CloseableHttpClient getHttpClient() {
     return httpClient;
+  }
+
+  private void applyHttpOptions(HttpOptions httpOptionsToApply) {
+    HttpOptions.Builder mergedHttpOptionsBuilder = HttpOptions.builder();
+    if (httpOptionsToApply.getBaseUrl().isPresent()) {
+      mergedHttpOptionsBuilder.setBaseUrl(httpOptionsToApply.getBaseUrl().get());
+    }
+    if (httpOptionsToApply.getApiVersion().isPresent()) {
+      mergedHttpOptionsBuilder.setApiVersion(httpOptionsToApply.getApiVersion().get());
+    }
+    if (httpOptionsToApply.getTimeout().isPresent()) {
+      mergedHttpOptionsBuilder.setTimeout(httpOptionsToApply.getTimeout().get());
+    }
+    if (httpOptionsToApply.getHeaders().isPresent()) {
+      Map<String, String> mergedHeaders =
+          ImmutableMap.<String, String>builder()
+              .putAll(httpOptionsToApply.getHeaders().get())
+              .putAll(this.httpOptions.getHeaders().get())
+              .build();
+      mergedHttpOptionsBuilder.setHeaders(mergedHeaders);
+    }
+    this.httpOptions = mergedHttpOptionsBuilder.build();
+  }
+
+  private HttpOptions getDefaultHttpOptions(Boolean isVertexAI, Optional<String> location) {
+    ImmutableMap.Builder<String, String> defaultHeaders = ImmutableMap.builder();
+    defaultHeaders.put("Content-Type", "application/json");
+    defaultHeaders.put("user-agent", getLibraryVersion());
+    defaultHeaders.put("x-goog-api-client", getLibraryVersion());
+
+    HttpOptions.Builder defaultHttpOptionsBuilder =
+        HttpOptions.builder().setHeaders(defaultHeaders.build());
+
+    if (isVertexAI && location.isPresent()) {
+      defaultHttpOptionsBuilder
+          .setBaseUrl(String.format("https://%s-aiplatform.googleapis.com/", location.get()))
+          .setApiVersion("v1beta1");
+    } else if (isVertexAI && !location.isPresent()) {
+      throw new IllegalArgumentException("Location must be provided for Vertex AI APIs.");
+    } else {
+      defaultHttpOptionsBuilder
+          .setBaseUrl("https://generativelanguage.googleapis.com/")
+          .setApiVersion("v1beta");
+    }
+    return defaultHttpOptionsBuilder.build();
   }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.genai.types.HttpOptions;
 import java.lang.reflect.Field;
 import java.util.Optional;
 import org.apache.http.client.config.RequestConfig;
