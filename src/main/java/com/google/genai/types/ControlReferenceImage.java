@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Class that represents a Control reference image.
+ * A control reference image.
  *
  * <p>The image of the control reference image is either a control image provided by the user, or a
  * regular image which the backend will use to generate a control image of. In the case of the

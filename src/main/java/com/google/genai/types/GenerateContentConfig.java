@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Class for configuring optional model parameters.
+ * Optional model configuration parameters.
  *
  * <p>For more information, see `Content generation parameters
  * <https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters>`_.

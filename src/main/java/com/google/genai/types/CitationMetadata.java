@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.List;
 import java.util.Optional;
 
-/** Class for citation information when the model quotes another source. */
+/** Citation information when the model quotes another source. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_CitationMetadata.Builder.class)
 public abstract class CitationMetadata extends JsonSerializable {

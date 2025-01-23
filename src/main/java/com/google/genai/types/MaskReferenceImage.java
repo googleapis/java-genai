@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Class that represents a Mask reference image.
+ * A mask reference image.
  *
  * <p>This encapsulates either a mask image provided by the user and configs for the user provided
  * mask, or only config parameters for the model to generate a mask.
