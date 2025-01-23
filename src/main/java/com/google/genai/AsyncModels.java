@@ -5,8 +5,8 @@ package com.google.genai;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
-import com.google.genai.types.GenerateImageConfig;
-import com.google.genai.types.GenerateImageResponse;
+import com.google.genai.types.GenerateImagesConfig;
+import com.google.genai.types.GenerateImagesResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -43,12 +43,12 @@ public final class AsyncModels {
         });
   }
 
-  public CompletableFuture<GenerateImageResponse> generateImage(
-      String model, String prompt, GenerateImageConfig config) {
+  public CompletableFuture<GenerateImagesResponse> generateImages(
+      String model, String prompt, GenerateImagesConfig config) {
     return CompletableFuture.supplyAsync(
         () -> {
           try {
-            return models.generateImage(model, prompt, config);
+            return models.generateImages(model, prompt, config);
           } catch (IOException | HttpException e) {
             throw new RuntimeException(e);
           }

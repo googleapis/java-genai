@@ -8,31 +8,31 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Class that represents the parameters for generating an image. */
+/** Class that represents the parameters for generating images. */
 @AutoValue
-@JsonDeserialize(builder = AutoValue_GenerateImageParameters.Builder.class)
-public abstract class GenerateImageParameters extends JsonSerializable {
+@JsonDeserialize(builder = AutoValue_GenerateImagesParameters.Builder.class)
+public abstract class GenerateImagesParameters extends JsonSerializable {
   /**
    * ID of the model to use. For a list of models, see `Google models
    * <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>`_.
    */
   public abstract Optional<String> getModel();
 
-  /** Text prompt that typically describes the image to output. */
+  /** Text prompt that typically describes the images to output. */
   public abstract Optional<String> getPrompt();
 
-  /** Configuration for generating an image. */
-  public abstract Optional<GenerateImageConfig> getConfig();
+  /** Configuration for generating images. */
+  public abstract Optional<GenerateImagesConfig> getConfig();
 
-  /** Instantiates a builder for GenerateImageParameters. */
+  /** Instantiates a builder for GenerateImagesParameters. */
   public static Builder builder() {
-    return new AutoValue_GenerateImageParameters.Builder();
+    return new AutoValue_GenerateImagesParameters.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for GenerateImageParameters. */
+  /** Builder for GenerateImagesParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("model")
@@ -42,13 +42,13 @@ public abstract class GenerateImageParameters extends JsonSerializable {
     public abstract Builder setPrompt(String prompt);
 
     @JsonProperty("config")
-    public abstract Builder setConfig(GenerateImageConfig config);
+    public abstract Builder setConfig(GenerateImagesConfig config);
 
-    public abstract GenerateImageParameters build();
+    public abstract GenerateImagesParameters build();
   }
 
-  /** Deserializes a JSON string to a GenerateImageParameters object. */
-  public static GenerateImageParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateImageParameters.class);
+  /** Deserializes a JSON string to a GenerateImagesParameters object. */
+  public static GenerateImagesParameters fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, GenerateImagesParameters.class);
   }
 }

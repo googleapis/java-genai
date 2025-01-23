@@ -8,10 +8,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Class that represents the config for generating an image. */
+/** Class that represents the config for generating images. */
 @AutoValue
-@JsonDeserialize(builder = AutoValue_GenerateImageConfig.Builder.class)
-public abstract class GenerateImageConfig extends JsonSerializable {
+@JsonDeserialize(builder = AutoValue_GenerateImagesConfig.Builder.class)
+public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Cloud Storage URI used to store the generated images. */
   public abstract Optional<String> getOutputGcsUri();
 
@@ -56,21 +56,21 @@ public abstract class GenerateImageConfig extends JsonSerializable {
   /** Compression quality of the generated image (for ``image/jpeg`` only). */
   public abstract Optional<Integer> getOutputCompressionQuality();
 
-  /** Whether to add a watermark to the generated image. */
+  /** Whether to add a watermark to the generated images. */
   public abstract Optional<Boolean> getAddWatermark();
 
-  /** Aspect ratio of the generated image. */
+  /** Aspect ratio of the generated images. */
   public abstract Optional<String> getAspectRatio();
 
-  /** Instantiates a builder for GenerateImageConfig. */
+  /** Instantiates a builder for GenerateImagesConfig. */
   public static Builder builder() {
-    return new AutoValue_GenerateImageConfig.Builder();
+    return new AutoValue_GenerateImagesConfig.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for GenerateImageConfig. */
+  /** Builder for GenerateImagesConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("outputGcsUri")
@@ -115,11 +115,11 @@ public abstract class GenerateImageConfig extends JsonSerializable {
     @JsonProperty("aspectRatio")
     public abstract Builder setAspectRatio(String aspectRatio);
 
-    public abstract GenerateImageConfig build();
+    public abstract GenerateImagesConfig build();
   }
 
-  /** Deserializes a JSON string to a GenerateImageConfig object. */
-  public static GenerateImageConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateImageConfig.class);
+  /** Deserializes a JSON string to a GenerateImagesConfig object. */
+  public static GenerateImagesConfig fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, GenerateImagesConfig.class);
   }
 }

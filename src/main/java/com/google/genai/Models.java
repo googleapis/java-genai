@@ -10,9 +10,9 @@ import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentParameters;
 import com.google.genai.types.GenerateContentResponse;
-import com.google.genai.types.GenerateImageConfig;
-import com.google.genai.types.GenerateImageParameters;
-import com.google.genai.types.GenerateImageResponse;
+import com.google.genai.types.GenerateImagesConfig;
+import com.google.genai.types.GenerateImagesParameters;
+import com.google.genai.types.GenerateImagesResponse;
 import java.io.IOException;
 import java.util.List;
 import org.apache.http.HttpEntity;
@@ -1488,7 +1488,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageConfigToMldev(
+  ObjectNode GenerateImagesConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -1584,7 +1584,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageConfigToVertex(
+  ObjectNode GenerateImagesConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -1689,7 +1689,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageParametersToMldev(
+  ObjectNode GenerateImagesParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
@@ -1711,7 +1711,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"config"},
-          GenerateImageConfigToMldev(
+          GenerateImagesConfigToMldev(
               apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
@@ -1721,7 +1721,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageParametersToVertex(
+  ObjectNode GenerateImagesParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
@@ -1743,7 +1743,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"config"},
-          GenerateImageConfigToVertex(
+          GenerateImagesConfigToVertex(
               apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
@@ -2274,7 +2274,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageResponseFromMldev(
+  ObjectNode GenerateImagesResponseFromMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
@@ -2294,7 +2294,7 @@ public final class Models {
     return toObject;
   }
 
-  ObjectNode GenerateImageResponseFromVertex(
+  ObjectNode GenerateImagesResponseFromVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
@@ -2398,10 +2398,10 @@ public final class Models {
         GenerateContentResponse.class, response, this, converterName);
   }
 
-  public GenerateImageResponse generateImage(
-      String model, String prompt, GenerateImageConfig config) throws IOException, HttpException {
+  public GenerateImagesResponse generateImages(
+      String model, String prompt, GenerateImagesConfig config) throws IOException, HttpException {
 
-    GenerateImageParameters.Builder parameterBuilder = GenerateImageParameters.builder();
+    GenerateImagesParameters.Builder parameterBuilder = GenerateImagesParameters.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.setModel(model);
@@ -2417,10 +2417,10 @@ public final class Models {
     ObjectNode body;
     String path;
     if (this.apiClient.isVertexAI()) {
-      body = GenerateImageParametersToVertex(this.apiClient, parameterNode, null);
+      body = GenerateImagesParametersToVertex(this.apiClient, parameterNode, null);
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
-      body = GenerateImageParametersToMldev(this.apiClient, parameterNode, null);
+      body = GenerateImagesParametersToMldev(this.apiClient, parameterNode, null);
       path = Common.formatMap("{model}:predict", body.get("_url"));
     }
     body.remove("_url");
@@ -2432,11 +2432,11 @@ public final class Models {
       String responseString = EntityUtils.toString(entity);
       JsonNode responseNode = JsonSerializable.objectMapper.readTree(responseString);
       if (this.apiClient.isVertexAI()) {
-        responseNode = GenerateImageResponseFromVertex(this.apiClient, responseNode, null);
+        responseNode = GenerateImagesResponseFromVertex(this.apiClient, responseNode, null);
       } else {
-        responseNode = GenerateImageResponseFromMldev(this.apiClient, responseNode, null);
+        responseNode = GenerateImagesResponseFromMldev(this.apiClient, responseNode, null);
       }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateImageResponse.class);
+      return JsonSerializable.fromJsonNode(responseNode, GenerateImagesResponse.class);
     }
   }
 

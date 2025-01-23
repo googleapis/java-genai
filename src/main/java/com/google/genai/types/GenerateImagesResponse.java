@@ -9,32 +9,32 @@ import com.google.genai.JsonSerializable;
 import java.util.List;
 import java.util.Optional;
 
-/** Class that represents the output image response. */
+/** Class that represents the output images response. */
 @AutoValue
-@JsonDeserialize(builder = AutoValue_GenerateImageResponse.Builder.class)
-public abstract class GenerateImageResponse extends JsonSerializable {
+@JsonDeserialize(builder = AutoValue_GenerateImagesResponse.Builder.class)
+public abstract class GenerateImagesResponse extends JsonSerializable {
   /** List of generated images. */
   public abstract Optional<List<GeneratedImage>> getGeneratedImages();
 
-  /** Instantiates a builder for GenerateImageResponse. */
+  /** Instantiates a builder for GenerateImagesResponse. */
   public static Builder builder() {
-    return new AutoValue_GenerateImageResponse.Builder();
+    return new AutoValue_GenerateImagesResponse.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for GenerateImageResponse. */
+  /** Builder for GenerateImagesResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("generatedImages")
     public abstract Builder setGeneratedImages(List<GeneratedImage> generatedImages);
 
-    public abstract GenerateImageResponse build();
+    public abstract GenerateImagesResponse build();
   }
 
-  /** Deserializes a JSON string to a GenerateImageResponse object. */
-  public static GenerateImageResponse fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateImageResponse.class);
+  /** Deserializes a JSON string to a GenerateImagesResponse object. */
+  public static GenerateImagesResponse fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, GenerateImagesResponse.class);
   }
 }
