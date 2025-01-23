@@ -24,6 +24,9 @@ public abstract class Image extends JsonSerializable {
    */
   public abstract Optional<String> getImageBytes();
 
+  /** The MIME type of the image. */
+  public abstract Optional<String> getMimeType();
+
   /** Instantiates a builder for Image. */
   public static Builder builder() {
     return new AutoValue_Image.Builder();
@@ -40,6 +43,9 @@ public abstract class Image extends JsonSerializable {
 
     @JsonProperty("imageBytes")
     public abstract Builder setImageBytes(String imageBytes);
+
+    @JsonProperty("mimeType")
+    public abstract Builder setMimeType(String mimeType);
 
     public abstract Image build();
   }

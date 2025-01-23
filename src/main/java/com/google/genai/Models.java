@@ -2202,6 +2202,13 @@ public final class Models {
               Common.getValueByPath(fromObject, new String[] {"bytesBase64Encoded"})));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
     return toObject;
   }
 
@@ -2221,6 +2228,13 @@ public final class Models {
           Transformers.tBytes(
               this.apiClient,
               Common.getValueByPath(fromObject, new String[] {"bytesBase64Encoded"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
