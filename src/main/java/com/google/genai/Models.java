@@ -29,7 +29,7 @@ public final class Models {
   ObjectNode PartToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"videoMetadata"}))) {
-      throw new Error("video_metadata parameter is not supported in Google AI.");
+      throw new Error("video_metadata parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
@@ -210,63 +210,63 @@ public final class Models {
   ObjectNode SchemaToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minItems"}))) {
-      throw new Error("min_items parameter is not supported in Google AI.");
+      throw new Error("min_items parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"example"}))) {
-      throw new Error("example parameter is not supported in Google AI.");
+      throw new Error("example parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}))) {
-      throw new Error("property_ordering parameter is not supported in Google AI.");
+      throw new Error("property_ordering parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"pattern"}))) {
-      throw new Error("pattern parameter is not supported in Google AI.");
+      throw new Error("pattern parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minimum"}))) {
-      throw new Error("minimum parameter is not supported in Google AI.");
+      throw new Error("minimum parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"default"}))) {
-      throw new Error("default parameter is not supported in Google AI.");
+      throw new Error("default parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"anyOf"}))) {
-      throw new Error("any_of parameter is not supported in Google AI.");
+      throw new Error("any_of parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxLength"}))) {
-      throw new Error("max_length parameter is not supported in Google AI.");
+      throw new Error("max_length parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"title"}))) {
-      throw new Error("title parameter is not supported in Google AI.");
+      throw new Error("title parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minLength"}))) {
-      throw new Error("min_length parameter is not supported in Google AI.");
+      throw new Error("min_length parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minProperties"}))) {
-      throw new Error("min_properties parameter is not supported in Google AI.");
+      throw new Error("min_properties parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxItems"}))) {
-      throw new Error("max_items parameter is not supported in Google AI.");
+      throw new Error("max_items parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maximum"}))) {
-      throw new Error("maximum parameter is not supported in Google AI.");
+      throw new Error("maximum parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"nullable"}))) {
-      throw new Error("nullable parameter is not supported in Google AI.");
+      throw new Error("nullable parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxProperties"}))) {
-      throw new Error("max_properties parameter is not supported in Google AI.");
+      throw new Error("max_properties parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"type"}) != null) {
@@ -484,7 +484,7 @@ public final class Models {
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
-      throw new Error("method parameter is not supported in Google AI.");
+      throw new Error("method parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
@@ -535,7 +535,7 @@ public final class Models {
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"response"}))) {
-      throw new Error("response parameter is not supported in Google AI.");
+      throw new Error("response parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
@@ -705,7 +705,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
-      throw new Error("retrieval parameter is not supported in Google AI.");
+      throw new Error("retrieval parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
@@ -1102,7 +1102,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"routingConfig"}))) {
-      throw new Error("routing_config parameter is not supported in Google AI.");
+      throw new Error("routing_config parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
@@ -1162,7 +1162,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mediaResolution"}))) {
-      throw new Error("media_resolution parameter is not supported in Google AI.");
+      throw new Error("media_resolution parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"speechConfig"}) != null) {
@@ -1179,7 +1179,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
-      throw new Error("audio_timestamp parameter is not supported in Google AI.");
+      throw new Error("audio_timestamp parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
@@ -1493,7 +1493,7 @@ public final class Models {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
-      throw new Error("output_gcs_uri parameter is not supported in Google AI.");
+      throw new Error("output_gcs_uri parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"negativePrompt"}) != null) {
@@ -1518,7 +1518,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"seed"}))) {
-      throw new Error("seed parameter is not supported in Google AI.");
+      throw new Error("seed parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
@@ -1571,7 +1571,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"addWatermark"}))) {
-      throw new Error("add_watermark parameter is not supported in Google AI.");
+      throw new Error("add_watermark parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
