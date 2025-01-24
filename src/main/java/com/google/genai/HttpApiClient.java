@@ -47,11 +47,10 @@ final class HttpApiClient extends ApiClient {
     if (apiKey.isPresent()) {
       httpPost.setHeader("x-goog-api-key", apiKey.get());
     } else {
-      AccessToken accessToken = credentials.get().getAccessToken();
-      if (accessToken == null) {
-        accessToken = credentials.get().refreshAccessToken();
-      }
-      httpPost.setHeader("Authorization", "Bearer " + accessToken.getTokenValue());
+      GoogleCredentials cred =
+          credentials.orElseThrow(() -> new IllegalStateException("credentials is required"));
+      cred.refreshIfExpired();
+      httpPost.setHeader("Authorization", "Bearer " + cred.getAccessToken().getTokenValue());
     }
 
     httpPost.setEntity(new StringEntity(requestJson));
