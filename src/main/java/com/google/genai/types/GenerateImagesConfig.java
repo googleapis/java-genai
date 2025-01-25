@@ -62,6 +62,9 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Aspect ratio of the generated images. */
   public abstract Optional<String> getAspectRatio();
 
+  /** Whether to use the prompt rewriting logic. */
+  public abstract Optional<Boolean> getEnhancePrompt();
+
   /** Instantiates a builder for GenerateImagesConfig. */
   public static Builder builder() {
     return new AutoValue_GenerateImagesConfig.Builder();
@@ -114,6 +117,9 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
 
     @JsonProperty("aspectRatio")
     public abstract Builder setAspectRatio(String aspectRatio);
+
+    @JsonProperty("enhancePrompt")
+    public abstract Builder setEnhancePrompt(boolean enhancePrompt);
 
     public abstract GenerateImagesConfig build();
   }

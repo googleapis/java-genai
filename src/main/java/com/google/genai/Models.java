@@ -1581,6 +1581,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "enhancePrompt"},
+          Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}));
+    }
+
     return toObject;
   }
 
@@ -1684,6 +1691,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "aspectRatio"},
           Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "enhancePrompt"},
+          Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}));
     }
 
     return toObject;
