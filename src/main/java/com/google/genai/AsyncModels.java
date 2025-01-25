@@ -1,5 +1,6 @@
 // Auto-generated code. Do not edit.
 
+
 package com.google.genai;
 
 import com.google.genai.types.Content;
@@ -110,7 +111,7 @@ public final class AsyncModels {
   }
 
   /**
-   * Asynchronously generates content with streaming support given a GenAI model and a text string.
+   * Asynchronously generates content with streaming support given a Gen AI model and a text string.
    *
    * @param model the name of the GenAI model to use for generation
    * @param text the text string to send to the generative model
