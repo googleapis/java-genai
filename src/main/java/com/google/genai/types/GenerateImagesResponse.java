@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.List;
 import java.util.Optional;
 
-/** Class that represents the output images response. */
+/** The output images response. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_GenerateImagesResponse.Builder.class)
 public abstract class GenerateImagesResponse extends JsonSerializable {

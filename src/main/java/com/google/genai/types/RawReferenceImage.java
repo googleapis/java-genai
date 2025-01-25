@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Class that represents a Raw reference image.
+ * A raw reference image.
  *
  * <p>A raw reference image represents the base image to edit, provided by the user. It can
  * optionally be provided in addition to a mask reference image or a style reference image.

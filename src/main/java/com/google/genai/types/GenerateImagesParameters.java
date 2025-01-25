@@ -8,7 +8,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Class that represents the parameters for generating images. */
+/** The parameters for generating images. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_GenerateImagesParameters.Builder.class)
 public abstract class GenerateImagesParameters extends JsonSerializable {

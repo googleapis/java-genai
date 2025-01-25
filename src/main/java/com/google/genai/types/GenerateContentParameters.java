@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.List;
 import java.util.Optional;
 
-/** Class for configuring the content of the request to the model. */
+/** Config for models.generate_content parameters. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_GenerateContentParameters.Builder.class)
 public abstract class GenerateContentParameters extends JsonSerializable {

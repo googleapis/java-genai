@@ -8,7 +8,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Class that represents an image. */
+/** An image. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_Image.Builder.class)
 public abstract class Image extends JsonSerializable {

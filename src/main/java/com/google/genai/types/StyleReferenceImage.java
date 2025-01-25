@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Class that represents a Style reference image.
+ * A style reference image.
  *
  * <p>This encapsulates a style reference image provided by the user, and additionally optional
  * config parameters for the style reference image.

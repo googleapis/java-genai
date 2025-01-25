@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Class that represents a Subject reference image.
+ * A subject reference image.
  *
  * <p>This encapsulates a subject reference image provided by the user, and additionally optional
  * config parameters for the subject reference image.

@@ -9,7 +9,7 @@ import com.google.genai.JsonSerializable;
 import java.util.List;
 import java.util.Optional;
 
-/** Class containing a response candidate generated from the model. */
+/** A response candidate generated from the model. */
 @AutoValue
 @JsonDeserialize(builder = AutoValue_Candidate.Builder.class)
 public abstract class Candidate extends JsonSerializable {
