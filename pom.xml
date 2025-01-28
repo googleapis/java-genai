@@ -88,6 +88,12 @@
     <artifactId>mockito-core</artifactId>
     <version>${mockito.version}</version>
   </dependency>
+  <dependency>
+    <groupId>com.github.tomakehurst</groupId>
+    <artifactId>wiremock-jre8</artifactId>
+    <version>2.35.0</version>
+    <scope>test</scope>
+  </dependency>
 </dependencies>
 
   <build>

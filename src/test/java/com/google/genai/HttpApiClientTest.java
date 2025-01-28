@@ -1,12 +1,25 @@
 package com.google.genai;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.Candidate;
+import com.google.genai.types.Content;
+import com.google.genai.types.GenerateContentConfig;
+import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.Part;
 import java.lang.reflect.Field;
 import java.util.Optional;
 import org.apache.http.client.config.RequestConfig;
@@ -112,5 +125,43 @@ public class HttpApiClientTest {
             Optional.of(credentials),
             Optional.of(httpOptions));
     assertEquals(credentials, client.credentials.get());
+  }
+
+  @Test
+  public void testProxySetup() throws Exception {
+    WireMockServer wireMockServer = null;
+    try {
+      wireMockServer = new WireMockServer(options().dynamicPort());
+      wireMockServer.start();
+      WireMock.configureFor("localhost", wireMockServer.port());
+      String expectedText = "This is Proxy speaking, Hello, World!";
+      Part part = Part.builder().setText(expectedText).build();
+      Content content = Content.builder().setParts(ImmutableList.of(part)).build();
+      Candidate candidate = Candidate.builder().setContent(content).build();
+      GenerateContentResponse fakeResponse =
+          GenerateContentResponse.builder().setCandidates(ImmutableList.of(candidate)).build();
+      stubFor(
+          post(urlMatching(".*"))
+              .willReturn(
+                  aResponse()
+                      .withStatus(200)
+                      .withHeader("Content-Type", "application/json")
+                      .withBody(fakeResponse.toJson())));
+
+      HttpOptions httpOptions =
+          HttpOptions.builder()
+              .setBaseUrl("http://localhost:" + wireMockServer.port())
+              .setApiVersion("v1beta")
+              .build();
+      Client client = Client.builder().setHttpOptions(httpOptions).build();
+
+      GenerateContentConfig config = GenerateContentConfig.builder().build();
+      GenerateContentResponse response =
+          client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
+
+      assertEquals(response.text().get(), expectedText);
+    } finally {
+      wireMockServer.stop();
+    }
   }
 }
