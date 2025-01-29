@@ -7,6 +7,7 @@
   <groupId>com.google.genai</groupId>
   <artifactId>genai-client</artifactId>
   <version>0.1.0</version>
+  <packaging>jar</packaging>
 
   <name>genai-client</name>
   <!-- FIXME change it to the project's github link -->

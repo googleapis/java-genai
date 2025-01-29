@@ -1,0 +1,9 @@
+{
+  "release-type": "java",
+  "versioning": "always-bump-minor",
+  "separate-pull-requests": true,
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {}
+  }
+}
