@@ -2291,6 +2291,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"raiFilteredReason"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enhancedPrompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
+    }
+
     return toObject;
   }
 
@@ -2313,6 +2320,13 @@ public final class Models {
           toObject,
           new String[] {"raiFilteredReason"},
           Common.getValueByPath(fromObject, new String[] {"raiFilteredReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enhancedPrompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
     }
 
     return toObject;

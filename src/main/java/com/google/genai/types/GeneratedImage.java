@@ -34,6 +34,9 @@ public abstract class GeneratedImage extends JsonSerializable {
   /** Responsible AI filter reason if the image is filtered out of the response. */
   public abstract Optional<String> getRaiFilteredReason();
 
+  /** The rewritten prompt used for the image generation if the prompt enhancer is enabled. */
+  public abstract Optional<String> getEnhancedPrompt();
+
   /** Instantiates a builder for GeneratedImage. */
   public static Builder builder() {
     return new AutoValue_GeneratedImage.Builder();
@@ -50,6 +53,9 @@ public abstract class GeneratedImage extends JsonSerializable {
 
     @JsonProperty("raiFilteredReason")
     public abstract Builder setRaiFilteredReason(String raiFilteredReason);
+
+    @JsonProperty("enhancedPrompt")
+    public abstract Builder setEnhancedPrompt(String enhancedPrompt);
 
     public abstract GeneratedImage build();
   }
