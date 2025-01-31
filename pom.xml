@@ -169,6 +169,15 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.11.2</version>
+          <configuration>
+            <doclint>none</doclint>
+            <nohelp>true</nohelp>
+            <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
