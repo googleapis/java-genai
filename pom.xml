@@ -10,8 +10,7 @@
   <packaging>jar</packaging>
 
   <name>genai-client</name>
-  <!-- FIXME change it to the project's github link -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/googleapis/java-genai</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
