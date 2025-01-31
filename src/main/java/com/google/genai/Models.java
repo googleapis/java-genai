@@ -1162,6 +1162,10 @@ public final class Models {
               toObject));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
+      throw new Error("labels parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"cachedContent"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1372,6 +1376,13 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"cachedContent"}) != null) {

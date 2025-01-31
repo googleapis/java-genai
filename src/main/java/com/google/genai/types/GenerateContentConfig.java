@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -122,6 +123,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   /** Associates model output to a specific function call. */
   public abstract Optional<ToolConfig> getToolConfig();
 
+  /** Labels with user-defined metadata to break down billed charges. */
+  public abstract Optional<Map<String, String>> getLabels();
+
   /** Resource name of a context cache that can be used in subsequent requests. */
   public abstract Optional<String> getCachedContent();
 
@@ -207,6 +211,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
 
     @JsonProperty("toolConfig")
     public abstract Builder setToolConfig(ToolConfig toolConfig);
+
+    @JsonProperty("labels")
+    public abstract Builder setLabels(Map<String, String> labels);
 
     @JsonProperty("cachedContent")
     public abstract Builder setCachedContent(String cachedContent);
