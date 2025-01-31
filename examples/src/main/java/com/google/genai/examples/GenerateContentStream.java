@@ -42,10 +42,8 @@
 package com.google.genai.examples;
 
 import com.google.genai.Client;
-import com.google.genai.HttpOptions;
 import com.google.genai.ResponseStream;
 import com.google.genai.types.GenerateContentResponse;
-import com.google.genai.types.Part;
 import java.io.IOException;
 import org.apache.http.HttpException;
 
@@ -57,20 +55,11 @@ public final class GenerateContentStream {
     String location = System.getenv("GOOGLE_CLOUD_LOCATION");
 
     // Instantiate a client that will use Google AI APIs.
-    Client mldevClient =
-        Client.builder()
-            .setApiKey(apiKey)
-            .setHttpOptions(HttpOptions.builder().addHeader("test", "header").build())
-            .build();
+    Client mldevClient = Client.builder().setApiKey(apiKey).build();
 
     // Instantiate a client that will use Vertex AI APIs.
     Client vertexClient =
-        Client.builder()
-            .setProject(project)
-            .setLocation(location)
-            .setVertexAI(true)
-            .setHttpOptions(HttpOptions.builder().setApiVersion("v1beta1").build())
-            .build();
+        Client.builder().setProject(project).setLocation(location).setVertexAI(true).build();
 
     // Streaming generateContent call.
     ResponseStream<GenerateContentResponse> responseStream =

@@ -43,12 +43,11 @@ package com.google.genai.examples;
 
 import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
-import com.google.genai.HttpOptions;
 import com.google.genai.ResponseStream;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
-import com.google.genai.types.GenerateImageConfig;
-import com.google.genai.types.GenerateImageResponse;
+import com.google.genai.types.GenerateImagesConfig;
+import com.google.genai.types.GenerateImagesResponse;
 import com.google.genai.types.Part;
 import java.io.IOException;
 import java.util.List;
@@ -63,20 +62,11 @@ public final class Sample {
     String location = System.getenv("GOOGLE_CLOUD_LOCATION");
 
     // Instantiate a client that will use Google AI APIs.
-    Client mldevClient =
-        Client.builder()
-            .setApiKey(apiKey)
-            .setHttpOptions(HttpOptions.builder().addHeader("test", "header").build())
-            .build();
+    Client mldevClient = Client.builder().setApiKey(apiKey).build();
 
     // Instantiate a client that will use Vertex AI APIs.
     Client vertexClient =
-        Client.builder()
-            .setProject(project)
-            .setLocation(location)
-            .setVertexAI(true)
-            .setHttpOptions(HttpOptions.builder().setApiVersion("v1beta1").build())
-            .build();
+        Client.builder().setProject(project).setLocation(location).setVertexAI(true).build();
 
     List<Content> contents =
         ImmutableList.of(
@@ -127,11 +117,11 @@ public final class Sample {
     }
 
     // Generate image
-    GenerateImageConfig generateImageConfig =
-        GenerateImageConfig.builder().setNumberOfImages(1).setOutputMimeType("image/jpeg").build();
-    GenerateImageResponse generatedImagesResponse =
-        vertexClient.models.generateImage(
-            "imagen-3.0-generate-001", "Robot holding a red skateboard", generateImageConfig);
+    GenerateImagesConfig generateImagesConfig =
+        GenerateImagesConfig.builder().setNumberOfImages(1).setOutputMimeType("image/jpeg").build();
+    GenerateImagesResponse generatedImagesResponse =
+        vertexClient.models.generateImages(
+            "imagen-3.0-generate-001", "Robot holding a red skateboard", generateImagesConfig);
     System.out.println(
         "Image:\n"
             + generatedImagesResponse

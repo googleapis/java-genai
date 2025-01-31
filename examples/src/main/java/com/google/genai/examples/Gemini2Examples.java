@@ -49,7 +49,6 @@ package com.google.genai.examples;
 
 import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
-import com.google.genai.HttpOptions;
 import com.google.genai.ResponseStream;
 import com.google.genai.types.Content;
 import com.google.genai.types.FileData;
@@ -57,6 +56,7 @@ import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GoogleSearch;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
 import java.io.IOException;
