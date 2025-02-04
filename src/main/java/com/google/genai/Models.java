@@ -45,7 +45,7 @@ public final class Models {
   ObjectNode PartToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"videoMetadata"}))) {
-      throw new Error("video_metadata parameter is not supported in Gemini API.");
+      throw new Error("videoMetadata parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
@@ -226,7 +226,7 @@ public final class Models {
   ObjectNode SchemaToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minItems"}))) {
-      throw new Error("min_items parameter is not supported in Gemini API.");
+      throw new Error("minItems parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"example"}))) {
@@ -234,7 +234,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}))) {
-      throw new Error("property_ordering parameter is not supported in Gemini API.");
+      throw new Error("propertyOrdering parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"pattern"}))) {
@@ -250,11 +250,11 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"anyOf"}))) {
-      throw new Error("any_of parameter is not supported in Gemini API.");
+      throw new Error("anyOf parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxLength"}))) {
-      throw new Error("max_length parameter is not supported in Gemini API.");
+      throw new Error("maxLength parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"title"}))) {
@@ -262,15 +262,15 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minLength"}))) {
-      throw new Error("min_length parameter is not supported in Gemini API.");
+      throw new Error("minLength parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"minProperties"}))) {
-      throw new Error("min_properties parameter is not supported in Gemini API.");
+      throw new Error("minProperties parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxItems"}))) {
-      throw new Error("max_items parameter is not supported in Gemini API.");
+      throw new Error("maxItems parameter is not supported in Gemini API.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maximum"}))) {
@@ -282,7 +282,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxProperties"}))) {
-      throw new Error("max_properties parameter is not supported in Gemini API.");
+      throw new Error("maxProperties parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"type"}) != null) {
@@ -1118,7 +1118,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"routingConfig"}))) {
-      throw new Error("routing_config parameter is not supported in Gemini API.");
+      throw new Error("routingConfig parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
@@ -1182,7 +1182,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mediaResolution"}))) {
-      throw new Error("media_resolution parameter is not supported in Gemini API.");
+      throw new Error("mediaResolution parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"speechConfig"}) != null) {
@@ -1199,7 +1199,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
-      throw new Error("audio_timestamp parameter is not supported in Gemini API.");
+      throw new Error("audioTimestamp parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
@@ -1520,7 +1520,7 @@ public final class Models {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
-      throw new Error("output_gcs_uri parameter is not supported in Gemini API.");
+      throw new Error("outputGcsUri parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"negativePrompt"}) != null) {
@@ -1598,7 +1598,7 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"addWatermark"}))) {
-      throw new Error("add_watermark parameter is not supported in Gemini API.");
+      throw new Error("addWatermark parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
