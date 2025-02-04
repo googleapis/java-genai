@@ -10,6 +10,9 @@
   <packaging>jar</packaging>
 
   <name>genai-client</name>
+  <description>
+    Java idiomatic client is an unified client library for both Vertex AI and Gemini API.
+  </description>
   <url>https://github.com/googleapis/java-genai</url>
 
   <properties>
@@ -184,7 +187,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.5</version>
+          <version>3.2.7</version>
           <executions>
             <execution>
               <id>sign-artifacts</id>
