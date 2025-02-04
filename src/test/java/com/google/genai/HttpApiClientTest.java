@@ -175,7 +175,7 @@ public class HttpApiClientTest {
       GenerateContentResponse response =
           client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
 
-      assertEquals(response.text().get(), expectedText);
+      assertEquals(response.text(), expectedText);
     } finally {
       wireMockServer.stop();
     }

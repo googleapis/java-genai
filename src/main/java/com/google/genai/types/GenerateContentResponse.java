@@ -24,6 +24,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.JsonSerializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -87,124 +88,99 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   /**
    * Returns the list of parts in the first candidate of the response.
    *
-   * <p>Returns an empty list if there is no content in the candidate or there are no parts in the
-   * content.
+   * <p>Returns null if there is no candidate or no content in the first candidate
    *
-   * @throws IllegalArgumentException if the response has no candidate or finishes unexpectedly.
+   * @throws IllegalArgumentException if the response finishes unexpectedly.
    */
   public ImmutableList<Part> parts() {
     checkFinishReason();
-    return ImmutableList.copyOf(
-        getCandidates()
-            .get()
-            .get(0)
-            .getContent()
-            .orElse(Content.builder().build())
-            .getParts()
-            .orElse(new ArrayList<>()));
+
+    Optional<List<Candidate>> candidates = getCandidates();
+    if (candidates.isEmpty() || candidates.get().isEmpty()) {
+      return null;
+    }
+
+    Optional<Content> content = candidates.get().get(0).getContent();
+    if (content.isEmpty()) {
+      return null;
+    }
+
+    return ImmutableList.copyOf(content.get().getParts().orElse(new ArrayList<>()));
   }
 
   /**
    * Returns the concatenation of all text parts in the first candidate of the response.
    *
-   * <p>Returns an Optional.empty() if there are no text parts.
+   * <p>Returns null if there is no candidate, no content in the first candidate, or no parts in the
+   * content.
    *
-   * @throws IllegalArgumentException if the response has multimodal parts.
+   * @throws IllegalArgumentException if the response has non-text parts or finishes unexpectedly.
    */
-  public Optional<String> text() {
-    return getCandidates()
-        .flatMap(
-            candidates -> {
-              if (candidates.isEmpty()) {
-                return Optional.empty();
-              }
-              if (candidates.size() > 1) {
-                logger.warning(
-                    String.format(
-                        "There are %d candidates, returning text from the first candidate",
-                        candidates.size()));
-              }
-              return candidates
-                  .get(0)
-                  .getContent()
-                  .flatMap(Content::getParts)
-                  .flatMap(
-                      parts -> {
-                        if (parts.isEmpty()) {
-                          return Optional.empty();
-                        }
-                        final StringBuilder text = new StringBuilder();
-                        boolean anyTextPartText = false;
-                        for (Part part : parts) {
+  public String text() {
+    ImmutableList<Part> parts = parts();
+    if (parts == null || parts.isEmpty()) {
+      return null;
+    }
 
-                          if (part.getInlineData().isPresent()
-                              || part.getCodeExecutionResult().isPresent()
-                              || part.getExecutableCode().isPresent()
-                              || part.getFileData().isPresent()
-                              || part.getFunctionCall().isPresent()
-                              || part.getFunctionResponse().isPresent()) {
-                            throw new IllegalArgumentException(
-                                String.format(
-                                    "GenerateContentResponse.text only supports text parts, but got"
-                                        + " unsupported part %s",
-                                    part));
-                          }
-                          if (part.getText().isPresent()) {
-                            if (Boolean.TRUE.equals(part.getThought())) {
-                              continue;
-                            }
-                            anyTextPartText = true;
-                            text.append(part.getText().get());
-                          }
-                        }
-                        return anyTextPartText ? Optional.of(text.toString()) : Optional.empty();
-                      });
-            });
+    String text = "";
+    for (Part part : parts) {
+      if (part.getInlineData().isPresent()
+          || part.getCodeExecutionResult().isPresent()
+          || part.getExecutableCode().isPresent()
+          || part.getFileData().isPresent()
+          || part.getFunctionCall().isPresent()
+          || part.getFunctionResponse().isPresent()) {
+        throw new IllegalArgumentException(
+            String.format("Only text parts are supported, but got %s", part));
+      }
+      if (part.getThought().orElse(false)) {
+        continue;
+      }
+      text += part.getText().orElse("");
+    }
+
+    return text;
   }
 
   /**
    * Returns the list of function calls in the response.
    *
-   * <p>Returns an Optional.empty() if there are no function calls.
+   * <p>Returns null if there is no candidate, no content in the first candidate, or no parts in the
+   * content.
+   *
+   * @throws IllegalArgumentException if the response has non-function-call parts or finishes
+   *     unexpectedly.
    */
-  public Optional<List<FunctionCall>> functionCalls() {
-    return getCandidates()
-        .flatMap(
-            candidates -> {
-              if (candidates.isEmpty()) {
-                return Optional.empty();
-              }
-              if (candidates.size() > 1) {
-                logger.warning(
-                    "Warning: there are multiple candidates in the response, returning function"
-                        + " calls from the first one.");
-              }
-              return candidates
-                  .get(0)
-                  .getContent()
-                  .flatMap(Content::getParts)
-                  .flatMap(
-                      parts -> {
-                        if (parts.isEmpty()) {
-                          return Optional.empty();
-                        }
-                        final List<FunctionCall> functionCalls =
-                            parts.stream()
-                                .flatMap(part -> part.getFunctionCall().stream())
-                                .collect(Collectors.toList());
-                        return functionCalls.isEmpty()
-                            ? Optional.empty()
-                            : Optional.of(functionCalls);
-                      });
-            });
+  public ImmutableList<FunctionCall> functionCalls() {
+    ImmutableList<Part> parts = parts();
+    if (parts == null || parts.isEmpty()) {
+      return null;
+    }
+
+    return ImmutableList.copyOf(
+        parts.stream()
+            .filter(
+                part -> {
+                  if (!part.getFunctionCall().isPresent()
+                      && (part.getInlineData().isPresent()
+                          || part.getCodeExecutionResult().isPresent()
+                          || part.getExecutableCode().isPresent()
+                          || part.getFileData().isPresent()
+                          || part.getFunctionResponse().isPresent()
+                          || part.getText().isPresent())) {
+                    throw new IllegalArgumentException(
+                        String.format("Only function call parts are supported, but got %s", part));
+                  }
+                  return part.getFunctionCall().isPresent();
+                })
+            .map(part -> part.getFunctionCall().get())
+            .collect(Collectors.toList()));
   }
 
   /** Gets the finish reason in a GenerateContentResponse. */
   private String finishReason() {
-    List<Candidate> candidates = getCandidates().orElse(new ArrayList<>());
-    if (candidates.isEmpty()) {
-      throw new IllegalArgumentException("This response has no candidate.");
-    } else if (candidates.size() > 1) {
+    List<Candidate> candidates = getCandidates().orElse(Arrays.asList(Candidate.builder().build()));
+    if (candidates.size() > 1) {
       logger.warning(
           String.format(
               "This response has %d candidates, will only use the first candidate",
