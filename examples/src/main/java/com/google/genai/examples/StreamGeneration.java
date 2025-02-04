@@ -19,7 +19,7 @@ public class StreamGeneration {
         client.models.generateContentStream(
             "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
     for (GenerateContentResponse res : response) {
-      System.out.print(res.text().get());
+      System.out.print(res.text());
     }
   }
 }

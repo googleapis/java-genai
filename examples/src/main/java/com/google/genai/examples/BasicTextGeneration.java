@@ -16,6 +16,6 @@ public class BasicTextGeneration {
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
-    System.out.println(response.text().get());
+    System.out.println(response.text());
   }
 }

@@ -142,7 +142,7 @@ public final class Gemini2Examples {
         generateContentStreamWithSystemInstructionSample(
             mldevClient, model, "Tell me the history of the world");
     for (GenerateContentResponse res : responseStream) {
-      System.out.println(res.text());
+      System.out.print(res.text());
     }
     System.out.println("\n\n");
     responseStream.close();
@@ -152,7 +152,7 @@ public final class Gemini2Examples {
         generateContentStreamWithSystemInstructionSample(
             vertexClient, model, "Tell me the history of the world");
     for (GenerateContentResponse res : responseStream) {
-      System.out.println(res.text());
+      System.out.print(res.text());
     }
     System.out.println("\n\n");
     responseStream.close();

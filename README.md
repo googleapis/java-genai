@@ -66,7 +66,6 @@ code snippet is the most basic usage of SDK.
 package <your package name>;
 
 import com.google.genai.Client;
-import com.google.genai.Models;
 import java.io.IOException;
 import org.apache.http.HttpException;
 
@@ -76,7 +75,7 @@ public class BasicTextGeneration {
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
-    System.out.println(response.text().get());
+    System.out.println(response.text());
   }
 }
 ```
