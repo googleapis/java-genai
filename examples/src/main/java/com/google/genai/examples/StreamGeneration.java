@@ -13,21 +13,12 @@ import org.apache.http.HttpException;
  */
 public class StreamGeneration {
   public static void main(String[] args) throws IOException, HttpException {
-    Client geminiAPIClient = Client.builder().setVertexAI(false).build();
-    Client vertexClient = Client.builder().setVertexAI(true).build();
+    Client client = Client.builder().setVertexAI(true).build();
 
-    System.out.println("VertexAI responded: ");
-    ResponseStream<GenerateContentResponse> vertexResponseStream =
-        vertexClient.models.generateContentStream(
+    ResponseStream<GenerateContentResponse> response =
+        client.models.generateContentStream(
             "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
-    for (GenerateContentResponse res : vertexResponseStream) {
-      System.out.print(res.text().get());
-    }
-    System.out.println("Gemini Dev API responded: ");
-    ResponseStream<GenerateContentResponse> geminiAPIResponse =
-        geminiAPIClient.models.generateContentStream(
-            "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
-    for (GenerateContentResponse res : geminiAPIResponse) {
+    for (GenerateContentResponse res : response) {
       System.out.print(res.text().get());
     }
   }

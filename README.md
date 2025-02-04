@@ -35,22 +35,35 @@ You can either set the following environment variables or pass them to the
 client builder explicitly:
 
 ```bash
-GOOGLE_API_KEY=${GEMINI_API_KEY}   # Required to call Gemini APIs
+GOOGLE_API_KEY=${GEMINI_API_KEY}      # Required to call Gemini APIs
 GOOGLE_CLOUD_PROJECT=${PROJECT_NAME}  # Required to call Vertex AI APIs
 GOOGLE_CLOUD_LOCATION=${LOCATION}     # Required to call Vertex AI APIs
 ```
 
-### Use the Vertex AI SDK for Java
+### Call Vertex AI or Gemini API using the same client
+By default, the client uses the Gemini Developer API. To use Vertex, set
+`VertexAI=true`.
 
-The following sections show you how to perform common tasks by using the SDK on
-either of Vertex AI or Gemini Developer API.
+```java
+Client client = Client.builder()
+  .setAPIKey(System.getenv("GOOGLE_API_KEY"))
+  .build();
+```
+
+```java
+Client client = Client.builder()
+  .setVertexAI(true)
+  .setProject(System.getenv("GOOGLE_CLOUD_PROJECT"))
+  .setLocation(System.getenv("GOOGLE_CLOUD_LOCATION"))
+  .build();
+```
 
 #### Basic Text Generation
 Vertex AI SDK allows you to access the service programmatically. The following
 code snippet is the most basic usage of SDK.
 
 ```java
-package com.google.genai.examples;
+package <your package name>;
 
 import com.google.genai.Client;
 import com.google.genai.Models;
@@ -59,13 +72,11 @@ import org.apache.http.HttpException;
 
 public class BasicTextGeneration {
   public static void main(String[] args) throws IOException, HttpException {
-    Client geminiDevClient = Client.builder().setVertexAI(false).build();
-    Client vertexClient = Client.builder().setVertexAI(true).build();
+    Client client = Client.builder().setVertexAI(true).build();
 
-    String vertexResponse = vertexClient.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null).text().get();
-    System.out.println("VertexAI responded: " + vertexResponse);
-    String geminiAPIResponse = geminiDevClient.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null).text().get()
-    System.out.println("Gemini Dev API responded: " + geminiAPIResponse);
+    GenerateContentResponse response =
+        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+    System.out.println(response.text().get());
   }
 }
 ```
@@ -82,17 +93,16 @@ import com.google.genai.types.GenerateContentResponse;
 import java.io.IOException;
 import org.apache.http.HttpException;
 
-public class BasicTextGeneration {
+public class StreamGeneration {
   public static void main(String[] args) throws IOException, HttpException {
-    Client geminiAPIClient = Client.builder().setVertexAI(false).build();
-    Client vertexClient = Client.builder().setVertexAI(true).build();
+    Client client = Client.builder().setVertexAI(true).build();
 
-    GenerateContentResponse vertexResponse =
-        vertexClient.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
-    System.out.println("VertexAI responded: " + vertexResponse.text().get());
-    GenerateContentResponse geminiAPIResponse =
-        geminiAPIClient.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
-    System.out.println("Gemini Dev API responded: " + geminiAPIResponse.text().get());
+    ResponseStream<GenerateContentResponse> response =
+        client.models.generateContentStream(
+            "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
+    for (GenerateContentResponse res : response) {
+      System.out.print(res.text().get());
+    }
   }
 }
 ```
