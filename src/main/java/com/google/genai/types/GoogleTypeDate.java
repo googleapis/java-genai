@@ -40,13 +40,16 @@ public abstract class GoogleTypeDate extends JsonSerializable {
    * Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year
    * by itself or a year and month where the day isn't significant.
    */
-  public abstract Optional<Integer> getDay();
+  @JsonProperty("day")
+  public abstract Optional<Integer> day();
 
   /** Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day. */
-  public abstract Optional<Integer> getMonth();
+  @JsonProperty("month")
+  public abstract Optional<Integer> month();
 
   /** Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year. */
-  public abstract Optional<Integer> getYear();
+  @JsonProperty("year")
+  public abstract Optional<Integer> year();
 
   /** Instantiates a builder for GoogleTypeDate. */
   public static Builder builder() {
@@ -60,13 +63,13 @@ public abstract class GoogleTypeDate extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("day")
-    public abstract Builder setDay(Integer day);
+    public abstract Builder day(Integer day);
 
     @JsonProperty("month")
-    public abstract Builder setMonth(Integer month);
+    public abstract Builder month(Integer month);
 
     @JsonProperty("year")
-    public abstract Builder setYear(Integer year);
+    public abstract Builder year(Integer year);
 
     public abstract GoogleTypeDate build();
   }

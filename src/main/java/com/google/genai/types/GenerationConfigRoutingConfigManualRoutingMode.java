@@ -29,7 +29,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GenerationConfigRoutingConfigManualRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigManualRoutingMode extends JsonSerializable {
   /** The model name to use. Only the public LLM models are accepted. e.g. 'gemini-1.5-pro-001'. */
-  public abstract Optional<String> getModelName();
+  @JsonProperty("modelName")
+  public abstract Optional<String> modelName();
 
   /** Instantiates a builder for GenerationConfigRoutingConfigManualRoutingMode. */
   public static Builder builder() {
@@ -43,7 +44,7 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("modelName")
-    public abstract Builder setModelName(String modelName);
+    public abstract Builder modelName(String modelName);
 
     public abstract GenerationConfigRoutingConfigManualRoutingMode build();
   }

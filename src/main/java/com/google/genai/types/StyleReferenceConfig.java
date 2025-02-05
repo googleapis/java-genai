@@ -29,7 +29,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_StyleReferenceConfig.Builder.class)
 public abstract class StyleReferenceConfig extends JsonSerializable {
   /** A text description of the style to use for the generated image. */
-  public abstract Optional<String> getStyleDescription();
+  @JsonProperty("styleDescription")
+  public abstract Optional<String> styleDescription();
 
   /** Instantiates a builder for StyleReferenceConfig. */
   public static Builder builder() {
@@ -43,7 +44,7 @@ public abstract class StyleReferenceConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("styleDescription")
-    public abstract Builder setStyleDescription(String styleDescription);
+    public abstract Builder styleDescription(String styleDescription);
 
     public abstract StyleReferenceConfig build();
   }

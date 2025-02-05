@@ -30,31 +30,38 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_TestTableItem.Builder.class)
 public abstract class TestTableItem extends JsonSerializable {
   /** The name of the test. This is used to derive the replay id. */
-  public abstract Optional<String> getName();
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
   /** The parameters to the test. Use pydantic models. */
-  public abstract Optional<Map<String, Object>> getParameters();
+  @JsonProperty("parameters")
+  public abstract Optional<Map<String, Object>> parameters();
 
   /** Expects an exception for MLDev matching the string. */
-  public abstract Optional<String> getExceptionIfMldev();
+  @JsonProperty("exceptionIfMldev")
+  public abstract Optional<String> exceptionIfMldev();
 
   /** Expects an exception for Vertex matching the string. */
-  public abstract Optional<String> getExceptionIfVertex();
+  @JsonProperty("exceptionIfVertex")
+  public abstract Optional<String> exceptionIfVertex();
 
   /** Use if you don't want to use the default replay id which is derived from the test name. */
-  public abstract Optional<String> getOverrideReplayId();
+  @JsonProperty("overrideReplayId")
+  public abstract Optional<String> overrideReplayId();
 
   /**
    * True if the parameters contain an unsupported union type. This test will be skipped for
    * languages that do not support the union type.
    */
-  public abstract Optional<Boolean> getHasUnion();
+  @JsonProperty("hasUnion")
+  public abstract Optional<Boolean> hasUnion();
 
   /**
    * When set to a reason string, this test will be skipped in the API mode. Use this flag for tests
    * that can not be reproduced with the real API. E.g. a test that deletes a resource.
    */
-  public abstract Optional<String> getSkipInApiMode();
+  @JsonProperty("skipInApiMode")
+  public abstract Optional<String> skipInApiMode();
 
   /** Instantiates a builder for TestTableItem. */
   public static Builder builder() {
@@ -68,25 +75,25 @@ public abstract class TestTableItem extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("name")
-    public abstract Builder setName(String name);
+    public abstract Builder name(String name);
 
     @JsonProperty("parameters")
-    public abstract Builder setParameters(Map<String, Object> parameters);
+    public abstract Builder parameters(Map<String, Object> parameters);
 
     @JsonProperty("exceptionIfMldev")
-    public abstract Builder setExceptionIfMldev(String exceptionIfMldev);
+    public abstract Builder exceptionIfMldev(String exceptionIfMldev);
 
     @JsonProperty("exceptionIfVertex")
-    public abstract Builder setExceptionIfVertex(String exceptionIfVertex);
+    public abstract Builder exceptionIfVertex(String exceptionIfVertex);
 
     @JsonProperty("overrideReplayId")
-    public abstract Builder setOverrideReplayId(String overrideReplayId);
+    public abstract Builder overrideReplayId(String overrideReplayId);
 
     @JsonProperty("hasUnion")
-    public abstract Builder setHasUnion(boolean hasUnion);
+    public abstract Builder hasUnion(boolean hasUnion);
 
     @JsonProperty("skipInApiMode")
-    public abstract Builder setSkipInApiMode(String skipInApiMode);
+    public abstract Builder skipInApiMode(String skipInApiMode);
 
     public abstract TestTableItem build();
   }

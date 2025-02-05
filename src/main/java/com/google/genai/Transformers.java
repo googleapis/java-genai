@@ -87,8 +87,8 @@ final class Transformers {
     if (contents instanceof String) {
       return ImmutableList.of(
           Content.builder()
-              .setRole("user")
-              .setParts(ImmutableList.of(Part.builder().setText((String) contents).build()))
+              .role("user")
+              .parts(ImmutableList.of(Part.builder().text((String) contents).build()))
               .build());
     } else if (contents instanceof Content) {
       return ImmutableList.of((Content) contents);
@@ -115,8 +115,8 @@ final class Transformers {
       return null;
     } else if (content instanceof String) {
       return Content.builder()
-          .setRole("user")
-          .setParts(ImmutableList.of(Part.builder().setText((String) content).build()))
+          .role("user")
+          .parts(ImmutableList.of(Part.builder().text((String) content).build()))
           .build();
     } else if (content instanceof Content) {
       return (Content) content;
@@ -145,10 +145,10 @@ final class Transformers {
       return null;
     } else if (speechConfig instanceof String) {
       return SpeechConfig.builder()
-          .setVoiceConfig(
+          .voiceConfig(
               VoiceConfig.builder()
-                  .setPrebuiltVoiceConfig(
-                      PrebuiltVoiceConfig.builder().setVoiceName((String) speechConfig).build())
+                  .prebuiltVoiceConfig(
+                      PrebuiltVoiceConfig.builder().voiceName((String) speechConfig).build())
                   .build())
           .build();
     } else if (speechConfig instanceof SpeechConfig) {
@@ -217,15 +217,14 @@ final class Transformers {
       if (resourceName.startsWith("projects/")) {
         return resourceName;
       } else if (resourceName.startsWith("locations/")) {
-        return String.format("projects/%s/%s", apiClient.getProject(), resourceName);
+        return String.format("projects/%s/%s", apiClient.project(), resourceName);
       } else if (resourceName.startsWith(resourcePrefix + "/")) {
         return String.format(
-            "projects/%s/locations/%s/%s",
-            apiClient.getProject(), apiClient.getLocation(), resourceName);
+            "projects/%s/locations/%s/%s", apiClient.project(), apiClient.location(), resourceName);
       } else {
         return String.format(
             "projects/%s/locations/%s/%s/%s",
-            apiClient.getProject(), apiClient.getLocation(), resourcePrefix, resourceName);
+            apiClient.project(), apiClient.location(), resourcePrefix, resourceName);
       }
     } else {
       if (resourceName.startsWith(resourcePrefix + "/")) {

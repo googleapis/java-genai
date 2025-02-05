@@ -33,17 +33,20 @@ public abstract class GroundingSupport extends JsonSerializable {
    * Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. This
    * list must have the same size as the grounding_chunk_indices.
    */
-  public abstract Optional<List<Float>> getConfidenceScores();
+  @JsonProperty("confidenceScores")
+  public abstract Optional<List<Float>> confidenceScores();
 
   /**
    * A list of indices (into 'grounding_chunk') specifying the citations associated with the claim.
    * For instance [1,3,4] means that grounding_chunk[1], grounding_chunk[3], grounding_chunk[4] are
    * the retrieved content attributed to the claim.
    */
-  public abstract Optional<List<Integer>> getGroundingChunkIndices();
+  @JsonProperty("groundingChunkIndices")
+  public abstract Optional<List<Integer>> groundingChunkIndices();
 
   /** Segment of the content this support belongs to. */
-  public abstract Optional<Segment> getSegment();
+  @JsonProperty("segment")
+  public abstract Optional<Segment> segment();
 
   /** Instantiates a builder for GroundingSupport. */
   public static Builder builder() {
@@ -57,13 +60,13 @@ public abstract class GroundingSupport extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("confidenceScores")
-    public abstract Builder setConfidenceScores(List<Float> confidenceScores);
+    public abstract Builder confidenceScores(List<Float> confidenceScores);
 
     @JsonProperty("groundingChunkIndices")
-    public abstract Builder setGroundingChunkIndices(List<Integer> groundingChunkIndices);
+    public abstract Builder groundingChunkIndices(List<Integer> groundingChunkIndices);
 
     @JsonProperty("segment")
-    public abstract Builder setSegment(Segment segment);
+    public abstract Builder segment(Segment segment);
 
     public abstract GroundingSupport build();
   }

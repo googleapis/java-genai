@@ -32,16 +32,19 @@ public abstract class UploadFileConfig extends JsonSerializable {
    * The name of the file in the destination (e.g., 'files/sample-image'. If not provided one will
    * be generated.
    */
-  public abstract Optional<String> getName();
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
   /**
    * mime_type: The MIME type of the file. If not provided, it will be inferred from the file
    * extension.
    */
-  public abstract Optional<String> getMimeType();
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
 
   /** Optional display name of the file. */
-  public abstract Optional<String> getDisplayName();
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
 
   /** Instantiates a builder for UploadFileConfig. */
   public static Builder builder() {
@@ -55,13 +58,13 @@ public abstract class UploadFileConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("name")
-    public abstract Builder setName(String name);
+    public abstract Builder name(String name);
 
     @JsonProperty("mimeType")
-    public abstract Builder setMimeType(String mimeType);
+    public abstract Builder mimeType(String mimeType);
 
     @JsonProperty("displayName")
-    public abstract Builder setDisplayName(String displayName);
+    public abstract Builder displayName(String displayName);
 
     public abstract UploadFileConfig build();
   }

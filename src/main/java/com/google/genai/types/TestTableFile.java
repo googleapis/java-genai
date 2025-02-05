@@ -30,16 +30,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_TestTableFile.Builder.class)
 public abstract class TestTableFile extends JsonSerializable {
   /** */
-  public abstract Optional<String> getComment();
+  @JsonProperty("comment")
+  public abstract Optional<String> comment();
 
   /** */
-  public abstract Optional<String> getTestMethod();
+  @JsonProperty("testMethod")
+  public abstract Optional<String> testMethod();
 
   /** */
-  public abstract Optional<List<String>> getParameterNames();
+  @JsonProperty("parameterNames")
+  public abstract Optional<List<String>> parameterNames();
 
   /** */
-  public abstract Optional<List<TestTableItem>> getTestTable();
+  @JsonProperty("testTable")
+  public abstract Optional<List<TestTableItem>> testTable();
 
   /** Instantiates a builder for TestTableFile. */
   public static Builder builder() {
@@ -53,16 +57,16 @@ public abstract class TestTableFile extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("comment")
-    public abstract Builder setComment(String comment);
+    public abstract Builder comment(String comment);
 
     @JsonProperty("testMethod")
-    public abstract Builder setTestMethod(String testMethod);
+    public abstract Builder testMethod(String testMethod);
 
     @JsonProperty("parameterNames")
-    public abstract Builder setParameterNames(List<String> parameterNames);
+    public abstract Builder parameterNames(List<String> parameterNames);
 
     @JsonProperty("testTable")
-    public abstract Builder setTestTable(List<TestTableItem> testTable);
+    public abstract Builder testTable(List<TestTableItem> testTable);
 
     public abstract TestTableFile build();
   }

@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GroundingChunkWeb.Builder.class)
 public abstract class GroundingChunkWeb extends JsonSerializable {
   /** Title of the chunk. */
-  public abstract Optional<String> getTitle();
+  @JsonProperty("title")
+  public abstract Optional<String> title();
 
   /** URI reference of the chunk. */
-  public abstract Optional<String> getUri();
+  @JsonProperty("uri")
+  public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkWeb. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("title")
-    public abstract Builder setTitle(String title);
+    public abstract Builder title(String title);
 
     @JsonProperty("uri")
-    public abstract Builder setUri(String uri);
+    public abstract Builder uri(String uri);
 
     public abstract GroundingChunkWeb build();
   }

@@ -30,10 +30,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ReplayFile.Builder.class)
 public abstract class ReplayFile extends JsonSerializable {
   /** */
-  public abstract Optional<String> getReplayId();
+  @JsonProperty("replayId")
+  public abstract Optional<String> replayId();
 
   /** */
-  public abstract Optional<List<ReplayInteraction>> getInteractions();
+  @JsonProperty("interactions")
+  public abstract Optional<List<ReplayInteraction>> interactions();
 
   /** Instantiates a builder for ReplayFile. */
   public static Builder builder() {
@@ -47,10 +49,10 @@ public abstract class ReplayFile extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("replayId")
-    public abstract Builder setReplayId(String replayId);
+    public abstract Builder replayId(String replayId);
 
     @JsonProperty("interactions")
-    public abstract Builder setInteractions(List<ReplayInteraction> interactions);
+    public abstract Builder interactions(List<ReplayInteraction> interactions);
 
     public abstract ReplayFile build();
   }

@@ -29,22 +29,28 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_SafetyRating.Builder.class)
 public abstract class SafetyRating extends JsonSerializable {
   /** Output only. Indicates whether the content was filtered out because of this rating. */
-  public abstract Optional<Boolean> getBlocked();
+  @JsonProperty("blocked")
+  public abstract Optional<Boolean> blocked();
 
   /** Output only. Harm category. */
-  public abstract Optional<String> getCategory();
+  @JsonProperty("category")
+  public abstract Optional<String> category();
 
   /** Output only. Harm probability levels in the content. */
-  public abstract Optional<String> getProbability();
+  @JsonProperty("probability")
+  public abstract Optional<String> probability();
 
   /** Output only. Harm probability score. */
-  public abstract Optional<Float> getProbabilityScore();
+  @JsonProperty("probabilityScore")
+  public abstract Optional<Float> probabilityScore();
 
   /** Output only. Harm severity levels in the content. */
-  public abstract Optional<String> getSeverity();
+  @JsonProperty("severity")
+  public abstract Optional<String> severity();
 
   /** Output only. Harm severity score. */
-  public abstract Optional<Float> getSeverityScore();
+  @JsonProperty("severityScore")
+  public abstract Optional<Float> severityScore();
 
   /** Instantiates a builder for SafetyRating. */
   public static Builder builder() {
@@ -58,22 +64,22 @@ public abstract class SafetyRating extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("blocked")
-    public abstract Builder setBlocked(boolean blocked);
+    public abstract Builder blocked(boolean blocked);
 
     @JsonProperty("category")
-    public abstract Builder setCategory(String category);
+    public abstract Builder category(String category);
 
     @JsonProperty("probability")
-    public abstract Builder setProbability(String probability);
+    public abstract Builder probability(String probability);
 
     @JsonProperty("probabilityScore")
-    public abstract Builder setProbabilityScore(Float probabilityScore);
+    public abstract Builder probabilityScore(Float probabilityScore);
 
     @JsonProperty("severity")
-    public abstract Builder setSeverity(String severity);
+    public abstract Builder severity(String severity);
 
     @JsonProperty("severityScore")
-    public abstract Builder setSeverityScore(Float severityScore);
+    public abstract Builder severityScore(Float severityScore);
 
     public abstract SafetyRating build();
   }

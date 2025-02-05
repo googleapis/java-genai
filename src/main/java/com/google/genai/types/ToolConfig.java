@@ -33,7 +33,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ToolConfig.Builder.class)
 public abstract class ToolConfig extends JsonSerializable {
   /** Optional. Function calling config. */
-  public abstract Optional<FunctionCallingConfig> getFunctionCallingConfig();
+  @JsonProperty("functionCallingConfig")
+  public abstract Optional<FunctionCallingConfig> functionCallingConfig();
 
   /** Instantiates a builder for ToolConfig. */
   public static Builder builder() {
@@ -47,7 +48,7 @@ public abstract class ToolConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("functionCallingConfig")
-    public abstract Builder setFunctionCallingConfig(FunctionCallingConfig functionCallingConfig);
+    public abstract Builder functionCallingConfig(FunctionCallingConfig functionCallingConfig);
 
     public abstract ToolConfig build();
   }

@@ -29,13 +29,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GeneratedImage.Builder.class)
 public abstract class GeneratedImage extends JsonSerializable {
   /** The output image data. */
-  public abstract Optional<Image> getImage();
+  @JsonProperty("image")
+  public abstract Optional<Image> image();
 
   /** Responsible AI filter reason if the image is filtered out of the response. */
-  public abstract Optional<String> getRaiFilteredReason();
+  @JsonProperty("raiFilteredReason")
+  public abstract Optional<String> raiFilteredReason();
 
   /** The rewritten prompt used for the image generation if the prompt enhancer is enabled. */
-  public abstract Optional<String> getEnhancedPrompt();
+  @JsonProperty("enhancedPrompt")
+  public abstract Optional<String> enhancedPrompt();
 
   /** Instantiates a builder for GeneratedImage. */
   public static Builder builder() {
@@ -49,13 +52,13 @@ public abstract class GeneratedImage extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("image")
-    public abstract Builder setImage(Image image);
+    public abstract Builder image(Image image);
 
     @JsonProperty("raiFilteredReason")
-    public abstract Builder setRaiFilteredReason(String raiFilteredReason);
+    public abstract Builder raiFilteredReason(String raiFilteredReason);
 
     @JsonProperty("enhancedPrompt")
-    public abstract Builder setEnhancedPrompt(String enhancedPrompt);
+    public abstract Builder enhancedPrompt(String enhancedPrompt);
 
     public abstract GeneratedImage build();
   }

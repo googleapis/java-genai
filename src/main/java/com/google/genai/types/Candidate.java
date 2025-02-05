@@ -30,40 +30,50 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Candidate.Builder.class)
 public abstract class Candidate extends JsonSerializable {
   /** Contains the multi-part content of the response. */
-  public abstract Optional<Content> getContent();
+  @JsonProperty("content")
+  public abstract Optional<Content> content();
 
   /** Source attribution of the generated content. */
-  public abstract Optional<CitationMetadata> getCitationMetadata();
+  @JsonProperty("citationMetadata")
+  public abstract Optional<CitationMetadata> citationMetadata();
 
   /** Describes the reason the model stopped generating tokens. */
-  public abstract Optional<String> getFinishMessage();
+  @JsonProperty("finishMessage")
+  public abstract Optional<String> finishMessage();
 
   /** Number of tokens for this candidate. */
-  public abstract Optional<Integer> getTokenCount();
+  @JsonProperty("tokenCount")
+  public abstract Optional<Integer> tokenCount();
 
   /** Output only. Average log probability score of the candidate. */
-  public abstract Optional<Double> getAvgLogprobs();
+  @JsonProperty("avgLogprobs")
+  public abstract Optional<Double> avgLogprobs();
 
   /**
    * Output only. The reason why the model stopped generating tokens. If empty, the model has not
    * stopped generating the tokens.
    */
-  public abstract Optional<String> getFinishReason();
+  @JsonProperty("finishReason")
+  public abstract Optional<String> finishReason();
 
   /** Output only. Metadata specifies sources used to ground generated content. */
-  public abstract Optional<GroundingMetadata> getGroundingMetadata();
+  @JsonProperty("groundingMetadata")
+  public abstract Optional<GroundingMetadata> groundingMetadata();
 
   /** Output only. Index of the candidate. */
-  public abstract Optional<Integer> getIndex();
+  @JsonProperty("index")
+  public abstract Optional<Integer> index();
 
   /** Output only. Log-likelihood scores for the response tokens and top tokens */
-  public abstract Optional<LogprobsResult> getLogprobsResult();
+  @JsonProperty("logprobsResult")
+  public abstract Optional<LogprobsResult> logprobsResult();
 
   /**
    * Output only. List of ratings for the safety of a response candidate. There is at most one
    * rating per category.
    */
-  public abstract Optional<List<SafetyRating>> getSafetyRatings();
+  @JsonProperty("safetyRatings")
+  public abstract Optional<List<SafetyRating>> safetyRatings();
 
   /** Instantiates a builder for Candidate. */
   public static Builder builder() {
@@ -77,34 +87,34 @@ public abstract class Candidate extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("content")
-    public abstract Builder setContent(Content content);
+    public abstract Builder content(Content content);
 
     @JsonProperty("citationMetadata")
-    public abstract Builder setCitationMetadata(CitationMetadata citationMetadata);
+    public abstract Builder citationMetadata(CitationMetadata citationMetadata);
 
     @JsonProperty("finishMessage")
-    public abstract Builder setFinishMessage(String finishMessage);
+    public abstract Builder finishMessage(String finishMessage);
 
     @JsonProperty("tokenCount")
-    public abstract Builder setTokenCount(Integer tokenCount);
+    public abstract Builder tokenCount(Integer tokenCount);
 
     @JsonProperty("avgLogprobs")
-    public abstract Builder setAvgLogprobs(Double avgLogprobs);
+    public abstract Builder avgLogprobs(Double avgLogprobs);
 
     @JsonProperty("finishReason")
-    public abstract Builder setFinishReason(String finishReason);
+    public abstract Builder finishReason(String finishReason);
 
     @JsonProperty("groundingMetadata")
-    public abstract Builder setGroundingMetadata(GroundingMetadata groundingMetadata);
+    public abstract Builder groundingMetadata(GroundingMetadata groundingMetadata);
 
     @JsonProperty("index")
-    public abstract Builder setIndex(Integer index);
+    public abstract Builder index(Integer index);
 
     @JsonProperty("logprobsResult")
-    public abstract Builder setLogprobsResult(LogprobsResult logprobsResult);
+    public abstract Builder logprobsResult(LogprobsResult logprobsResult);
 
     @JsonProperty("safetyRatings")
-    public abstract Builder setSafetyRatings(List<SafetyRating> safetyRatings);
+    public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
 
     public abstract Candidate build();
   }

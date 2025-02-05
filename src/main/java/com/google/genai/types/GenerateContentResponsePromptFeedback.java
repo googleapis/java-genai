@@ -30,13 +30,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GenerateContentResponsePromptFeedback.Builder.class)
 public abstract class GenerateContentResponsePromptFeedback extends JsonSerializable {
   /** Output only. Blocked reason. */
-  public abstract Optional<String> getBlockReason();
+  @JsonProperty("blockReason")
+  public abstract Optional<String> blockReason();
 
   /** Output only. A readable block reason message. */
-  public abstract Optional<String> getBlockReasonMessage();
+  @JsonProperty("blockReasonMessage")
+  public abstract Optional<String> blockReasonMessage();
 
   /** Output only. Safety ratings. */
-  public abstract Optional<List<SafetyRating>> getSafetyRatings();
+  @JsonProperty("safetyRatings")
+  public abstract Optional<List<SafetyRating>> safetyRatings();
 
   /** Instantiates a builder for GenerateContentResponsePromptFeedback. */
   public static Builder builder() {
@@ -50,13 +53,13 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("blockReason")
-    public abstract Builder setBlockReason(String blockReason);
+    public abstract Builder blockReason(String blockReason);
 
     @JsonProperty("blockReasonMessage")
-    public abstract Builder setBlockReasonMessage(String blockReasonMessage);
+    public abstract Builder blockReasonMessage(String blockReasonMessage);
 
     @JsonProperty("safetyRatings")
-    public abstract Builder setSafetyRatings(List<SafetyRating> safetyRatings);
+    public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
 
     public abstract GenerateContentResponsePromptFeedback build();
   }

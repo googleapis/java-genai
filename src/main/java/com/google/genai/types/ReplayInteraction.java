@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ReplayInteraction.Builder.class)
 public abstract class ReplayInteraction extends JsonSerializable {
   /** */
-  public abstract Optional<ReplayRequest> getRequest();
+  @JsonProperty("request")
+  public abstract Optional<ReplayRequest> request();
 
   /** */
-  public abstract Optional<ReplayResponse> getResponse();
+  @JsonProperty("response")
+  public abstract Optional<ReplayResponse> response();
 
   /** Instantiates a builder for ReplayInteraction. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class ReplayInteraction extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("request")
-    public abstract Builder setRequest(ReplayRequest request);
+    public abstract Builder request(ReplayRequest request);
 
     @JsonProperty("response")
-    public abstract Builder setResponse(ReplayResponse response);
+    public abstract Builder response(ReplayResponse response);
 
     public abstract ReplayInteraction build();
   }

@@ -29,16 +29,19 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Retrieval.Builder.class)
 public abstract class Retrieval extends JsonSerializable {
   /** Optional. Deprecated. This option is no longer supported. */
-  public abstract Optional<Boolean> getDisableAttribution();
+  @JsonProperty("disableAttribution")
+  public abstract Optional<Boolean> disableAttribution();
 
   /** Set to use data source powered by Vertex AI Search. */
-  public abstract Optional<VertexAISearch> getVertexAiSearch();
+  @JsonProperty("vertexAiSearch")
+  public abstract Optional<VertexAISearch> vertexAiSearch();
 
   /**
    * Set to use data source powered by Vertex RAG store. User data is uploaded via the
    * VertexRagDataService.
    */
-  public abstract Optional<VertexRagStore> getVertexRagStore();
+  @JsonProperty("vertexRagStore")
+  public abstract Optional<VertexRagStore> vertexRagStore();
 
   /** Instantiates a builder for Retrieval. */
   public static Builder builder() {
@@ -52,13 +55,13 @@ public abstract class Retrieval extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("disableAttribution")
-    public abstract Builder setDisableAttribution(boolean disableAttribution);
+    public abstract Builder disableAttribution(boolean disableAttribution);
 
     @JsonProperty("vertexAiSearch")
-    public abstract Builder setVertexAiSearch(VertexAISearch vertexAiSearch);
+    public abstract Builder vertexAiSearch(VertexAISearch vertexAiSearch);
 
     @JsonProperty("vertexRagStore")
-    public abstract Builder setVertexRagStore(VertexRagStore vertexRagStore);
+    public abstract Builder vertexRagStore(VertexRagStore vertexRagStore);
 
     public abstract Retrieval build();
   }

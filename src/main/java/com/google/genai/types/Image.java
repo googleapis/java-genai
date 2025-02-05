@@ -32,16 +32,19 @@ public abstract class Image extends JsonSerializable {
    * The Cloud Storage URI of the image. ``Image`` can contain a value for this field or the
    * ``image_bytes`` field but not both.
    */
-  public abstract Optional<String> getGcsUri();
+  @JsonProperty("gcsUri")
+  public abstract Optional<String> gcsUri();
 
   /**
    * The image bytes data. ``Image`` can contain a value for this field or the ``gcs_uri`` field but
    * not both.
    */
-  public abstract Optional<String> getImageBytes();
+  @JsonProperty("imageBytes")
+  public abstract Optional<String> imageBytes();
 
   /** The MIME type of the image. */
-  public abstract Optional<String> getMimeType();
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for Image. */
   public static Builder builder() {
@@ -55,13 +58,13 @@ public abstract class Image extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("gcsUri")
-    public abstract Builder setGcsUri(String gcsUri);
+    public abstract Builder gcsUri(String gcsUri);
 
     @JsonProperty("imageBytes")
-    public abstract Builder setImageBytes(String imageBytes);
+    public abstract Builder imageBytes(String imageBytes);
 
     @JsonProperty("mimeType")
-    public abstract Builder setMimeType(String mimeType);
+    public abstract Builder mimeType(String mimeType);
 
     public abstract Image build();
   }

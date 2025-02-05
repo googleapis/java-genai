@@ -29,16 +29,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_UpscaleImageParameters.Builder.class)
 public abstract class UpscaleImageParameters extends JsonSerializable {
   /** The model to use. */
-  public abstract Optional<String> getModel();
+  @JsonProperty("model")
+  public abstract Optional<String> model();
 
   /** The input image to upscale. */
-  public abstract Optional<Image> getImage();
+  @JsonProperty("image")
+  public abstract Optional<Image> image();
 
   /** The factor to upscale the image (x2 or x4). */
-  public abstract Optional<String> getUpscaleFactor();
+  @JsonProperty("upscaleFactor")
+  public abstract Optional<String> upscaleFactor();
 
   /** Configuration for upscaling. */
-  public abstract Optional<UpscaleImageConfig> getConfig();
+  @JsonProperty("config")
+  public abstract Optional<UpscaleImageConfig> config();
 
   /** Instantiates a builder for UpscaleImageParameters. */
   public static Builder builder() {
@@ -52,16 +56,16 @@ public abstract class UpscaleImageParameters extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("model")
-    public abstract Builder setModel(String model);
+    public abstract Builder model(String model);
 
     @JsonProperty("image")
-    public abstract Builder setImage(Image image);
+    public abstract Builder image(Image image);
 
     @JsonProperty("upscaleFactor")
-    public abstract Builder setUpscaleFactor(String upscaleFactor);
+    public abstract Builder upscaleFactor(String upscaleFactor);
 
     @JsonProperty("config")
-    public abstract Builder setConfig(UpscaleImageConfig config);
+    public abstract Builder config(UpscaleImageConfig config);
 
     public abstract UpscaleImageParameters build();
   }

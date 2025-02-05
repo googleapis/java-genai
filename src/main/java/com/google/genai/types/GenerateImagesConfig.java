@@ -29,57 +29,72 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GenerateImagesConfig.Builder.class)
 public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Cloud Storage URI used to store the generated images. */
-  public abstract Optional<String> getOutputGcsUri();
+  @JsonProperty("outputGcsUri")
+  public abstract Optional<String> outputGcsUri();
 
   /** Description of what to discourage in the generated images. */
-  public abstract Optional<String> getNegativePrompt();
+  @JsonProperty("negativePrompt")
+  public abstract Optional<String> negativePrompt();
 
   /** Number of images to generate. */
-  public abstract Optional<Integer> getNumberOfImages();
+  @JsonProperty("numberOfImages")
+  public abstract Optional<Integer> numberOfImages();
 
   /**
    * Controls how much the model adheres to the text prompt. Large values increase output and prompt
    * alignment, but may compromise image quality.
    */
-  public abstract Optional<Float> getGuidanceScale();
+  @JsonProperty("guidanceScale")
+  public abstract Optional<Float> guidanceScale();
 
   /**
    * Random seed for image generation. This is not available when ``add_watermark`` is set to true.
    */
-  public abstract Optional<Integer> getSeed();
+  @JsonProperty("seed")
+  public abstract Optional<Integer> seed();
 
   /** Filter level for safety filtering. */
-  public abstract Optional<String> getSafetyFilterLevel();
+  @JsonProperty("safetyFilterLevel")
+  public abstract Optional<String> safetyFilterLevel();
 
   /** Allows generation of people by the model. */
-  public abstract Optional<String> getPersonGeneration();
+  @JsonProperty("personGeneration")
+  public abstract Optional<String> personGeneration();
 
   /** Whether to report the safety scores of each image in the response. */
-  public abstract Optional<Boolean> getIncludeSafetyAttributes();
+  @JsonProperty("includeSafetyAttributes")
+  public abstract Optional<Boolean> includeSafetyAttributes();
 
   /**
    * Whether to include the Responsible AI filter reason if the image is filtered out of the
    * response.
    */
-  public abstract Optional<Boolean> getIncludeRaiReason();
+  @JsonProperty("includeRaiReason")
+  public abstract Optional<Boolean> includeRaiReason();
 
   /** Language of the text in the prompt. */
-  public abstract Optional<String> getLanguage();
+  @JsonProperty("language")
+  public abstract Optional<String> language();
 
   /** MIME type of the generated image. */
-  public abstract Optional<String> getOutputMimeType();
+  @JsonProperty("outputMimeType")
+  public abstract Optional<String> outputMimeType();
 
   /** Compression quality of the generated image (for ``image/jpeg`` only). */
-  public abstract Optional<Integer> getOutputCompressionQuality();
+  @JsonProperty("outputCompressionQuality")
+  public abstract Optional<Integer> outputCompressionQuality();
 
   /** Whether to add a watermark to the generated images. */
-  public abstract Optional<Boolean> getAddWatermark();
+  @JsonProperty("addWatermark")
+  public abstract Optional<Boolean> addWatermark();
 
   /** Aspect ratio of the generated images. */
-  public abstract Optional<String> getAspectRatio();
+  @JsonProperty("aspectRatio")
+  public abstract Optional<String> aspectRatio();
 
   /** Whether to use the prompt rewriting logic. */
-  public abstract Optional<Boolean> getEnhancePrompt();
+  @JsonProperty("enhancePrompt")
+  public abstract Optional<Boolean> enhancePrompt();
 
   /** Instantiates a builder for GenerateImagesConfig. */
   public static Builder builder() {
@@ -93,49 +108,49 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("outputGcsUri")
-    public abstract Builder setOutputGcsUri(String outputGcsUri);
+    public abstract Builder outputGcsUri(String outputGcsUri);
 
     @JsonProperty("negativePrompt")
-    public abstract Builder setNegativePrompt(String negativePrompt);
+    public abstract Builder negativePrompt(String negativePrompt);
 
     @JsonProperty("numberOfImages")
-    public abstract Builder setNumberOfImages(Integer numberOfImages);
+    public abstract Builder numberOfImages(Integer numberOfImages);
 
     @JsonProperty("guidanceScale")
-    public abstract Builder setGuidanceScale(Float guidanceScale);
+    public abstract Builder guidanceScale(Float guidanceScale);
 
     @JsonProperty("seed")
-    public abstract Builder setSeed(Integer seed);
+    public abstract Builder seed(Integer seed);
 
     @JsonProperty("safetyFilterLevel")
-    public abstract Builder setSafetyFilterLevel(String safetyFilterLevel);
+    public abstract Builder safetyFilterLevel(String safetyFilterLevel);
 
     @JsonProperty("personGeneration")
-    public abstract Builder setPersonGeneration(String personGeneration);
+    public abstract Builder personGeneration(String personGeneration);
 
     @JsonProperty("includeSafetyAttributes")
-    public abstract Builder setIncludeSafetyAttributes(boolean includeSafetyAttributes);
+    public abstract Builder includeSafetyAttributes(boolean includeSafetyAttributes);
 
     @JsonProperty("includeRaiReason")
-    public abstract Builder setIncludeRaiReason(boolean includeRaiReason);
+    public abstract Builder includeRaiReason(boolean includeRaiReason);
 
     @JsonProperty("language")
-    public abstract Builder setLanguage(String language);
+    public abstract Builder language(String language);
 
     @JsonProperty("outputMimeType")
-    public abstract Builder setOutputMimeType(String outputMimeType);
+    public abstract Builder outputMimeType(String outputMimeType);
 
     @JsonProperty("outputCompressionQuality")
-    public abstract Builder setOutputCompressionQuality(Integer outputCompressionQuality);
+    public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
     @JsonProperty("addWatermark")
-    public abstract Builder setAddWatermark(boolean addWatermark);
+    public abstract Builder addWatermark(boolean addWatermark);
 
     @JsonProperty("aspectRatio")
-    public abstract Builder setAspectRatio(String aspectRatio);
+    public abstract Builder aspectRatio(String aspectRatio);
 
     @JsonProperty("enhancePrompt")
-    public abstract Builder setEnhancePrompt(boolean enhancePrompt);
+    public abstract Builder enhancePrompt(boolean enhancePrompt);
 
     public abstract GenerateImagesConfig build();
   }

@@ -33,20 +33,23 @@ public abstract class FunctionResponse extends JsonSerializable {
    * The id of the function call this response is for. Populated by the client to match the
    * corresponding function call `id`.
    */
-  public abstract Optional<String> getId();
+  @JsonProperty("id")
+  public abstract Optional<String> id();
 
   /**
    * Required. The name of the function to call. Matches [FunctionDeclaration.name] and
    * [FunctionCall.name].
    */
-  public abstract Optional<String> getName();
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
   /**
    * Required. The function response in JSON object format. Use "output" key to specify function
    * output and "error" key to specify error details (if any). If "output" and "error" keys are not
    * specified, then whole "response" is treated as function output.
    */
-  public abstract Optional<Map<String, Object>> getResponse();
+  @JsonProperty("response")
+  public abstract Optional<Map<String, Object>> response();
 
   /** Instantiates a builder for FunctionResponse. */
   public static Builder builder() {
@@ -60,13 +63,13 @@ public abstract class FunctionResponse extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("id")
-    public abstract Builder setId(String id);
+    public abstract Builder id(String id);
 
     @JsonProperty("name")
-    public abstract Builder setName(String name);
+    public abstract Builder name(String name);
 
     @JsonProperty("response")
-    public abstract Builder setResponse(Map<String, Object> response);
+    public abstract Builder response(Map<String, Object> response);
 
     public abstract FunctionResponse build();
   }

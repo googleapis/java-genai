@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import java.lang.reflect.Field;
 import org.apache.http.HttpEntity;
@@ -57,9 +56,8 @@ public class ForwardCompatibilityTest {
     apiClientField.setAccessible(true);
     apiClientField.set(client.models, mockedClient);
 
-    GenerateContentConfig config = GenerateContentConfig.builder().build();
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
+        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
 
     assertNotNull(response);
   }

@@ -30,7 +30,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_LogprobsResultTopCandidates.Builder.class)
 public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   /** Sorted by log probability in descending order. */
-  public abstract Optional<List<LogprobsResultCandidate>> getCandidates();
+  @JsonProperty("candidates")
+  public abstract Optional<List<LogprobsResultCandidate>> candidates();
 
   /** Instantiates a builder for LogprobsResultTopCandidates. */
   public static Builder builder() {
@@ -44,7 +45,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("candidates")
-    public abstract Builder setCandidates(List<LogprobsResultCandidate> candidates);
+    public abstract Builder candidates(List<LogprobsResultCandidate> candidates);
 
     public abstract LogprobsResultTopCandidates build();
   }

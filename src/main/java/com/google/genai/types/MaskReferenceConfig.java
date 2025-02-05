@@ -33,16 +33,19 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
    * Prompts the model to generate a mask instead of you needing to provide one (unless
    * MASK_MODE_USER_PROVIDED is used).
    */
-  public abstract Optional<String> getMaskMode();
+  @JsonProperty("maskMode")
+  public abstract Optional<String> maskMode();
 
   /**
    * A list of up to 5 class ids to use for semantic segmentation. Automatically creates an image
    * mask based on specific objects.
    */
-  public abstract Optional<List<Integer>> getSegmentationClasses();
+  @JsonProperty("segmentationClasses")
+  public abstract Optional<List<Integer>> segmentationClasses();
 
   /** Dilation percentage of the mask provided. Float between 0 and 1. */
-  public abstract Optional<Float> getMaskDilation();
+  @JsonProperty("maskDilation")
+  public abstract Optional<Float> maskDilation();
 
   /** Instantiates a builder for MaskReferenceConfig. */
   public static Builder builder() {
@@ -56,13 +59,13 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("maskMode")
-    public abstract Builder setMaskMode(String maskMode);
+    public abstract Builder maskMode(String maskMode);
 
     @JsonProperty("segmentationClasses")
-    public abstract Builder setSegmentationClasses(List<Integer> segmentationClasses);
+    public abstract Builder segmentationClasses(List<Integer> segmentationClasses);
 
     @JsonProperty("maskDilation")
-    public abstract Builder setMaskDilation(Float maskDilation);
+    public abstract Builder maskDilation(Float maskDilation);
 
     public abstract MaskReferenceConfig build();
   }

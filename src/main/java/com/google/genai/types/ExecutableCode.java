@@ -33,10 +33,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ExecutableCode.Builder.class)
 public abstract class ExecutableCode extends JsonSerializable {
   /** Required. The code to be executed. */
-  public abstract Optional<String> getCode();
+  @JsonProperty("code")
+  public abstract Optional<String> code();
 
   /** Required. Programming language of the `code`. */
-  public abstract Optional<String> getLanguage();
+  @JsonProperty("language")
+  public abstract Optional<String> language();
 
   /** Instantiates a builder for ExecutableCode. */
   public static Builder builder() {
@@ -50,10 +52,10 @@ public abstract class ExecutableCode extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("code")
-    public abstract Builder setCode(String code);
+    public abstract Builder code(String code);
 
     @JsonProperty("language")
-    public abstract Builder setLanguage(String language);
+    public abstract Builder language(String language);
 
     public abstract ExecutableCode build();
   }

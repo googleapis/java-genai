@@ -35,19 +35,23 @@ import java.util.stream.Collectors;
 @JsonDeserialize(builder = AutoValue_GenerateContentResponse.Builder.class)
 public abstract class GenerateContentResponse extends JsonSerializable {
   /** Response variations returned by the model. */
-  public abstract Optional<List<Candidate>> getCandidates();
+  @JsonProperty("candidates")
+  public abstract Optional<List<Candidate>> candidates();
 
   /** Output only. The model version used to generate the response. */
-  public abstract Optional<String> getModelVersion();
+  @JsonProperty("modelVersion")
+  public abstract Optional<String> modelVersion();
 
   /**
    * Output only. Content filter results for a prompt sent in the request. Note: Sent only in the
    * first stream chunk. Only happens when no candidates were generated due to content violations.
    */
-  public abstract Optional<GenerateContentResponsePromptFeedback> getPromptFeedback();
+  @JsonProperty("promptFeedback")
+  public abstract Optional<GenerateContentResponsePromptFeedback> promptFeedback();
 
   /** Usage metadata about the response(s). */
-  public abstract Optional<GenerateContentResponseUsageMetadata> getUsageMetadata();
+  @JsonProperty("usageMetadata")
+  public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
 
   /** Instantiates a builder for GenerateContentResponse. */
   public static Builder builder() {
@@ -61,16 +65,16 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("candidates")
-    public abstract Builder setCandidates(List<Candidate> candidates);
+    public abstract Builder candidates(List<Candidate> candidates);
 
     @JsonProperty("modelVersion")
-    public abstract Builder setModelVersion(String modelVersion);
+    public abstract Builder modelVersion(String modelVersion);
 
     @JsonProperty("promptFeedback")
-    public abstract Builder setPromptFeedback(GenerateContentResponsePromptFeedback promptFeedback);
+    public abstract Builder promptFeedback(GenerateContentResponsePromptFeedback promptFeedback);
 
     @JsonProperty("usageMetadata")
-    public abstract Builder setUsageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
+    public abstract Builder usageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
 
     public abstract GenerateContentResponse build();
   }
@@ -95,17 +99,17 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   public ImmutableList<Part> parts() {
     checkFinishReason();
 
-    Optional<List<Candidate>> candidates = getCandidates();
+    Optional<List<Candidate>> candidates = candidates();
     if (candidates.isEmpty() || candidates.get().isEmpty()) {
       return null;
     }
 
-    Optional<Content> content = candidates.get().get(0).getContent();
+    Optional<Content> content = candidates.get().get(0).content();
     if (content.isEmpty()) {
       return null;
     }
 
-    return ImmutableList.copyOf(content.get().getParts().orElse(new ArrayList<>()));
+    return ImmutableList.copyOf(content.get().parts().orElse(new ArrayList<>()));
   }
 
   /**
@@ -124,19 +128,19 @@ public abstract class GenerateContentResponse extends JsonSerializable {
 
     String text = "";
     for (Part part : parts) {
-      if (part.getInlineData().isPresent()
-          || part.getCodeExecutionResult().isPresent()
-          || part.getExecutableCode().isPresent()
-          || part.getFileData().isPresent()
-          || part.getFunctionCall().isPresent()
-          || part.getFunctionResponse().isPresent()) {
+      if (part.inlineData().isPresent()
+          || part.codeExecutionResult().isPresent()
+          || part.executableCode().isPresent()
+          || part.fileData().isPresent()
+          || part.functionCall().isPresent()
+          || part.functionResponse().isPresent()) {
         throw new IllegalArgumentException(
             String.format("Only text parts are supported, but got %s", part));
       }
-      if (part.getThought().orElse(false)) {
+      if (part.thought().orElse(false)) {
         continue;
       }
-      text += part.getText().orElse("");
+      text += part.text().orElse("");
     }
 
     return text;
@@ -161,32 +165,32 @@ public abstract class GenerateContentResponse extends JsonSerializable {
         parts.stream()
             .filter(
                 part -> {
-                  if (!part.getFunctionCall().isPresent()
-                      && (part.getInlineData().isPresent()
-                          || part.getCodeExecutionResult().isPresent()
-                          || part.getExecutableCode().isPresent()
-                          || part.getFileData().isPresent()
-                          || part.getFunctionResponse().isPresent()
-                          || part.getText().isPresent())) {
+                  if (!part.functionCall().isPresent()
+                      && (part.inlineData().isPresent()
+                          || part.codeExecutionResult().isPresent()
+                          || part.executableCode().isPresent()
+                          || part.fileData().isPresent()
+                          || part.functionResponse().isPresent()
+                          || part.text().isPresent())) {
                     throw new IllegalArgumentException(
                         String.format("Only function call parts are supported, but got %s", part));
                   }
-                  return part.getFunctionCall().isPresent();
+                  return part.functionCall().isPresent();
                 })
-            .map(part -> part.getFunctionCall().get())
+            .map(part -> part.functionCall().get())
             .collect(Collectors.toList()));
   }
 
   /** Gets the finish reason in a GenerateContentResponse. */
   private String finishReason() {
-    List<Candidate> candidates = getCandidates().orElse(Arrays.asList(Candidate.builder().build()));
+    List<Candidate> candidates = candidates().orElse(Arrays.asList(Candidate.builder().build()));
     if (candidates.size() > 1) {
       logger.warning(
           String.format(
               "This response has %d candidates, will only use the first candidate",
               candidates.size()));
     }
-    return candidates.get(0).getFinishReason().orElse("");
+    return candidates.get(0).finishReason().orElse("");
   }
 
   /** Throws an exception if the response finishes unexpectedly. */

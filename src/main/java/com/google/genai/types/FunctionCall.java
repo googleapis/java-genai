@@ -33,16 +33,19 @@ public abstract class FunctionCall extends JsonSerializable {
    * The unique id of the function call. If populated, the client to execute the `function_call` and
    * return the response with the matching `id`.
    */
-  public abstract Optional<String> getId();
+  @JsonProperty("id")
+  public abstract Optional<String> id();
 
   /**
    * Optional. Required. The function parameters and values in JSON object format. See
    * [FunctionDeclaration.parameters] for parameter details.
    */
-  public abstract Optional<Map<String, Object>> getArgs();
+  @JsonProperty("args")
+  public abstract Optional<Map<String, Object>> args();
 
   /** Required. The name of the function to call. Matches [FunctionDeclaration.name]. */
-  public abstract Optional<String> getName();
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
   /** Instantiates a builder for FunctionCall. */
   public static Builder builder() {
@@ -56,13 +59,13 @@ public abstract class FunctionCall extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("id")
-    public abstract Builder setId(String id);
+    public abstract Builder id(String id);
 
     @JsonProperty("args")
-    public abstract Builder setArgs(Map<String, Object> args);
+    public abstract Builder args(Map<String, Object> args);
 
     @JsonProperty("name")
-    public abstract Builder setName(String name);
+    public abstract Builder name(String name);
 
     public abstract FunctionCall build();
   }

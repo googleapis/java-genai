@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_FileData.Builder.class)
 public abstract class FileData extends JsonSerializable {
   /** Required. URI. */
-  public abstract Optional<String> getFileUri();
+  @JsonProperty("fileUri")
+  public abstract Optional<String> fileUri();
 
   /** Required. The IANA standard MIME type of the source data. */
-  public abstract Optional<String> getMimeType();
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for FileData. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class FileData extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("fileUri")
-    public abstract Builder setFileUri(String fileUri);
+    public abstract Builder fileUri(String fileUri);
 
     @JsonProperty("mimeType")
-    public abstract Builder setMimeType(String mimeType);
+    public abstract Builder mimeType(String mimeType);
 
     public abstract FileData build();
   }

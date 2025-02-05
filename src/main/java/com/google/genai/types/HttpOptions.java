@@ -30,16 +30,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_HttpOptions.Builder.class)
 public abstract class HttpOptions extends JsonSerializable {
   /** The base URL for the AI platform service endpoint. */
-  public abstract Optional<String> getBaseUrl();
+  @JsonProperty("baseUrl")
+  public abstract Optional<String> baseUrl();
 
   /** Specifies the version of the API to use. */
-  public abstract Optional<String> getApiVersion();
+  @JsonProperty("apiVersion")
+  public abstract Optional<String> apiVersion();
 
   /** Additional HTTP headers to be sent with the request. */
-  public abstract Optional<Map<String, String>> getHeaders();
+  @JsonProperty("headers")
+  public abstract Optional<Map<String, String>> headers();
 
   /** Timeout for the request in milliseconds. */
-  public abstract Optional<Integer> getTimeout();
+  @JsonProperty("timeout")
+  public abstract Optional<Integer> timeout();
 
   /** Instantiates a builder for HttpOptions. */
   public static Builder builder() {
@@ -53,16 +57,16 @@ public abstract class HttpOptions extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("baseUrl")
-    public abstract Builder setBaseUrl(String baseUrl);
+    public abstract Builder baseUrl(String baseUrl);
 
     @JsonProperty("apiVersion")
-    public abstract Builder setApiVersion(String apiVersion);
+    public abstract Builder apiVersion(String apiVersion);
 
     @JsonProperty("headers")
-    public abstract Builder setHeaders(Map<String, String> headers);
+    public abstract Builder headers(Map<String, String> headers);
 
     @JsonProperty("timeout")
-    public abstract Builder setTimeout(Integer timeout);
+    public abstract Builder timeout(Integer timeout);
 
     public abstract HttpOptions build();
   }

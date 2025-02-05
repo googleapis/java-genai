@@ -30,22 +30,28 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GroundingMetadata.Builder.class)
 public abstract class GroundingMetadata extends JsonSerializable {
   /** List of supporting references retrieved from specified grounding source. */
-  public abstract Optional<List<GroundingChunk>> getGroundingChunks();
+  @JsonProperty("groundingChunks")
+  public abstract Optional<List<GroundingChunk>> groundingChunks();
 
   /** Optional. List of grounding support. */
-  public abstract Optional<List<GroundingSupport>> getGroundingSupports();
+  @JsonProperty("groundingSupports")
+  public abstract Optional<List<GroundingSupport>> groundingSupports();
 
   /** Optional. Output only. Retrieval metadata. */
-  public abstract Optional<RetrievalMetadata> getRetrievalMetadata();
+  @JsonProperty("retrievalMetadata")
+  public abstract Optional<RetrievalMetadata> retrievalMetadata();
 
   /** Optional. Queries executed by the retrieval tools. */
-  public abstract Optional<List<String>> getRetrievalQueries();
+  @JsonProperty("retrievalQueries")
+  public abstract Optional<List<String>> retrievalQueries();
 
   /** Optional. Google search entry for the following-up web searches. */
-  public abstract Optional<SearchEntryPoint> getSearchEntryPoint();
+  @JsonProperty("searchEntryPoint")
+  public abstract Optional<SearchEntryPoint> searchEntryPoint();
 
   /** Optional. Web search queries for the following-up web search. */
-  public abstract Optional<List<String>> getWebSearchQueries();
+  @JsonProperty("webSearchQueries")
+  public abstract Optional<List<String>> webSearchQueries();
 
   /** Instantiates a builder for GroundingMetadata. */
   public static Builder builder() {
@@ -59,22 +65,22 @@ public abstract class GroundingMetadata extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("groundingChunks")
-    public abstract Builder setGroundingChunks(List<GroundingChunk> groundingChunks);
+    public abstract Builder groundingChunks(List<GroundingChunk> groundingChunks);
 
     @JsonProperty("groundingSupports")
-    public abstract Builder setGroundingSupports(List<GroundingSupport> groundingSupports);
+    public abstract Builder groundingSupports(List<GroundingSupport> groundingSupports);
 
     @JsonProperty("retrievalMetadata")
-    public abstract Builder setRetrievalMetadata(RetrievalMetadata retrievalMetadata);
+    public abstract Builder retrievalMetadata(RetrievalMetadata retrievalMetadata);
 
     @JsonProperty("retrievalQueries")
-    public abstract Builder setRetrievalQueries(List<String> retrievalQueries);
+    public abstract Builder retrievalQueries(List<String> retrievalQueries);
 
     @JsonProperty("searchEntryPoint")
-    public abstract Builder setSearchEntryPoint(SearchEntryPoint searchEntryPoint);
+    public abstract Builder searchEntryPoint(SearchEntryPoint searchEntryPoint);
 
     @JsonProperty("webSearchQueries")
-    public abstract Builder setWebSearchQueries(List<String> webSearchQueries);
+    public abstract Builder webSearchQueries(List<String> webSearchQueries);
 
     public abstract GroundingMetadata build();
   }

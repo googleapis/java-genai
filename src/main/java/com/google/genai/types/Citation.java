@@ -29,22 +29,28 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Citation.Builder.class)
 public abstract class Citation extends JsonSerializable {
   /** Output only. End index into the content. */
-  public abstract Optional<Integer> getEndIndex();
+  @JsonProperty("endIndex")
+  public abstract Optional<Integer> endIndex();
 
   /** Output only. License of the attribution. */
-  public abstract Optional<String> getLicense();
+  @JsonProperty("license")
+  public abstract Optional<String> license();
 
   /** Output only. Publication date of the attribution. */
-  public abstract Optional<GoogleTypeDate> getPublicationDate();
+  @JsonProperty("publicationDate")
+  public abstract Optional<GoogleTypeDate> publicationDate();
 
   /** Output only. Start index into the content. */
-  public abstract Optional<Integer> getStartIndex();
+  @JsonProperty("startIndex")
+  public abstract Optional<Integer> startIndex();
 
   /** Output only. Title of the attribution. */
-  public abstract Optional<String> getTitle();
+  @JsonProperty("title")
+  public abstract Optional<String> title();
 
   /** Output only. Url reference of the attribution. */
-  public abstract Optional<String> getUri();
+  @JsonProperty("uri")
+  public abstract Optional<String> uri();
 
   /** Instantiates a builder for Citation. */
   public static Builder builder() {
@@ -58,22 +64,22 @@ public abstract class Citation extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("endIndex")
-    public abstract Builder setEndIndex(Integer endIndex);
+    public abstract Builder endIndex(Integer endIndex);
 
     @JsonProperty("license")
-    public abstract Builder setLicense(String license);
+    public abstract Builder license(String license);
 
     @JsonProperty("publicationDate")
-    public abstract Builder setPublicationDate(GoogleTypeDate publicationDate);
+    public abstract Builder publicationDate(GoogleTypeDate publicationDate);
 
     @JsonProperty("startIndex")
-    public abstract Builder setStartIndex(Integer startIndex);
+    public abstract Builder startIndex(Integer startIndex);
 
     @JsonProperty("title")
-    public abstract Builder setTitle(String title);
+    public abstract Builder title(String title);
 
     @JsonProperty("uri")
-    public abstract Builder setUri(String uri);
+    public abstract Builder uri(String uri);
 
     public abstract Citation build();
   }

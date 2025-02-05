@@ -32,19 +32,23 @@ public abstract class Segment extends JsonSerializable {
    * Output only. End index in the given Part, measured in bytes. Offset from the start of the Part,
    * exclusive, starting at zero.
    */
-  public abstract Optional<Integer> getEndIndex();
+  @JsonProperty("endIndex")
+  public abstract Optional<Integer> endIndex();
 
   /** Output only. The index of a Part object within its parent Content object. */
-  public abstract Optional<Integer> getPartIndex();
+  @JsonProperty("partIndex")
+  public abstract Optional<Integer> partIndex();
 
   /**
    * Output only. Start index in the given Part, measured in bytes. Offset from the start of the
    * Part, inclusive, starting at zero.
    */
-  public abstract Optional<Integer> getStartIndex();
+  @JsonProperty("startIndex")
+  public abstract Optional<Integer> startIndex();
 
   /** Output only. The text corresponding to the segment from the response. */
-  public abstract Optional<String> getText();
+  @JsonProperty("text")
+  public abstract Optional<String> text();
 
   /** Instantiates a builder for Segment. */
   public static Builder builder() {
@@ -58,16 +62,16 @@ public abstract class Segment extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("endIndex")
-    public abstract Builder setEndIndex(Integer endIndex);
+    public abstract Builder endIndex(Integer endIndex);
 
     @JsonProperty("partIndex")
-    public abstract Builder setPartIndex(Integer partIndex);
+    public abstract Builder partIndex(Integer partIndex);
 
     @JsonProperty("startIndex")
-    public abstract Builder setStartIndex(Integer startIndex);
+    public abstract Builder startIndex(Integer startIndex);
 
     @JsonProperty("text")
-    public abstract Builder setText(String text);
+    public abstract Builder text(String text);
 
     public abstract Segment build();
   }

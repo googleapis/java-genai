@@ -34,13 +34,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_UpscaleImageConfig.Builder.class)
 public abstract class UpscaleImageConfig extends JsonSerializable {
   /** Whether to include a reason for filtered-out images in the response. */
-  public abstract Optional<Boolean> getIncludeRaiReason();
+  @JsonProperty("includeRaiReason")
+  public abstract Optional<Boolean> includeRaiReason();
 
   /** The image format that the output should be saved as. */
-  public abstract Optional<String> getOutputMimeType();
+  @JsonProperty("outputMimeType")
+  public abstract Optional<String> outputMimeType();
 
   /** The level of compression if the ``output_mime_type`` is ``image/jpeg``. */
-  public abstract Optional<Integer> getOutputCompressionQuality();
+  @JsonProperty("outputCompressionQuality")
+  public abstract Optional<Integer> outputCompressionQuality();
 
   /** Instantiates a builder for UpscaleImageConfig. */
   public static Builder builder() {
@@ -54,13 +57,13 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("includeRaiReason")
-    public abstract Builder setIncludeRaiReason(boolean includeRaiReason);
+    public abstract Builder includeRaiReason(boolean includeRaiReason);
 
     @JsonProperty("outputMimeType")
-    public abstract Builder setOutputMimeType(String outputMimeType);
+    public abstract Builder outputMimeType(String outputMimeType);
 
     @JsonProperty("outputCompressionQuality")
-    public abstract Builder setOutputCompressionQuality(Integer outputCompressionQuality);
+    public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
     public abstract UpscaleImageConfig build();
   }

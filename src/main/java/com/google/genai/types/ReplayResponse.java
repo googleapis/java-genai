@@ -31,16 +31,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ReplayResponse.Builder.class)
 public abstract class ReplayResponse extends JsonSerializable {
   /** */
-  public abstract Optional<Integer> getStatusCode();
+  @JsonProperty("statusCode")
+  public abstract Optional<Integer> statusCode();
 
   /** */
-  public abstract Optional<Map<String, String>> getHeaders();
+  @JsonProperty("headers")
+  public abstract Optional<Map<String, String>> headers();
 
   /** */
-  public abstract Optional<List<Map<String, Object>>> getBodySegments();
+  @JsonProperty("bodySegments")
+  public abstract Optional<List<Map<String, Object>>> bodySegments();
 
   /** */
-  public abstract Optional<List<Map<String, Object>>> getSdkResponseSegments();
+  @JsonProperty("sdkResponseSegments")
+  public abstract Optional<List<Map<String, Object>>> sdkResponseSegments();
 
   /** Instantiates a builder for ReplayResponse. */
   public static Builder builder() {
@@ -54,16 +58,16 @@ public abstract class ReplayResponse extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("statusCode")
-    public abstract Builder setStatusCode(Integer statusCode);
+    public abstract Builder statusCode(Integer statusCode);
 
     @JsonProperty("headers")
-    public abstract Builder setHeaders(Map<String, String> headers);
+    public abstract Builder headers(Map<String, String> headers);
 
     @JsonProperty("bodySegments")
-    public abstract Builder setBodySegments(List<Map<String, Object>> bodySegments);
+    public abstract Builder bodySegments(List<Map<String, Object>> bodySegments);
 
     @JsonProperty("sdkResponseSegments")
-    public abstract Builder setSdkResponseSegments(List<Map<String, Object>> sdkResponseSegments);
+    public abstract Builder sdkResponseSegments(List<Map<String, Object>> sdkResponseSegments);
 
     public abstract ReplayResponse build();
   }

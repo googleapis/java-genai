@@ -30,14 +30,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_FunctionCallingConfig.Builder.class)
 public abstract class FunctionCallingConfig extends JsonSerializable {
   /** Optional. Function calling mode. */
-  public abstract Optional<String> getMode();
+  @JsonProperty("mode")
+  public abstract Optional<String> mode();
 
   /**
    * Optional. Function names to call. Only set when the Mode is ANY. Function names should match
    * [FunctionDeclaration.name]. With mode set to ANY, model will predict a function call from the
    * set of function names provided.
    */
-  public abstract Optional<List<String>> getAllowedFunctionNames();
+  @JsonProperty("allowedFunctionNames")
+  public abstract Optional<List<String>> allowedFunctionNames();
 
   /** Instantiates a builder for FunctionCallingConfig. */
   public static Builder builder() {
@@ -51,10 +53,10 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("mode")
-    public abstract Builder setMode(String mode);
+    public abstract Builder mode(String mode);
 
     @JsonProperty("allowedFunctionNames")
-    public abstract Builder setAllowedFunctionNames(List<String> allowedFunctionNames);
+    public abstract Builder allowedFunctionNames(List<String> allowedFunctionNames);
 
     public abstract FunctionCallingConfig build();
   }

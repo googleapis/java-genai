@@ -60,13 +60,13 @@ abstract class ApiClient {
     this.credentials = Optional.empty();
     this.vertexAI = false;
 
-    this.httpOptions = getDefaultHttpOptions(/* isVertexAI= */ false, this.location);
+    this.httpOptions = defaultHttpOptions(/* isVertexAI= */ false, this.location);
 
     if (customHttpOptions.isPresent()) {
       applyHttpOptions(customHttpOptions.get());
     }
 
-    this.httpClient = createHttpClient(httpOptions.getTimeout());
+    this.httpClient = createHttpClient(httpOptions.timeout());
   }
 
   ApiClient(
@@ -111,14 +111,14 @@ abstract class ApiClient {
           e);
     }
 
-    this.httpOptions = getDefaultHttpOptions(/* isVertexAI= */ true, this.location);
+    this.httpOptions = defaultHttpOptions(/* isVertexAI= */ true, this.location);
 
     if (customHttpOptions.isPresent()) {
       applyHttpOptions(customHttpOptions.get());
     }
     this.apiKey = Optional.empty();
     this.vertexAI = true;
-    this.httpClient = createHttpClient(httpOptions.getTimeout());
+    this.httpClient = createHttpClient(httpOptions.timeout());
   }
 
   private CloseableHttpClient createHttpClient(Optional<Integer> timeout) {
@@ -138,7 +138,7 @@ abstract class ApiClient {
   public abstract ApiResponse post(String path, String requestJson) throws IOException;
 
   /** Returns the library version. */
-  String getLibraryVersion() {
+  String libraryVersion() {
     // TODO: Automate revisions to the SDK library version.
     String libraryLabel = "google-genai-sdk/0.1.0";
     String languageLabel = "gl-java/" + System.getProperty("java.version");
@@ -151,66 +151,66 @@ abstract class ApiClient {
   }
 
   /** Returns the project ID for Vertex AI APIs. */
-  public String getProject() {
+  public String project() {
     return project.get();
   }
 
   /** Returns the location for Vertex AI APIs. */
-  public String getLocation() {
+  public String location() {
     return location.get();
   }
 
   /** Returns the API key for Google AI APIs. */
-  public String getApiKey() {
+  public String apiKey() {
     return apiKey.get();
   }
 
   /** Returns the HttpClient for API calls. */
-  CloseableHttpClient getHttpClient() {
+  CloseableHttpClient httpClient() {
     return httpClient;
   }
 
   private void applyHttpOptions(HttpOptions httpOptionsToApply) {
     HttpOptions.Builder mergedHttpOptionsBuilder = HttpOptions.builder();
-    if (httpOptionsToApply.getBaseUrl().isPresent()) {
-      mergedHttpOptionsBuilder.setBaseUrl(httpOptionsToApply.getBaseUrl().get());
+    if (httpOptionsToApply.baseUrl().isPresent()) {
+      mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
     }
-    if (httpOptionsToApply.getApiVersion().isPresent()) {
-      mergedHttpOptionsBuilder.setApiVersion(httpOptionsToApply.getApiVersion().get());
+    if (httpOptionsToApply.apiVersion().isPresent()) {
+      mergedHttpOptionsBuilder.apiVersion(httpOptionsToApply.apiVersion().get());
     }
-    if (httpOptionsToApply.getTimeout().isPresent()) {
-      mergedHttpOptionsBuilder.setTimeout(httpOptionsToApply.getTimeout().get());
+    if (httpOptionsToApply.timeout().isPresent()) {
+      mergedHttpOptionsBuilder.timeout(httpOptionsToApply.timeout().get());
     }
-    if (httpOptionsToApply.getHeaders().isPresent()) {
+    if (httpOptionsToApply.headers().isPresent()) {
       Map<String, String> mergedHeaders =
           ImmutableMap.<String, String>builder()
-              .putAll(httpOptionsToApply.getHeaders().get())
-              .putAll(this.httpOptions.getHeaders().get())
+              .putAll(httpOptionsToApply.headers().get())
+              .putAll(this.httpOptions.headers().get())
               .build();
-      mergedHttpOptionsBuilder.setHeaders(mergedHeaders);
+      mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
     this.httpOptions = mergedHttpOptionsBuilder.build();
   }
 
-  private HttpOptions getDefaultHttpOptions(Boolean isVertexAI, Optional<String> location) {
+  private HttpOptions defaultHttpOptions(Boolean isVertexAI, Optional<String> location) {
     ImmutableMap.Builder<String, String> defaultHeaders = ImmutableMap.builder();
     defaultHeaders.put("Content-Type", "application/json");
-    defaultHeaders.put("user-agent", getLibraryVersion());
-    defaultHeaders.put("x-goog-api-client", getLibraryVersion());
+    defaultHeaders.put("user-agent", libraryVersion());
+    defaultHeaders.put("x-goog-api-client", libraryVersion());
 
     HttpOptions.Builder defaultHttpOptionsBuilder =
-        HttpOptions.builder().setHeaders(defaultHeaders.build());
+        HttpOptions.builder().headers(defaultHeaders.build());
 
     if (isVertexAI && location.isPresent()) {
       defaultHttpOptionsBuilder
-          .setBaseUrl(String.format("https://%s-aiplatform.googleapis.com/", location.get()))
-          .setApiVersion("v1beta1");
+          .baseUrl(String.format("https://%s-aiplatform.googleapis.com/", location.get()))
+          .apiVersion("v1beta1");
     } else if (isVertexAI && !location.isPresent()) {
       throw new IllegalArgumentException("Location must be provided for Vertex AI APIs.");
     } else {
       defaultHttpOptionsBuilder
-          .setBaseUrl("https://generativelanguage.googleapis.com/")
-          .setApiVersion("v1beta");
+          .baseUrl("https://generativelanguage.googleapis.com/")
+          .apiVersion("v1beta");
     }
     return defaultHttpOptionsBuilder.build();
   }

@@ -29,13 +29,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_LogprobsResultCandidate.Builder.class)
 public abstract class LogprobsResultCandidate extends JsonSerializable {
   /** The candidate's log probability. */
-  public abstract Optional<Float> getLogProbability();
+  @JsonProperty("logProbability")
+  public abstract Optional<Float> logProbability();
 
   /** The candidate's token string value. */
-  public abstract Optional<String> getToken();
+  @JsonProperty("token")
+  public abstract Optional<String> token();
 
   /** The candidate's token id value. */
-  public abstract Optional<Integer> getTokenId();
+  @JsonProperty("tokenId")
+  public abstract Optional<Integer> tokenId();
 
   /** Instantiates a builder for LogprobsResultCandidate. */
   public static Builder builder() {
@@ -49,13 +52,13 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("logProbability")
-    public abstract Builder setLogProbability(Float logProbability);
+    public abstract Builder logProbability(Float logProbability);
 
     @JsonProperty("token")
-    public abstract Builder setToken(String token);
+    public abstract Builder token(String token);
 
     @JsonProperty("tokenId")
-    public abstract Builder setTokenId(Integer tokenId);
+    public abstract Builder tokenId(Integer tokenId);
 
     public abstract LogprobsResultCandidate build();
   }

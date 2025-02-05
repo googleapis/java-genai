@@ -29,7 +29,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GoogleSearchRetrieval.Builder.class)
 public abstract class GoogleSearchRetrieval extends JsonSerializable {
   /** Specifies the dynamic retrieval configuration for the given source. */
-  public abstract Optional<DynamicRetrievalConfig> getDynamicRetrievalConfig();
+  @JsonProperty("dynamicRetrievalConfig")
+  public abstract Optional<DynamicRetrievalConfig> dynamicRetrievalConfig();
 
   /** Instantiates a builder for GoogleSearchRetrieval. */
   public static Builder builder() {
@@ -43,8 +44,7 @@ public abstract class GoogleSearchRetrieval extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("dynamicRetrievalConfig")
-    public abstract Builder setDynamicRetrievalConfig(
-        DynamicRetrievalConfig dynamicRetrievalConfig);
+    public abstract Builder dynamicRetrievalConfig(DynamicRetrievalConfig dynamicRetrievalConfig);
 
     public abstract GoogleSearchRetrieval build();
   }

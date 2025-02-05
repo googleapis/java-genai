@@ -33,7 +33,8 @@ public abstract class CitationMetadata extends JsonSerializable {
    * Contains citation information when the model directly quotes, at length, from another source.
    * Can include traditional websites and code repositories.
    */
-  public abstract Optional<List<Citation>> getCitations();
+  @JsonProperty("citations")
+  public abstract Optional<List<Citation>> citations();
 
   /** Instantiates a builder for CitationMetadata. */
   public static Builder builder() {
@@ -47,7 +48,7 @@ public abstract class CitationMetadata extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("citations")
-    public abstract Builder setCitations(List<Citation> citations);
+    public abstract Builder citations(List<Citation> citations);
 
     public abstract CitationMetadata build();
   }

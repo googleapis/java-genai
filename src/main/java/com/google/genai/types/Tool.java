@@ -30,31 +30,36 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Tool.Builder.class)
 public abstract class Tool extends JsonSerializable {
   /** List of function declarations that the tool supports. */
-  public abstract Optional<List<FunctionDeclaration>> getFunctionDeclarations();
+  @JsonProperty("functionDeclarations")
+  public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
 
   /**
    * Optional. Retrieval tool type. System will always execute the provided retrieval tool(s) to get
    * external knowledge to answer the prompt. Retrieval results are presented to the model for
    * generation.
    */
-  public abstract Optional<Retrieval> getRetrieval();
+  @JsonProperty("retrieval")
+  public abstract Optional<Retrieval> retrieval();
 
   /**
    * Optional. Google Search tool type. Specialized retrieval tool that is powered by Google Search.
    */
-  public abstract Optional<GoogleSearch> getGoogleSearch();
+  @JsonProperty("googleSearch")
+  public abstract Optional<GoogleSearch> googleSearch();
 
   /**
    * Optional. GoogleSearchRetrieval tool type. Specialized retrieval tool that is powered by Google
    * search.
    */
-  public abstract Optional<GoogleSearchRetrieval> getGoogleSearchRetrieval();
+  @JsonProperty("googleSearchRetrieval")
+  public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
   /**
    * Optional. CodeExecution tool type. Enables the model to execute code as part of generation.
    * This field is only used by the Gemini Developer API services.
    */
-  public abstract Optional<ToolCodeExecution> getCodeExecution();
+  @JsonProperty("codeExecution")
+  public abstract Optional<ToolCodeExecution> codeExecution();
 
   /** Instantiates a builder for Tool. */
   public static Builder builder() {
@@ -68,19 +73,19 @@ public abstract class Tool extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("functionDeclarations")
-    public abstract Builder setFunctionDeclarations(List<FunctionDeclaration> functionDeclarations);
+    public abstract Builder functionDeclarations(List<FunctionDeclaration> functionDeclarations);
 
     @JsonProperty("retrieval")
-    public abstract Builder setRetrieval(Retrieval retrieval);
+    public abstract Builder retrieval(Retrieval retrieval);
 
     @JsonProperty("googleSearch")
-    public abstract Builder setGoogleSearch(GoogleSearch googleSearch);
+    public abstract Builder googleSearch(GoogleSearch googleSearch);
 
     @JsonProperty("googleSearchRetrieval")
-    public abstract Builder setGoogleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
+    public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
 
     @JsonProperty("codeExecution")
-    public abstract Builder setCodeExecution(ToolCodeExecution codeExecution);
+    public abstract Builder codeExecution(ToolCodeExecution codeExecution);
 
     public abstract Tool build();
   }

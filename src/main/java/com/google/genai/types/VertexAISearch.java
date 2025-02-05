@@ -35,7 +35,8 @@ public abstract class VertexAISearch extends JsonSerializable {
    * Required. Fully-qualified Vertex AI Search data store resource ID. Format:
    * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{dataStore}`
    */
-  public abstract Optional<String> getDatastore();
+  @JsonProperty("datastore")
+  public abstract Optional<String> datastore();
 
   /** Instantiates a builder for VertexAISearch. */
   public static Builder builder() {
@@ -49,7 +50,7 @@ public abstract class VertexAISearch extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("datastore")
-    public abstract Builder setDatastore(String datastore);
+    public abstract Builder datastore(String datastore);
 
     public abstract VertexAISearch build();
   }

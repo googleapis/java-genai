@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_SearchEntryPoint.Builder.class)
 public abstract class SearchEntryPoint extends JsonSerializable {
   /** Optional. Web content snippet that can be embedded in a web page or an app webview. */
-  public abstract Optional<String> getRenderedContent();
+  @JsonProperty("renderedContent")
+  public abstract Optional<String> renderedContent();
 
   /** Optional. Base64 encoded JSON representing array of tuple. */
-  public abstract Optional<String> getSdkBlob();
+  @JsonProperty("sdkBlob")
+  public abstract Optional<String> sdkBlob();
 
   /** Instantiates a builder for SearchEntryPoint. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class SearchEntryPoint extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("renderedContent")
-    public abstract Builder setRenderedContent(String renderedContent);
+    public abstract Builder renderedContent(String renderedContent);
 
     @JsonProperty("sdkBlob")
-    public abstract Builder setSdkBlob(String sdkBlob);
+    public abstract Builder sdkBlob(String sdkBlob);
 
     public abstract SearchEntryPoint build();
   }

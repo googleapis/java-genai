@@ -221,17 +221,17 @@ public final class Client implements AutoCloseable {
 
   /** Returns the project ID for Vertex AI APIs. */
   public String getProject() {
-    return apiClient.getProject();
+    return apiClient.project();
   }
 
   /** Returns the location for Vertex AI APIs. */
   public String getLocation() {
-    return apiClient.getLocation();
+    return apiClient.location();
   }
 
   /** Returns the API key for Google AI APIs. */
   public String getApiKey() {
-    return apiClient.getApiKey();
+    return apiClient.apiKey();
   }
 
   protected void setReplayId(String replayId) {
@@ -248,6 +248,6 @@ public final class Client implements AutoCloseable {
   /** Closes the Client instance together with its instantiated http client. */
   @Override
   public void close() throws IOException {
-    apiClient.getHttpClient().close();
+    apiClient.httpClient().close();
   }
 }

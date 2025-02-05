@@ -33,10 +33,12 @@ public abstract class LogprobsResult extends JsonSerializable {
    * Length = total number of decoding steps. The chosen candidates may or may not be in
    * top_candidates.
    */
-  public abstract Optional<List<LogprobsResultCandidate>> getChosenCandidates();
+  @JsonProperty("chosenCandidates")
+  public abstract Optional<List<LogprobsResultCandidate>> chosenCandidates();
 
   /** Length = total number of decoding steps. */
-  public abstract Optional<List<LogprobsResultTopCandidates>> getTopCandidates();
+  @JsonProperty("topCandidates")
+  public abstract Optional<List<LogprobsResultTopCandidates>> topCandidates();
 
   /** Instantiates a builder for LogprobsResult. */
   public static Builder builder() {
@@ -50,10 +52,10 @@ public abstract class LogprobsResult extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("chosenCandidates")
-    public abstract Builder setChosenCandidates(List<LogprobsResultCandidate> chosenCandidates);
+    public abstract Builder chosenCandidates(List<LogprobsResultCandidate> chosenCandidates);
 
     @JsonProperty("topCandidates")
-    public abstract Builder setTopCandidates(List<LogprobsResultTopCandidates> topCandidates);
+    public abstract Builder topCandidates(List<LogprobsResultTopCandidates> topCandidates);
 
     public abstract LogprobsResult build();
   }

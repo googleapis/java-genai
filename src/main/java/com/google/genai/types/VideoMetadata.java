@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_VideoMetadata.Builder.class)
 public abstract class VideoMetadata extends JsonSerializable {
   /** Optional. The end offset of the video. */
-  public abstract Optional<String> getEndOffset();
+  @JsonProperty("endOffset")
+  public abstract Optional<String> endOffset();
 
   /** Optional. The start offset of the video. */
-  public abstract Optional<String> getStartOffset();
+  @JsonProperty("startOffset")
+  public abstract Optional<String> startOffset();
 
   /** Instantiates a builder for VideoMetadata. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class VideoMetadata extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("endOffset")
-    public abstract Builder setEndOffset(String endOffset);
+    public abstract Builder endOffset(String endOffset);
 
     @JsonProperty("startOffset")
-    public abstract Builder setStartOffset(String startOffset);
+    public abstract Builder startOffset(String startOffset);
 
     public abstract VideoMetadata build();
   }

@@ -29,13 +29,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_SafetySetting.Builder.class)
 public abstract class SafetySetting extends JsonSerializable {
   /** Determines if the harm block method uses probability or probability and severity scores. */
-  public abstract Optional<String> getMethod();
+  @JsonProperty("method")
+  public abstract Optional<String> method();
 
   /** Required. Harm category. */
-  public abstract Optional<String> getCategory();
+  @JsonProperty("category")
+  public abstract Optional<String> category();
 
   /** Required. The harm block threshold. */
-  public abstract Optional<String> getThreshold();
+  @JsonProperty("threshold")
+  public abstract Optional<String> threshold();
 
   /** Instantiates a builder for SafetySetting. */
   public static Builder builder() {
@@ -49,13 +52,13 @@ public abstract class SafetySetting extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("method")
-    public abstract Builder setMethod(String method);
+    public abstract Builder method(String method);
 
     @JsonProperty("category")
-    public abstract Builder setCategory(String category);
+    public abstract Builder category(String category);
 
     @JsonProperty("threshold")
-    public abstract Builder setThreshold(String threshold);
+    public abstract Builder threshold(String threshold);
 
     public abstract SafetySetting build();
   }

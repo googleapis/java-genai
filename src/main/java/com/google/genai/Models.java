@@ -2380,13 +2380,13 @@ public final class Models {
     GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
 
     if (!Common.isZero(model)) {
-      parameterBuilder.setModel(model);
+      parameterBuilder.model(model);
     }
     if (!Common.isZero(contents)) {
-      parameterBuilder.setContents(contents);
+      parameterBuilder.contents(contents);
     }
     if (!Common.isZero(config)) {
-      parameterBuilder.setConfig(config);
+      parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
 
@@ -2423,13 +2423,13 @@ public final class Models {
     GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
 
     if (!Common.isZero(model)) {
-      parameterBuilder.setModel(model);
+      parameterBuilder.model(model);
     }
     if (!Common.isZero(contents)) {
-      parameterBuilder.setContents(contents);
+      parameterBuilder.contents(contents);
     }
     if (!Common.isZero(config)) {
-      parameterBuilder.setConfig(config);
+      parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
 
@@ -2463,13 +2463,13 @@ public final class Models {
     GenerateImagesParameters.Builder parameterBuilder = GenerateImagesParameters.builder();
 
     if (!Common.isZero(model)) {
-      parameterBuilder.setModel(model);
+      parameterBuilder.model(model);
     }
     if (!Common.isZero(prompt)) {
-      parameterBuilder.setPrompt(prompt);
+      parameterBuilder.prompt(prompt);
     }
     if (!Common.isZero(config)) {
-      parameterBuilder.setConfig(config);
+      parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
 

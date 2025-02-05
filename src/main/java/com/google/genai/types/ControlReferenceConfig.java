@@ -29,13 +29,15 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ControlReferenceConfig.Builder.class)
 public abstract class ControlReferenceConfig extends JsonSerializable {
   /** The type of control reference image to use. */
-  public abstract Optional<String> getControlType();
+  @JsonProperty("controlType")
+  public abstract Optional<String> controlType();
 
   /**
    * Defaults to False. When set to True, the control image will be computed by the model based on
    * the control type. When set to False, the control image must be provided by the user.
    */
-  public abstract Optional<Boolean> getEnableControlImageComputation();
+  @JsonProperty("enableControlImageComputation")
+  public abstract Optional<Boolean> enableControlImageComputation();
 
   /** Instantiates a builder for ControlReferenceConfig. */
   public static Builder builder() {
@@ -49,10 +51,10 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("controlType")
-    public abstract Builder setControlType(String controlType);
+    public abstract Builder controlType(String controlType);
 
     @JsonProperty("enableControlImageComputation")
-    public abstract Builder setEnableControlImageComputation(boolean enableControlImageComputation);
+    public abstract Builder enableControlImageComputation(boolean enableControlImageComputation);
 
     public abstract ControlReferenceConfig build();
   }

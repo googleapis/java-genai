@@ -29,13 +29,15 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_DynamicRetrievalConfig.Builder.class)
 public abstract class DynamicRetrievalConfig extends JsonSerializable {
   /** The mode of the predictor to be used in dynamic retrieval. */
-  public abstract Optional<String> getMode();
+  @JsonProperty("mode")
+  public abstract Optional<String> mode();
 
   /**
    * Optional. The threshold to be used in dynamic retrieval. If not set, a system default value is
    * used.
    */
-  public abstract Optional<Float> getDynamicThreshold();
+  @JsonProperty("dynamicThreshold")
+  public abstract Optional<Float> dynamicThreshold();
 
   /** Instantiates a builder for DynamicRetrievalConfig. */
   public static Builder builder() {
@@ -49,10 +51,10 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("mode")
-    public abstract Builder setMode(String mode);
+    public abstract Builder mode(String mode);
 
     @JsonProperty("dynamicThreshold")
-    public abstract Builder setDynamicThreshold(Float dynamicThreshold);
+    public abstract Builder dynamicThreshold(Float dynamicThreshold);
 
     public abstract DynamicRetrievalConfig build();
   }

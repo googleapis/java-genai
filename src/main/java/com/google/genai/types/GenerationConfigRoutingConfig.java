@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GenerationConfigRoutingConfig.Builder.class)
 public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   /** Automated routing. */
-  public abstract Optional<GenerationConfigRoutingConfigAutoRoutingMode> getAutoMode();
+  @JsonProperty("autoMode")
+  public abstract Optional<GenerationConfigRoutingConfigAutoRoutingMode> autoMode();
 
   /** Manual routing. */
-  public abstract Optional<GenerationConfigRoutingConfigManualRoutingMode> getManualMode();
+  @JsonProperty("manualMode")
+  public abstract Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode();
 
   /** Instantiates a builder for GenerationConfigRoutingConfig. */
   public static Builder builder() {
@@ -46,11 +48,10 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("autoMode")
-    public abstract Builder setAutoMode(GenerationConfigRoutingConfigAutoRoutingMode autoMode);
+    public abstract Builder autoMode(GenerationConfigRoutingConfigAutoRoutingMode autoMode);
 
     @JsonProperty("manualMode")
-    public abstract Builder setManualMode(
-        GenerationConfigRoutingConfigManualRoutingMode manualMode);
+    public abstract Builder manualMode(GenerationConfigRoutingConfigManualRoutingMode manualMode);
 
     public abstract GenerationConfigRoutingConfig build();
   }

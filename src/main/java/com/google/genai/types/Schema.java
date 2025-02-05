@@ -35,86 +35,108 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Schema.Builder.class)
 public abstract class Schema extends JsonSerializable {
   /** Optional. Minimum number of the elements for Type.ARRAY. */
-  public abstract Optional<Long> getMinItems();
+  @JsonProperty("minItems")
+  public abstract Optional<Long> minItems();
 
   /** Optional. Example of the object. Will only populated when the object is the root. */
-  public abstract Optional<Object> getExample();
+  @JsonProperty("example")
+  public abstract Optional<Object> example();
 
   /**
    * Optional. The order of the properties. Not a standard field in open api spec. Only used to
    * support the order of the properties.
    */
-  public abstract Optional<List<String>> getPropertyOrdering();
+  @JsonProperty("propertyOrdering")
+  public abstract Optional<List<String>> propertyOrdering();
 
   /** Optional. Pattern of the Type.STRING to restrict a string to a regular expression. */
-  public abstract Optional<String> getPattern();
+  @JsonProperty("pattern")
+  public abstract Optional<String> pattern();
 
   /**
    * Optional. SCHEMA FIELDS FOR TYPE INTEGER and NUMBER Minimum value of the Type.INTEGER and
    * Type.NUMBER
    */
-  public abstract Optional<Double> getMinimum();
+  @JsonProperty("minimum")
+  public abstract Optional<Double> minimum();
 
   /** Optional. Default value of the data. */
-  public abstract Optional<Object> getDefault();
+  @JsonProperty("default")
+  public abstract Optional<Object> default_();
 
   /**
    * Optional. The value should be validated against any (one or more) of the subschemas in the
    * list.
    */
-  public abstract Optional<List<Schema>> getAnyOf();
+  @JsonProperty("anyOf")
+  public abstract Optional<List<Schema>> anyOf();
 
   /** Optional. Maximum length of the Type.STRING */
-  public abstract Optional<Long> getMaxLength();
+  @JsonProperty("maxLength")
+  public abstract Optional<Long> maxLength();
 
   /** Optional. The title of the Schema. */
-  public abstract Optional<String> getTitle();
+  @JsonProperty("title")
+  public abstract Optional<String> title();
 
   /** Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the Type.STRING */
-  public abstract Optional<Long> getMinLength();
+  @JsonProperty("minLength")
+  public abstract Optional<Long> minLength();
 
   /** Optional. Minimum number of the properties for Type.OBJECT. */
-  public abstract Optional<Long> getMinProperties();
+  @JsonProperty("minProperties")
+  public abstract Optional<Long> minProperties();
 
   /** Optional. Maximum number of the elements for Type.ARRAY. */
-  public abstract Optional<Long> getMaxItems();
+  @JsonProperty("maxItems")
+  public abstract Optional<Long> maxItems();
 
   /** Optional. Maximum value of the Type.INTEGER and Type.NUMBER */
-  public abstract Optional<Double> getMaximum();
+  @JsonProperty("maximum")
+  public abstract Optional<Double> maximum();
 
   /** Optional. Indicates if the value may be null. */
-  public abstract Optional<Boolean> getNullable();
+  @JsonProperty("nullable")
+  public abstract Optional<Boolean> nullable();
 
   /** Optional. Maximum number of the properties for Type.OBJECT. */
-  public abstract Optional<Long> getMaxProperties();
+  @JsonProperty("maxProperties")
+  public abstract Optional<Long> maxProperties();
 
   /** Optional. The type of the data. */
-  public abstract Optional<String> getType();
+  @JsonProperty("type")
+  public abstract Optional<String> type();
 
   /** Optional. The description of the data. */
-  public abstract Optional<String> getDescription();
+  @JsonProperty("description")
+  public abstract Optional<String> description();
 
   /**
    * Optional. Possible values of the element of primitive type with enum format. Examples: 1. We
    * can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH", "SOUTH", "WEST"]} 2.
    * We can define apartment number as : {type:INTEGER, format:enum, enum:["101", "201", "301"]}
    */
-  public abstract Optional<List<String>> getEnum();
+  @JsonProperty("enum")
+  public abstract Optional<List<String>> enum_();
 
   /**
    * Optional. The format of the data. Supported formats: for NUMBER type: "float", "double" for
    * INTEGER type: "int32", "int64" for STRING type: "email", "byte", etc
    */
-  public abstract Optional<String> getFormat();
+  @JsonProperty("format")
+  public abstract Optional<String> format();
 
   /** Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY. */
-  public abstract Optional<Schema> getItems();
+  @JsonProperty("items")
+  public abstract Optional<Schema> items();
 
   /** Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT. */
-  public abstract Optional<Map<String, Schema>> getProperties();
+  @JsonProperty("properties")
+  public abstract Optional<Map<String, Schema>> properties();
 
   /** Optional. Required properties of Type.OBJECT. */
-  public abstract Optional<List<String>> getRequired();
+  @JsonProperty("required")
+  public abstract Optional<List<String>> required();
 
   /** Instantiates a builder for Schema. */
   public static Builder builder() {
@@ -128,70 +150,70 @@ public abstract class Schema extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("minItems")
-    public abstract Builder setMinItems(Long minItems);
+    public abstract Builder minItems(Long minItems);
 
     @JsonProperty("example")
-    public abstract Builder setExample(Object example);
+    public abstract Builder example(Object example);
 
     @JsonProperty("propertyOrdering")
-    public abstract Builder setPropertyOrdering(List<String> propertyOrdering);
+    public abstract Builder propertyOrdering(List<String> propertyOrdering);
 
     @JsonProperty("pattern")
-    public abstract Builder setPattern(String pattern);
+    public abstract Builder pattern(String pattern);
 
     @JsonProperty("minimum")
-    public abstract Builder setMinimum(Double minimum);
+    public abstract Builder minimum(Double minimum);
 
     @JsonProperty("default")
-    public abstract Builder setDefault(Object default_);
+    public abstract Builder default_(Object default_);
 
     @JsonProperty("anyOf")
-    public abstract Builder setAnyOf(List<Schema> anyOf);
+    public abstract Builder anyOf(List<Schema> anyOf);
 
     @JsonProperty("maxLength")
-    public abstract Builder setMaxLength(Long maxLength);
+    public abstract Builder maxLength(Long maxLength);
 
     @JsonProperty("title")
-    public abstract Builder setTitle(String title);
+    public abstract Builder title(String title);
 
     @JsonProperty("minLength")
-    public abstract Builder setMinLength(Long minLength);
+    public abstract Builder minLength(Long minLength);
 
     @JsonProperty("minProperties")
-    public abstract Builder setMinProperties(Long minProperties);
+    public abstract Builder minProperties(Long minProperties);
 
     @JsonProperty("maxItems")
-    public abstract Builder setMaxItems(Long maxItems);
+    public abstract Builder maxItems(Long maxItems);
 
     @JsonProperty("maximum")
-    public abstract Builder setMaximum(Double maximum);
+    public abstract Builder maximum(Double maximum);
 
     @JsonProperty("nullable")
-    public abstract Builder setNullable(boolean nullable);
+    public abstract Builder nullable(boolean nullable);
 
     @JsonProperty("maxProperties")
-    public abstract Builder setMaxProperties(Long maxProperties);
+    public abstract Builder maxProperties(Long maxProperties);
 
     @JsonProperty("type")
-    public abstract Builder setType(String type);
+    public abstract Builder type(String type);
 
     @JsonProperty("description")
-    public abstract Builder setDescription(String description);
+    public abstract Builder description(String description);
 
     @JsonProperty("enum")
-    public abstract Builder setEnum(List<String> enum_);
+    public abstract Builder enum_(List<String> enum_);
 
     @JsonProperty("format")
-    public abstract Builder setFormat(String format);
+    public abstract Builder format(String format);
 
     @JsonProperty("items")
-    public abstract Builder setItems(Schema items);
+    public abstract Builder items(Schema items);
 
     @JsonProperty("properties")
-    public abstract Builder setProperties(Map<String, Schema> properties);
+    public abstract Builder properties(Map<String, Schema> properties);
 
     @JsonProperty("required")
-    public abstract Builder setRequired(List<String> required);
+    public abstract Builder required(List<String> required);
 
     public abstract Schema build();
   }

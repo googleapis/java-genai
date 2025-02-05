@@ -50,9 +50,8 @@ public class DefaultValuesTest {
     apiClientField.setAccessible(true);
     apiClientField.set(client.models, httpClientSpy);
 
-    GenerateContentConfig config = GenerateContentConfig.builder().build();
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
+        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
 
     ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
     verify(httpClientSpy).post(argumentCaptor.capture(), argumentCaptor.capture());
@@ -60,28 +59,28 @@ public class DefaultValuesTest {
         GenerateContentConfig.fromJson(argumentCaptor.getAllValues().get(1));
 
     // Assert that the temperature and candidateCount fields are not set when not passed via config.
-    assertEquals(spiedConfig.getAudioTimestamp(), Optional.empty());
-    assertEquals(spiedConfig.getCachedContent(), Optional.empty());
-    assertEquals(spiedConfig.getCandidateCount(), Optional.empty());
-    assertEquals(spiedConfig.getFrequencyPenalty(), Optional.empty());
-    assertEquals(spiedConfig.getLogprobs(), Optional.empty());
-    assertEquals(spiedConfig.getMaxOutputTokens(), Optional.empty());
-    assertEquals(spiedConfig.getMediaResolution(), Optional.empty());
-    assertEquals(spiedConfig.getPresencePenalty(), Optional.empty());
-    assertEquals(spiedConfig.getResponseLogprobs(), Optional.empty());
-    assertEquals(spiedConfig.getResponseModalities(), Optional.empty());
-    assertEquals(spiedConfig.getResponseMimeType(), Optional.empty());
-    assertEquals(spiedConfig.getResponseSchema(), Optional.empty());
-    assertEquals(spiedConfig.getRoutingConfig(), Optional.empty());
-    assertEquals(spiedConfig.getSafetySettings(), Optional.empty());
-    assertEquals(spiedConfig.getSeed(), Optional.empty());
-    assertEquals(spiedConfig.getStopSequences(), Optional.empty());
-    assertEquals(spiedConfig.getSpeechConfig(), Optional.empty());
-    assertEquals(spiedConfig.getTemperature(), Optional.empty());
-    assertEquals(spiedConfig.getThinkingConfig(), Optional.empty());
-    assertEquals(spiedConfig.getTools(), Optional.empty());
-    assertEquals(spiedConfig.getToolConfig(), Optional.empty());
-    assertEquals(spiedConfig.getTopK(), Optional.empty());
-    assertEquals(spiedConfig.getTopP(), Optional.empty());
+    assertEquals(spiedConfig.audioTimestamp(), Optional.empty());
+    assertEquals(spiedConfig.cachedContent(), Optional.empty());
+    assertEquals(spiedConfig.candidateCount(), Optional.empty());
+    assertEquals(spiedConfig.frequencyPenalty(), Optional.empty());
+    assertEquals(spiedConfig.logprobs(), Optional.empty());
+    assertEquals(spiedConfig.maxOutputTokens(), Optional.empty());
+    assertEquals(spiedConfig.mediaResolution(), Optional.empty());
+    assertEquals(spiedConfig.presencePenalty(), Optional.empty());
+    assertEquals(spiedConfig.responseLogprobs(), Optional.empty());
+    assertEquals(spiedConfig.responseModalities(), Optional.empty());
+    assertEquals(spiedConfig.responseMimeType(), Optional.empty());
+    assertEquals(spiedConfig.responseSchema(), Optional.empty());
+    assertEquals(spiedConfig.routingConfig(), Optional.empty());
+    assertEquals(spiedConfig.safetySettings(), Optional.empty());
+    assertEquals(spiedConfig.seed(), Optional.empty());
+    assertEquals(spiedConfig.stopSequences(), Optional.empty());
+    assertEquals(spiedConfig.speechConfig(), Optional.empty());
+    assertEquals(spiedConfig.temperature(), Optional.empty());
+    assertEquals(spiedConfig.thinkingConfig(), Optional.empty());
+    assertEquals(spiedConfig.tools(), Optional.empty());
+    assertEquals(spiedConfig.toolConfig(), Optional.empty());
+    assertEquals(spiedConfig.topK(), Optional.empty());
+    assertEquals(spiedConfig.topP(), Optional.empty());
   }
 }

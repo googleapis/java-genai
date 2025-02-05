@@ -47,10 +47,10 @@ public class HttpApiClientTest {
 
   @Test
   public void testHttpClientMLDevTimeout() throws Exception {
-    HttpOptions httpOptions = HttpOptions.builder().setTimeout(5000).build();
+    HttpOptions httpOptions = HttpOptions.builder().timeout(5000).build();
     HttpApiClient client = new HttpApiClient(Optional.of("api-key"), Optional.of(httpOptions));
 
-    CloseableHttpClient httpClient = client.getHttpClient();
+    CloseableHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
     RequestConfig config = getRequestConfig(httpClient);
@@ -58,13 +58,13 @@ public class HttpApiClientTest {
     assertEquals(5000, config.getConnectTimeout());
     assertEquals(5000, config.getConnectionRequestTimeout());
     assertEquals(5000, config.getSocketTimeout());
-    assertEquals("api-key", client.getApiKey());
+    assertEquals("api-key", client.apiKey());
     assertFalse(client.isVertexAI());
   }
 
   @Test
   public void testHttpClientVertexTimeout() throws Exception {
-    HttpOptions httpOptions = HttpOptions.builder().setTimeout(5000).build();
+    HttpOptions httpOptions = HttpOptions.builder().timeout(5000).build();
     Optional<String> project = Optional.of("project");
     Optional<String> location = Optional.of("location");
     Optional<GoogleCredentials> credentials =
@@ -72,7 +72,7 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(project, location, credentials, Optional.of(httpOptions));
 
-    CloseableHttpClient httpClient = client.getHttpClient();
+    CloseableHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
     RequestConfig config = getRequestConfig(httpClient);
@@ -80,8 +80,8 @@ public class HttpApiClientTest {
     assertEquals(5000, config.getConnectTimeout());
     assertEquals(5000, config.getConnectionRequestTimeout());
     assertEquals(5000, config.getSocketTimeout());
-    assertEquals("project", client.getProject());
-    assertEquals("location", client.getLocation());
+    assertEquals("project", client.project());
+    assertEquals("location", client.location());
     assertTrue(client.isVertexAI());
   }
 
@@ -90,7 +90,7 @@ public class HttpApiClientTest {
     HttpOptions httpOptions = HttpOptions.builder().build();
     HttpApiClient client = new HttpApiClient(Optional.of("api-key"), Optional.of(httpOptions));
 
-    CloseableHttpClient httpClient = client.getHttpClient();
+    CloseableHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
     RequestConfig config = getRequestConfig(httpClient);
@@ -98,7 +98,7 @@ public class HttpApiClientTest {
     assertEquals(-1, config.getConnectTimeout());
     assertEquals(-1, config.getConnectionRequestTimeout());
     assertEquals(-1, config.getSocketTimeout());
-    assertEquals("api-key", client.getApiKey());
+    assertEquals("api-key", client.apiKey());
   }
 
   @Test
@@ -111,7 +111,7 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(project, location, credentials, Optional.of(httpOptions));
 
-    CloseableHttpClient httpClient = client.getHttpClient();
+    CloseableHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
     RequestConfig config = getRequestConfig(httpClient);
@@ -119,8 +119,8 @@ public class HttpApiClientTest {
     assertEquals(-1, config.getConnectTimeout());
     assertEquals(-1, config.getConnectionRequestTimeout());
     assertEquals(-1, config.getSocketTimeout());
-    assertEquals("project", client.getProject());
-    assertEquals("location", client.getLocation());
+    assertEquals("project", client.project());
+    assertEquals("location", client.location());
     assertTrue(client.isVertexAI());
   }
 
@@ -151,11 +151,11 @@ public class HttpApiClientTest {
       wireMockServer.start();
       WireMock.configureFor("localhost", wireMockServer.port());
       String expectedText = "This is Proxy speaking, Hello, World!";
-      Part part = Part.builder().setText(expectedText).build();
-      Content content = Content.builder().setParts(ImmutableList.of(part)).build();
-      Candidate candidate = Candidate.builder().setContent(content).build();
+      Part part = Part.builder().text(expectedText).build();
+      Content content = Content.builder().parts(ImmutableList.of(part)).build();
+      Candidate candidate = Candidate.builder().content(content).build();
       GenerateContentResponse fakeResponse =
-          GenerateContentResponse.builder().setCandidates(ImmutableList.of(candidate)).build();
+          GenerateContentResponse.builder().candidates(ImmutableList.of(candidate)).build();
       stubFor(
           post(urlMatching(".*"))
               .willReturn(
@@ -166,14 +166,13 @@ public class HttpApiClientTest {
 
       HttpOptions httpOptions =
           HttpOptions.builder()
-              .setBaseUrl("http://localhost:" + wireMockServer.port())
-              .setApiVersion("v1beta")
+              .baseUrl("http://localhost:" + wireMockServer.port())
+              .apiVersion("v1beta")
               .build();
       Client client = Client.builder().setHttpOptions(httpOptions).build();
 
-      GenerateContentConfig config = GenerateContentConfig.builder().build();
       GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
+          client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
 
       assertEquals(response.text(), expectedText);
     } finally {

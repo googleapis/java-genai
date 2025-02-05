@@ -75,7 +75,7 @@ public final class TableTest {
     TestTableFile testTableFile = TestTableFile.fromJson(data);
 
     // Gets module name and method name.
-    String testMethod = testTableFile.getTestMethod().get();
+    String testMethod = testTableFile.testMethod().get();
     String[] segments = testMethod.split("\\.");
     if (segments.length != 2) {
       throw new RuntimeException("Invalid test method: " + testMethod);
@@ -125,21 +125,21 @@ public final class TableTest {
 
     List<DynamicTest> dynamicTests = new ArrayList<>();
     // Processes.
-    for (TestTableItem testTableItem : testTableFile.getTestTable().get()) {
+    for (TestTableItem testTableItem : testTableFile.testTable().get()) {
       String testName =
           String.format(
               "%s.%s.%s.%s",
-              originalModuleName, originalMethodName, testTableItem.getName().get(), suffix);
+              originalModuleName, originalMethodName, testTableItem.name().get(), suffix);
       int testTableIndex = path.lastIndexOf("/_test_table.json");
       int replaysTestsIndex = path.lastIndexOf("/replays/tests/");
       String testDirectory =
           path.substring(replaysTestsIndex + "/replays/tests/".length(), testTableIndex);
-      String replayId = testTableItem.getName().get();
-      if (testTableItem.getOverrideReplayId().isPresent()) {
-        replayId = testTableItem.getOverrideReplayId().get();
+      String replayId = testTableItem.name().get();
+      if (testTableItem.overrideReplayId().isPresent()) {
+        replayId = testTableItem.overrideReplayId().get();
       }
       client.setReplayId(testDirectory + "/" + replayId + "." + suffix + ".json");
-      List<String> parameterNames = testTableFile.getParameterNames().get();
+      List<String> parameterNames = testTableFile.parameterNames().get();
       dynamicTests.addAll(
           createTestCases(testName, testTableItem, module, client, methods, parameterNames));
     }
@@ -155,7 +155,7 @@ public final class TableTest {
       List<String> parameterNames) {
 
     System.out.printf("    === Calling method: %s\n", testName);
-    if (testTableItem.getHasUnion().isPresent() && testTableItem.getHasUnion().get()) {
+    if (testTableItem.hasUnion().isPresent() && testTableItem.hasUnion().get()) {
       String msg = "    === Skipped: parameters contain unsupported union type";
       return Collections.singletonList(
           DynamicTest.dynamicTest(
@@ -166,7 +166,7 @@ public final class TableTest {
               }));
     }
 
-    Map<String, Object> fromParameters = testTableItem.getParameters().get();
+    Map<String, Object> fromParameters = testTableItem.parameters().get();
 
     List<DynamicTest> dynamicTests = new ArrayList<>();
     // Iterate through overloading methods and find a match.
@@ -192,9 +192,9 @@ public final class TableTest {
                     Object response = method.invoke(module.get(client), parameters.toArray());
                   } catch (IllegalAccessException | InvocationTargetException e) {
                     // Handle expected exceptions here
-                    Optional<String> skipInApiMode = testTableItem.getSkipInApiMode();
-                    Optional<String> exceptionIfMldev = testTableItem.getExceptionIfMldev();
-                    Optional<String> exceptionIfVertex = testTableItem.getExceptionIfVertex();
+                    Optional<String> skipInApiMode = testTableItem.skipInApiMode();
+                    Optional<String> exceptionIfMldev = testTableItem.exceptionIfMldev();
+                    Optional<String> exceptionIfVertex = testTableItem.exceptionIfVertex();
                     if (skipInApiMode.isPresent()
                         && (client.getClientMode().equals("api")
                             || client.getClientMode().isEmpty())) {

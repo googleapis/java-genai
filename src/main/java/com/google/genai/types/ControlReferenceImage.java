@@ -38,16 +38,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ControlReferenceImage.Builder.class)
 public abstract class ControlReferenceImage extends JsonSerializable {
   /** The reference image for the editing operation. */
-  public abstract Optional<Image> getReferenceImage();
+  @JsonProperty("referenceImage")
+  public abstract Optional<Image> referenceImage();
 
   /** The id of the reference image. */
-  public abstract Optional<Integer> getReferenceId();
+  @JsonProperty("referenceId")
+  public abstract Optional<Integer> referenceId();
 
   /** The type of the reference image. */
-  public abstract Optional<String> getReferenceType();
+  @JsonProperty("referenceType")
+  public abstract Optional<String> referenceType();
 
   /** Configuration for the control reference image. */
-  public abstract Optional<ControlReferenceConfig> getConfig();
+  @JsonProperty("config")
+  public abstract Optional<ControlReferenceConfig> config();
 
   /** Instantiates a builder for ControlReferenceImage. */
   public static Builder builder() {
@@ -61,16 +65,16 @@ public abstract class ControlReferenceImage extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("referenceImage")
-    public abstract Builder setReferenceImage(Image referenceImage);
+    public abstract Builder referenceImage(Image referenceImage);
 
     @JsonProperty("referenceId")
-    public abstract Builder setReferenceId(Integer referenceId);
+    public abstract Builder referenceId(Integer referenceId);
 
     @JsonProperty("referenceType")
-    public abstract Builder setReferenceType(String referenceType);
+    public abstract Builder referenceType(String referenceType);
 
     @JsonProperty("config")
-    public abstract Builder setConfig(ControlReferenceConfig config);
+    public abstract Builder config(ControlReferenceConfig config);
 
     public abstract ControlReferenceImage build();
   }

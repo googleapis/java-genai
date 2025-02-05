@@ -32,13 +32,15 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_CodeExecutionResult.Builder.class)
 public abstract class CodeExecutionResult extends JsonSerializable {
   /** Required. Outcome of the code execution. */
-  public abstract Optional<String> getOutcome();
+  @JsonProperty("outcome")
+  public abstract Optional<String> outcome();
 
   /**
    * Optional. Contains stdout when code execution is successful, stderr or other description
    * otherwise.
    */
-  public abstract Optional<String> getOutput();
+  @JsonProperty("output")
+  public abstract Optional<String> output();
 
   /** Instantiates a builder for CodeExecutionResult. */
   public static Builder builder() {
@@ -52,10 +54,10 @@ public abstract class CodeExecutionResult extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("outcome")
-    public abstract Builder setOutcome(String outcome);
+    public abstract Builder outcome(String outcome);
 
     @JsonProperty("output")
-    public abstract Builder setOutput(String output);
+    public abstract Builder output(String output);
 
     public abstract CodeExecutionResult build();
   }

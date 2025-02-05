@@ -30,20 +30,24 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_VertexRagStore.Builder.class)
 public abstract class VertexRagStore extends JsonSerializable {
   /** Optional. Deprecated. Please use rag_resources instead. */
-  public abstract Optional<List<String>> getRagCorpora();
+  @JsonProperty("ragCorpora")
+  public abstract Optional<List<String>> ragCorpora();
 
   /**
    * Optional. The representation of the rag source. It can be used to specify corpus only or
    * ragfiles. Currently only support one corpus or multiple files from one corpus. In the future we
    * may open up multiple corpora support.
    */
-  public abstract Optional<List<VertexRagStoreRagResource>> getRagResources();
+  @JsonProperty("ragResources")
+  public abstract Optional<List<VertexRagStoreRagResource>> ragResources();
 
   /** Optional. Number of top k results to return from the selected corpora. */
-  public abstract Optional<Integer> getSimilarityTopK();
+  @JsonProperty("similarityTopK")
+  public abstract Optional<Integer> similarityTopK();
 
   /** Optional. Only return results with vector distance smaller than the threshold. */
-  public abstract Optional<Double> getVectorDistanceThreshold();
+  @JsonProperty("vectorDistanceThreshold")
+  public abstract Optional<Double> vectorDistanceThreshold();
 
   /** Instantiates a builder for VertexRagStore. */
   public static Builder builder() {
@@ -57,16 +61,16 @@ public abstract class VertexRagStore extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("ragCorpora")
-    public abstract Builder setRagCorpora(List<String> ragCorpora);
+    public abstract Builder ragCorpora(List<String> ragCorpora);
 
     @JsonProperty("ragResources")
-    public abstract Builder setRagResources(List<VertexRagStoreRagResource> ragResources);
+    public abstract Builder ragResources(List<VertexRagStoreRagResource> ragResources);
 
     @JsonProperty("similarityTopK")
-    public abstract Builder setSimilarityTopK(Integer similarityTopK);
+    public abstract Builder similarityTopK(Integer similarityTopK);
 
     @JsonProperty("vectorDistanceThreshold")
-    public abstract Builder setVectorDistanceThreshold(Double vectorDistanceThreshold);
+    public abstract Builder vectorDistanceThreshold(Double vectorDistanceThreshold);
 
     public abstract VertexRagStore build();
   }

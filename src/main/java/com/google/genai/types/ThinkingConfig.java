@@ -32,7 +32,8 @@ public abstract class ThinkingConfig extends JsonSerializable {
    * Indicates whether to include thoughts in the response. If true, thoughts are returned only if
    * the model supports thought and thoughts are available.
    */
-  public abstract Optional<Boolean> getIncludeThoughts();
+  @JsonProperty("includeThoughts")
+  public abstract Optional<Boolean> includeThoughts();
 
   /** Instantiates a builder for ThinkingConfig. */
   public static Builder builder() {
@@ -46,7 +47,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("includeThoughts")
-    public abstract Builder setIncludeThoughts(boolean includeThoughts);
+    public abstract Builder includeThoughts(boolean includeThoughts);
 
     public abstract ThinkingConfig build();
   }

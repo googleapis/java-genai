@@ -32,14 +32,16 @@ public abstract class Content extends JsonSerializable {
   /**
    * List of parts that constitute a single message. Each part may have a different IANA MIME type.
    */
-  public abstract Optional<List<Part>> getParts();
+  @JsonProperty("parts")
+  public abstract Optional<List<Part>> parts();
 
   /**
    * Optional. The producer of the content. Must be either 'user' or 'model'. Useful to set for
    * multi-turn conversations, otherwise can be left blank or unset. If role is not specified, SDK
    * will determine the role.
    */
-  public abstract Optional<String> getRole();
+  @JsonProperty("role")
+  public abstract Optional<String> role();
 
   /** Instantiates a builder for Content. */
   public static Builder builder() {
@@ -53,10 +55,10 @@ public abstract class Content extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("parts")
-    public abstract Builder setParts(List<Part> parts);
+    public abstract Builder parts(List<Part> parts);
 
     @JsonProperty("role")
-    public abstract Builder setRole(String role);
+    public abstract Builder role(String role);
 
     public abstract Content build();
   }

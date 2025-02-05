@@ -31,16 +31,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_ReplayRequest.Builder.class)
 public abstract class ReplayRequest extends JsonSerializable {
   /** */
-  public abstract Optional<String> getMethod();
+  @JsonProperty("method")
+  public abstract Optional<String> method();
 
   /** */
-  public abstract Optional<String> getUrl();
+  @JsonProperty("url")
+  public abstract Optional<String> url();
 
   /** */
-  public abstract Optional<Map<String, String>> getHeaders();
+  @JsonProperty("headers")
+  public abstract Optional<Map<String, String>> headers();
 
   /** */
-  public abstract Optional<List<Map<String, Object>>> getBodySegments();
+  @JsonProperty("bodySegments")
+  public abstract Optional<List<Map<String, Object>>> bodySegments();
 
   /** Instantiates a builder for ReplayRequest. */
   public static Builder builder() {
@@ -54,16 +58,16 @@ public abstract class ReplayRequest extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("method")
-    public abstract Builder setMethod(String method);
+    public abstract Builder method(String method);
 
     @JsonProperty("url")
-    public abstract Builder setUrl(String url);
+    public abstract Builder url(String url);
 
     @JsonProperty("headers")
-    public abstract Builder setHeaders(Map<String, String> headers);
+    public abstract Builder headers(Map<String, String> headers);
 
     @JsonProperty("bodySegments")
-    public abstract Builder setBodySegments(List<Map<String, Object>> bodySegments);
+    public abstract Builder bodySegments(List<Map<String, Object>> bodySegments);
 
     public abstract ReplayRequest build();
   }

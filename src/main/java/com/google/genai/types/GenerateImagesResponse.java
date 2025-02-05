@@ -30,7 +30,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GenerateImagesResponse.Builder.class)
 public abstract class GenerateImagesResponse extends JsonSerializable {
   /** List of generated images. */
-  public abstract Optional<List<GeneratedImage>> getGeneratedImages();
+  @JsonProperty("generatedImages")
+  public abstract Optional<List<GeneratedImage>> generatedImages();
 
   /** Instantiates a builder for GenerateImagesResponse. */
   public static Builder builder() {
@@ -44,7 +45,7 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("generatedImages")
-    public abstract Builder setGeneratedImages(List<GeneratedImage> generatedImages);
+    public abstract Builder generatedImages(List<GeneratedImage> generatedImages);
 
     public abstract GenerateImagesResponse build();
   }

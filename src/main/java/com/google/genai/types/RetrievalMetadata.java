@@ -34,7 +34,8 @@ public abstract class RetrievalMetadata extends JsonSerializable {
    * likely. This score is only populated when Google Search grounding and dynamic retrieval is
    * enabled. It will be compared to the threshold to determine whether to trigger Google Search.
    */
-  public abstract Optional<Float> getGoogleSearchDynamicRetrievalScore();
+  @JsonProperty("googleSearchDynamicRetrievalScore")
+  public abstract Optional<Float> googleSearchDynamicRetrievalScore();
 
   /** Instantiates a builder for RetrievalMetadata. */
   public static Builder builder() {
@@ -48,7 +49,7 @@ public abstract class RetrievalMetadata extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("googleSearchDynamicRetrievalScore")
-    public abstract Builder setGoogleSearchDynamicRetrievalScore(
+    public abstract Builder googleSearchDynamicRetrievalScore(
         Float googleSearchDynamicRetrievalScore);
 
     public abstract RetrievalMetadata build();

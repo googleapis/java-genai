@@ -39,21 +39,24 @@ public abstract class GenerateContentConfig extends JsonSerializable {
    * Instructions for the model to steer it toward better performance. For example, "Answer as
    * concisely as possible" or "Don't use technical terms in your response".
    */
-  public abstract Optional<Content> getSystemInstruction();
+  @JsonProperty("systemInstruction")
+  public abstract Optional<Content> systemInstruction();
 
   /**
    * Value that controls the degree of randomness in token selection. Lower temperatures are good
    * for prompts that require a less open-ended or creative response, while higher temperatures can
    * lead to more diverse or creative results.
    */
-  public abstract Optional<Float> getTemperature();
+  @JsonProperty("temperature")
+  public abstract Optional<Float> temperature();
 
   /**
    * Tokens are selected from the most to least probable until the sum of their probabilities equals
    * this value. Use a lower value for less random responses and a higher value for more random
    * responses.
    */
-  public abstract Optional<Float> getTopP();
+  @JsonProperty("topP")
+  public abstract Optional<Float> topP();
 
   /**
    * For each token selection step, the ``top_k`` tokens with the highest probabilities are sampled.
@@ -61,91 +64,113 @@ public abstract class GenerateContentConfig extends JsonSerializable {
    * temperature sampling. Use a lower number for less random responses and a higher number for more
    * random responses.
    */
-  public abstract Optional<Float> getTopK();
+  @JsonProperty("topK")
+  public abstract Optional<Float> topK();
 
   /** Number of response variations to return. */
-  public abstract Optional<Integer> getCandidateCount();
+  @JsonProperty("candidateCount")
+  public abstract Optional<Integer> candidateCount();
 
   /** Maximum number of tokens that can be generated in the response. */
-  public abstract Optional<Integer> getMaxOutputTokens();
+  @JsonProperty("maxOutputTokens")
+  public abstract Optional<Integer> maxOutputTokens();
 
   /**
    * List of strings that tells the model to stop generating text if one of the strings is
    * encountered in the response.
    */
-  public abstract Optional<List<String>> getStopSequences();
+  @JsonProperty("stopSequences")
+  public abstract Optional<List<String>> stopSequences();
 
   /**
    * Whether to return the log probabilities of the tokens that were chosen by the model at each
    * step.
    */
-  public abstract Optional<Boolean> getResponseLogprobs();
+  @JsonProperty("responseLogprobs")
+  public abstract Optional<Boolean> responseLogprobs();
 
   /** Number of top candidate tokens to return the log probabilities for at each generation step. */
-  public abstract Optional<Integer> getLogprobs();
+  @JsonProperty("logprobs")
+  public abstract Optional<Integer> logprobs();
 
   /**
    * Positive values penalize tokens that already appear in the generated text, increasing the
    * probability of generating more diverse content.
    */
-  public abstract Optional<Float> getPresencePenalty();
+  @JsonProperty("presencePenalty")
+  public abstract Optional<Float> presencePenalty();
 
   /**
    * Positive values penalize tokens that repeatedly appear in the generated text, increasing the
    * probability of generating more diverse content.
    */
-  public abstract Optional<Float> getFrequencyPenalty();
+  @JsonProperty("frequencyPenalty")
+  public abstract Optional<Float> frequencyPenalty();
 
   /**
    * When ``seed`` is fixed to a specific number, the model makes a best effort to provide the same
    * response for repeated requests. By default, a random number is used.
    */
-  public abstract Optional<Integer> getSeed();
+  @JsonProperty("seed")
+  public abstract Optional<Integer> seed();
 
   /** Output response media type of the generated candidate text. */
-  public abstract Optional<String> getResponseMimeType();
+  @JsonProperty("responseMimeType")
+  public abstract Optional<String> responseMimeType();
 
   /** Schema that the generated candidate text must adhere to. */
-  public abstract Optional<Schema> getResponseSchema();
+  @JsonProperty("responseSchema")
+  public abstract Optional<Schema> responseSchema();
 
   /** Configuration for model router requests. */
-  public abstract Optional<GenerationConfigRoutingConfig> getRoutingConfig();
+  @JsonProperty("routingConfig")
+  public abstract Optional<GenerationConfigRoutingConfig> routingConfig();
 
   /** Safety settings in the request to block unsafe content in the response. */
-  public abstract Optional<List<SafetySetting>> getSafetySettings();
+  @JsonProperty("safetySettings")
+  public abstract Optional<List<SafetySetting>> safetySettings();
 
   /**
    * Code that enables the system to interact with external systems to perform an action outside of
    * the knowledge and scope of the model.
    */
-  public abstract Optional<List<Tool>> getTools();
+  @JsonProperty("tools")
+  public abstract Optional<List<Tool>> tools();
 
   /** Associates model output to a specific function call. */
-  public abstract Optional<ToolConfig> getToolConfig();
+  @JsonProperty("toolConfig")
+  public abstract Optional<ToolConfig> toolConfig();
 
   /** Labels with user-defined metadata to break down billed charges. */
-  public abstract Optional<Map<String, String>> getLabels();
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Resource name of a context cache that can be used in subsequent requests. */
-  public abstract Optional<String> getCachedContent();
+  @JsonProperty("cachedContent")
+  public abstract Optional<String> cachedContent();
 
   /**
    * The requested modalities of the response. Represents the set of modalities that the model can
    * return.
    */
-  public abstract Optional<List<String>> getResponseModalities();
+  @JsonProperty("responseModalities")
+  public abstract Optional<List<String>> responseModalities();
 
   /** If specified, the media resolution specified will be used. */
-  public abstract Optional<String> getMediaResolution();
+  @JsonProperty("mediaResolution")
+  public abstract Optional<String> mediaResolution();
 
   /** The speech generation configuration. */
-  public abstract Optional<SpeechConfig> getSpeechConfig();
+  @JsonProperty("speechConfig")
+  public abstract Optional<SpeechConfig> speechConfig();
 
   /** If enabled, audio timestamp will be included in the request to the model. */
-  public abstract Optional<Boolean> getAudioTimestamp();
+  @JsonProperty("audioTimestamp")
+  public abstract Optional<Boolean> audioTimestamp();
 
   /** The thinking features configuration. */
-  public abstract Optional<ThinkingConfig> getThinkingConfig();
+  @JsonProperty("thinkingConfig")
+  public abstract Optional<ThinkingConfig> thinkingConfig();
 
   /** Instantiates a builder for GenerateContentConfig. */
   public static Builder builder() {
@@ -159,79 +184,79 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("systemInstruction")
-    public abstract Builder setSystemInstruction(Content systemInstruction);
+    public abstract Builder systemInstruction(Content systemInstruction);
 
     @JsonProperty("temperature")
-    public abstract Builder setTemperature(Float temperature);
+    public abstract Builder temperature(Float temperature);
 
     @JsonProperty("topP")
-    public abstract Builder setTopP(Float topP);
+    public abstract Builder topP(Float topP);
 
     @JsonProperty("topK")
-    public abstract Builder setTopK(Float topK);
+    public abstract Builder topK(Float topK);
 
     @JsonProperty("candidateCount")
-    public abstract Builder setCandidateCount(Integer candidateCount);
+    public abstract Builder candidateCount(Integer candidateCount);
 
     @JsonProperty("maxOutputTokens")
-    public abstract Builder setMaxOutputTokens(Integer maxOutputTokens);
+    public abstract Builder maxOutputTokens(Integer maxOutputTokens);
 
     @JsonProperty("stopSequences")
-    public abstract Builder setStopSequences(List<String> stopSequences);
+    public abstract Builder stopSequences(List<String> stopSequences);
 
     @JsonProperty("responseLogprobs")
-    public abstract Builder setResponseLogprobs(boolean responseLogprobs);
+    public abstract Builder responseLogprobs(boolean responseLogprobs);
 
     @JsonProperty("logprobs")
-    public abstract Builder setLogprobs(Integer logprobs);
+    public abstract Builder logprobs(Integer logprobs);
 
     @JsonProperty("presencePenalty")
-    public abstract Builder setPresencePenalty(Float presencePenalty);
+    public abstract Builder presencePenalty(Float presencePenalty);
 
     @JsonProperty("frequencyPenalty")
-    public abstract Builder setFrequencyPenalty(Float frequencyPenalty);
+    public abstract Builder frequencyPenalty(Float frequencyPenalty);
 
     @JsonProperty("seed")
-    public abstract Builder setSeed(Integer seed);
+    public abstract Builder seed(Integer seed);
 
     @JsonProperty("responseMimeType")
-    public abstract Builder setResponseMimeType(String responseMimeType);
+    public abstract Builder responseMimeType(String responseMimeType);
 
     @JsonProperty("responseSchema")
-    public abstract Builder setResponseSchema(Schema responseSchema);
+    public abstract Builder responseSchema(Schema responseSchema);
 
     @JsonProperty("routingConfig")
-    public abstract Builder setRoutingConfig(GenerationConfigRoutingConfig routingConfig);
+    public abstract Builder routingConfig(GenerationConfigRoutingConfig routingConfig);
 
     @JsonProperty("safetySettings")
-    public abstract Builder setSafetySettings(List<SafetySetting> safetySettings);
+    public abstract Builder safetySettings(List<SafetySetting> safetySettings);
 
     @JsonProperty("tools")
-    public abstract Builder setTools(List<Tool> tools);
+    public abstract Builder tools(List<Tool> tools);
 
     @JsonProperty("toolConfig")
-    public abstract Builder setToolConfig(ToolConfig toolConfig);
+    public abstract Builder toolConfig(ToolConfig toolConfig);
 
     @JsonProperty("labels")
-    public abstract Builder setLabels(Map<String, String> labels);
+    public abstract Builder labels(Map<String, String> labels);
 
     @JsonProperty("cachedContent")
-    public abstract Builder setCachedContent(String cachedContent);
+    public abstract Builder cachedContent(String cachedContent);
 
     @JsonProperty("responseModalities")
-    public abstract Builder setResponseModalities(List<String> responseModalities);
+    public abstract Builder responseModalities(List<String> responseModalities);
 
     @JsonProperty("mediaResolution")
-    public abstract Builder setMediaResolution(String mediaResolution);
+    public abstract Builder mediaResolution(String mediaResolution);
 
     @JsonProperty("speechConfig")
-    public abstract Builder setSpeechConfig(SpeechConfig speechConfig);
+    public abstract Builder speechConfig(SpeechConfig speechConfig);
 
     @JsonProperty("audioTimestamp")
-    public abstract Builder setAudioTimestamp(boolean audioTimestamp);
+    public abstract Builder audioTimestamp(boolean audioTimestamp);
 
     @JsonProperty("thinkingConfig")
-    public abstract Builder setThinkingConfig(ThinkingConfig thinkingConfig);
+    public abstract Builder thinkingConfig(ThinkingConfig thinkingConfig);
 
     public abstract GenerateContentConfig build();
   }

@@ -29,13 +29,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_GroundingChunkRetrievedContext.Builder.class)
 public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   /** Text of the attribution. */
-  public abstract Optional<String> getText();
+  @JsonProperty("text")
+  public abstract Optional<String> text();
 
   /** Title of the attribution. */
-  public abstract Optional<String> getTitle();
+  @JsonProperty("title")
+  public abstract Optional<String> title();
 
   /** URI reference of the attribution. */
-  public abstract Optional<String> getUri();
+  @JsonProperty("uri")
+  public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
   public static Builder builder() {
@@ -49,13 +52,13 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("text")
-    public abstract Builder setText(String text);
+    public abstract Builder text(String text);
 
     @JsonProperty("title")
-    public abstract Builder setTitle(String title);
+    public abstract Builder title(String title);
 
     @JsonProperty("uri")
-    public abstract Builder setUri(String uri);
+    public abstract Builder uri(String uri);
 
     public abstract GroundingChunkRetrievedContext build();
   }

@@ -29,10 +29,12 @@ import java.util.Optional;
 @JsonDeserialize(builder = AutoValue_Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
   /** Required. Raw bytes. */
-  public abstract Optional<String> getData();
+  @JsonProperty("data")
+  public abstract Optional<String> data();
 
   /** Required. The IANA standard MIME type of the source data. */
-  public abstract Optional<String> getMimeType();
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for Blob. */
   public static Builder builder() {
@@ -46,10 +48,10 @@ public abstract class Blob extends JsonSerializable {
   @AutoValue.Builder
   public abstract static class Builder {
     @JsonProperty("data")
-    public abstract Builder setData(String data);
+    public abstract Builder data(String data);
 
     @JsonProperty("mimeType")
-    public abstract Builder setMimeType(String mimeType);
+    public abstract Builder mimeType(String mimeType);
 
     public abstract Blob build();
   }
