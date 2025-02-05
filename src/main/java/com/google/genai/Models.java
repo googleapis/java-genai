@@ -1608,11 +1608,8 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "enhancePrompt"},
-          Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}));
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}))) {
+      throw new Error("enhancePrompt parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -2300,13 +2297,6 @@ public final class Models {
           toObject,
           new String[] {"raiFilteredReason"},
           Common.getValueByPath(fromObject, new String[] {"raiFilteredReason"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enhancedPrompt"},
-          Common.getValueByPath(fromObject, new String[] {"prompt"}));
     }
 
     return toObject;
