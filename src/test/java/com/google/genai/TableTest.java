@@ -199,7 +199,7 @@ public final class TableTest {
                         && (client.getClientMode().equals("api")
                             || client.getClientMode().isEmpty())) {
                       System.out.printf("    === Skipped: %s\n", skipInApiMode.get());
-                      return;
+                      assumeTrue(false, String.format("Skipped: %s", skipInApiMode.get()));
                     }
                     // TODO(jayceeli): Check if the error message is expected, once we update the
                     // error
@@ -212,6 +212,8 @@ public final class TableTest {
                       System.out.println(
                           "    === Skipped: test case is expected to fail in Vertex AI");
                     }
+                    e.printStackTrace();
+                    fail(String.format("'%s' failed: %s", testName, e));
                   }
                 }));
       } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
@@ -226,7 +228,6 @@ public final class TableTest {
             DynamicTest.dynamicTest(
                 testName,
                 () -> {
-                  System.out.println(msg);
                   assumeTrue(false, msg);
                 }));
       }
@@ -256,7 +257,6 @@ public final class TableTest {
   @TestFactory
   @DisplayName("TableTest")
   Collection<DynamicTest> createTests() throws IOException {
-    System.out.println("env_use_vertexai: " + System.getenv("GOOGLE_GENAI_USE_VERTEXAI"));
     String replaysPath = System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY");
     if (replaysPath == null) {
       throw new RuntimeException("GOOGLE_GENAI_REPLAYS_DIRECTORY is not set");
