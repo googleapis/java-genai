@@ -33,34 +33,34 @@
  *
  * <p>2. Compile the java package and run the sample code.
  *
- * <p>mvn clean compile exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContentStream"
+ * <p>mvn clean compile
+ *
+ * <p>mvn exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContentWithResponseModality"
  */
 package com.google.genai.examples;
 
+import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
-import com.google.genai.ResponseStream;
+import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import java.io.IOException;
 import org.apache.http.HttpException;
 
-/** An example of using the Unified GenAI Java SDK to generate stream of content. */
-public class GenerateContentStream {
+/** An example of using the Unified Gen AI Java SDK to generate content with response modality. */
+public class GenerateContentWithResponseModality {
   public static void main(String[] args) throws IOException, HttpException {
-    // Instantiate the client using Vertex API. The client gets the project and location from the
-    // environment variables `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
+    // Instantiate the client using Vertex API.
     Client client = Client.builder().vertexAI(true).build();
 
-    ResponseStream<GenerateContentResponse> responseStream =
-        client.models.generateContentStream(
-            "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseModalities(ImmutableList.of("TEXT", "IMAGE"))
+            .build();
 
-    System.out.println("Streaming response: ");
-    for (GenerateContentResponse res : responseStream) {
-      System.out.print(res.text());
-    }
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.0-flash-exp", "Generate a cat image and describe it.", config);
 
-    // To save resources and avoid connection leaks, it is recommended to close the response
-    // stream after consumption (or using try block to get the response stream).
-    responseStream.close();
+    System.out.println("Response: " + response.toJson());
   }
 }

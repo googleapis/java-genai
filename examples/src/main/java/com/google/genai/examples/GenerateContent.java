@@ -33,34 +33,26 @@
  *
  * <p>2. Compile the java package and run the sample code.
  *
- * <p>mvn clean compile exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContentStream"
+ * <p>mvn clean compile exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContent"
  */
 package com.google.genai.examples;
 
 import com.google.genai.Client;
-import com.google.genai.ResponseStream;
 import com.google.genai.types.GenerateContentResponse;
 import java.io.IOException;
 import org.apache.http.HttpException;
 
-/** An example of using the Unified GenAI Java SDK to generate stream of content. */
-public class GenerateContentStream {
+/** An example of using the Unified Gen AI Java SDK to generate content. */
+public class GenerateContent {
   public static void main(String[] args) throws IOException, HttpException {
-    // Instantiate the client using Vertex API. The client gets the project and location from the
-    // environment variables `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
-    Client client = Client.builder().vertexAI(true).build();
+    // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
+    // key from the environment variable `GOOGLE_API_KEY`.
+    Client client = new Client();
 
-    ResponseStream<GenerateContentResponse> responseStream =
-        client.models.generateContentStream(
-            "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
+    GenerateContentResponse response =
+        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
 
-    System.out.println("Streaming response: ");
-    for (GenerateContentResponse res : responseStream) {
-      System.out.print(res.text());
-    }
-
-    // To save resources and avoid connection leaks, it is recommended to close the response
-    // stream after consumption (or using try block to get the response stream).
-    responseStream.close();
+    // Gets the text string from the response by the quick accessor method `text()`.
+    System.out.println("Unary response: " + response.text());
   }
 }
