@@ -169,7 +169,7 @@ public class HttpApiClientTest {
               .baseUrl("http://localhost:" + wireMockServer.port())
               .apiVersion("v1beta")
               .build();
-      Client client = Client.builder().setHttpOptions(httpOptions).build();
+      Client client = Client.builder().httpOptions(httpOptions).build();
 
       GenerateContentResponse response =
           client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);

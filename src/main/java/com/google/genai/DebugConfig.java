@@ -48,15 +48,15 @@ final class DebugConfig {
             : (envReplaysDirectory != null ? envReplaysDirectory : "");
   }
 
-  public String getClientMode() {
+  public String clientMode() {
     return this.clientMode;
   }
 
-  public String getReplayId() {
+  public String replayId() {
     return this.replayId;
   }
 
-  public String getReplaysDirectory() {
+  public String replaysDirectory() {
     return this.replaysDirectory;
   }
 }

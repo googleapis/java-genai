@@ -56,42 +56,42 @@ public final class Client implements AutoCloseable {
     }
 
     /** Sets the API key for Google AI APIs. */
-    public Builder setApiKey(String apiKey) {
+    public Builder apiKey(String apiKey) {
       checkNotNull(apiKey, "apiKey cannot be null");
       this.apiKey = Optional.of(apiKey);
       return this;
     }
 
     /** Sets the project ID for Vertex AI APIs. */
-    public Builder setProject(String project) {
+    public Builder project(String project) {
       checkNotNull(project, "project cannot be null");
       this.project = Optional.of(project);
       return this;
     }
 
     /** Sets the location for Vertex AI APIs. */
-    public Builder setLocation(String location) {
+    public Builder location(String location) {
       checkNotNull(location, "location cannot be null");
       this.location = Optional.of(location);
       return this;
     }
 
     /** Sets the {@link GoogleCredentials} for Vertex AI APIs. */
-    public Builder setCredentials(GoogleCredentials credentials) {
+    public Builder credentials(GoogleCredentials credentials) {
       checkNotNull(credentials, "credentials cannot be null");
       this.credentials = Optional.of(credentials);
       return this;
     }
 
     /** Sets the {@link HttpOptions} for the API client. */
-    public Builder setHttpOptions(HttpOptions httpOptions) {
+    public Builder httpOptions(HttpOptions httpOptions) {
       checkNotNull(httpOptions, "httpOptions cannot be null");
       this.httpOptions = Optional.of(httpOptions);
       return this;
     }
 
     /** Sets whether to use Vertex AI APIs. */
-    public Builder setVertexAI(boolean vertexAI) {
+    public Builder vertexAI(boolean vertexAI) {
       checkNotNull(vertexAI, "vertexAI cannot be null");
       this.vertexAI = Optional.of(vertexAI);
       return this;
@@ -101,7 +101,7 @@ public final class Client implements AutoCloseable {
      * Sets the {@link DebugConfig} for debugging or testing the Client. This is for internal use
      * only.
      */
-    Builder setDebugConfig(DebugConfig debugConfig) {
+    Builder debugConfig(DebugConfig debugConfig) {
       checkNotNull(debugConfig, "debugConfig cannot be null");
       this.debugConfig = Optional.of(debugConfig);
       return this;
@@ -173,8 +173,8 @@ public final class Client implements AutoCloseable {
     }
 
     this.debugConfig = debugConfig.orElse(new DebugConfig());
-    if (this.debugConfig.getClientMode().equals("replay")
-        || this.debugConfig.getClientMode().equals("auto")) {
+    if (this.debugConfig.clientMode().equals("replay")
+        || this.debugConfig.clientMode().equals("auto")) {
       System.out.println("Instantialing a client that will use Replay mode...");
       if (!useVertexAI) {
         System.out.println("Instantialing a replay client that will use Google AI APIs...");
@@ -182,9 +182,9 @@ public final class Client implements AutoCloseable {
             new ReplayApiClient(
                 /* apiKey= */ apiKey,
                 /* httpOptions= */ httpOptions,
-                this.debugConfig.getReplaysDirectory(),
-                this.debugConfig.getReplayId(),
-                this.debugConfig.getClientMode());
+                this.debugConfig.replaysDirectory(),
+                this.debugConfig.replayId(),
+                this.debugConfig.clientMode());
       } else {
         System.out.println("Instantialing a replay client that will use Vertex AI APIs...");
         this.apiClient =
@@ -193,9 +193,9 @@ public final class Client implements AutoCloseable {
                 /* location= */ location,
                 /* credentials= */ credentials,
                 /* httpOptions= */ httpOptions,
-                this.debugConfig.getReplaysDirectory(),
-                this.debugConfig.getReplayId(),
-                this.debugConfig.getClientMode());
+                this.debugConfig.replaysDirectory(),
+                this.debugConfig.replayId(),
+                this.debugConfig.clientMode());
       }
     } else {
       if (!useVertexAI) {
@@ -220,17 +220,17 @@ public final class Client implements AutoCloseable {
   }
 
   /** Returns the project ID for Vertex AI APIs. */
-  public String getProject() {
+  public String project() {
     return apiClient.project();
   }
 
   /** Returns the location for Vertex AI APIs. */
-  public String getLocation() {
+  public String location() {
     return apiClient.location();
   }
 
   /** Returns the API key for Google AI APIs. */
-  public String getApiKey() {
+  public String apiKey() {
     return apiClient.apiKey();
   }
 
@@ -241,8 +241,8 @@ public final class Client implements AutoCloseable {
   }
 
   /** Returns the client mode. If it's "replay" or "auto", then the client is in testing mode. */
-  String getClientMode() {
-    return debugConfig.getClientMode();
+  String clientMode() {
+    return debugConfig.clientMode();
   }
 
   /** Closes the Client instance together with its instantiated http client. */

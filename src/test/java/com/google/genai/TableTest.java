@@ -196,8 +196,7 @@ public final class TableTest {
                     Optional<String> exceptionIfMldev = testTableItem.exceptionIfMldev();
                     Optional<String> exceptionIfVertex = testTableItem.exceptionIfVertex();
                     if (skipInApiMode.isPresent()
-                        && (client.getClientMode().equals("api")
-                            || client.getClientMode().isEmpty())) {
+                        && (client.clientMode().equals("api") || client.clientMode().isEmpty())) {
                       System.out.printf("    === Skipped: %s\n", skipInApiMode.get());
                       assumeTrue(false, String.format("Skipped: %s", skipInApiMode.get()));
                     }
@@ -269,8 +268,8 @@ public final class TableTest {
     }
 
     DebugConfig debugConfig = new DebugConfig(replayMode, "", testsReplaysPath);
-    Client mlDevClient = Client.builder().setVertexAI(false).setDebugConfig(debugConfig).build();
-    Client vertexClient = Client.builder().setVertexAI(true).setDebugConfig(debugConfig).build();
+    Client mlDevClient = Client.builder().vertexAI(false).debugConfig(debugConfig).build();
+    Client vertexClient = Client.builder().vertexAI(true).debugConfig(debugConfig).build();
 
     Collection<DynamicTest> dynamicTests = new ArrayList<>();
     Files.walk(Paths.get(testsReplaysPath))

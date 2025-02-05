@@ -55,7 +55,7 @@ final class HttpApiResponse extends ApiResponse {
         }
       }
       return "";
-    } catch (IOException e) {
+    } catch (IOException ignored) {
       return "";
     }
   }
