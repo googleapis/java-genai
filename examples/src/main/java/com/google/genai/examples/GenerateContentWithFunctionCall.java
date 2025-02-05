@@ -77,7 +77,7 @@ public class GenerateContentWithFunctionCall {
 
     GenerateContentResponse response =
         client.models.generateContent(
-            "gemini-2.0-flash-exp", "What is the weather in Vancouver?", config);
+            "gemini-2.0-flash-001", "What is the weather in Vancouver?", config);
 
     // Gets the function calls from the response by the quick accessor method `functionCalls()`.
     System.out.println("Response: " + response.functionCalls());

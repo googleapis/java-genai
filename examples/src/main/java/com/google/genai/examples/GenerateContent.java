@@ -50,7 +50,7 @@ public class GenerateContent {
     Client client = new Client();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+        client.models.generateContent("gemini-2.0-flash-001", "What is your name?", null);
 
     // Gets the text string from the response by the quick accessor method `text()`.
     System.out.println("Unary response: " + response.text());

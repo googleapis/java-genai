@@ -59,7 +59,7 @@ public class GenerateContentWithResponseModality {
 
     GenerateContentResponse response =
         client.models.generateContent(
-            "gemini-2.0-flash-exp", "Generate a cat image and describe it.", config);
+            "gemini-2.0-flash-001", "Generate a cat image and describe it.", config);
 
     System.out.println("Response: " + response.toJson());
   }

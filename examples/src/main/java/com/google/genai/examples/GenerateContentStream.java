@@ -52,7 +52,7 @@ public class GenerateContentStream {
 
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            "gemini-2.0-flash-exp", "Tell me a story in 300 words.", null);
+            "gemini-2.0-flash-001", "Tell me a story in 300 words.", null);
 
     System.out.println("Streaming response: ");
     for (GenerateContentResponse res : responseStream) {

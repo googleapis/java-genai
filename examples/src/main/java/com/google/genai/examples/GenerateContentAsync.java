@@ -51,7 +51,7 @@ public class GenerateContentAsync {
 
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-2.0-flash-exp", "Introduce Google AI Studio.", null);
+            "gemini-2.0-flash-001", "Introduce Google AI Studio.", null);
 
     responseFuture
         .thenAccept(

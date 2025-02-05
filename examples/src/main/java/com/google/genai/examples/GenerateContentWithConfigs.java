@@ -88,7 +88,7 @@ public class GenerateContentWithConfigs {
             .build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "Tell me the history of LLM", config);
+        client.models.generateContent("gemini-2.0-flash-001", "Tell me the history of LLM", config);
 
     System.out.println("Response: " + response.text());
   }

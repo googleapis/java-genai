@@ -74,7 +74,7 @@ public class BasicTextGeneration {
     Client client = Client.builder().setVertexAI(true).build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
+        client.models.generateContent("gemini-2.0-flash-001", "What is your name?", null);
     System.out.println(response.text());
   }
 }
@@ -98,7 +98,7 @@ public class StreamGeneration {
 
     ResponseStream<GenerateContentResponse> response =
         client.models.generateContentStream(
-            "gemini-2.0-flash", "Tell me a story in 300 words.", null);
+            "gemini-2.0-flash-001", "Tell me a story in 300 words.", null);
     for (GenerateContentResponse res : response) {
       System.out.print(res.text());
     }

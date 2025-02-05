@@ -64,7 +64,7 @@ public class GenerateContentWithImageInput {
         Content.builder().role("user").parts(ImmutableList.of(textPart, imagePart)).build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", content, null);
+        client.models.generateContent("gemini-2.0-flash-001", content, null);
 
     System.out.println("Response: " + response.text());
   }
