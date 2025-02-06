@@ -4,6 +4,8 @@ Java idiomatic SDK for the
 [Gemini Developer APIs][gemini-api-doc] and [Vertex AI][vertex-api-doc] APIs.
 
 [![Maven][maven-version-image]][maven-version-link]
+[![javadoc][javadoc-version-image]][javadoc-version-link]
+
 
 This is an early release. API is subject to change. Please do not use this SDK
 in production environments at this stage.
@@ -288,6 +290,8 @@ Apache 2.0 - See [LICENSE][license] for more information.
 [gemini-api-doc]: https://ai.google.dev/gemini-api/docs
 [vertex-api-doc]: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview
 [maven-version-image]: https://img.shields.io/maven-central/v/com.google.genai/google-genai.svg
-[maven-version-link]: https://central.sonatype.com/artifact/com.google.genai/google-genai/0.1.0
+[maven-version-link]: https://central.sonatype.com/artifact/com.google.genai/google-genai
+[javadoc-version-image]: https://javadoc.io/badge2/com.google.genai/google-genai/javadoc.svg
+[javadoc-version-link]: https://javadoc.io/doc/com.google.genai/google-genai
 [license]: https://github.com/googleapis/java-genai/blob/main/LICENSE
 
