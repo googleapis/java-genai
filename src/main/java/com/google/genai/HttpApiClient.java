@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 
 /** Base client for the HTTP APIs. */
@@ -67,7 +68,7 @@ final class HttpApiClient extends ApiClient {
       httpPost.setHeader("Authorization", "Bearer " + cred.getAccessToken().getTokenValue());
     }
 
-    httpPost.setEntity(new StringEntity(requestJson));
+    httpPost.setEntity(new StringEntity(requestJson, ContentType.APPLICATION_JSON));
 
     HttpApiResponse httpApiResponse = new HttpApiResponse(httpClient.execute(httpPost));
     return httpApiResponse;
