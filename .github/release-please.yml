@@ -8,5 +8,5 @@ branches:
     releaseType: maven
     handleGHRelease: true
     manifest: true
-    manifestFile: pom.xml
+    manifestFile: .release-please-manifest.json
     manifestConfig: release-please-config.json
