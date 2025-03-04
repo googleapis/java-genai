@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.HttpOptions.Builder;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -171,7 +170,7 @@ abstract class ApiClient {
   }
 
   private void applyHttpOptions(HttpOptions httpOptionsToApply) {
-    HttpOptions.Builder mergedHttpOptionsBuilder = HttpOptions.builder();
+    HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
     if (httpOptionsToApply.baseUrl().isPresent()) {
       mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
     }
