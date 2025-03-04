@@ -38,10 +38,22 @@ public final class Common {
     ObjectNode currentObject = jsonObject;
     for (int i = 0; i < path.length - 1; i++) {
       String key = path[i];
-      if (!currentObject.has(key)) {
-        currentObject.putObject(key);
+      if (key.endsWith("[0]")) {
+        String keyName = key.substring(0, key.length() - 3);
+        ArrayNode arrayNode;
+        if (!currentObject.has(keyName)) {
+          currentObject.putArray(keyName);
+          arrayNode = (ArrayNode) currentObject.get(keyName);
+          arrayNode.add(JsonSerializable.objectMapper.createObjectNode());
+        }
+        arrayNode = (ArrayNode) currentObject.get(keyName);
+        currentObject = (ObjectNode) arrayNode.get(0);
+      } else {
+        if (!currentObject.has(key)) {
+          currentObject.putObject(key);
+        }
+        currentObject = (ObjectNode) currentObject.get(key);
       }
-      currentObject = (ObjectNode) currentObject.get(key);
     }
 
     currentObject.put(path[path.length - 1], JsonSerializable.toJsonNode(value));

@@ -1761,7 +1761,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"instances", "prompt"},
+          new String[] {"instances[0]", "prompt"},
           Common.getValueByPath(fromObject, new String[] {"prompt"}));
     }
 
@@ -1793,7 +1793,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"instances", "prompt"},
+          new String[] {"instances[0]", "prompt"},
           Common.getValueByPath(fromObject, new String[] {"prompt"}));
     }
 
@@ -1960,7 +1960,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"instances", "image"},
+          new String[] {"instances[0]", "image"},
           ImageToMldev(
               apiClient,
               JsonSerializable.toJsonNode(
@@ -2003,7 +2003,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"instances", "image"},
+          new String[] {"instances[0]", "image"},
           ImageToVertex(
               apiClient,
               JsonSerializable.toJsonNode(
