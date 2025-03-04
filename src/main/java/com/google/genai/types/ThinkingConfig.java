@@ -18,22 +18,21 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** The thinking features configuration. */
 @AutoValue
-@JsonDeserialize(builder = ThinkingConfig.Builder.class)
 public abstract class ThinkingConfig extends JsonSerializable {
   /**
    * Indicates whether to include thoughts in the response. If true, thoughts are returned only if
    * the model supports thought and thoughts are available.
    */
-  @JsonProperty("includeThoughts")
+  @SerializedName("includeThoughts")
   public abstract Optional<Boolean> includeThoughts();
 
   /** Instantiates a builder for ThinkingConfig. */
@@ -47,16 +46,18 @@ public abstract class ThinkingConfig extends JsonSerializable {
   /** Builder for ThinkingConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ThinkingConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ThinkingConfig.Builder();
-    }
-
-    @JsonProperty("includeThoughts")
+    @SerializedName("includeThoughts")
     public abstract Builder includeThoughts(boolean includeThoughts);
 
+    @SerializedName("includeThoughts")
+    public abstract Builder includeThoughts(Optional<Boolean> includeThoughts);
+
     public abstract ThinkingConfig build();
+  }
+
+  /** Returns a TypeAdapter for ThinkingConfig. */
+  public static TypeAdapter<ThinkingConfig> typeAdapter(Gson gson) {
+    return new AutoValue_ThinkingConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a ThinkingConfig object. */

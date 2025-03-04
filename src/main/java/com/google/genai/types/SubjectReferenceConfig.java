@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Configuration for a Subject reference image. */
 @AutoValue
-@JsonDeserialize(builder = SubjectReferenceConfig.Builder.class)
 public abstract class SubjectReferenceConfig extends JsonSerializable {
   /** The subject type of a subject reference image. */
-  @JsonProperty("subjectType")
+  @SerializedName("subjectType")
   public abstract Optional<String> subjectType();
 
   /** Subject description for the image. */
-  @JsonProperty("subjectDescription")
+  @SerializedName("subjectDescription")
   public abstract Optional<String> subjectDescription();
 
   /** Instantiates a builder for SubjectReferenceConfig. */
@@ -48,19 +47,24 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
   /** Builder for SubjectReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `SubjectReferenceConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_SubjectReferenceConfig.Builder();
-    }
-
-    @JsonProperty("subjectType")
+    @SerializedName("subjectType")
     public abstract Builder subjectType(String subjectType);
 
-    @JsonProperty("subjectDescription")
+    @SerializedName("subjectType")
+    public abstract Builder subjectType(Optional<String> subjectType);
+
+    @SerializedName("subjectDescription")
     public abstract Builder subjectDescription(String subjectDescription);
 
+    @SerializedName("subjectDescription")
+    public abstract Builder subjectDescription(Optional<String> subjectDescription);
+
     public abstract SubjectReferenceConfig build();
+  }
+
+  /** Returns a TypeAdapter for SubjectReferenceConfig. */
+  public static TypeAdapter<SubjectReferenceConfig> typeAdapter(Gson gson) {
+    return new AutoValue_SubjectReferenceConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a SubjectReferenceConfig object. */

@@ -18,34 +18,33 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 import java.util.Optional;
 
 /** A function call. */
 @AutoValue
-@JsonDeserialize(builder = FunctionCall.Builder.class)
 public abstract class FunctionCall extends JsonSerializable {
   /**
    * The unique id of the function call. If populated, the client to execute the `function_call` and
    * return the response with the matching `id`.
    */
-  @JsonProperty("id")
+  @SerializedName("id")
   public abstract Optional<String> id();
 
   /**
    * Optional. Required. The function parameters and values in JSON object format. See
    * [FunctionDeclaration.parameters] for parameter details.
    */
-  @JsonProperty("args")
+  @SerializedName("args")
   public abstract Optional<Map<String, Object>> args();
 
   /** Required. The name of the function to call. Matches [FunctionDeclaration.name]. */
-  @JsonProperty("name")
+  @SerializedName("name")
   public abstract Optional<String> name();
 
   /** Instantiates a builder for FunctionCall. */
@@ -59,22 +58,30 @@ public abstract class FunctionCall extends JsonSerializable {
   /** Builder for FunctionCall. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FunctionCall.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_FunctionCall.Builder();
-    }
-
-    @JsonProperty("id")
+    @SerializedName("id")
     public abstract Builder id(String id);
 
-    @JsonProperty("args")
+    @SerializedName("id")
+    public abstract Builder id(Optional<String> id);
+
+    @SerializedName("args")
     public abstract Builder args(Map<String, Object> args);
 
-    @JsonProperty("name")
+    @SerializedName("args")
+    public abstract Builder args(Optional<Map<String, Object>> args);
+
+    @SerializedName("name")
     public abstract Builder name(String name);
 
+    @SerializedName("name")
+    public abstract Builder name(Optional<String> name);
+
     public abstract FunctionCall build();
+  }
+
+  /** Returns a TypeAdapter for FunctionCall. */
+  public static TypeAdapter<FunctionCall> typeAdapter(Gson gson) {
+    return new AutoValue_FunctionCall.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a FunctionCall object. */

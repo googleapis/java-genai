@@ -18,19 +18,18 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** The configuration for the prebuilt speaker to use. */
 @AutoValue
-@JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
 public abstract class PrebuiltVoiceConfig extends JsonSerializable {
   /** The name of the prebuilt voice to use. */
-  @JsonProperty("voiceName")
+  @SerializedName("voiceName")
   public abstract Optional<String> voiceName();
 
   /** Instantiates a builder for PrebuiltVoiceConfig. */
@@ -44,16 +43,18 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
   /** Builder for PrebuiltVoiceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `PrebuiltVoiceConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_PrebuiltVoiceConfig.Builder();
-    }
-
-    @JsonProperty("voiceName")
+    @SerializedName("voiceName")
     public abstract Builder voiceName(String voiceName);
 
+    @SerializedName("voiceName")
+    public abstract Builder voiceName(Optional<String> voiceName);
+
     public abstract PrebuiltVoiceConfig build();
+  }
+
+  /** Returns a TypeAdapter for PrebuiltVoiceConfig. */
+  public static TypeAdapter<PrebuiltVoiceConfig> typeAdapter(Gson gson) {
+    return new AutoValue_PrebuiltVoiceConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a PrebuiltVoiceConfig object. */

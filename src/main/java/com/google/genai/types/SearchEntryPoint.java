@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Google search entry point. */
 @AutoValue
-@JsonDeserialize(builder = SearchEntryPoint.Builder.class)
 public abstract class SearchEntryPoint extends JsonSerializable {
   /** Optional. Web content snippet that can be embedded in a web page or an app webview. */
-  @JsonProperty("renderedContent")
+  @SerializedName("renderedContent")
   public abstract Optional<String> renderedContent();
 
   /** Optional. Base64 encoded JSON representing array of tuple. */
-  @JsonProperty("sdkBlob")
+  @SerializedName("sdkBlob")
   public abstract Optional<String> sdkBlob();
 
   /** Instantiates a builder for SearchEntryPoint. */
@@ -48,19 +47,24 @@ public abstract class SearchEntryPoint extends JsonSerializable {
   /** Builder for SearchEntryPoint. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `SearchEntryPoint.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_SearchEntryPoint.Builder();
-    }
-
-    @JsonProperty("renderedContent")
+    @SerializedName("renderedContent")
     public abstract Builder renderedContent(String renderedContent);
 
-    @JsonProperty("sdkBlob")
+    @SerializedName("renderedContent")
+    public abstract Builder renderedContent(Optional<String> renderedContent);
+
+    @SerializedName("sdkBlob")
     public abstract Builder sdkBlob(String sdkBlob);
 
+    @SerializedName("sdkBlob")
+    public abstract Builder sdkBlob(Optional<String> sdkBlob);
+
     public abstract SearchEntryPoint build();
+  }
+
+  /** Returns a TypeAdapter for SearchEntryPoint. */
+  public static TypeAdapter<SearchEntryPoint> typeAdapter(Gson gson) {
+    return new AutoValue_SearchEntryPoint.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a SearchEntryPoint object. */

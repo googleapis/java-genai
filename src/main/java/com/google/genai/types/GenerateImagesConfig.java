@@ -18,83 +18,82 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** The config for generating an images. */
 @AutoValue
-@JsonDeserialize(builder = GenerateImagesConfig.Builder.class)
 public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Cloud Storage URI used to store the generated images. */
-  @JsonProperty("outputGcsUri")
+  @SerializedName("outputGcsUri")
   public abstract Optional<String> outputGcsUri();
 
   /** Description of what to discourage in the generated images. */
-  @JsonProperty("negativePrompt")
+  @SerializedName("negativePrompt")
   public abstract Optional<String> negativePrompt();
 
   /** Number of images to generate. */
-  @JsonProperty("numberOfImages")
+  @SerializedName("numberOfImages")
   public abstract Optional<Integer> numberOfImages();
 
   /** Aspect ratio of the generated images. */
-  @JsonProperty("aspectRatio")
+  @SerializedName("aspectRatio")
   public abstract Optional<String> aspectRatio();
 
   /**
    * Controls how much the model adheres to the text prompt. Large values increase output and prompt
    * alignment, but may compromise image quality.
    */
-  @JsonProperty("guidanceScale")
+  @SerializedName("guidanceScale")
   public abstract Optional<Float> guidanceScale();
 
   /**
    * Random seed for image generation. This is not available when ``add_watermark`` is set to true.
    */
-  @JsonProperty("seed")
+  @SerializedName("seed")
   public abstract Optional<Integer> seed();
 
   /** Filter level for safety filtering. */
-  @JsonProperty("safetyFilterLevel")
+  @SerializedName("safetyFilterLevel")
   public abstract Optional<String> safetyFilterLevel();
 
   /** Allows generation of people by the model. */
-  @JsonProperty("personGeneration")
+  @SerializedName("personGeneration")
   public abstract Optional<String> personGeneration();
 
   /** Whether to report the safety scores of each image in the response. */
-  @JsonProperty("includeSafetyAttributes")
+  @SerializedName("includeSafetyAttributes")
   public abstract Optional<Boolean> includeSafetyAttributes();
 
   /**
    * Whether to include the Responsible AI filter reason if the image is filtered out of the
    * response.
    */
-  @JsonProperty("includeRaiReason")
+  @SerializedName("includeRaiReason")
   public abstract Optional<Boolean> includeRaiReason();
 
   /** Language of the text in the prompt. */
-  @JsonProperty("language")
+  @SerializedName("language")
   public abstract Optional<String> language();
 
   /** MIME type of the generated image. */
-  @JsonProperty("outputMimeType")
+  @SerializedName("outputMimeType")
   public abstract Optional<String> outputMimeType();
 
   /** Compression quality of the generated image (for ``image/jpeg`` only). */
-  @JsonProperty("outputCompressionQuality")
+  @SerializedName("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
 
   /** Whether to add a watermark to the generated images. */
-  @JsonProperty("addWatermark")
+  @SerializedName("addWatermark")
   public abstract Optional<Boolean> addWatermark();
 
   /** Whether to use the prompt rewriting logic. */
-  @JsonProperty("enhancePrompt")
+  @SerializedName("enhancePrompt")
   public abstract Optional<Boolean> enhancePrompt();
 
   /** Instantiates a builder for GenerateImagesConfig. */
@@ -108,58 +107,102 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Builder for GenerateImagesConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GenerateImagesConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateImagesConfig.Builder();
-    }
-
-    @JsonProperty("outputGcsUri")
+    @SerializedName("outputGcsUri")
     public abstract Builder outputGcsUri(String outputGcsUri);
 
-    @JsonProperty("negativePrompt")
+    @SerializedName("outputGcsUri")
+    public abstract Builder outputGcsUri(Optional<String> outputGcsUri);
+
+    @SerializedName("negativePrompt")
     public abstract Builder negativePrompt(String negativePrompt);
 
-    @JsonProperty("numberOfImages")
+    @SerializedName("negativePrompt")
+    public abstract Builder negativePrompt(Optional<String> negativePrompt);
+
+    @SerializedName("numberOfImages")
     public abstract Builder numberOfImages(Integer numberOfImages);
 
-    @JsonProperty("aspectRatio")
+    @SerializedName("numberOfImages")
+    public abstract Builder numberOfImages(Optional<Integer> numberOfImages);
+
+    @SerializedName("aspectRatio")
     public abstract Builder aspectRatio(String aspectRatio);
 
-    @JsonProperty("guidanceScale")
+    @SerializedName("aspectRatio")
+    public abstract Builder aspectRatio(Optional<String> aspectRatio);
+
+    @SerializedName("guidanceScale")
     public abstract Builder guidanceScale(Float guidanceScale);
 
-    @JsonProperty("seed")
+    @SerializedName("guidanceScale")
+    public abstract Builder guidanceScale(Optional<Float> guidanceScale);
+
+    @SerializedName("seed")
     public abstract Builder seed(Integer seed);
 
-    @JsonProperty("safetyFilterLevel")
+    @SerializedName("seed")
+    public abstract Builder seed(Optional<Integer> seed);
+
+    @SerializedName("safetyFilterLevel")
     public abstract Builder safetyFilterLevel(String safetyFilterLevel);
 
-    @JsonProperty("personGeneration")
+    @SerializedName("safetyFilterLevel")
+    public abstract Builder safetyFilterLevel(Optional<String> safetyFilterLevel);
+
+    @SerializedName("personGeneration")
     public abstract Builder personGeneration(String personGeneration);
 
-    @JsonProperty("includeSafetyAttributes")
+    @SerializedName("personGeneration")
+    public abstract Builder personGeneration(Optional<String> personGeneration);
+
+    @SerializedName("includeSafetyAttributes")
     public abstract Builder includeSafetyAttributes(boolean includeSafetyAttributes);
 
-    @JsonProperty("includeRaiReason")
+    @SerializedName("includeSafetyAttributes")
+    public abstract Builder includeSafetyAttributes(Optional<Boolean> includeSafetyAttributes);
+
+    @SerializedName("includeRaiReason")
     public abstract Builder includeRaiReason(boolean includeRaiReason);
 
-    @JsonProperty("language")
+    @SerializedName("includeRaiReason")
+    public abstract Builder includeRaiReason(Optional<Boolean> includeRaiReason);
+
+    @SerializedName("language")
     public abstract Builder language(String language);
 
-    @JsonProperty("outputMimeType")
+    @SerializedName("language")
+    public abstract Builder language(Optional<String> language);
+
+    @SerializedName("outputMimeType")
     public abstract Builder outputMimeType(String outputMimeType);
 
-    @JsonProperty("outputCompressionQuality")
+    @SerializedName("outputMimeType")
+    public abstract Builder outputMimeType(Optional<String> outputMimeType);
+
+    @SerializedName("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
-    @JsonProperty("addWatermark")
+    @SerializedName("outputCompressionQuality")
+    public abstract Builder outputCompressionQuality(Optional<Integer> outputCompressionQuality);
+
+    @SerializedName("addWatermark")
     public abstract Builder addWatermark(boolean addWatermark);
 
-    @JsonProperty("enhancePrompt")
+    @SerializedName("addWatermark")
+    public abstract Builder addWatermark(Optional<Boolean> addWatermark);
+
+    @SerializedName("enhancePrompt")
     public abstract Builder enhancePrompt(boolean enhancePrompt);
 
+    @SerializedName("enhancePrompt")
+    public abstract Builder enhancePrompt(Optional<Boolean> enhancePrompt);
+
     public abstract GenerateImagesConfig build();
+  }
+
+  /** Returns a TypeAdapter for GenerateImagesConfig. */
+  public static TypeAdapter<GenerateImagesConfig> typeAdapter(Gson gson) {
+    return new AutoValue_GenerateImagesConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GenerateImagesConfig object. */

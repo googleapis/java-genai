@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** The definition of the Rag resource. */
 @AutoValue
-@JsonDeserialize(builder = VertexRagStoreRagResource.Builder.class)
 public abstract class VertexRagStoreRagResource extends JsonSerializable {
   /**
    * Optional. RagCorpora resource name. Format:
    * `projects/{project}/locations/{location}/ragCorpora/{rag_corpus}`
    */
-  @JsonProperty("ragCorpus")
+  @SerializedName("ragCorpus")
   public abstract Optional<String> ragCorpus();
 
   /** Optional. rag_file_id. The files should be in the same rag_corpus set in rag_corpus field. */
-  @JsonProperty("ragFileIds")
+  @SerializedName("ragFileIds")
   public abstract Optional<List<String>> ragFileIds();
 
   /** Instantiates a builder for VertexRagStoreRagResource. */
@@ -52,19 +51,24 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
   /** Builder for VertexRagStoreRagResource. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `VertexRagStoreRagResource.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_VertexRagStoreRagResource.Builder();
-    }
-
-    @JsonProperty("ragCorpus")
+    @SerializedName("ragCorpus")
     public abstract Builder ragCorpus(String ragCorpus);
 
-    @JsonProperty("ragFileIds")
+    @SerializedName("ragCorpus")
+    public abstract Builder ragCorpus(Optional<String> ragCorpus);
+
+    @SerializedName("ragFileIds")
     public abstract Builder ragFileIds(List<String> ragFileIds);
 
+    @SerializedName("ragFileIds")
+    public abstract Builder ragFileIds(Optional<List<String>> ragFileIds);
+
     public abstract VertexRagStoreRagResource build();
+  }
+
+  /** Returns a TypeAdapter for VertexRagStoreRagResource. */
+  public static TypeAdapter<VertexRagStoreRagResource> typeAdapter(Gson gson) {
+    return new AutoValue_VertexRagStoreRagResource.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a VertexRagStoreRagResource object. */

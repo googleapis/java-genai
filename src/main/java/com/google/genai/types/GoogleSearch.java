@@ -18,14 +18,13 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
 /** Tool to support Google Search in Model. Powered by Google. */
 @AutoValue
-@JsonDeserialize(builder = GoogleSearch.Builder.class)
 public abstract class GoogleSearch extends JsonSerializable {
   /** Instantiates a builder for GoogleSearch. */
   public static Builder builder() {
@@ -38,13 +37,12 @@ public abstract class GoogleSearch extends JsonSerializable {
   /** Builder for GoogleSearch. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GoogleSearch.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GoogleSearch.Builder();
-    }
-
     public abstract GoogleSearch build();
+  }
+
+  /** Returns a TypeAdapter for GoogleSearch. */
+  public static TypeAdapter<GoogleSearch> typeAdapter(Gson gson) {
+    return new AutoValue_GoogleSearch.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GoogleSearch object. */

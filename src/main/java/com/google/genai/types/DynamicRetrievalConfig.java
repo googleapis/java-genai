@@ -18,26 +18,25 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Describes the options to customize dynamic retrieval. */
 @AutoValue
-@JsonDeserialize(builder = DynamicRetrievalConfig.Builder.class)
 public abstract class DynamicRetrievalConfig extends JsonSerializable {
   /** The mode of the predictor to be used in dynamic retrieval. */
-  @JsonProperty("mode")
+  @SerializedName("mode")
   public abstract Optional<String> mode();
 
   /**
    * Optional. The threshold to be used in dynamic retrieval. If not set, a system default value is
    * used.
    */
-  @JsonProperty("dynamicThreshold")
+  @SerializedName("dynamicThreshold")
   public abstract Optional<Float> dynamicThreshold();
 
   /** Instantiates a builder for DynamicRetrievalConfig. */
@@ -51,19 +50,24 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
   /** Builder for DynamicRetrievalConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `DynamicRetrievalConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_DynamicRetrievalConfig.Builder();
-    }
-
-    @JsonProperty("mode")
+    @SerializedName("mode")
     public abstract Builder mode(String mode);
 
-    @JsonProperty("dynamicThreshold")
+    @SerializedName("mode")
+    public abstract Builder mode(Optional<String> mode);
+
+    @SerializedName("dynamicThreshold")
     public abstract Builder dynamicThreshold(Float dynamicThreshold);
 
+    @SerializedName("dynamicThreshold")
+    public abstract Builder dynamicThreshold(Optional<Float> dynamicThreshold);
+
     public abstract DynamicRetrievalConfig build();
+  }
+
+  /** Returns a TypeAdapter for DynamicRetrievalConfig. */
+  public static TypeAdapter<DynamicRetrievalConfig> typeAdapter(Gson gson) {
+    return new AutoValue_DynamicRetrievalConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a DynamicRetrievalConfig object. */

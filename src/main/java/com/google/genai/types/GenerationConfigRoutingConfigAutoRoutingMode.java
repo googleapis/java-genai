@@ -18,11 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /**
@@ -30,10 +30,9 @@ import java.util.Optional;
  * model and customer provided model routing preference.
  */
 @AutoValue
-@JsonDeserialize(builder = GenerationConfigRoutingConfigAutoRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigAutoRoutingMode extends JsonSerializable {
   /** The model routing preference. */
-  @JsonProperty("modelRoutingPreference")
+  @SerializedName("modelRoutingPreference")
   public abstract Optional<String> modelRoutingPreference();
 
   /** Instantiates a builder for GenerationConfigRoutingConfigAutoRoutingMode. */
@@ -47,19 +46,18 @@ public abstract class GenerationConfigRoutingConfigAutoRoutingMode extends JsonS
   /** Builder for GenerationConfigRoutingConfigAutoRoutingMode. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GenerationConfigRoutingConfigAutoRoutingMode.builder()` for
-     * instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerationConfigRoutingConfigAutoRoutingMode.Builder();
-    }
-
-    @JsonProperty("modelRoutingPreference")
+    @SerializedName("modelRoutingPreference")
     public abstract Builder modelRoutingPreference(String modelRoutingPreference);
 
+    @SerializedName("modelRoutingPreference")
+    public abstract Builder modelRoutingPreference(Optional<String> modelRoutingPreference);
+
     public abstract GenerationConfigRoutingConfigAutoRoutingMode build();
+  }
+
+  /** Returns a TypeAdapter for GenerationConfigRoutingConfigAutoRoutingMode. */
+  public static TypeAdapter<GenerationConfigRoutingConfigAutoRoutingMode> typeAdapter(Gson gson) {
+    return new AutoValue_GenerationConfigRoutingConfigAutoRoutingMode.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfigAutoRoutingMode object. */

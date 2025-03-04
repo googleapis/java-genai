@@ -18,32 +18,31 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** None */
 @AutoValue
-@JsonDeserialize(builder = TestTableFile.Builder.class)
 public abstract class TestTableFile extends JsonSerializable {
   /** */
-  @JsonProperty("comment")
+  @SerializedName("comment")
   public abstract Optional<String> comment();
 
   /** */
-  @JsonProperty("testMethod")
+  @SerializedName("testMethod")
   public abstract Optional<String> testMethod();
 
   /** */
-  @JsonProperty("parameterNames")
+  @SerializedName("parameterNames")
   public abstract Optional<List<String>> parameterNames();
 
   /** */
-  @JsonProperty("testTable")
+  @SerializedName("testTable")
   public abstract Optional<List<TestTableItem>> testTable();
 
   /** Instantiates a builder for TestTableFile. */
@@ -57,25 +56,36 @@ public abstract class TestTableFile extends JsonSerializable {
   /** Builder for TestTableFile. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `TestTableFile.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_TestTableFile.Builder();
-    }
-
-    @JsonProperty("comment")
+    @SerializedName("comment")
     public abstract Builder comment(String comment);
 
-    @JsonProperty("testMethod")
+    @SerializedName("comment")
+    public abstract Builder comment(Optional<String> comment);
+
+    @SerializedName("testMethod")
     public abstract Builder testMethod(String testMethod);
 
-    @JsonProperty("parameterNames")
+    @SerializedName("testMethod")
+    public abstract Builder testMethod(Optional<String> testMethod);
+
+    @SerializedName("parameterNames")
     public abstract Builder parameterNames(List<String> parameterNames);
 
-    @JsonProperty("testTable")
+    @SerializedName("parameterNames")
+    public abstract Builder parameterNames(Optional<List<String>> parameterNames);
+
+    @SerializedName("testTable")
     public abstract Builder testTable(List<TestTableItem> testTable);
 
+    @SerializedName("testTable")
+    public abstract Builder testTable(Optional<List<TestTableItem>> testTable);
+
     public abstract TestTableFile build();
+  }
+
+  /** Returns a TypeAdapter for TestTableFile. */
+  public static TypeAdapter<TestTableFile> typeAdapter(Gson gson) {
+    return new AutoValue_TestTableFile.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a TestTableFile object. */

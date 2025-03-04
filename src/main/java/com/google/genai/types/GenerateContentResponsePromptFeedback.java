@@ -18,28 +18,27 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Content filter results for a prompt sent in the request. */
 @AutoValue
-@JsonDeserialize(builder = GenerateContentResponsePromptFeedback.Builder.class)
 public abstract class GenerateContentResponsePromptFeedback extends JsonSerializable {
   /** Output only. Blocked reason. */
-  @JsonProperty("blockReason")
+  @SerializedName("blockReason")
   public abstract Optional<String> blockReason();
 
   /** Output only. A readable block reason message. */
-  @JsonProperty("blockReasonMessage")
+  @SerializedName("blockReasonMessage")
   public abstract Optional<String> blockReasonMessage();
 
   /** Output only. Safety ratings. */
-  @JsonProperty("safetyRatings")
+  @SerializedName("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
 
   /** Instantiates a builder for GenerateContentResponsePromptFeedback. */
@@ -53,25 +52,30 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
   /** Builder for GenerateContentResponsePromptFeedback. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GenerateContentResponsePromptFeedback.builder()` for
-     * instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateContentResponsePromptFeedback.Builder();
-    }
-
-    @JsonProperty("blockReason")
+    @SerializedName("blockReason")
     public abstract Builder blockReason(String blockReason);
 
-    @JsonProperty("blockReasonMessage")
+    @SerializedName("blockReason")
+    public abstract Builder blockReason(Optional<String> blockReason);
+
+    @SerializedName("blockReasonMessage")
     public abstract Builder blockReasonMessage(String blockReasonMessage);
 
-    @JsonProperty("safetyRatings")
+    @SerializedName("blockReasonMessage")
+    public abstract Builder blockReasonMessage(Optional<String> blockReasonMessage);
+
+    @SerializedName("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
 
+    @SerializedName("safetyRatings")
+    public abstract Builder safetyRatings(Optional<List<SafetyRating>> safetyRatings);
+
     public abstract GenerateContentResponsePromptFeedback build();
+  }
+
+  /** Returns a TypeAdapter for GenerateContentResponsePromptFeedback. */
+  public static TypeAdapter<GenerateContentResponsePromptFeedback> typeAdapter(Gson gson) {
+    return new AutoValue_GenerateContentResponsePromptFeedback.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GenerateContentResponsePromptFeedback object. */

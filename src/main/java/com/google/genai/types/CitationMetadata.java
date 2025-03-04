@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Citation information when the model quotes another source. */
 @AutoValue
-@JsonDeserialize(builder = CitationMetadata.Builder.class)
 public abstract class CitationMetadata extends JsonSerializable {
   /**
    * Contains citation information when the model directly quotes, at length, from another source.
    * Can include traditional websites and code repositories.
    */
-  @JsonProperty("citations")
+  @SerializedName("citations")
   public abstract Optional<List<Citation>> citations();
 
   /** Instantiates a builder for CitationMetadata. */
@@ -48,16 +47,18 @@ public abstract class CitationMetadata extends JsonSerializable {
   /** Builder for CitationMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `CitationMetadata.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_CitationMetadata.Builder();
-    }
-
-    @JsonProperty("citations")
+    @SerializedName("citations")
     public abstract Builder citations(List<Citation> citations);
 
+    @SerializedName("citations")
+    public abstract Builder citations(Optional<List<Citation>> citations);
+
     public abstract CitationMetadata build();
+  }
+
+  /** Returns a TypeAdapter for CitationMetadata. */
+  public static TypeAdapter<CitationMetadata> typeAdapter(Gson gson) {
+    return new AutoValue_CitationMetadata.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a CitationMetadata object. */

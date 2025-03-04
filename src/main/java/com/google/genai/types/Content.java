@@ -18,22 +18,21 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Contains the multi-part content of a message. */
 @AutoValue
-@JsonDeserialize(builder = Content.Builder.class)
 public abstract class Content extends JsonSerializable {
   /**
    * List of parts that constitute a single message. Each part may have a different IANA MIME type.
    */
-  @JsonProperty("parts")
+  @SerializedName("parts")
   public abstract Optional<List<Part>> parts();
 
   /**
@@ -41,7 +40,7 @@ public abstract class Content extends JsonSerializable {
    * multi-turn conversations, otherwise can be left blank or unset. If role is not specified, SDK
    * will determine the role.
    */
-  @JsonProperty("role")
+  @SerializedName("role")
   public abstract Optional<String> role();
 
   /** Instantiates a builder for Content. */
@@ -55,19 +54,24 @@ public abstract class Content extends JsonSerializable {
   /** Builder for Content. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Content.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Content.Builder();
-    }
-
-    @JsonProperty("parts")
+    @SerializedName("parts")
     public abstract Builder parts(List<Part> parts);
 
-    @JsonProperty("role")
+    @SerializedName("parts")
+    public abstract Builder parts(Optional<List<Part>> parts);
+
+    @SerializedName("role")
     public abstract Builder role(String role);
 
+    @SerializedName("role")
+    public abstract Builder role(Optional<String> role);
+
     public abstract Content build();
+  }
+
+  /** Returns a TypeAdapter for Content. */
+  public static TypeAdapter<Content> typeAdapter(Gson gson) {
+    return new AutoValue_Content.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a Content object. */

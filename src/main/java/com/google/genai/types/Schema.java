@@ -18,11 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,83 +33,82 @@ import java.util.Optional;
  * <p>Represents a select subset of an OpenAPI 3.0 schema object.
  */
 @AutoValue
-@JsonDeserialize(builder = Schema.Builder.class)
 public abstract class Schema extends JsonSerializable {
   /** Optional. Minimum number of the elements for Type.ARRAY. */
-  @JsonProperty("minItems")
+  @SerializedName("minItems")
   public abstract Optional<Long> minItems();
 
   /** Optional. Example of the object. Will only populated when the object is the root. */
-  @JsonProperty("example")
+  @SerializedName("example")
   public abstract Optional<Object> example();
 
   /**
    * Optional. The order of the properties. Not a standard field in open api spec. Only used to
    * support the order of the properties.
    */
-  @JsonProperty("propertyOrdering")
+  @SerializedName("propertyOrdering")
   public abstract Optional<List<String>> propertyOrdering();
 
   /** Optional. Pattern of the Type.STRING to restrict a string to a regular expression. */
-  @JsonProperty("pattern")
+  @SerializedName("pattern")
   public abstract Optional<String> pattern();
 
   /**
    * Optional. SCHEMA FIELDS FOR TYPE INTEGER and NUMBER Minimum value of the Type.INTEGER and
    * Type.NUMBER
    */
-  @JsonProperty("minimum")
+  @SerializedName("minimum")
   public abstract Optional<Double> minimum();
 
   /** Optional. Default value of the data. */
-  @JsonProperty("default")
+  @SerializedName("default")
   public abstract Optional<Object> default_();
 
   /**
    * Optional. The value should be validated against any (one or more) of the subschemas in the
    * list.
    */
-  @JsonProperty("anyOf")
+  @SerializedName("anyOf")
   public abstract Optional<List<Schema>> anyOf();
 
   /** Optional. Maximum length of the Type.STRING */
-  @JsonProperty("maxLength")
+  @SerializedName("maxLength")
   public abstract Optional<Long> maxLength();
 
   /** Optional. The title of the Schema. */
-  @JsonProperty("title")
+  @SerializedName("title")
   public abstract Optional<String> title();
 
   /** Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the Type.STRING */
-  @JsonProperty("minLength")
+  @SerializedName("minLength")
   public abstract Optional<Long> minLength();
 
   /** Optional. Minimum number of the properties for Type.OBJECT. */
-  @JsonProperty("minProperties")
+  @SerializedName("minProperties")
   public abstract Optional<Long> minProperties();
 
   /** Optional. Maximum number of the elements for Type.ARRAY. */
-  @JsonProperty("maxItems")
+  @SerializedName("maxItems")
   public abstract Optional<Long> maxItems();
 
   /** Optional. Maximum value of the Type.INTEGER and Type.NUMBER */
-  @JsonProperty("maximum")
+  @SerializedName("maximum")
   public abstract Optional<Double> maximum();
 
   /** Optional. Indicates if the value may be null. */
-  @JsonProperty("nullable")
+  @SerializedName("nullable")
   public abstract Optional<Boolean> nullable();
 
   /** Optional. Maximum number of the properties for Type.OBJECT. */
-  @JsonProperty("maxProperties")
+  @SerializedName("maxProperties")
   public abstract Optional<Long> maxProperties();
 
   /** Optional. The type of the data. */
-  @JsonProperty("type")
+  @SerializedName("type")
   public abstract Optional<String> type();
 
   /** Optional. The description of the data. */
-  @JsonProperty("description")
+  @SerializedName("description")
   public abstract Optional<String> description();
 
   /**
@@ -117,26 +116,26 @@ public abstract class Schema extends JsonSerializable {
    * can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH", "SOUTH", "WEST"]} 2.
    * We can define apartment number as : {type:INTEGER, format:enum, enum:["101", "201", "301"]}
    */
-  @JsonProperty("enum")
+  @SerializedName("enum")
   public abstract Optional<List<String>> enum_();
 
   /**
    * Optional. The format of the data. Supported formats: for NUMBER type: "float", "double" for
    * INTEGER type: "int32", "int64" for STRING type: "email", "byte", etc
    */
-  @JsonProperty("format")
+  @SerializedName("format")
   public abstract Optional<String> format();
 
   /** Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY. */
-  @JsonProperty("items")
+  @SerializedName("items")
   public abstract Optional<Schema> items();
 
   /** Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT. */
-  @JsonProperty("properties")
+  @SerializedName("properties")
   public abstract Optional<Map<String, Schema>> properties();
 
   /** Optional. Required properties of Type.OBJECT. */
-  @JsonProperty("required")
+  @SerializedName("required")
   public abstract Optional<List<String>> required();
 
   /** Instantiates a builder for Schema. */
@@ -150,79 +149,144 @@ public abstract class Schema extends JsonSerializable {
   /** Builder for Schema. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Schema.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Schema.Builder();
-    }
-
-    @JsonProperty("minItems")
+    @SerializedName("minItems")
     public abstract Builder minItems(Long minItems);
 
-    @JsonProperty("example")
+    @SerializedName("minItems")
+    public abstract Builder minItems(Optional<Long> minItems);
+
+    @SerializedName("example")
     public abstract Builder example(Object example);
 
-    @JsonProperty("propertyOrdering")
+    @SerializedName("example")
+    public abstract Builder example(Optional<Object> example);
+
+    @SerializedName("propertyOrdering")
     public abstract Builder propertyOrdering(List<String> propertyOrdering);
 
-    @JsonProperty("pattern")
+    @SerializedName("propertyOrdering")
+    public abstract Builder propertyOrdering(Optional<List<String>> propertyOrdering);
+
+    @SerializedName("pattern")
     public abstract Builder pattern(String pattern);
 
-    @JsonProperty("minimum")
+    @SerializedName("pattern")
+    public abstract Builder pattern(Optional<String> pattern);
+
+    @SerializedName("minimum")
     public abstract Builder minimum(Double minimum);
 
-    @JsonProperty("default")
+    @SerializedName("minimum")
+    public abstract Builder minimum(Optional<Double> minimum);
+
+    @SerializedName("default")
     public abstract Builder default_(Object default_);
 
-    @JsonProperty("anyOf")
+    @SerializedName("default")
+    public abstract Builder default_(Optional<Object> default_);
+
+    @SerializedName("anyOf")
     public abstract Builder anyOf(List<Schema> anyOf);
 
-    @JsonProperty("maxLength")
+    @SerializedName("anyOf")
+    public abstract Builder anyOf(Optional<List<Schema>> anyOf);
+
+    @SerializedName("maxLength")
     public abstract Builder maxLength(Long maxLength);
 
-    @JsonProperty("title")
+    @SerializedName("maxLength")
+    public abstract Builder maxLength(Optional<Long> maxLength);
+
+    @SerializedName("title")
     public abstract Builder title(String title);
 
-    @JsonProperty("minLength")
+    @SerializedName("title")
+    public abstract Builder title(Optional<String> title);
+
+    @SerializedName("minLength")
     public abstract Builder minLength(Long minLength);
 
-    @JsonProperty("minProperties")
+    @SerializedName("minLength")
+    public abstract Builder minLength(Optional<Long> minLength);
+
+    @SerializedName("minProperties")
     public abstract Builder minProperties(Long minProperties);
 
-    @JsonProperty("maxItems")
+    @SerializedName("minProperties")
+    public abstract Builder minProperties(Optional<Long> minProperties);
+
+    @SerializedName("maxItems")
     public abstract Builder maxItems(Long maxItems);
 
-    @JsonProperty("maximum")
+    @SerializedName("maxItems")
+    public abstract Builder maxItems(Optional<Long> maxItems);
+
+    @SerializedName("maximum")
     public abstract Builder maximum(Double maximum);
 
-    @JsonProperty("nullable")
+    @SerializedName("maximum")
+    public abstract Builder maximum(Optional<Double> maximum);
+
+    @SerializedName("nullable")
     public abstract Builder nullable(boolean nullable);
 
-    @JsonProperty("maxProperties")
+    @SerializedName("nullable")
+    public abstract Builder nullable(Optional<Boolean> nullable);
+
+    @SerializedName("maxProperties")
     public abstract Builder maxProperties(Long maxProperties);
 
-    @JsonProperty("type")
+    @SerializedName("maxProperties")
+    public abstract Builder maxProperties(Optional<Long> maxProperties);
+
+    @SerializedName("type")
     public abstract Builder type(String type);
 
-    @JsonProperty("description")
+    @SerializedName("type")
+    public abstract Builder type(Optional<String> type);
+
+    @SerializedName("description")
     public abstract Builder description(String description);
 
-    @JsonProperty("enum")
+    @SerializedName("description")
+    public abstract Builder description(Optional<String> description);
+
+    @SerializedName("enum")
     public abstract Builder enum_(List<String> enum_);
 
-    @JsonProperty("format")
+    @SerializedName("enum")
+    public abstract Builder enum_(Optional<List<String>> enum_);
+
+    @SerializedName("format")
     public abstract Builder format(String format);
 
-    @JsonProperty("items")
+    @SerializedName("format")
+    public abstract Builder format(Optional<String> format);
+
+    @SerializedName("items")
     public abstract Builder items(Schema items);
 
-    @JsonProperty("properties")
+    @SerializedName("items")
+    public abstract Builder items(Optional<Schema> items);
+
+    @SerializedName("properties")
     public abstract Builder properties(Map<String, Schema> properties);
 
-    @JsonProperty("required")
+    @SerializedName("properties")
+    public abstract Builder properties(Optional<Map<String, Schema>> properties);
+
+    @SerializedName("required")
     public abstract Builder required(List<String> required);
 
+    @SerializedName("required")
+    public abstract Builder required(Optional<List<String>> required);
+
     public abstract Schema build();
+  }
+
+  /** Returns a TypeAdapter for Schema. */
+  public static TypeAdapter<Schema> typeAdapter(Gson gson) {
+    return new AutoValue_Schema.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a Schema object. */
