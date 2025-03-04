@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Candidate for the logprobs token and score. */
 @AutoValue
-@JsonDeserialize(builder = LogprobsResultCandidate.Builder.class)
 public abstract class LogprobsResultCandidate extends JsonSerializable {
   /** The candidate's log probability. */
-  @JsonProperty("logProbability")
+  @SerializedName("logProbability")
   public abstract Optional<Float> logProbability();
 
   /** The candidate's token string value. */
-  @JsonProperty("token")
+  @SerializedName("token")
   public abstract Optional<String> token();
 
   /** The candidate's token id value. */
-  @JsonProperty("tokenId")
+  @SerializedName("tokenId")
   public abstract Optional<Integer> tokenId();
 
   /** Instantiates a builder for LogprobsResultCandidate. */
@@ -52,22 +51,30 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
   /** Builder for LogprobsResultCandidate. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LogprobsResultCandidate.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LogprobsResultCandidate.Builder();
-    }
-
-    @JsonProperty("logProbability")
+    @SerializedName("logProbability")
     public abstract Builder logProbability(Float logProbability);
 
-    @JsonProperty("token")
+    @SerializedName("logProbability")
+    public abstract Builder logProbability(Optional<Float> logProbability);
+
+    @SerializedName("token")
     public abstract Builder token(String token);
 
-    @JsonProperty("tokenId")
+    @SerializedName("token")
+    public abstract Builder token(Optional<String> token);
+
+    @SerializedName("tokenId")
     public abstract Builder tokenId(Integer tokenId);
 
+    @SerializedName("tokenId")
+    public abstract Builder tokenId(Optional<Integer> tokenId);
+
     public abstract LogprobsResultCandidate build();
+  }
+
+  /** Returns a TypeAdapter for LogprobsResultCandidate. */
+  public static TypeAdapter<LogprobsResultCandidate> typeAdapter(Gson gson) {
+    return new AutoValue_LogprobsResultCandidate.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a LogprobsResultCandidate object. */

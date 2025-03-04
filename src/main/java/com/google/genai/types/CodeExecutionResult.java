@@ -18,11 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /**
@@ -30,17 +30,16 @@ import java.util.Optional;
  * [ExecutableCode].
  */
 @AutoValue
-@JsonDeserialize(builder = CodeExecutionResult.Builder.class)
 public abstract class CodeExecutionResult extends JsonSerializable {
   /** Required. Outcome of the code execution. */
-  @JsonProperty("outcome")
+  @SerializedName("outcome")
   public abstract Optional<String> outcome();
 
   /**
    * Optional. Contains stdout when code execution is successful, stderr or other description
    * otherwise.
    */
-  @JsonProperty("output")
+  @SerializedName("output")
   public abstract Optional<String> output();
 
   /** Instantiates a builder for CodeExecutionResult. */
@@ -54,19 +53,24 @@ public abstract class CodeExecutionResult extends JsonSerializable {
   /** Builder for CodeExecutionResult. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `CodeExecutionResult.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_CodeExecutionResult.Builder();
-    }
-
-    @JsonProperty("outcome")
+    @SerializedName("outcome")
     public abstract Builder outcome(String outcome);
 
-    @JsonProperty("output")
+    @SerializedName("outcome")
+    public abstract Builder outcome(Optional<String> outcome);
+
+    @SerializedName("output")
     public abstract Builder output(String output);
 
+    @SerializedName("output")
+    public abstract Builder output(Optional<String> output);
+
     public abstract CodeExecutionResult build();
+  }
+
+  /** Returns a TypeAdapter for CodeExecutionResult. */
+  public static TypeAdapter<CodeExecutionResult> typeAdapter(Gson gson) {
+    return new AutoValue_CodeExecutionResult.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a CodeExecutionResult object. */

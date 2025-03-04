@@ -18,31 +18,30 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** User-facing config UpscaleImageParameters. */
 @AutoValue
-@JsonDeserialize(builder = UpscaleImageParameters.Builder.class)
 public abstract class UpscaleImageParameters extends JsonSerializable {
   /** The model to use. */
-  @JsonProperty("model")
+  @SerializedName("model")
   public abstract Optional<String> model();
 
   /** The input image to upscale. */
-  @JsonProperty("image")
+  @SerializedName("image")
   public abstract Optional<Image> image();
 
   /** The factor to upscale the image (x2 or x4). */
-  @JsonProperty("upscaleFactor")
+  @SerializedName("upscaleFactor")
   public abstract Optional<String> upscaleFactor();
 
   /** Configuration for upscaling. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<UpscaleImageConfig> config();
 
   /** Instantiates a builder for UpscaleImageParameters. */
@@ -56,25 +55,36 @@ public abstract class UpscaleImageParameters extends JsonSerializable {
   /** Builder for UpscaleImageParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UpscaleImageParameters.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_UpscaleImageParameters.Builder();
-    }
-
-    @JsonProperty("model")
+    @SerializedName("model")
     public abstract Builder model(String model);
 
-    @JsonProperty("image")
+    @SerializedName("model")
+    public abstract Builder model(Optional<String> model);
+
+    @SerializedName("image")
     public abstract Builder image(Image image);
 
-    @JsonProperty("upscaleFactor")
+    @SerializedName("image")
+    public abstract Builder image(Optional<Image> image);
+
+    @SerializedName("upscaleFactor")
     public abstract Builder upscaleFactor(String upscaleFactor);
 
-    @JsonProperty("config")
+    @SerializedName("upscaleFactor")
+    public abstract Builder upscaleFactor(Optional<String> upscaleFactor);
+
+    @SerializedName("config")
     public abstract Builder config(UpscaleImageConfig config);
 
+    @SerializedName("config")
+    public abstract Builder config(Optional<UpscaleImageConfig> config);
+
     public abstract UpscaleImageParameters build();
+  }
+
+  /** Returns a TypeAdapter for UpscaleImageParameters. */
+  public static TypeAdapter<UpscaleImageParameters> typeAdapter(Gson gson) {
+    return new AutoValue_UpscaleImageParameters.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a UpscaleImageParameters object. */

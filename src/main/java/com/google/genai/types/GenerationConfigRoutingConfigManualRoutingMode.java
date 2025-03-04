@@ -18,19 +18,18 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** When manual routing is set, the specified model will be used directly. */
 @AutoValue
-@JsonDeserialize(builder = GenerationConfigRoutingConfigManualRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigManualRoutingMode extends JsonSerializable {
   /** The model name to use. Only the public LLM models are accepted. e.g. 'gemini-1.5-pro-001'. */
-  @JsonProperty("modelName")
+  @SerializedName("modelName")
   public abstract Optional<String> modelName();
 
   /** Instantiates a builder for GenerationConfigRoutingConfigManualRoutingMode. */
@@ -44,19 +43,18 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
   /** Builder for GenerationConfigRoutingConfigManualRoutingMode. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GenerationConfigRoutingConfigManualRoutingMode.builder()` for
-     * instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerationConfigRoutingConfigManualRoutingMode.Builder();
-    }
-
-    @JsonProperty("modelName")
+    @SerializedName("modelName")
     public abstract Builder modelName(String modelName);
 
+    @SerializedName("modelName")
+    public abstract Builder modelName(Optional<String> modelName);
+
     public abstract GenerationConfigRoutingConfigManualRoutingMode build();
+  }
+
+  /** Returns a TypeAdapter for GenerationConfigRoutingConfigManualRoutingMode. */
+  public static TypeAdapter<GenerationConfigRoutingConfigManualRoutingMode> typeAdapter(Gson gson) {
+    return new AutoValue_GenerationConfigRoutingConfigManualRoutingMode.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfigManualRoutingMode object. */

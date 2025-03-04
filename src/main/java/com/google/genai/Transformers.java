@@ -16,8 +16,6 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Content;
 import com.google.genai.types.Part;
@@ -26,10 +24,14 @@ import com.google.genai.types.Schema;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.Tool;
 import com.google.genai.types.VoiceConfig;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import java.util.List;
+import java.util.Optional;
 
 /** Transformers for GenAI SDK. */
 final class Transformers {
+  private static final TypeToken<List<Content>> TYPE_TOKEN = new TypeToken<List<Content>>() {};
 
   private Transformers() {}
 
@@ -46,8 +48,8 @@ final class Transformers {
       return null;
     } else if (origin instanceof String) {
       model = (String) origin;
-    } else if (origin instanceof JsonNode) {
-      model = JsonSerializable.toJsonString((JsonNode) origin);
+    } else if (origin instanceof JsonElement) {
+      model = JsonSerializable.getGson().toJson(origin);
       model = model.replace("\"", "");
     } else {
       throw new IllegalArgumentException("Unsupported model type: " + origin.getClass());
@@ -88,16 +90,18 @@ final class Transformers {
     if (contents instanceof String) {
       return ImmutableList.of(
           Content.builder()
-              .role("user")
-              .parts(ImmutableList.of(Part.builder().text((String) contents).build()))
+              .role(Optional.of("user"))
+              .parts(
+                  Optional.of(
+                      ImmutableList.of(
+                          Part.builder().text(Optional.of((String) contents)).build())))
               .build());
     } else if (contents instanceof Content) {
       return ImmutableList.of((Content) contents);
     } else if (contents instanceof List) {
       return (List<Content>) contents;
-    } else if (contents instanceof JsonNode) {
-      return JsonSerializable.objectMapper.convertValue(
-          (JsonNode) contents, new TypeReference<List<Content>>() {});
+    } else if (contents instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) contents, TYPE_TOKEN.getType());
     }
 
     throw new IllegalArgumentException("Unsupported contents type: " + contents.getClass());
@@ -116,13 +120,15 @@ final class Transformers {
       return null;
     } else if (content instanceof String) {
       return Content.builder()
-          .role("user")
-          .parts(ImmutableList.of(Part.builder().text((String) content).build()))
+          .role(Optional.of("user"))
+          .parts(
+              Optional.of(
+                  ImmutableList.of(Part.builder().text(Optional.of((String) content)).build())))
           .build();
     } else if (content instanceof Content) {
       return (Content) content;
-    } else if (content instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) content, Content.class);
+    } else if (content instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) content, Content.class);
     }
 
     throw new IllegalArgumentException("Unsupported content type: " + content.getClass());
@@ -134,8 +140,8 @@ final class Transformers {
       return null;
     } else if (origin instanceof Schema) {
       return (Schema) origin;
-    } else if (origin instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class);
+    } else if (origin instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) origin, Schema.class);
     }
 
     throw new IllegalArgumentException("Unsupported schema type: " + origin.getClass());
@@ -147,15 +153,19 @@ final class Transformers {
     } else if (speechConfig instanceof String) {
       return SpeechConfig.builder()
           .voiceConfig(
-              VoiceConfig.builder()
-                  .prebuiltVoiceConfig(
-                      PrebuiltVoiceConfig.builder().voiceName((String) speechConfig).build())
-                  .build())
+              Optional.of(
+                  VoiceConfig.builder()
+                      .prebuiltVoiceConfig(
+                          Optional.of(
+                              PrebuiltVoiceConfig.builder()
+                                  .voiceName(Optional.of((String) speechConfig))
+                                  .build()))
+                      .build()))
           .build();
     } else if (speechConfig instanceof SpeechConfig) {
       return (SpeechConfig) speechConfig;
-    } else if (speechConfig instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) speechConfig, SpeechConfig.class);
+    } else if (speechConfig instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) speechConfig, SpeechConfig.class);
     }
 
     throw new IllegalArgumentException("Unsupported speechConfig type:" + speechConfig.getClass());
@@ -168,9 +178,8 @@ final class Transformers {
       return null;
     } else if (origin instanceof List) {
       return (List<Tool>) origin;
-    } else if (origin instanceof JsonNode) {
-      return JsonSerializable.objectMapper.convertValue(
-          (JsonNode) origin, new TypeReference<List<Tool>>() {});
+    } else if (origin instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) origin, List.class);
     }
 
     throw new IllegalArgumentException("Unsupported tools type: " + origin.getClass());
@@ -182,9 +191,8 @@ final class Transformers {
       return null;
     } else if (origin instanceof Tool) {
       return (Tool) origin;
-    } else if (origin instanceof JsonNode) {
-      return JsonSerializable.objectMapper.convertValue(
-          (JsonNode) origin, new TypeReference<Tool>() {});
+    } else if (origin instanceof JsonElement) {
+      return JsonSerializable.getGson().fromJson((JsonElement) origin, Tool.class);
     }
 
     throw new IllegalArgumentException("Unsupported tool type: " + origin.getClass());
@@ -202,8 +210,8 @@ final class Transformers {
       return null;
     } else if (origin instanceof String) {
       return getResourceName(apiClient, (String) origin, "cachedContents");
-    } else if (origin instanceof JsonNode) {
-      String cachedContentName = JsonSerializable.toJsonString((JsonNode) origin);
+    } else if (origin instanceof JsonElement) {
+      String cachedContentName = JsonSerializable.getGson().toJson(origin);
       cachedContentName = cachedContentName.replace("\"", "");
       return getResourceName(apiClient, cachedContentName, "cachedContents");
     }

@@ -18,11 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /**
@@ -31,14 +31,13 @@ import java.util.Optional;
  * [Mode.CODE].
  */
 @AutoValue
-@JsonDeserialize(builder = ExecutableCode.Builder.class)
 public abstract class ExecutableCode extends JsonSerializable {
   /** Required. The code to be executed. */
-  @JsonProperty("code")
+  @SerializedName("code")
   public abstract Optional<String> code();
 
   /** Required. Programming language of the `code`. */
-  @JsonProperty("language")
+  @SerializedName("language")
   public abstract Optional<String> language();
 
   /** Instantiates a builder for ExecutableCode. */
@@ -52,19 +51,24 @@ public abstract class ExecutableCode extends JsonSerializable {
   /** Builder for ExecutableCode. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ExecutableCode.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ExecutableCode.Builder();
-    }
-
-    @JsonProperty("code")
+    @SerializedName("code")
     public abstract Builder code(String code);
 
-    @JsonProperty("language")
+    @SerializedName("code")
+    public abstract Builder code(Optional<String> code);
+
+    @SerializedName("language")
     public abstract Builder language(String language);
 
+    @SerializedName("language")
+    public abstract Builder language(Optional<String> language);
+
     public abstract ExecutableCode build();
+  }
+
+  /** Returns a TypeAdapter for ExecutableCode. */
+  public static TypeAdapter<ExecutableCode> typeAdapter(Gson gson) {
+    return new AutoValue_ExecutableCode.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a ExecutableCode object. */

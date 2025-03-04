@@ -18,39 +18,38 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Source attributions for content. */
 @AutoValue
-@JsonDeserialize(builder = Citation.Builder.class)
 public abstract class Citation extends JsonSerializable {
   /** Output only. End index into the content. */
-  @JsonProperty("endIndex")
+  @SerializedName("endIndex")
   public abstract Optional<Integer> endIndex();
 
   /** Output only. License of the attribution. */
-  @JsonProperty("license")
+  @SerializedName("license")
   public abstract Optional<String> license();
 
   /** Output only. Publication date of the attribution. */
-  @JsonProperty("publicationDate")
+  @SerializedName("publicationDate")
   public abstract Optional<GoogleTypeDate> publicationDate();
 
   /** Output only. Start index into the content. */
-  @JsonProperty("startIndex")
+  @SerializedName("startIndex")
   public abstract Optional<Integer> startIndex();
 
   /** Output only. Title of the attribution. */
-  @JsonProperty("title")
+  @SerializedName("title")
   public abstract Optional<String> title();
 
   /** Output only. Url reference of the attribution. */
-  @JsonProperty("uri")
+  @SerializedName("uri")
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for Citation. */
@@ -64,31 +63,48 @@ public abstract class Citation extends JsonSerializable {
   /** Builder for Citation. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Citation.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Citation.Builder();
-    }
-
-    @JsonProperty("endIndex")
+    @SerializedName("endIndex")
     public abstract Builder endIndex(Integer endIndex);
 
-    @JsonProperty("license")
+    @SerializedName("endIndex")
+    public abstract Builder endIndex(Optional<Integer> endIndex);
+
+    @SerializedName("license")
     public abstract Builder license(String license);
 
-    @JsonProperty("publicationDate")
+    @SerializedName("license")
+    public abstract Builder license(Optional<String> license);
+
+    @SerializedName("publicationDate")
     public abstract Builder publicationDate(GoogleTypeDate publicationDate);
 
-    @JsonProperty("startIndex")
+    @SerializedName("publicationDate")
+    public abstract Builder publicationDate(Optional<GoogleTypeDate> publicationDate);
+
+    @SerializedName("startIndex")
     public abstract Builder startIndex(Integer startIndex);
 
-    @JsonProperty("title")
+    @SerializedName("startIndex")
+    public abstract Builder startIndex(Optional<Integer> startIndex);
+
+    @SerializedName("title")
     public abstract Builder title(String title);
 
-    @JsonProperty("uri")
+    @SerializedName("title")
+    public abstract Builder title(Optional<String> title);
+
+    @SerializedName("uri")
     public abstract Builder uri(String uri);
 
+    @SerializedName("uri")
+    public abstract Builder uri(Optional<String> uri);
+
     public abstract Citation build();
+  }
+
+  /** Returns a TypeAdapter for Citation. */
+  public static TypeAdapter<Citation> typeAdapter(Gson gson) {
+    return new AutoValue_Citation.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a Citation object. */

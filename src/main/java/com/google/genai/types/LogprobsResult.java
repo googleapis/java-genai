@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Logprobs Result */
 @AutoValue
-@JsonDeserialize(builder = LogprobsResult.Builder.class)
 public abstract class LogprobsResult extends JsonSerializable {
   /**
    * Length = total number of decoding steps. The chosen candidates may or may not be in
    * top_candidates.
    */
-  @JsonProperty("chosenCandidates")
+  @SerializedName("chosenCandidates")
   public abstract Optional<List<LogprobsResultCandidate>> chosenCandidates();
 
   /** Length = total number of decoding steps. */
-  @JsonProperty("topCandidates")
+  @SerializedName("topCandidates")
   public abstract Optional<List<LogprobsResultTopCandidates>> topCandidates();
 
   /** Instantiates a builder for LogprobsResult. */
@@ -52,19 +51,26 @@ public abstract class LogprobsResult extends JsonSerializable {
   /** Builder for LogprobsResult. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LogprobsResult.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LogprobsResult.Builder();
-    }
-
-    @JsonProperty("chosenCandidates")
+    @SerializedName("chosenCandidates")
     public abstract Builder chosenCandidates(List<LogprobsResultCandidate> chosenCandidates);
 
-    @JsonProperty("topCandidates")
+    @SerializedName("chosenCandidates")
+    public abstract Builder chosenCandidates(
+        Optional<List<LogprobsResultCandidate>> chosenCandidates);
+
+    @SerializedName("topCandidates")
     public abstract Builder topCandidates(List<LogprobsResultTopCandidates> topCandidates);
 
+    @SerializedName("topCandidates")
+    public abstract Builder topCandidates(
+        Optional<List<LogprobsResultTopCandidates>> topCandidates);
+
     public abstract LogprobsResult build();
+  }
+
+  /** Returns a TypeAdapter for LogprobsResult. */
+  public static TypeAdapter<LogprobsResult> typeAdapter(Gson gson) {
+    return new AutoValue_LogprobsResult.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a LogprobsResult object. */

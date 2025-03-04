@@ -18,33 +18,32 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 /** Represents a single response in a replay. */
 @AutoValue
-@JsonDeserialize(builder = ReplayResponse.Builder.class)
 public abstract class ReplayResponse extends JsonSerializable {
   /** */
-  @JsonProperty("statusCode")
+  @SerializedName("statusCode")
   public abstract Optional<Integer> statusCode();
 
   /** */
-  @JsonProperty("headers")
+  @SerializedName("headers")
   public abstract Optional<Map<String, String>> headers();
 
   /** */
-  @JsonProperty("bodySegments")
+  @SerializedName("bodySegments")
   public abstract Optional<List<Map<String, Object>>> bodySegments();
 
   /** */
-  @JsonProperty("sdkResponseSegments")
+  @SerializedName("sdkResponseSegments")
   public abstract Optional<List<Map<String, Object>>> sdkResponseSegments();
 
   /** Instantiates a builder for ReplayResponse. */
@@ -58,25 +57,37 @@ public abstract class ReplayResponse extends JsonSerializable {
   /** Builder for ReplayResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ReplayResponse.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ReplayResponse.Builder();
-    }
-
-    @JsonProperty("statusCode")
+    @SerializedName("statusCode")
     public abstract Builder statusCode(Integer statusCode);
 
-    @JsonProperty("headers")
+    @SerializedName("statusCode")
+    public abstract Builder statusCode(Optional<Integer> statusCode);
+
+    @SerializedName("headers")
     public abstract Builder headers(Map<String, String> headers);
 
-    @JsonProperty("bodySegments")
+    @SerializedName("headers")
+    public abstract Builder headers(Optional<Map<String, String>> headers);
+
+    @SerializedName("bodySegments")
     public abstract Builder bodySegments(List<Map<String, Object>> bodySegments);
 
-    @JsonProperty("sdkResponseSegments")
+    @SerializedName("bodySegments")
+    public abstract Builder bodySegments(Optional<List<Map<String, Object>>> bodySegments);
+
+    @SerializedName("sdkResponseSegments")
     public abstract Builder sdkResponseSegments(List<Map<String, Object>> sdkResponseSegments);
 
+    @SerializedName("sdkResponseSegments")
+    public abstract Builder sdkResponseSegments(
+        Optional<List<Map<String, Object>>> sdkResponseSegments);
+
     public abstract ReplayResponse build();
+  }
+
+  /** Returns a TypeAdapter for ReplayResponse. */
+  public static TypeAdapter<ReplayResponse> typeAdapter(Gson gson) {
+    return new AutoValue_ReplayResponse.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a ReplayResponse object. */

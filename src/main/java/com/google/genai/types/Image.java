@@ -18,33 +18,32 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** An image. */
 @AutoValue
-@JsonDeserialize(builder = Image.Builder.class)
 public abstract class Image extends JsonSerializable {
   /**
    * The Cloud Storage URI of the image. ``Image`` can contain a value for this field or the
    * ``image_bytes`` field but not both.
    */
-  @JsonProperty("gcsUri")
+  @SerializedName("gcsUri")
   public abstract Optional<String> gcsUri();
 
   /**
    * The image bytes data. ``Image`` can contain a value for this field or the ``gcs_uri`` field but
    * not both.
    */
-  @JsonProperty("imageBytes")
+  @SerializedName("imageBytes")
   public abstract Optional<String> imageBytes();
 
   /** The MIME type of the image. */
-  @JsonProperty("mimeType")
+  @SerializedName("mimeType")
   public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for Image. */
@@ -58,22 +57,30 @@ public abstract class Image extends JsonSerializable {
   /** Builder for Image. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Image.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Image.Builder();
-    }
-
-    @JsonProperty("gcsUri")
+    @SerializedName("gcsUri")
     public abstract Builder gcsUri(String gcsUri);
 
-    @JsonProperty("imageBytes")
+    @SerializedName("gcsUri")
+    public abstract Builder gcsUri(Optional<String> gcsUri);
+
+    @SerializedName("imageBytes")
     public abstract Builder imageBytes(String imageBytes);
 
-    @JsonProperty("mimeType")
+    @SerializedName("imageBytes")
+    public abstract Builder imageBytes(Optional<String> imageBytes);
+
+    @SerializedName("mimeType")
     public abstract Builder mimeType(String mimeType);
 
+    @SerializedName("mimeType")
+    public abstract Builder mimeType(Optional<String> mimeType);
+
     public abstract Image build();
+  }
+
+  /** Returns a TypeAdapter for Image. */
+  public static TypeAdapter<Image> typeAdapter(Gson gson) {
+    return new AutoValue_Image.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a Image object. */

@@ -18,34 +18,33 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Configuration for a Mask reference image. */
 @AutoValue
-@JsonDeserialize(builder = MaskReferenceConfig.Builder.class)
 public abstract class MaskReferenceConfig extends JsonSerializable {
   /**
    * Prompts the model to generate a mask instead of you needing to provide one (unless
    * MASK_MODE_USER_PROVIDED is used).
    */
-  @JsonProperty("maskMode")
+  @SerializedName("maskMode")
   public abstract Optional<String> maskMode();
 
   /**
    * A list of up to 5 class ids to use for semantic segmentation. Automatically creates an image
    * mask based on specific objects.
    */
-  @JsonProperty("segmentationClasses")
+  @SerializedName("segmentationClasses")
   public abstract Optional<List<Integer>> segmentationClasses();
 
   /** Dilation percentage of the mask provided. Float between 0 and 1. */
-  @JsonProperty("maskDilation")
+  @SerializedName("maskDilation")
   public abstract Optional<Float> maskDilation();
 
   /** Instantiates a builder for MaskReferenceConfig. */
@@ -59,22 +58,30 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
   /** Builder for MaskReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `MaskReferenceConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_MaskReferenceConfig.Builder();
-    }
-
-    @JsonProperty("maskMode")
+    @SerializedName("maskMode")
     public abstract Builder maskMode(String maskMode);
 
-    @JsonProperty("segmentationClasses")
+    @SerializedName("maskMode")
+    public abstract Builder maskMode(Optional<String> maskMode);
+
+    @SerializedName("segmentationClasses")
     public abstract Builder segmentationClasses(List<Integer> segmentationClasses);
 
-    @JsonProperty("maskDilation")
+    @SerializedName("segmentationClasses")
+    public abstract Builder segmentationClasses(Optional<List<Integer>> segmentationClasses);
+
+    @SerializedName("maskDilation")
     public abstract Builder maskDilation(Float maskDilation);
 
+    @SerializedName("maskDilation")
+    public abstract Builder maskDilation(Optional<Float> maskDilation);
+
     public abstract MaskReferenceConfig build();
+  }
+
+  /** Returns a TypeAdapter for MaskReferenceConfig. */
+  public static TypeAdapter<MaskReferenceConfig> typeAdapter(Gson gson) {
+    return new AutoValue_MaskReferenceConfig.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a MaskReferenceConfig object. */

@@ -18,32 +18,31 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 import java.util.Optional;
 
 /** HTTP options to be used in each of the requests. */
 @AutoValue
-@JsonDeserialize(builder = HttpOptions.Builder.class)
 public abstract class HttpOptions extends JsonSerializable {
   /** The base URL for the AI platform service endpoint. */
-  @JsonProperty("baseUrl")
+  @SerializedName("baseUrl")
   public abstract Optional<String> baseUrl();
 
   /** Specifies the version of the API to use. */
-  @JsonProperty("apiVersion")
+  @SerializedName("apiVersion")
   public abstract Optional<String> apiVersion();
 
   /** Additional HTTP headers to be sent with the request. */
-  @JsonProperty("headers")
+  @SerializedName("headers")
   public abstract Optional<Map<String, String>> headers();
 
   /** Timeout for the request in milliseconds. */
-  @JsonProperty("timeout")
+  @SerializedName("timeout")
   public abstract Optional<Integer> timeout();
 
   /** Instantiates a builder for HttpOptions. */
@@ -57,25 +56,36 @@ public abstract class HttpOptions extends JsonSerializable {
   /** Builder for HttpOptions. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `HttpOptions.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_HttpOptions.Builder();
-    }
-
-    @JsonProperty("baseUrl")
+    @SerializedName("baseUrl")
     public abstract Builder baseUrl(String baseUrl);
 
-    @JsonProperty("apiVersion")
+    @SerializedName("baseUrl")
+    public abstract Builder baseUrl(Optional<String> baseUrl);
+
+    @SerializedName("apiVersion")
     public abstract Builder apiVersion(String apiVersion);
 
-    @JsonProperty("headers")
+    @SerializedName("apiVersion")
+    public abstract Builder apiVersion(Optional<String> apiVersion);
+
+    @SerializedName("headers")
     public abstract Builder headers(Map<String, String> headers);
 
-    @JsonProperty("timeout")
+    @SerializedName("headers")
+    public abstract Builder headers(Optional<Map<String, String>> headers);
+
+    @SerializedName("timeout")
     public abstract Builder timeout(Integer timeout);
 
+    @SerializedName("timeout")
+    public abstract Builder timeout(Optional<Integer> timeout);
+
     public abstract HttpOptions build();
+  }
+
+  /** Returns a TypeAdapter for HttpOptions. */
+  public static TypeAdapter<HttpOptions> typeAdapter(Gson gson) {
+    return new AutoValue_HttpOptions.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a HttpOptions object. */

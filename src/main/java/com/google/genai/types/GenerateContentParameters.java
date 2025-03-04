@@ -18,31 +18,30 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Optional;
 
 /** Config for models.generate_content parameters. */
 @AutoValue
-@JsonDeserialize(builder = GenerateContentParameters.Builder.class)
 public abstract class GenerateContentParameters extends JsonSerializable {
   /**
    * ID of the model to use. For a list of models, see `Google models
    * <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>`_.
    */
-  @JsonProperty("model")
+  @SerializedName("model")
   public abstract Optional<String> model();
 
   /** Content of the request. */
-  @JsonProperty("contents")
+  @SerializedName("contents")
   public abstract Optional<List<Content>> contents();
 
   /** Configuration that contains optional model parameters. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<GenerateContentConfig> config();
 
   /** Instantiates a builder for GenerateContentParameters. */
@@ -56,22 +55,30 @@ public abstract class GenerateContentParameters extends JsonSerializable {
   /** Builder for GenerateContentParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GenerateContentParameters.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateContentParameters.Builder();
-    }
-
-    @JsonProperty("model")
+    @SerializedName("model")
     public abstract Builder model(String model);
 
-    @JsonProperty("contents")
+    @SerializedName("model")
+    public abstract Builder model(Optional<String> model);
+
+    @SerializedName("contents")
     public abstract Builder contents(List<Content> contents);
 
-    @JsonProperty("config")
+    @SerializedName("contents")
+    public abstract Builder contents(Optional<List<Content>> contents);
+
+    @SerializedName("config")
     public abstract Builder config(GenerateContentConfig config);
 
+    @SerializedName("config")
+    public abstract Builder config(Optional<GenerateContentConfig> config);
+
     public abstract GenerateContentParameters build();
+  }
+
+  /** Returns a TypeAdapter for GenerateContentParameters. */
+  public static TypeAdapter<GenerateContentParameters> typeAdapter(Gson gson) {
+    return new AutoValue_GenerateContentParameters.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a GenerateContentParameters object. */

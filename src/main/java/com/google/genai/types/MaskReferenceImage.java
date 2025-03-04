@@ -18,11 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /**
@@ -35,22 +35,21 @@ import java.util.Optional;
  * user provides a mask image, the mask must be in the same dimensions as the raw image.
  */
 @AutoValue
-@JsonDeserialize(builder = MaskReferenceImage.Builder.class)
 public abstract class MaskReferenceImage extends JsonSerializable {
   /** The reference image for the editing operation. */
-  @JsonProperty("referenceImage")
+  @SerializedName("referenceImage")
   public abstract Optional<Image> referenceImage();
 
   /** The id of the reference image. */
-  @JsonProperty("referenceId")
+  @SerializedName("referenceId")
   public abstract Optional<Integer> referenceId();
 
   /** The type of the reference image. Only set by the SDK. */
-  @JsonProperty("referenceType")
+  @SerializedName("referenceType")
   public abstract Optional<String> referenceType();
 
   /** Configuration for the mask reference image. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<MaskReferenceConfig> config();
 
   /** Instantiates a builder for MaskReferenceImage. */
@@ -64,25 +63,36 @@ public abstract class MaskReferenceImage extends JsonSerializable {
   /** Builder for MaskReferenceImage. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `MaskReferenceImage.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_MaskReferenceImage.Builder();
-    }
-
-    @JsonProperty("referenceImage")
+    @SerializedName("referenceImage")
     public abstract Builder referenceImage(Image referenceImage);
 
-    @JsonProperty("referenceId")
+    @SerializedName("referenceImage")
+    public abstract Builder referenceImage(Optional<Image> referenceImage);
+
+    @SerializedName("referenceId")
     public abstract Builder referenceId(Integer referenceId);
 
-    @JsonProperty("referenceType")
+    @SerializedName("referenceId")
+    public abstract Builder referenceId(Optional<Integer> referenceId);
+
+    @SerializedName("referenceType")
     public abstract Builder referenceType(String referenceType);
 
-    @JsonProperty("config")
+    @SerializedName("referenceType")
+    public abstract Builder referenceType(Optional<String> referenceType);
+
+    @SerializedName("config")
     public abstract Builder config(MaskReferenceConfig config);
 
+    @SerializedName("config")
+    public abstract Builder config(Optional<MaskReferenceConfig> config);
+
     public abstract MaskReferenceImage build();
+  }
+
+  /** Returns a TypeAdapter for MaskReferenceImage. */
+  public static TypeAdapter<MaskReferenceImage> typeAdapter(Gson gson) {
+    return new AutoValue_MaskReferenceImage.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a MaskReferenceImage object. */

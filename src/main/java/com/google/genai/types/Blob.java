@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 import java.util.Optional;
 
 /** Content blob. */
 @AutoValue
-@JsonDeserialize(builder = Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
   /** Required. Raw bytes. */
-  @JsonProperty("data")
+  @SerializedName("data")
   public abstract Optional<String> data();
 
   /** Required. The IANA standard MIME type of the source data. */
-  @JsonProperty("mimeType")
+  @SerializedName("mimeType")
   public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for Blob. */
@@ -48,19 +47,24 @@ public abstract class Blob extends JsonSerializable {
   /** Builder for Blob. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Blob.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Blob.Builder();
-    }
-
-    @JsonProperty("data")
+    @SerializedName("data")
     public abstract Builder data(String data);
 
-    @JsonProperty("mimeType")
+    @SerializedName("data")
+    public abstract Builder data(Optional<String> data);
+
+    @SerializedName("mimeType")
     public abstract Builder mimeType(String mimeType);
 
+    @SerializedName("mimeType")
+    public abstract Builder mimeType(Optional<String> mimeType);
+
     public abstract Blob build();
+  }
+
+  /** Returns a TypeAdapter for Blob. */
+  public static TypeAdapter<Blob> typeAdapter(Gson gson) {
+    return new AutoValue_Blob.GsonTypeAdapter(gson);
   }
 
   /** Deserializes a JSON string to a Blob object. */
