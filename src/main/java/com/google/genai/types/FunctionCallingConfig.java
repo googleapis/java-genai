@@ -18,20 +18,19 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Function calling config. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = FunctionCallingConfig.Builder.class)
 public abstract class FunctionCallingConfig extends JsonSerializable {
   /** Optional. Function calling mode. */
-  @JsonProperty("mode")
+  @SerializedName("mode")
   public abstract Optional<String> mode();
 
   /**
@@ -39,7 +38,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
    * [FunctionDeclaration.name]. With mode set to ANY, model will predict a function call from the
    * set of function names provided.
    */
-  @JsonProperty("allowedFunctionNames")
+  @SerializedName("allowedFunctionNames")
   public abstract Optional<List<String>> allowedFunctionNames();
 
   /** Instantiates a builder for FunctionCallingConfig. */
@@ -53,17 +52,17 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   /** Builder for FunctionCallingConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FunctionCallingConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_FunctionCallingConfig.Builder();
-    }
-
-    @JsonProperty("mode")
+    @SerializedName("mode")
     public abstract Builder mode(String mode);
 
-    @JsonProperty("allowedFunctionNames")
+    @SerializedName("mode")
+    abstract Builder mode(Optional<String> mode);
+
+    @SerializedName("allowedFunctionNames")
     public abstract Builder allowedFunctionNames(List<String> allowedFunctionNames);
+
+    @SerializedName("allowedFunctionNames")
+    abstract Builder allowedFunctionNames(Optional<List<String>> allowedFunctionNames);
 
     public abstract FunctionCallingConfig build();
   }

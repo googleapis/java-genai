@@ -18,14 +18,13 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 
 /** Sent in response to a `LiveGenerateContentSetup` message from the client. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveServerSetupComplete.Builder.class)
 public abstract class LiveServerSetupComplete extends JsonSerializable {
   /** Instantiates a builder for LiveServerSetupComplete. */
   public static Builder builder() {
@@ -38,12 +37,6 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
   /** Builder for LiveServerSetupComplete. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveServerSetupComplete.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveServerSetupComplete.Builder();
-    }
-
     public abstract LiveServerSetupComplete build();
   }
 

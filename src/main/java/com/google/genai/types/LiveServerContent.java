@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -31,11 +30,11 @@ import java.util.Optional;
  * <p>Content is generated as quickly as possible, and not in real time. Clients may choose to
  * buffer and play it out in real time.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveServerContent.Builder.class)
 public abstract class LiveServerContent extends JsonSerializable {
   /** The content that the model has generated as part of the current conversation with the user. */
-  @JsonProperty("modelTurn")
+  @SerializedName("modelTurn")
   public abstract Optional<Content> modelTurn();
 
   /**
@@ -43,7 +42,7 @@ public abstract class LiveServerContent extends JsonSerializable {
    * additional client messages. Can be set alongside `content`, indicating that the `content` is
    * the last in the turn.
    */
-  @JsonProperty("turnComplete")
+  @SerializedName("turnComplete")
   public abstract Optional<Boolean> turnComplete();
 
   /**
@@ -51,7 +50,7 @@ public abstract class LiveServerContent extends JsonSerializable {
    * client is playing out the content in realtime, this is a good signal to stop and empty the
    * current queue.
    */
-  @JsonProperty("interrupted")
+  @SerializedName("interrupted")
   public abstract Optional<Boolean> interrupted();
 
   /** Instantiates a builder for LiveServerContent. */
@@ -65,20 +64,23 @@ public abstract class LiveServerContent extends JsonSerializable {
   /** Builder for LiveServerContent. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveServerContent.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveServerContent.Builder();
-    }
-
-    @JsonProperty("modelTurn")
+    @SerializedName("modelTurn")
     public abstract Builder modelTurn(Content modelTurn);
 
-    @JsonProperty("turnComplete")
+    @SerializedName("modelTurn")
+    abstract Builder modelTurn(Optional<Content> modelTurn);
+
+    @SerializedName("turnComplete")
     public abstract Builder turnComplete(boolean turnComplete);
 
-    @JsonProperty("interrupted")
+    @SerializedName("turnComplete")
+    abstract Builder turnComplete(Optional<Boolean> turnComplete);
+
+    @SerializedName("interrupted")
     public abstract Builder interrupted(boolean interrupted);
+
+    @SerializedName("interrupted")
+    abstract Builder interrupted(Optional<Boolean> interrupted);
 
     public abstract LiveServerContent build();
   }

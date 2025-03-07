@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,11 +38,11 @@ import java.util.Optional;
  * from the model. - Is always assumed to be the user's input (cannot be used to populate
  * conversation history).
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveClientRealtimeInput.Builder.class)
 public abstract class LiveClientRealtimeInput extends JsonSerializable {
   /** Inlined bytes data for media input. */
-  @JsonProperty("mediaChunks")
+  @SerializedName("mediaChunks")
   public abstract Optional<List<Blob>> mediaChunks();
 
   /** Instantiates a builder for LiveClientRealtimeInput. */
@@ -57,14 +56,11 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
   /** Builder for LiveClientRealtimeInput. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveClientRealtimeInput.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveClientRealtimeInput.Builder();
-    }
-
-    @JsonProperty("mediaChunks")
+    @SerializedName("mediaChunks")
     public abstract Builder mediaChunks(List<Blob> mediaChunks);
+
+    @SerializedName("mediaChunks")
+    abstract Builder mediaChunks(Optional<List<Blob>> mediaChunks);
 
     public abstract LiveClientRealtimeInput build();
   }

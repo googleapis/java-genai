@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Chunk from the web. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GroundingChunkWeb.Builder.class)
 public abstract class GroundingChunkWeb extends JsonSerializable {
   /** Title of the chunk. */
-  @JsonProperty("title")
+  @SerializedName("title")
   public abstract Optional<String> title();
 
   /** URI reference of the chunk. */
-  @JsonProperty("uri")
+  @SerializedName("uri")
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkWeb. */
@@ -48,17 +47,17 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
   /** Builder for GroundingChunkWeb. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GroundingChunkWeb.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GroundingChunkWeb.Builder();
-    }
-
-    @JsonProperty("title")
+    @SerializedName("title")
     public abstract Builder title(String title);
 
-    @JsonProperty("uri")
+    @SerializedName("title")
+    abstract Builder title(Optional<String> title);
+
+    @SerializedName("uri")
     public abstract Builder uri(String uri);
+
+    @SerializedName("uri")
+    abstract Builder uri(Optional<String> uri);
 
     public abstract GroundingChunkWeb build();
   }

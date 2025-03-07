@@ -18,37 +18,36 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Segment of the content. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = Segment.Builder.class)
 public abstract class Segment extends JsonSerializable {
   /**
    * Output only. End index in the given Part, measured in bytes. Offset from the start of the Part,
    * exclusive, starting at zero.
    */
-  @JsonProperty("endIndex")
+  @SerializedName("endIndex")
   public abstract Optional<Integer> endIndex();
 
   /** Output only. The index of a Part object within its parent Content object. */
-  @JsonProperty("partIndex")
+  @SerializedName("partIndex")
   public abstract Optional<Integer> partIndex();
 
   /**
    * Output only. Start index in the given Part, measured in bytes. Offset from the start of the
    * Part, inclusive, starting at zero.
    */
-  @JsonProperty("startIndex")
+  @SerializedName("startIndex")
   public abstract Optional<Integer> startIndex();
 
   /** Output only. The text corresponding to the segment from the response. */
-  @JsonProperty("text")
+  @SerializedName("text")
   public abstract Optional<String> text();
 
   /** Instantiates a builder for Segment. */
@@ -62,23 +61,29 @@ public abstract class Segment extends JsonSerializable {
   /** Builder for Segment. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Segment.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Segment.Builder();
-    }
-
-    @JsonProperty("endIndex")
+    @SerializedName("endIndex")
     public abstract Builder endIndex(Integer endIndex);
 
-    @JsonProperty("partIndex")
+    @SerializedName("endIndex")
+    abstract Builder endIndex(Optional<Integer> endIndex);
+
+    @SerializedName("partIndex")
     public abstract Builder partIndex(Integer partIndex);
 
-    @JsonProperty("startIndex")
+    @SerializedName("partIndex")
+    abstract Builder partIndex(Optional<Integer> partIndex);
+
+    @SerializedName("startIndex")
     public abstract Builder startIndex(Integer startIndex);
 
-    @JsonProperty("text")
+    @SerializedName("startIndex")
+    abstract Builder startIndex(Optional<Integer> startIndex);
+
+    @SerializedName("text")
     public abstract Builder text(String text);
+
+    @SerializedName("text")
+    abstract Builder text(Optional<String> text);
 
     public abstract Segment build();
   }

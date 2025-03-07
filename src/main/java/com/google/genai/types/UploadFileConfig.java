@@ -18,33 +18,32 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Used to override the default configuration. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = UploadFileConfig.Builder.class)
 public abstract class UploadFileConfig extends JsonSerializable {
   /**
    * The name of the file in the destination (e.g., 'files/sample-image'. If not provided one will
    * be generated.
    */
-  @JsonProperty("name")
+  @SerializedName("name")
   public abstract Optional<String> name();
 
   /**
    * mime_type: The MIME type of the file. If not provided, it will be inferred from the file
    * extension.
    */
-  @JsonProperty("mimeType")
+  @SerializedName("mimeType")
   public abstract Optional<String> mimeType();
 
   /** Optional display name of the file. */
-  @JsonProperty("displayName")
+  @SerializedName("displayName")
   public abstract Optional<String> displayName();
 
   /** Instantiates a builder for UploadFileConfig. */
@@ -58,20 +57,23 @@ public abstract class UploadFileConfig extends JsonSerializable {
   /** Builder for UploadFileConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UploadFileConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_UploadFileConfig.Builder();
-    }
-
-    @JsonProperty("name")
+    @SerializedName("name")
     public abstract Builder name(String name);
 
-    @JsonProperty("mimeType")
+    @SerializedName("name")
+    abstract Builder name(Optional<String> name);
+
+    @SerializedName("mimeType")
     public abstract Builder mimeType(String mimeType);
 
-    @JsonProperty("displayName")
+    @SerializedName("mimeType")
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    @SerializedName("displayName")
     public abstract Builder displayName(String displayName);
+
+    @SerializedName("displayName")
+    abstract Builder displayName(Optional<String> displayName);
 
     public abstract UploadFileConfig build();
   }

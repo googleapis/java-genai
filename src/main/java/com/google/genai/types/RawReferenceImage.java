@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -31,19 +30,19 @@ import java.util.Optional;
  * <p>A raw reference image represents the base image to edit, provided by the user. It can
  * optionally be provided in addition to a mask reference image or a style reference image.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = RawReferenceImage.Builder.class)
 public abstract class RawReferenceImage extends JsonSerializable {
   /** The reference image for the editing operation. */
-  @JsonProperty("referenceImage")
+  @SerializedName("referenceImage")
   public abstract Optional<Image> referenceImage();
 
   /** The id of the reference image. */
-  @JsonProperty("referenceId")
+  @SerializedName("referenceId")
   public abstract Optional<Integer> referenceId();
 
   /** The type of the reference image. Only set by the SDK. */
-  @JsonProperty("referenceType")
+  @SerializedName("referenceType")
   public abstract Optional<String> referenceType();
 
   /** Instantiates a builder for RawReferenceImage. */
@@ -57,20 +56,23 @@ public abstract class RawReferenceImage extends JsonSerializable {
   /** Builder for RawReferenceImage. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `RawReferenceImage.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_RawReferenceImage.Builder();
-    }
-
-    @JsonProperty("referenceImage")
+    @SerializedName("referenceImage")
     public abstract Builder referenceImage(Image referenceImage);
 
-    @JsonProperty("referenceId")
+    @SerializedName("referenceImage")
+    abstract Builder referenceImage(Optional<Image> referenceImage);
+
+    @SerializedName("referenceId")
     public abstract Builder referenceId(Integer referenceId);
 
-    @JsonProperty("referenceType")
+    @SerializedName("referenceId")
+    abstract Builder referenceId(Optional<Integer> referenceId);
+
+    @SerializedName("referenceType")
     public abstract Builder referenceType(String referenceType);
+
+    @SerializedName("referenceType")
+    abstract Builder referenceType(Optional<String> referenceType);
 
     public abstract RawReferenceImage build();
   }

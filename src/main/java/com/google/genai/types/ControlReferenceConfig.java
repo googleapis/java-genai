@@ -18,26 +18,25 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Configuration for a Control reference image. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = ControlReferenceConfig.Builder.class)
 public abstract class ControlReferenceConfig extends JsonSerializable {
   /** The type of control reference image to use. */
-  @JsonProperty("controlType")
+  @SerializedName("controlType")
   public abstract Optional<String> controlType();
 
   /**
    * Defaults to False. When set to True, the control image will be computed by the model based on
    * the control type. When set to False, the control image must be provided by the user.
    */
-  @JsonProperty("enableControlImageComputation")
+  @SerializedName("enableControlImageComputation")
   public abstract Optional<Boolean> enableControlImageComputation();
 
   /** Instantiates a builder for ControlReferenceConfig. */
@@ -51,17 +50,17 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
   /** Builder for ControlReferenceConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ControlReferenceConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ControlReferenceConfig.Builder();
-    }
-
-    @JsonProperty("controlType")
+    @SerializedName("controlType")
     public abstract Builder controlType(String controlType);
 
-    @JsonProperty("enableControlImageComputation")
+    @SerializedName("controlType")
+    abstract Builder controlType(Optional<String> controlType);
+
+    @SerializedName("enableControlImageComputation")
     public abstract Builder enableControlImageComputation(boolean enableControlImageComputation);
+
+    @SerializedName("enableControlImageComputation")
+    abstract Builder enableControlImageComputation(Optional<Boolean> enableControlImageComputation);
 
     public abstract ControlReferenceConfig build();
   }

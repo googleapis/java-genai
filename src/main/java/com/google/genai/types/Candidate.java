@@ -18,62 +18,61 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** A response candidate generated from the model. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = Candidate.Builder.class)
 public abstract class Candidate extends JsonSerializable {
   /** Contains the multi-part content of the response. */
-  @JsonProperty("content")
+  @SerializedName("content")
   public abstract Optional<Content> content();
 
   /** Source attribution of the generated content. */
-  @JsonProperty("citationMetadata")
+  @SerializedName("citationMetadata")
   public abstract Optional<CitationMetadata> citationMetadata();
 
   /** Describes the reason the model stopped generating tokens. */
-  @JsonProperty("finishMessage")
+  @SerializedName("finishMessage")
   public abstract Optional<String> finishMessage();
 
   /** Number of tokens for this candidate. */
-  @JsonProperty("tokenCount")
+  @SerializedName("tokenCount")
   public abstract Optional<Integer> tokenCount();
 
   /** Output only. Average log probability score of the candidate. */
-  @JsonProperty("avgLogprobs")
+  @SerializedName("avgLogprobs")
   public abstract Optional<Double> avgLogprobs();
 
   /**
    * Output only. The reason why the model stopped generating tokens. If empty, the model has not
    * stopped generating the tokens.
    */
-  @JsonProperty("finishReason")
+  @SerializedName("finishReason")
   public abstract Optional<String> finishReason();
 
   /** Output only. Metadata specifies sources used to ground generated content. */
-  @JsonProperty("groundingMetadata")
+  @SerializedName("groundingMetadata")
   public abstract Optional<GroundingMetadata> groundingMetadata();
 
   /** Output only. Index of the candidate. */
-  @JsonProperty("index")
+  @SerializedName("index")
   public abstract Optional<Integer> index();
 
   /** Output only. Log-likelihood scores for the response tokens and top tokens */
-  @JsonProperty("logprobsResult")
+  @SerializedName("logprobsResult")
   public abstract Optional<LogprobsResult> logprobsResult();
 
   /**
    * Output only. List of ratings for the safety of a response candidate. There is at most one
    * rating per category.
    */
-  @JsonProperty("safetyRatings")
+  @SerializedName("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
 
   /** Instantiates a builder for Candidate. */
@@ -87,41 +86,65 @@ public abstract class Candidate extends JsonSerializable {
   /** Builder for Candidate. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Candidate.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Candidate.Builder();
-    }
-
-    @JsonProperty("content")
+    @SerializedName("content")
     public abstract Builder content(Content content);
 
-    @JsonProperty("citationMetadata")
+    @SerializedName("content")
+    abstract Builder content(Optional<Content> content);
+
+    @SerializedName("citationMetadata")
     public abstract Builder citationMetadata(CitationMetadata citationMetadata);
 
-    @JsonProperty("finishMessage")
+    @SerializedName("citationMetadata")
+    abstract Builder citationMetadata(Optional<CitationMetadata> citationMetadata);
+
+    @SerializedName("finishMessage")
     public abstract Builder finishMessage(String finishMessage);
 
-    @JsonProperty("tokenCount")
+    @SerializedName("finishMessage")
+    abstract Builder finishMessage(Optional<String> finishMessage);
+
+    @SerializedName("tokenCount")
     public abstract Builder tokenCount(Integer tokenCount);
 
-    @JsonProperty("avgLogprobs")
+    @SerializedName("tokenCount")
+    abstract Builder tokenCount(Optional<Integer> tokenCount);
+
+    @SerializedName("avgLogprobs")
     public abstract Builder avgLogprobs(Double avgLogprobs);
 
-    @JsonProperty("finishReason")
+    @SerializedName("avgLogprobs")
+    abstract Builder avgLogprobs(Optional<Double> avgLogprobs);
+
+    @SerializedName("finishReason")
     public abstract Builder finishReason(String finishReason);
 
-    @JsonProperty("groundingMetadata")
+    @SerializedName("finishReason")
+    abstract Builder finishReason(Optional<String> finishReason);
+
+    @SerializedName("groundingMetadata")
     public abstract Builder groundingMetadata(GroundingMetadata groundingMetadata);
 
-    @JsonProperty("index")
+    @SerializedName("groundingMetadata")
+    abstract Builder groundingMetadata(Optional<GroundingMetadata> groundingMetadata);
+
+    @SerializedName("index")
     public abstract Builder index(Integer index);
 
-    @JsonProperty("logprobsResult")
+    @SerializedName("index")
+    abstract Builder index(Optional<Integer> index);
+
+    @SerializedName("logprobsResult")
     public abstract Builder logprobsResult(LogprobsResult logprobsResult);
 
-    @JsonProperty("safetyRatings")
+    @SerializedName("logprobsResult")
+    abstract Builder logprobsResult(Optional<LogprobsResult> logprobsResult);
+
+    @SerializedName("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
+
+    @SerializedName("safetyRatings")
+    abstract Builder safetyRatings(Optional<List<SafetyRating>> safetyRatings);
 
     public abstract Candidate build();
   }

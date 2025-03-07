@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** An output image. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GeneratedImage.Builder.class)
 public abstract class GeneratedImage extends JsonSerializable {
   /** The output image data. */
-  @JsonProperty("image")
+  @SerializedName("image")
   public abstract Optional<Image> image();
 
   /** Responsible AI filter reason if the image is filtered out of the response. */
-  @JsonProperty("raiFilteredReason")
+  @SerializedName("raiFilteredReason")
   public abstract Optional<String> raiFilteredReason();
 
   /** The rewritten prompt used for the image generation if the prompt enhancer is enabled. */
-  @JsonProperty("enhancedPrompt")
+  @SerializedName("enhancedPrompt")
   public abstract Optional<String> enhancedPrompt();
 
   /** Instantiates a builder for GeneratedImage. */
@@ -52,20 +51,23 @@ public abstract class GeneratedImage extends JsonSerializable {
   /** Builder for GeneratedImage. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GeneratedImage.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GeneratedImage.Builder();
-    }
-
-    @JsonProperty("image")
+    @SerializedName("image")
     public abstract Builder image(Image image);
 
-    @JsonProperty("raiFilteredReason")
+    @SerializedName("image")
+    abstract Builder image(Optional<Image> image);
+
+    @SerializedName("raiFilteredReason")
     public abstract Builder raiFilteredReason(String raiFilteredReason);
 
-    @JsonProperty("enhancedPrompt")
+    @SerializedName("raiFilteredReason")
+    abstract Builder raiFilteredReason(Optional<String> raiFilteredReason);
+
+    @SerializedName("enhancedPrompt")
     public abstract Builder enhancedPrompt(String enhancedPrompt);
+
+    @SerializedName("enhancedPrompt")
+    abstract Builder enhancedPrompt(Optional<String> enhancedPrompt);
 
     public abstract GeneratedImage build();
   }

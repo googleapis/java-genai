@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +33,8 @@ import java.util.Optional;
  *
  * <p>A message here will interrupt any current model generation.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveClientContent.Builder.class)
 public abstract class LiveClientContent extends JsonSerializable {
   /**
    * The content appended to the current conversation with the model.
@@ -43,7 +42,7 @@ public abstract class LiveClientContent extends JsonSerializable {
    * <p>For single-turn queries, this is a single instance. For multi-turn queries, this is a
    * repeated field that contains conversation history and latest request.
    */
-  @JsonProperty("turns")
+  @SerializedName("turns")
   public abstract Optional<List<Content>> turns();
 
   /**
@@ -51,7 +50,7 @@ public abstract class LiveClientContent extends JsonSerializable {
    * accumulated prompt. Otherwise, the server will await additional messages before starting
    * generation.
    */
-  @JsonProperty("turnComplete")
+  @SerializedName("turnComplete")
   public abstract Optional<Boolean> turnComplete();
 
   /** Instantiates a builder for LiveClientContent. */
@@ -65,17 +64,17 @@ public abstract class LiveClientContent extends JsonSerializable {
   /** Builder for LiveClientContent. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveClientContent.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveClientContent.Builder();
-    }
-
-    @JsonProperty("turns")
+    @SerializedName("turns")
     public abstract Builder turns(List<Content> turns);
 
-    @JsonProperty("turnComplete")
+    @SerializedName("turns")
+    abstract Builder turns(Optional<List<Content>> turns);
+
+    @SerializedName("turnComplete")
     public abstract Builder turnComplete(boolean turnComplete);
+
+    @SerializedName("turnComplete")
+    abstract Builder turnComplete(Optional<Boolean> turnComplete);
 
     public abstract LiveClientContent build();
   }

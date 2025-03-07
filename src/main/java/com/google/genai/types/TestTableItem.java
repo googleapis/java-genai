@@ -18,50 +18,49 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Map;
 import java.util.Optional;
 
 /** None */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = TestTableItem.Builder.class)
 public abstract class TestTableItem extends JsonSerializable {
   /** The name of the test. This is used to derive the replay id. */
-  @JsonProperty("name")
+  @SerializedName("name")
   public abstract Optional<String> name();
 
   /** The parameters to the test. Use pydantic models. */
-  @JsonProperty("parameters")
+  @SerializedName("parameters")
   public abstract Optional<Map<String, Object>> parameters();
 
   /** Expects an exception for MLDev matching the string. */
-  @JsonProperty("exceptionIfMldev")
+  @SerializedName("exceptionIfMldev")
   public abstract Optional<String> exceptionIfMldev();
 
   /** Expects an exception for Vertex matching the string. */
-  @JsonProperty("exceptionIfVertex")
+  @SerializedName("exceptionIfVertex")
   public abstract Optional<String> exceptionIfVertex();
 
   /** Use if you don't want to use the default replay id which is derived from the test name. */
-  @JsonProperty("overrideReplayId")
+  @SerializedName("overrideReplayId")
   public abstract Optional<String> overrideReplayId();
 
   /**
    * True if the parameters contain an unsupported union type. This test will be skipped for
    * languages that do not support the union type.
    */
-  @JsonProperty("hasUnion")
+  @SerializedName("hasUnion")
   public abstract Optional<Boolean> hasUnion();
 
   /**
    * When set to a reason string, this test will be skipped in the API mode. Use this flag for tests
    * that can not be reproduced with the real API. E.g. a test that deletes a resource.
    */
-  @JsonProperty("skipInApiMode")
+  @SerializedName("skipInApiMode")
   public abstract Optional<String> skipInApiMode();
 
   /** Instantiates a builder for TestTableItem. */
@@ -75,32 +74,47 @@ public abstract class TestTableItem extends JsonSerializable {
   /** Builder for TestTableItem. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `TestTableItem.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_TestTableItem.Builder();
-    }
-
-    @JsonProperty("name")
+    @SerializedName("name")
     public abstract Builder name(String name);
 
-    @JsonProperty("parameters")
+    @SerializedName("name")
+    abstract Builder name(Optional<String> name);
+
+    @SerializedName("parameters")
     public abstract Builder parameters(Map<String, Object> parameters);
 
-    @JsonProperty("exceptionIfMldev")
+    @SerializedName("parameters")
+    abstract Builder parameters(Optional<Map<String, Object>> parameters);
+
+    @SerializedName("exceptionIfMldev")
     public abstract Builder exceptionIfMldev(String exceptionIfMldev);
 
-    @JsonProperty("exceptionIfVertex")
+    @SerializedName("exceptionIfMldev")
+    abstract Builder exceptionIfMldev(Optional<String> exceptionIfMldev);
+
+    @SerializedName("exceptionIfVertex")
     public abstract Builder exceptionIfVertex(String exceptionIfVertex);
 
-    @JsonProperty("overrideReplayId")
+    @SerializedName("exceptionIfVertex")
+    abstract Builder exceptionIfVertex(Optional<String> exceptionIfVertex);
+
+    @SerializedName("overrideReplayId")
     public abstract Builder overrideReplayId(String overrideReplayId);
 
-    @JsonProperty("hasUnion")
+    @SerializedName("overrideReplayId")
+    abstract Builder overrideReplayId(Optional<String> overrideReplayId);
+
+    @SerializedName("hasUnion")
     public abstract Builder hasUnion(boolean hasUnion);
 
-    @JsonProperty("skipInApiMode")
+    @SerializedName("hasUnion")
+    abstract Builder hasUnion(Optional<Boolean> hasUnion);
+
+    @SerializedName("skipInApiMode")
     public abstract Builder skipInApiMode(String skipInApiMode);
+
+    @SerializedName("skipInApiMode")
+    abstract Builder skipInApiMode(Optional<String> skipInApiMode);
 
     public abstract TestTableItem build();
   }

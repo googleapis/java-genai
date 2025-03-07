@@ -16,18 +16,21 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Iterator;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import java.util.Map;
+import java.util.Set;
+import org.jspecify.annotations.Nullable;
 
 /** Common utility methods for the GenAI SDK. */
 public final class Common {
 
   private Common() {}
 
-  static void setValueByPath(ObjectNode jsonObject, String[] path, Object value) {
+  static void setValueByPath(JsonObject jsonObject, String[] path, Object value) {
     if (path == null || path.length == 0) {
       throw new IllegalArgumentException("Path cannot be empty.");
     }
@@ -35,38 +38,37 @@ public final class Common {
       throw new IllegalArgumentException("JsonObject cannot be null.");
     }
 
-    ObjectNode currentObject = jsonObject;
+    JsonObject currentObject = jsonObject;
     for (int i = 0; i < path.length - 1; i++) {
       String key = path[i];
       if (key.endsWith("[0]")) {
         String keyName = key.substring(0, key.length() - 3);
-        ArrayNode arrayNode;
+        JsonArray arrayNode;
         if (!currentObject.has(keyName)) {
-          currentObject.putArray(keyName);
-          arrayNode = (ArrayNode) currentObject.get(keyName);
-          arrayNode.add(JsonSerializable.objectMapper.createObjectNode());
+          arrayNode = new JsonArray();
+          arrayNode.add(new JsonObject());
+          currentObject.add(keyName, arrayNode);
         }
-        arrayNode = (ArrayNode) currentObject.get(keyName);
-        currentObject = (ObjectNode) arrayNode.get(0);
+        arrayNode = (JsonArray) currentObject.get(keyName);
+        currentObject = arrayNode.get(0).getAsJsonObject();
       } else {
         if (!currentObject.has(key)) {
-          currentObject.putObject(key);
+          currentObject.add(key, new JsonObject());
         }
-        currentObject = (ObjectNode) currentObject.get(key);
+        currentObject = currentObject.getAsJsonObject(key);
       }
     }
 
-    currentObject.put(path[path.length - 1], JsonSerializable.toJsonNode(value));
+    currentObject.add(path[path.length - 1], toJsonElement(value));
   }
 
-  static String formatMap(String template, JsonNode data) {
-    Iterator<Map.Entry<String, JsonNode>> fields = data.fields();
-    while (fields.hasNext()) {
-      Map.Entry<String, JsonNode> field = fields.next();
-      String key = field.getKey();
+  static String formatMap(String template, JsonObject data) {
+    Set<Map.Entry<String, JsonElement>> entries = data.entrySet();
+    for (Map.Entry<String, JsonElement> entry : entries) {
+      String key = entry.getKey();
       String placeholder = "{" + key + "}";
       if (template.contains(placeholder)) {
-        template = template.replace(placeholder, data.get(key).asText());
+        template = template.replace(placeholder, entry.getValue().getAsString());
       }
     }
     return template;
@@ -91,7 +93,7 @@ public final class Common {
     return false;
   }
 
-  static Object getValueByPath(JsonNode object, String[] keys) {
+  static JsonElement getValueByPath(JsonElement object, String[] keys) {
     if (object == null || keys == null) {
       return null;
     }
@@ -99,15 +101,15 @@ public final class Common {
       return object;
     }
 
-    JsonNode currentObject = object;
+    JsonElement currentElement = object;
 
     for (String key : keys) {
-      if (currentObject instanceof ObjectNode) {
-        currentObject = currentObject.get(key);
-      } else if (currentObject instanceof ArrayNode) {
+      if (currentElement.isJsonObject()) {
+        currentElement = currentElement.getAsJsonObject().get(key);
+      } else if (currentElement.isJsonArray()) {
         try {
           int index = Integer.parseInt(key);
-          currentObject = currentObject.get(index);
+          currentElement = currentElement.getAsJsonArray().get(index);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
           return null;
         }
@@ -116,6 +118,27 @@ public final class Common {
       }
     }
 
-    return currentObject;
+    return currentElement;
+  }
+
+  private static @Nullable JsonElement toJsonElement(Object value) {
+    if (value == null) {
+      return null;
+    } else if (value instanceof Number) {
+      return new JsonPrimitive((Number) value);
+    } else if (value instanceof String) {
+      return new JsonPrimitive((String) value);
+    } else if (value instanceof Boolean) {
+      return new JsonPrimitive((Boolean) value);
+    } else if (value instanceof Character) {
+      return new JsonPrimitive(String.valueOf(value));
+    } else if (value instanceof JsonObject) {
+      return (JsonObject) value;
+    } else if (value instanceof JsonArray) {
+      return (JsonArray) value;
+    } else {
+      Gson gson = new Gson();
+      return gson.toJsonTree(value);
+    }
   }
 }

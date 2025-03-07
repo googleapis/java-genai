@@ -18,30 +18,29 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** The parameters for generating images. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GenerateImagesParameters.Builder.class)
 public abstract class GenerateImagesParameters extends JsonSerializable {
   /**
    * ID of the model to use. For a list of models, see `Google models
    * <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>`_.
    */
-  @JsonProperty("model")
+  @SerializedName("model")
   public abstract Optional<String> model();
 
   /** Text prompt that typically describes the images to output. */
-  @JsonProperty("prompt")
+  @SerializedName("prompt")
   public abstract Optional<String> prompt();
 
   /** Configuration for generating images. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<GenerateImagesConfig> config();
 
   /** Instantiates a builder for GenerateImagesParameters. */
@@ -55,20 +54,23 @@ public abstract class GenerateImagesParameters extends JsonSerializable {
   /** Builder for GenerateImagesParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GenerateImagesParameters.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateImagesParameters.Builder();
-    }
-
-    @JsonProperty("model")
+    @SerializedName("model")
     public abstract Builder model(String model);
 
-    @JsonProperty("prompt")
+    @SerializedName("model")
+    abstract Builder model(Optional<String> model);
+
+    @SerializedName("prompt")
     public abstract Builder prompt(String prompt);
 
-    @JsonProperty("config")
+    @SerializedName("prompt")
+    abstract Builder prompt(Optional<String> prompt);
+
+    @SerializedName("config")
     public abstract Builder config(GenerateImagesConfig config);
+
+    @SerializedName("config")
+    abstract Builder config(Optional<GenerateImagesConfig> config);
 
     public abstract GenerateImagesParameters build();
   }

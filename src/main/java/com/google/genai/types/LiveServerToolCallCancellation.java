@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +32,11 @@ import java.util.Optional;
  * <p>If there were side-effects to those tool calls, clients may attempt to undo the tool calls.
  * This message occurs only in cases where the clients interrupt server turns.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveServerToolCallCancellation.Builder.class)
 public abstract class LiveServerToolCallCancellation extends JsonSerializable {
   /** The ids of the tool calls to be cancelled. */
-  @JsonProperty("ids")
+  @SerializedName("ids")
   public abstract Optional<List<String>> ids();
 
   /** Instantiates a builder for LiveServerToolCallCancellation. */
@@ -51,16 +50,11 @@ public abstract class LiveServerToolCallCancellation extends JsonSerializable {
   /** Builder for LiveServerToolCallCancellation. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `LiveServerToolCallCancellation.builder()` for instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveServerToolCallCancellation.Builder();
-    }
-
-    @JsonProperty("ids")
+    @SerializedName("ids")
     public abstract Builder ids(List<String> ids);
+
+    @SerializedName("ids")
+    abstract Builder ids(Optional<List<String>> ids);
 
     public abstract LiveServerToolCallCancellation build();
   }

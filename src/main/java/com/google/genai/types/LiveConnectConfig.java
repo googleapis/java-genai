@@ -18,38 +18,37 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Session config for the API connection. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveConnectConfig.Builder.class)
 public abstract class LiveConnectConfig extends JsonSerializable {
   /** The generation configuration for the session. */
-  @JsonProperty("generationConfig")
+  @SerializedName("generationConfig")
   public abstract Optional<GenerationConfig> generationConfig();
 
   /**
    * The requested modalities of the response. Represents the set of modalities that the model can
    * return. Defaults to AUDIO if not specified.
    */
-  @JsonProperty("responseModalities")
+  @SerializedName("responseModalities")
   public abstract Optional<List<String>> responseModalities();
 
   /** The speech generation configuration. */
-  @JsonProperty("speechConfig")
+  @SerializedName("speechConfig")
   public abstract Optional<SpeechConfig> speechConfig();
 
   /**
    * The user provided system instructions for the model. Note: only text should be used in parts
    * and content in each part will be in a separate paragraph.
    */
-  @JsonProperty("systemInstruction")
+  @SerializedName("systemInstruction")
   public abstract Optional<Content> systemInstruction();
 
   /**
@@ -58,7 +57,7 @@ public abstract class LiveConnectConfig extends JsonSerializable {
    * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
    * perform an action, or set of actions, outside of knowledge and scope of the model.
    */
-  @JsonProperty("tools")
+  @SerializedName("tools")
   public abstract Optional<List<Tool>> tools();
 
   /** Instantiates a builder for LiveConnectConfig. */
@@ -72,26 +71,35 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   /** Builder for LiveConnectConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveConnectConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveConnectConfig.Builder();
-    }
-
-    @JsonProperty("generationConfig")
+    @SerializedName("generationConfig")
     public abstract Builder generationConfig(GenerationConfig generationConfig);
 
-    @JsonProperty("responseModalities")
+    @SerializedName("generationConfig")
+    abstract Builder generationConfig(Optional<GenerationConfig> generationConfig);
+
+    @SerializedName("responseModalities")
     public abstract Builder responseModalities(List<String> responseModalities);
 
-    @JsonProperty("speechConfig")
+    @SerializedName("responseModalities")
+    abstract Builder responseModalities(Optional<List<String>> responseModalities);
+
+    @SerializedName("speechConfig")
     public abstract Builder speechConfig(SpeechConfig speechConfig);
 
-    @JsonProperty("systemInstruction")
+    @SerializedName("speechConfig")
+    abstract Builder speechConfig(Optional<SpeechConfig> speechConfig);
+
+    @SerializedName("systemInstruction")
     public abstract Builder systemInstruction(Content systemInstruction);
 
-    @JsonProperty("tools")
+    @SerializedName("systemInstruction")
+    abstract Builder systemInstruction(Optional<Content> systemInstruction);
+
+    @SerializedName("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    @SerializedName("tools")
+    abstract Builder tools(Optional<List<Tool>> tools);
 
     public abstract LiveConnectConfig build();
   }

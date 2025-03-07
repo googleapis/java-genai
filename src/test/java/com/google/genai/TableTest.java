@@ -20,8 +20,10 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.genai.types.TestTableFile;
 import com.google.genai.types.TestTableItem;
+import com.google.gson.JsonParseException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -37,7 +39,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
-import com.google.common.collect.ImmutableSet;
 
 /** Sample class to prototype GenAI SDK functionalities. */
 public final class TableTest {
@@ -185,8 +186,15 @@ public final class TableTest {
           String parameterName = snakeToCamel(parameterNames.get(i));
           Object fromValue = fromParameters.getOrDefault(parameterName, null);
           // May throw IllegalArgumentException here
-          parameters.add(
-              JsonSerializable.objectMapper.convertValue(fromValue, method.getParameterTypes()[i]));
+          String jsonValue = JsonSerializable.toJsonString(fromValue);
+          try {
+            parameters.add(
+                JsonSerializable.fromJsonString(jsonValue, method.getParameterTypes()[i]));
+          } catch (JsonParseException e) {
+            // Throw IllegalArgumentException here will be caught and skipped. This also ensures
+            // that we won't miss such errors in the future if this becomes a valid failing case.
+            throw new IllegalArgumentException(e);
+          }
         }
         dynamicTests.add(
             DynamicTest.dynamicTest(
@@ -197,6 +205,10 @@ public final class TableTest {
                     // InvocationTargetException is sometimes expected, when exceptionIfMldev or
                     // exceptionIfVertex is present.
                     Object response = method.invoke(module.get(client), parameters.toArray());
+                    // (TODO: b/375410873): For now, just simply convert the response to JSON to do
+                    // a shallow sanity check. This will throw an exception if the response is not
+                    // serializable.
+                    JsonSerializable.toJsonString(response);
                   } catch (IllegalAccessException | InvocationTargetException e) {
                     // Handle expected exceptions here
                     Optional<String> skipInApiMode = testTableItem.skipInApiMode();

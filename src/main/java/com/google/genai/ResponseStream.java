@@ -16,9 +16,8 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +51,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
         this.converter =
             obj.getClass()
                 .getDeclaredMethod(
-                    converterName, ApiClient.class, JsonNode.class, ObjectNode.class);
+                    converterName, ApiClient.class, JsonElement.class, JsonObject.class);
       } catch (NoSuchMethodException e) {
         throw new IllegalStateException("Failed to find converter method " + converterName, e);
       }
@@ -71,10 +70,10 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       String currentJson = nextJson;
       nextJson = readNextJson();
       try {
-        JsonNode currentJsonNode = JsonSerializable.objectMapper.readTree(currentJson);
-        currentJsonNode = (JsonNode) converter.invoke(obj, null, currentJsonNode, null);
-        return JsonSerializable.fromJsonNode(currentJsonNode, clazz);
-      } catch (IllegalAccessException | InvocationTargetException | JsonProcessingException e) {
+        JsonElement currentJsonElement = JsonSerializable.fromJsonString(currentJson);
+        currentJsonElement = (JsonElement) converter.invoke(obj, null, currentJsonElement, null);
+        return JsonSerializable.fromJsonElement(currentJsonElement, clazz);
+      } catch (IllegalAccessException | InvocationTargetException e) {
         throw new IllegalStateException("Failed to convert JSON object " + currentJson, e);
       }
     }

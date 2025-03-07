@@ -18,20 +18,19 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Retrieve from Vertex RAG Store for grounding. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = VertexRagStore.Builder.class)
 public abstract class VertexRagStore extends JsonSerializable {
   /** Optional. Deprecated. Please use rag_resources instead. */
-  @JsonProperty("ragCorpora")
+  @SerializedName("ragCorpora")
   public abstract Optional<List<String>> ragCorpora();
 
   /**
@@ -39,15 +38,15 @@ public abstract class VertexRagStore extends JsonSerializable {
    * ragfiles. Currently only support one corpus or multiple files from one corpus. In the future we
    * may open up multiple corpora support.
    */
-  @JsonProperty("ragResources")
+  @SerializedName("ragResources")
   public abstract Optional<List<VertexRagStoreRagResource>> ragResources();
 
   /** Optional. Number of top k results to return from the selected corpora. */
-  @JsonProperty("similarityTopK")
+  @SerializedName("similarityTopK")
   public abstract Optional<Integer> similarityTopK();
 
   /** Optional. Only return results with vector distance smaller than the threshold. */
-  @JsonProperty("vectorDistanceThreshold")
+  @SerializedName("vectorDistanceThreshold")
   public abstract Optional<Double> vectorDistanceThreshold();
 
   /** Instantiates a builder for VertexRagStore. */
@@ -61,23 +60,29 @@ public abstract class VertexRagStore extends JsonSerializable {
   /** Builder for VertexRagStore. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `VertexRagStore.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_VertexRagStore.Builder();
-    }
-
-    @JsonProperty("ragCorpora")
+    @SerializedName("ragCorpora")
     public abstract Builder ragCorpora(List<String> ragCorpora);
 
-    @JsonProperty("ragResources")
+    @SerializedName("ragCorpora")
+    abstract Builder ragCorpora(Optional<List<String>> ragCorpora);
+
+    @SerializedName("ragResources")
     public abstract Builder ragResources(List<VertexRagStoreRagResource> ragResources);
 
-    @JsonProperty("similarityTopK")
+    @SerializedName("ragResources")
+    abstract Builder ragResources(Optional<List<VertexRagStoreRagResource>> ragResources);
+
+    @SerializedName("similarityTopK")
     public abstract Builder similarityTopK(Integer similarityTopK);
 
-    @JsonProperty("vectorDistanceThreshold")
+    @SerializedName("similarityTopK")
+    abstract Builder similarityTopK(Optional<Integer> similarityTopK);
+
+    @SerializedName("vectorDistanceThreshold")
     public abstract Builder vectorDistanceThreshold(Double vectorDistanceThreshold);
+
+    @SerializedName("vectorDistanceThreshold")
+    abstract Builder vectorDistanceThreshold(Optional<Double> vectorDistanceThreshold);
 
     public abstract VertexRagStore build();
   }

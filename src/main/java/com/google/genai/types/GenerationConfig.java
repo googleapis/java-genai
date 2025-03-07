@@ -18,44 +18,43 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Generation config. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GenerationConfig.Builder.class)
 public abstract class GenerationConfig extends JsonSerializable {
   /** Optional. If enabled, audio timestamp will be included in the request to the model. */
-  @JsonProperty("audioTimestamp")
+  @SerializedName("audioTimestamp")
   public abstract Optional<Boolean> audioTimestamp();
 
   /** Optional. Number of candidates to generate. */
-  @JsonProperty("candidateCount")
+  @SerializedName("candidateCount")
   public abstract Optional<Integer> candidateCount();
 
   /** Optional. Frequency penalties. */
-  @JsonProperty("frequencyPenalty")
+  @SerializedName("frequencyPenalty")
   public abstract Optional<Float> frequencyPenalty();
 
   /** Optional. Logit probabilities. */
-  @JsonProperty("logprobs")
+  @SerializedName("logprobs")
   public abstract Optional<Integer> logprobs();
 
   /** Optional. The maximum number of output tokens to generate per message. */
-  @JsonProperty("maxOutputTokens")
+  @SerializedName("maxOutputTokens")
   public abstract Optional<Integer> maxOutputTokens();
 
   /** Optional. Positive penalties. */
-  @JsonProperty("presencePenalty")
+  @SerializedName("presencePenalty")
   public abstract Optional<Float> presencePenalty();
 
   /** Optional. If true, export the logprobs results in response. */
-  @JsonProperty("responseLogprobs")
+  @SerializedName("responseLogprobs")
   public abstract Optional<Boolean> responseLogprobs();
 
   /**
@@ -64,7 +63,7 @@ public abstract class GenerationConfig extends JsonSerializable {
    * model needs to be prompted to output the appropriate response type, otherwise the behavior is
    * undefined. This is a preview feature.
    */
-  @JsonProperty("responseMimeType")
+  @SerializedName("responseMimeType")
   public abstract Optional<String> responseMimeType();
 
   /**
@@ -74,31 +73,31 @@ public abstract class GenerationConfig extends JsonSerializable {
    * response_mime_type must also be set. Compatible mimetypes: `application/json`: Schema for JSON
    * response.
    */
-  @JsonProperty("responseSchema")
+  @SerializedName("responseSchema")
   public abstract Optional<Schema> responseSchema();
 
   /** Optional. Routing configuration. */
-  @JsonProperty("routingConfig")
+  @SerializedName("routingConfig")
   public abstract Optional<GenerationConfigRoutingConfig> routingConfig();
 
   /** Optional. Seed. */
-  @JsonProperty("seed")
+  @SerializedName("seed")
   public abstract Optional<Integer> seed();
 
   /** Optional. Stop sequences. */
-  @JsonProperty("stopSequences")
+  @SerializedName("stopSequences")
   public abstract Optional<List<String>> stopSequences();
 
   /** Optional. Controls the randomness of predictions. */
-  @JsonProperty("temperature")
+  @SerializedName("temperature")
   public abstract Optional<Float> temperature();
 
   /** Optional. If specified, top-k sampling will be used. */
-  @JsonProperty("topK")
+  @SerializedName("topK")
   public abstract Optional<Float> topK();
 
   /** Optional. If specified, nucleus sampling will be used. */
-  @JsonProperty("topP")
+  @SerializedName("topP")
   public abstract Optional<Float> topP();
 
   /** Instantiates a builder for GenerationConfig. */
@@ -112,56 +111,95 @@ public abstract class GenerationConfig extends JsonSerializable {
   /** Builder for GenerationConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GenerationConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerationConfig.Builder();
-    }
-
-    @JsonProperty("audioTimestamp")
+    @SerializedName("audioTimestamp")
     public abstract Builder audioTimestamp(boolean audioTimestamp);
 
-    @JsonProperty("candidateCount")
+    @SerializedName("audioTimestamp")
+    abstract Builder audioTimestamp(Optional<Boolean> audioTimestamp);
+
+    @SerializedName("candidateCount")
     public abstract Builder candidateCount(Integer candidateCount);
 
-    @JsonProperty("frequencyPenalty")
+    @SerializedName("candidateCount")
+    abstract Builder candidateCount(Optional<Integer> candidateCount);
+
+    @SerializedName("frequencyPenalty")
     public abstract Builder frequencyPenalty(Float frequencyPenalty);
 
-    @JsonProperty("logprobs")
+    @SerializedName("frequencyPenalty")
+    abstract Builder frequencyPenalty(Optional<Float> frequencyPenalty);
+
+    @SerializedName("logprobs")
     public abstract Builder logprobs(Integer logprobs);
 
-    @JsonProperty("maxOutputTokens")
+    @SerializedName("logprobs")
+    abstract Builder logprobs(Optional<Integer> logprobs);
+
+    @SerializedName("maxOutputTokens")
     public abstract Builder maxOutputTokens(Integer maxOutputTokens);
 
-    @JsonProperty("presencePenalty")
+    @SerializedName("maxOutputTokens")
+    abstract Builder maxOutputTokens(Optional<Integer> maxOutputTokens);
+
+    @SerializedName("presencePenalty")
     public abstract Builder presencePenalty(Float presencePenalty);
 
-    @JsonProperty("responseLogprobs")
+    @SerializedName("presencePenalty")
+    abstract Builder presencePenalty(Optional<Float> presencePenalty);
+
+    @SerializedName("responseLogprobs")
     public abstract Builder responseLogprobs(boolean responseLogprobs);
 
-    @JsonProperty("responseMimeType")
+    @SerializedName("responseLogprobs")
+    abstract Builder responseLogprobs(Optional<Boolean> responseLogprobs);
+
+    @SerializedName("responseMimeType")
     public abstract Builder responseMimeType(String responseMimeType);
 
-    @JsonProperty("responseSchema")
+    @SerializedName("responseMimeType")
+    abstract Builder responseMimeType(Optional<String> responseMimeType);
+
+    @SerializedName("responseSchema")
     public abstract Builder responseSchema(Schema responseSchema);
 
-    @JsonProperty("routingConfig")
+    @SerializedName("responseSchema")
+    abstract Builder responseSchema(Optional<Schema> responseSchema);
+
+    @SerializedName("routingConfig")
     public abstract Builder routingConfig(GenerationConfigRoutingConfig routingConfig);
 
-    @JsonProperty("seed")
+    @SerializedName("routingConfig")
+    abstract Builder routingConfig(Optional<GenerationConfigRoutingConfig> routingConfig);
+
+    @SerializedName("seed")
     public abstract Builder seed(Integer seed);
 
-    @JsonProperty("stopSequences")
+    @SerializedName("seed")
+    abstract Builder seed(Optional<Integer> seed);
+
+    @SerializedName("stopSequences")
     public abstract Builder stopSequences(List<String> stopSequences);
 
-    @JsonProperty("temperature")
+    @SerializedName("stopSequences")
+    abstract Builder stopSequences(Optional<List<String>> stopSequences);
+
+    @SerializedName("temperature")
     public abstract Builder temperature(Float temperature);
 
-    @JsonProperty("topK")
+    @SerializedName("temperature")
+    abstract Builder temperature(Optional<Float> temperature);
+
+    @SerializedName("topK")
     public abstract Builder topK(Float topK);
 
-    @JsonProperty("topP")
+    @SerializedName("topK")
+    abstract Builder topK(Optional<Float> topK);
+
+    @SerializedName("topP")
     public abstract Builder topP(Float topP);
+
+    @SerializedName("topP")
+    abstract Builder topP(Optional<Float> topP);
 
     public abstract GenerationConfig build();
   }

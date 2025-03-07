@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Metadata describes the input video content. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = VideoMetadata.Builder.class)
 public abstract class VideoMetadata extends JsonSerializable {
   /** Optional. The end offset of the video. */
-  @JsonProperty("endOffset")
+  @SerializedName("endOffset")
   public abstract Optional<String> endOffset();
 
   /** Optional. The start offset of the video. */
-  @JsonProperty("startOffset")
+  @SerializedName("startOffset")
   public abstract Optional<String> startOffset();
 
   /** Instantiates a builder for VideoMetadata. */
@@ -48,17 +47,17 @@ public abstract class VideoMetadata extends JsonSerializable {
   /** Builder for VideoMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `VideoMetadata.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_VideoMetadata.Builder();
-    }
-
-    @JsonProperty("endOffset")
+    @SerializedName("endOffset")
     public abstract Builder endOffset(String endOffset);
 
-    @JsonProperty("startOffset")
+    @SerializedName("endOffset")
+    abstract Builder endOffset(Optional<String> endOffset);
+
+    @SerializedName("startOffset")
     public abstract Builder startOffset(String startOffset);
+
+    @SerializedName("startOffset")
+    abstract Builder startOffset(Optional<String> startOffset);
 
     public abstract VideoMetadata build();
   }

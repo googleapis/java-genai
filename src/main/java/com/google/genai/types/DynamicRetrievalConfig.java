@@ -18,26 +18,25 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Describes the options to customize dynamic retrieval. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = DynamicRetrievalConfig.Builder.class)
 public abstract class DynamicRetrievalConfig extends JsonSerializable {
   /** The mode of the predictor to be used in dynamic retrieval. */
-  @JsonProperty("mode")
+  @SerializedName("mode")
   public abstract Optional<String> mode();
 
   /**
    * Optional. The threshold to be used in dynamic retrieval. If not set, a system default value is
    * used.
    */
-  @JsonProperty("dynamicThreshold")
+  @SerializedName("dynamicThreshold")
   public abstract Optional<Float> dynamicThreshold();
 
   /** Instantiates a builder for DynamicRetrievalConfig. */
@@ -51,17 +50,17 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
   /** Builder for DynamicRetrievalConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `DynamicRetrievalConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_DynamicRetrievalConfig.Builder();
-    }
-
-    @JsonProperty("mode")
+    @SerializedName("mode")
     public abstract Builder mode(String mode);
 
-    @JsonProperty("dynamicThreshold")
+    @SerializedName("mode")
+    abstract Builder mode(Optional<String> mode);
+
+    @SerializedName("dynamicThreshold")
     public abstract Builder dynamicThreshold(Float dynamicThreshold);
+
+    @SerializedName("dynamicThreshold")
+    abstract Builder dynamicThreshold(Optional<Float> dynamicThreshold);
 
     public abstract DynamicRetrievalConfig build();
   }

@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Grounding chunk. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GroundingChunk.Builder.class)
 public abstract class GroundingChunk extends JsonSerializable {
   /** Grounding chunk from context retrieved by the retrieval tools. */
-  @JsonProperty("retrievedContext")
+  @SerializedName("retrievedContext")
   public abstract Optional<GroundingChunkRetrievedContext> retrievedContext();
 
   /** Grounding chunk from the web. */
-  @JsonProperty("web")
+  @SerializedName("web")
   public abstract Optional<GroundingChunkWeb> web();
 
   /** Instantiates a builder for GroundingChunk. */
@@ -48,17 +47,17 @@ public abstract class GroundingChunk extends JsonSerializable {
   /** Builder for GroundingChunk. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GroundingChunk.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GroundingChunk.Builder();
-    }
-
-    @JsonProperty("retrievedContext")
+    @SerializedName("retrievedContext")
     public abstract Builder retrievedContext(GroundingChunkRetrievedContext retrievedContext);
 
-    @JsonProperty("web")
+    @SerializedName("retrievedContext")
+    abstract Builder retrievedContext(Optional<GroundingChunkRetrievedContext> retrievedContext);
+
+    @SerializedName("web")
     public abstract Builder web(GroundingChunkWeb web);
+
+    @SerializedName("web")
+    abstract Builder web(Optional<GroundingChunkWeb> web);
 
     public abstract GroundingChunk build();
   }

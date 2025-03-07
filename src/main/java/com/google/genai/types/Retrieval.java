@@ -18,30 +18,29 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Defines a retrieval tool that model can call to access external knowledge. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = Retrieval.Builder.class)
 public abstract class Retrieval extends JsonSerializable {
   /** Optional. Deprecated. This option is no longer supported. */
-  @JsonProperty("disableAttribution")
+  @SerializedName("disableAttribution")
   public abstract Optional<Boolean> disableAttribution();
 
   /** Set to use data source powered by Vertex AI Search. */
-  @JsonProperty("vertexAiSearch")
+  @SerializedName("vertexAiSearch")
   public abstract Optional<VertexAISearch> vertexAiSearch();
 
   /**
    * Set to use data source powered by Vertex RAG store. User data is uploaded via the
    * VertexRagDataService.
    */
-  @JsonProperty("vertexRagStore")
+  @SerializedName("vertexRagStore")
   public abstract Optional<VertexRagStore> vertexRagStore();
 
   /** Instantiates a builder for Retrieval. */
@@ -55,20 +54,23 @@ public abstract class Retrieval extends JsonSerializable {
   /** Builder for Retrieval. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Retrieval.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Retrieval.Builder();
-    }
-
-    @JsonProperty("disableAttribution")
+    @SerializedName("disableAttribution")
     public abstract Builder disableAttribution(boolean disableAttribution);
 
-    @JsonProperty("vertexAiSearch")
+    @SerializedName("disableAttribution")
+    abstract Builder disableAttribution(Optional<Boolean> disableAttribution);
+
+    @SerializedName("vertexAiSearch")
     public abstract Builder vertexAiSearch(VertexAISearch vertexAiSearch);
 
-    @JsonProperty("vertexRagStore")
+    @SerializedName("vertexAiSearch")
+    abstract Builder vertexAiSearch(Optional<VertexAISearch> vertexAiSearch);
+
+    @SerializedName("vertexRagStore")
     public abstract Builder vertexRagStore(VertexRagStore vertexRagStore);
+
+    @SerializedName("vertexRagStore")
+    abstract Builder vertexRagStore(Optional<VertexRagStore> vertexRagStore);
 
     public abstract Retrieval build();
   }

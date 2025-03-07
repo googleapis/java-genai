@@ -18,33 +18,32 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 /** Represents a single request in a replay. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = ReplayRequest.Builder.class)
 public abstract class ReplayRequest extends JsonSerializable {
   /** */
-  @JsonProperty("method")
+  @SerializedName("method")
   public abstract Optional<String> method();
 
   /** */
-  @JsonProperty("url")
+  @SerializedName("url")
   public abstract Optional<String> url();
 
   /** */
-  @JsonProperty("headers")
+  @SerializedName("headers")
   public abstract Optional<Map<String, String>> headers();
 
   /** */
-  @JsonProperty("bodySegments")
+  @SerializedName("bodySegments")
   public abstract Optional<List<Map<String, Object>>> bodySegments();
 
   /** Instantiates a builder for ReplayRequest. */
@@ -58,23 +57,29 @@ public abstract class ReplayRequest extends JsonSerializable {
   /** Builder for ReplayRequest. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ReplayRequest.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ReplayRequest.Builder();
-    }
-
-    @JsonProperty("method")
+    @SerializedName("method")
     public abstract Builder method(String method);
 
-    @JsonProperty("url")
+    @SerializedName("method")
+    abstract Builder method(Optional<String> method);
+
+    @SerializedName("url")
     public abstract Builder url(String url);
 
-    @JsonProperty("headers")
+    @SerializedName("url")
+    abstract Builder url(Optional<String> url);
+
+    @SerializedName("headers")
     public abstract Builder headers(Map<String, String> headers);
 
-    @JsonProperty("bodySegments")
+    @SerializedName("headers")
+    abstract Builder headers(Optional<Map<String, String>> headers);
+
+    @SerializedName("bodySegments")
     public abstract Builder bodySegments(List<Map<String, Object>> bodySegments);
+
+    @SerializedName("bodySegments")
+    abstract Builder bodySegments(Optional<List<Map<String, Object>>> bodySegments);
 
     public abstract ReplayRequest build();
   }

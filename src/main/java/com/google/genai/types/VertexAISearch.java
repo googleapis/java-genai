@@ -18,25 +18,24 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
  * Retrieve from Vertex AI Search datastore for grounding. See
  * https://cloud.google.com/products/agent-builder
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = VertexAISearch.Builder.class)
 public abstract class VertexAISearch extends JsonSerializable {
   /**
    * Required. Fully-qualified Vertex AI Search data store resource ID. Format:
    * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{dataStore}`
    */
-  @JsonProperty("datastore")
+  @SerializedName("datastore")
   public abstract Optional<String> datastore();
 
   /** Instantiates a builder for VertexAISearch. */
@@ -50,14 +49,11 @@ public abstract class VertexAISearch extends JsonSerializable {
   /** Builder for VertexAISearch. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `VertexAISearch.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_VertexAISearch.Builder();
-    }
-
-    @JsonProperty("datastore")
+    @SerializedName("datastore")
     public abstract Builder datastore(String datastore);
+
+    @SerializedName("datastore")
+    abstract Builder datastore(Optional<String> datastore);
 
     public abstract VertexAISearch build();
   }

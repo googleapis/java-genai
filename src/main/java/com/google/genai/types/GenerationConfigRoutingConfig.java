@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** The configuration for routing the request to a specific model. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GenerationConfigRoutingConfig.Builder.class)
 public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   /** Automated routing. */
-  @JsonProperty("autoMode")
+  @SerializedName("autoMode")
   public abstract Optional<GenerationConfigRoutingConfigAutoRoutingMode> autoMode();
 
   /** Manual routing. */
-  @JsonProperty("manualMode")
+  @SerializedName("manualMode")
   public abstract Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode();
 
   /** Instantiates a builder for GenerationConfigRoutingConfig. */
@@ -48,19 +47,18 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   /** Builder for GenerationConfigRoutingConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GenerationConfigRoutingConfig.builder()` for instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerationConfigRoutingConfig.Builder();
-    }
-
-    @JsonProperty("autoMode")
+    @SerializedName("autoMode")
     public abstract Builder autoMode(GenerationConfigRoutingConfigAutoRoutingMode autoMode);
 
-    @JsonProperty("manualMode")
+    @SerializedName("autoMode")
+    abstract Builder autoMode(Optional<GenerationConfigRoutingConfigAutoRoutingMode> autoMode);
+
+    @SerializedName("manualMode")
     public abstract Builder manualMode(GenerationConfigRoutingConfigManualRoutingMode manualMode);
+
+    @SerializedName("manualMode")
+    abstract Builder manualMode(
+        Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode);
 
     public abstract GenerationConfigRoutingConfig build();
   }

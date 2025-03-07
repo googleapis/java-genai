@@ -18,34 +18,33 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Messages sent by the client in the API call. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveClientMessage.Builder.class)
 public abstract class LiveClientMessage extends JsonSerializable {
   /**
    * Message to be sent by the system when connecting to the API. SDK users should not send this
    * message.
    */
-  @JsonProperty("setup")
+  @SerializedName("setup")
   public abstract Optional<LiveClientSetup> setup();
 
   /** Incremental update of the current conversation delivered from the client. */
-  @JsonProperty("clientContent")
+  @SerializedName("clientContent")
   public abstract Optional<LiveClientContent> clientContent();
 
   /** User input that is sent in real time. */
-  @JsonProperty("realtimeInput")
+  @SerializedName("realtimeInput")
   public abstract Optional<LiveClientRealtimeInput> realtimeInput();
 
   /** Response to a `ToolCallMessage` received from the server. */
-  @JsonProperty("toolResponse")
+  @SerializedName("toolResponse")
   public abstract Optional<LiveClientToolResponse> toolResponse();
 
   /** Instantiates a builder for LiveClientMessage. */
@@ -59,23 +58,29 @@ public abstract class LiveClientMessage extends JsonSerializable {
   /** Builder for LiveClientMessage. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveClientMessage.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveClientMessage.Builder();
-    }
-
-    @JsonProperty("setup")
+    @SerializedName("setup")
     public abstract Builder setup(LiveClientSetup setup);
 
-    @JsonProperty("clientContent")
+    @SerializedName("setup")
+    abstract Builder setup(Optional<LiveClientSetup> setup);
+
+    @SerializedName("clientContent")
     public abstract Builder clientContent(LiveClientContent clientContent);
 
-    @JsonProperty("realtimeInput")
+    @SerializedName("clientContent")
+    abstract Builder clientContent(Optional<LiveClientContent> clientContent);
+
+    @SerializedName("realtimeInput")
     public abstract Builder realtimeInput(LiveClientRealtimeInput realtimeInput);
 
-    @JsonProperty("toolResponse")
+    @SerializedName("realtimeInput")
+    abstract Builder realtimeInput(Optional<LiveClientRealtimeInput> realtimeInput);
+
+    @SerializedName("toolResponse")
     public abstract Builder toolResponse(LiveClientToolResponse toolResponse);
+
+    @SerializedName("toolResponse")
+    abstract Builder toolResponse(Optional<LiveClientToolResponse> toolResponse);
 
     public abstract LiveClientMessage build();
   }

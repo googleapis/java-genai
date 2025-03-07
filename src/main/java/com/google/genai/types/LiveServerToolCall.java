@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +29,11 @@ import java.util.Optional;
  * Request for the client to execute the `function_calls` and return the responses with the matching
  * `id`s.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveServerToolCall.Builder.class)
 public abstract class LiveServerToolCall extends JsonSerializable {
   /** The function call to be executed. */
-  @JsonProperty("functionCalls")
+  @SerializedName("functionCalls")
   public abstract Optional<List<FunctionCall>> functionCalls();
 
   /** Instantiates a builder for LiveServerToolCall. */
@@ -48,14 +47,11 @@ public abstract class LiveServerToolCall extends JsonSerializable {
   /** Builder for LiveServerToolCall. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveServerToolCall.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveServerToolCall.Builder();
-    }
-
-    @JsonProperty("functionCalls")
+    @SerializedName("functionCalls")
     public abstract Builder functionCalls(List<FunctionCall> functionCalls);
+
+    @SerializedName("functionCalls")
+    abstract Builder functionCalls(Optional<List<FunctionCall>> functionCalls);
 
     public abstract LiveServerToolCall build();
   }
