@@ -18,31 +18,30 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** API parameters for UpscaleImage. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = UpscaleImageAPIParameters.Builder.class)
 public abstract class UpscaleImageAPIParameters extends JsonSerializable {
   /** The model to use. */
-  @JsonProperty("model")
+  @SerializedName("model")
   public abstract Optional<String> model();
 
   /** The input image to upscale. */
-  @JsonProperty("image")
+  @SerializedName("image")
   public abstract Optional<Image> image();
 
   /** The factor to upscale the image (x2 or x4). */
-  @JsonProperty("upscaleFactor")
+  @SerializedName("upscaleFactor")
   public abstract Optional<String> upscaleFactor();
 
   /** Configuration for upscaling. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<UpscaleImageAPIConfig> config();
 
   /** Instantiates a builder for UpscaleImageAPIParameters. */
@@ -56,23 +55,29 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
   /** Builder for UpscaleImageAPIParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UpscaleImageAPIParameters.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_UpscaleImageAPIParameters.Builder();
-    }
-
-    @JsonProperty("model")
+    @SerializedName("model")
     public abstract Builder model(String model);
 
-    @JsonProperty("image")
+    @SerializedName("model")
+    abstract Builder model(Optional<String> model);
+
+    @SerializedName("image")
     public abstract Builder image(Image image);
 
-    @JsonProperty("upscaleFactor")
+    @SerializedName("image")
+    abstract Builder image(Optional<Image> image);
+
+    @SerializedName("upscaleFactor")
     public abstract Builder upscaleFactor(String upscaleFactor);
 
-    @JsonProperty("config")
+    @SerializedName("upscaleFactor")
+    abstract Builder upscaleFactor(Optional<String> upscaleFactor);
+
+    @SerializedName("config")
     public abstract Builder config(UpscaleImageAPIConfig config);
+
+    @SerializedName("config")
+    abstract Builder config(Optional<UpscaleImageAPIConfig> config);
 
     public abstract UpscaleImageAPIParameters build();
   }

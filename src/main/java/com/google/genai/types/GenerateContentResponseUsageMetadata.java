@@ -18,34 +18,33 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Usage metadata about response(s). */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GenerateContentResponseUsageMetadata.Builder.class)
 public abstract class GenerateContentResponseUsageMetadata extends JsonSerializable {
   /** Output only. Number of tokens in the cached part in the input (the cached content). */
-  @JsonProperty("cachedContentTokenCount")
+  @SerializedName("cachedContentTokenCount")
   public abstract Optional<Integer> cachedContentTokenCount();
 
   /** Number of tokens in the response(s). */
-  @JsonProperty("candidatesTokenCount")
+  @SerializedName("candidatesTokenCount")
   public abstract Optional<Integer> candidatesTokenCount();
 
   /**
    * Number of tokens in the request. When `cached_content` is set, this is still the total
    * effective prompt size meaning this includes the number of tokens in the cached content.
    */
-  @JsonProperty("promptTokenCount")
+  @SerializedName("promptTokenCount")
   public abstract Optional<Integer> promptTokenCount();
 
   /** Total token count for prompt and response candidates. */
-  @JsonProperty("totalTokenCount")
+  @SerializedName("totalTokenCount")
   public abstract Optional<Integer> totalTokenCount();
 
   /** Instantiates a builder for GenerateContentResponseUsageMetadata. */
@@ -59,26 +58,29 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
   /** Builder for GenerateContentResponseUsageMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GenerateContentResponseUsageMetadata.builder()` for
-     * instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateContentResponseUsageMetadata.Builder();
-    }
-
-    @JsonProperty("cachedContentTokenCount")
+    @SerializedName("cachedContentTokenCount")
     public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
 
-    @JsonProperty("candidatesTokenCount")
+    @SerializedName("cachedContentTokenCount")
+    abstract Builder cachedContentTokenCount(Optional<Integer> cachedContentTokenCount);
+
+    @SerializedName("candidatesTokenCount")
     public abstract Builder candidatesTokenCount(Integer candidatesTokenCount);
 
-    @JsonProperty("promptTokenCount")
+    @SerializedName("candidatesTokenCount")
+    abstract Builder candidatesTokenCount(Optional<Integer> candidatesTokenCount);
+
+    @SerializedName("promptTokenCount")
     public abstract Builder promptTokenCount(Integer promptTokenCount);
 
-    @JsonProperty("totalTokenCount")
+    @SerializedName("promptTokenCount")
+    abstract Builder promptTokenCount(Optional<Integer> promptTokenCount);
+
+    @SerializedName("totalTokenCount")
     public abstract Builder totalTokenCount(Integer totalTokenCount);
+
+    @SerializedName("totalTokenCount")
+    abstract Builder totalTokenCount(Optional<Integer> totalTokenCount);
 
     public abstract GenerateContentResponseUsageMetadata build();
   }

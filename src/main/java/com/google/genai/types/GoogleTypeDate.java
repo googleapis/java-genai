@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -34,22 +33,22 @@ import java.util.Optional;
  * card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime *
  * google.protobuf.Timestamp
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GoogleTypeDate.Builder.class)
 public abstract class GoogleTypeDate extends JsonSerializable {
   /**
    * Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year
    * by itself or a year and month where the day isn't significant.
    */
-  @JsonProperty("day")
+  @SerializedName("day")
   public abstract Optional<Integer> day();
 
   /** Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day. */
-  @JsonProperty("month")
+  @SerializedName("month")
   public abstract Optional<Integer> month();
 
   /** Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year. */
-  @JsonProperty("year")
+  @SerializedName("year")
   public abstract Optional<Integer> year();
 
   /** Instantiates a builder for GoogleTypeDate. */
@@ -63,20 +62,23 @@ public abstract class GoogleTypeDate extends JsonSerializable {
   /** Builder for GoogleTypeDate. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GoogleTypeDate.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GoogleTypeDate.Builder();
-    }
-
-    @JsonProperty("day")
+    @SerializedName("day")
     public abstract Builder day(Integer day);
 
-    @JsonProperty("month")
+    @SerializedName("day")
+    abstract Builder day(Optional<Integer> day);
+
+    @SerializedName("month")
     public abstract Builder month(Integer month);
 
-    @JsonProperty("year")
+    @SerializedName("month")
+    abstract Builder month(Optional<Integer> month);
+
+    @SerializedName("year")
     public abstract Builder year(Integer year);
+
+    @SerializedName("year")
+    abstract Builder year(Optional<Integer> year);
 
     public abstract GoogleTypeDate build();
   }

@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Grounding support. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GroundingSupport.Builder.class)
 public abstract class GroundingSupport extends JsonSerializable {
   /**
    * Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. This
    * list must have the same size as the grounding_chunk_indices.
    */
-  @JsonProperty("confidenceScores")
+  @SerializedName("confidenceScores")
   public abstract Optional<List<Float>> confidenceScores();
 
   /**
@@ -42,11 +41,11 @@ public abstract class GroundingSupport extends JsonSerializable {
    * For instance [1,3,4] means that grounding_chunk[1], grounding_chunk[3], grounding_chunk[4] are
    * the retrieved content attributed to the claim.
    */
-  @JsonProperty("groundingChunkIndices")
+  @SerializedName("groundingChunkIndices")
   public abstract Optional<List<Integer>> groundingChunkIndices();
 
   /** Segment of the content this support belongs to. */
-  @JsonProperty("segment")
+  @SerializedName("segment")
   public abstract Optional<Segment> segment();
 
   /** Instantiates a builder for GroundingSupport. */
@@ -60,20 +59,23 @@ public abstract class GroundingSupport extends JsonSerializable {
   /** Builder for GroundingSupport. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GroundingSupport.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GroundingSupport.Builder();
-    }
-
-    @JsonProperty("confidenceScores")
+    @SerializedName("confidenceScores")
     public abstract Builder confidenceScores(List<Float> confidenceScores);
 
-    @JsonProperty("groundingChunkIndices")
+    @SerializedName("confidenceScores")
+    abstract Builder confidenceScores(Optional<List<Float>> confidenceScores);
+
+    @SerializedName("groundingChunkIndices")
     public abstract Builder groundingChunkIndices(List<Integer> groundingChunkIndices);
 
-    @JsonProperty("segment")
+    @SerializedName("groundingChunkIndices")
+    abstract Builder groundingChunkIndices(Optional<List<Integer>> groundingChunkIndices);
+
+    @SerializedName("segment")
     public abstract Builder segment(Segment segment);
+
+    @SerializedName("segment")
+    abstract Builder segment(Optional<Segment> segment);
 
     public abstract GroundingSupport build();
   }

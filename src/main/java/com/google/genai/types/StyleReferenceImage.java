@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -33,23 +32,23 @@ import java.util.Optional;
  *
  * <p>A raw reference image can also be provided as a destination for the style to be applied to.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = StyleReferenceImage.Builder.class)
 public abstract class StyleReferenceImage extends JsonSerializable {
   /** The reference image for the editing operation. */
-  @JsonProperty("referenceImage")
+  @SerializedName("referenceImage")
   public abstract Optional<Image> referenceImage();
 
   /** The id of the reference image. */
-  @JsonProperty("referenceId")
+  @SerializedName("referenceId")
   public abstract Optional<Integer> referenceId();
 
   /** The type of the reference image. Only set by the SDK. */
-  @JsonProperty("referenceType")
+  @SerializedName("referenceType")
   public abstract Optional<String> referenceType();
 
   /** Configuration for the style reference image. */
-  @JsonProperty("config")
+  @SerializedName("config")
   public abstract Optional<StyleReferenceConfig> config();
 
   /** Instantiates a builder for StyleReferenceImage. */
@@ -63,23 +62,29 @@ public abstract class StyleReferenceImage extends JsonSerializable {
   /** Builder for StyleReferenceImage. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `StyleReferenceImage.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_StyleReferenceImage.Builder();
-    }
-
-    @JsonProperty("referenceImage")
+    @SerializedName("referenceImage")
     public abstract Builder referenceImage(Image referenceImage);
 
-    @JsonProperty("referenceId")
+    @SerializedName("referenceImage")
+    abstract Builder referenceImage(Optional<Image> referenceImage);
+
+    @SerializedName("referenceId")
     public abstract Builder referenceId(Integer referenceId);
 
-    @JsonProperty("referenceType")
+    @SerializedName("referenceId")
+    abstract Builder referenceId(Optional<Integer> referenceId);
+
+    @SerializedName("referenceType")
     public abstract Builder referenceType(String referenceType);
 
-    @JsonProperty("config")
+    @SerializedName("referenceType")
+    abstract Builder referenceType(Optional<String> referenceType);
+
+    @SerializedName("config")
     public abstract Builder config(StyleReferenceConfig config);
+
+    @SerializedName("config")
+    abstract Builder config(Optional<StyleReferenceConfig> config);
 
     public abstract StyleReferenceImage build();
   }

@@ -16,7 +16,7 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -47,11 +47,13 @@ final class HttpApiResponse extends ApiResponse {
         return "";
       }
 
-      JsonNode errorNode = JsonSerializable.objectMapper.readTree(responseBody).get("error");
-      if (errorNode != null && errorNode.isObject()) {
-        JsonNode messageNode = errorNode.get("message");
-        if (messageNode != null && messageNode.isTextual()) {
-          return messageNode.asText();
+      JsonObject jsonObject = JsonSerializable.gson.fromJson(responseBody, JsonObject.class);
+      if (jsonObject != null && jsonObject.has("error") && jsonObject.get("error").isJsonObject()) {
+        JsonObject errorObject = jsonObject.getAsJsonObject("error");
+        if (errorObject.has("message")
+            && errorObject.get("message").isJsonPrimitive()
+            && errorObject.get("message").getAsJsonPrimitive().isString()) {
+          return errorObject.get("message").getAsString();
         }
       }
       return "";
@@ -65,6 +67,7 @@ final class HttpApiResponse extends ApiResponse {
    *
    * @throws HttpException if the HTTP status code is not 200 OK.
    */
+  @Override
   public HttpEntity getEntity() throws HttpException {
     StatusLine statusLine = response.getStatusLine();
     if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
@@ -78,6 +81,7 @@ final class HttpApiResponse extends ApiResponse {
   }
 
   /** Closes the Http response. */
+  @Override
   public void close() throws IOException {
     this.response.close();
   }

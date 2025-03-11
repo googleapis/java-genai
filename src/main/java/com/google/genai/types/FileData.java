@@ -18,23 +18,22 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** URI based data. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = FileData.Builder.class)
 public abstract class FileData extends JsonSerializable {
   /** Required. URI. */
-  @JsonProperty("fileUri")
+  @SerializedName("fileUri")
   public abstract Optional<String> fileUri();
 
   /** Required. The IANA standard MIME type of the source data. */
-  @JsonProperty("mimeType")
+  @SerializedName("mimeType")
   public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for FileData. */
@@ -48,17 +47,17 @@ public abstract class FileData extends JsonSerializable {
   /** Builder for FileData. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FileData.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_FileData.Builder();
-    }
-
-    @JsonProperty("fileUri")
+    @SerializedName("fileUri")
     public abstract Builder fileUri(String fileUri);
 
-    @JsonProperty("mimeType")
+    @SerializedName("fileUri")
+    abstract Builder fileUri(Optional<String> fileUri);
+
+    @SerializedName("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @SerializedName("mimeType")
+    abstract Builder mimeType(Optional<String> mimeType);
 
     public abstract FileData build();
   }

@@ -18,12 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,34 +32,34 @@ import java.util.stream.Collectors;
 import org.jspecify.annotations.Nullable;
 
 /** Response message for PredictionService.GenerateContent. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GenerateContentResponse.Builder.class)
 public abstract class GenerateContentResponse extends JsonSerializable {
   /** Response variations returned by the model. */
-  @JsonProperty("candidates")
+  @SerializedName("candidates")
   public abstract Optional<List<Candidate>> candidates();
 
   /** Timestamp when the request is made to the server. */
-  @JsonProperty("createTime")
+  @SerializedName("createTime")
   public abstract Optional<String> createTime();
 
   /** Identifier for each response. */
-  @JsonProperty("responseId")
+  @SerializedName("responseId")
   public abstract Optional<String> responseId();
 
   /** Output only. The model version used to generate the response. */
-  @JsonProperty("modelVersion")
+  @SerializedName("modelVersion")
   public abstract Optional<String> modelVersion();
 
   /**
    * Output only. Content filter results for a prompt sent in the request. Note: Sent only in the
    * first stream chunk. Only happens when no candidates were generated due to content violations.
    */
-  @JsonProperty("promptFeedback")
+  @SerializedName("promptFeedback")
   public abstract Optional<GenerateContentResponsePromptFeedback> promptFeedback();
 
   /** Usage metadata about the response(s). */
-  @JsonProperty("usageMetadata")
+  @SerializedName("usageMetadata")
   public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
 
   /** Instantiates a builder for GenerateContentResponse. */
@@ -74,29 +73,41 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   /** Builder for GenerateContentResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GenerateContentResponse.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GenerateContentResponse.Builder();
-    }
-
-    @JsonProperty("candidates")
+    @SerializedName("candidates")
     public abstract Builder candidates(List<Candidate> candidates);
 
-    @JsonProperty("createTime")
+    @SerializedName("candidates")
+    abstract Builder candidates(Optional<List<Candidate>> candidates);
+
+    @SerializedName("createTime")
     public abstract Builder createTime(String createTime);
 
-    @JsonProperty("responseId")
+    @SerializedName("createTime")
+    abstract Builder createTime(Optional<String> createTime);
+
+    @SerializedName("responseId")
     public abstract Builder responseId(String responseId);
 
-    @JsonProperty("modelVersion")
+    @SerializedName("responseId")
+    abstract Builder responseId(Optional<String> responseId);
+
+    @SerializedName("modelVersion")
     public abstract Builder modelVersion(String modelVersion);
 
-    @JsonProperty("promptFeedback")
+    @SerializedName("modelVersion")
+    abstract Builder modelVersion(Optional<String> modelVersion);
+
+    @SerializedName("promptFeedback")
     public abstract Builder promptFeedback(GenerateContentResponsePromptFeedback promptFeedback);
 
-    @JsonProperty("usageMetadata")
+    @SerializedName("promptFeedback")
+    abstract Builder promptFeedback(Optional<GenerateContentResponsePromptFeedback> promptFeedback);
+
+    @SerializedName("usageMetadata")
     public abstract Builder usageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
+
+    @SerializedName("usageMetadata")
+    abstract Builder usageMetadata(Optional<GenerateContentResponseUsageMetadata> usageMetadata);
 
     public abstract GenerateContentResponse build();
   }

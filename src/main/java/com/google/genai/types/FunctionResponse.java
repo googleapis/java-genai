@@ -18,30 +18,29 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Map;
 import java.util.Optional;
 
 /** A function response. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = FunctionResponse.Builder.class)
 public abstract class FunctionResponse extends JsonSerializable {
   /**
    * The id of the function call this response is for. Populated by the client to match the
    * corresponding function call `id`.
    */
-  @JsonProperty("id")
+  @SerializedName("id")
   public abstract Optional<String> id();
 
   /**
    * Required. The name of the function to call. Matches [FunctionDeclaration.name] and
    * [FunctionCall.name].
    */
-  @JsonProperty("name")
+  @SerializedName("name")
   public abstract Optional<String> name();
 
   /**
@@ -49,7 +48,7 @@ public abstract class FunctionResponse extends JsonSerializable {
    * output and "error" key to specify error details (if any). If "output" and "error" keys are not
    * specified, then whole "response" is treated as function output.
    */
-  @JsonProperty("response")
+  @SerializedName("response")
   public abstract Optional<Map<String, Object>> response();
 
   /** Instantiates a builder for FunctionResponse. */
@@ -63,20 +62,23 @@ public abstract class FunctionResponse extends JsonSerializable {
   /** Builder for FunctionResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FunctionResponse.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_FunctionResponse.Builder();
-    }
-
-    @JsonProperty("id")
+    @SerializedName("id")
     public abstract Builder id(String id);
 
-    @JsonProperty("name")
+    @SerializedName("id")
+    abstract Builder id(Optional<String> id);
+
+    @SerializedName("name")
     public abstract Builder name(String name);
 
-    @JsonProperty("response")
+    @SerializedName("name")
+    abstract Builder name(Optional<String> name);
+
+    @SerializedName("response")
     public abstract Builder response(Map<String, Object> response);
+
+    @SerializedName("response")
+    abstract Builder response(Optional<Map<String, Object>> response);
 
     public abstract FunctionResponse build();
   }

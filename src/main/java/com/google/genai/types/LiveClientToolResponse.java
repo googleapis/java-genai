@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +35,11 @@ import java.util.Optional;
  * exchanging the `Content` parts, while in the bidi GenerateContent APIs function calling happens
  * over this dedicated set of messages.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LiveClientToolResponse.Builder.class)
 public abstract class LiveClientToolResponse extends JsonSerializable {
   /** The response to the function calls. */
-  @JsonProperty("functionResponses")
+  @SerializedName("functionResponses")
   public abstract Optional<List<FunctionResponse>> functionResponses();
 
   /** Instantiates a builder for LiveClientToolResponse. */
@@ -54,14 +53,11 @@ public abstract class LiveClientToolResponse extends JsonSerializable {
   /** Builder for LiveClientToolResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveClientToolResponse.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LiveClientToolResponse.Builder();
-    }
-
-    @JsonProperty("functionResponses")
+    @SerializedName("functionResponses")
     public abstract Builder functionResponses(List<FunctionResponse> functionResponses);
+
+    @SerializedName("functionResponses")
+    abstract Builder functionResponses(Optional<List<FunctionResponse>> functionResponses);
 
     public abstract LiveClientToolResponse build();
   }

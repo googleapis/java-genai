@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -30,25 +29,25 @@ import java.util.Optional;
  *
  * <p>The inputs are based on `OpenAPI 3.0 specifications <https://spec.openapis.org/oas/v3.0.3>`_.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = FunctionDeclaration.Builder.class)
 public abstract class FunctionDeclaration extends JsonSerializable {
   /** Describes the output from the function in the OpenAPI JSON Schema Object format. */
-  @JsonProperty("response")
+  @SerializedName("response")
   public abstract Optional<Schema> response();
 
   /**
    * Optional. Description and purpose of the function. Model uses it to decide how and whether to
    * call the function.
    */
-  @JsonProperty("description")
+  @SerializedName("description")
   public abstract Optional<String> description();
 
   /**
    * Required. The name of the function to call. Must start with a letter or an underscore. Must be
    * a-z, A-Z, 0-9, or contain underscores, dots and dashes, with a maximum length of 64.
    */
-  @JsonProperty("name")
+  @SerializedName("name")
   public abstract Optional<String> name();
 
   /**
@@ -60,7 +59,7 @@ public abstract class FunctionDeclaration extends JsonSerializable {
    * 64. Example with 1 required and 1 optional parameter: type: OBJECT properties: param1: type:
    * STRING param2: type: INTEGER required: - param1
    */
-  @JsonProperty("parameters")
+  @SerializedName("parameters")
   public abstract Optional<Schema> parameters();
 
   /** Instantiates a builder for FunctionDeclaration. */
@@ -74,23 +73,29 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   /** Builder for FunctionDeclaration. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FunctionDeclaration.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_FunctionDeclaration.Builder();
-    }
-
-    @JsonProperty("response")
+    @SerializedName("response")
     public abstract Builder response(Schema response);
 
-    @JsonProperty("description")
+    @SerializedName("response")
+    abstract Builder response(Optional<Schema> response);
+
+    @SerializedName("description")
     public abstract Builder description(String description);
 
-    @JsonProperty("name")
+    @SerializedName("description")
+    abstract Builder description(Optional<String> description);
+
+    @SerializedName("name")
     public abstract Builder name(String name);
 
-    @JsonProperty("parameters")
+    @SerializedName("name")
+    abstract Builder name(Optional<String> name);
+
+    @SerializedName("parameters")
     public abstract Builder parameters(Schema parameters);
+
+    @SerializedName("parameters")
+    abstract Builder parameters(Optional<Schema> parameters);
 
     public abstract FunctionDeclaration build();
   }

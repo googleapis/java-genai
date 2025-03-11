@@ -18,20 +18,19 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** None */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = UpscaleImageResponse.Builder.class)
 public abstract class UpscaleImageResponse extends JsonSerializable {
   /** Generated images. */
-  @JsonProperty("generatedImages")
+  @SerializedName("generatedImages")
   public abstract Optional<List<GeneratedImage>> generatedImages();
 
   /** Instantiates a builder for UpscaleImageResponse. */
@@ -45,14 +44,11 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
   /** Builder for UpscaleImageResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UpscaleImageResponse.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_UpscaleImageResponse.Builder();
-    }
-
-    @JsonProperty("generatedImages")
+    @SerializedName("generatedImages")
     public abstract Builder generatedImages(List<GeneratedImage> generatedImages);
+
+    @SerializedName("generatedImages")
+    abstract Builder generatedImages(Optional<List<GeneratedImage>> generatedImages);
 
     public abstract UpscaleImageResponse build();
   }

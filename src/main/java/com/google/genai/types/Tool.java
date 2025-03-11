@@ -18,20 +18,19 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Tool details of a tool that the model may use to generate a response. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = Tool.Builder.class)
 public abstract class Tool extends JsonSerializable {
   /** List of function declarations that the tool supports. */
-  @JsonProperty("functionDeclarations")
+  @SerializedName("functionDeclarations")
   public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
 
   /**
@@ -39,27 +38,27 @@ public abstract class Tool extends JsonSerializable {
    * external knowledge to answer the prompt. Retrieval results are presented to the model for
    * generation.
    */
-  @JsonProperty("retrieval")
+  @SerializedName("retrieval")
   public abstract Optional<Retrieval> retrieval();
 
   /**
    * Optional. Google Search tool type. Specialized retrieval tool that is powered by Google Search.
    */
-  @JsonProperty("googleSearch")
+  @SerializedName("googleSearch")
   public abstract Optional<GoogleSearch> googleSearch();
 
   /**
    * Optional. GoogleSearchRetrieval tool type. Specialized retrieval tool that is powered by Google
    * search.
    */
-  @JsonProperty("googleSearchRetrieval")
+  @SerializedName("googleSearchRetrieval")
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
   /**
    * Optional. CodeExecution tool type. Enables the model to execute code as part of generation.
    * This field is only used by the Gemini Developer API services.
    */
-  @JsonProperty("codeExecution")
+  @SerializedName("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
 
   /** Instantiates a builder for Tool. */
@@ -73,26 +72,35 @@ public abstract class Tool extends JsonSerializable {
   /** Builder for Tool. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `Tool.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Tool.Builder();
-    }
-
-    @JsonProperty("functionDeclarations")
+    @SerializedName("functionDeclarations")
     public abstract Builder functionDeclarations(List<FunctionDeclaration> functionDeclarations);
 
-    @JsonProperty("retrieval")
+    @SerializedName("functionDeclarations")
+    abstract Builder functionDeclarations(Optional<List<FunctionDeclaration>> functionDeclarations);
+
+    @SerializedName("retrieval")
     public abstract Builder retrieval(Retrieval retrieval);
 
-    @JsonProperty("googleSearch")
+    @SerializedName("retrieval")
+    abstract Builder retrieval(Optional<Retrieval> retrieval);
+
+    @SerializedName("googleSearch")
     public abstract Builder googleSearch(GoogleSearch googleSearch);
 
-    @JsonProperty("googleSearchRetrieval")
+    @SerializedName("googleSearch")
+    abstract Builder googleSearch(Optional<GoogleSearch> googleSearch);
+
+    @SerializedName("googleSearchRetrieval")
     public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
 
-    @JsonProperty("codeExecution")
+    @SerializedName("googleSearchRetrieval")
+    abstract Builder googleSearchRetrieval(Optional<GoogleSearchRetrieval> googleSearchRetrieval);
+
+    @SerializedName("codeExecution")
     public abstract Builder codeExecution(ToolCodeExecution codeExecution);
+
+    @SerializedName("codeExecution")
+    abstract Builder codeExecution(Optional<ToolCodeExecution> codeExecution);
 
     public abstract Tool build();
   }

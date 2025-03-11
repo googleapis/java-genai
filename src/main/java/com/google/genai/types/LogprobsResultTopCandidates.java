@@ -18,20 +18,19 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Candidates with top log probabilities at each decoding step. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = LogprobsResultTopCandidates.Builder.class)
 public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   /** Sorted by log probability in descending order. */
-  @JsonProperty("candidates")
+  @SerializedName("candidates")
   public abstract Optional<List<LogprobsResultCandidate>> candidates();
 
   /** Instantiates a builder for LogprobsResultTopCandidates. */
@@ -45,14 +44,11 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   /** Builder for LogprobsResultTopCandidates. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LogprobsResultTopCandidates.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_LogprobsResultTopCandidates.Builder();
-    }
-
-    @JsonProperty("candidates")
+    @SerializedName("candidates")
     public abstract Builder candidates(List<LogprobsResultCandidate> candidates);
+
+    @SerializedName("candidates")
+    abstract Builder candidates(Optional<List<LogprobsResultCandidate>> candidates);
 
     public abstract LogprobsResultTopCandidates build();
   }

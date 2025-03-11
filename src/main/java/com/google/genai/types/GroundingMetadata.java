@@ -18,40 +18,39 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Metadata returned to client when grounding is enabled. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GroundingMetadata.Builder.class)
 public abstract class GroundingMetadata extends JsonSerializable {
   /** List of supporting references retrieved from specified grounding source. */
-  @JsonProperty("groundingChunks")
+  @SerializedName("groundingChunks")
   public abstract Optional<List<GroundingChunk>> groundingChunks();
 
   /** Optional. List of grounding support. */
-  @JsonProperty("groundingSupports")
+  @SerializedName("groundingSupports")
   public abstract Optional<List<GroundingSupport>> groundingSupports();
 
   /** Optional. Output only. Retrieval metadata. */
-  @JsonProperty("retrievalMetadata")
+  @SerializedName("retrievalMetadata")
   public abstract Optional<RetrievalMetadata> retrievalMetadata();
 
   /** Optional. Queries executed by the retrieval tools. */
-  @JsonProperty("retrievalQueries")
+  @SerializedName("retrievalQueries")
   public abstract Optional<List<String>> retrievalQueries();
 
   /** Optional. Google search entry for the following-up web searches. */
-  @JsonProperty("searchEntryPoint")
+  @SerializedName("searchEntryPoint")
   public abstract Optional<SearchEntryPoint> searchEntryPoint();
 
   /** Optional. Web search queries for the following-up web search. */
-  @JsonProperty("webSearchQueries")
+  @SerializedName("webSearchQueries")
   public abstract Optional<List<String>> webSearchQueries();
 
   /** Instantiates a builder for GroundingMetadata. */
@@ -65,29 +64,41 @@ public abstract class GroundingMetadata extends JsonSerializable {
   /** Builder for GroundingMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `GroundingMetadata.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GroundingMetadata.Builder();
-    }
-
-    @JsonProperty("groundingChunks")
+    @SerializedName("groundingChunks")
     public abstract Builder groundingChunks(List<GroundingChunk> groundingChunks);
 
-    @JsonProperty("groundingSupports")
+    @SerializedName("groundingChunks")
+    abstract Builder groundingChunks(Optional<List<GroundingChunk>> groundingChunks);
+
+    @SerializedName("groundingSupports")
     public abstract Builder groundingSupports(List<GroundingSupport> groundingSupports);
 
-    @JsonProperty("retrievalMetadata")
+    @SerializedName("groundingSupports")
+    abstract Builder groundingSupports(Optional<List<GroundingSupport>> groundingSupports);
+
+    @SerializedName("retrievalMetadata")
     public abstract Builder retrievalMetadata(RetrievalMetadata retrievalMetadata);
 
-    @JsonProperty("retrievalQueries")
+    @SerializedName("retrievalMetadata")
+    abstract Builder retrievalMetadata(Optional<RetrievalMetadata> retrievalMetadata);
+
+    @SerializedName("retrievalQueries")
     public abstract Builder retrievalQueries(List<String> retrievalQueries);
 
-    @JsonProperty("searchEntryPoint")
+    @SerializedName("retrievalQueries")
+    abstract Builder retrievalQueries(Optional<List<String>> retrievalQueries);
+
+    @SerializedName("searchEntryPoint")
     public abstract Builder searchEntryPoint(SearchEntryPoint searchEntryPoint);
 
-    @JsonProperty("webSearchQueries")
+    @SerializedName("searchEntryPoint")
+    abstract Builder searchEntryPoint(Optional<SearchEntryPoint> searchEntryPoint);
+
+    @SerializedName("webSearchQueries")
     public abstract Builder webSearchQueries(List<String> webSearchQueries);
+
+    @SerializedName("webSearchQueries")
+    abstract Builder webSearchQueries(Optional<List<String>> webSearchQueries);
 
     public abstract GroundingMetadata build();
   }

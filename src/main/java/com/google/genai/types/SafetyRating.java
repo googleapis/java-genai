@@ -18,39 +18,38 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Safety rating corresponding to the generated content. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = SafetyRating.Builder.class)
 public abstract class SafetyRating extends JsonSerializable {
   /** Output only. Indicates whether the content was filtered out because of this rating. */
-  @JsonProperty("blocked")
+  @SerializedName("blocked")
   public abstract Optional<Boolean> blocked();
 
   /** Output only. Harm category. */
-  @JsonProperty("category")
+  @SerializedName("category")
   public abstract Optional<String> category();
 
   /** Output only. Harm probability levels in the content. */
-  @JsonProperty("probability")
+  @SerializedName("probability")
   public abstract Optional<String> probability();
 
   /** Output only. Harm probability score. */
-  @JsonProperty("probabilityScore")
+  @SerializedName("probabilityScore")
   public abstract Optional<Float> probabilityScore();
 
   /** Output only. Harm severity levels in the content. */
-  @JsonProperty("severity")
+  @SerializedName("severity")
   public abstract Optional<String> severity();
 
   /** Output only. Harm severity score. */
-  @JsonProperty("severityScore")
+  @SerializedName("severityScore")
   public abstract Optional<Float> severityScore();
 
   /** Instantiates a builder for SafetyRating. */
@@ -64,29 +63,41 @@ public abstract class SafetyRating extends JsonSerializable {
   /** Builder for SafetyRating. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `SafetyRating.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_SafetyRating.Builder();
-    }
-
-    @JsonProperty("blocked")
+    @SerializedName("blocked")
     public abstract Builder blocked(boolean blocked);
 
-    @JsonProperty("category")
+    @SerializedName("blocked")
+    abstract Builder blocked(Optional<Boolean> blocked);
+
+    @SerializedName("category")
     public abstract Builder category(String category);
 
-    @JsonProperty("probability")
+    @SerializedName("category")
+    abstract Builder category(Optional<String> category);
+
+    @SerializedName("probability")
     public abstract Builder probability(String probability);
 
-    @JsonProperty("probabilityScore")
+    @SerializedName("probability")
+    abstract Builder probability(Optional<String> probability);
+
+    @SerializedName("probabilityScore")
     public abstract Builder probabilityScore(Float probabilityScore);
 
-    @JsonProperty("severity")
+    @SerializedName("probabilityScore")
+    abstract Builder probabilityScore(Optional<Float> probabilityScore);
+
+    @SerializedName("severity")
     public abstract Builder severity(String severity);
 
-    @JsonProperty("severityScore")
+    @SerializedName("severity")
+    abstract Builder severity(Optional<String> severity);
+
+    @SerializedName("severityScore")
     public abstract Builder severityScore(Float severityScore);
+
+    @SerializedName("severityScore")
+    abstract Builder severityScore(Optional<Float> severityScore);
 
     public abstract SafetyRating build();
   }

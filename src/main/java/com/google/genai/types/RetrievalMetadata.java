@@ -18,16 +18,15 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Metadata related to retrieval in the grounding flow. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = RetrievalMetadata.Builder.class)
 public abstract class RetrievalMetadata extends JsonSerializable {
   /**
    * Optional. Score indicating how likely information from Google Search could help answer the
@@ -35,7 +34,7 @@ public abstract class RetrievalMetadata extends JsonSerializable {
    * likely. This score is only populated when Google Search grounding and dynamic retrieval is
    * enabled. It will be compared to the threshold to determine whether to trigger Google Search.
    */
-  @JsonProperty("googleSearchDynamicRetrievalScore")
+  @SerializedName("googleSearchDynamicRetrievalScore")
   public abstract Optional<Float> googleSearchDynamicRetrievalScore();
 
   /** Instantiates a builder for RetrievalMetadata. */
@@ -49,15 +48,13 @@ public abstract class RetrievalMetadata extends JsonSerializable {
   /** Builder for RetrievalMetadata. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `RetrievalMetadata.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_RetrievalMetadata.Builder();
-    }
-
-    @JsonProperty("googleSearchDynamicRetrievalScore")
+    @SerializedName("googleSearchDynamicRetrievalScore")
     public abstract Builder googleSearchDynamicRetrievalScore(
         Float googleSearchDynamicRetrievalScore);
+
+    @SerializedName("googleSearchDynamicRetrievalScore")
+    abstract Builder googleSearchDynamicRetrievalScore(
+        Optional<Float> googleSearchDynamicRetrievalScore);
 
     public abstract RetrievalMetadata build();
   }

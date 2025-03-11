@@ -18,24 +18,23 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.List;
 import java.util.Optional;
 
 /** Represents a recorded session. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = ReplayFile.Builder.class)
 public abstract class ReplayFile extends JsonSerializable {
   /** */
-  @JsonProperty("replayId")
+  @SerializedName("replayId")
   public abstract Optional<String> replayId();
 
   /** */
-  @JsonProperty("interactions")
+  @SerializedName("interactions")
   public abstract Optional<List<ReplayInteraction>> interactions();
 
   /** Instantiates a builder for ReplayFile. */
@@ -49,17 +48,17 @@ public abstract class ReplayFile extends JsonSerializable {
   /** Builder for ReplayFile. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ReplayFile.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ReplayFile.Builder();
-    }
-
-    @JsonProperty("replayId")
+    @SerializedName("replayId")
     public abstract Builder replayId(String replayId);
 
-    @JsonProperty("interactions")
+    @SerializedName("replayId")
+    abstract Builder replayId(Optional<String> replayId);
+
+    @SerializedName("interactions")
     public abstract Builder interactions(List<ReplayInteraction> interactions);
+
+    @SerializedName("interactions")
+    abstract Builder interactions(Optional<List<ReplayInteraction>> interactions);
 
     public abstract ReplayFile build();
   }

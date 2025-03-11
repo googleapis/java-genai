@@ -18,11 +18,10 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -30,11 +29,11 @@ import java.util.Optional;
  *
  * <p>This config is shared for all tools provided in the request.
  */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = ToolConfig.Builder.class)
 public abstract class ToolConfig extends JsonSerializable {
   /** Optional. Function calling config. */
-  @JsonProperty("functionCallingConfig")
+  @SerializedName("functionCallingConfig")
   public abstract Optional<FunctionCallingConfig> functionCallingConfig();
 
   /** Instantiates a builder for ToolConfig. */
@@ -48,14 +47,11 @@ public abstract class ToolConfig extends JsonSerializable {
   /** Builder for ToolConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `ToolConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_ToolConfig.Builder();
-    }
-
-    @JsonProperty("functionCallingConfig")
+    @SerializedName("functionCallingConfig")
     public abstract Builder functionCallingConfig(FunctionCallingConfig functionCallingConfig);
+
+    @SerializedName("functionCallingConfig")
+    abstract Builder functionCallingConfig(Optional<FunctionCallingConfig> functionCallingConfig);
 
     public abstract ToolConfig build();
   }

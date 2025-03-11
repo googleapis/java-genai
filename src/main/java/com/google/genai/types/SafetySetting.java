@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Safety settings. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = SafetySetting.Builder.class)
 public abstract class SafetySetting extends JsonSerializable {
   /** Determines if the harm block method uses probability or probability and severity scores. */
-  @JsonProperty("method")
+  @SerializedName("method")
   public abstract Optional<String> method();
 
   /** Required. Harm category. */
-  @JsonProperty("category")
+  @SerializedName("category")
   public abstract Optional<String> category();
 
   /** Required. The harm block threshold. */
-  @JsonProperty("threshold")
+  @SerializedName("threshold")
   public abstract Optional<String> threshold();
 
   /** Instantiates a builder for SafetySetting. */
@@ -52,20 +51,23 @@ public abstract class SafetySetting extends JsonSerializable {
   /** Builder for SafetySetting. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `SafetySetting.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_SafetySetting.Builder();
-    }
-
-    @JsonProperty("method")
+    @SerializedName("method")
     public abstract Builder method(String method);
 
-    @JsonProperty("category")
+    @SerializedName("method")
+    abstract Builder method(Optional<String> method);
+
+    @SerializedName("category")
     public abstract Builder category(String category);
 
-    @JsonProperty("threshold")
+    @SerializedName("category")
+    abstract Builder category(Optional<String> category);
+
+    @SerializedName("threshold")
     public abstract Builder threshold(String threshold);
+
+    @SerializedName("threshold")
+    abstract Builder threshold(Optional<String> threshold);
 
     public abstract SafetySetting build();
   }

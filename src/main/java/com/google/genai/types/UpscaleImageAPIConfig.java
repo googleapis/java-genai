@@ -18,12 +18,11 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /**
@@ -32,28 +31,28 @@ import java.util.Optional;
  * <p>These fields require default values sent to the API which are not intended to be modifiable or
  * exposed to users in the SDK method.
  */
+@GenerateTypeAdapter
 @AutoValue
 @InternalApi
-@JsonDeserialize(builder = UpscaleImageAPIConfig.Builder.class)
 public abstract class UpscaleImageAPIConfig extends JsonSerializable {
   /** Whether to include a reason for filtered-out images in the response. */
-  @JsonProperty("includeRaiReason")
+  @SerializedName("includeRaiReason")
   public abstract Optional<Boolean> includeRaiReason();
 
   /** The image format that the output should be saved as. */
-  @JsonProperty("outputMimeType")
+  @SerializedName("outputMimeType")
   public abstract Optional<String> outputMimeType();
 
   /** The level of compression if the ``output_mime_type`` is ``image/jpeg``. */
-  @JsonProperty("outputCompressionQuality")
+  @SerializedName("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
 
   /** */
-  @JsonProperty("numberOfImages")
+  @SerializedName("numberOfImages")
   public abstract Optional<Integer> numberOfImages();
 
   /** */
-  @JsonProperty("mode")
+  @SerializedName("mode")
   public abstract Optional<String> mode();
 
   /** Instantiates a builder for UpscaleImageAPIConfig. */
@@ -67,26 +66,35 @@ public abstract class UpscaleImageAPIConfig extends JsonSerializable {
   /** Builder for UpscaleImageAPIConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UpscaleImageAPIConfig.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_UpscaleImageAPIConfig.Builder();
-    }
-
-    @JsonProperty("includeRaiReason")
+    @SerializedName("includeRaiReason")
     public abstract Builder includeRaiReason(boolean includeRaiReason);
 
-    @JsonProperty("outputMimeType")
+    @SerializedName("includeRaiReason")
+    abstract Builder includeRaiReason(Optional<Boolean> includeRaiReason);
+
+    @SerializedName("outputMimeType")
     public abstract Builder outputMimeType(String outputMimeType);
 
-    @JsonProperty("outputCompressionQuality")
+    @SerializedName("outputMimeType")
+    abstract Builder outputMimeType(Optional<String> outputMimeType);
+
+    @SerializedName("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
-    @JsonProperty("numberOfImages")
+    @SerializedName("outputCompressionQuality")
+    abstract Builder outputCompressionQuality(Optional<Integer> outputCompressionQuality);
+
+    @SerializedName("numberOfImages")
     public abstract Builder numberOfImages(Integer numberOfImages);
 
-    @JsonProperty("mode")
+    @SerializedName("numberOfImages")
+    abstract Builder numberOfImages(Optional<Integer> numberOfImages);
+
+    @SerializedName("mode")
     public abstract Builder mode(String mode);
+
+    @SerializedName("mode")
+    abstract Builder mode(Optional<String> mode);
 
     public abstract UpscaleImageAPIConfig build();
   }

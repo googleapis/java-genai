@@ -18,9 +18,9 @@ package com.google.genai;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.types.HttpOptions;
+import com.google.gson.reflect.TypeToken;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,6 +85,7 @@ final class ReplayApiClient extends ApiClient {
     this.clientMode = clientMode;
   }
 
+  @SuppressWarnings("unchecked")
   void initializeReplaySession(String replayId) {
     this.replayId = replayId;
     String replayPath = this.replaysDirectory + "/" + this.replayId;
@@ -94,11 +95,9 @@ final class ReplayApiClient extends ApiClient {
       // TODO(b/369384123): Parsing to a ReplaySession object is not working because snake_case
       // fields like body_segments are not being populated. For now, we will just use basic JSON
       // parsing and switch to the generated JSON classes once we have the replays working.
-      Map<String, Object> map = new HashMap<>();
-      // convert JSON string to Map
-      map =
-          JsonSerializable.objectMapper.readValue(
-              replayData, new TypeReference<Map<String, Object>>() {});
+      TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {};
+      Map<String, Object> map =
+          (Map<String, Object>) JsonSerializable.fromJsonString(replayData, typeToken.getType());
       this.replaySession = map;
       this.replayIndex = 0;
       this.sdkResponseIndex = 0;
@@ -108,6 +107,7 @@ final class ReplayApiClient extends ApiClient {
   }
 
   /** Sends a Http Post request given the path and request json string. */
+  @Override
   @SuppressWarnings("unchecked")
   public ApiResponse post(String path, String requestJson) throws IOException {
     if (this.clientMode.equals("replay") || this.clientMode.equals("auto")) {
@@ -116,8 +116,8 @@ final class ReplayApiClient extends ApiClient {
       // TODO(b/369384123): Ensure the replay is correctly loaded by index for multi-turn
       // conversations.
       Object currentInteraction = Arrays.asList(interactions.get(this.replayIndex)).get(0);
-      java.util.LinkedHashMap<String, Object> currentMember =
-          ((ArrayList<java.util.LinkedHashMap<String, Object>>) currentInteraction).get(0);
+      LinkedHashMap<String, Object> currentMember =
+          ((ArrayList<LinkedHashMap<String, Object>>) currentInteraction).get(0);
       Map<String, Object> responseMap = (Map<String, Object>) currentMember.get("response");
       Integer statusCode = (Integer) responseMap.get("status_code");
       List<Object> bodySegments = (List<Object>) responseMap.get("body_segments");

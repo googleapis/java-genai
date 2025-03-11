@@ -18,27 +18,26 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.gson.annotations.SerializedName;
+import com.ryanharter.auto.value.gson.GenerateTypeAdapter;
 import java.util.Optional;
 
 /** Chunk from context retrieved by the retrieval tools. */
+@GenerateTypeAdapter
 @AutoValue
-@JsonDeserialize(builder = GroundingChunkRetrievedContext.Builder.class)
 public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   /** Text of the attribution. */
-  @JsonProperty("text")
+  @SerializedName("text")
   public abstract Optional<String> text();
 
   /** Title of the attribution. */
-  @JsonProperty("title")
+  @SerializedName("title")
   public abstract Optional<String> title();
 
   /** URI reference of the attribution. */
-  @JsonProperty("uri")
+  @SerializedName("uri")
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
@@ -52,22 +51,23 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   /** Builder for GroundingChunkRetrievedContext. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /**
-     * For internal usage. Please use `GroundingChunkRetrievedContext.builder()` for instantiation.
-     */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_GroundingChunkRetrievedContext.Builder();
-    }
-
-    @JsonProperty("text")
+    @SerializedName("text")
     public abstract Builder text(String text);
 
-    @JsonProperty("title")
+    @SerializedName("text")
+    abstract Builder text(Optional<String> text);
+
+    @SerializedName("title")
     public abstract Builder title(String title);
 
-    @JsonProperty("uri")
+    @SerializedName("title")
+    abstract Builder title(Optional<String> title);
+
+    @SerializedName("uri")
     public abstract Builder uri(String uri);
+
+    @SerializedName("uri")
+    abstract Builder uri(Optional<String> uri);
 
     public abstract GroundingChunkRetrievedContext build();
   }
