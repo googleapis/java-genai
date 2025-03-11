@@ -37,7 +37,7 @@ import java.util.Optional;
  */
 @AutoValue
 @JsonDeserialize(builder = ControlReferenceImage.Builder.class)
-public abstract class ControlReferenceImage extends JsonSerializable {
+public abstract class ControlReferenceImage extends JsonSerializable implements ReferenceImage {
   /** The reference image for the editing operation. */
   @JsonProperty("referenceImage")
   public abstract Optional<Image> referenceImage();
@@ -89,5 +89,15 @@ public abstract class ControlReferenceImage extends JsonSerializable {
   /** Deserializes a JSON string to a ControlReferenceImage object. */
   public static ControlReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ControlReferenceImage.class);
+  }
+
+  @Override
+  public ReferenceImageAPI toReferenceImageAPI() {
+    ReferenceImageAPI.Builder referenceImageAPIBuilder = ReferenceImageAPI.builder();
+    referenceImage().ifPresent(referenceImageAPIBuilder::referenceImage);
+    referenceId().ifPresent(referenceImageAPIBuilder::referenceId);
+    config().ifPresent(referenceImageAPIBuilder::controlImageConfig);
+    referenceImageAPIBuilder.referenceType("REFERENCE_TYPE_CONTROL");
+    return referenceImageAPIBuilder.build();
   }
 }

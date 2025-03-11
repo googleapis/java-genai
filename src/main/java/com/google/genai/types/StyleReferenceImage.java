@@ -35,7 +35,7 @@ import java.util.Optional;
  */
 @AutoValue
 @JsonDeserialize(builder = StyleReferenceImage.Builder.class)
-public abstract class StyleReferenceImage extends JsonSerializable {
+public abstract class StyleReferenceImage extends JsonSerializable implements ReferenceImage {
   /** The reference image for the editing operation. */
   @JsonProperty("referenceImage")
   public abstract Optional<Image> referenceImage();
@@ -87,5 +87,15 @@ public abstract class StyleReferenceImage extends JsonSerializable {
   /** Deserializes a JSON string to a StyleReferenceImage object. */
   public static StyleReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, StyleReferenceImage.class);
+  }
+
+  @Override
+  public ReferenceImageAPI toReferenceImageAPI() {
+    ReferenceImageAPI.Builder referenceImageAPIBuilder = ReferenceImageAPI.builder();
+    referenceImage().ifPresent(referenceImageAPIBuilder::referenceImage);
+    referenceId().ifPresent(referenceImageAPIBuilder::referenceId);
+    config().ifPresent(referenceImageAPIBuilder::styleImageConfig);
+    referenceImageAPIBuilder.referenceType("REFERENCE_TYPE_STYLE");
+    return referenceImageAPIBuilder.build();
   }
 }

@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 @AutoValue
 @JsonDeserialize(builder = RawReferenceImage.Builder.class)
-public abstract class RawReferenceImage extends JsonSerializable {
+public abstract class RawReferenceImage extends JsonSerializable implements ReferenceImage {
   /** The reference image for the editing operation. */
   @JsonProperty("referenceImage")
   public abstract Optional<Image> referenceImage();
@@ -78,5 +78,14 @@ public abstract class RawReferenceImage extends JsonSerializable {
   /** Deserializes a JSON string to a RawReferenceImage object. */
   public static RawReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RawReferenceImage.class);
+  }
+
+  @Override
+  public ReferenceImageAPI toReferenceImageAPI() {
+    ReferenceImageAPI.Builder referenceImageAPIBuilder = ReferenceImageAPI.builder();
+    referenceImage().ifPresent(referenceImageAPIBuilder::referenceImage);
+    referenceId().ifPresent(referenceImageAPIBuilder::referenceId);
+    referenceImageAPIBuilder.referenceType("REFERENCE_TYPE_RAW");
+    return referenceImageAPIBuilder.build();
   }
 }

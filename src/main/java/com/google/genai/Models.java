@@ -23,6 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.Content;
+import com.google.genai.types.EditImageConfig;
+import com.google.genai.types.EditImageParameters;
+import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentParameters;
 import com.google.genai.types.GenerateContentResponse;
@@ -30,11 +33,14 @@ import com.google.genai.types.GenerateImagesConfig;
 import com.google.genai.types.GenerateImagesParameters;
 import com.google.genai.types.GenerateImagesResponse;
 import com.google.genai.types.Image;
+import com.google.genai.types.ReferenceImage;
+import com.google.genai.types.ReferenceImageAPI;
 import com.google.genai.types.UpscaleImageAPIConfig;
 import com.google.genai.types.UpscaleImageAPIParameters;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -1868,6 +1874,545 @@ public final class Models {
     return toObject;
   }
 
+  ObjectNode MaskReferenceConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maskMode"}))) {
+      throw new Error("maskMode parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"segmentationClasses"}))) {
+      throw new Error("segmentationClasses parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maskDilation"}))) {
+      throw new Error("maskDilation parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  ObjectNode MaskReferenceConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"maskMode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"maskMode"},
+          Common.getValueByPath(fromObject, new String[] {"maskMode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"segmentationClasses"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"maskClasses"},
+          Common.getValueByPath(fromObject, new String[] {"segmentationClasses"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maskDilation"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dilation"},
+          Common.getValueByPath(fromObject, new String[] {"maskDilation"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode ControlReferenceConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"controlType"}))) {
+      throw new Error("controlType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"enableControlImageComputation"}))) {
+      throw new Error("enableControlImageComputation parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  ObjectNode ControlReferenceConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"controlType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"controlType"},
+          Common.getValueByPath(fromObject, new String[] {"controlType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enableControlImageComputation"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computeControl"},
+          Common.getValueByPath(fromObject, new String[] {"enableControlImageComputation"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode StyleReferenceConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"styleDescription"}))) {
+      throw new Error("styleDescription parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  ObjectNode StyleReferenceConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"styleDescription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"styleDescription"},
+          Common.getValueByPath(fromObject, new String[] {"styleDescription"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode SubjectReferenceConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"subjectType"}))) {
+      throw new Error("subjectType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"subjectDescription"}))) {
+      throw new Error("subjectDescription parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  ObjectNode SubjectReferenceConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"subjectType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"subjectType"},
+          Common.getValueByPath(fromObject, new String[] {"subjectType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"subjectDescription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"subjectDescription"},
+          Common.getValueByPath(fromObject, new String[] {"subjectDescription"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode ReferenceImageAPIToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"referenceImage"}))) {
+      throw new Error("referenceImage parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"referenceId"}))) {
+      throw new Error("referenceId parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"referenceType"}))) {
+      throw new Error("referenceType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maskImageConfig"}))) {
+      throw new Error("maskImageConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"controlImageConfig"}))) {
+      throw new Error("controlImageConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"styleImageConfig"}))) {
+      throw new Error("styleImageConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"subjectImageConfig"}))) {
+      throw new Error("subjectImageConfig parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  ObjectNode ReferenceImageAPIToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"referenceImage"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"referenceImage"},
+          ImageToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"referenceImage"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"referenceId"},
+          Common.getValueByPath(fromObject, new String[] {"referenceId"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"referenceType"},
+          Common.getValueByPath(fromObject, new String[] {"referenceType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maskImageConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"maskImageConfig"},
+          MaskReferenceConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"maskImageConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"controlImageConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"controlImageConfig"},
+          ControlReferenceConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"controlImageConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"styleImageConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"styleImageConfig"},
+          StyleReferenceConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"styleImageConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"subjectImageConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"subjectImageConfig"},
+          SubjectReferenceConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"subjectImageConfig"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode EditImageConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
+      throw new Error("outputGcsUri parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"negativePrompt"}))) {
+      throw new Error("negativePrompt parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "sampleCount"},
+          Common.getValueByPath(fromObject, new String[] {"numberOfImages"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "aspectRatio"},
+          Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"guidanceScale"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "guidanceScale"},
+          Common.getValueByPath(fromObject, new String[] {"guidanceScale"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"seed"}))) {
+      throw new Error("seed parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "safetySetting"},
+          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "includeSafetyAttributes"},
+          Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "includeRaiReason"},
+          Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"language"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "language"},
+          Common.getValueByPath(fromObject, new String[] {"language"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"outputMimeType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "compressionQuality"},
+          Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"editMode"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "editMode"},
+          Common.getValueByPath(fromObject, new String[] {"editMode"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode EditImageConfigToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "storageUri"},
+          Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"negativePrompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "negativePrompt"},
+          Common.getValueByPath(fromObject, new String[] {"negativePrompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "sampleCount"},
+          Common.getValueByPath(fromObject, new String[] {"numberOfImages"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "aspectRatio"},
+          Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"guidanceScale"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "guidanceScale"},
+          Common.getValueByPath(fromObject, new String[] {"guidanceScale"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"seed"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "seed"},
+          Common.getValueByPath(fromObject, new String[] {"seed"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "safetySetting"},
+          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "includeSafetyAttributes"},
+          Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "includeRaiReason"},
+          Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"language"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "language"},
+          Common.getValueByPath(fromObject, new String[] {"language"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"outputMimeType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "compressionQuality"},
+          Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"editMode"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "editMode"},
+          Common.getValueByPath(fromObject, new String[] {"editMode"}));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode EditImageParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"instances[0]", "prompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceImages"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"referenceImages"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      keyArray.forEach(
+          item -> {
+            result.add(
+                ReferenceImageAPIToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+          });
+      Common.setValueByPath(toObject, new String[] {"instances[0]", "referenceImages"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          EditImageConfigToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  ObjectNode EditImageParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"instances[0]", "prompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceImages"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"referenceImages"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      keyArray.forEach(
+          item -> {
+            result.add(
+                ReferenceImageAPIToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+          });
+      Common.setValueByPath(toObject, new String[] {"instances[0]", "referenceImages"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          EditImageConfigToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
   ObjectNode UpscaleImageAPIConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -2698,6 +3243,46 @@ public final class Models {
     return toObject;
   }
 
+  ObjectNode EditImageResponseFromMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      keyArray.forEach(
+          item -> {
+            result.add(
+                GeneratedImageFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+          });
+      Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
+    }
+
+    return toObject;
+  }
+
+  ObjectNode EditImageResponseFromVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      keyArray.forEach(
+          item -> {
+            result.add(
+                GeneratedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+          });
+      Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
+    }
+
+    return toObject;
+  }
+
   ObjectNode UpscaleImageResponseFromMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -2864,6 +3449,52 @@ public final class Models {
     }
   }
 
+  private EditImageResponse privateEditImage(
+      String model, String prompt, List<ReferenceImageAPI> referenceImages, EditImageConfig config)
+      throws IOException, HttpException {
+
+    EditImageParameters.Builder parameterBuilder = EditImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(prompt)) {
+      parameterBuilder.prompt(prompt);
+    }
+    if (!Common.isZero(referenceImages)) {
+      parameterBuilder.referenceImages(referenceImages);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.isVertexAI()) {
+      body = EditImageParametersToVertex(this.apiClient, parameterNode, null);
+      path = Common.formatMap("{model}:predict", body.get("_url"));
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported by the Gemini Developer API.");
+    }
+    body.remove("_url");
+    // TODO: Remove the hack that removes config.
+    body.remove("config");
+
+    try (ApiResponse response = this.apiClient.post(path, JsonSerializable.toJsonString(body))) {
+      HttpEntity entity = response.getEntity();
+      String responseString = EntityUtils.toString(entity);
+      JsonNode responseNode = JsonSerializable.objectMapper.readTree(responseString);
+      if (this.apiClient.isVertexAI()) {
+        responseNode = EditImageResponseFromVertex(this.apiClient, responseNode, null);
+      } else {
+        responseNode = EditImageResponseFromMldev(this.apiClient, responseNode, null);
+      }
+      return JsonSerializable.fromJsonNode(responseNode, EditImageResponse.class);
+    }
+  }
+
   private UpscaleImageResponse privateUpscaleImage(
       String model, Image image, String upscaleFactor, UpscaleImageAPIConfig config)
       throws IOException, HttpException {
@@ -3018,6 +3649,32 @@ public final class Models {
       String model, String text, GenerateContentConfig config) throws IOException, HttpException {
     return privateGenerateContentStream(
         model, Transformers.tContents(this.apiClient, (Object) text), config);
+  }
+
+  /**
+   * Edits an image given a GenAI model, a prompt, and a list of reference images.
+   *
+   * @param model the name of the GenAI model to use for editing capabilities
+   * @param prompt the prompt to edit the image
+   * @param referenceImages a {@link List<com.google.genai.types.ReferenceImage>} to send to use for
+   *     editing
+   * @param config a {@link com.google.genai.types.EditImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the upscaled
+   *     image.
+   * @throws IOException if an I/O error occurs while making the API call
+   * @throws HttpException if an HTTP error occurs while making the API call
+   */
+  public EditImageResponse editImage(
+      String model, String prompt, List<ReferenceImage> referenceImages, EditImageConfig config)
+      throws IOException, HttpException {
+
+    List<ReferenceImageAPI> referenceImagesAPI = new ArrayList<>();
+    for (ReferenceImage referenceImage : referenceImages) {
+      referenceImagesAPI.add(referenceImage.toReferenceImageAPI());
+    }
+
+    return privateEditImage(model, prompt, referenceImagesAPI, config);
   }
 
   /**
