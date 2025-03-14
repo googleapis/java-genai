@@ -32,13 +32,13 @@ public class ReplaySanitizer {
     if (key.startsWith("[]")) {
       if (!m.containsKey(key.substring(2))) {
         if (debug) {
-          log.warning("path doesn't exist: " + data + ", path: " + path);
+          log.warning("1path doesn't exist: " + data + ", path: " + path);
         }
         return;
       }
     } else if (!m.containsKey(key)) {
       if (debug) {
-        log.warning("path doesn't exist: " + data + ", path: " + path);
+        log.warning("2path doesn't exist: " + data + ", path: " + path + "\n\n\nkey: " + key);
       }
       return;
     }

@@ -21,22 +21,16 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * A mask reference image.
- *
- * <p>This encapsulates either a mask image provided by the user and configs for the user provided
- * mask, or only config parameters for the model to generate a mask.
- *
- * <p>A mask image is an image whose non-zero values indicate where to edit the base image. If the
- * user provides a mask image, the mask must be in the same dimensions as the raw image.
- */
+/** Private class that represents a Reference image that is sent to API. */
 @AutoValue
-@JsonDeserialize(builder = MaskReferenceImage.Builder.class)
-public abstract class MaskReferenceImage extends JsonSerializable implements ReferenceImage {
+@InternalApi
+@JsonDeserialize(builder = ReferenceImageAPI.Builder.class)
+public abstract class ReferenceImageAPI extends JsonSerializable {
   /** The reference image for the editing operation. */
   @JsonProperty("referenceImage")
   public abstract Optional<Image> referenceImage();
@@ -50,24 +44,36 @@ public abstract class MaskReferenceImage extends JsonSerializable implements Ref
   public abstract Optional<String> referenceType();
 
   /** Configuration for the mask reference image. */
-  @JsonProperty("config")
-  public abstract Optional<MaskReferenceConfig> config();
+  @JsonProperty("maskImageConfig")
+  public abstract Optional<MaskReferenceConfig> maskImageConfig();
 
-  /** Instantiates a builder for MaskReferenceImage. */
+  /** Configuration for the control reference image. */
+  @JsonProperty("controlImageConfig")
+  public abstract Optional<ControlReferenceConfig> controlImageConfig();
+
+  /** Configuration for the style reference image. */
+  @JsonProperty("styleImageConfig")
+  public abstract Optional<StyleReferenceConfig> styleImageConfig();
+
+  /** Configuration for the subject reference image. */
+  @JsonProperty("subjectImageConfig")
+  public abstract Optional<SubjectReferenceConfig> subjectImageConfig();
+
+  /** Instantiates a builder for ReferenceImageAPI. */
   public static Builder builder() {
-    return new AutoValue_MaskReferenceImage.Builder();
+    return new AutoValue_ReferenceImageAPI.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for MaskReferenceImage. */
+  /** Builder for ReferenceImageAPI. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `MaskReferenceImage.builder()` for instantiation. */
+    /** For internal usage. Please use `ReferenceImageAPI.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_MaskReferenceImage.Builder();
+      return new AutoValue_ReferenceImageAPI.Builder();
     }
 
     @JsonProperty("referenceImage")
@@ -79,24 +85,23 @@ public abstract class MaskReferenceImage extends JsonSerializable implements Ref
     @JsonProperty("referenceType")
     public abstract Builder referenceType(String referenceType);
 
-    @JsonProperty("config")
-    public abstract Builder config(MaskReferenceConfig config);
+    @JsonProperty("maskImageConfig")
+    public abstract Builder maskImageConfig(MaskReferenceConfig maskImageConfig);
 
-    public abstract MaskReferenceImage build();
+    @JsonProperty("controlImageConfig")
+    public abstract Builder controlImageConfig(ControlReferenceConfig controlImageConfig);
+
+    @JsonProperty("styleImageConfig")
+    public abstract Builder styleImageConfig(StyleReferenceConfig styleImageConfig);
+
+    @JsonProperty("subjectImageConfig")
+    public abstract Builder subjectImageConfig(SubjectReferenceConfig subjectImageConfig);
+
+    public abstract ReferenceImageAPI build();
   }
 
-  /** Deserializes a JSON string to a MaskReferenceImage object. */
-  public static MaskReferenceImage fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, MaskReferenceImage.class);
-  }
-
-  @Override
-  public ReferenceImageAPI toReferenceImageAPI() {
-    ReferenceImageAPI.Builder referenceImageAPIBuilder = ReferenceImageAPI.builder();
-    referenceImage().ifPresent(referenceImageAPIBuilder::referenceImage);
-    referenceId().ifPresent(referenceImageAPIBuilder::referenceId);
-    config().ifPresent(referenceImageAPIBuilder::maskImageConfig);
-    referenceImageAPIBuilder.referenceType("REFERENCE_TYPE_MASK");
-    return referenceImageAPIBuilder.build();
+  /** Deserializes a JSON string to a ReferenceImageAPI object. */
+  public static ReferenceImageAPI fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ReferenceImageAPI.class);
   }
 }
