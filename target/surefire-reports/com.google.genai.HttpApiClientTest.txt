@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: com.google.genai.HttpApiClientTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.036 s -- in com.google.genai.HttpApiClientTest
+com.google.genai.HttpApiClientTest.testHttpClientVertexWithGlobalEndpoint -- Time elapsed: 0.004 s
+com.google.genai.HttpApiClientTest.testInitHttpClientVertexWithPartialHttpOptions -- Time elapsed: 0.017 s
+com.google.genai.HttpApiClientTest.testHttpClientMLDevTimeout -- Time elapsed: 0.003 s
+com.google.genai.HttpApiClientTest.testInitHttpClientVertex -- Time elapsed: 0.002 s
+com.google.genai.HttpApiClientTest.testHttpClientWithCustomCredentials -- Time elapsed: 0.075 s
+com.google.genai.HttpApiClientTest.testHttpClientNoTimeout -- Time elapsed: 0.002 s
+com.google.genai.HttpApiClientTest.testInitHttpClientMldev -- Time elapsed: 0.001 s
+com.google.genai.HttpApiClientTest.testHttpClientVertexTimeout -- Time elapsed: 0.002 s
+com.google.genai.HttpApiClientTest.testProxySetup -- Time elapsed: 0.916 s
+com.google.genai.HttpApiClientTest.testInitHttpClientMldevWithPartialHttpOptions -- Time elapsed: 0.002 s
+com.google.genai.HttpApiClientTest.testHttpClientVertexNoTimeout -- Time elapsed: 0.001 s

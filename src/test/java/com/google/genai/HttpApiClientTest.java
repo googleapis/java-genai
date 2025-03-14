@@ -237,6 +237,21 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testHttpClientVertexWithGlobalEndpoint() throws Exception {
+    HttpOptions httpOptions = HttpOptions.builder().build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of(PROJECT),
+            Optional.of("global"),
+            Optional.empty(),
+            Optional.of(httpOptions));
+
+    assertEquals("global", client.location());
+    assertTrue(client.vertexAI());
+    assertEquals(Optional.of("https://aiplatform.googleapis.com/"), client.httpOptions.baseUrl());
+  }
+
+  @Test
   public void testProxySetup() throws Exception {
     WireMockServer wireMockServer = null;
     try {

@@ -201,9 +201,15 @@ abstract class ApiClient {
         HttpOptions.builder().headers(defaultHeaders.build());
 
     if (vertexAI && location.isPresent()) {
-      defaultHttpOptionsBuilder
-          .baseUrl(String.format("https://%s-aiplatform.googleapis.com/", location.get()))
-          .apiVersion("v1beta1");
+      if (location.get().equals("global")) {
+        defaultHttpOptionsBuilder
+            .baseUrl("https://aiplatform.googleapis.com/")
+            .apiVersion("v1beta1");
+      } else {
+        defaultHttpOptionsBuilder
+            .baseUrl(String.format("https://%s-aiplatform.googleapis.com/", location.get()))
+            .apiVersion("v1beta1");
+      }
     } else if (vertexAI && location.isEmpty()) {
       throw new IllegalArgumentException("Location must be provided for Vertex AI APIs.");
     } else {
