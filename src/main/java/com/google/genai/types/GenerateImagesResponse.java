@@ -34,6 +34,13 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
   @JsonProperty("generatedImages")
   public abstract Optional<List<GeneratedImage>> generatedImages();
 
+  /**
+   * Safety attributes of the positive prompt. Only populated if ``include_safety_attributes`` is
+   * set to True.
+   */
+  @JsonProperty("positivePromptSafetyAttributes")
+  public abstract Optional<SafetyAttributes> positivePromptSafetyAttributes();
+
   /** Instantiates a builder for GenerateImagesResponse. */
   public static Builder builder() {
     return new AutoValue_GenerateImagesResponse.Builder();
@@ -53,6 +60,10 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
 
     @JsonProperty("generatedImages")
     public abstract Builder generatedImages(List<GeneratedImage> generatedImages);
+
+    @JsonProperty("positivePromptSafetyAttributes")
+    public abstract Builder positivePromptSafetyAttributes(
+        SafetyAttributes positivePromptSafetyAttributes);
 
     public abstract GenerateImagesResponse build();
   }

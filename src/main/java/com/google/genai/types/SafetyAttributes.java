@@ -38,6 +38,10 @@ public abstract class SafetyAttributes extends JsonSerializable {
   @JsonProperty("scores")
   public abstract Optional<List<Float>> scores();
 
+  /** Internal use only. */
+  @JsonProperty("contentType")
+  public abstract Optional<String> contentType();
+
   /** Instantiates a builder for SafetyAttributes. */
   public static Builder builder() {
     return new AutoValue_SafetyAttributes.Builder();
@@ -60,6 +64,9 @@ public abstract class SafetyAttributes extends JsonSerializable {
 
     @JsonProperty("scores")
     public abstract Builder scores(List<Float> scores);
+
+    @JsonProperty("contentType")
+    public abstract Builder contentType(String contentType);
 
     public abstract SafetyAttributes build();
   }

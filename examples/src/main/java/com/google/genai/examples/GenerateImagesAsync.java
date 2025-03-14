@@ -40,6 +40,7 @@ package com.google.genai.examples;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateImagesConfig;
 import com.google.genai.types.GenerateImagesResponse;
+import com.google.genai.types.Image;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import org.apache.http.HttpException;
@@ -71,28 +72,16 @@ public class GenerateImagesAsync {
             generatedImagesResponse -> {
               System.out.println(
                   "Generated "
-                      + (generatedImagesResponse.generatedImages().get().size() - 1)
+                      + generatedImagesResponse.generatedImages().get().size()
                       + " images.");
 
-              System.out.println(
-                  "Image:\n"
-                      + generatedImagesResponse
-                          .generatedImages()
-                          .get()
-                          .get(0)
-                          .image()
-                          .get()
-                          .imageBytes()
-                          .get());
+              Image generatedImage =
+                  generatedImagesResponse.generatedImages().get().get(0).image().get();
+              // Do something with the image.
 
               System.out.println(
                   "Prompt Safety Attributes:\n"
-                      + generatedImagesResponse
-                          .generatedImages()
-                          .get()
-                          .get(-1)
-                          .safetyAttributes()
-                          .get());
+                      + generatedImagesResponse.positivePromptSafetyAttributes().get());
             })
         .join();
   }

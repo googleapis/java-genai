@@ -38,18 +38,6 @@ public final class AsyncModels {
     this.models = new Models(apiClient);
   }
 
-  public CompletableFuture<GenerateImagesResponse> generateImages(
-      String model, String prompt, GenerateImagesConfig config) {
-    return CompletableFuture.supplyAsync(
-        () -> {
-          try {
-            return models.generateImages(model, prompt, config);
-          } catch (IOException | HttpException e) {
-            throw new RuntimeException(e);
-          }
-        });
-  }
-
   /**
    * Asynchronously generates content given a GenAI model and a content object.
    *
@@ -168,6 +156,30 @@ public final class AsyncModels {
   public CompletableFuture<ResponseStream<GenerateContentResponse>> generateContentStream(
       String model, String text, GenerateContentConfig config) throws IOException, HttpException {
     return generateContentStream(model, Transformers.tContents(null, (Object) text), config);
+  }
+
+  /**
+   * Asynchronously generates images given a GenAI model and a prompt.
+   *
+   * @param model the name of the GenAI model to use for upscaling
+   * @param prompt the factor to upscale the image
+   * @param config a {@link com.google.genai.types.GenerateImagesConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
+   *     generated images.
+   * @throws IOException if an I/O error occurs while making the API call
+   * @throws HttpException if an HTTP error occurs while making the API call
+   */
+  public CompletableFuture<GenerateImagesResponse> generateImages(
+      String model, String prompt, GenerateImagesConfig config) throws IOException, HttpException {
+    return CompletableFuture.supplyAsync(
+        () -> {
+          try {
+            return models.generateImages(model, prompt, config);
+          } catch (IOException | HttpException e) {
+            throw new RuntimeException(e);
+          }
+        });
   }
 
   /**

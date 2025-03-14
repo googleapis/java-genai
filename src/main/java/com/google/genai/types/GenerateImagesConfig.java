@@ -66,7 +66,10 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   @JsonProperty("personGeneration")
   public abstract Optional<String> personGeneration();
 
-  /** Whether to report the safety scores of each image in the response. */
+  /**
+   * Whether to report the safety scores of each generated image and the positive prompt in the
+   * response.
+   */
   @JsonProperty("includeSafetyAttributes")
   public abstract Optional<Boolean> includeSafetyAttributes();
 
