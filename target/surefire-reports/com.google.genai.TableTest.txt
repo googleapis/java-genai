@@ -1,0 +1,227 @@
+-------------------------------------------------------------------------------
+Test set: com.google.genai.TableTest
+-------------------------------------------------------------------------------
+Tests run: 199, Failures: 3, Errors: 0, Skipped: 134, Time elapsed: 199.6 s <<< FAILURE! -- in com.google.genai.TableTest
+com.google.genai.TableTest.createTests()[1] skipped
+com.google.genai.TableTest.createTests()[2] skipped
+com.google.genai.TableTest.createTests()[3] skipped
+com.google.genai.TableTest.createTests()[4] skipped
+com.google.genai.TableTest.createTests()[5] skipped
+com.google.genai.TableTest.createTests()[6] skipped
+com.google.genai.TableTest.createTests()[7] skipped
+com.google.genai.TableTest.createTests()[8] skipped
+com.google.genai.TableTest.createTests()[9] skipped
+com.google.genai.TableTest.createTests()[10] skipped
+com.google.genai.TableTest.createTests()[11] skipped
+com.google.genai.TableTest.createTests()[12] skipped
+com.google.genai.TableTest.createTests()[13] skipped
+com.google.genai.TableTest.createTests()[14] skipped
+com.google.genai.TableTest.createTests()[15] skipped
+com.google.genai.TableTest.createTests()[16] skipped
+com.google.genai.TableTest.createTests()[17] skipped
+com.google.genai.TableTest.createTests()[18] skipped
+com.google.genai.TableTest.createTests()[19] skipped
+com.google.genai.TableTest.createTests()[20] skipped
+com.google.genai.TableTest.createTests()[21] skipped
+com.google.genai.TableTest.createTests()[22] skipped
+com.google.genai.TableTest.createTests()[23] skipped
+com.google.genai.TableTest.createTests()[24] skipped
+com.google.genai.TableTest.createTests()[25] skipped
+com.google.genai.TableTest.createTests()[26] skipped
+com.google.genai.TableTest.createTests()[27] skipped
+com.google.genai.TableTest.createTests()[28] skipped
+com.google.genai.TableTest.createTests()[29] skipped
+com.google.genai.TableTest.createTests()[30] skipped
+com.google.genai.TableTest.createTests()[31] skipped
+com.google.genai.TableTest.createTests()[32] skipped
+com.google.genai.TableTest.createTests()[33] skipped
+com.google.genai.TableTest.createTests()[34] skipped
+com.google.genai.TableTest.createTests()[35] -- Time elapsed: 3.032 s
+com.google.genai.TableTest.createTests()[36] skipped
+com.google.genai.TableTest.createTests()[37] skipped
+com.google.genai.TableTest.createTests()[38] skipped
+com.google.genai.TableTest.createTests()[39] -- Time elapsed: 0.260 s
+com.google.genai.TableTest.createTests()[40] -- Time elapsed: 4.300 s
+com.google.genai.TableTest.createTests()[41] -- Time elapsed: 2.610 s
+com.google.genai.TableTest.createTests()[42] -- Time elapsed: 3.235 s
+com.google.genai.TableTest.createTests()[43] skipped
+com.google.genai.TableTest.createTests()[44] -- Time elapsed: 2.753 s
+com.google.genai.TableTest.createTests()[45] -- Time elapsed: 0.320 s
+com.google.genai.TableTest.createTests()[46] skipped
+com.google.genai.TableTest.createTests()[47] skipped
+com.google.genai.TableTest.createTests()[48] skipped
+com.google.genai.TableTest.createTests()[49] skipped
+com.google.genai.TableTest.createTests()[50] skipped
+com.google.genai.TableTest.createTests()[51] skipped
+com.google.genai.TableTest.createTests()[52] skipped
+com.google.genai.TableTest.createTests()[53] skipped
+com.google.genai.TableTest.createTests()[54] skipped
+com.google.genai.TableTest.createTests()[55] skipped
+com.google.genai.TableTest.createTests()[56] skipped
+com.google.genai.TableTest.createTests()[57] skipped
+com.google.genai.TableTest.createTests()[58] skipped
+com.google.genai.TableTest.createTests()[59] skipped
+com.google.genai.TableTest.createTests()[60] skipped
+com.google.genai.TableTest.createTests()[61] skipped
+com.google.genai.TableTest.createTests()[62] skipped
+com.google.genai.TableTest.createTests()[63] skipped
+com.google.genai.TableTest.createTests()[64] skipped
+com.google.genai.TableTest.createTests()[65] skipped
+com.google.genai.TableTest.createTests()[66] skipped
+com.google.genai.TableTest.createTests()[67] skipped
+com.google.genai.TableTest.createTests()[68] skipped
+com.google.genai.TableTest.createTests()[69] skipped
+com.google.genai.TableTest.createTests()[70] skipped
+com.google.genai.TableTest.createTests()[71] -- Time elapsed: 0.615 s
+com.google.genai.TableTest.createTests()[72] skipped
+com.google.genai.TableTest.createTests()[73] -- Time elapsed: 0.419 s
+com.google.genai.TableTest.createTests()[74] skipped
+com.google.genai.TableTest.createTests()[75] -- Time elapsed: 0.845 s
+com.google.genai.TableTest.createTests()[76] -- Time elapsed: 0.946 s
+com.google.genai.TableTest.createTests()[77] skipped
+com.google.genai.TableTest.createTests()[78] skipped
+com.google.genai.TableTest.createTests()[79] skipped
+com.google.genai.TableTest.createTests()[80] skipped
+com.google.genai.TableTest.createTests()[81] skipped
+com.google.genai.TableTest.createTests()[82] skipped
+com.google.genai.TableTest.createTests()[83] -- Time elapsed: 0.756 s
+com.google.genai.TableTest.createTests()[84] skipped
+com.google.genai.TableTest.createTests()[85] -- Time elapsed: 0.436 s
+com.google.genai.TableTest.createTests()[86] skipped
+com.google.genai.TableTest.createTests()[87] skipped
+com.google.genai.TableTest.createTests()[88] skipped
+com.google.genai.TableTest.createTests()[89] -- Time elapsed: 0.565 s
+com.google.genai.TableTest.createTests()[90] skipped
+com.google.genai.TableTest.createTests()[91] skipped
+com.google.genai.TableTest.createTests()[92] skipped
+com.google.genai.TableTest.createTests()[93] skipped
+com.google.genai.TableTest.createTests()[94] skipped
+com.google.genai.TableTest.createTests()[95] -- Time elapsed: 0.398 s
+com.google.genai.TableTest.createTests()[96] skipped
+com.google.genai.TableTest.createTests()[97] skipped
+com.google.genai.TableTest.createTests()[98] skipped
+com.google.genai.TableTest.createTests()[99] skipped
+com.google.genai.TableTest.createTests()[100] -- Time elapsed: 2.364 s
+com.google.genai.TableTest.createTests()[101] skipped
+com.google.genai.TableTest.createTests()[102] -- Time elapsed: 0.240 s
+com.google.genai.TableTest.createTests()[103] skipped
+com.google.genai.TableTest.createTests()[104] -- Time elapsed: 0.283 s
+com.google.genai.TableTest.createTests()[105] -- Time elapsed: 0.427 s
+com.google.genai.TableTest.createTests()[106] skipped
+com.google.genai.TableTest.createTests()[107] -- Time elapsed: 0.418 s
+com.google.genai.TableTest.createTests()[108] -- Time elapsed: 0.432 s
+com.google.genai.TableTest.createTests()[109] -- Time elapsed: 2.210 s
+com.google.genai.TableTest.createTests()[110] -- Time elapsed: 0.312 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 'models.generate_content.test_speech_with_config.mldev' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.google.genai.TableTest.createTests()[111] skipped
+com.google.genai.TableTest.createTests()[112] skipped
+com.google.genai.TableTest.createTests()[113] -- Time elapsed: 0.336 s
+com.google.genai.TableTest.createTests()[114] skipped
+com.google.genai.TableTest.createTests()[115] skipped
+com.google.genai.TableTest.createTests()[116] skipped
+com.google.genai.TableTest.createTests()[117] skipped
+com.google.genai.TableTest.createTests()[118] -- Time elapsed: 1.894 s
+com.google.genai.TableTest.createTests()[119] -- Time elapsed: 0.860 s
+com.google.genai.TableTest.createTests()[120] -- Time elapsed: 0.258 s
+com.google.genai.TableTest.createTests()[121] -- Time elapsed: 0.350 s
+com.google.genai.TableTest.createTests()[122] -- Time elapsed: 0.291 s
+com.google.genai.TableTest.createTests()[123] -- Time elapsed: 0.447 s
+com.google.genai.TableTest.createTests()[124] -- Time elapsed: 0.357 s
+com.google.genai.TableTest.createTests()[125] -- Time elapsed: 0.481 s
+com.google.genai.TableTest.createTests()[126] -- Time elapsed: 0.384 s
+com.google.genai.TableTest.createTests()[127] -- Time elapsed: 2.418 s
+com.google.genai.TableTest.createTests()[128] -- Time elapsed: 0.073 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 'models.generate_content.test_speech_with_config.vertex' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.google.genai.TableTest.createTests()[129] skipped
+com.google.genai.TableTest.createTests()[130] -- Time elapsed: 22.28 s
+com.google.genai.TableTest.createTests()[131] skipped
+com.google.genai.TableTest.createTests()[132] skipped
+com.google.genai.TableTest.createTests()[133] -- Time elapsed: 2.667 s
+com.google.genai.TableTest.createTests()[134] -- Time elapsed: 2.154 s
+com.google.genai.TableTest.createTests()[135] skipped
+com.google.genai.TableTest.createTests()[136] skipped
+com.google.genai.TableTest.createTests()[137] skipped
+com.google.genai.TableTest.createTests()[138] skipped
+com.google.genai.TableTest.createTests()[139] skipped
+com.google.genai.TableTest.createTests()[140] skipped
+com.google.genai.TableTest.createTests()[141] -- Time elapsed: 0.394 s
+com.google.genai.TableTest.createTests()[142] -- Time elapsed: 0.303 s
+com.google.genai.TableTest.createTests()[143] -- Time elapsed: 0.319 s
+com.google.genai.TableTest.createTests()[144] skipped
+com.google.genai.TableTest.createTests()[145] skipped
+com.google.genai.TableTest.createTests()[146] -- Time elapsed: 0.366 s
+com.google.genai.TableTest.createTests()[147] skipped
+com.google.genai.TableTest.createTests()[148] skipped
+com.google.genai.TableTest.createTests()[149] skipped
+com.google.genai.TableTest.createTests()[150] -- Time elapsed: 0.322 s
+com.google.genai.TableTest.createTests()[151] -- Time elapsed: 0.337 s
+com.google.genai.TableTest.createTests()[152] -- Time elapsed: 7.066 s
+com.google.genai.TableTest.createTests()[153] -- Time elapsed: 0.060 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 'models.generate_images.test_simple_prompt_001.mldev' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.google.genai.TableTest.createTests()[154] skipped
+com.google.genai.TableTest.createTests()[155] skipped
+com.google.genai.TableTest.createTests()[156] skipped
+com.google.genai.TableTest.createTests()[157] skipped
+com.google.genai.TableTest.createTests()[158] -- Time elapsed: 7.767 s
+com.google.genai.TableTest.createTests()[159] -- Time elapsed: 6.811 s
+com.google.genai.TableTest.createTests()[160] -- Time elapsed: 7.982 s
+com.google.genai.TableTest.createTests()[161] -- Time elapsed: 6.983 s
+com.google.genai.TableTest.createTests()[162] -- Time elapsed: 6.712 s
+com.google.genai.TableTest.createTests()[163] -- Time elapsed: 8.940 s
+com.google.genai.TableTest.createTests()[164] -- Time elapsed: 6.444 s
+com.google.genai.TableTest.createTests()[165] -- Time elapsed: 7.921 s
+com.google.genai.TableTest.createTests()[166] -- Time elapsed: 7.808 s
+com.google.genai.TableTest.createTests()[167] -- Time elapsed: 7.471 s
+com.google.genai.TableTest.createTests()[168] -- Time elapsed: 7.489 s
+com.google.genai.TableTest.createTests()[169] -- Time elapsed: 8.201 s
+com.google.genai.TableTest.createTests()[170] -- Time elapsed: 7.824 s
+com.google.genai.TableTest.createTests()[171] -- Time elapsed: 7.736 s
+com.google.genai.TableTest.createTests()[172] skipped
+com.google.genai.TableTest.createTests()[173] -- Time elapsed: 6.749 s
+com.google.genai.TableTest.createTests()[174] skipped
+com.google.genai.TableTest.createTests()[175] skipped
+com.google.genai.TableTest.createTests()[176] skipped
+com.google.genai.TableTest.createTests()[177] skipped
+com.google.genai.TableTest.createTests()[178] skipped
+com.google.genai.TableTest.createTests()[179] skipped
+com.google.genai.TableTest.createTests()[180] skipped
+com.google.genai.TableTest.createTests()[181] skipped
+com.google.genai.TableTest.createTests()[182] skipped
+com.google.genai.TableTest.createTests()[183] -- Time elapsed: 0.552 s
+com.google.genai.TableTest.createTests()[184] skipped
+com.google.genai.TableTest.createTests()[185] skipped
+com.google.genai.TableTest.createTests()[186] skipped
+com.google.genai.TableTest.createTests()[187] -- Time elapsed: 3.683 s
+com.google.genai.TableTest.createTests()[188] -- Time elapsed: 0.674 s
+com.google.genai.TableTest.createTests()[189] skipped
+com.google.genai.TableTest.createTests()[190] -- Time elapsed: 0.588 s
+com.google.genai.TableTest.createTests()[191] skipped
+com.google.genai.TableTest.createTests()[192] skipped
+com.google.genai.TableTest.createTests()[193] skipped
+com.google.genai.TableTest.createTests()[194] skipped
+com.google.genai.TableTest.createTests()[195] skipped
+com.google.genai.TableTest.createTests()[196] skipped
+com.google.genai.TableTest.createTests()[197] skipped
+com.google.genai.TableTest.createTests()[198] skipped
+com.google.genai.TableTest.createTests()[199] skipped

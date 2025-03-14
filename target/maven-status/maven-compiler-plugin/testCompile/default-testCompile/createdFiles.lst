@@ -1,0 +1,9 @@
+com/google/genai/ReplaySanitizer$Sanitizer.class
+com/google/genai/ReplaySanitizer.class
+com/google/genai/ForwardCompatibilityTest.class
+com/google/genai/types/GenerateContentResponseTest.class
+com/google/genai/TableTest.class
+com/google/genai/DefaultValuesTest.class
+com/google/genai/HttpApiClientTest.class
+com/google/genai/ReplayBase64Sanitizer.class
+com/google/genai/ReplaySanitizerTest.class

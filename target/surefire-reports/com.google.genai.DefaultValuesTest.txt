@@ -1,0 +1,5 @@
+-------------------------------------------------------------------------------
+Test set: com.google.genai.DefaultValuesTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.070 s -- in com.google.genai.DefaultValuesTest
+com.google.genai.DefaultValuesTest.testDefaultValues -- Time elapsed: 0.069 s

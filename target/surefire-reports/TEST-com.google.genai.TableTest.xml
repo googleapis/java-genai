@@ -1,0 +1,2255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.google.genai.TableTest" time="199.571" tests="199" errors="0" skipped="134" failures="3">
+  <properties>
+    <property name="java.specification.version" value="23"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/test-classes:/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/classes:/usr/local/google/home/wuamy/.m2/repository/com/google/auth/google-auth-library-oauth2-http/1.30.1/google-auth-library-oauth2-http-1.30.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auth/google-auth-library-credentials/1.30.1/google-auth-library-credentials-1.30.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/http-client/google-http-client/1.45.3/google-http-client-1.45.3.jar:/usr/local/google/home/wuamy/.m2/repository/io/grpc/grpc-context/1.69.0/grpc-context-1.69.0.jar:/usr/local/google/home/wuamy/.m2/repository/io/grpc/grpc-api/1.69.0/grpc-api-1.69.0.jar:/usr/local/google/home/wuamy/.m2/repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar:/usr/local/google/home/wuamy/.m2/repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/http-client/google-http-client-gson/1.45.3/google-http-client-gson-1.45.3.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/usr/local/google/home/wuamy/.m2/repository/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/usr/local/google/home/wuamy/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/usr/local/google/home/wuamy/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auto/value/auto-value/1.11.0/auto-value-1.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/api/api-common/2.42.1/api-common-2.42.1.jar:/usr/local/google/home/wuamy/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/java-websocket/Java-WebSocket/1.6.0/Java-WebSocket-1.6.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.4/junit-jupiter-api-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/platform/junit-platform-commons/1.11.4/junit-platform-commons-1.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.11.4/junit-jupiter-params-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.11.4/junit-jupiter-engine-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/platform/junit-platform-engine/1.11.4/junit-platform-engine-1.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/mockito/mockito-core/3.12.4/mockito-core-3.12.4.jar:/usr/local/google/home/wuamy/.m2/repository/net/bytebuddy/byte-buddy/1.11.13/byte-buddy-1.11.13.jar:/usr/local/google/home/wuamy/.m2/repository/net/bytebuddy/byte-buddy-agent/1.11.13/byte-buddy-agent-1.11.13.jar:/usr/local/google/home/wuamy/.m2/repository/org/objenesis/objenesis/3.2/objenesis-3.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/tomakehurst/wiremock-jre8/2.35.0/wiremock-jre8-2.35.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-server/9.4.49.v20220914/jetty-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-http/9.4.49.v20220914/jetty-http-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-io/9.4.49.v20220914/jetty-io-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.49.v20220914/jetty-servlet-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-security/9.4.49.v20220914/jetty-security-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-util-ajax/9.4.49.v20220914/jetty-util-ajax-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-servlets/9.4.49.v20220914/jetty-servlets-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-continuation/9.4.49.v20220914/jetty-continuation-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-util/9.4.49.v20220914/jetty-util-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.49.v20220914/jetty-webapp-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.49.v20220914/jetty-xml-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-proxy/9.4.49.v20220914/jetty-proxy-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-client/9.4.49.v20220914/jetty-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-server/9.4.49.v20220914/http2-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-common/9.4.49.v20220914/http2-common-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-hpack/9.4.49.v20220914/http2-hpack-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-server/9.4.49.v20220914/jetty-alpn-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-java-server/9.4.49.v20220914/jetty-alpn-java-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-openjdk8-server/9.4.49.v20220914/jetty-alpn-openjdk8-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-java-client/9.4.49.v20220914/jetty-alpn-java-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-client/9.4.49.v20220914/jetty-alpn-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.49.v20220914/jetty-alpn-openjdk8-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/client5/httpclient5/5.1.3/httpclient5-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/core5/httpcore5/5.1.3/httpcore5-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/core5/httpcore5-h2/5.1.3/httpcore5-h2-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-core/2.9.0/xmlunit-core-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3.jar:/usr/local/google/home/wuamy/.m2/repository/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-legacy/2.9.0/xmlunit-legacy-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-placeholders/2.9.0/xmlunit-placeholders-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/net/javacrumbs/json-unit/json-unit-core/2.36.0/json-unit-core-2.36.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar:/usr/local/google/home/wuamy/.m2/repository/net/minidev/json-smart/2.4.7/json-smart-2.4.7.jar:/usr/local/google/home/wuamy/.m2/repository/net/minidev/accessors-smart/2.4.7/accessors-smart-2.4.7.jar:/usr/local/google/home/wuamy/.m2/repository/org/ow2/asm/asm/9.4/asm-9.4.jar:/usr/local/google/home/wuamy/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/jknack/handlebars/4.3.1/handlebars-4.3.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/jknack/handlebars-helpers/4.3.1/handlebars-helpers-4.3.1.jar:/usr/local/google/home/wuamy/.m2/repository/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar:/usr/local/google/home/wuamy/.m2/repository/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar:"/>
+    <property name="java.vm.vendor" value="Google Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://goto.google.com/java-platform"/>
+    <property name="user.timezone" value="Etc/UTC"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="23"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="/usr/local/buildtools/java/jdk-sts/lib"/>
+    <property name="sun.java.command" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/surefire/surefirebooter-20250314224720885_3.jar /google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/surefire 2025-03-14T22-47-20_753-jvmRun1 surefire-20250314224720885_1tmp surefire_0-20250314224720885_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/test-classes:/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/classes:/usr/local/google/home/wuamy/.m2/repository/com/google/auth/google-auth-library-oauth2-http/1.30.1/google-auth-library-oauth2-http-1.30.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auth/google-auth-library-credentials/1.30.1/google-auth-library-credentials-1.30.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/http-client/google-http-client/1.45.3/google-http-client-1.45.3.jar:/usr/local/google/home/wuamy/.m2/repository/io/grpc/grpc-context/1.69.0/grpc-context-1.69.0.jar:/usr/local/google/home/wuamy/.m2/repository/io/grpc/grpc-api/1.69.0/grpc-api-1.69.0.jar:/usr/local/google/home/wuamy/.m2/repository/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar:/usr/local/google/home/wuamy/.m2/repository/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/http-client/google-http-client-gson/1.45.3/google-http-client-gson-1.45.3.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/usr/local/google/home/wuamy/.m2/repository/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/usr/local/google/home/wuamy/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/usr/local/google/home/wuamy/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auto/value/auto-value/1.11.0/auto-value-1.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/api/api-common/2.42.1/api-common-2.42.1.jar:/usr/local/google/home/wuamy/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/java-websocket/Java-WebSocket/1.6.0/Java-WebSocket-1.6.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.4/junit-jupiter-api-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/platform/junit-platform-commons/1.11.4/junit-platform-commons-1.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.11.4/junit-jupiter-params-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.11.4/junit-jupiter-engine-5.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/junit/platform/junit-platform-engine/1.11.4/junit-platform-engine-1.11.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/mockito/mockito-core/3.12.4/mockito-core-3.12.4.jar:/usr/local/google/home/wuamy/.m2/repository/net/bytebuddy/byte-buddy/1.11.13/byte-buddy-1.11.13.jar:/usr/local/google/home/wuamy/.m2/repository/net/bytebuddy/byte-buddy-agent/1.11.13/byte-buddy-agent-1.11.13.jar:/usr/local/google/home/wuamy/.m2/repository/org/objenesis/objenesis/3.2/objenesis-3.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/tomakehurst/wiremock-jre8/2.35.0/wiremock-jre8-2.35.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-server/9.4.49.v20220914/jetty-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-http/9.4.49.v20220914/jetty-http-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-io/9.4.49.v20220914/jetty-io-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.49.v20220914/jetty-servlet-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-security/9.4.49.v20220914/jetty-security-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-util-ajax/9.4.49.v20220914/jetty-util-ajax-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-servlets/9.4.49.v20220914/jetty-servlets-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-continuation/9.4.49.v20220914/jetty-continuation-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-util/9.4.49.v20220914/jetty-util-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.49.v20220914/jetty-webapp-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.49.v20220914/jetty-xml-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-proxy/9.4.49.v20220914/jetty-proxy-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-client/9.4.49.v20220914/jetty-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-server/9.4.49.v20220914/http2-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-common/9.4.49.v20220914/http2-common-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/http2/http2-hpack/9.4.49.v20220914/http2-hpack-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-server/9.4.49.v20220914/jetty-alpn-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-java-server/9.4.49.v20220914/jetty-alpn-java-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-openjdk8-server/9.4.49.v20220914/jetty-alpn-openjdk8-server-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-java-client/9.4.49.v20220914/jetty-alpn-java-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-client/9.4.49.v20220914/jetty-alpn-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.49.v20220914/jetty-alpn-openjdk8-client-9.4.49.v20220914.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/client5/httpclient5/5.1.3/httpclient5-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/core5/httpcore5/5.1.3/httpcore5-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/httpcomponents/core5/httpcore5-h2/5.1.3/httpcore5-h2-5.1.3.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-core/2.9.0/xmlunit-core-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.3/jakarta.xml.bind-api-2.3.3.jar:/usr/local/google/home/wuamy/.m2/repository/jakarta/activation/jakarta.activation-api/1.2.2/jakarta.activation-api-1.2.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-legacy/2.9.0/xmlunit-legacy-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/xmlunit/xmlunit-placeholders/2.9.0/xmlunit-placeholders-2.9.0.jar:/usr/local/google/home/wuamy/.m2/repository/net/javacrumbs/json-unit/json-unit-core/2.36.0/json-unit-core-2.36.0.jar:/usr/local/google/home/wuamy/.m2/repository/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/usr/local/google/home/wuamy/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/usr/local/google/home/wuamy/.m2/repository/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar:/usr/local/google/home/wuamy/.m2/repository/net/minidev/json-smart/2.4.7/json-smart-2.4.7.jar:/usr/local/google/home/wuamy/.m2/repository/net/minidev/accessors-smart/2.4.7/accessors-smart-2.4.7.jar:/usr/local/google/home/wuamy/.m2/repository/org/ow2/asm/asm/9.4/asm-9.4.jar:/usr/local/google/home/wuamy/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar:/usr/local/google/home/wuamy/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/jknack/handlebars/4.3.1/handlebars-4.3.1.jar:/usr/local/google/home/wuamy/.m2/repository/com/github/jknack/handlebars-helpers/4.3.1/handlebars-helpers-4.3.1.jar:/usr/local/google/home/wuamy/.m2/repository/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar:/usr/local/google/home/wuamy/.m2/repository/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/usr/local/google/home/wuamy"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-02-26"/>
+    <property name="java.home" value="/usr/local/buildtools/java/jdk-sts"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai/target/surefire/surefirebooter-20250314224720885_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="23.0.2+-google-release-sts-731501170"/>
+    <property name="user.name" value="wuamy"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="6.10.11-1rodete2-amd64"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/usr/local/google/home/wuamy/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://b.corp.google.com/createIssue?component=32554"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="23.0.2"/>
+    <property name="user.dir" value="/google/src/cloud/wuamy/genai-java/google3/third_party/java/google_genai"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Google Inc."/>
+    <property name="java.vm.version" value="23.0.2+-google-release-sts-731501170"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="67.0"/>
+  </properties>
+  <testcase name="createTests()[1]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/create/
+Running test table: batches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/create/
+Running test table: batches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/delete/
+Running test table: batches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/delete/
+Running test table: batches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/get/
+Running test table: batches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/get/
+Running test table: batches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/cancel/
+Running test table: batches.cancel
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/cancel/
+Running test table: batches.cancel
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/list/
+Running test table: batches.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/batches/list/
+Running test table: batches.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/list/
+Running test table: tunings.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/list/
+Running test table: tunings.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/get/
+Running test table: tunings.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/get/
+Running test table: tunings.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/tune/
+Running test table: tunings.tune
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/tunings/tune/
+Running test table: tunings.tune
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/get/
+Running test table: caches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/get/
+Running test table: caches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/create/
+Running test table: caches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/create/
+Running test table: caches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/list/
+Running test table: caches.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/list/
+Running test table: caches.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/delete/
+Running test table: caches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/delete/
+Running test table: caches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/get_custom_url/
+Running test table: caches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/get_custom_url/
+Running test table: caches.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/delete_custom_url/
+Running test table: caches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/delete_custom_url/
+Running test table: caches.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/create_custom_url/
+Running test table: caches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/create_custom_url/
+Running test table: caches.create
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/update/
+Running test table: caches.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/update/
+Running test table: caches.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/update_custom_url/
+Running test table: caches.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/caches/update_custom_url/
+Running test table: caches.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_tools/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_google_search_retrieval.mldev
+    === Calling method: models.generate_content.test_vai_search.mldev
+    === Calling method: models.generate_content.test_vai_google_search.mldev
+    === Calling method: models.generate_content.test_rag_model.mldev
+    === Calling method: models.generate_content.test_function_call.mldev
+    === Calling method: models.generate_content.test_code_execution.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_tools/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_google_search_retrieval.vertex
+    === Calling method: models.generate_content.test_vai_search.vertex
+    === Calling method: models.generate_content.test_vai_google_search.vertex
+    === Calling method: models.generate_content.test_rag_model.vertex
+    === Calling method: models.generate_content.test_function_call.vertex
+    === Calling method: models.generate_content.test_code_execution.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_videos/
+Running test table: models.generate_videos
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_videos/
+Running test table: models.generate_videos
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_cached_content/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_cached_content_wrong_name.mldev
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_0.mldev
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_1.mldev
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_2.mldev
+    === Calling method: models.generate_content.test_cached_content_partial_mldev_resource_name_1.mldev
+    === Calling method: models.generate_content.test_cached_content_for_vertex.mldev
+    === Calling method: models.generate_content.test_cached_content_for_mldev.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_cached_content/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_cached_content_wrong_name.vertex
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_0.vertex
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_1.vertex
+    === Calling method: models.generate_content.test_cached_content_partial_vertex_resource_name_2.vertex
+    === Calling method: models.generate_content.test_cached_content_partial_mldev_resource_name_1.vertex
+    === Calling method: models.generate_content.test_cached_content_for_vertex.vertex
+    === Calling method: models.generate_content.test_cached_content_for_mldev.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_part/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_image_uri.mldev
+    === Calling method: models.generate_content.test_external_file_uri.mldev
+    === Calling method: models.generate_content.test_image_png_file_uri.mldev
+    === Calling method: models.generate_content.test_image_jpg_file_uri.mldev
+    === Calling method: models.generate_content.test_application_pdf_file_uri.mldev
+    === Calling method: models.generate_content.test_video_mp4_file_uri.mldev
+    === Calling method: models.generate_content.test_audio_m4a_file_uri.mldev
+    === Calling method: models.generate_content.test_video_gcs_file_uri.mldev
+    === Calling method: models.generate_content.test_image_base64.mldev
+    === Calling method: models.generate_content.test_union_none_part.mldev
+    === Calling method: models.generate_content.test_dict_content.mldev
+    === Calling method: models.generate_content.test_union_part_list.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_part/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_image_uri.vertex
+    === Calling method: models.generate_content.test_external_file_uri.vertex
+    === Calling method: models.generate_content.test_image_png_file_uri.vertex
+    === Calling method: models.generate_content.test_image_jpg_file_uri.vertex
+    === Calling method: models.generate_content.test_application_pdf_file_uri.vertex
+    === Calling method: models.generate_content.test_video_mp4_file_uri.vertex
+    === Calling method: models.generate_content.test_audio_m4a_file_uri.vertex
+    === Calling method: models.generate_content.test_video_gcs_file_uri.vertex
+    === Calling method: models.generate_content.test_image_base64.vertex
+    === Calling method: models.generate_content.test_union_none_part.vertex
+    === Calling method: models.generate_content.test_dict_content.vertex
+    === Calling method: models.generate_content.test_union_part_list.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/embed_content/
+Running test table: models.embed_content
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/embed_content/
+Running test table: models.embed_content
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_http_options/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_generate_content_with_http_options.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_http_options/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_generate_content_with_http_options.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/get/
+Running test table: models.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/get/
+Running test table: models.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/compute_tokens/
+Running test table: models.compute_tokens
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/compute_tokens/
+Running test table: models.compute_tokens
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_http_options_in_method.mldev
+    === Calling method: models.generate_content.test_union_contents_is_string.mldev
+    === Calling method: models.generate_content.test_union_contents_is_content.mldev
+    === Calling method: models.generate_content.test_union_contents_is_parts.mldev
+    === Calling method: models.generate_content.test_union_contents_is_part.mldev
+    === Calling method: models.generate_content.test_sync_content_list.mldev
+    === Calling method: models.generate_content.test_llama.mldev
+    === Calling method: models.generate_content.test_system_instructions.mldev
+    === Calling method: models.generate_content.test_labels.mldev
+    === Calling method: models.generate_content.test_simple_shared_generation_config.mldev
+    === Calling method: models.generate_content.test_2_candidates_gemini_1_5_flash.mldev
+    === Calling method: models.generate_content.test_safety_settings_on_difference.mldev
+    === Calling method: models.generate_content.test_penalty.mldev
+    === Calling method: models.generate_content.test_penalty_gemini_1_5_flash.mldev
+    === Calling method: models.generate_content.test_google_search_tool.mldev
+    === Calling method: models.generate_content.test_speech_with_config.mldev
+    === Calling method: models.generate_content.test_union_speech_string_config.mldev
+    === Calling method: models.generate_content.test_audio_timestamp.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_http_options_in_method.vertex
+    === Calling method: models.generate_content.test_union_contents_is_string.vertex
+    === Calling method: models.generate_content.test_union_contents_is_content.vertex
+    === Calling method: models.generate_content.test_union_contents_is_parts.vertex
+    === Calling method: models.generate_content.test_union_contents_is_part.vertex
+    === Calling method: models.generate_content.test_sync_content_list.vertex
+    === Calling method: models.generate_content.test_llama.vertex
+    === Calling method: models.generate_content.test_system_instructions.vertex
+    === Calling method: models.generate_content.test_labels.vertex
+    === Calling method: models.generate_content.test_simple_shared_generation_config.vertex
+    === Calling method: models.generate_content.test_2_candidates_gemini_1_5_flash.vertex
+    === Calling method: models.generate_content.test_safety_settings_on_difference.vertex
+    === Calling method: models.generate_content.test_penalty.vertex
+    === Calling method: models.generate_content.test_penalty_gemini_1_5_flash.vertex
+    === Calling method: models.generate_content.test_google_search_tool.vertex
+    === Calling method: models.generate_content.test_speech_with_config.vertex
+    === Calling method: models.generate_content.test_union_speech_string_config.vertex
+    === Calling method: models.generate_content.test_audio_timestamp.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/upscale_image/
+Running test table: models.upscale_image
+    === Calling method: models.upscale_image.test_upscale_no_config.mldev
+    === Calling method: models.upscale_image.test_upscale.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/upscale_image/
+Running test table: models.upscale_image
+    === Calling method: models.upscale_image.test_upscale_no_config.vertex
+    === Calling method: models.upscale_image.test_upscale.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/edit_image/
+Running test table: models.edit_image
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/edit_image/
+Running test table: models.edit_image
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_config_zero_value/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_candidate_count_zero.mldev
+    === Calling method: models.generate_content.test_max_output_tokens_zero.mldev
+    === Calling method: models.generate_content.test_logprobs_zero.mldev
+    === Calling method: models.generate_content.test_logprobs_zero_with_response_logprobs_true.mldev
+    === Calling method: models.generate_content.test_presence_penalty_zero.mldev
+    === Calling method: models.generate_content.test_frequency_penalty_zero.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_config_zero_value/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_candidate_count_zero.vertex
+    === Calling method: models.generate_content.test_max_output_tokens_zero.vertex
+    === Calling method: models.generate_content.test_logprobs_zero.vertex
+    === Calling method: models.generate_content.test_logprobs_zero_with_response_logprobs_true.vertex
+    === Calling method: models.generate_content.test_presence_penalty_zero.vertex
+    === Calling method: models.generate_content.test_frequency_penalty_zero.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_images/
+Running test table: models.generate_images
+    === Calling method: models.generate_images.test_simple_prompt.mldev
+    === Calling method: models.generate_images.test_simple_prompt_001.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_parameters.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters_2.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters_3.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters_2.mldev
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters_3.mldev
+    === Calling method: models.generate_images.test_all_mldev_config_parameters.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_images/
+Running test table: models.generate_images
+    === Calling method: models.generate_images.test_simple_prompt.vertex
+    === Calling method: models.generate_images.test_simple_prompt_001.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_parameters.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters_2.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_person_generation_enum_parameters_3.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters_2.vertex
+    === Calling method: models.generate_images.test_all_vertexai_config_safety_filter_level_enum_parameters_3.vertex
+    === Calling method: models.generate_images.test_all_mldev_config_parameters.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_media_resolution/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_video_audio_uri_with_media_resolution.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_media_resolution/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_video_audio_uri_with_media_resolution.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/list/
+Running test table: models.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/list/
+Running test table: models.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/count_tokens/
+Running test table: models.count_tokens
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/count_tokens/
+Running test table: models.count_tokens
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/update/
+Running test table: models.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/update/
+Running test table: models.update
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_model/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_tuned_model_with_model_name.mldev
+    === Calling method: models.generate_content.test_tuned_model.mldev
+    === Calling method: models.generate_content.test_start_with_publishers.mldev
+    === Calling method: models.generate_content.test_start_with_models.mldev
+    === Calling method: models.generate_content.test_publisher_model.mldev
+    === Calling method: models.generate_content.test_empty_model.mldev
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/generate_content_model/
+Running test table: models.generate_content
+    === Calling method: models.generate_content.test_tuned_model_with_model_name.vertex
+    === Calling method: models.generate_content.test_tuned_model.vertex
+    === Calling method: models.generate_content.test_start_with_publishers.vertex
+    === Calling method: models.generate_content.test_start_with_models.vertex
+    === Calling method: models.generate_content.test_publisher_model.vertex
+    === Calling method: models.generate_content.test_empty_model.vertex
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/delete/
+Running test table: models.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/models/delete/
+Running test table: models.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/get/
+Running test table: files.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/get/
+Running test table: files.get
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/list/
+Running test table: files.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/list/
+Running test table: files.list
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/delete/
+Running test table: files.delete
+replayFilePath: /google/src/cloud/wuamy/genai-java/google3/google/cloud/aiplatform/sdk/genai/replays/tests/files/delete/
+Running test table: files.delete
+    === Skipped: method batches.create is not supported in Java
+]]></system-out>
+    <system-err><![CDATA[Mar 14, 2025 10:47:22 PM com.google.auth.oauth2.DefaultCredentialsProvider warnAboutProblematicCredentials
+WARNING: You are authenticating using user credentials. For production, we recommend using service account credentials.
+
+To learn more about service account credentials, see http://cloud.google.com/docs/authentication/external/set-up-adc-on-cloud
+]]></system-err>
+  </testcase>
+  <testcase name="createTests()[2]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.create is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[3]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[4]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[5]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[6]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[7]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.cancel is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.cancel is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[8]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.cancel is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.cancel is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[9]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[10]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method batches.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method batches.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[11]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[12]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[13]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[14]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[15]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.tune is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.tune is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[16]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method tunings.tune is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method tunings.tune is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[17]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[18]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[19]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.create is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[20]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.create is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[21]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[22]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[23]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[24]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[25]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[26]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[27]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[28]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[29]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.create is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[30]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.create is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.create is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[31]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[32]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[33]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[34]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method caches.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method caches.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[35]" classname="com.google.genai.TableTest" time="3.032"/>
+  <testcase name="createTests()[36]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[37]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[38]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[39]" classname="com.google.genai.TableTest" time="0.26"/>
+  <testcase name="createTests()[40]" classname="com.google.genai.TableTest" time="4.3"/>
+  <testcase name="createTests()[41]" classname="com.google.genai.TableTest" time="2.61"/>
+  <testcase name="createTests()[42]" classname="com.google.genai.TableTest" time="3.235"/>
+  <testcase name="createTests()[43]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[44]" classname="com.google.genai.TableTest" time="2.753"/>
+  <testcase name="createTests()[45]" classname="com.google.genai.TableTest" time="0.32"/>
+  <testcase name="createTests()[46]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Model gemini-1.5-flash-001 does not support code execution for Vertex API.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Model gemini-1.5-flash-001 does not support code execution for Vertex API.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[47]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.generate_videos is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.generate_videos is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[48]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.generate_videos is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.generate_videos is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[49]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[50]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[51]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[52]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[53]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[54]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[55]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[56]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[57]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[58]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[59]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[60]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[61]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[62]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: CachedContent API has expiration and permission issues
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: CachedContent API has expiration and permission issues
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[63]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[64]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[65]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[66]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[67]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[68]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[69]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[70]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[71]" classname="com.google.genai.TableTest" time="0.615"/>
+  <testcase name="createTests()[72]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[73]" classname="com.google.genai.TableTest" time="0.419"/>
+  <testcase name="createTests()[74]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[75]" classname="com.google.genai.TableTest" time="0.845"/>
+  <testcase name="createTests()[76]" classname="com.google.genai.TableTest" time="0.946"/>
+  <testcase name="createTests()[77]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[78]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[79]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[80]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[81]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[82]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: Name of the file is hardcoded, only supporting replay mode.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: Name of the file is hardcoded, only supporting replay mode.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[83]" classname="com.google.genai.TableTest" time="0.756"/>
+  <testcase name="createTests()[84]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[85]" classname="com.google.genai.TableTest" time="0.436"/>
+  <testcase name="createTests()[86]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[87]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.embed_content is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.embed_content is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[88]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.embed_content is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.embed_content is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[89]" classname="com.google.genai.TableTest" time="0.565"/>
+  <testcase name="createTests()[90]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[91]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[92]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[93]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.compute_tokens is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.compute_tokens is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[94]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.compute_tokens is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.compute_tokens is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[95]" classname="com.google.genai.TableTest" time="0.398"/>
+  <testcase name="createTests()[96]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[97]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[98]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[99]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[100]" classname="com.google.genai.TableTest" time="2.364"/>
+  <testcase name="createTests()[101]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: it will encounter 403 for api mode
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: it will encounter 403 for api mode
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[102]" classname="com.google.genai.TableTest" time="0.24"/>
+  <testcase name="createTests()[103]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[104]" classname="com.google.genai.TableTest" time="0.283"/>
+  <testcase name="createTests()[105]" classname="com.google.genai.TableTest" time="0.427"/>
+  <testcase name="createTests()[106]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[107]" classname="com.google.genai.TableTest" time="0.418"/>
+  <testcase name="createTests()[108]" classname="com.google.genai.TableTest" time="0.432"/>
+  <testcase name="createTests()[109]" classname="com.google.genai.TableTest" time="2.21"/>
+  <testcase name="createTests()[110]" classname="com.google.genai.TableTest" time="0.312">
+    <failure message="&apos;models.generate_content.test_speech_with_config.mldev&apos; failed: java.lang.reflect.InvocationTargetException" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 'models.generate_content.test_speech_with_config.mldev' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></failure>
+    <system-err><![CDATA[java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:118)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:199)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$0(DynamicTestTestDescriptor.java:53)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:167)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:184)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$1(DynamicTestTestDescriptor.java:61)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptorCall.lambda$ofVoid$0(InvocationInterceptorChain.java:78)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:60)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:32)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:231)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:209)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.lambda$invokeTestMethod$1(TestFactoryTestDescriptor.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.invokeTestMethod(TestFactoryTestDescriptor.java:95)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: org.apache.http.HttpException: 400 Bad Request. Model does not support requested modality: AUDIO
+	at com.google.genai.HttpApiResponse.getEntity(HttpApiResponse.java:73)
+	at com.google.genai.Models.privateGenerateContent(Models.java:2772)
+	at com.google.genai.Models.generateContent(Models.java:2928)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	... 79 more
+]]></system-err>
+  </testcase>
+  <testcase name="createTests()[111]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[112]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[113]" classname="com.google.genai.TableTest" time="0.336"/>
+  <testcase name="createTests()[114]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[115]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[116]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[117]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[118]" classname="com.google.genai.TableTest" time="1.894"/>
+  <testcase name="createTests()[119]" classname="com.google.genai.TableTest" time="0.86"/>
+  <testcase name="createTests()[120]" classname="com.google.genai.TableTest" time="0.258"/>
+  <testcase name="createTests()[121]" classname="com.google.genai.TableTest" time="0.35"/>
+  <testcase name="createTests()[122]" classname="com.google.genai.TableTest" time="0.291"/>
+  <testcase name="createTests()[123]" classname="com.google.genai.TableTest" time="0.447"/>
+  <testcase name="createTests()[124]" classname="com.google.genai.TableTest" time="0.357"/>
+  <testcase name="createTests()[125]" classname="com.google.genai.TableTest" time="0.481"/>
+  <testcase name="createTests()[126]" classname="com.google.genai.TableTest" time="0.384"/>
+  <testcase name="createTests()[127]" classname="com.google.genai.TableTest" time="2.418"/>
+  <testcase name="createTests()[128]" classname="com.google.genai.TableTest" time="0.073">
+    <failure message="&apos;models.generate_content.test_speech_with_config.vertex&apos; failed: java.lang.reflect.InvocationTargetException" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 'models.generate_content.test_speech_with_config.vertex' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></failure>
+    <system-err><![CDATA[java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:118)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:199)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$0(DynamicTestTestDescriptor.java:53)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:167)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:184)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$1(DynamicTestTestDescriptor.java:61)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptorCall.lambda$ofVoid$0(InvocationInterceptorChain.java:78)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:60)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:32)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:231)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:209)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.lambda$invokeTestMethod$1(TestFactoryTestDescriptor.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.invokeTestMethod(TestFactoryTestDescriptor.java:95)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: org.apache.http.HttpException: 400 Bad Request. You are not allowlisted to request audio output.
+	at com.google.genai.HttpApiResponse.getEntity(HttpApiResponse.java:73)
+	at com.google.genai.Models.privateGenerateContent(Models.java:2772)
+	at com.google.genai.Models.generateContent(Models.java:2928)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	... 79 more
+]]></system-err>
+  </testcase>
+  <testcase name="createTests()[129]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: parameters contain unsupported union type
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$1(TableTest.java:170)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: parameters contain unsupported union type
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[130]" classname="com.google.genai.TableTest" time="22.285"/>
+  <testcase name="createTests()[131]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[132]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[133]" classname="com.google.genai.TableTest" time="2.667"/>
+  <testcase name="createTests()[134]" classname="com.google.genai.TableTest" time="2.154"/>
+  <testcase name="createTests()[135]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.edit_image is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.edit_image is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[136]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.edit_image is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.edit_image is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[137]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[138]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[139]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: it will encounter 400 for api mode
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: it will encounter 400 for api mode
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[140]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[141]" classname="com.google.genai.TableTest" time="0.394"/>
+  <testcase name="createTests()[142]" classname="com.google.genai.TableTest" time="0.303"/>
+  <testcase name="createTests()[143]" classname="com.google.genai.TableTest" time="0.319"/>
+  <testcase name="createTests()[144]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[145]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: it will encounter 400 for api mode
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: it will encounter 400 for api mode
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[146]" classname="com.google.genai.TableTest" time="0.366"/>
+  <testcase name="createTests()[147]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$3(TableTest.java:237)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[148]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$3(TableTest.java:237)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[149]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$3(TableTest.java:237)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[150]" classname="com.google.genai.TableTest" time="0.322"/>
+  <testcase name="createTests()[151]" classname="com.google.genai.TableTest" time="0.337"/>
+  <testcase name="createTests()[152]" classname="com.google.genai.TableTest" time="7.066"/>
+  <testcase name="createTests()[153]" classname="com.google.genai.TableTest" time="0.06">
+    <failure message="&apos;models.generate_images.test_simple_prompt_001.mldev&apos; failed: java.lang.reflect.InvocationTargetException" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 'models.generate_images.test_simple_prompt_001.mldev' failed: java.lang.reflect.InvocationTargetException
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:222)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></failure>
+    <system-err><![CDATA[java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:118)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:199)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$0(DynamicTestTestDescriptor.java:53)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:167)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptDynamicTest(InvocationInterceptor.java:184)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.lambda$execute$1(DynamicTestTestDescriptor.java:61)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptorCall.lambda$ofVoid$0(InvocationInterceptorChain.java:78)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:60)
+	at org.junit.jupiter.engine.descriptor.DynamicTestTestDescriptor.execute(DynamicTestTestDescriptor.java:32)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:231)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask$DefaultDynamicTestExecutor.execute(NodeTestTask.java:209)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.lambda$invokeTestMethod$1(TestFactoryTestDescriptor.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestFactoryTestDescriptor.invokeTestMethod(TestFactoryTestDescriptor.java:95)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: org.apache.http.HttpException: 404 Not Found. models/imagen-3.0-generate-001 is not found for API version v1beta, or is not supported for predict. Call ListModels to see the list of available models and their supported methods.
+	at com.google.genai.HttpApiResponse.getEntity(HttpApiResponse.java:73)
+	at com.google.genai.Models.generateImages(Models.java:2855)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	... 79 more
+]]></system-err>
+  </testcase>
+  <testcase name="createTests()[154]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[155]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[156]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[157]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[158]" classname="com.google.genai.TableTest" time="7.767"/>
+  <testcase name="createTests()[159]" classname="com.google.genai.TableTest" time="6.811"/>
+  <testcase name="createTests()[160]" classname="com.google.genai.TableTest" time="7.982"/>
+  <testcase name="createTests()[161]" classname="com.google.genai.TableTest" time="6.983"/>
+  <testcase name="createTests()[162]" classname="com.google.genai.TableTest" time="6.712"/>
+  <testcase name="createTests()[163]" classname="com.google.genai.TableTest" time="8.94"/>
+  <testcase name="createTests()[164]" classname="com.google.genai.TableTest" time="6.444"/>
+  <testcase name="createTests()[165]" classname="com.google.genai.TableTest" time="7.921"/>
+  <testcase name="createTests()[166]" classname="com.google.genai.TableTest" time="7.808"/>
+  <testcase name="createTests()[167]" classname="com.google.genai.TableTest" time="7.471"/>
+  <testcase name="createTests()[168]" classname="com.google.genai.TableTest" time="7.489"/>
+  <testcase name="createTests()[169]" classname="com.google.genai.TableTest" time="8.201"/>
+  <testcase name="createTests()[170]" classname="com.google.genai.TableTest" time="7.824"/>
+  <testcase name="createTests()[171]" classname="com.google.genai.TableTest" time="7.736"/>
+  <testcase name="createTests()[172]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[173]" classname="com.google.genai.TableTest" time="6.749"/>
+  <testcase name="createTests()[174]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[175]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[176]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.count_tokens is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.count_tokens is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[177]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.count_tokens is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.count_tokens is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[178]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[179]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.update is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.update is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[180]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: It requires a specific ML Dev account.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: It requires a specific ML Dev account.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[181]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[182]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[183]" classname="com.google.genai.TableTest" time="0.552"/>
+  <testcase name="createTests()[184]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[185]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in MLDev
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:214)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[186]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: It requires a specific ML Dev account.
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:208)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: It requires a specific ML Dev account.
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[187]" classname="com.google.genai.TableTest" time="3.683"/>
+  <testcase name="createTests()[188]" classname="com.google.genai.TableTest" time="0.674"/>
+  <testcase name="createTests()[189]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[190]" classname="com.google.genai.TableTest" time="0.588"/>
+  <testcase name="createTests()[191]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed: Skipped: test case is expected to fail in Vertex AI
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTestCases$2(TableTest.java:217)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+  </testcase>
+  <testcase name="createTests()[192]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[193]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method models.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method models.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[194]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[195]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.get is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.get is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[196]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[197]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.list is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.list is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[198]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.delete is not supported in Java
+]]></system-out>
+  </testcase>
+  <testcase name="createTests()[199]" classname="com.google.genai.TableTest" time="0.0">
+    <skipped type="org.opentest4j.TestAbortedException"><![CDATA[org.opentest4j.TestAbortedException: Assumption failed:     === Skipped: method files.delete is not supported in Java
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:316)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:115)
+	at com.google.genai.TableTest.lambda$createTableTests$0(TableTest.java:127)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></skipped>
+    <system-out><![CDATA[    === Skipped: method files.delete is not supported in Java
+]]></system-out>
+  </testcase>
+</testsuite>

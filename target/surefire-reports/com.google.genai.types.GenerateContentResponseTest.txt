@@ -1,0 +1,35 @@
+-------------------------------------------------------------------------------
+Test set: com.google.genai.types.GenerateContentResponseTest
+-------------------------------------------------------------------------------
+Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in com.google.genai.types.GenerateContentResponseTest
+com.google.genai.types.GenerateContentResponseTest.testParts_SinglePart -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_EmptyParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_PartWithText -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_MultiplePartsWithThought -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testParts_EmptyCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testFunctionCalls_EmptyCandidates -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_TextPart -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_EmptyContent -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testText_MultipleCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_MixedParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_EmptyCandidates -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_MultipleParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_MultipleCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_MultipleCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_EmptyCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_PartWithExecutableCode -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_TextPart -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testParts_UnexpectedFinishReason -- Time elapsed: 0.002 s
+com.google.genai.types.GenerateContentResponseTest.testFunctionCalls_EmptyParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_EmptyCandidates -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_EmptyParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testFunctionCalls_PartWithFunctionCall -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testText_UnexpectedFinishReason -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_PartWithCodeExecutionResult -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testParts_MultipleCandidates -- Time elapsed: 0.002 s
+com.google.genai.types.GenerateContentResponseTest.testText_MultiplePartsWithText -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_EmptyContent -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testFunctionCalls_MixedParts -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testExecutableCode_EmptyParts -- Time elapsed: 0.001 s
+com.google.genai.types.GenerateContentResponseTest.testParts_MultipleParts -- Time elapsed: 0 s
+com.google.genai.types.GenerateContentResponseTest.testCodeExecutionResult_MultipleParts -- Time elapsed: 0 s
