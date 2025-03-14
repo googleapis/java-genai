@@ -2273,18 +2273,18 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"avgLogprobs"},
-          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"finishReason"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"finishReason"},
           Common.getValueByPath(fromObject, new String[] {"finishReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"avgLogprobs"},
+          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
@@ -2350,18 +2350,18 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"finishMessage"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"avgLogprobs"},
-          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"finishReason"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"finishReason"},
           Common.getValueByPath(fromObject, new String[] {"finishReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"avgLogprobs"},
+          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {

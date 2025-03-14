@@ -46,16 +46,16 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("tokenCount")
   public abstract Optional<Integer> tokenCount();
 
-  /** Output only. Average log probability score of the candidate. */
-  @JsonProperty("avgLogprobs")
-  public abstract Optional<Double> avgLogprobs();
-
   /**
-   * Output only. The reason why the model stopped generating tokens. If empty, the model has not
-   * stopped generating the tokens.
+   * The reason why the model stopped generating tokens. If empty, the model has not stopped
+   * generating the tokens.
    */
   @JsonProperty("finishReason")
   public abstract Optional<String> finishReason();
+
+  /** Output only. Average log probability score of the candidate. */
+  @JsonProperty("avgLogprobs")
+  public abstract Optional<Double> avgLogprobs();
 
   /** Output only. Metadata specifies sources used to ground generated content. */
   @JsonProperty("groundingMetadata")
@@ -105,11 +105,11 @@ public abstract class Candidate extends JsonSerializable {
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Integer tokenCount);
 
-    @JsonProperty("avgLogprobs")
-    public abstract Builder avgLogprobs(Double avgLogprobs);
-
     @JsonProperty("finishReason")
     public abstract Builder finishReason(String finishReason);
+
+    @JsonProperty("avgLogprobs")
+    public abstract Builder avgLogprobs(Double avgLogprobs);
 
     @JsonProperty("groundingMetadata")
     public abstract Builder groundingMetadata(GroundingMetadata groundingMetadata);
