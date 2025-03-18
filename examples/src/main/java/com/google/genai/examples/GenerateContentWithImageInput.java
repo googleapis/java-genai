@@ -39,7 +39,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
@@ -54,14 +53,10 @@ public class GenerateContentWithImageInput {
     // environment variables `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
     Client client = Client.builder().vertexAI(true).build();
 
-    // Create parts from builder or `fromJson` method.
-    Part textPart = Part.builder().text("describe the image").build();
-    Part imagePart =
-        Part.fromJson(
-            "{\"fileData\":{\"mimeType\":\"image/jpeg\",\"fileUri\":\"gs://path/to/image.jpg\"}}");
-
     Content content =
-        Content.builder().role("user").parts(ImmutableList.of(textPart, imagePart)).build();
+        Content.fromParts(
+            Part.fromText("describe the image"),
+            Part.fromUri("gs://cloud-samples-data/generative-ai/image/scones.jpg", "image/jpeg"));
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-001", content, null);

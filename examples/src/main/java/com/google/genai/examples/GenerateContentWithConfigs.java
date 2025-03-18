@@ -70,10 +70,7 @@ public class GenerateContentWithConfigs {
                 .build());
 
     // Sets the system instruction in the config.
-    Content systemInstruction =
-        Content.builder()
-            .parts(ImmutableList.of(Part.builder().text("Answer as concisely as possible").build()))
-            .build();
+    Content systemInstruction = Content.fromParts(Part.fromText("You are a history teacher."));
 
     // Sets the Google Search tool in the config.
     Tool googleSearchTool = Tool.builder().googleSearch(GoogleSearch.builder().build()).build();

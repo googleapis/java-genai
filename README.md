@@ -129,14 +129,11 @@ public class GenerateContentWithImageInput {
     // environment variables `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
     Client client = Client.builder().vertexAI(true).build();
 
-    // Create parts from builder or `fromJson` method.
-    Part textPart = Part.builder().text("describe the image").build();
-    Part imagePart =
-        Part.fromJson(
-            "{\"fileData\":{\"mimeType\":\"image/jpeg\",\"fileUri\":\"gs://path/to/image.jpg\"}}");
-
+    // Construct a multimodal content with quick constructors
     Content content =
-        Content.builder().role("user").parts(ImmutableList.of(textPart, imagePart)).build();
+        Content.fromParts(
+            Part.fromText("describe the image"),
+            Part.fromUri("gs://path/to/image.jpg", "image/jpeg"));
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-001", content, null);
@@ -248,10 +245,7 @@ public class GenerateContentWithConfigs {
                 .build());
 
     // Sets the system instruction in the config.
-    Content systemInstruction =
-        Content.builder()
-            .parts(ImmutableList.of(Part.builder().text("Answer as concisely as possible").build()))
-            .build();
+    Content systemInstruction = Content.fromParts(Part.fromText("You are a history teacher."));
 
     // Sets the Google Search tool in the config.
     Tool googleSearchTool = Tool.builder().googleSearch(GoogleSearch.builder().build()).build();

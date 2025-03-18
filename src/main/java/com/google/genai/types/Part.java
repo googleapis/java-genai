@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -127,5 +128,42 @@ public abstract class Part extends JsonSerializable {
   /** Deserializes a JSON string to a Part object. */
   public static Part fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Part.class);
+  }
+
+  /** Constructs a Text Part from a text string. */
+  public static Part fromText(String text) {
+    return builder().text(text).build();
+  }
+
+  /** Constructs a FileData Part from a file URI and MIME type. */
+  public static Part fromUri(String fileUri, String mimeType) {
+    return builder()
+        .fileData(FileData.builder().fileUri(fileUri).mimeType(mimeType).build())
+        .build();
+  }
+
+  /** Constructs a InlineData Part from a byte array and MIME type. */
+  public static Part fromBytes(byte[] bytes, String mimeType) {
+    return builder().inlineData(Blob.builder().data(bytes).mimeType(mimeType).build()).build();
+  }
+
+  /** Constructs a FunctionCall Part from a function name and args. */
+  public static Part fromFunctionCall(String name, Map<String, Object> args) {
+    return builder().functionCall(FunctionCall.builder().name(name).args(args).build()).build();
+  }
+
+  /** Constructs a FunctionResponse Part from a function name and response. */
+  public static Part fromFunctionResponse(String name, Map<String, Object> response) {
+    return builder()
+        .functionResponse(FunctionResponse.builder().name(name).response(response).build())
+        .build();
+  }
+
+  /** Constructs a VideoMetadata Part from a start offset and end offset. */
+  public static Part fromVideoMetadata(String startOffset, String endOffset) {
+    return builder()
+        .videoMetadata(
+            VideoMetadata.builder().startOffset(startOffset).endOffset(endOffset).build())
+        .build();
   }
 }

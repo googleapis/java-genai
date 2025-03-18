@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,5 +74,10 @@ public abstract class Content extends JsonSerializable {
   /** Deserializes a JSON string to a Content object. */
   public static Content fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Content.class);
+  }
+
+  /** Constructs a Content from parts, assuming the role is "user". */
+  public static Content fromParts(Part... parts) {
+    return builder().role("user").parts(Arrays.asList(parts)).build();
   }
 }
