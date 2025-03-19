@@ -16,7 +16,15 @@
 
 package com.google.genai;
 
+import com.google.common.collect.ImmutableList;
+import com.google.genai.types.Blob;
+import com.google.genai.types.LiveClientContent;
 import com.google.genai.types.LiveClientMessage;
+import com.google.genai.types.LiveClientRealtimeInput;
+import com.google.genai.types.LiveClientToolResponse;
+import com.google.genai.types.LiveSendClientContentParameters;
+import com.google.genai.types.LiveSendRealtimeInputParameters;
+import com.google.genai.types.LiveSendToolResponseParameters;
 import com.google.genai.types.LiveServerMessage;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -37,6 +45,52 @@ public final class AsyncSession {
   AsyncSession(ApiClient apiClient, AsyncLive.GenAiWebSocketClient websocket) {
     this.apiClient = apiClient;
     this.websocket = websocket;
+  }
+
+  /**
+   * Sends client content to the live session.
+   *
+   * @param clientContent A {@link LiveSendClientContentParameters} to send.
+   * @return A {@link CompletableFuture} that completes when the client content has been sent. The
+   *     future will fail if the client content cannot be sent.
+   */
+  public CompletableFuture<Void> sendClientContent(LiveSendClientContentParameters clientContent) {
+    return send(
+        LiveClientMessage.builder()
+            .clientContent(LiveClientContent.fromJson(clientContent.toJson()))
+            .build());
+  }
+
+  /**
+   * Sends realtime input to the live session.
+   *
+   * @param realtimeInput A {@link LiveSendRealtimeInputParameters} to send.
+   * @return A {@link CompletableFuture} that completes when the realtime input has been sent. The
+   *     future will fail if the realtime input cannot be sent.
+   */
+  public CompletableFuture<Void> sendRealtimeInput(LiveSendRealtimeInputParameters realtimeInput) {
+    return send(
+        LiveClientMessage.builder()
+            .realtimeInput(
+                LiveClientRealtimeInput.builder()
+                    .mediaChunks(
+                        ImmutableList.of(realtimeInput.media().orElse(Blob.builder().build())))
+                    .build())
+            .build());
+  }
+
+  /**
+   * Sends tool response to the live session.
+   *
+   * @param toolResponse A {@link LiveSendToolResponseParameters} to send.
+   * @return A {@link CompletableFuture} that completes when the tool response has been sent. The
+   *     future will fail if the tool response cannot be sent.
+   */
+  public CompletableFuture<Void> sendToolResponse(LiveSendToolResponseParameters toolResponse) {
+    return send(
+        LiveClientMessage.builder()
+            .toolResponse(LiveClientToolResponse.fromJson(toolResponse.toJson()))
+            .build());
   }
 
   /**

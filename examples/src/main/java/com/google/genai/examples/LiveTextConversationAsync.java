@@ -43,9 +43,8 @@ import com.google.genai.AsyncSession;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.LiveClientContent;
-import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveConnectConfig;
+import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveServerContent;
 import com.google.genai.types.LiveServerMessage;
 import com.google.genai.types.Part;
@@ -93,17 +92,14 @@ public class LiveTextConversationAsync {
     }
   }
 
-  public static LiveClientMessage liveClientMessageFromText(String text) {
-    return LiveClientMessage.builder()
-        .clientContent(
-            LiveClientContent.builder()
-                .turnComplete(true)
-                .turns(
-                    ImmutableList.of(
-                        Content.builder()
-                            .parts(ImmutableList.of(Part.builder().text(text).build()))
-                            .build()))
-                .build())
+  public static LiveSendClientContentParameters clientContentFromText(String text) {
+    return LiveSendClientContentParameters.builder()
+        .turnComplete(true)
+        .turns(
+            ImmutableList.of(
+                Content.builder()
+                    .parts(ImmutableList.of(Part.builder().text(text).build()))
+                    .build()))
         .build();
   }
 
@@ -139,7 +135,7 @@ public class LiveTextConversationAsync {
       if (textInput == null || textInput.toLowerCase().matches("q|quit|exit")) {
         return CompletableFuture.completedFuture(false);
       }
-      return session.send(liveClientMessageFromText(textInput)).thenApply(unused -> true);
+      return session.sendClientContent(clientContentFromText(textInput)).thenApply(unused -> true);
 
     } catch (Exception e) {
       return CompletableFuture.completedFuture(false);

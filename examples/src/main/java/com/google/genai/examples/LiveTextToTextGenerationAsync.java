@@ -42,9 +42,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.LiveClientContent;
-import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveConnectConfig;
+import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveServerContent;
 import com.google.genai.types.LiveServerMessage;
 import com.google.genai.types.Part;
@@ -74,11 +73,9 @@ public class LiveTextToTextGenerationAsync {
               String inputText = "Write a short poem about a cat.";
               System.out.println("\n**Input**\n" + inputText);
 
-              LiveClientMessage input = liveClientMessageFromText(inputText);
-
               return session
                   // Send the input message.
-                  .send(input)
+                  .sendClientContent(clientContentFromText(inputText))
                   .thenCompose(
                       unused -> {
                         System.out.print("\n**Response**\n");
@@ -90,17 +87,14 @@ public class LiveTextToTextGenerationAsync {
             });
   }
 
-  public static LiveClientMessage liveClientMessageFromText(String text) {
-    return LiveClientMessage.builder()
-        .clientContent(
-            LiveClientContent.builder()
-                .turnComplete(true)
-                .turns(
-                    ImmutableList.of(
-                        Content.builder()
-                            .parts(ImmutableList.of(Part.builder().text(text).build()))
-                            .build()))
-                .build())
+  public static LiveSendClientContentParameters clientContentFromText(String text) {
+    return LiveSendClientContentParameters.builder()
+        .turnComplete(true)
+        .turns(
+            ImmutableList.of(
+                Content.builder()
+                    .parts(ImmutableList.of(Part.builder().text(text).build()))
+                    .build()))
         .build();
   }
 
