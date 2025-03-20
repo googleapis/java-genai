@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,6 +65,13 @@ public abstract class TestTableItem extends JsonSerializable {
   @JsonProperty("skipInApiMode")
   public abstract Optional<String> skipInApiMode();
 
+  /**
+   * Keys to ignore when comparing the request and response. This is useful for tests that are not
+   * deterministic.
+   */
+  @JsonProperty("ignoreKeys")
+  public abstract Optional<List<String>> ignoreKeys();
+
   /** Instantiates a builder for TestTableItem. */
   public static Builder builder() {
     return new AutoValue_TestTableItem.Builder();
@@ -101,6 +109,9 @@ public abstract class TestTableItem extends JsonSerializable {
 
     @JsonProperty("skipInApiMode")
     public abstract Builder skipInApiMode(String skipInApiMode);
+
+    @JsonProperty("ignoreKeys")
+    public abstract Builder ignoreKeys(List<String> ignoreKeys);
 
     public abstract TestTableItem build();
   }

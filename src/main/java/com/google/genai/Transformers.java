@@ -19,6 +19,7 @@ package com.google.genai;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.Content;
 import com.google.genai.types.Part;
 import com.google.genai.types.PrebuiltVoiceConfig;
@@ -26,7 +27,9 @@ import com.google.genai.types.Schema;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.Tool;
 import com.google.genai.types.VoiceConfig;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /** Transformers for GenAI SDK. */
 final class Transformers {
@@ -133,9 +136,10 @@ final class Transformers {
     if (origin == null) {
       return null;
     } else if (origin instanceof Schema) {
-      return (Schema) origin;
+      return processSchema(apiClient, (Schema) origin);
     } else if (origin instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class);
+      return processSchema(
+          apiClient, JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class));
     }
 
     throw new IllegalArgumentException("Unsupported schema type: " + origin.getClass());
@@ -210,6 +214,42 @@ final class Transformers {
 
     throw new IllegalArgumentException(
         "Unsupported cached content name type: " + origin.getClass());
+  }
+
+  private static Schema processSchema(ApiClient apiClient, Schema schema) {
+    if (!apiClient.vertexAI()) {
+      if (schema.default_().isPresent()) {
+        throw new IllegalArgumentException(
+            "Default value is not supported in the Schema for the Gemini API");
+      }
+    }
+
+    if (schema.anyOf().isPresent()) {
+      ArrayList<Schema> anyOf = new ArrayList<>();
+      for (Schema subSchema : schema.anyOf().get()) {
+        anyOf.add(processSchema(apiClient, subSchema));
+      }
+      schema = schema.toBuilder().anyOf(ImmutableList.copyOf(anyOf)).build();
+    }
+
+    if (schema.items().isPresent()) {
+      schema = schema.toBuilder().items(processSchema(apiClient, schema.items().get())).build();
+    }
+
+    if (schema.properties().isPresent()) {
+      for (Map.Entry<String, Schema> entry : schema.properties().get().entrySet()) {
+        String propertyName = entry.getKey();
+        Schema propertySchema = entry.getValue();
+        schema =
+            schema.toBuilder()
+                .properties(
+                    ImmutableMap.of(
+                        propertyName, processSchema(apiClient, propertySchema).toBuilder().build()))
+                .build();
+      }
+    }
+
+    return schema;
   }
 
   /** Formats a resource name given the resource name and resource prefix. */
