@@ -51,10 +51,6 @@ public abstract class Schema extends JsonSerializable {
   @JsonProperty("maxLength")
   public abstract Optional<Long> maxLength();
 
-  /** Optional. The title of the Schema. */
-  @JsonProperty("title")
-  public abstract Optional<String> title();
-
   /** Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the Type.STRING */
   @JsonProperty("minLength")
   public abstract Optional<Long> minLength();
@@ -135,6 +131,10 @@ public abstract class Schema extends JsonSerializable {
   @JsonProperty("required")
   public abstract Optional<List<String>> required();
 
+  /** Optional. The title of the Schema. */
+  @JsonProperty("title")
+  public abstract Optional<String> title();
+
   /** Optional. The type of the data. */
   @JsonProperty("type")
   public abstract Optional<String> type();
@@ -167,9 +167,6 @@ public abstract class Schema extends JsonSerializable {
 
     @JsonProperty("maxLength")
     public abstract Builder maxLength(Long maxLength);
-
-    @JsonProperty("title")
-    public abstract Builder title(String title);
 
     @JsonProperty("minLength")
     public abstract Builder minLength(Long minLength);
@@ -218,6 +215,9 @@ public abstract class Schema extends JsonSerializable {
 
     @JsonProperty("required")
     public abstract Builder required(List<String> required);
+
+    @JsonProperty("title")
+    public abstract Builder title(String title);
 
     @JsonProperty("type")
     public abstract Builder type(String type);
