@@ -128,8 +128,6 @@ abstract class ApiClient {
     RequestConfig config =
         RequestConfig.custom()
             .setConnectTimeout(timeout.get())
-            .setConnectionRequestTimeout(timeout.get())
-            .setSocketTimeout(timeout.get())
             .build();
     return HttpClientBuilder.create().setDefaultRequestConfig(config).build();
   }

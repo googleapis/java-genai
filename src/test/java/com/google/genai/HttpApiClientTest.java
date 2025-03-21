@@ -149,8 +149,6 @@ public class HttpApiClientTest {
     RequestConfig config = getRequestConfig(httpClient);
 
     assertEquals(5000, config.getConnectTimeout());
-    assertEquals(5000, config.getConnectionRequestTimeout());
-    assertEquals(5000, config.getSocketTimeout());
     assertEquals("api-key", client.apiKey());
     assertFalse(client.vertexAI());
   }
@@ -171,8 +169,6 @@ public class HttpApiClientTest {
     RequestConfig config = getRequestConfig(httpClient);
 
     assertEquals(5000, config.getConnectTimeout());
-    assertEquals(5000, config.getConnectionRequestTimeout());
-    assertEquals(5000, config.getSocketTimeout());
     assertEquals("project", client.project());
     assertEquals("location", client.location());
     assertTrue(client.vertexAI());
@@ -189,8 +185,6 @@ public class HttpApiClientTest {
     RequestConfig config = getRequestConfig(httpClient);
 
     assertEquals(-1, config.getConnectTimeout());
-    assertEquals(-1, config.getConnectionRequestTimeout());
-    assertEquals(-1, config.getSocketTimeout());
     assertEquals("api-key", client.apiKey());
   }
 
@@ -210,8 +204,6 @@ public class HttpApiClientTest {
     RequestConfig config = getRequestConfig(httpClient);
 
     assertEquals(-1, config.getConnectTimeout());
-    assertEquals(-1, config.getConnectionRequestTimeout());
-    assertEquals(-1, config.getSocketTimeout());
     assertEquals("project", client.project());
     assertEquals("location", client.location());
     assertTrue(client.vertexAI());
