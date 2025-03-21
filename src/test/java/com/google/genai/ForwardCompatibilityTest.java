@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.genai.types.GenerateContentResponse;
 import java.lang.reflect.Field;
 import org.apache.http.HttpEntity;
@@ -60,5 +61,41 @@ public class ForwardCompatibilityTest {
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
 
     assertNotNull(response);
+  }
+
+  @Test
+  public void testEnumForwardCompatibility() throws Exception {
+    // Mocks and test setup.
+    ApiClient mockedClient = Mockito.mock(ApiClient.class);
+    ApiResponse mockedResponse = Mockito.mock(ApiResponse.class);
+    when(mockedClient.post(anyString(), anyString())).thenReturn(mockedResponse);
+    HttpEntity mockedEntity = Mockito.mock(HttpEntity.class);
+    GenerateContentResponse returnResponse = GenerateContentResponse.builder().build();
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode rootNode = objectMapper.readTree(returnResponse.toJson());
+    ObjectNode rootObjectNode = (ObjectNode) rootNode;
+
+    ArrayNode candidatesArray = objectMapper.createArrayNode();
+    ObjectNode candidateObject = objectMapper.createObjectNode();
+    candidateObject.put("finishReason", "UNKNOWN_VALUE");
+    candidatesArray.add(candidateObject);
+    rootObjectNode.putArray("candidates").addAll(candidatesArray);
+
+    String jsonString = objectMapper.writeValueAsString(rootNode);
+    StringEntity content = new StringEntity(jsonString);
+    when(mockedResponse.getEntity()).thenReturn(content);
+
+    Client client = Client.builder().build();
+    // Make the apiClient field public so that it can be spied on in the tests. This is a
+    // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
+    Field apiClientField = Models.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.models, mockedClient);
+
+    GenerateContentResponse response =
+        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+
+    assert (response.candidates().get().get(0).finishReason().get().equals("UNKNOWN_VALUE"));
   }
 }
