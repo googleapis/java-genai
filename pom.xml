@@ -13,6 +13,13 @@
   </description>
   <url>https://github.com/googleapis/java-genai</url>
 
+  <parent>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>sdk-platform-java-config</artifactId>
+    <version>3.45.1</version>
+    <relativePath/>
+  </parent>
+
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
