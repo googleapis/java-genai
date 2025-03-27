@@ -46,6 +46,14 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
   @JsonProperty("mediaChunks")
   public abstract Optional<List<Blob>> mediaChunks();
 
+  /** Marks the start of user activity. */
+  @JsonProperty("activityStart")
+  public abstract Optional<ActivityStart> activityStart();
+
+  /** Marks the end of user activity. */
+  @JsonProperty("activityEnd")
+  public abstract Optional<ActivityEnd> activityEnd();
+
   /** Instantiates a builder for LiveClientRealtimeInput. */
   public static Builder builder() {
     return new AutoValue_LiveClientRealtimeInput.Builder();
@@ -65,6 +73,12 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
 
     @JsonProperty("mediaChunks")
     public abstract Builder mediaChunks(List<Blob> mediaChunks);
+
+    @JsonProperty("activityStart")
+    public abstract Builder activityStart(ActivityStart activityStart);
+
+    @JsonProperty("activityEnd")
+    public abstract Builder activityEnd(ActivityEnd activityEnd);
 
     public abstract LiveClientRealtimeInput build();
   }
