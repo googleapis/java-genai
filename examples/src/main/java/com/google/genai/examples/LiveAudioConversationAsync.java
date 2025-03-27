@@ -1,0 +1,319 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Usage:
+ *
+ * <p>1a. If you are using Vertex AI, setup ADC to get credentials:
+ * https://cloud.google.com/docs/authentication/provide-credentials-adc#google-idp
+ *
+ * <p>Then set Project, Location, and USE_VERTEXAI flag as environment variables:
+ *
+ * <p>export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT
+ *
+ * <p>export GOOGLE_CLOUD_LOCATION=YOUR_LOCATION
+ *
+ * <p>1b. If you are using Gemini Developer AI, set an API key environment variable. You can find a
+ * list of available API keys here: https://aistudio.google.com/app/apikey
+ *
+ * <p>export GOOGLE_API_KEY=YOUR_API_KEY
+ *
+ * <p>2. Compile the java package and run the sample code. You might need to grant microphone
+ * permissions.
+ *
+ * <p>mvn clean compile exec:java
+ * -Dexec.mainClass="com.google.genai.examples.LiveAudioConversationAsync"
+ *
+ * <p>3. Speak into the microphone. Press Ctrl+C to exit.
+ */
+package com.google.genai.examples;
+
+import com.google.common.collect.ImmutableList;
+import com.google.genai.AsyncSession;
+import com.google.genai.Client;
+import com.google.genai.types.Blob;
+import com.google.genai.types.Content;
+import com.google.genai.types.HttpOptions;
+import com.google.genai.types.LiveConnectConfig;
+import com.google.genai.types.LiveSendRealtimeInputParameters;
+import com.google.genai.types.LiveServerContent;
+import com.google.genai.types.LiveServerMessage;
+import com.google.genai.types.Part;
+import com.google.genai.types.PrebuiltVoiceConfig;
+import com.google.genai.types.SpeechConfig;
+import com.google.genai.types.VoiceConfig;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import javax.sound.sampled.*;
+import org.apache.http.HttpException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
+/** Example of using the live module for a streaming audio conversation. */
+public class LiveAudioConversationAsync {
+
+  // --- Audio Configuration ---
+  private static final float SAMPLE_RATE = 16000.0f; // 16kHz
+  private static final float SPEAKER_SAMPLE_RATE = 24000.0f; // 24kHz
+  private static final int SAMPLE_SIZE_IN_BITS = 16; // 16-bit
+  private static final int CHANNELS = 1; // Mono
+  private static final boolean SIGNED = true;
+  private static final boolean BIG_ENDIAN = false; // Common for PCM
+  private static final AudioFormat AUDIO_FORMAT =
+      new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+  private static final AudioFormat SPEAKER_AUDIO_FORMAT =
+      new AudioFormat(SPEAKER_SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+  // How many bytes to read from mic/send to API at a time
+  private static final int CHUNK_SIZE = 4096;
+  // --------------------------
+
+  private static volatile boolean running = true;
+  private static TargetDataLine microphoneLine;
+  private static SourceDataLine speakerLine;
+  private static AsyncSession session;
+  private static ExecutorService micExecutor = Executors.newSingleThreadExecutor();
+
+  /** Creates the parameters for sending an audio chunk. */
+  public static LiveSendRealtimeInputParameters createAudioContent(byte[] audioData) {
+
+    if (audioData == null) {
+      System.err.println("Error: Audio is null");
+      return null;
+    }
+
+    Blob media = Blob.builder().mimeType("audio/pcm").data(audioData).build();
+
+    return LiveSendRealtimeInputParameters.builder().media(media).build();
+  }
+
+  /** Reads audio from the microphone and sends it to the API session. Runs in a separate thread. */
+  private static void sendMicrophoneAudio() {
+    byte[] buffer = new byte[CHUNK_SIZE];
+    int bytesRead;
+
+    while (running && microphoneLine != null && microphoneLine.isOpen()) {
+      bytesRead = microphoneLine.read(buffer, 0, buffer.length);
+
+      if (bytesRead > 0) {
+        // Create a copy of the buffer with the actual bytes read
+        byte[] audioChunk = new byte[bytesRead];
+        System.arraycopy(buffer, 0, audioChunk, 0, bytesRead);
+
+        // Send the audio chunk asynchronously
+        if (session != null) {
+          session
+              .sendRealtimeInput(createAudioContent(audioChunk))
+              .exceptionally(
+                  e -> {
+                    System.err.println("Error sending audio chunk: " + e.getMessage());
+                    return null;
+                  });
+        }
+      } else if (bytesRead == -1) {
+        System.err.println("Microphone stream ended unexpectedly.");
+        running = false; // Stop the loop if stream ends
+      }
+    }
+    System.out.println("Microphone reading stopped.");
+  }
+
+  public static void main(String[] args)
+      throws IOException, HttpException, LineUnavailableException {
+
+    // Instantiates the client.
+    Client client =
+        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1alpha").build()).build();
+
+    // --- Audio Line Setup ---
+    microphoneLine = getMicrophoneLine();
+    speakerLine = getSpeakerLine();
+
+    // --- Live API Config for Audio ---
+    // Choice of ["Aoede", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Zephyr"]
+    String voiceName = "Aoede";
+    LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .responseModalities(ImmutableList.of("AUDIO"))
+            .speechConfig(
+                SpeechConfig.builder()
+                    .voiceConfig(
+                        VoiceConfig.builder()
+                            .prebuiltVoiceConfig(
+                                PrebuiltVoiceConfig.builder().voiceName(voiceName).build())
+                            .build())
+                    .build())
+            .build();
+
+    // --- Shutdown Hook for Cleanup ---
+    Runtime.getRuntime()
+        .addShutdownHook(
+            new Thread(
+                () -> {
+                  System.out.println("\nShutting down...");
+                  running = false; // Signal mic thread to stop
+                  micExecutor.shutdown();
+                  try {
+                    if (!micExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+                      System.err.println("Mic executor did not terminate gracefully.");
+                      micExecutor.shutdownNow();
+                    }
+                  } catch (InterruptedException e) {
+                    micExecutor.shutdownNow();
+                    Thread.currentThread().interrupt();
+                  }
+
+                  // Close session first
+                  if (session != null) {
+                    try {
+                      System.out.println("Closing API session...");
+                      session.close().get(5, TimeUnit.SECONDS); // Wait with timeout
+                      System.out.println("API session closed.");
+                    } catch (Exception e) {
+                      System.err.println("Error closing API session: " + e.getMessage());
+                    }
+                  }
+                  // Close audio lines
+                  closeAudioLine(microphoneLine);
+                  closeAudioLine(speakerLine);
+                  System.out.println("Audio lines closed.");
+                }));
+
+    try {
+      // --- Connect to Gemini Live API ---
+      System.out.println("Connecting to Gemini Live API...");
+      session =
+          client.async.live.connect("gemini-2.0-flash-exp", config).get(); // Use appropriate model
+      System.out.println("Connected.");
+
+      // --- Start Audio Lines ---
+      microphoneLine.start();
+      speakerLine.start();
+      System.out.println("Microphone and speakers started. Speak now (Press Ctrl+C to exit)...");
+
+      // --- Start Receiving Audio Responses ---
+      CompletableFuture<Void> receiveFuture =
+          session.receive(LiveAudioConversationAsync::handleAudioResponse);
+      System.err.println("Receive stream started."); // Add this line
+
+      // --- Start Sending Microphone Audio ---
+      CompletableFuture<Void> sendFuture =
+          CompletableFuture.runAsync(LiveAudioConversationAsync::sendMicrophoneAudio, micExecutor);
+
+      // Keep the main thread alive. Wait for sending or receiving to finish (or
+      // error).
+      // In this continuous streaming case, we rely on the shutdown hook triggered by
+      // Ctrl+C.
+      // We can wait on the futures, but they might not complete normally in this
+      // design.
+      CompletableFuture.anyOf(receiveFuture, sendFuture)
+          .handle(
+              (res, err) -> {
+                if (err != null) {
+                  System.err.println("An error occurred in sending/receiving: " + err.getMessage());
+                  // Trigger shutdown if needed
+                  System.exit(1);
+                }
+                return null;
+              })
+          .get(); // Wait indefinitely or until an error occurs in send/receive
+
+    } catch (InterruptedException | ExecutionException e) {
+      System.err.println("An error occurred during setup or connection: " + e.getMessage());
+      e.printStackTrace();
+      System.exit(1);
+    }
+    // Note: Normal exit is handled by the shutdown hook when Ctrl+C is pressed.
+  }
+
+  /** Gets and opens the microphone line. */
+  private static TargetDataLine getMicrophoneLine() throws LineUnavailableException {
+    DataLine.Info micInfo = new DataLine.Info(TargetDataLine.class, AUDIO_FORMAT);
+    if (!AudioSystem.isLineSupported(micInfo)) {
+      throw new LineUnavailableException(
+          "Microphone line not supported for format: " + AUDIO_FORMAT);
+    }
+    TargetDataLine line = (TargetDataLine) AudioSystem.getLine(micInfo);
+    line.open(AUDIO_FORMAT);
+    System.out.println("Microphone line opened.");
+    return line;
+  }
+
+  /** Gets and opens the speaker line. */
+  private static SourceDataLine getSpeakerLine() throws LineUnavailableException {
+    DataLine.Info speakerInfo = new DataLine.Info(SourceDataLine.class, AUDIO_FORMAT);
+    if (!AudioSystem.isLineSupported(speakerInfo)) {
+      throw new LineUnavailableException("Speaker line not supported for format: " + AUDIO_FORMAT);
+    }
+    SourceDataLine line = (SourceDataLine) AudioSystem.getLine(speakerInfo);
+    line.open(SPEAKER_AUDIO_FORMAT);
+    System.out.println("Speaker line opened.");
+    return line;
+  }
+
+  /** Closes an audio line safely. */
+  private static void closeAudioLine(Line line) {
+    if (line != null && line.isOpen()) {
+      if (line instanceof SourceDataLine) {
+        ((SourceDataLine) line).stop();
+      } else if (line instanceof TargetDataLine) {
+        ((TargetDataLine) line).stop();
+      }
+      line.close();
+    }
+  }
+
+  /** Callback function to handle incoming audio messages from the server. */
+  public static void handleAudioResponse(LiveServerMessage message) {
+    message
+        .serverContent()
+        .ifPresent(
+            content -> {
+              content
+                  .modelTurn()
+                  .ifPresent(
+                      modelTurn -> {
+                        modelTurn
+                            .parts()
+                            .ifPresent(
+                                parts -> {
+                                  parts.forEach(
+                                      part ->
+                                          part.inlineData() // Look for audio data
+                                              .ifPresent(
+                                                  inlineData -> {
+                                                    Optional<byte[]> audioBytesOptional =
+                                                        inlineData.data();
+                                                    audioBytesOptional.ifPresent(
+                                                        audioBytes -> {
+                                                          if (speakerLine != null
+                                                              && speakerLine.isOpen()) {
+                                                            // Write audio data to the
+                                                            // speaker
+                                                            speakerLine.write(
+                                                                audioBytes, 0, audioBytes.length);
+                                                          }
+                                                        });
+                                                  }));
+                                });
+                      });
+            });
+  }
+}
