@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/googleapis/java-genai/compare/v0.3.0...v0.4.0) (2025-03-28)
+
+
+### Documentation
+
+* docstring improvements ([9d0ca34](https://github.com/googleapis/java-genai/commit/9d0ca34ef944d075e57b1df370bd751bd9c976b3))
+
 ## [0.3.0](https://github.com/googleapis/java-genai/compare/v0.2.0...v0.3.0) (2025-03-28)
 
 
