@@ -103,13 +103,15 @@ abstract class ApiClient {
       throw new IllegalArgumentException("Location must not be empty.");
     }
 
-    try {
-      this.credentials = Optional.of(credentials.orElse(defaultCredentials()));
-    } catch (IOException e) {
-      throw new IllegalArgumentException(
-          "Failed to get application default credentials, please explicitly provide credentials.",
-          e);
-    }
+    this.credentials = Optional.of(credentials.orElseGet(() -> {
+      try {
+        return defaultCredentials();
+      } catch (IOException e) {
+        throw new IllegalArgumentException(
+            "Failed to get application default credentials, please explicitly provide credentials.",
+            e);
+      }
+    }));
 
     this.httpOptions = defaultHttpOptions(/* vertexAI= */ true, this.location);
 
