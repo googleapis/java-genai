@@ -6,7 +6,7 @@
   <groupId>com.google.genai</groupId>
   <artifactId>google-genai</artifactId>
   <name>google-genai</name>
-  <version>0.3.0</version><!-- {x-version-update:google-genai:current} -->
+  <version>0.4.0-SNAPSHOT</version><!-- {x-version-update:google-genai:current} -->
   <packaging>jar</packaging>
   <description>
     Java idiomatic SDK for the Gemini Developer APIs and Vertex AI APIs.
