@@ -3246,11 +3246,17 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"response", "generateVideoResponse"})
+        != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
+          GenerateVideosResponseFromMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(
+                      fromObject, new String[] {"response", "generateVideoResponse"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"response", "generateVideoResponse"})
@@ -3897,7 +3903,11 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
+          GenerateVideosResponseFromVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
