@@ -267,16 +267,13 @@ final class Transformers {
     }
 
     if (schema.properties().isPresent()) {
+      ImmutableMap.Builder<String, Schema> properties = new ImmutableMap.Builder<>();
       for (Map.Entry<String, Schema> entry : schema.properties().get().entrySet()) {
         String propertyName = entry.getKey();
         Schema propertySchema = entry.getValue();
-        schema =
-            schema.toBuilder()
-                .properties(
-                    ImmutableMap.of(
-                        propertyName, processSchema(apiClient, propertySchema).toBuilder().build()))
-                .build();
+        properties.put(propertyName, processSchema(apiClient, propertySchema).toBuilder().build());
       }
+      schema = schema.toBuilder().properties(properties.build()).build();
     }
 
     return schema;
