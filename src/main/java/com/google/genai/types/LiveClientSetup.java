@@ -54,6 +54,10 @@ public abstract class LiveClientSetup extends JsonSerializable {
   @JsonProperty("tools")
   public abstract Optional<List<Tool>> tools();
 
+  /** Configures the realtime input behavior in BidiGenerateContent. */
+  @JsonProperty("realtimeInputConfig")
+  public abstract Optional<RealtimeInputConfig> realtimeInputConfig();
+
   /** Instantiates a builder for LiveClientSetup. */
   public static Builder builder() {
     return new AutoValue_LiveClientSetup.Builder();
@@ -82,6 +86,9 @@ public abstract class LiveClientSetup extends JsonSerializable {
 
     @JsonProperty("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    @JsonProperty("realtimeInputConfig")
+    public abstract Builder realtimeInputConfig(RealtimeInputConfig realtimeInputConfig);
 
     public abstract LiveClientSetup build();
   }
