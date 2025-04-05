@@ -81,6 +81,24 @@ public class TransformerTest {
   }
 
   @Test
+  public void testTSchema_properties_success() {
+    Schema schema =
+        Schema.builder()
+            .type("OBJECT")
+            .properties(
+                ImmutableMap.of(
+                    "one", Schema.builder().type("STRING").build(),
+                    "two", Schema.builder().type("NUMBER").build()
+                ))
+            .build();
+    Schema transformedSchema = Transformers.tSchema(GEMINI_API_CLIENT, schema);
+    assertEquals(2, transformedSchema.properties().get().size());
+    assertEquals("STRING", transformedSchema.properties().get().get("one").type().get());
+    assertEquals("NUMBER", transformedSchema.properties().get().get("two").type().get());
+    assertEquals("OBJECT", transformedSchema.type().get());
+  }
+
+  @Test
   public void testTSchema_Items_success() {
     Schema schema =
         Schema.builder().type("ARRAY").items(Schema.builder().type("STRING").build()).build();
