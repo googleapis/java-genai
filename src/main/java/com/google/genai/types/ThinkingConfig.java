@@ -36,6 +36,14 @@ public abstract class ThinkingConfig extends JsonSerializable {
   @JsonProperty("includeThoughts")
   public abstract Optional<Boolean> includeThoughts();
 
+  /**
+   * Maximum token budget allocated for the model's internal reasoning ('thoughts'). This counts
+   * towards the `max_output_tokens` limit and must be less than it to leave capacity for the final
+   * response.
+   */
+  @JsonProperty("thinkingBudget")
+  public abstract Optional<Integer> thinkingBudget();
+
   /** Instantiates a builder for ThinkingConfig. */
   public static Builder builder() {
     return new AutoValue_ThinkingConfig.Builder();
@@ -55,6 +63,9 @@ public abstract class ThinkingConfig extends JsonSerializable {
 
     @JsonProperty("includeThoughts")
     public abstract Builder includeThoughts(boolean includeThoughts);
+
+    @JsonProperty("thinkingBudget")
+    public abstract Builder thinkingBudget(Integer thinkingBudget);
 
     public abstract ThinkingConfig build();
   }
