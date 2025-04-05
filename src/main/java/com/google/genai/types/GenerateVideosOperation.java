@@ -58,13 +58,9 @@ public abstract class GenerateVideosOperation extends JsonSerializable {
   @JsonProperty("error")
   public abstract Optional<Map<String, Object>> error();
 
-  /** The normal response of the operation in case of success. */
-  @JsonProperty("response")
-  public abstract Optional<Map<String, Object>> response();
-
   /** The generated videos. */
-  @JsonProperty("result")
-  public abstract Optional<GenerateVideosResponse> result();
+  @JsonProperty("response")
+  public abstract Optional<GenerateVideosResponse> response();
 
   /** Instantiates a builder for GenerateVideosOperation. */
   public static Builder builder() {
@@ -96,10 +92,7 @@ public abstract class GenerateVideosOperation extends JsonSerializable {
     public abstract Builder error(Map<String, Object> error);
 
     @JsonProperty("response")
-    public abstract Builder response(Map<String, Object> response);
-
-    @JsonProperty("result")
-    public abstract Builder result(GenerateVideosResponse result);
+    public abstract Builder response(GenerateVideosResponse response);
 
     public abstract GenerateVideosOperation build();
   }
