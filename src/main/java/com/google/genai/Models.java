@@ -549,6 +549,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thinkingBudget"},
+          Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}));
+    }
+
     return toObject;
   }
 
@@ -1672,6 +1679,13 @@ public final class Models {
           toObject,
           new String[] {"includeThoughts"},
           Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thinkingBudget"},
+          Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}));
     }
 
     return toObject;
