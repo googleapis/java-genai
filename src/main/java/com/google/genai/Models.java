@@ -678,6 +678,11 @@ public final class Models {
       throw new Error("routingConfig parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"generateContentModelConfig"}))) {
+      throw new Error("generateContentModelConfig parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"safetySettings"});
@@ -1811,6 +1816,13 @@ public final class Models {
           toObject,
           new String[] {"routingConfig"},
           Common.getValueByPath(fromObject, new String[] {"routingConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generateContentModelConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"modelConfig"},
+          Common.getValueByPath(fromObject, new String[] {"generateContentModelConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {

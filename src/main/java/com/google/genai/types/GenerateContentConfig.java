@@ -123,9 +123,16 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("responseSchema")
   public abstract Optional<Schema> responseSchema();
 
-  /** Configuration for model router requests. */
+  /**
+   * Deprecated. Configuration for model router requests. This field is deprecated, please use the
+   * `generate_content_model_config` field instead.
+   */
   @JsonProperty("routingConfig")
   public abstract Optional<GenerationConfigRoutingConfig> routingConfig();
+
+  /** Configuration for model selection. */
+  @JsonProperty("generateContentModelConfig")
+  public abstract Optional<GenerationConfigModelConfig> generateContentModelConfig();
 
   /** Safety settings in the request to block unsafe content in the response. */
   @JsonProperty("safetySettings")
@@ -234,6 +241,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
 
     @JsonProperty("routingConfig")
     public abstract Builder routingConfig(GenerationConfigRoutingConfig routingConfig);
+
+    @JsonProperty("generateContentModelConfig")
+    public abstract Builder generateContentModelConfig(
+        GenerationConfigModelConfig generateContentModelConfig);
 
     @JsonProperty("safetySettings")
     public abstract Builder safetySettings(List<SafetySetting> safetySettings);
