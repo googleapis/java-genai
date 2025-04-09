@@ -81,10 +81,17 @@ public class LiveTextToAudioTranscriptionAsync {
 
     CompletableFuture<Void> allDone = new CompletableFuture<>();
 
+    String modelName;
+    if (client.vertexAi()) {
+      modelName = "gemini-2.0-flash-live-preview-04-09";
+    } else {
+      modelName = "gemini-2.0-flash-live-001";
+    }
+
     client
         .async
         .live
-        .connect("gemini-2.0-flash-exp", config)
+        .connect(modelName, config)
         .thenCompose(
             session -> {
               String inputText = "What is the weather like in Tokyo now?";

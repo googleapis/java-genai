@@ -135,7 +135,7 @@ public class LiveAudioConversationAsync {
 
     // Instantiates the client.
     Client client =
-        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1alpha").build()).build();
+        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
 
     // --- Audio Line Setup ---
     microphoneLine = getMicrophoneLine();
@@ -195,8 +195,12 @@ public class LiveAudioConversationAsync {
     try {
       // --- Connect to Gemini Live API ---
       System.out.println("Connecting to Gemini Live API...");
-      session =
-          client.async.live.connect("gemini-2.0-flash-exp", config).get(); // Use appropriate model
+
+      if (client.vertexAi()) {
+        session = client.async.live.connect("gemini-2.0-flash-live-preview-04-09", config).get();
+      } else {
+        session = client.async.live.connect("gemini-2.0-flash-live-001", config).get();
+      }
       System.out.println("Connected.");
 
       // --- Start Audio Lines ---
