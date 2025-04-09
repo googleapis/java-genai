@@ -19,7 +19,7 @@ package com.google.genai;
 import org.apache.http.HttpEntity;
 
 /** The API response contains a response to a call to the GenAI APIs. */
-public abstract class ApiResponse implements AutoCloseable {
+abstract class ApiResponse implements AutoCloseable {
   /** Gets the HttpEntity. */
   public abstract HttpEntity getEntity();
 

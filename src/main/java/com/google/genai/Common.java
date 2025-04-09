@@ -26,7 +26,7 @@ import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
 /** Common utility methods for the GenAI SDK. */
-public final class Common {
+final class Common {
 
   private Common() {}
 
