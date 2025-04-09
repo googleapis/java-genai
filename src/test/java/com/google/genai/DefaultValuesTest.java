@@ -51,7 +51,7 @@ public class DefaultValuesTest {
     apiClientField.set(client.models, httpClientSpy);
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+        client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
 
     ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
     verify(httpClientSpy).post(argumentCaptor.capture(), argumentCaptor.capture());

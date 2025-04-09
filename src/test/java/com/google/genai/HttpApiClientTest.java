@@ -272,7 +272,7 @@ public class HttpApiClientTest {
       Client client = Client.builder().httpOptions(httpOptions).build();
 
       GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+          client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
 
       assertEquals(response.text(), expectedText);
     } finally {

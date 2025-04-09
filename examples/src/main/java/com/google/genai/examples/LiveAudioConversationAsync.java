@@ -135,7 +135,7 @@ public class LiveAudioConversationAsync {
 
     // Instantiates the client.
     Client client =
-        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1alpha").build()).build();
+        Client.builder().httpOptions(HttpOptions.builder().build()).build();
 
     // --- Audio Line Setup ---
     microphoneLine = getMicrophoneLine();
@@ -195,7 +195,7 @@ public class LiveAudioConversationAsync {
       // --- Connect to Gemini Live API ---
       System.out.println("Connecting to Gemini Live API...");
       session =
-          client.async.live.connect("gemini-2.0-flash-exp", config).get(); // Use appropriate model
+          client.async.live.connect("gemini-2.0-flash", config).get(); // Use appropriate model
       System.out.println("Connected.");
 
       // --- Start Audio Lines ---
