@@ -19,6 +19,7 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.GenerateContentResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,12 +27,17 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.http.HttpEntity;
 
 /** An iterable of datatype objects. */
 public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, AutoCloseable {
+
+  protected boolean recordingHistory = false;
+  protected List<GenerateContentResponse> history = new ArrayList<>();
 
   /** Iterator for the ResponseStream. */
   class ResponseStreamIterator implements Iterator<T> {
@@ -40,6 +46,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
     private final Object obj;
     private final Method converter;
     private String nextJson;
+    private boolean consumed = false;
 
     ResponseStreamIterator(
         Class<T> clazz, BufferedReader reader, Object obj, String converterName) {
@@ -59,6 +66,9 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
 
     @Override
     public boolean hasNext() {
+      if (nextJson == null) {
+        consumed = true;
+      }
       return nextJson != null;
     }
 
@@ -72,6 +82,11 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       try {
         JsonNode currentJsonNode = JsonSerializable.stringToJsonNode(currentJson);
         currentJsonNode = (JsonNode) converter.invoke(obj, null, currentJsonNode, null);
+        if (recordingHistory) {
+          GenerateContentResponse response =
+              JsonSerializable.fromJsonNode(currentJsonNode, GenerateContentResponse.class);
+          history.add(response);
+        }
         return JsonSerializable.fromJsonNode(currentJsonNode, clazz);
       } catch (IllegalAccessException | InvocationTargetException e) {
         throw new IllegalStateException("Failed to convert JSON object " + currentJson, e);
@@ -137,5 +152,9 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
         response.close();
       }
     }
+  }
+
+  public boolean isConsumed() {
+    return iterator.consumed;
   }
 }
