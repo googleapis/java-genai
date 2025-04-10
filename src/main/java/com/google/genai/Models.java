@@ -4429,8 +4429,8 @@ public final class Models {
   /**
    * Generates images given a GenAI model and a prompt.
    *
-   * @param model the name of the GenAI model to use for upscaling
-   * @param prompt the factor to upscale the image
+   * @param model the name of the GenAI model to use for generating images
+   * @param prompt the prompt to generate images
    * @param config a {@link com.google.genai.types.GenerateImagesConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
@@ -4486,7 +4486,7 @@ public final class Models {
    *     com.google.genai.types.SubjectReferenceImage},
    * @param config a {@link com.google.genai.types.EditImageConfig} instance that specifies the
    *     optional configurations
-   * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the upscaled
+   * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the edited
    *     image.
    */
   public EditImageResponse editImage(

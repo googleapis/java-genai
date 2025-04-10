@@ -144,8 +144,8 @@ public final class AsyncModels {
   /**
    * Asynchronously generates images given a GenAI model and a prompt.
    *
-   * @param model the name of the GenAI model to use for upscaling
-   * @param prompt the factor to upscale the image
+   * @param model the name of the GenAI model to use for generating images
+   * @param prompt the prompt to generate images
    * @param config a {@link com.google.genai.types.GenerateImagesConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
