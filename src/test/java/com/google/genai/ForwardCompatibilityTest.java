@@ -57,7 +57,7 @@ public class ForwardCompatibilityTest {
     apiClientField.set(client.models, mockedClient);
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+        client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
 
     assertNotNull(response);
   }

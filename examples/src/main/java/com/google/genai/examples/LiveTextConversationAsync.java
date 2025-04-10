@@ -58,7 +58,7 @@ public class LiveTextConversationAsync {
   public static void main(String[] args) {
     // Instantiates the client.
     Client client =
-        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1alpha").build()).build();
+        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
 
     LiveConnectConfig config =
         LiveConnectConfig.builder().responseModalities(ImmutableList.of("TEXT")).build();
@@ -66,7 +66,7 @@ public class LiveTextConversationAsync {
     CompletableFuture<Void> allDone = new CompletableFuture<>();
 
     try {
-      AsyncSession session = client.async.live.connect("gemini-2.0-flash-exp", config).get();
+      AsyncSession session = client.async.live.connect("gemini-2.0-flash-live-001", config).get();
 
       // Start receiving messages.
       CompletableFuture<Void> receiveFuture =

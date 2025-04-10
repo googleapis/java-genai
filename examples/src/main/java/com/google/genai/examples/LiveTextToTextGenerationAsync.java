@@ -55,7 +55,7 @@ public class LiveTextToTextGenerationAsync {
   public static void main(String[] args) {
     // Instantiates the client.
     Client client =
-        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1alpha").build()).build();
+        Client.builder().httpOptions(HttpOptions.builder().apiVersion("v1beta").build()).build();
 
     LiveConnectConfig config =
         LiveConnectConfig.builder().responseModalities(ImmutableList.of("TEXT")).build();
@@ -65,7 +65,7 @@ public class LiveTextToTextGenerationAsync {
     client
         .async
         .live
-        .connect("gemini-2.0-flash-exp", config)
+        .connect("gemini-2.0-flash-live-001", config)
         .thenCompose(
             session -> {
               String inputText = "Write a short poem about a cat.";
