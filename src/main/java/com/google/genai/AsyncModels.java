@@ -19,6 +19,8 @@
 package com.google.genai;
 
 import com.google.genai.types.Content;
+import com.google.genai.types.EditImageConfig;
+import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
 import com.google.genai.types.GenerateContentConfig;
@@ -28,6 +30,7 @@ import com.google.genai.types.GenerateImagesResponse;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.Image;
+import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
 import java.util.List;
@@ -151,6 +154,30 @@ public final class AsyncModels {
   public CompletableFuture<GenerateImagesResponse> generateImages(
       String model, String prompt, GenerateImagesConfig config) {
     return CompletableFuture.supplyAsync(() -> models.generateImages(model, prompt, config));
+  }
+
+  /**
+   * Asynchronously edits an image given a GenAI model, a prompt, and a list of reference images.
+   *
+   * @param model the name of the GenAI model to use for editing capabilities
+   * @param prompt the prompt to edit the image
+   * @param referenceImages a {@link List<com.google.genai.types.ReferenceImage>} to send to use for
+   *     editing. The 5 types of reference images are: {@link
+   *     com.google.genai.types.RawReferenceImage}, {@link
+   *     com.google.genai.types.MaskReferenceImage}, {@link
+   *     com.google.genai.types.ControlReferenceImage}, {@link
+   *     com.google.genai.types.StyleReferenceImage}, {@link
+   *     com.google.genai.types.SubjectReferenceImage},
+   * @param config a {@link com.google.genai.types.EditImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the upscaled
+   *     image.
+   */
+  public CompletableFuture<EditImageResponse> editImage(
+      String model, String prompt, List<ReferenceImage> referenceImages, EditImageConfig config) {
+
+    return CompletableFuture.supplyAsync(
+        () -> models.editImage(model, prompt, referenceImages, config));
   }
 
   /**
