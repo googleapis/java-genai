@@ -1,5 +1,54 @@
 # Changelog
 
+## [0.4.0](https://github.com/googleapis/java-genai/compare/v0.3.0...v0.4.0) (2025-04-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Move generation config to the top level LiveConnectConfig
+* Remove AsyncSession.sendContent method which was accidentally added
+* No more checked exceptions
+* Remove AsyncSession.sendContent method which was accidentally added
+* No more checked exceptions
+
+### Features
+
+* Add domain to Web GroundingChunk ([990586b](https://github.com/googleapis/java-genai/commit/990586b3f1d8ca8723fe1823c9f549778787ab5c))
+* Add generationComplete notification to Live ServerContent ([de5a762](https://github.com/googleapis/java-genai/commit/de5a76292452d6bf691bc602d1dc45b24883b82b))
+* add session resumption. ([5c35c52](https://github.com/googleapis/java-genai/commit/5c35c52eb06e7243eb0b417179a6c3f11a9825ba))
+* Add thinking_budget to ThinkingConfig for Gemini Thinking Models ([a3ea4ed](https://github.com/googleapis/java-genai/commit/a3ea4ed04fb1e6251ebabd54a5370c04c9db976e))
+* Add traffic type to GenerateContentResponseUsageMetadata ([fac241b](https://github.com/googleapis/java-genai/commit/fac241b9b6095bc965d48051caacd7b1da56d5f1))
+* Add types for configurable speech detection ([021d74b](https://github.com/googleapis/java-genai/commit/021d74b97c17d500d6f64a619150b1d940eeef87))
+* Add types to support continuous sessions with a sliding window ([d5e8a32](https://github.com/googleapis/java-genai/commit/d5e8a320de67aa947d0df232dcf1d7c811651927))
+* Add UsageMetadata to LiveServerMessage ([8b57e99](https://github.com/googleapis/java-genai/commit/8b57e999dbb02e43d6682c36b00b56fb1b7acad4))
+* Add Veo 2 generate_videos support in Java SDK ([272649a](https://github.com/googleapis/java-genai/commit/272649a2ebb35110b96b4db0ae52347ae1449bf6))
+* expose generation_complete, input/output_transcription & input/output_audio_transcription to SDK for Vertex Live API ([e3b517a](https://github.com/googleapis/java-genai/commit/e3b517a085736e6171730c36e2a88e2d0bdeb36f))
+* merge GenerationConfig into LiveConnectConfig ([e2fa59d](https://github.com/googleapis/java-genai/commit/e2fa59df04abe400e8688077bfb2486703fdd841))
+* No more checked exceptions ([e452491](https://github.com/googleapis/java-genai/commit/e452491f363f20489e8d4754a74e9fc9ab557e26))
+* No more checked exceptions ([cad9eba](https://github.com/googleapis/java-genai/commit/cad9eba9af0b1a2536e9ce7be2c967aa6fdd6bee))
+* Remove experimental warnings for generate_videos and operations ([be93305](https://github.com/googleapis/java-genai/commit/be93305b236283b77fcab9d5372d9a77f4dab757))
+* Support audio transcription in Vertex Live API ([1ddb6d4](https://github.com/googleapis/java-genai/commit/1ddb6d498adcfb4b67152bdf42a22eb3e7850bfd))
+* support media resolution ([ce9e7b0](https://github.com/googleapis/java-genai/commit/ce9e7b04e309198481392a0f0d54406d5d6de6ed))
+* Support RealtimeInputConfig, and language_code in SpeechConfig in python ([f5bd874](https://github.com/googleapis/java-genai/commit/f5bd8744471b24792096ee169db3cea95ed7a872))
+* Update VertexRagStore ([4a75670](https://github.com/googleapis/java-genai/commit/4a75670dc081e747f157ef632a59f3afa53aaa63))
+
+
+### Bug Fixes
+
+* Move generation config to the top level LiveConnectConfig ([c71e78e](https://github.com/googleapis/java-genai/commit/c71e78e4d3041798bbf4352a266337f834925104))
+* Remove AsyncSession.sendContent method which was accidentally added ([e452491](https://github.com/googleapis/java-genai/commit/e452491f363f20489e8d4754a74e9fc9ab557e26))
+* Remove AsyncSession.sendContent method which was accidentally added ([cad9eba](https://github.com/googleapis/java-genai/commit/cad9eba9af0b1a2536e9ce7be2c967aa6fdd6bee))
+* schema handling in transformer ([8064028](https://github.com/googleapis/java-genai/commit/8064028e00df143245010c49b468adf04d939266))
+* Use `orElseGet` to defer loading of default credentials. ([bc19d79](https://github.com/googleapis/java-genai/commit/bc19d794db6a6111e23a316870ef4a568df9128e))
+* Use `orElseGet` to defer loading of default credentials. ([#124](https://github.com/googleapis/java-genai/issues/124)) ([6adac0e](https://github.com/googleapis/java-genai/commit/6adac0effbd5f792c69b3ab1d537c221de392894))
+
+
+### Documentation
+
+* Add examples for embedContent ([7583ddf](https://github.com/googleapis/java-genai/commit/7583ddfa22ec82a4cc0620615c5f67202ab99923))
+* docstring improvements ([9d0ca34](https://github.com/googleapis/java-genai/commit/9d0ca34ef944d075e57b1df370bd751bd9c976b3))
+* Update examples and README after removing checked exceptions ([5cb6ee5](https://github.com/googleapis/java-genai/commit/5cb6ee5384c57e5f698c395a97e8f9b197bb5f3b))
+
 ## [0.3.0](https://github.com/googleapis/java-genai/compare/v0.2.0...v0.3.0) (2025-03-28)
 
 
