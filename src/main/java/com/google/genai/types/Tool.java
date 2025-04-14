@@ -56,9 +56,13 @@ public abstract class Tool extends JsonSerializable {
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
   /**
-   * Optional. CodeExecution tool type. Enables the model to execute code as part of generation.
-   * This field is only used by the Gemini Developer API services.
+   * Optional. Enterprise web search tool type. Specialized retrieval tool that is powered by Vertex
+   * AI Search and Sec4 compliance.
    */
+  @JsonProperty("enterpriseWebSearch")
+  public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
+
+  /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
   @JsonProperty("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
 
@@ -90,6 +94,9 @@ public abstract class Tool extends JsonSerializable {
 
     @JsonProperty("googleSearchRetrieval")
     public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
+
+    @JsonProperty("enterpriseWebSearch")
+    public abstract Builder enterpriseWebSearch(EnterpriseWebSearch enterpriseWebSearch);
 
     @JsonProperty("codeExecution")
     public abstract Builder codeExecution(ToolCodeExecution codeExecution);

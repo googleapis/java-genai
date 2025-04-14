@@ -33,6 +33,14 @@ public abstract class Blob extends JsonSerializable {
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
 
+  /**
+   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
+   * This field is only returned in PromptMessage for prompt management. It is not currently used in
+   * the Gemini GenerateContent calls.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
   /** Required. The IANA standard MIME type of the source data. */
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
@@ -56,6 +64,9 @@ public abstract class Blob extends JsonSerializable {
 
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
+
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
 
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
