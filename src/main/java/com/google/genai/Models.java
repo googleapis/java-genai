@@ -70,13 +70,6 @@ public final class Models {
       throw new Error("videoMetadata parameter is not supported in Gemini API.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -124,6 +117,13 @@ public final class Models {
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
     return toObject;
@@ -414,10 +414,6 @@ public final class Models {
       Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
-      throw new Error("retrieval parameter is not supported in Gemini API.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -427,6 +423,10 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
+      throw new Error("retrieval parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
@@ -445,6 +445,13 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
     }
 
     return toObject;
@@ -485,35 +492,11 @@ public final class Models {
               toObject));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode PrebuiltVoiceConfigToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode VoiceConfigToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          PrebuiltVoiceConfigToMldev(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
-              toObject));
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     return toObject;
@@ -523,22 +506,18 @@ public final class Models {
   ObjectNode SpeechConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          VoiceConfigToMldev(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"languageCode"},
           Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          Common.getValueByPath(fromObject, new String[] {"voiceConfig"}));
     }
 
     return toObject;
@@ -1173,13 +1152,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1227,6 +1199,13 @@ public final class Models {
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
     return toObject;
@@ -1549,13 +1528,6 @@ public final class Models {
       Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrieval"},
-          Common.getValueByPath(fromObject, new String[] {"retrieval"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1565,6 +1537,13 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrieval"},
+          Common.getValueByPath(fromObject, new String[] {"retrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
@@ -1583,6 +1562,13 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
     }
 
     return toObject;
@@ -1623,36 +1609,11 @@ public final class Models {
               toObject));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode PrebuiltVoiceConfigToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode VoiceConfigToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          PrebuiltVoiceConfigToVertex(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
-              toObject));
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     return toObject;
@@ -1662,22 +1623,18 @@ public final class Models {
   ObjectNode SpeechConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          VoiceConfigToVertex(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"languageCode"},
           Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          Common.getValueByPath(fromObject, new String[] {"voiceConfig"}));
     }
 
     return toObject;
@@ -2759,13 +2716,6 @@ public final class Models {
   ObjectNode PartFromMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2813,6 +2763,13 @@ public final class Models {
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
     return toObject;
@@ -3299,13 +3256,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3353,6 +3303,13 @@ public final class Models {
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
     return toObject;

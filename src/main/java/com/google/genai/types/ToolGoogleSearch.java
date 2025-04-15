@@ -19,45 +19,36 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
-import java.util.Optional;
 
-/** The configuration for the prebuilt speaker to use. */
+/** GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google. */
 @AutoValue
-@JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
-public abstract class PrebuiltVoiceConfig extends JsonSerializable {
-  /** The name of the preset voice to use. */
-  @JsonProperty("voiceName")
-  public abstract Optional<String> voiceName();
-
-  /** Instantiates a builder for PrebuiltVoiceConfig. */
+@JsonDeserialize(builder = ToolGoogleSearch.Builder.class)
+public abstract class ToolGoogleSearch extends JsonSerializable {
+  /** Instantiates a builder for ToolGoogleSearch. */
   public static Builder builder() {
-    return new AutoValue_PrebuiltVoiceConfig.Builder();
+    return new AutoValue_ToolGoogleSearch.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for PrebuiltVoiceConfig. */
+  /** Builder for ToolGoogleSearch. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `PrebuiltVoiceConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `ToolGoogleSearch.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_PrebuiltVoiceConfig.Builder();
+      return new AutoValue_ToolGoogleSearch.Builder();
     }
 
-    @JsonProperty("voiceName")
-    public abstract Builder voiceName(String voiceName);
-
-    public abstract PrebuiltVoiceConfig build();
+    public abstract ToolGoogleSearch build();
   }
 
-  /** Deserializes a JSON string to a PrebuiltVoiceConfig object. */
-  public static PrebuiltVoiceConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, PrebuiltVoiceConfig.class);
+  /** Deserializes a JSON string to a ToolGoogleSearch object. */
+  public static ToolGoogleSearch fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ToolGoogleSearch.class);
   }
 }

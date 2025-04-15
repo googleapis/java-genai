@@ -29,6 +29,14 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = FileData.Builder.class)
 public abstract class FileData extends JsonSerializable {
+  /**
+   * Optional. Display name of the file data. Used to provide a label or filename to distinguish
+   * file datas. This field is only returned in PromptMessage for prompt management. It is not
+   * currently used in the Gemini GenerateContent calls.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
   /** Required. URI. */
   @JsonProperty("fileUri")
   public abstract Optional<String> fileUri();
@@ -53,6 +61,9 @@ public abstract class FileData extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_FileData.Builder();
     }
+
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
 
     @JsonProperty("fileUri")
     public abstract Builder fileUri(String fileUri);
