@@ -37,6 +37,10 @@ public abstract class ToolConfig extends JsonSerializable {
   @JsonProperty("functionCallingConfig")
   public abstract Optional<FunctionCallingConfig> functionCallingConfig();
 
+  /** Optional. Retrieval config. */
+  @JsonProperty("retrievalConfig")
+  public abstract Optional<RetrievalConfig> retrievalConfig();
+
   /** Instantiates a builder for ToolConfig. */
   public static Builder builder() {
     return new AutoValue_ToolConfig.Builder();
@@ -56,6 +60,9 @@ public abstract class ToolConfig extends JsonSerializable {
 
     @JsonProperty("functionCallingConfig")
     public abstract Builder functionCallingConfig(FunctionCallingConfig functionCallingConfig);
+
+    @JsonProperty("retrievalConfig")
+    public abstract Builder retrievalConfig(RetrievalConfig retrievalConfig);
 
     public abstract ToolConfig build();
   }
