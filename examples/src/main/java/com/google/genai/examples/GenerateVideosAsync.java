@@ -47,13 +47,15 @@ import java.util.concurrent.ExecutionException;
 /** An example of using the Unified Gen AI Java SDK to generate images asynchronously. */
 public class GenerateVideosAsync {
   public static void main(String[] args) {
-    // Instantiates the client using Vertex AI, and sets the project and location in the builder.
-    Client client =
-        Client.builder()
-            .vertexAI(true)
-            .project(System.getenv("GOOGLE_CLOUD_PROJECT"))
-            .location(System.getenv("GOOGLE_CLOUD_LOCATION"))
-            .build();
+    // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
+    // key from the environment variable `GOOGLE_API_KEY`.
+    Client client = new Client();
+
+    if (client.vertexAI()) {
+      System.out.println("Using Vertex AI");
+    } else {
+      System.out.println("Using Gemini Developer API");
+    }
 
     GenerateVideosConfig.Builder generateVideosConfigBuilder =
         GenerateVideosConfig.builder().numberOfVideos(1);
