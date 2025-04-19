@@ -90,9 +90,15 @@ class ChatBase {
     List<Content> currentOutput = new ArrayList<>();
     List<String> validRoles = Arrays.asList("user", "model");
     for (int i = 0; i < history.size(); i++) {
-      if (i == 0
-          && history.get(i).role().isPresent()
-          && !history.get(i).role().get().equals("user")) {
+      // The second condition handles the case where the history is empty and we are validating the
+      // first message in a streaming call
+      if ((i == 0
+              && history.get(i).role().isPresent()
+              && !history.get(i).role().get().equals("user"))
+          || (curatedHistory.size() == 0
+              && history.size() > 0
+              && history.get(0).role().isPresent()
+              && !history.get(0).role().get().equals("user"))) {
         throw new IllegalArgumentException(
             "The first message in the history must be from the user.");
       }

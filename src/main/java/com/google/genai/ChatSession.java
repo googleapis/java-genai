@@ -19,7 +19,7 @@ package com.google.genai;
 import com.google.genai.types.GenerateContentConfig;
 
 /** A class for creating chat sessions. */
-public final class ChatSession {
+public class ChatSession {
   private final ApiClient apiClient;
 
   ChatSession(ApiClient apiClient) {
