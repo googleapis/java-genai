@@ -71,6 +71,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("responseMimeType")
   public abstract Optional<String> responseMimeType();
 
+  /** Optional. The modalities of the response. */
+  @JsonProperty("responseModalities")
+  public abstract Optional<List<String>> responseModalities();
+
   /**
    * Optional. The `Schema` object allows the definition of input and output data types. These types
    * can be objects, but also primitives and arrays. Represents a select subset of an [OpenAPI 3.0
@@ -88,6 +92,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   /** Optional. Seed. */
   @JsonProperty("seed")
   public abstract Optional<Integer> seed();
+
+  /** Optional. The speech generation config. */
+  @JsonProperty("speechConfig")
+  public abstract Optional<SpeechConfig> speechConfig();
 
   /** Optional. Stop sequences. */
   @JsonProperty("stopSequences")
@@ -149,6 +157,9 @@ public abstract class GenerationConfig extends JsonSerializable {
     @JsonProperty("responseMimeType")
     public abstract Builder responseMimeType(String responseMimeType);
 
+    @JsonProperty("responseModalities")
+    public abstract Builder responseModalities(List<String> responseModalities);
+
     @JsonProperty("responseSchema")
     public abstract Builder responseSchema(Schema responseSchema);
 
@@ -157,6 +168,9 @@ public abstract class GenerationConfig extends JsonSerializable {
 
     @JsonProperty("seed")
     public abstract Builder seed(Integer seed);
+
+    @JsonProperty("speechConfig")
+    public abstract Builder speechConfig(SpeechConfig speechConfig);
 
     @JsonProperty("stopSequences")
     public abstract Builder stopSequences(List<String> stopSequences);

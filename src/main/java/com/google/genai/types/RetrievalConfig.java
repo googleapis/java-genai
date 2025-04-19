@@ -25,48 +25,46 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The speech generation configuration. */
+/** Retrieval config. */
 @AutoValue
-@JsonDeserialize(builder = SpeechConfig.Builder.class)
-public abstract class SpeechConfig extends JsonSerializable {
-  /**
-   * Language code (ISO 639. e.g. en-US) for the speech synthesization. Only available for Live API.
-   */
+@JsonDeserialize(builder = RetrievalConfig.Builder.class)
+public abstract class RetrievalConfig extends JsonSerializable {
+  /** The language code of the user. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
 
-  /** The configuration for the speaker to use. */
-  @JsonProperty("voiceConfig")
-  public abstract Optional<VoiceConfig> voiceConfig();
+  /** The location of the user. */
+  @JsonProperty("latLng")
+  public abstract Optional<GoogleTypeLatLng> latLng();
 
-  /** Instantiates a builder for SpeechConfig. */
+  /** Instantiates a builder for RetrievalConfig. */
   public static Builder builder() {
-    return new AutoValue_SpeechConfig.Builder();
+    return new AutoValue_RetrievalConfig.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for SpeechConfig. */
+  /** Builder for RetrievalConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `SpeechConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `RetrievalConfig.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_SpeechConfig.Builder();
+      return new AutoValue_RetrievalConfig.Builder();
     }
 
     @JsonProperty("languageCode")
     public abstract Builder languageCode(String languageCode);
 
-    @JsonProperty("voiceConfig")
-    public abstract Builder voiceConfig(VoiceConfig voiceConfig);
+    @JsonProperty("latLng")
+    public abstract Builder latLng(GoogleTypeLatLng latLng);
 
-    public abstract SpeechConfig build();
+    public abstract RetrievalConfig build();
   }
 
-  /** Deserializes a JSON string to a SpeechConfig object. */
-  public static SpeechConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, SpeechConfig.class);
+  /** Deserializes a JSON string to a RetrievalConfig object. */
+  public static RetrievalConfig fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, RetrievalConfig.class);
   }
 }
