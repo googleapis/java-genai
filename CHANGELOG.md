@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/googleapis/java-genai/compare/v0.4.0...v0.5.0) (2025-04-22)
+
+
+### Features
+
+* Populate X-Server-Timeout header when a request timeout is set. ([7126995](https://github.com/googleapis/java-genai/commit/71269959b7e376cd9fd8e3d1f2bfbf6a82ca6bc4))
+* support `default` field in Schema when users call Gemini API ([1d7c48d](https://github.com/googleapis/java-genai/commit/1d7c48d9327482989cd06999626718ed33d62c6f))
+
 ## [0.4.0](https://github.com/googleapis/java-genai/compare/v0.3.0...v0.4.0) (2025-04-15)
 
 
