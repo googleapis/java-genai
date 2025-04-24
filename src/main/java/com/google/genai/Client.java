@@ -134,9 +134,12 @@ public final class Client implements AutoCloseable {
   /**
    * Constructs a Client instance with the given parameters.
    *
-   * @param apiKey Optional String for the API key. Google AI APIs only.
+   * @param apiKey Optional String for the <a href="https://ai.google.dev/gemini-api/docs/api-key">API key</a>.
+   *     Google AI APIs only.
    * @param project Optional String for the project ID. Vertex AI APIs only.
-   * @param location Optional String for the location. Vertex AI APIs only.
+   *     Find your <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">project ID</a>
+   * @param location Optional String for the <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations">location</a>.
+   *     Vertex AI APIs only.
    * @param credentials Optional {@link GoogleCredentials}. Vertex AI APIs only.
    * @param httpOptions Optional {@link HttpOptions} for sending HTTP requests.
    * @param vertexAI Optional Boolean for whether to use Vertex AI APIs. If not specified here nor
