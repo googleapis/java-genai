@@ -29,7 +29,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = VoiceConfig.Builder.class)
 public abstract class VoiceConfig extends JsonSerializable {
-  /** The configuration for the speaker to use. */
+  /** The configuration for the prebuilt voice to use. */
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
 

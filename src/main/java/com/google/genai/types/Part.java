@@ -39,10 +39,6 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("videoMetadata")
   public abstract Optional<VideoMetadata> videoMetadata();
 
-  /** Indicates if the part is thought from the model. */
-  @JsonProperty("thought")
-  public abstract Optional<Boolean> thought();
-
   /** Optional. Result of executing the [ExecutableCode]. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -78,6 +74,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("text")
   public abstract Optional<String> text();
 
+  /** Output only. Indicates if the part is thought from the model. */
+  @JsonProperty("thought")
+  public abstract Optional<Boolean> thought();
+
   /** Instantiates a builder for Part. */
   public static Builder builder() {
     return new AutoValue_Part.Builder();
@@ -97,9 +97,6 @@ public abstract class Part extends JsonSerializable {
 
     @JsonProperty("videoMetadata")
     public abstract Builder videoMetadata(VideoMetadata videoMetadata);
-
-    @JsonProperty("thought")
-    public abstract Builder thought(boolean thought);
 
     @JsonProperty("codeExecutionResult")
     public abstract Builder codeExecutionResult(CodeExecutionResult codeExecutionResult);
@@ -121,6 +118,9 @@ public abstract class Part extends JsonSerializable {
 
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @JsonProperty("thought")
+    public abstract Builder thought(boolean thought);
 
     public abstract Part build();
   }

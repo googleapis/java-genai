@@ -31,8 +31,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = FunctionResponse.Builder.class)
 public abstract class FunctionResponse extends JsonSerializable {
   /**
-   * The id of the function call this response is for. Populated by the client to match the
-   * corresponding function call `id`.
+   * Optional. The id of the function call this response is for. Populated by the client to match
+   * the corresponding function call `id`.
    */
   @JsonProperty("id")
   public abstract Optional<String> id();

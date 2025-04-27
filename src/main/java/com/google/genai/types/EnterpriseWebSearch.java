@@ -19,45 +19,36 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
-import java.util.Optional;
 
-/** The configuration for the prebuilt speaker to use. */
+/** Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. */
 @AutoValue
-@JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
-public abstract class PrebuiltVoiceConfig extends JsonSerializable {
-  /** The name of the preset voice to use. */
-  @JsonProperty("voiceName")
-  public abstract Optional<String> voiceName();
-
-  /** Instantiates a builder for PrebuiltVoiceConfig. */
+@JsonDeserialize(builder = EnterpriseWebSearch.Builder.class)
+public abstract class EnterpriseWebSearch extends JsonSerializable {
+  /** Instantiates a builder for EnterpriseWebSearch. */
   public static Builder builder() {
-    return new AutoValue_PrebuiltVoiceConfig.Builder();
+    return new AutoValue_EnterpriseWebSearch.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for PrebuiltVoiceConfig. */
+  /** Builder for EnterpriseWebSearch. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `PrebuiltVoiceConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `EnterpriseWebSearch.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_PrebuiltVoiceConfig.Builder();
+      return new AutoValue_EnterpriseWebSearch.Builder();
     }
 
-    @JsonProperty("voiceName")
-    public abstract Builder voiceName(String voiceName);
-
-    public abstract PrebuiltVoiceConfig build();
+    public abstract EnterpriseWebSearch build();
   }
 
-  /** Deserializes a JSON string to a PrebuiltVoiceConfig object. */
-  public static PrebuiltVoiceConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, PrebuiltVoiceConfig.class);
+  /** Deserializes a JSON string to a EnterpriseWebSearch object. */
+  public static EnterpriseWebSearch fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, EnterpriseWebSearch.class);
   }
 }
