@@ -36,6 +36,10 @@ import java.util.Optional;
 @InternalApi
 @JsonDeserialize(builder = UpscaleImageAPIConfig.Builder.class)
 public abstract class UpscaleImageAPIConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Whether to include a reason for filtered-out images in the response. */
   @JsonProperty("includeRaiReason")
   public abstract Optional<Boolean> includeRaiReason();
@@ -72,6 +76,9 @@ public abstract class UpscaleImageAPIConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_UpscaleImageAPIConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("includeRaiReason")
     public abstract Builder includeRaiReason(boolean includeRaiReason);
