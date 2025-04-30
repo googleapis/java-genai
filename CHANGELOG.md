@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.6.0](https://github.com/googleapis/java-genai/compare/v0.5.0...v0.6.0) (2025-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* add streaming support for Chat
+
+### Features
+
+* add streaming support for Chat ([59eca52](https://github.com/googleapis/java-genai/commit/59eca52caf9f6a6f0a6d02959e3a41db0270c5d1))
+* add support for live grounding metadata ([e90dd15](https://github.com/googleapis/java-genai/commit/e90dd15f58fcbab954c915a89619a035f5edb7ca))
+* Enable configurable speech detection in live SDK ([d6bfa76](https://github.com/googleapis/java-genai/commit/d6bfa76599df688dcaf3178cf70a86b292af461a))
+* introduce FunctionDeclaration.fromMethod class method to parse a FunctionDeclaration instance from a java.lang.reflect.Method instance. ([aeb63b4](https://github.com/googleapis/java-genai/commit/aeb63b448714026c531aa321369f2272ffc8e3ae))
+* make min_property, max_property, min_length, max_length, example, patter fields available for Schema class when calling Gemini API ([8527db5](https://github.com/googleapis/java-genai/commit/8527db52795b1281f3a3de54bb6351e67d5d5229))
+* Support continuous window compression in the Live API ([7acb98c](https://github.com/googleapis/java-genai/commit/7acb98c59774282a7c9bad131c5a3ec3ebd93324))
+* Support setting the default base URL in clients via Client.setDefaultBaseUrls() ([c119778](https://github.com/googleapis/java-genai/commit/c119778c3cf573e9eeefc0c540313162f1abf3ae))
+
+
+### Bug Fixes
+
+* do not raise error for `default` field in Schema for Gemini API calls ([8bb1c64](https://github.com/googleapis/java-genai/commit/8bb1c640f4f710b7cd4a1a5a248ced14683bcd0d))
+* Throw IllegalArgumentException rather than general Error when an invalid parameter is passed to Gemini/Vertex backend ([1bd4485](https://github.com/googleapis/java-genai/commit/1bd44850b251560cdc4b513aea43bb037f7016b1))
+* Update error message when a service from an unsupported backend is called ([4cd81ea](https://github.com/googleapis/java-genai/commit/4cd81ea374f756b418629f25c78d5d8e7d914d20))
+* Update Live API websocket base url in java SDK ([8c97572](https://github.com/googleapis/java-genai/commit/8c97572ce6b2b12e5d597ee42bd454ef20f2ad75))
+
+
+### Documentation
+
+* add a link for where to find the Google Cloud project id, API key and location ([3ac726c](https://github.com/googleapis/java-genai/commit/3ac726c6122bc8fad1cbfd0959ba62d4ba05f489))
+
 ## [0.5.0](https://github.com/googleapis/java-genai/compare/v0.4.0...v0.5.0) (2025-04-22)
 
 
