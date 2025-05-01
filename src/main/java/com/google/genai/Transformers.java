@@ -20,12 +20,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Content;
+import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.Part;
 import com.google.genai.types.PrebuiltVoiceConfig;
 import com.google.genai.types.Schema;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.Tool;
 import com.google.genai.types.VoiceConfig;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.jspecify.annotations.Nullable;
@@ -182,10 +184,45 @@ final class Transformers {
     if (origin == null) {
       return null;
     } else if (origin instanceof Tool) {
-      return (Tool) origin;
+      Tool tool = (Tool) origin;
+      if (!tool.reflectMethods().isPresent()) {
+        return tool;
+      }
+      List<FunctionDeclaration> combinedFunctionDeclarations = new ArrayList<>();
+      for (Method method : tool.reflectMethods().get()) {
+        combinedFunctionDeclarations.add(FunctionDeclaration.fromMethod(method));
+      }
+      if (tool.functionDeclarations().isPresent()) {
+        combinedFunctionDeclarations.addAll(tool.functionDeclarations().get());
+      }
+      // need to remove the client side only reflectMethods field from the tool.
+      Tool.Builder toolBuilder = Tool.builder();
+      if (tool.retrieval().isPresent()) {
+        toolBuilder.retrieval(tool.retrieval().get());
+      }
+      if (tool.googleSearch().isPresent()) {
+        toolBuilder.googleSearch(tool.googleSearch().get());
+      }
+      if (tool.googleSearchRetrieval().isPresent()) {
+        toolBuilder.googleSearchRetrieval(tool.googleSearchRetrieval().get());
+      }
+      if (tool.codeExecution().isPresent()) {
+        toolBuilder.codeExecution(tool.codeExecution().get());
+      }
+      if (tool.enterpriseWebSearch().isPresent()) {
+        toolBuilder.enterpriseWebSearch(tool.enterpriseWebSearch().get());
+      }
+      if (!combinedFunctionDeclarations.isEmpty()) {
+        toolBuilder.functionDeclarations(combinedFunctionDeclarations);
+      }
+      return toolBuilder.build();
     } else if (origin instanceof JsonNode) {
-      return JsonSerializable.objectMapper.convertValue(
-          (JsonNode) origin, new TypeReference<Tool>() {});
+      // in case reflectMethods is present in the json node, call tTool to parse it and remove it
+      // from the json node.
+      return tTool(
+          apiClient,
+          JsonSerializable.objectMapper.convertValue(
+              (JsonNode) origin, new TypeReference<Tool>() {}));
     }
 
     throw new IllegalArgumentException("Unsupported tool type: " + origin.getClass());

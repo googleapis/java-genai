@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,13 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("enterpriseWebSearch")
   public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
+
+  /**
+   * The java.lang.reflect.Method instance. If provided, it will to be parsed into a list of
+   * FunctionDeclaration instances, and be assigned to the functionDeclarations field.
+   */
+  @JsonProperty("reflectMethods")
+  public abstract Optional<List<Method>> reflectMethods();
 
   /**
    * Optional. CodeExecution tool type. Enables the model to execute code as part of generation.
@@ -103,6 +111,9 @@ public abstract class Tool extends JsonSerializable {
 
     @JsonProperty("enterpriseWebSearch")
     public abstract Builder enterpriseWebSearch(EnterpriseWebSearch enterpriseWebSearch);
+
+    @JsonProperty("reflectMethods")
+    public abstract Builder reflectMethods(List<Method> reflectMethods);
 
     @JsonProperty("codeExecution")
     public abstract Builder codeExecution(ToolCodeExecution codeExecution);
