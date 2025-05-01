@@ -250,6 +250,33 @@ final class Transformers {
     return result;
   }
 
+  /**
+   * Transforms a model name to the correct format for the Caches API.
+   *
+   * @param apiClient the API client to use for transformation
+   * @param origin the model name to transform, can be a string or JsonNode
+   * @return the transformed model name, or null if the input is null
+   * @throws IllegalArgumentException if the object is not a supported type
+   */
+  public static @Nullable String tCachesModel(ApiClient apiClient, Object origin) {
+    String model = tModel(apiClient, origin);
+    if (model == null) {
+      return null;
+    }
+
+    if (apiClient.vertexAI()) {
+      if (model.startsWith("publishers/")) {
+        // Vertex caches only support model names starting with projects.
+        return String.format(
+            "projects/%s/locations/%s/%s", apiClient.project(), apiClient.location(), model);
+      } else if (model.startsWith("models/")) {
+        return String.format(
+            "projects/%s/locations/%s/publishers/google/%s",
+            apiClient.project(), apiClient.location(), model);
+      }
+    }
+    return model;
+  }
 
   /** Formats a resource name given the resource name and resource prefix. */
   private static String getResourceName(
