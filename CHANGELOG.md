@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.1](https://github.com/googleapis/java-genai/compare/v0.6.0...v0.6.1) (2025-05-01)
+
+
+### Bug Fixes
+
+* generateContentStream failed to find converter method GenerateContentResponseFromXxx ([590cb98](https://github.com/googleapis/java-genai/commit/590cb987874e6a812b0b3e5dab3f75fe919adafa))
+
+
+### Miscellaneous Chores
+
+* release 0.6.1 ([19c6373](https://github.com/googleapis/java-genai/commit/19c6373ac4e8dbc703d84b2d6564468ba810f739))
+
 ## [0.6.0](https://github.com/googleapis/java-genai/compare/v0.5.0...v0.6.0) (2025-04-30)
 
 
