@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.7.0](https://github.com/googleapis/java-genai/compare/v0.6.1...v0.7.0) (2025-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename getVideoOperation to getVideosOperation for Java SDK
+* add enum support
+* add enum support
+
+### Features
+
+* Add `Tool.enterprise_web_search` field ([919c22a](https://github.com/googleapis/java-genai/commit/919c22a79e357a4be03e98bd24b4d02282ca7a0d))
+* Add computeTokens support ([85c751e](https://github.com/googleapis/java-genai/commit/85c751e5e8e715ef26cf5524cb57a7d77953a734))
+* Add countTokens method support ([8b8fb45](https://github.com/googleapis/java-genai/commit/8b8fb4515d994b24bd1a3bb3b500f415c2dddeca))
+* add enum support ([6cb7d7a](https://github.com/googleapis/java-genai/commit/6cb7d7a3cfd0bef4a4ad13ea1c2ed95148320707))
+* add enum support ([04971fc](https://github.com/googleapis/java-genai/commit/04971fce22baf0c926dca8ec90646ef81c28130a))
+* Add support for Grounding with Google Maps ([24b1127](https://github.com/googleapis/java-genai/commit/24b112756b21e1b9650e434ba6f53557c8bf6531))
+* enable input transcription for Gemini API. ([9065970](https://github.com/googleapis/java-genai/commit/906597026e36c09cded0d8cb50ffe14a96c5faff))
+* **http:** Make HttpApiClient public ([5da0746](https://github.com/googleapis/java-genai/commit/5da0746a818218d22456bfbab9d665cde6c1540e))
+
+
+### Documentation
+
+* Add javadoc to public classes/methods ([78c2a39](https://github.com/googleapis/java-genai/commit/78c2a390ef7ad34dac5cf14ff10838ba9c0899c4))
+
+
+### Code Refactoring
+
+* Rename getVideoOperation to getVideosOperation for Java SDK ([4cd355b](https://github.com/googleapis/java-genai/commit/4cd355b51ffe5a551c54bf5e35b22ef47ad545e2))
+
 ## [0.6.1](https://github.com/googleapis/java-genai/compare/v0.6.0...v0.6.1) (2025-05-01)
 
 
