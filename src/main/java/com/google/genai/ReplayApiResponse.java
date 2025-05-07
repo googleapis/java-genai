@@ -16,6 +16,7 @@
 
 package com.google.genai;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 
@@ -25,16 +26,21 @@ final class ReplayApiResponse extends ApiResponse {
 
   private final HttpEntity entity;
   private final StatusLine statusLine;
+  private final Header[] headers;
 
-  public ReplayApiResponse(HttpEntity entity, StatusLine statusLine) {
+  public ReplayApiResponse(HttpEntity entity, StatusLine statusLine, Header[] headers) {
     this.entity = entity;
     this.statusLine = statusLine;
+    this.headers = headers;
   }
 
   @Override
   public HttpEntity getEntity() {
     return this.entity;
   }
+
+  @Override
+  public Header[] getHeaders() { return this.headers;}
 
   @Override
   public void close() {}

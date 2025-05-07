@@ -36,9 +36,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.apache.http.Header;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
 
 // TODO(b/369384123): Currently the ReplayApiClient mirrors the HttpApiClient. We will refactor the
@@ -131,10 +133,17 @@ final class ReplayApiClient extends ApiClient {
       Map<String, Object> responseMap = (Map<String, Object>) currentMember.get("response");
       Integer statusCode = (Integer) responseMap.get("status_code");
       List<Object> bodySegments = (List<Object>) responseMap.get("body_segments");
+      Map<String, String> headerMap = (Map<String, String>) responseMap.get("headers");
       StringBuilder responseBody = new StringBuilder();
       for (Object bodySegment : bodySegments) {
         responseBody.append(bodySegment.toString());
       }
+
+      Header[] headers = headerMap.entrySet()
+              .stream()
+              .map(entry -> new BasicHeader(entry.getKey(), entry.getValue()))
+              .toArray(Header[]::new);
+
       String responseString = responseBody.toString();
 
       BasicHttpEntity entity = new BasicHttpEntity();
@@ -144,7 +153,7 @@ final class ReplayApiClient extends ApiClient {
       StatusLine statusLine =
           new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), statusCode, "OK");
 
-      return new ReplayApiResponse(entity, statusLine);
+      return new ReplayApiResponse(entity, statusLine, headers);
     } else {
       // Note that if the client mode is "api", then the ReplayApiClient will not be used.
       throw new IllegalArgumentException("Invalid client mode: " + this.clientMode);
