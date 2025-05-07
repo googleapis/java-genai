@@ -4125,6 +4125,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateContentResponseFromVertex(this.apiClient, responseNode, null);
@@ -4170,6 +4171,7 @@ public final class Models {
     ApiResponse response =
         this.apiClient.request("post", path, JsonSerializable.toJsonString(body));
     String converterName;
+
     if (this.apiClient.vertexAI()) {
       converterName = "generateContentResponseFromVertex";
     } else {
@@ -4220,6 +4222,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = embedContentResponseFromVertex(this.apiClient, responseNode, null);
@@ -4271,6 +4274,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateImagesResponseFromVertex(this.apiClient, responseNode, null);
@@ -4328,6 +4332,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = editImageResponseFromVertex(this.apiClient, responseNode, null);
@@ -4383,6 +4388,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = upscaleImageResponseFromVertex(this.apiClient, responseNode, null);
@@ -4435,6 +4441,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = countTokensResponseFromVertex(this.apiClient, responseNode, null);
@@ -4486,6 +4493,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = computeTokensResponseFromVertex(this.apiClient, responseNode, null);
@@ -4554,6 +4562,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
