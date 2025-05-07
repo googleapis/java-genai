@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
+// Auto-generated code. Do not edit.
+
 package com.google.genai;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 
+/** Async module of {@link Files} */
+public final class AsyncFiles {
+  Files files;
 
-/** The API response contains a response to a call to the GenAI APIs. */
-abstract class ApiResponse implements AutoCloseable {
-  /** Gets the HttpEntity. */
-  public abstract HttpEntity getEntity();
-
-  public abstract Header[] getHeaders();
-
-  @Override
-  public abstract void close();
+  public AsyncFiles(ApiClient apiClient) {
+    this.files = new Files(apiClient);
+  }
 }
