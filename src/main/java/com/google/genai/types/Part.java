@@ -43,6 +43,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("thought")
   public abstract Optional<Boolean> thought();
 
+  /** Optional. Inlined bytes data. */
+  @JsonProperty("inlineData")
+  public abstract Optional<Blob> inlineData();
+
   /** Optional. Result of executing the [ExecutableCode]. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -69,10 +73,6 @@ public abstract class Part extends JsonSerializable {
    */
   @JsonProperty("functionResponse")
   public abstract Optional<FunctionResponse> functionResponse();
-
-  /** Optional. Inlined bytes data. */
-  @JsonProperty("inlineData")
-  public abstract Optional<Blob> inlineData();
 
   /** Optional. Text part (can be code). */
   @JsonProperty("text")
@@ -101,6 +101,9 @@ public abstract class Part extends JsonSerializable {
     @JsonProperty("thought")
     public abstract Builder thought(boolean thought);
 
+    @JsonProperty("inlineData")
+    public abstract Builder inlineData(Blob inlineData);
+
     @JsonProperty("codeExecutionResult")
     public abstract Builder codeExecutionResult(CodeExecutionResult codeExecutionResult);
 
@@ -115,9 +118,6 @@ public abstract class Part extends JsonSerializable {
 
     @JsonProperty("functionResponse")
     public abstract Builder functionResponse(FunctionResponse functionResponse);
-
-    @JsonProperty("inlineData")
-    public abstract Builder inlineData(Blob inlineData);
 
     @JsonProperty("text")
     public abstract Builder text(String text);
