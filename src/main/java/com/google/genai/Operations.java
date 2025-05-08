@@ -393,7 +393,11 @@ public final class Operations {
       path = Common.formatMap("{operationName}", body.get("_url"));
     } else {
       body = getOperationParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{operationName}", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{operationName}", body.get("_url"));
+      } else {
+        path = "{operationName}";
+      }
     }
     body.remove("_url");
 
@@ -411,6 +415,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
@@ -463,6 +468,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
