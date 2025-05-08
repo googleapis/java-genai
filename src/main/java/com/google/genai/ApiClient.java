@@ -32,7 +32,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
-abstract class ApiClient {
+public abstract class ApiClient {
   CloseableHttpClient httpClient;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -44,7 +44,7 @@ abstract class ApiClient {
   final boolean vertexAI;
 
   /** Constructs an ApiClient for Google AI APIs. */
-  ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
+  protected ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
     checkNotNull(apiKey, "API Key cannot be null");
     checkNotNull(customHttpOptions, "customHttpOptions cannot be null");
 
@@ -64,7 +64,7 @@ abstract class ApiClient {
     this.httpOptions = defaultHttpOptions(/* vertexAI= */ false, this.location);
 
     if (customHttpOptions.isPresent()) {
-      this.httpOptions = applyHttpOptions(customHttpOptions.get());
+      this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
 
     this.httpClient = createHttpClient(httpOptions.timeout());
@@ -109,7 +109,7 @@ abstract class ApiClient {
     this.httpOptions = defaultHttpOptions(/* vertexAI= */ true, this.location);
 
     if (customHttpOptions.isPresent()) {
-      this.httpOptions = applyHttpOptions(customHttpOptions.get());
+      this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
     this.apiKey = Optional.empty();
     this.vertexAI = true;
@@ -130,6 +130,10 @@ abstract class ApiClient {
   /** Sends a Http request given the http method, path, and request json string. */
   public abstract ApiResponse request(
       String httpMethod, String path, String requestJson, HttpOptions httpOptions);
+
+  /** Sends a Http request given the http method, path, and request bytes. */
+  public abstract ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
 
   /** Returns the library version. */
   static String libraryVersion() {
@@ -174,12 +178,12 @@ abstract class ApiClient {
   }
 
   /**
-   * Applies the http options to the client's http options.
+   * Merges the http options to the client's http options.
    *
    * @param httpOptionsToApply the http options to apply
    * @return the merged http options
    */
-  HttpOptions applyHttpOptions(HttpOptions httpOptionsToApply) {
+  HttpOptions mergeHttpOptions(HttpOptions httpOptionsToApply) {
     if (httpOptionsToApply == null) {
       return this.httpOptions;
     }

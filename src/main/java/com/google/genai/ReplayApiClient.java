@@ -160,4 +160,10 @@ final class ReplayApiClient extends ApiClient {
       throw new IllegalArgumentException("Invalid client mode: " + this.clientMode);
     }
   }
+
+  @Override
+  public ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+    throw new UnsupportedOperationException("Not implemented yet.");
+  }
 }

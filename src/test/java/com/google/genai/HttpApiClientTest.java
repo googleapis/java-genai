@@ -133,7 +133,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("GET", TEST_PATH, null, null);
+    client.request("GET", TEST_PATH, "", null);
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -158,7 +158,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("DELETE", TEST_PATH, null, null);
+    client.request("DELETE", TEST_PATH, "", null);
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
