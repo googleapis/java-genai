@@ -403,12 +403,18 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode latLngToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"latitude"}))) {
-      throw new IllegalArgumentException("latitude parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"latitude"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"latitude"},
+          Common.getValueByPath(fromObject, new String[] {"latitude"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"longitude"}))) {
-      throw new IllegalArgumentException("longitude parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"longitude"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"longitude"},
+          Common.getValueByPath(fromObject, new String[] {"longitude"}));
     }
 
     return toObject;
@@ -418,8 +424,15 @@ public final class Models {
   ObjectNode retrievalConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"latLng"}))) {
-      throw new IllegalArgumentException("latLng parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"latLng"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"latLng"},
+          latLngToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"latLng"})),
+              toObject));
     }
 
     return toObject;
@@ -439,9 +452,15 @@ public final class Models {
               toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}))) {
-      throw new IllegalArgumentException(
-          "retrievalConfig parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          retrievalConfigToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"retrievalConfig"})),
+              toObject));
     }
 
     return toObject;
