@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.8.0](https://github.com/googleapis/java-genai/compare/v0.7.0...v0.8.0) (2025-05-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* add enum support
+
+### Features
+
+* add enum support ([86b0553](https://github.com/googleapis/java-genai/commit/86b0553855b68e7e11b2bc91945326cf14c39a7e))
+* add support for audio, video, text and session resumption in java. ([dcd08a4](https://github.com/googleapis/java-genai/commit/dcd08a4062981b1e2079ed61dd55fa693fa89983))
+* automatically parse a java.lang.reflect.Method instance into a FunctionDeclaration when users pass it in as a Tool. ([e5109a0](https://github.com/googleapis/java-genai/commit/e5109a0a3ab3f74116513c962d65e95b80b61178))
+
+
+### Bug Fixes
+
+* fix import in live sample ([78cc345](https://github.com/googleapis/java-genai/commit/78cc345791331fb662b2a151846bae19086acc2a))
+
+
+### Documentation
+
+* Improve docs for response_mime_type and response_schema. Relate to [#297](https://github.com/googleapis/java-genai/issues/297) ([4782f56](https://github.com/googleapis/java-genai/commit/4782f56b5541bf62f88dce7e3e778b9e30df1692))
+
 ## [0.7.0](https://github.com/googleapis/java-genai/compare/v0.6.1...v0.7.0) (2025-05-06)
 
 
