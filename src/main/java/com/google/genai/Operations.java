@@ -30,6 +30,7 @@ import com.google.genai.types.GetOperationConfig;
 import com.google.genai.types.GetOperationParameters;
 import com.google.genai.types.HttpOptions;
 import java.io.IOException;
+import java.util.Optional;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -394,7 +395,11 @@ public final class Operations {
       path = Common.formatMap("{operationName}", body.get("_url"));
     } else {
       body = getOperationParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{operationName}", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{operationName}", body.get("_url"));
+      } else {
+        path = "{operationName}";
+      }
     }
     body.remove("_url");
 
@@ -403,13 +408,14 @@ public final class Operations {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("get", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -417,6 +423,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
@@ -460,13 +467,14 @@ public final class Operations {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -474,6 +482,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);

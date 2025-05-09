@@ -28,6 +28,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 
@@ -52,8 +53,10 @@ public class HttpApiClient extends ApiClient {
   /** Sends a Http request given the http method, path, request json string, and http options. */
   @Override
   public HttpApiResponse request(
-      String httpMethod, String path, String requestJson, HttpOptions httpOptions) {
-    HttpOptions requestHttpOptions = applyHttpOptions(httpOptions);
+      String httpMethod,
+      String path,
+      String requestJson,
+      Optional<HttpOptions> requestHttpOptions) {
     boolean queryBaseModel =
         httpMethod.equalsIgnoreCase("GET") && path.startsWith("publishers/google/models/");
     if (this.vertexAI() && !path.startsWith("projects/") && !queryBaseModel) {
@@ -61,26 +64,60 @@ public class HttpApiClient extends ApiClient {
           String.format("projects/%s/locations/%s/", this.project.get(), this.location.get())
               + path;
     }
-    String requestUrl =
-        String.format(
-            "%s/%s/%s",
-            requestHttpOptions.baseUrl().get(), requestHttpOptions.apiVersion().get(), path);
+
+    HttpOptions mergedHttpOptions = httpOptions;
+    if (requestHttpOptions.isPresent()) {
+      mergedHttpOptions = mergeHttpOptions(requestHttpOptions.get());
+    }
+
+    String requestUrl;
+
+    if (mergedHttpOptions.apiVersion().get().isEmpty()) {
+      requestUrl = String.format("%s/%s", mergedHttpOptions.baseUrl().get(), path);
+    } else {
+      requestUrl =
+          String.format(
+              "%s/%s/%s",
+              mergedHttpOptions.baseUrl().get(), mergedHttpOptions.apiVersion().get(), path);
+    }
 
     if (httpMethod.equalsIgnoreCase("POST")) {
       HttpPost httpPost = new HttpPost(requestUrl);
-      setHeaders(httpPost, requestHttpOptions);
+      setHeaders(httpPost, mergedHttpOptions);
       httpPost.setEntity(new StringEntity(requestJson, ContentType.APPLICATION_JSON));
       return executeRequest(httpPost);
     } else if (httpMethod.equalsIgnoreCase("GET")) {
       HttpGet httpGet = new HttpGet(requestUrl);
-      setHeaders(httpGet, requestHttpOptions);
+      setHeaders(httpGet, mergedHttpOptions);
       return executeRequest(httpGet);
     } else if (httpMethod.equalsIgnoreCase("DELETE")) {
       HttpDelete httpDelete = new HttpDelete(requestUrl);
-      setHeaders(httpDelete, requestHttpOptions);
+      setHeaders(httpDelete, mergedHttpOptions);
       return executeRequest(httpDelete);
     } else {
       throw new IllegalArgumentException("Unsupported HTTP method: " + httpMethod);
+    }
+  }
+
+  @Override
+  public ApiResponse request(
+      String httpMethod,
+      String url,
+      byte[] requestBytes,
+      Optional<HttpOptions> requestHttpOptions) {
+    HttpOptions mergedHttpOptions = httpOptions;
+    if (requestHttpOptions.isPresent()) {
+      mergedHttpOptions = mergeHttpOptions(requestHttpOptions.get());
+    }
+    if (httpMethod.equalsIgnoreCase("POST")) {
+      HttpPost httpPost = new HttpPost(url);
+      setHeaders(httpPost, mergedHttpOptions);
+      httpPost.setEntity(new ByteArrayEntity(requestBytes));
+      return executeRequest(httpPost);
+    } else {
+      throw new IllegalArgumentException(
+          "The request method with bytes is only supported for POST. Unsupported HTTP method: "
+              + httpMethod);
     }
   }
 
