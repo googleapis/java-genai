@@ -48,11 +48,31 @@ public final class AsyncModels {
     this.models = new Models(apiClient);
   }
 
+  /**
+   * Asynchronously counts tokens given a GenAI model and a list of content.
+   *
+   * @param model the name of the GenAI model to use.
+   * @param contents a {@link List<com.google.genai.types.Content>} to send to count tokens for.
+   * @param config a {@link com.google.genai.types.CountTokensConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.CountTokensResponse} instance that contains tokens
+   *     count.
+   */
   public CompletableFuture<CountTokensResponse> countTokens(
       String model, List<Content> contents, CountTokensConfig config) {
     return CompletableFuture.supplyAsync(() -> models.countTokens(model, contents, config));
   }
 
+  /**
+   * Asynchronously computes tokens given a GenAI model and a list of content.
+   *
+   * @param model the name of the GenAI model to use.
+   * @param contents a {@link List<com.google.genai.types.Content>} to send to compute tokens for.
+   * @param config a {@link com.google.genai.types.ComputeTokensConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.ComputeTokensResponse} instance that contains tokens
+   *     results.
+   */
   public CompletableFuture<ComputeTokensResponse> computeTokens(
       String model, List<Content> contents, ComputeTokensConfig config) {
     return CompletableFuture.supplyAsync(() -> models.computeTokens(model, contents, config));
@@ -77,7 +97,7 @@ public final class AsyncModels {
   }
 
   /**
-   * Asynchronously generates content given a GenAI model and a content object.
+   * Asynchronously generates content given a GenAI model and a list of content.
    *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
@@ -122,8 +142,8 @@ public final class AsyncModels {
   }
 
   /**
-   * Asynchronously generates content with streaming support given a GenAI model and a content
-   * object.
+   * Asynchronously generates content with streaming support given a GenAI model and a list of
+   * content.
    *
    * @param model the name of the GenAI model to use for generation
    * @param contents a {@link List<com.google.genai.types.Content>} to send to the generative model
