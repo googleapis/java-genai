@@ -19,14 +19,20 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Optional;
 
 /** Optional parameters for computing tokens. */
 @AutoValue
 @JsonDeserialize(builder = ComputeTokensConfig.Builder.class)
 public abstract class ComputeTokensConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Instantiates a builder for ComputeTokensConfig. */
   public static Builder builder() {
     return new AutoValue_ComputeTokensConfig.Builder();
@@ -43,6 +49,9 @@ public abstract class ComputeTokensConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_ComputeTokensConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     public abstract ComputeTokensConfig build();
   }

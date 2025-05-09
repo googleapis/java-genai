@@ -27,64 +27,37 @@ import java.util.Optional;
 
 /** Used to override the default configuration. */
 @AutoValue
-@JsonDeserialize(builder = UploadFileConfig.Builder.class)
-public abstract class UploadFileConfig extends JsonSerializable {
+@JsonDeserialize(builder = GetFileConfig.Builder.class)
+public abstract class GetFileConfig extends JsonSerializable {
   /** Used to override HTTP request options. */
   @JsonProperty("httpOptions")
   public abstract Optional<HttpOptions> httpOptions();
 
-  /**
-   * The name of the file in the destination (e.g., 'files/sample-image'. If not provided one will
-   * be generated.
-   */
-  @JsonProperty("name")
-  public abstract Optional<String> name();
-
-  /**
-   * mime_type: The MIME type of the file. If not provided, it will be inferred from the file
-   * extension.
-   */
-  @JsonProperty("mimeType")
-  public abstract Optional<String> mimeType();
-
-  /** Optional display name of the file. */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
-  /** Instantiates a builder for UploadFileConfig. */
+  /** Instantiates a builder for GetFileConfig. */
   public static Builder builder() {
-    return new AutoValue_UploadFileConfig.Builder();
+    return new AutoValue_GetFileConfig.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for UploadFileConfig. */
+  /** Builder for GetFileConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UploadFileConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `GetFileConfig.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_UploadFileConfig.Builder();
+      return new AutoValue_GetFileConfig.Builder();
     }
 
     @JsonProperty("httpOptions")
     public abstract Builder httpOptions(HttpOptions httpOptions);
 
-    @JsonProperty("name")
-    public abstract Builder name(String name);
-
-    @JsonProperty("mimeType")
-    public abstract Builder mimeType(String mimeType);
-
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    public abstract UploadFileConfig build();
+    public abstract GetFileConfig build();
   }
 
-  /** Deserializes a JSON string to a UploadFileConfig object. */
-  public static UploadFileConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, UploadFileConfig.class);
+  /** Deserializes a JSON string to a GetFileConfig object. */
+  public static GetFileConfig fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, GetFileConfig.class);
   }
 }
