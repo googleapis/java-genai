@@ -166,6 +166,10 @@ final class Common {
   }
 
   static String formatMap(String template, JsonNode data) {
+    if (data == null) {
+      return template;
+    }
+
     Iterator<Map.Entry<String, JsonNode>> fields = data.fields();
     while (fields.hasNext()) {
       Map.Entry<String, JsonNode> field = fields.next();
