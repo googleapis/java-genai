@@ -25,39 +25,39 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** Response for the create file method. */
 @AutoValue
-@JsonDeserialize(builder = FetchPredictOperationConfig.Builder.class)
-public abstract class FetchPredictOperationConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
+@JsonDeserialize(builder = CreateFileResponse.Builder.class)
+public abstract class CreateFileResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
 
-  /** Instantiates a builder for FetchPredictOperationConfig. */
+  /** Instantiates a builder for CreateFileResponse. */
   public static Builder builder() {
-    return new AutoValue_FetchPredictOperationConfig.Builder();
+    return new AutoValue_CreateFileResponse.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for FetchPredictOperationConfig. */
+  /** Builder for CreateFileResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FetchPredictOperationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `CreateFileResponse.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_FetchPredictOperationConfig.Builder();
+      return new AutoValue_CreateFileResponse.Builder();
     }
 
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
 
-    public abstract FetchPredictOperationConfig build();
+    public abstract CreateFileResponse build();
   }
 
-  /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
-  public static FetchPredictOperationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
+  /** Deserializes a JSON string to a CreateFileResponse object. */
+  public static CreateFileResponse fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, CreateFileResponse.class);
   }
 }

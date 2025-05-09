@@ -25,39 +25,46 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** Generates the parameters for the get method. */
 @AutoValue
-@JsonDeserialize(builder = FetchPredictOperationConfig.Builder.class)
-public abstract class FetchPredictOperationConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
+@JsonDeserialize(builder = DeleteFileParameters.Builder.class)
+public abstract class DeleteFileParameters extends JsonSerializable {
+  /** The name identifier for the file to be deleted. */
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
-  /** Instantiates a builder for FetchPredictOperationConfig. */
+  /** Used to override the default configuration. */
+  @JsonProperty("config")
+  public abstract Optional<DeleteFileConfig> config();
+
+  /** Instantiates a builder for DeleteFileParameters. */
   public static Builder builder() {
-    return new AutoValue_FetchPredictOperationConfig.Builder();
+    return new AutoValue_DeleteFileParameters.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for FetchPredictOperationConfig. */
+  /** Builder for DeleteFileParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FetchPredictOperationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `DeleteFileParameters.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_FetchPredictOperationConfig.Builder();
+      return new AutoValue_DeleteFileParameters.Builder();
     }
 
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
+    @JsonProperty("name")
+    public abstract Builder name(String name);
 
-    public abstract FetchPredictOperationConfig build();
+    @JsonProperty("config")
+    public abstract Builder config(DeleteFileConfig config);
+
+    public abstract DeleteFileParameters build();
   }
 
-  /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
-  public static FetchPredictOperationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
+  /** Deserializes a JSON string to a DeleteFileParameters object. */
+  public static DeleteFileParameters fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, DeleteFileParameters.class);
   }
 }

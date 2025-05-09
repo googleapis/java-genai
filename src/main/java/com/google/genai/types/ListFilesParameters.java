@@ -25,39 +25,39 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** Generates the parameters for the list method. */
 @AutoValue
-@JsonDeserialize(builder = FetchPredictOperationConfig.Builder.class)
-public abstract class FetchPredictOperationConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
+@JsonDeserialize(builder = ListFilesParameters.Builder.class)
+public abstract class ListFilesParameters extends JsonSerializable {
+  /** Used to override the default configuration. */
+  @JsonProperty("config")
+  public abstract Optional<ListFilesConfig> config();
 
-  /** Instantiates a builder for FetchPredictOperationConfig. */
+  /** Instantiates a builder for ListFilesParameters. */
   public static Builder builder() {
-    return new AutoValue_FetchPredictOperationConfig.Builder();
+    return new AutoValue_ListFilesParameters.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for FetchPredictOperationConfig. */
+  /** Builder for ListFilesParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FetchPredictOperationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `ListFilesParameters.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_FetchPredictOperationConfig.Builder();
+      return new AutoValue_ListFilesParameters.Builder();
     }
 
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
+    @JsonProperty("config")
+    public abstract Builder config(ListFilesConfig config);
 
-    public abstract FetchPredictOperationConfig build();
+    public abstract ListFilesParameters build();
   }
 
-  /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
-  public static FetchPredictOperationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
+  /** Deserializes a JSON string to a ListFilesParameters object. */
+  public static ListFilesParameters fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ListFilesParameters.class);
   }
 }

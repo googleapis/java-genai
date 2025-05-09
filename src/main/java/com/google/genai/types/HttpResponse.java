@@ -23,41 +23,49 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
-/** None */
+/** A wrapper class for the http response. */
 @AutoValue
-@JsonDeserialize(builder = FetchPredictOperationConfig.Builder.class)
-public abstract class FetchPredictOperationConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
+@JsonDeserialize(builder = HttpResponse.Builder.class)
+public abstract class HttpResponse extends JsonSerializable {
+  /** Used to retain the processed HTTP headers in the response. */
+  @JsonProperty("headers")
+  public abstract Optional<Map<String, String>> headers();
 
-  /** Instantiates a builder for FetchPredictOperationConfig. */
+  /** The raw HTTP response body, in JSON format. */
+  @JsonProperty("body")
+  public abstract Optional<String> body();
+
+  /** Instantiates a builder for HttpResponse. */
   public static Builder builder() {
-    return new AutoValue_FetchPredictOperationConfig.Builder();
+    return new AutoValue_HttpResponse.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for FetchPredictOperationConfig. */
+  /** Builder for HttpResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FetchPredictOperationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `HttpResponse.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_FetchPredictOperationConfig.Builder();
+      return new AutoValue_HttpResponse.Builder();
     }
 
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
+    @JsonProperty("headers")
+    public abstract Builder headers(Map<String, String> headers);
 
-    public abstract FetchPredictOperationConfig build();
+    @JsonProperty("body")
+    public abstract Builder body(String body);
+
+    public abstract HttpResponse build();
   }
 
-  /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
-  public static FetchPredictOperationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
+  /** Deserializes a JSON string to a HttpResponse object. */
+  public static HttpResponse fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, HttpResponse.class);
   }
 }
