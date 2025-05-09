@@ -401,31 +401,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode latLngToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"latitude"}))) {
-      throw new IllegalArgumentException("latitude parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"longitude"}))) {
-      throw new IllegalArgumentException("longitude parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode retrievalConfigToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"latLng"}))) {
-      throw new IllegalArgumentException("latLng parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
@@ -439,9 +414,11 @@ public final class Models {
               toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}))) {
-      throw new IllegalArgumentException(
-          "retrievalConfig parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     return toObject;
@@ -1551,44 +1528,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode latLngToVertex(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latitude"},
-          Common.getValueByPath(fromObject, new String[] {"latitude"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"longitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"longitude"},
-          Common.getValueByPath(fromObject, new String[] {"longitude"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode retrievalConfigToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latLng"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latLng"},
-          latLngToVertex(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"latLng"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToVertex(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
@@ -1606,11 +1545,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"retrievalConfig"},
-          retrievalConfigToVertex(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"retrievalConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     return toObject;
