@@ -411,6 +411,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
@@ -463,6 +464,7 @@ public final class Operations {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);
