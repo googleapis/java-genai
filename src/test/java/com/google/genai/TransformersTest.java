@@ -17,14 +17,20 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.File;
 import com.google.genai.types.FunctionDeclaration;
+import com.google.genai.types.GeneratedVideo;
 import com.google.genai.types.GoogleSearch;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Schema;
 import com.google.genai.types.Tool;
+import com.google.genai.types.Video;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +46,9 @@ public class TransformersTest {
           Optional.of("location"),
           Optional.empty(),
           Optional.of(HttpOptions.builder().build()));
+  private static final String FILE_NAME = "12tsygtx2";
+
+  private class UnsupportedType {}
 
   /** A function (static method) to test fromMethod functionalities. */
   public static int functionUnderTest(
@@ -296,5 +305,91 @@ public class TransformersTest {
             .build();
     assertEquals(expectedTool, geminiTransformedTool);
     assertEquals(expectedTool, vertexTransformedTool);
+  }
+
+  @Test
+  public void tFileName_string_success() {
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, FILE_NAME);
+    assertEquals(FILE_NAME, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_string_file_success() {
+    String fileName = "files/" + FILE_NAME;
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, FILE_NAME);
+    assertEquals(FILE_NAME, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_textNode_file_success() {
+    String fileName = "files/" + FILE_NAME;
+    TextNode textNode = JsonNodeFactory.instance.textNode(fileName);
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, FILE_NAME);
+    assertEquals(FILE_NAME, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_video_success() {
+    Video video =
+        Video.builder()
+            .uri(
+                "https://generativelanguage.googleapis.com/v1beta/files/"
+                    + FILE_NAME
+                    + ":download?alt=media")
+            .build();
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, video);
+    assertEquals(FILE_NAME, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_generatedVideo_success() {
+    GeneratedVideo generatedVideo =
+        GeneratedVideo.builder()
+            .video(
+                Video.builder()
+                    .uri(
+                        "https://generativelanguage.googleapis.com/v1beta/files/"
+                            + FILE_NAME
+                            + ":download?alt=media")
+                    .build())
+            .build();
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, generatedVideo);
+    assertEquals(FILE_NAME, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_generatedVideo_noUri_returnNull() {
+    GeneratedVideo generatedVideo = GeneratedVideo.builder().video(Video.builder().build()).build();
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, generatedVideo);
+    assertEquals(null, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_video_noUri_returnNull() {
+    Video video = Video.builder().build();
+    String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, video);
+    assertEquals(null, transformedFileName);
+  }
+
+  @Test
+  public void tFileName_file_noName_throwsException() {
+    File file = File.builder().build();
+    assertThrows(
+        IllegalArgumentException.class, () -> Transformers.tFileName(GEMINI_API_CLIENT, file));
+  }
+
+  @Test
+  public void tFileName_generatedVideo_noVideo_throwsException() {
+    GeneratedVideo generatedVideo = GeneratedVideo.builder().build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Transformers.tFileName(GEMINI_API_CLIENT, generatedVideo));
+  }
+
+  @Test
+  public void tFileName_unsupportedType_throwsException() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> Transformers.tFileName(GEMINI_API_CLIENT, new UnsupportedType()));
   }
 }
