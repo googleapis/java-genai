@@ -23,6 +23,8 @@ import com.google.genai.types.ComputeTokensResponse;
 import com.google.genai.types.Content;
 import com.google.genai.types.CountTokensConfig;
 import com.google.genai.types.CountTokensResponse;
+import com.google.genai.types.DeleteModelConfig;
+import com.google.genai.types.DeleteModelResponse;
 import com.google.genai.types.EditImageConfig;
 import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EmbedContentConfig;
@@ -33,8 +35,11 @@ import com.google.genai.types.GenerateImagesConfig;
 import com.google.genai.types.GenerateImagesResponse;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.GetModelConfig;
 import com.google.genai.types.Image;
+import com.google.genai.types.Model;
 import com.google.genai.types.ReferenceImage;
+import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
 import java.util.List;
@@ -46,6 +51,18 @@ public final class AsyncModels {
 
   public AsyncModels(ApiClient apiClient) {
     this.models = new Models(apiClient);
+  }
+
+  public CompletableFuture<Model> get(String model, GetModelConfig config) {
+    return CompletableFuture.supplyAsync(() -> models.get(model, config));
+  }
+
+  public CompletableFuture<Model> update(String model, UpdateModelConfig config) {
+    return CompletableFuture.supplyAsync(() -> models.update(model, config));
+  }
+
+  public CompletableFuture<DeleteModelResponse> delete(String model, DeleteModelConfig config) {
+    return CompletableFuture.supplyAsync(() -> models.delete(model, config));
   }
 
   public CompletableFuture<CountTokensResponse> countTokens(

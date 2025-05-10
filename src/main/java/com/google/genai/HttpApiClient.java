@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
@@ -76,6 +77,11 @@ public class HttpApiClient extends ApiClient {
       HttpDelete httpDelete = new HttpDelete(requestUrl);
       setHeaders(httpDelete);
       return executeRequest(httpDelete);
+    } else if (httpMethod.equalsIgnoreCase("PATCH")) {
+      HttpPatch httpPatch = new HttpPatch(requestUrl);
+      setHeaders(httpPatch);
+      httpPatch.setEntity(new StringEntity(requestJson, ContentType.APPLICATION_JSON));
+      return executeRequest(httpPatch);
     } else {
       throw new IllegalArgumentException("Unsupported HTTP method: " + httpMethod);
     }
