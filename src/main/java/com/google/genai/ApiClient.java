@@ -32,7 +32,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
-abstract class ApiClient {
+public abstract class ApiClient {
   CloseableHttpClient httpClient;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -44,7 +44,7 @@ abstract class ApiClient {
   final boolean vertexAI;
 
   /** Constructs an ApiClient for Google AI APIs. */
-  ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
+  protected ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
     checkNotNull(apiKey, "API Key cannot be null");
     checkNotNull(customHttpOptions, "customHttpOptions cannot be null");
 
@@ -130,6 +130,10 @@ abstract class ApiClient {
   /** Sends a Http request given the http method, path, and request json string. */
   public abstract ApiResponse request(String httpMethod, String path, String requestJson);
 
+  /** Sends a Http request given the http method, path, and request bytes. */
+  public abstract ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
+
   /** Returns the library version. */
   static String libraryVersion() {
     // TODO: Automate revisions to the SDK library version.
@@ -173,6 +177,10 @@ abstract class ApiClient {
   }
 
   private void applyHttpOptions(HttpOptions httpOptionsToApply) {
+    this.httpOptions = mergeHttpOptions(httpOptionsToApply);
+  }
+
+  protected HttpOptions mergeHttpOptions(HttpOptions httpOptionsToApply) {
     HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
     if (httpOptionsToApply.baseUrl().isPresent()) {
       mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
@@ -192,7 +200,7 @@ abstract class ApiClient {
               .build();
       mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
-    this.httpOptions = mergedHttpOptionsBuilder.build();
+    return mergedHttpOptionsBuilder.build();
   }
 
   static HttpOptions defaultHttpOptions(boolean vertexAI, Optional<String> location) {
