@@ -19,14 +19,20 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Optional;
 
 /** None */
 @AutoValue
 @JsonDeserialize(builder = GetOperationConfig.Builder.class)
 public abstract class GetOperationConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Instantiates a builder for GetOperationConfig. */
   public static Builder builder() {
     return new AutoValue_GetOperationConfig.Builder();
@@ -43,6 +49,9 @@ public abstract class GetOperationConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_GetOperationConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     public abstract GetOperationConfig build();
   }

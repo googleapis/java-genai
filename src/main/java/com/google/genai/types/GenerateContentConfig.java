@@ -37,6 +37,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GenerateContentConfig.Builder.class)
 public abstract class GenerateContentConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /**
    * Instructions for the model to steer it toward better performance. For example, "Answer as
    * concisely as possible" or "Don't use technical terms in your response".
@@ -204,6 +208,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_GenerateContentConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("systemInstruction")
     public abstract Builder systemInstruction(Content systemInstruction);

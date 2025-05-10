@@ -27,64 +27,51 @@ import java.util.Optional;
 
 /** Used to override the default configuration. */
 @AutoValue
-@JsonDeserialize(builder = UploadFileConfig.Builder.class)
-public abstract class UploadFileConfig extends JsonSerializable {
+@JsonDeserialize(builder = ListFilesConfig.Builder.class)
+public abstract class ListFilesConfig extends JsonSerializable {
   /** Used to override HTTP request options. */
   @JsonProperty("httpOptions")
   public abstract Optional<HttpOptions> httpOptions();
 
-  /**
-   * The name of the file in the destination (e.g., 'files/sample-image'. If not provided one will
-   * be generated.
-   */
-  @JsonProperty("name")
-  public abstract Optional<String> name();
+  /** */
+  @JsonProperty("pageSize")
+  public abstract Optional<Integer> pageSize();
 
-  /**
-   * mime_type: The MIME type of the file. If not provided, it will be inferred from the file
-   * extension.
-   */
-  @JsonProperty("mimeType")
-  public abstract Optional<String> mimeType();
+  /** */
+  @JsonProperty("pageToken")
+  public abstract Optional<String> pageToken();
 
-  /** Optional display name of the file. */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
-  /** Instantiates a builder for UploadFileConfig. */
+  /** Instantiates a builder for ListFilesConfig. */
   public static Builder builder() {
-    return new AutoValue_UploadFileConfig.Builder();
+    return new AutoValue_ListFilesConfig.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for UploadFileConfig. */
+  /** Builder for ListFilesConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `UploadFileConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `ListFilesConfig.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_UploadFileConfig.Builder();
+      return new AutoValue_ListFilesConfig.Builder();
     }
 
     @JsonProperty("httpOptions")
     public abstract Builder httpOptions(HttpOptions httpOptions);
 
-    @JsonProperty("name")
-    public abstract Builder name(String name);
+    @JsonProperty("pageSize")
+    public abstract Builder pageSize(Integer pageSize);
 
-    @JsonProperty("mimeType")
-    public abstract Builder mimeType(String mimeType);
+    @JsonProperty("pageToken")
+    public abstract Builder pageToken(String pageToken);
 
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    public abstract UploadFileConfig build();
+    public abstract ListFilesConfig build();
   }
 
-  /** Deserializes a JSON string to a UploadFileConfig object. */
-  public static UploadFileConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, UploadFileConfig.class);
+  /** Deserializes a JSON string to a ListFilesConfig object. */
+  public static ListFilesConfig fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ListFilesConfig.class);
   }
 }
