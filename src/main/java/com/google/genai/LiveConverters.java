@@ -31,6 +31,57 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
+      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobToVertex(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"videoMetadata"}))) {
@@ -42,6 +93,17 @@ final class LiveConverters {
           toObject,
           new String[] {"thought"},
           Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -77,13 +139,6 @@ final class LiveConverters {
           toObject,
           new String[] {"functionResponse"},
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -113,6 +168,17 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -146,13 +212,6 @@ final class LiveConverters {
           toObject,
           new String[] {"functionResponse"},
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -1995,6 +2054,54 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobFromMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobFromVertex(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partFromMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -2003,6 +2110,17 @@ final class LiveConverters {
           toObject,
           new String[] {"thought"},
           Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobFromMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -2038,13 +2156,6 @@ final class LiveConverters {
           toObject,
           new String[] {"functionResponse"},
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -2074,6 +2185,17 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"thought"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobFromVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2107,13 +2229,6 @@ final class LiveConverters {
           toObject,
           new String[] {"functionResponse"},
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
