@@ -21,12 +21,14 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /** Class that represents the parameters for generating an image. */
 @AutoValue
+@InternalApi
 @JsonDeserialize(builder = GenerateVideosParameters.Builder.class)
 public abstract class GenerateVideosParameters extends JsonSerializable {
   /**
