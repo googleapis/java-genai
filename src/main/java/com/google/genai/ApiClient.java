@@ -25,6 +25,7 @@ import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -32,7 +33,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
-abstract class ApiClient {
+public abstract class ApiClient {
   CloseableHttpClient httpClient;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -44,7 +45,7 @@ abstract class ApiClient {
   final boolean vertexAI;
 
   /** Constructs an ApiClient for Google AI APIs. */
-  ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
+  protected ApiClient(Optional<String> apiKey, Optional<HttpOptions> customHttpOptions) {
     checkNotNull(apiKey, "API Key cannot be null");
     checkNotNull(customHttpOptions, "customHttpOptions cannot be null");
 
@@ -128,7 +129,12 @@ abstract class ApiClient {
   }
 
   /** Sends a Http request given the http method, path, and request json string. */
-  public abstract ApiResponse request(String httpMethod, String path, String requestJson);
+  public abstract ApiResponse request(
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
+
+  /** Sends a Http request given the http method, path, and request bytes. */
+  public abstract ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
 
   /** Returns the library version. */
   static String libraryVersion() {
@@ -173,6 +179,10 @@ abstract class ApiClient {
   }
 
   private void applyHttpOptions(HttpOptions httpOptionsToApply) {
+    this.httpOptions = mergeHttpOptions(httpOptionsToApply);
+  }
+
+  protected HttpOptions mergeHttpOptions(HttpOptions httpOptionsToApply) {
     HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
     if (httpOptionsToApply.baseUrl().isPresent()) {
       mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
@@ -184,15 +194,23 @@ abstract class ApiClient {
       mergedHttpOptionsBuilder.timeout(httpOptionsToApply.timeout().get());
     }
     if (httpOptionsToApply.headers().isPresent()) {
+      Stream<Map.Entry<String, String>> headersStream =
+          Stream.concat(
+              Stream.concat(
+                  this.httpOptions.headers().orElse(ImmutableMap.of()).entrySet().stream(),
+                  getTimeoutHeader(httpOptionsToApply)
+                      .orElse(ImmutableMap.of())
+                      .entrySet()
+                      .stream()),
+              httpOptionsToApply.headers().orElse(ImmutableMap.of()).entrySet().stream());
+
       Map<String, String> mergedHeaders =
-          ImmutableMap.<String, String>builder()
-              .putAll(httpOptionsToApply.headers().orElse(ImmutableMap.of()))
-              .putAll(this.httpOptions.headers().orElse(ImmutableMap.of()))
-              .putAll(getTimeoutHeader(httpOptionsToApply).orElse(ImmutableMap.of()))
-              .build();
+          headersStream.collect(
+              ImmutableMap.toImmutableMap(
+                  Map.Entry::getKey, Map.Entry::getValue, (val1, val2) -> val2));
       mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
-    this.httpOptions = mergedHttpOptionsBuilder.build();
+    return mergedHttpOptionsBuilder.build();
   }
 
   static HttpOptions defaultHttpOptions(boolean vertexAI, Optional<String> location) {

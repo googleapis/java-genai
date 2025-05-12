@@ -23,41 +23,49 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.List;
 import java.util.Optional;
 
-/** None */
+/** Response for the list files method. */
 @AutoValue
-@JsonDeserialize(builder = FetchPredictOperationConfig.Builder.class)
-public abstract class FetchPredictOperationConfig extends JsonSerializable {
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
+@JsonDeserialize(builder = ListFilesResponse.Builder.class)
+public abstract class ListFilesResponse extends JsonSerializable {
+  /** A token to retrieve next page of results. */
+  @JsonProperty("nextPageToken")
+  public abstract Optional<String> nextPageToken();
 
-  /** Instantiates a builder for FetchPredictOperationConfig. */
+  /** The list of files. */
+  @JsonProperty("files")
+  public abstract Optional<List<File>> files();
+
+  /** Instantiates a builder for ListFilesResponse. */
   public static Builder builder() {
-    return new AutoValue_FetchPredictOperationConfig.Builder();
+    return new AutoValue_ListFilesResponse.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for FetchPredictOperationConfig. */
+  /** Builder for ListFilesResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `FetchPredictOperationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `ListFilesResponse.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_FetchPredictOperationConfig.Builder();
+      return new AutoValue_ListFilesResponse.Builder();
     }
 
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
+    @JsonProperty("nextPageToken")
+    public abstract Builder nextPageToken(String nextPageToken);
 
-    public abstract FetchPredictOperationConfig build();
+    @JsonProperty("files")
+    public abstract Builder files(List<File> files);
+
+    public abstract ListFilesResponse build();
   }
 
-  /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
-  public static FetchPredictOperationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
+  /** Deserializes a JSON string to a ListFilesResponse object. */
+  public static ListFilesResponse fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ListFilesResponse.class);
   }
 }
