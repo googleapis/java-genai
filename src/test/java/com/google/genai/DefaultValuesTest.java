@@ -17,6 +17,7 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,7 +38,8 @@ public class DefaultValuesTest {
     // Mocks and test setup.
     ApiClient httpClientSpy = Mockito.spy(Mockito.mock(ApiClient.class));
     ApiResponse mockedResponse = Mockito.mock(ApiResponse.class);
-    when(httpClientSpy.request(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+    when(httpClientSpy.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse);
     HttpEntity mockedEntity = Mockito.mock(HttpEntity.class);
     GenerateContentResponse returnResponse = GenerateContentResponse.builder().build();
     StringEntity content = new StringEntity(returnResponse.toJson());
@@ -55,7 +57,8 @@ public class DefaultValuesTest {
 
     ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
     verify(httpClientSpy)
-        .request(argumentCaptor.capture(), argumentCaptor.capture(), argumentCaptor.capture());
+        .request(
+            argumentCaptor.capture(), argumentCaptor.capture(), argumentCaptor.capture(), any());
     GenerateContentConfig spiedConfig =
         GenerateContentConfig.fromJson(argumentCaptor.getAllValues().get(2));
 

@@ -67,6 +67,12 @@ public class HttpApiClientTest {
       HttpApiClient.defaultHttpOptions(false, Optional.empty());
   private static final HttpOptions defaultHttpOptionsVertex =
       HttpApiClient.defaultHttpOptions(true, Optional.of(LOCATION));
+  private static final HttpOptions REQUEST_HTTP_OPTIONS =
+      HttpOptions.builder()
+          .baseUrl("test-url")
+          .apiVersion("test-api-version")
+          .headers(ImmutableMap.of("test", "header"))
+          .build();
   private static final String TEST_PATH = "test-path";
   private static final String TEST_REQUEST_JSON = "{\"test\": \"request-json\"}";
 
@@ -94,7 +100,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("POST", TEST_PATH, TEST_REQUEST_JSON);
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, null);
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -127,7 +133,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("GET", TEST_PATH, null);
+    client.request("GET", TEST_PATH, null, null);
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -152,7 +158,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("DELETE", TEST_PATH, null);
+    client.request("DELETE", TEST_PATH, null, null);
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -168,6 +174,29 @@ public class HttpApiClientTest {
     assertNotNull(authHeader);
     assertEquals(API_KEY, authHeader.getValue());
     assertNull(capturedRequest.getFirstHeader("Authorization"));
+  }
+
+  @Test
+  public void testRequestWithHttpOptions() throws Exception {
+    // Arrange
+    HttpApiClient client = new HttpApiClient(Optional.of(API_KEY), Optional.empty());
+    setMockClient(client);
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, REQUEST_HTTP_OPTIONS);
+
+    // Assert
+    ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
+    verify(mockHttpClient).execute(requestCaptor.capture());
+    HttpRequestBase capturedRequest = requestCaptor.getValue();
+
+    assertTrue(capturedRequest instanceof HttpPost);
+    assertEquals("POST", capturedRequest.getMethod());
+    // The request URL is set by the request-level http options.
+    assertEquals("test-url/test-api-version/" + TEST_PATH, capturedRequest.getURI().toString());
+    Header authHeader = capturedRequest.getFirstHeader("Authorization");
+    // Request should have the header set by the request-level http options.
+    assertEquals("header", capturedRequest.getFirstHeader("test").getValue());
   }
 
   @Test

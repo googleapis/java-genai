@@ -121,7 +121,8 @@ final class ReplayApiClient extends ApiClient {
   /** Sends a Http Post request given the path and request json string. */
   @SuppressWarnings("unchecked")
   @Override
-  public ApiResponse request(String httpMethod, String path, String requestJson) {
+  public ApiResponse request(
+      String httpMethod, String path, String requestJson, HttpOptions httpOptions) {
     if (this.clientMode.equals("replay") || this.clientMode.equals("auto")) {
       System.out.println("    === Using replay for ID: " + this.replayId);
       List<Object> interactions = Arrays.asList(this.replaySession.get("interactions"));

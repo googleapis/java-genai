@@ -64,7 +64,7 @@ abstract class ApiClient {
     this.httpOptions = defaultHttpOptions(/* vertexAI= */ false, this.location);
 
     if (customHttpOptions.isPresent()) {
-      applyHttpOptions(customHttpOptions.get());
+      this.httpOptions = applyHttpOptions(customHttpOptions.get());
     }
 
     this.httpClient = createHttpClient(httpOptions.timeout());
@@ -109,7 +109,7 @@ abstract class ApiClient {
     this.httpOptions = defaultHttpOptions(/* vertexAI= */ true, this.location);
 
     if (customHttpOptions.isPresent()) {
-      applyHttpOptions(customHttpOptions.get());
+      this.httpOptions = applyHttpOptions(customHttpOptions.get());
     }
     this.apiKey = Optional.empty();
     this.vertexAI = true;
@@ -128,7 +128,8 @@ abstract class ApiClient {
   }
 
   /** Sends a Http request given the http method, path, and request json string. */
-  public abstract ApiResponse request(String httpMethod, String path, String requestJson);
+  public abstract ApiResponse request(
+      String httpMethod, String path, String requestJson, HttpOptions httpOptions);
 
   /** Returns the library version. */
   static String libraryVersion() {
@@ -172,7 +173,16 @@ abstract class ApiClient {
     return Optional.empty();
   }
 
-  private void applyHttpOptions(HttpOptions httpOptionsToApply) {
+  /**
+   * Applies the http options to the client's http options.
+   *
+   * @param httpOptionsToApply the http options to apply
+   * @return the merged http options
+   */
+  HttpOptions applyHttpOptions(HttpOptions httpOptionsToApply) {
+    if (httpOptionsToApply == null) {
+      return this.httpOptions;
+    }
     HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
     if (httpOptionsToApply.baseUrl().isPresent()) {
       mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
@@ -192,7 +202,7 @@ abstract class ApiClient {
               .build();
       mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
-    this.httpOptions = mergedHttpOptionsBuilder.build();
+    return mergedHttpOptionsBuilder.build();
   }
 
   static HttpOptions defaultHttpOptions(boolean vertexAI, Optional<String> location) {

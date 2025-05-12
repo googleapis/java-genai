@@ -34,6 +34,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = LiveConnectConfig.Builder.class)
 public abstract class LiveConnectConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /**
    * The requested modalities of the response. Represents the set of modalities that the model can
    * return. Defaults to AUDIO if not specified.
@@ -147,6 +151,9 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_LiveConnectConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("responseModalities")
     public abstract Builder responseModalities(List<Modality> responseModalities);

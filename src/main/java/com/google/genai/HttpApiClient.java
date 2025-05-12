@@ -49,9 +49,11 @@ public class HttpApiClient extends ApiClient {
     super(project, location, credentials, httpOptions);
   }
 
-  /** Sends a Http request given the http method, path, and request json string. */
+  /** Sends a Http request given the http method, path, request json string, and http options. */
   @Override
-  public HttpApiResponse request(String httpMethod, String path, String requestJson) {
+  public HttpApiResponse request(
+      String httpMethod, String path, String requestJson, HttpOptions httpOptions) {
+    HttpOptions requestHttpOptions = applyHttpOptions(httpOptions);
     boolean queryBaseModel =
         httpMethod.equalsIgnoreCase("GET") && path.startsWith("publishers/google/models/");
     if (this.vertexAI() && !path.startsWith("projects/") && !queryBaseModel) {
@@ -61,20 +63,21 @@ public class HttpApiClient extends ApiClient {
     }
     String requestUrl =
         String.format(
-            "%s/%s/%s", httpOptions.baseUrl().get(), httpOptions.apiVersion().get(), path);
+            "%s/%s/%s",
+            requestHttpOptions.baseUrl().get(), requestHttpOptions.apiVersion().get(), path);
 
     if (httpMethod.equalsIgnoreCase("POST")) {
       HttpPost httpPost = new HttpPost(requestUrl);
-      setHeaders(httpPost);
+      setHeaders(httpPost, requestHttpOptions);
       httpPost.setEntity(new StringEntity(requestJson, ContentType.APPLICATION_JSON));
       return executeRequest(httpPost);
     } else if (httpMethod.equalsIgnoreCase("GET")) {
       HttpGet httpGet = new HttpGet(requestUrl);
-      setHeaders(httpGet);
+      setHeaders(httpGet, requestHttpOptions);
       return executeRequest(httpGet);
     } else if (httpMethod.equalsIgnoreCase("DELETE")) {
       HttpDelete httpDelete = new HttpDelete(requestUrl);
-      setHeaders(httpDelete);
+      setHeaders(httpDelete, requestHttpOptions);
       return executeRequest(httpDelete);
     } else {
       throw new IllegalArgumentException("Unsupported HTTP method: " + httpMethod);
@@ -82,9 +85,9 @@ public class HttpApiClient extends ApiClient {
   }
 
   /** Sets the required headers (including auth) on the request object. */
-  private void setHeaders(HttpRequestBase request) {
+  private void setHeaders(HttpRequestBase request, HttpOptions requestHttpOptions) {
     for (Map.Entry<String, String> header :
-        httpOptions.headers().orElse(ImmutableMap.of()).entrySet()) {
+        requestHttpOptions.headers().orElse(ImmutableMap.of()).entrySet()) {
       request.setHeader(header.getKey(), header.getValue());
     }
 

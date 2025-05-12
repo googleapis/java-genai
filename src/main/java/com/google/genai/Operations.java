@@ -28,6 +28,7 @@ import com.google.genai.types.FetchPredictOperationParameters;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
 import com.google.genai.types.GetOperationParameters;
+import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
@@ -402,8 +403,13 @@ public final class Operations {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
+    HttpOptions httpOptions = null;
+    if (config != null) {
+      httpOptions = config.httpOptions().orElse(null);
+    }
+
     try (ApiResponse response =
-        this.apiClient.request("get", path, JsonSerializable.toJsonString(body))) {
+        this.apiClient.request("get", path, JsonSerializable.toJsonString(body), httpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -454,8 +460,13 @@ public final class Operations {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
+    HttpOptions httpOptions = null;
+    if (config != null) {
+      httpOptions = config.httpOptions().orElse(null);
+    }
+
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body))) {
+        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {

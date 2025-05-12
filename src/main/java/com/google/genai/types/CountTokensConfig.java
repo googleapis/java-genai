@@ -30,6 +30,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = CountTokensConfig.Builder.class)
 public abstract class CountTokensConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Instructions for the model to steer it toward better performance. */
   @JsonProperty("systemInstruction")
   public abstract Optional<Content> systemInstruction();
@@ -64,6 +68,9 @@ public abstract class CountTokensConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_CountTokensConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("systemInstruction")
     public abstract Builder systemInstruction(Content systemInstruction);
