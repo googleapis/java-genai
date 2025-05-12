@@ -19,6 +19,7 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.google.genai.types.Candidate;
@@ -142,7 +143,8 @@ public class ChatTest {
   void setUp() {
     mockedClient = Mockito.mock(ApiClient.class);
     mockedResponse = Mockito.mock(ApiResponse.class);
-    when(mockedClient.request(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse);
     mockedEntity = Mockito.mock(HttpEntity.class);
 
     client = Client.builder().build();
@@ -433,7 +435,7 @@ public class ChatTest {
     when(mockedEntity1.getContent()).thenReturn(inputStream1);
     when(mockedEntity2.getContent()).thenReturn(inputStream2);
     when(mockedEntity3.getContent()).thenReturn(inputStream3);
-    when(mockedClient.request(anyString(), anyString(), anyString()))
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2, mockedResponse3);
 
     assert chatSession.getHistory(false).size() == 0;
@@ -519,7 +521,7 @@ public class ChatTest {
     when(mockedResponse2.getEntity()).thenReturn(mockedEntity2);
     when(mockedEntity1.getContent()).thenReturn(inputStream1);
     when(mockedEntity2.getContent()).thenReturn(inputStream2);
-    when(mockedClient.request(anyString(), anyString(), anyString()))
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2);
 
     assert chatSession.getHistory(false).size() == 0;

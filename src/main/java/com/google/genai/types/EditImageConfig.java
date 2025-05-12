@@ -30,6 +30,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = EditImageConfig.Builder.class)
 public abstract class EditImageConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Cloud Storage URI used to store the generated images. */
   @JsonProperty("outputGcsUri")
   public abstract Optional<String> outputGcsUri();
@@ -120,6 +124,9 @@ public abstract class EditImageConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_EditImageConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("outputGcsUri")
     public abstract Builder outputGcsUri(String outputGcsUri);

@@ -29,6 +29,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = EmbedContentConfig.Builder.class)
 public abstract class EmbedContentConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Type of task for which the embedding will be used. */
   @JsonProperty("taskType")
   public abstract Optional<String> taskType();
@@ -73,6 +77,9 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_EmbedContentConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("taskType")
     public abstract Builder taskType(String taskType);
