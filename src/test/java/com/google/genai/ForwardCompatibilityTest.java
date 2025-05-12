@@ -19,6 +19,7 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,7 +58,8 @@ public class ForwardCompatibilityTest {
   void setUp() {
     mockedClient = Mockito.mock(ApiClient.class);
     mockedResponse = Mockito.mock(ApiResponse.class);
-    when(mockedClient.request(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse);
     mockedEntity = Mockito.mock(HttpEntity.class);
     returnResponse = GenerateContentResponse.builder().build();
 
@@ -71,7 +73,8 @@ public class ForwardCompatibilityTest {
     // Mocks and test setup.
     ApiClient mockedClient = Mockito.mock(ApiClient.class);
     ApiResponse mockedResponse = Mockito.mock(ApiResponse.class);
-    when(mockedClient.request(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse);
     HttpEntity mockedEntity = Mockito.mock(HttpEntity.class);
     GenerateContentResponse returnResponse = GenerateContentResponse.builder().build();
 
@@ -251,7 +254,7 @@ public class ForwardCompatibilityTest {
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
 
     ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-    verify(mockedClient).request(anyString(), anyString(), stringCaptor.capture());
+    verify(mockedClient).request(anyString(), anyString(), stringCaptor.capture(), any());
     assertEquals(
         "{\"contents\":[{\"parts\":[{\"text\":\"What is your name?\"}],\"role\":\"user\"}],"
             + "\"safetySettings\":[{\"threshold\":\"NEW_UNKNOWN_VALUE\"}],\"generationConfig\":{}}",

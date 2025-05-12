@@ -29,6 +29,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GenerateVideosConfig.Builder.class)
 public abstract class GenerateVideosConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Number of output videos. */
   @JsonProperty("numberOfVideos")
   public abstract Optional<Integer> numberOfVideos();
@@ -101,6 +105,9 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_GenerateVideosConfig.Builder();
     }
+
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
 
     @JsonProperty("numberOfVideos")
     public abstract Builder numberOfVideos(Integer numberOfVideos);
