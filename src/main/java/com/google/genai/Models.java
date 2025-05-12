@@ -60,6 +60,7 @@ import com.google.genai.types.UpscaleImageResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -4223,7 +4224,11 @@ public final class Models {
       path = Common.formatMap("{model}:generateContent", body.get("_url"));
     } else {
       body = generateContentParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:generateContent", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:generateContent", body.get("_url"));
+      } else {
+        path = "{model}:generateContent";
+      }
     }
     body.remove("_url");
 
@@ -4232,13 +4237,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4246,6 +4252,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateContentResponseFromVertex(this.apiClient, responseNode, null);
@@ -4279,7 +4286,11 @@ public final class Models {
       path = Common.formatMap("{model}:streamGenerateContent?alt=sse", body.get("_url"));
     } else {
       body = generateContentParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:streamGenerateContent?alt=sse", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:streamGenerateContent?alt=sse", body.get("_url"));
+      } else {
+        path = "{model}:streamGenerateContent?alt=sse";
+      }
     }
     body.remove("_url");
 
@@ -4288,14 +4299,16 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions);
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions);
     String converterName;
+
     if (this.apiClient.vertexAI()) {
       converterName = "generateContentResponseFromVertex";
     } else {
@@ -4328,7 +4341,11 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       body = embedContentParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:batchEmbedContents", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:batchEmbedContents", body.get("_url"));
+      } else {
+        path = "{model}:batchEmbedContents";
+      }
     }
     body.remove("_url");
 
@@ -4337,13 +4354,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4351,6 +4369,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = embedContentResponseFromVertex(this.apiClient, responseNode, null);
@@ -4384,7 +4403,11 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       body = generateImagesParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:predict", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:predict", body.get("_url"));
+      } else {
+        path = "{model}:predict";
+      }
     }
     body.remove("_url");
 
@@ -4393,13 +4416,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4407,6 +4431,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateImagesResponseFromVertex(this.apiClient, responseNode, null);
@@ -4455,13 +4480,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4469,6 +4495,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = editImageResponseFromVertex(this.apiClient, responseNode, null);
@@ -4515,13 +4542,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4529,6 +4557,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = upscaleImageResponseFromVertex(this.apiClient, responseNode, null);
@@ -4563,7 +4592,11 @@ public final class Models {
       path = Common.formatMap("{model}:countTokens", body.get("_url"));
     } else {
       body = countTokensParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:countTokens", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:countTokens", body.get("_url"));
+      } else {
+        path = "{model}:countTokens";
+      }
     }
     body.remove("_url");
 
@@ -4572,13 +4605,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4586,6 +4620,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = countTokensResponseFromVertex(this.apiClient, responseNode, null);
@@ -4628,13 +4663,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4642,6 +4678,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = computeTokensResponseFromVertex(this.apiClient, responseNode, null);
@@ -4692,7 +4729,11 @@ public final class Models {
       path = Common.formatMap("{model}:predictLongRunning", body.get("_url"));
     } else {
       body = generateVideosParametersToMldev(this.apiClient, parameterNode, null);
-      path = Common.formatMap("{model}:predictLongRunning", body.get("_url"));
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:predictLongRunning", body.get("_url"));
+      } else {
+        path = "{model}:predictLongRunning";
+      }
     }
     body.remove("_url");
 
@@ -4701,13 +4742,14 @@ public final class Models {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    HttpOptions httpOptions = null;
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
-      httpOptions = config.httpOptions().orElse(null);
+      requestHttpOptions = config.httpOptions();
     }
 
     try (ApiResponse response =
-        this.apiClient.request("post", path, JsonSerializable.toJsonString(body), httpOptions)) {
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
       HttpEntity entity = response.getEntity();
       String responseString;
       try {
@@ -4715,6 +4757,7 @@ public final class Models {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateVideosOperationFromVertex(this.apiClient, responseNode, null);

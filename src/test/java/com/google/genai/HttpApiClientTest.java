@@ -67,12 +67,13 @@ public class HttpApiClientTest {
       HttpApiClient.defaultHttpOptions(false, Optional.empty());
   private static final HttpOptions defaultHttpOptionsVertex =
       HttpApiClient.defaultHttpOptions(true, Optional.of(LOCATION));
-  private static final HttpOptions REQUEST_HTTP_OPTIONS =
-      HttpOptions.builder()
-          .baseUrl("test-url")
-          .apiVersion("test-api-version")
-          .headers(ImmutableMap.of("test", "header"))
-          .build();
+  private static final Optional<HttpOptions> REQUEST_HTTP_OPTIONS =
+      Optional.of(
+          HttpOptions.builder()
+              .baseUrl("test-url")
+              .apiVersion("test-api-version")
+              .headers(ImmutableMap.of("test", "header"))
+              .build());
   private static final String TEST_PATH = "test-path";
   private static final String TEST_REQUEST_JSON = "{\"test\": \"request-json\"}";
 
@@ -100,7 +101,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, null);
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -133,7 +134,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("GET", TEST_PATH, null, null);
+    client.request("GET", TEST_PATH, "", Optional.empty());
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
@@ -158,7 +159,7 @@ public class HttpApiClientTest {
     setMockClient(client);
 
     // Act
-    client.request("DELETE", TEST_PATH, null, null);
+    client.request("DELETE", TEST_PATH, "", Optional.empty());
 
     // Assert
     ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);

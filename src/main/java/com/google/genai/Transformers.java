@@ -21,19 +21,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Blob;
 import com.google.genai.types.Content;
+import com.google.genai.types.File;
 import com.google.genai.types.FunctionDeclaration;
+import com.google.genai.types.GeneratedVideo;
 import com.google.genai.types.Part;
 import com.google.genai.types.PrebuiltVoiceConfig;
 import com.google.genai.types.Schema;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.Tool;
+import com.google.genai.types.Video;
 import com.google.genai.types.VoiceConfig;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jspecify.annotations.Nullable;
 
 /** Transformers for GenAI SDK. */
@@ -345,6 +351,51 @@ final class Transformers {
     return result;
   }
 
+  public static @Nullable String tFileName(ApiClient apiClient, Object origin) {
+    String name = null;
+
+    if (origin instanceof String) {
+      name = (String) origin;
+    } else if (origin instanceof File) {
+      name =
+          ((File) origin)
+              .name()
+              .orElseThrow(() -> new IllegalArgumentException("File name is required."));
+    } else if (origin instanceof Video) {
+      name = ((Video) origin).uri().orElse(null);
+      if (name == null) {
+        return null;
+      }
+    } else if (origin instanceof GeneratedVideo) {
+      Video video =
+          ((GeneratedVideo) origin)
+              .video()
+              .orElseThrow(() -> new IllegalArgumentException("Video is required."));
+      name = video.uri().orElse(null);
+      if (name == null) {
+        return null;
+      }
+    } else if (origin instanceof TextNode) {
+      name = ((TextNode) origin).textValue();
+    } else {
+      throw new IllegalArgumentException("Unsupported file name type: " + origin.getClass());
+    }
+
+    if (name.startsWith("https://")) {
+      String suffix = name.split("files/")[1];
+      Pattern pattern = Pattern.compile("[a-z0-9]+");
+      Matcher matcher = pattern.matcher(suffix);
+      if (matcher.find()) {
+        name = matcher.group();
+      } else {
+        throw new IllegalArgumentException("Could not extract file name from " + name);
+      }
+    } else if (name.startsWith("files/")) {
+      name = name.split("files/")[1];
+    }
+
+    return name;
+  }
 
   /** Formats a resource name given the resource name and resource prefix. */
   private static String getResourceName(

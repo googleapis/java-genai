@@ -122,7 +122,7 @@ final class ReplayApiClient extends ApiClient {
   @SuppressWarnings("unchecked")
   @Override
   public ApiResponse request(
-      String httpMethod, String path, String requestJson, HttpOptions httpOptions) {
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
     if (this.clientMode.equals("replay") || this.clientMode.equals("auto")) {
       System.out.println("    === Using replay for ID: " + this.replayId);
       List<Object> interactions = Arrays.asList(this.replaySession.get("interactions"));
@@ -159,5 +159,11 @@ final class ReplayApiClient extends ApiClient {
       // Note that if the client mode is "api", then the ReplayApiClient will not be used.
       throw new IllegalArgumentException("Invalid client mode: " + this.clientMode);
     }
+  }
+
+  @Override
+  public ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+    throw new UnsupportedOperationException("Not implemented yet.");
   }
 }
