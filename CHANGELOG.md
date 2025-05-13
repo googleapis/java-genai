@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/googleapis/java-genai/compare/v0.8.0...v0.9.0) (2025-05-13)
+
+
+### Features
+
+* add Caches.create/delete/get support ([c4d17a0](https://github.com/googleapis/java-genai/commit/c4d17a0e2ac7aef13b82c2a31ba89d98a090724d))
+
 ## [0.8.0](https://github.com/googleapis/java-genai/compare/v0.7.0...v0.8.0) (2025-05-13)
 
 
