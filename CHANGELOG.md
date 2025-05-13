@@ -13,7 +13,7 @@
 * add Content.text() quick accessor ([c184615](https://github.com/googleapis/java-genai/commit/c184615f697652335b77348fd6b7b5eed2f03185))
 * add enum support ([86b0553](https://github.com/googleapis/java-genai/commit/86b0553855b68e7e11b2bc91945326cf14c39a7e))
 * Add httpOptions field to type classes ([971177d](https://github.com/googleapis/java-genai/commit/971177ddddf4c896e512bfb79d1cabe845719976))
-* add support for audio, video, text and session resumption in java. ([dcd08a4](https://github.com/googleapis/java-genai/commit/dcd08a4062981b1e2079ed61dd55fa693fa89983))
+* add support for audio, video, text and session resumption. ([dcd08a4](https://github.com/googleapis/java-genai/commit/dcd08a4062981b1e2079ed61dd55fa693fa89983))
 * automatically parse a java.lang.reflect.Method instance into a FunctionDeclaration when users pass it in as a Tool. ([e5109a0](https://github.com/googleapis/java-genai/commit/e5109a0a3ab3f74116513c962d65e95b80b61178))
 * enable request level http options(set through XxxConfig) ([abbe820](https://github.com/googleapis/java-genai/commit/abbe82015dc870c9588f55de8b5074ebebabcd63))
 * support display_name for Blob class when calling Vertex AI ([db33f8a](https://github.com/googleapis/java-genai/commit/db33f8a4434f990e3ab8fa543a2d6d787147a540))
