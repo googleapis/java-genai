@@ -81,6 +81,30 @@ final class Transformers {
   }
 
   /**
+   * Determines the appropriate models URL based on the API client type and whether base models are
+   * requested.
+   *
+   * @param apiClient the API client to use for transformation
+   * @param baseModels True if base models are requested, false otherwise.
+   * @return The transformed model name
+   */
+  public static String tModelsUrl(ApiClient apiClient, @Nullable Object baseModels) {
+    if (apiClient.vertexAI()) { // Use the getter method
+      if (baseModels == null) {
+        return "publishers/google/models";
+      } else {
+        return "models";
+      }
+    } else {
+      if (baseModels == null) {
+        return "models";
+      } else {
+        return "tunedModels";
+      }
+    }
+  }
+
+  /**
    * Transforms an object to a list of Content for the API.
    *
    * @param apiClient the API client to use for transformation
