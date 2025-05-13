@@ -1,0 +1,62 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.genai.errors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
+import org.junit.jupiter.api.Test;
+
+class GenAiIOExceptionTest {
+
+  @Test
+  public void testInitGenAiIOException_withMessage() {
+    try {
+      throw new GenAiIOException("Error message");
+    } catch (GenAiIOException e) {
+      assertTrue(e instanceof BaseException);
+      assertTrue(e instanceof RuntimeException);
+      assertEquals("Error message", e.getMessage());
+    }
+  }
+
+  @Test
+  public void testInitGenAiIOException_withCause() {
+    try {
+      throw new GenAiIOException(new IOException("i/o exception"));
+    } catch (GenAiIOException e) {
+      assertTrue(e instanceof BaseException);
+      assertTrue(e instanceof RuntimeException);
+      assertEquals("i/o exception", e.getMessage());
+      assertTrue(e.getCause() instanceof IOException);
+    }
+  }
+
+  @Test
+  public void testInitGenAiIOException_withMessageAndCause() {
+    try {
+      throw new GenAiIOException("Error message", new IOException("i/o exception"));
+    } catch (GenAiIOException e) {
+      assertTrue(e instanceof BaseException);
+      assertTrue(e instanceof RuntimeException);
+      assertEquals("Error message", e.getMessage());
+      assertEquals("i/o exception", e.getCause().getMessage());
+      assertTrue(e.getCause() instanceof IOException);
+    }
+  }
+}

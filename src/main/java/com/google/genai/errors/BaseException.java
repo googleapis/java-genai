@@ -30,11 +30,6 @@ class BaseException extends RuntimeException {
     super(message);
   }
 
-  /** Creates a new exception with the specified cause. */
-  BaseException(Throwable cause) {
-    super(cause);
-  }
-
   /** Creates a new exception with the specified message and cause. */
   BaseException(String message, Throwable cause) {
     super(message, cause);

@@ -47,6 +47,7 @@ import org.apache.http.message.BasicStatusLine;
 // ReplayApiClient to use the ReplayFile as part of resolving b/369384123.
 
 /** Base client for the HTTP APIs. */
+@ExcludeFromGeneratedCoverageReport
 final class ReplayApiClient extends ApiClient {
   private final String replaysDirectory;
   private String replayId;

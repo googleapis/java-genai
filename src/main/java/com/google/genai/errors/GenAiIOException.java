@@ -33,6 +33,6 @@ public final class GenAiIOException extends BaseException {
 
   /** Creates a new GenAiIoException with the specified cause. */
   public GenAiIOException(Throwable cause) {
-    super(cause);
+    super(cause.getMessage(), cause);
   }
 }
