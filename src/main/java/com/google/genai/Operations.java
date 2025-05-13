@@ -174,11 +174,9 @@ public final class Operations {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedVideoFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(generatedVideoFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
 
@@ -303,11 +301,10 @@ public final class Operations {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedVideoFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            generatedVideoFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
 

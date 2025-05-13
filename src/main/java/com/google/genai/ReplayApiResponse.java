@@ -22,6 +22,7 @@ import org.apache.http.StatusLine;
 
 // TODO(b/369384123): Change the replay API response to use the ReplayFile.
 /** Provides a simulated HTTP response from a replay file. */
+@ExcludeFromGeneratedCoverageReport
 final class ReplayApiResponse extends ApiResponse {
 
   private final HttpEntity entity;

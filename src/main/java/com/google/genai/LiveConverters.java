@@ -232,10 +232,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -257,10 +256,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -1019,14 +1017,13 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToMldev(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToMldev(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"setup", "tools"}, result);
     }
 
@@ -1167,14 +1164,13 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToVertex(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToVertex(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"setup", "tools"}, result);
     }
 
@@ -1478,14 +1474,13 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToMldev(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToMldev(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"tools"}, result);
     }
 
@@ -1583,14 +1578,13 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToVertex(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToVertex(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"tools"}, result);
     }
 
@@ -1661,10 +1655,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"turns"}, result);
     }
 
@@ -1687,10 +1680,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"turns"}, result);
     }
 
@@ -1881,11 +1873,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                functionResponseToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(functionResponseToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
     }
 
@@ -1902,11 +1892,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                functionResponseToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            functionResponseToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
     }
 
@@ -2249,10 +2238,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -2274,10 +2262,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -2527,11 +2514,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                functionCallFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(functionCallFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
     }
 
@@ -2548,11 +2533,9 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                functionCallFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(functionCallFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
     }
 
@@ -2677,12 +2660,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromMldev(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"promptTokensDetails"}, result);
     }
 
@@ -2692,12 +2673,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromMldev(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"cacheTokensDetails"}, result);
     }
 
@@ -2707,12 +2686,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromMldev(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"responseTokensDetails"}, result);
     }
 
@@ -2723,12 +2700,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromMldev(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"toolUsePromptTokensDetails"}, result);
     }
 
@@ -2787,12 +2762,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromVertex(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"promptTokensDetails"}, result);
     }
 
@@ -2802,12 +2775,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromVertex(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"cacheTokensDetails"}, result);
     }
 
@@ -2817,12 +2788,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromVertex(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"responseTokensDetails"}, result);
     }
 
@@ -2833,12 +2802,10 @@ final class LiveConverters {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                modalityTokenCountFromVertex(
-                    apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            modalityTokenCountFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"toolUsePromptTokensDetails"}, result);
     }
 

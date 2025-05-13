@@ -177,10 +177,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -678,11 +677,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                safetySettingToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(safetySettingToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"safetySettings"}, result);
     }
 
@@ -691,14 +688,13 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToMldev(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToMldev(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
 
@@ -788,10 +784,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
@@ -1056,10 +1051,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
@@ -1321,10 +1315,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -1888,11 +1881,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                safetySettingToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(safetySettingToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"safetySettings"}, result);
     }
 
@@ -1901,14 +1892,13 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                toolToVertex(
-                    apiClient,
-                    JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
-                    toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            toolToVertex(
+                apiClient,
+                JsonSerializable.toJsonNode(Transformers.tTool(this.apiClient, item)),
+                toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
 
@@ -2003,10 +1993,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
@@ -2573,11 +2562,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                referenceImageAPIToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            referenceImageAPIToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
 
@@ -2705,10 +2693,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(toolToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(toolToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
 
@@ -2739,10 +2726,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
@@ -2777,10 +2763,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
@@ -3019,10 +3004,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -3137,10 +3121,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(candidateFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(candidateFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"candidates"}, result);
     }
 
@@ -3208,11 +3191,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                contentEmbeddingFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            contentEmbeddingFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"embeddings"}, result);
     }
 
@@ -3328,11 +3310,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedImageFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(generatedImageFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
 
@@ -3430,11 +3410,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedVideoFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(generatedVideoFromMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
 
@@ -3611,10 +3589,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(partFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(partFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
 
@@ -3730,10 +3707,9 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(candidateFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(candidateFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"candidates"}, result);
     }
 
@@ -3846,11 +3822,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                contentEmbeddingFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            contentEmbeddingFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"embeddings"}, result);
     }
 
@@ -3979,11 +3954,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
 
@@ -4013,11 +3987,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
 
@@ -4034,11 +4007,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            generatedImageFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
 
@@ -4129,11 +4101,10 @@ public final class Models {
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
-      keyArray.forEach(
-          item -> {
-            result.add(
-                generatedVideoFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
-          });
+      for (JsonNode item : keyArray) {
+        result.add(
+            generatedVideoFromVertex(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
 
