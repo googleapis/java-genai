@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -538,5 +539,71 @@ public class ChatTest {
         assertThrows(
             IllegalStateException.class,
             () -> chatSession.sendMessageStream("Tell me another story."));
+  }
+
+  @Test
+  public void testCreateAsyncChatSession() throws Exception {
+    // Make the apiClient field public so that it can be spied on in the tests. This is a
+    // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
+    Field apiClientField = AsyncChats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.async.chats, mockedClient);
+
+    AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
+
+    assertNotNull(chat);
+  }
+
+  @Test
+  public void testGetAsyncChatMessage() throws Exception {
+    // Make the apiClient field public so that it can be spied on in the tests. This is a
+    // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
+    Field apiClientField = AsyncChats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.async.chats, mockedClient);
+
+    StringEntity content =
+        new StringEntity(
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
+                + " cheese shop\"}], \"role\":\"model\"}}]}}");
+
+    when(mockedResponse.getEntity()).thenReturn(content);
+
+    AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
+
+    CompletableFuture<GenerateContentResponse> responseFuture =
+        chat.sendMessage("Can you tell me a story?");
+
+    responseFuture.thenAccept(
+        response -> {
+          assertNotNull(response.text());
+        });
+  }
+
+  @Test
+  public void testGetHistoryAsync() throws Exception {
+    // Make the apiClient field public so that it can be spied on in the tests. This is a
+    // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
+    Field apiClientField = AsyncChats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.async.chats, mockedClient);
+
+    StringEntity content =
+        new StringEntity(
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
+                + " cheese shop\"}], \"role\":\"model\"}}]}}");
+
+    when(mockedResponse.getEntity()).thenReturn(content);
+
+    AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
+
+    CompletableFuture<GenerateContentResponse> responseFuture =
+        chat.sendMessage("Can you tell me a story?");
+
+    CompletableFuture<GenerateContentResponse> responseFuture2 =
+        chat.sendMessage("Can you tell me another story?");
+
+    List<Content> history = chat.getHistory(true);
+    assert history.size() == 4;
   }
 }
