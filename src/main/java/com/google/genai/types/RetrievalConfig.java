@@ -29,9 +29,13 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = RetrievalConfig.Builder.class)
 public abstract class RetrievalConfig extends JsonSerializable {
-  /** Optional. The location of the user. */
+  /** The language code of the user. */
+  @JsonProperty("languageCode")
+  public abstract Optional<String> languageCode();
+
+  /** The location of the user. */
   @JsonProperty("latLng")
-  public abstract Optional<LatLng> latLng();
+  public abstract Optional<GoogleTypeLatLng> latLng();
 
   /** Instantiates a builder for RetrievalConfig. */
   public static Builder builder() {
@@ -50,8 +54,11 @@ public abstract class RetrievalConfig extends JsonSerializable {
       return new AutoValue_RetrievalConfig.Builder();
     }
 
+    @JsonProperty("languageCode")
+    public abstract Builder languageCode(String languageCode);
+
     @JsonProperty("latLng")
-    public abstract Builder latLng(LatLng latLng);
+    public abstract Builder latLng(GoogleTypeLatLng latLng);
 
     public abstract RetrievalConfig build();
   }
