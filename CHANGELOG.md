@@ -1,5 +1,52 @@
 # Changelog
 
+## [1.0.0](https://github.com/googleapis/java-genai/compare/v0.8.0...v1.0.0) (2025-05-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* Support java.time.Instant and java.time.Duration for time/duration fields
+
+### Features
+
+* add `time range filter` to Google Search Tool ([4aba9a6](https://github.com/googleapis/java-genai/commit/4aba9a66ffb8b63fd5498674c386d0a21e67ae0e))
+* Add async list methods to Models, Caches, and Files ([cde10ab](https://github.com/googleapis/java-genai/commit/cde10abdc1ef0b9f35510413e7fcc0fa1d484b08))
+* add async streaming chat ([df6446a](https://github.com/googleapis/java-genai/commit/df6446a532448023c8e2b670c7fd5f766eca5a2b))
+* add async support for chat ([9973df7](https://github.com/googleapis/java-genai/commit/9973df7d1292f959d1fd3c814131a97ef1554e72))
+* Add AsyncPager class ([cde10ab](https://github.com/googleapis/java-genai/commit/cde10abdc1ef0b9f35510413e7fcc0fa1d484b08))
+* Add basic support for async function calling. ([653094a](https://github.com/googleapis/java-genai/commit/653094af41bf67fcff802ec7bc7ed4f7f4a14f47))
+* add Caches.create/delete/get support ([c4d17a0](https://github.com/googleapis/java-genai/commit/c4d17a0e2ac7aef13b82c2a31ba89d98a090724d))
+* Add client.models.list() method ([25883eb](https://github.com/googleapis/java-genai/commit/25883eb150f41da5b877dbfaae8b49170e91520c))
+* Add Files module with Files.upload, .get and .delete ([e211ca1](https://github.com/googleapis/java-genai/commit/e211ca1f617864f50590a6cc0a4b729a646a41e4))
+* Add Files.download methods ([082c890](https://github.com/googleapis/java-genai/commit/082c890920c2bed8d6fe30cf1d4d5de40b676e5e))
+* Add Image.fromFile() support in Java SDK ([4ddcaa1](https://github.com/googleapis/java-genai/commit/4ddcaa19bb0a99fabff52add6a3206caec281f23))
+* Add list methods in Caches and Files module ([ce6ed85](https://github.com/googleapis/java-genai/commit/ce6ed8543254e762372cc0b8f60585c2325efe9f))
+* add live proactivity_audio and enable_affective_dialog ([64c20c7](https://github.com/googleapis/java-genai/commit/64c20c70addcc179c753fda3ac74906c1dd96503))
+* add multi-speaker voice config ([1689f77](https://github.com/googleapis/java-genai/commit/1689f77614d67a956999b087f8f453a0ff281bd7))
+* Add pagination support ([25883eb](https://github.com/googleapis/java-genai/commit/25883eb150f41da5b877dbfaae8b49170e91520c))
+* Add support for lat/long in search. ([f43f00f](https://github.com/googleapis/java-genai/commit/f43f00f1ca51cfd7e3ee9439fad9013a42940d0a))
+* Add Video FPS, and enable start/end_offset for MLDev ([bc1df02](https://github.com/googleapis/java-genai/commit/bc1df02c6760c197eb3aa1eb7e58b2f982c06a40))
+* Added Async wrappers for the Files Module operations ([b5b608d](https://github.com/googleapis/java-genai/commit/b5b608d69f8a55ad430b0d1b748a1ecbbc0fbc07))
+* enable automatic function calling for Models.generateContent method ([ecca800](https://github.com/googleapis/java-genai/commit/ecca80020a3facaad37744d73e1951b655b62df1))
+* record automatic function calling history for Chat.sendMessage methods. ([7428d87](https://github.com/googleapis/java-genai/commit/7428d87adcf05fbac863fdd0986f7a08009f0b68))
+* support customer-managed encryption key in cached content ([3021aaf](https://github.com/googleapis/java-genai/commit/3021aafb5da9bbbb2852660761728849df924db0))
+* Support ephemeral token creation in Python ([7f33c20](https://github.com/googleapis/java-genai/commit/7f33c207b27c32f12817ba839eaf26526f08c195))
+* Support java.time.Instant and java.time.Duration for time/duration fields ([460d3d3](https://github.com/googleapis/java-genai/commit/460d3d31912c1003774bd898965d7a1aee90a61b))
+* Support models.get/delete/update in Java ([3d8d8ec](https://github.com/googleapis/java-genai/commit/3d8d8ec5eb60c8c8183588389e45300d7f4c82a0))
+* Support Url Context Retrieval tool ([f4fd37a](https://github.com/googleapis/java-genai/commit/f4fd37acea16595168a88801c4c50da0abdfd2f1))
+* Support using ephemeral token in Live session connection in Python ([7f33c20](https://github.com/googleapis/java-genai/commit/7f33c207b27c32f12817ba839eaf26526f08c195))
+
+
+### Bug Fixes
+
+* bug in validate history ([7428d87](https://github.com/googleapis/java-genai/commit/7428d87adcf05fbac863fdd0986f7a08009f0b68))
+* Transformers are not being used in list types ([a9609db](https://github.com/googleapis/java-genai/commit/a9609db72b5a2051f4fbe655ba32ca3f0def3a5a))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([d4561d7](https://github.com/googleapis/java-genai/commit/d4561d78447f45f7be63f4bc6f342ab337f35dc0))
+
 ## [0.8.0](https://github.com/googleapis/java-genai/compare/v0.7.0...v0.8.0) (2025-05-13)
 
 
