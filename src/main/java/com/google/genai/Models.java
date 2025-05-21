@@ -1068,6 +1068,13 @@ public final class Models {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseJsonSchema"},
+          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"routingConfig"}))) {
       throw new IllegalArgumentException("routingConfig parameter is not supported in Gemini API.");
     }
@@ -2785,6 +2792,13 @@ public final class Models {
                   Transformers.tSchema(
                       Common.getValueByPath(fromObject, new String[] {"responseSchema"}))),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseJsonSchema"},
+          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"routingConfig"}) != null) {
