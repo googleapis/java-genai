@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/googleapis/java-genai/compare/v1.0.0...v1.1.0) (2025-05-23)
+
+
+### Features
+
+* support new fields in FileData, GenerationConfig, GroundingChunkRetrievedContext, RetrievalConfig, Schema, TuningJob, VertexAISearch, ([6bf3d32](https://github.com/googleapis/java-genai/commit/6bf3d3224f16a9f46b4bc6e2d4af30bb4dbd768e))
+
 ## [1.0.0](https://github.com/googleapis/java-genai/compare/v0.8.0...v1.0.0) (2025-05-19)
 
 
