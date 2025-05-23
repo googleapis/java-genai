@@ -429,6 +429,13 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -508,6 +515,13 @@ final class LiveConverters {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -2872,6 +2886,13 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2951,6 +2972,13 @@ final class LiveConverters {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
