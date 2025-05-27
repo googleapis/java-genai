@@ -35,6 +35,8 @@ import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
 abstract class ApiClient {
+
+  private static final String SDK_VERSION = "1.0.0"; // x-release-please-version
   CloseableHttpClient httpClient;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -140,7 +142,7 @@ abstract class ApiClient {
   /** Returns the library version. */
   static String libraryVersion() {
     // TODO: Automate revisions to the SDK library version.
-    String libraryLabel = "google-genai-sdk/0.1.0";
+    String libraryLabel = String.format("google-genai-sdk/%s", SDK_VERSION);
     String languageLabel = "gl-java/" + System.getProperty("java.version");
     return libraryLabel + " " + languageLabel;
   }
