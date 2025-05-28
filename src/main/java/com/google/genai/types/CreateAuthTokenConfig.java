@@ -63,8 +63,8 @@ public abstract class CreateAuthTokenConfig extends JsonSerializable {
   public abstract Optional<Integer> uses();
 
   /** Configuration specific to Live API connections created using this token. */
-  @JsonProperty("liveEphemeralParameters")
-  public abstract Optional<LiveEphemeralParameters> liveEphemeralParameters();
+  @JsonProperty("liveConnectConstraints")
+  public abstract Optional<LiveConnectConstraints> liveConnectConstraints();
 
   /** Additional fields to lock in the effective LiveConnectParameters. */
   @JsonProperty("lockAdditionalFields")
@@ -99,9 +99,8 @@ public abstract class CreateAuthTokenConfig extends JsonSerializable {
     @JsonProperty("uses")
     public abstract Builder uses(Integer uses);
 
-    @JsonProperty("liveEphemeralParameters")
-    public abstract Builder liveEphemeralParameters(
-        LiveEphemeralParameters liveEphemeralParameters);
+    @JsonProperty("liveConnectConstraints")
+    public abstract Builder liveConnectConstraints(LiveConnectConstraints liveConnectConstraints);
 
     @JsonProperty("lockAdditionalFields")
     public abstract Builder lockAdditionalFields(List<String> lockAdditionalFields);

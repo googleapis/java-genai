@@ -1835,7 +1835,7 @@ final class TokensConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveEphemeralParametersToMldev(
+  ObjectNode liveConnectConstraintsToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
@@ -1861,7 +1861,7 @@ final class TokensConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveEphemeralParametersToVertex(
+  ObjectNode liveConnectConstraintsToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"model"}))) {
@@ -1901,14 +1901,14 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"uses"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"liveEphemeralParameters"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"liveConnectConstraints"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"bidiGenerateContentSetup"},
-          liveEphemeralParametersToMldev(
+          liveConnectConstraintsToMldev(
               apiClient,
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"liveEphemeralParameters"})),
+                  Common.getValueByPath(fromObject, new String[] {"liveConnectConstraints"})),
               toObject));
     }
 
@@ -1941,9 +1941,9 @@ final class TokensConverters {
     }
 
     if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"liveEphemeralParameters"}))) {
+        Common.getValueByPath(fromObject, new String[] {"liveConnectConstraints"}))) {
       throw new IllegalArgumentException(
-          "liveEphemeralParameters parameter is not supported in Vertex AI.");
+          "liveConnectConstraints parameter is not supported in Vertex AI.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"lockAdditionalFields"}))) {
