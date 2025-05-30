@@ -25,10 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for LiveEphemeralParameters for Auth Token creation. */
+/** Config for LiveConnectConstraints for Auth Token creation. */
 @AutoValue
-@JsonDeserialize(builder = LiveEphemeralParameters.Builder.class)
-public abstract class LiveEphemeralParameters extends JsonSerializable {
+@JsonDeserialize(builder = LiveConnectConstraints.Builder.class)
+public abstract class LiveConnectConstraints extends JsonSerializable {
   /**
    * ID of the model to configure in the ephemeral token for Live API. For a list of models, see
    * `Gemini models <https://ai.google.dev/gemini-api/docs/models>`.
@@ -40,21 +40,21 @@ public abstract class LiveEphemeralParameters extends JsonSerializable {
   @JsonProperty("config")
   public abstract Optional<LiveConnectConfig> config();
 
-  /** Instantiates a builder for LiveEphemeralParameters. */
+  /** Instantiates a builder for LiveConnectConstraints. */
   public static Builder builder() {
-    return new AutoValue_LiveEphemeralParameters.Builder();
+    return new AutoValue_LiveConnectConstraints.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for LiveEphemeralParameters. */
+  /** Builder for LiveConnectConstraints. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveEphemeralParameters.builder()` for instantiation. */
+    /** For internal usage. Please use `LiveConnectConstraints.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_LiveEphemeralParameters.Builder();
+      return new AutoValue_LiveConnectConstraints.Builder();
     }
 
     @JsonProperty("model")
@@ -63,11 +63,11 @@ public abstract class LiveEphemeralParameters extends JsonSerializable {
     @JsonProperty("config")
     public abstract Builder config(LiveConnectConfig config);
 
-    public abstract LiveEphemeralParameters build();
+    public abstract LiveConnectConstraints build();
   }
 
-  /** Deserializes a JSON string to a LiveEphemeralParameters object. */
-  public static LiveEphemeralParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, LiveEphemeralParameters.class);
+  /** Deserializes a JSON string to a LiveConnectConstraints object. */
+  public static LiveConnectConstraints fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, LiveConnectConstraints.class);
   }
 }
