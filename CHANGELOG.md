@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/googleapis/java-genai/compare/v1.1.0...v1.2.0) (2025-05-30)
+
+
+### Features
+
+* Adding `thought_signature` field to the `Part` to store the signature for thoughts. ([dc9c8f7](https://github.com/googleapis/java-genai/commit/dc9c8f79bff4f449ccec61e078c0edae4f85f4cb))
+* include UNEXPECTED_TOOL_CALL enum value to FinishReason for Vertex AI APIs. ([8186ff0](https://github.com/googleapis/java-genai/commit/8186ff0064b6f22e9f30e047ec0aebbb4804becc))
+
+
+### Bug Fixes
+
+* Rename LiveEphemeralParameters to LiveConnectConstraints. ([0655609](https://github.com/googleapis/java-genai/commit/0655609c854a5b147974016cee5f28d712b4a06f))
+
 ## [1.1.0](https://github.com/googleapis/java-genai/compare/v1.0.0...v1.1.0) (2025-05-28)
 
 
