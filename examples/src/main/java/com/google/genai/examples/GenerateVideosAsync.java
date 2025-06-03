@@ -78,6 +78,7 @@ public final class GenerateVideosAsync {
             "veo-2.0-generate-001",
             "A neon hologram of a cat driving at top speed",
             null,
+            null,
             generateVideosConfig);
 
     generateVideosOperationFuture

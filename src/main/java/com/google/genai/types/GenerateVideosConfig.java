@@ -93,6 +93,13 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("generateAudio")
   public abstract Optional<Boolean> generateAudio();
 
+  /**
+   * Image to use as the last frame of generated videos. Only supported for image to video use
+   * cases.
+   */
+  @JsonProperty("lastFrame")
+  public abstract Optional<Image> lastFrame();
+
   /** Instantiates a builder for GenerateVideosConfig. */
   public static Builder builder() {
     return new AutoValue_GenerateVideosConfig.Builder();
@@ -227,6 +234,25 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("generateAudio")
     public abstract Builder generateAudio(boolean generateAudio);
+
+    /**
+     * Setter for lastFrame.
+     *
+     * <p>lastFrame: Image to use as the last frame of generated videos. Only supported for image to
+     * video use cases.
+     */
+    @JsonProperty("lastFrame")
+    public abstract Builder lastFrame(Image lastFrame);
+
+    /**
+     * Setter for lastFrame builder.
+     *
+     * <p>lastFrame: Image to use as the last frame of generated videos. Only supported for image to
+     * video use cases.
+     */
+    public Builder lastFrame(Image.Builder lastFrameBuilder) {
+      return lastFrame(lastFrameBuilder.build());
+    }
 
     public abstract GenerateVideosConfig build();
   }

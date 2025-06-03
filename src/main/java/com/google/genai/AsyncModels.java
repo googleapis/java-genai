@@ -46,6 +46,7 @@ import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
+import com.google.genai.types.Video;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
@@ -122,21 +123,24 @@ public final class AsyncModels {
   }
 
   /**
-   * Asynchronously generates videos given a GenAI model, and a prompt or an image.
+   * Asynchronously generates videos given a GenAI model, and an input (text, image, or video).
    *
    * <p>This method is experimental.
    *
    * @param model the name of the GenAI model to use for generating videos
    * @param prompt the text prompt for generating the videos. Optional for image to video use cases.
    * @param image the input image for generating the videos. Optional if prompt is provided.
+   * @param video the input video for video extension use cases. Optional if prompt or image is
+   *     provided.
    * @param config a {@link com.google.genai.types.GenerateVideosConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
    *     generated videos.
    */
   public CompletableFuture<GenerateVideosOperation> generateVideos(
-      String model, String prompt, Image image, GenerateVideosConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.generateVideos(model, prompt, image, config));
+      String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
+    return CompletableFuture.supplyAsync(
+        () -> models.generateVideos(model, prompt, image, video, config));
   }
 
   /**
