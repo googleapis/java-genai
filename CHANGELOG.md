@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/googleapis/java-genai/compare/v1.2.0...v1.3.0) (2025-06-04)
+
+
+### Features
+
+* Add enhance_prompt field for Gemini Developer API generate_videos ([944af16](https://github.com/googleapis/java-genai/commit/944af164b380eaca7cf4d0be4a346807ad8d0ad9))
+* Enable url_context for Vertex ([cc772d8](https://github.com/googleapis/java-genai/commit/cc772d83354507ee576b6d6fc44c7e435e6fc3f0))
+* **java:** Support `GEMINI_API_KEY` as environment variable for setting API key. ([84e7588](https://github.com/googleapis/java-genai/commit/84e7588d1638770c7bf465aa25c5c7402404c918))
+
+
+### Documentation
+
+* Updating docs to include how to initialize client via environment variables ([7fc3e62](https://github.com/googleapis/java-genai/commit/7fc3e624cc46f897bee0d1fa12276e7dc0727c2f))
+
 ## [1.2.0](https://github.com/googleapis/java-genai/compare/v1.1.0...v1.2.0) (2025-05-30)
 
 
