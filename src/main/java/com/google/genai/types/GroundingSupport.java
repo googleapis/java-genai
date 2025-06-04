@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,16 @@ public abstract class GroundingSupport extends JsonSerializable {
     public abstract Builder confidenceScores(List<Float> confidenceScores);
 
     /**
+     * Setter for confidenceScores.
+     *
+     * <p>confidenceScores: Confidence score of the support references. Ranges from 0 to 1. 1 is the
+     * most confident. This list must have the same size as the grounding_chunk_indices.
+     */
+    public Builder confidenceScores(Float... confidenceScores) {
+      return confidenceScores(Arrays.asList(confidenceScores));
+    }
+
+    /**
      * Setter for groundingChunkIndices.
      *
      * <p>groundingChunkIndices: A list of indices (into 'grounding_chunk') specifying the citations
@@ -84,6 +95,17 @@ public abstract class GroundingSupport extends JsonSerializable {
      */
     @JsonProperty("groundingChunkIndices")
     public abstract Builder groundingChunkIndices(List<Integer> groundingChunkIndices);
+
+    /**
+     * Setter for groundingChunkIndices.
+     *
+     * <p>groundingChunkIndices: A list of indices (into 'grounding_chunk') specifying the citations
+     * associated with the claim. For instance [1,3,4] means that grounding_chunk[1],
+     * grounding_chunk[3], grounding_chunk[4] are the retrieved content attributed to the claim.
+     */
+    public Builder groundingChunkIndices(Integer... groundingChunkIndices) {
+      return groundingChunkIndices(Arrays.asList(groundingChunkIndices));
+    }
 
     /**
      * Setter for segment.

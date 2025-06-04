@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -169,6 +172,29 @@ public abstract class Schema extends JsonSerializable {
     public abstract Builder anyOf(List<Schema> anyOf);
 
     /**
+     * Setter for anyOf.
+     *
+     * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
+     * in the list.
+     */
+    public Builder anyOf(Schema... anyOf) {
+      return anyOf(Arrays.asList(anyOf));
+    }
+
+    /**
+     * Setter for anyOf builder.
+     *
+     * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
+     * in the list.
+     */
+    public Builder anyOf(Schema.Builder... anyOfBuilders) {
+      return anyOf(
+          Arrays.asList(anyOfBuilders).stream()
+              .map(Schema.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for default_.
      *
      * <p>default_: Optional. Default value of the data.
@@ -194,6 +220,18 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("enum")
     public abstract Builder enum_(List<String> enum_);
+
+    /**
+     * Setter for enum_.
+     *
+     * <p>enum_: Optional. Possible values of the element of primitive type with enum format.
+     * Examples: 1. We can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH",
+     * "SOUTH", "WEST"]} 2. We can define apartment number as : {type:INTEGER, format:enum,
+     * enum:["101", "201", "301"]}
+     */
+    public Builder enum_(String... enum_) {
+      return enum_(Arrays.asList(enum_));
+    }
 
     /**
      * Setter for example.
@@ -329,12 +367,31 @@ public abstract class Schema extends JsonSerializable {
     public abstract Builder propertyOrdering(List<String> propertyOrdering);
 
     /**
+     * Setter for propertyOrdering.
+     *
+     * <p>propertyOrdering: Optional. The order of the properties. Not a standard field in open api
+     * spec. Only used to support the order of the properties.
+     */
+    public Builder propertyOrdering(String... propertyOrdering) {
+      return propertyOrdering(Arrays.asList(propertyOrdering));
+    }
+
+    /**
      * Setter for required.
      *
      * <p>required: Optional. Required properties of Type.OBJECT.
      */
     @JsonProperty("required")
     public abstract Builder required(List<String> required);
+
+    /**
+     * Setter for required.
+     *
+     * <p>required: Optional. Required properties of Type.OBJECT.
+     */
+    public Builder required(String... required) {
+      return required(Arrays.asList(required));
+    }
 
     /**
      * Setter for title.

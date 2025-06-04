@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,6 +99,27 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
      */
     @JsonProperty("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
+
+    /**
+     * Setter for safetyRatings.
+     *
+     * <p>safetyRatings: Output only. Safety ratings.
+     */
+    public Builder safetyRatings(SafetyRating... safetyRatings) {
+      return safetyRatings(Arrays.asList(safetyRatings));
+    }
+
+    /**
+     * Setter for safetyRatings builder.
+     *
+     * <p>safetyRatings: Output only. Safety ratings.
+     */
+    public Builder safetyRatings(SafetyRating.Builder... safetyRatingsBuilders) {
+      return safetyRatings(
+          Arrays.asList(safetyRatingsBuilders).stream()
+              .map(SafetyRating.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract GenerateContentResponsePromptFeedback build();
   }

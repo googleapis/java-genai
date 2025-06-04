@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,16 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
      */
     @JsonProperty("ragFileIds")
     public abstract Builder ragFileIds(List<String> ragFileIds);
+
+    /**
+     * Setter for ragFileIds.
+     *
+     * <p>ragFileIds: Optional. rag_file_id. The files should be in the same rag_corpus set in
+     * rag_corpus field.
+     */
+    public Builder ragFileIds(String... ragFileIds) {
+      return ragFileIds(Arrays.asList(ragFileIds));
+    }
 
     public abstract VertexRagStoreRagResource build();
   }

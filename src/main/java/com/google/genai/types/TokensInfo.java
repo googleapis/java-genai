@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,12 +77,30 @@ public abstract class TokensInfo extends JsonSerializable {
     public abstract Builder tokenIds(List<Long> tokenIds);
 
     /**
+     * Setter for tokenIds.
+     *
+     * <p>tokenIds: A list of token ids from the input.
+     */
+    public Builder tokenIds(Long... tokenIds) {
+      return tokenIds(Arrays.asList(tokenIds));
+    }
+
+    /**
      * Setter for tokens.
      *
      * <p>tokens: A list of tokens from the input.
      */
     @JsonProperty("tokens")
     public abstract Builder tokens(List<byte[]> tokens);
+
+    /**
+     * Setter for tokens.
+     *
+     * <p>tokens: A list of tokens from the input.
+     */
+    public Builder tokens(byte[]... tokens) {
+      return tokens(Arrays.asList(tokens));
+    }
 
     public abstract TokensInfo build();
   }

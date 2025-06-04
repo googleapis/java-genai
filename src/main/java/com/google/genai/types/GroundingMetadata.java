@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,12 +83,54 @@ public abstract class GroundingMetadata extends JsonSerializable {
     public abstract Builder groundingChunks(List<GroundingChunk> groundingChunks);
 
     /**
+     * Setter for groundingChunks.
+     *
+     * <p>groundingChunks: List of supporting references retrieved from specified grounding source.
+     */
+    public Builder groundingChunks(GroundingChunk... groundingChunks) {
+      return groundingChunks(Arrays.asList(groundingChunks));
+    }
+
+    /**
+     * Setter for groundingChunks builder.
+     *
+     * <p>groundingChunks: List of supporting references retrieved from specified grounding source.
+     */
+    public Builder groundingChunks(GroundingChunk.Builder... groundingChunksBuilders) {
+      return groundingChunks(
+          Arrays.asList(groundingChunksBuilders).stream()
+              .map(GroundingChunk.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for groundingSupports.
      *
      * <p>groundingSupports: Optional. List of grounding support.
      */
     @JsonProperty("groundingSupports")
     public abstract Builder groundingSupports(List<GroundingSupport> groundingSupports);
+
+    /**
+     * Setter for groundingSupports.
+     *
+     * <p>groundingSupports: Optional. List of grounding support.
+     */
+    public Builder groundingSupports(GroundingSupport... groundingSupports) {
+      return groundingSupports(Arrays.asList(groundingSupports));
+    }
+
+    /**
+     * Setter for groundingSupports builder.
+     *
+     * <p>groundingSupports: Optional. List of grounding support.
+     */
+    public Builder groundingSupports(GroundingSupport.Builder... groundingSupportsBuilders) {
+      return groundingSupports(
+          Arrays.asList(groundingSupportsBuilders).stream()
+              .map(GroundingSupport.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for retrievalMetadata.
@@ -113,6 +158,15 @@ public abstract class GroundingMetadata extends JsonSerializable {
     public abstract Builder retrievalQueries(List<String> retrievalQueries);
 
     /**
+     * Setter for retrievalQueries.
+     *
+     * <p>retrievalQueries: Optional. Queries executed by the retrieval tools.
+     */
+    public Builder retrievalQueries(String... retrievalQueries) {
+      return retrievalQueries(Arrays.asList(retrievalQueries));
+    }
+
+    /**
      * Setter for searchEntryPoint.
      *
      * <p>searchEntryPoint: Optional. Google search entry for the following-up web searches.
@@ -136,6 +190,15 @@ public abstract class GroundingMetadata extends JsonSerializable {
      */
     @JsonProperty("webSearchQueries")
     public abstract Builder webSearchQueries(List<String> webSearchQueries);
+
+    /**
+     * Setter for webSearchQueries.
+     *
+     * <p>webSearchQueries: Optional. Web search queries for the following-up web search.
+     */
+    public Builder webSearchQueries(String... webSearchQueries) {
+      return webSearchQueries(Arrays.asList(webSearchQueries));
+    }
 
     public abstract GroundingMetadata build();
   }

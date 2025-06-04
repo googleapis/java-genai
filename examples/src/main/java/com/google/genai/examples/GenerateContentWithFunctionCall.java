@@ -41,7 +41,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
@@ -84,13 +83,9 @@ public final class GenerateContentWithFunctionCall {
         GenerateContentWithFunctionCall.class.getMethod(
             "divideTwoIntegers", Integer.class, Integer.class);
 
+    // Add the two methods as callable functions to the list of tools.
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(
-                    // Add the two methods as callable functions to the list of tools.
-                    Tool.builder().functions(ImmutableList.of(method1, method2)).build()))
-            .build();
+        GenerateContentConfig.builder().tools(Tool.builder().functions(method1, method2)).build();
 
     GenerateContentResponse response =
         client.models.generateContent(

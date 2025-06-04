@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,6 +114,29 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     public abstract Builder cacheTokensDetails(List<ModalityTokenCount> cacheTokensDetails);
 
     /**
+     * Setter for cacheTokensDetails.
+     *
+     * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
+     * input.
+     */
+    public Builder cacheTokensDetails(ModalityTokenCount... cacheTokensDetails) {
+      return cacheTokensDetails(Arrays.asList(cacheTokensDetails));
+    }
+
+    /**
+     * Setter for cacheTokensDetails builder.
+     *
+     * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
+     * input.
+     */
+    public Builder cacheTokensDetails(ModalityTokenCount.Builder... cacheTokensDetailsBuilders) {
+      return cacheTokensDetails(
+          Arrays.asList(cacheTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for cachedContentTokenCount.
      *
      * <p>cachedContentTokenCount: Output only. Number of tokens in the cached part in the input
@@ -138,6 +164,30 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
         List<ModalityTokenCount> candidatesTokensDetails);
 
     /**
+     * Setter for candidatesTokensDetails.
+     *
+     * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
+     * response.
+     */
+    public Builder candidatesTokensDetails(ModalityTokenCount... candidatesTokensDetails) {
+      return candidatesTokensDetails(Arrays.asList(candidatesTokensDetails));
+    }
+
+    /**
+     * Setter for candidatesTokensDetails builder.
+     *
+     * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
+     * response.
+     */
+    public Builder candidatesTokensDetails(
+        ModalityTokenCount.Builder... candidatesTokensDetailsBuilders) {
+      return candidatesTokensDetails(
+          Arrays.asList(candidatesTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for promptTokenCount.
      *
      * <p>promptTokenCount: Number of tokens in the request. When `cached_content` is set, this is
@@ -155,6 +205,29 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      */
     @JsonProperty("promptTokensDetails")
     public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
+
+    /**
+     * Setter for promptTokensDetails.
+     *
+     * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
+     * input.
+     */
+    public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
+      return promptTokensDetails(Arrays.asList(promptTokensDetails));
+    }
+
+    /**
+     * Setter for promptTokensDetails builder.
+     *
+     * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
+     * input.
+     */
+    public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
+      return promptTokensDetails(
+          Arrays.asList(promptTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for thoughtsTokenCount.
@@ -181,6 +254,30 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     @JsonProperty("toolUsePromptTokensDetails")
     public abstract Builder toolUsePromptTokensDetails(
         List<ModalityTokenCount> toolUsePromptTokensDetails);
+
+    /**
+     * Setter for toolUsePromptTokensDetails.
+     *
+     * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
+     * tool-use request inputs.
+     */
+    public Builder toolUsePromptTokensDetails(ModalityTokenCount... toolUsePromptTokensDetails) {
+      return toolUsePromptTokensDetails(Arrays.asList(toolUsePromptTokensDetails));
+    }
+
+    /**
+     * Setter for toolUsePromptTokensDetails builder.
+     *
+     * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
+     * tool-use request inputs.
+     */
+    public Builder toolUsePromptTokensDetails(
+        ModalityTokenCount.Builder... toolUsePromptTokensDetailsBuilders) {
+      return toolUsePromptTokensDetails(
+          Arrays.asList(toolUsePromptTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for totalTokenCount.

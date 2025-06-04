@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +61,27 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
      */
     @JsonProperty("candidates")
     public abstract Builder candidates(List<LogprobsResultCandidate> candidates);
+
+    /**
+     * Setter for candidates.
+     *
+     * <p>candidates: Sorted by log probability in descending order.
+     */
+    public Builder candidates(LogprobsResultCandidate... candidates) {
+      return candidates(Arrays.asList(candidates));
+    }
+
+    /**
+     * Setter for candidates builder.
+     *
+     * <p>candidates: Sorted by log probability in descending order.
+     */
+    public Builder candidates(LogprobsResultCandidate.Builder... candidatesBuilders) {
+      return candidates(
+          Arrays.asList(candidatesBuilders).stream()
+              .map(LogprobsResultCandidate.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract LogprobsResultTopCandidates build();
   }

@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -159,12 +162,54 @@ public abstract class UsageMetadata extends JsonSerializable {
     public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
 
     /**
+     * Setter for promptTokensDetails.
+     *
+     * <p>promptTokensDetails: List of modalities that were processed in the request input.
+     */
+    public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
+      return promptTokensDetails(Arrays.asList(promptTokensDetails));
+    }
+
+    /**
+     * Setter for promptTokensDetails builder.
+     *
+     * <p>promptTokensDetails: List of modalities that were processed in the request input.
+     */
+    public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
+      return promptTokensDetails(
+          Arrays.asList(promptTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for cacheTokensDetails.
      *
      * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
      */
     @JsonProperty("cacheTokensDetails")
     public abstract Builder cacheTokensDetails(List<ModalityTokenCount> cacheTokensDetails);
+
+    /**
+     * Setter for cacheTokensDetails.
+     *
+     * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
+     */
+    public Builder cacheTokensDetails(ModalityTokenCount... cacheTokensDetails) {
+      return cacheTokensDetails(Arrays.asList(cacheTokensDetails));
+    }
+
+    /**
+     * Setter for cacheTokensDetails builder.
+     *
+     * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
+     */
+    public Builder cacheTokensDetails(ModalityTokenCount.Builder... cacheTokensDetailsBuilders) {
+      return cacheTokensDetails(
+          Arrays.asList(cacheTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for responseTokensDetails.
@@ -175,6 +220,28 @@ public abstract class UsageMetadata extends JsonSerializable {
     public abstract Builder responseTokensDetails(List<ModalityTokenCount> responseTokensDetails);
 
     /**
+     * Setter for responseTokensDetails.
+     *
+     * <p>responseTokensDetails: List of modalities that were returned in the response.
+     */
+    public Builder responseTokensDetails(ModalityTokenCount... responseTokensDetails) {
+      return responseTokensDetails(Arrays.asList(responseTokensDetails));
+    }
+
+    /**
+     * Setter for responseTokensDetails builder.
+     *
+     * <p>responseTokensDetails: List of modalities that were returned in the response.
+     */
+    public Builder responseTokensDetails(
+        ModalityTokenCount.Builder... responseTokensDetailsBuilders) {
+      return responseTokensDetails(
+          Arrays.asList(responseTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for toolUsePromptTokensDetails.
      *
      * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
@@ -182,6 +249,28 @@ public abstract class UsageMetadata extends JsonSerializable {
     @JsonProperty("toolUsePromptTokensDetails")
     public abstract Builder toolUsePromptTokensDetails(
         List<ModalityTokenCount> toolUsePromptTokensDetails);
+
+    /**
+     * Setter for toolUsePromptTokensDetails.
+     *
+     * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
+     */
+    public Builder toolUsePromptTokensDetails(ModalityTokenCount... toolUsePromptTokensDetails) {
+      return toolUsePromptTokensDetails(Arrays.asList(toolUsePromptTokensDetails));
+    }
+
+    /**
+     * Setter for toolUsePromptTokensDetails builder.
+     *
+     * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
+     */
+    public Builder toolUsePromptTokensDetails(
+        ModalityTokenCount.Builder... toolUsePromptTokensDetailsBuilders) {
+      return toolUsePromptTokensDetails(
+          Arrays.asList(toolUsePromptTokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for trafficType.

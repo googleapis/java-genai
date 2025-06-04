@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -147,6 +150,29 @@ public abstract class Model extends JsonSerializable {
     public abstract Builder endpoints(List<Endpoint> endpoints);
 
     /**
+     * Setter for endpoints.
+     *
+     * <p>endpoints: List of deployed models created from this base model. Note that a model could
+     * have been deployed to endpoints in different locations.
+     */
+    public Builder endpoints(Endpoint... endpoints) {
+      return endpoints(Arrays.asList(endpoints));
+    }
+
+    /**
+     * Setter for endpoints builder.
+     *
+     * <p>endpoints: List of deployed models created from this base model. Note that a model could
+     * have been deployed to endpoints in different locations.
+     */
+    public Builder endpoints(Endpoint.Builder... endpointsBuilders) {
+      return endpoints(
+          Arrays.asList(endpointsBuilders).stream()
+              .map(Endpoint.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for labels.
      *
      * <p>labels: Labels with user-defined metadata to organize your models.
@@ -196,6 +222,15 @@ public abstract class Model extends JsonSerializable {
     public abstract Builder supportedActions(List<String> supportedActions);
 
     /**
+     * Setter for supportedActions.
+     *
+     * <p>supportedActions: List of actions that are supported by the model.
+     */
+    public Builder supportedActions(String... supportedActions) {
+      return supportedActions(Arrays.asList(supportedActions));
+    }
+
+    /**
      * Setter for defaultCheckpointId.
      *
      * <p>defaultCheckpointId: The default checkpoint id of a model version.
@@ -210,6 +245,27 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("checkpoints")
     public abstract Builder checkpoints(List<Checkpoint> checkpoints);
+
+    /**
+     * Setter for checkpoints.
+     *
+     * <p>checkpoints: The checkpoints of the model.
+     */
+    public Builder checkpoints(Checkpoint... checkpoints) {
+      return checkpoints(Arrays.asList(checkpoints));
+    }
+
+    /**
+     * Setter for checkpoints builder.
+     *
+     * <p>checkpoints: The checkpoints of the model.
+     */
+    public Builder checkpoints(Checkpoint.Builder... checkpointsBuilders) {
+      return checkpoints(
+          Arrays.asList(checkpointsBuilders).stream()
+              .map(Checkpoint.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract Model build();
   }

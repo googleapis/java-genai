@@ -41,7 +41,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
@@ -66,9 +65,7 @@ public final class GenerateContentWithResponseModality {
     }
 
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .responseModalities(ImmutableList.of("TEXT", "IMAGE"))
-            .build();
+        GenerateContentConfig.builder().responseModalities("TEXT", "IMAGE").build();
 
     GenerateContentResponse response =
         client.models.generateContent(

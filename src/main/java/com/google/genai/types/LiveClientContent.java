@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +84,33 @@ public abstract class LiveClientContent extends JsonSerializable {
      */
     @JsonProperty("turns")
     public abstract Builder turns(List<Content> turns);
+
+    /**
+     * Setter for turns.
+     *
+     * <p>turns: The content appended to the current conversation with the model.
+     *
+     * <p>For single-turn queries, this is a single instance. For multi-turn queries, this is a
+     * repeated field that contains conversation history and latest request.
+     */
+    public Builder turns(Content... turns) {
+      return turns(Arrays.asList(turns));
+    }
+
+    /**
+     * Setter for turns builder.
+     *
+     * <p>turns: The content appended to the current conversation with the model.
+     *
+     * <p>For single-turn queries, this is a single instance. For multi-turn queries, this is a
+     * repeated field that contains conversation history and latest request.
+     */
+    public Builder turns(Content.Builder... turnsBuilders) {
+      return turns(
+          Arrays.asList(turnsBuilders).stream()
+              .map(Content.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for turnComplete.

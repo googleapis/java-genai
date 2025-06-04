@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +104,27 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
      */
     @JsonProperty("mediaChunks")
     public abstract Builder mediaChunks(List<Blob> mediaChunks);
+
+    /**
+     * Setter for mediaChunks.
+     *
+     * <p>mediaChunks: Inlined bytes data for media input.
+     */
+    public Builder mediaChunks(Blob... mediaChunks) {
+      return mediaChunks(Arrays.asList(mediaChunks));
+    }
+
+    /**
+     * Setter for mediaChunks builder.
+     *
+     * <p>mediaChunks: Inlined bytes data for media input.
+     */
+    public Builder mediaChunks(Blob.Builder... mediaChunksBuilders) {
+      return mediaChunks(
+          Arrays.asList(mediaChunksBuilders).stream()
+              .map(Blob.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for audio.
