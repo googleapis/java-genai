@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +70,27 @@ public abstract class LiveClientToolResponse extends JsonSerializable {
      */
     @JsonProperty("functionResponses")
     public abstract Builder functionResponses(List<FunctionResponse> functionResponses);
+
+    /**
+     * Setter for functionResponses.
+     *
+     * <p>functionResponses: The response to the function calls.
+     */
+    public Builder functionResponses(FunctionResponse... functionResponses) {
+      return functionResponses(Arrays.asList(functionResponses));
+    }
+
+    /**
+     * Setter for functionResponses builder.
+     *
+     * <p>functionResponses: The response to the function calls.
+     */
+    public Builder functionResponses(FunctionResponse.Builder... functionResponsesBuilders) {
+      return functionResponses(
+          Arrays.asList(functionResponsesBuilders).stream()
+              .map(FunctionResponse.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract LiveClientToolResponse build();
   }

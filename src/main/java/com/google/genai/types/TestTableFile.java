@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,12 +91,42 @@ public abstract class TestTableFile extends JsonSerializable {
     public abstract Builder parameterNames(List<String> parameterNames);
 
     /**
+     * Setter for parameterNames.
+     *
+     * <p>parameterNames:
+     */
+    public Builder parameterNames(String... parameterNames) {
+      return parameterNames(Arrays.asList(parameterNames));
+    }
+
+    /**
      * Setter for testTable.
      *
      * <p>testTable:
      */
     @JsonProperty("testTable")
     public abstract Builder testTable(List<TestTableItem> testTable);
+
+    /**
+     * Setter for testTable.
+     *
+     * <p>testTable:
+     */
+    public Builder testTable(TestTableItem... testTable) {
+      return testTable(Arrays.asList(testTable));
+    }
+
+    /**
+     * Setter for testTable builder.
+     *
+     * <p>testTable:
+     */
+    public Builder testTable(TestTableItem.Builder... testTableBuilders) {
+      return testTable(
+          Arrays.asList(testTableBuilders).stream()
+              .map(TestTableItem.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract TestTableFile build();
   }

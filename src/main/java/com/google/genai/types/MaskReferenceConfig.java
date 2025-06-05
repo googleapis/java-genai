@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,6 +94,16 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
 
     @JsonProperty("segmentationClasses")
     public abstract Builder segmentationClasses(List<Integer> segmentationClasses);
+
+    /**
+     * Setter for segmentationClasses.
+     *
+     * <p>segmentationClasses: A list of up to 5 class ids to use for semantic segmentation.
+     * Automatically creates an image mask based on specific objects.
+     */
+    public Builder segmentationClasses(Integer... segmentationClasses) {
+      return segmentationClasses(Arrays.asList(segmentationClasses));
+    }
 
     /**
      * Setter for maskDilation.

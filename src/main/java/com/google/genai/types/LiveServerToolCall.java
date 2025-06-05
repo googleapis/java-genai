@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +64,27 @@ public abstract class LiveServerToolCall extends JsonSerializable {
      */
     @JsonProperty("functionCalls")
     public abstract Builder functionCalls(List<FunctionCall> functionCalls);
+
+    /**
+     * Setter for functionCalls.
+     *
+     * <p>functionCalls: The function call to be executed.
+     */
+    public Builder functionCalls(FunctionCall... functionCalls) {
+      return functionCalls(Arrays.asList(functionCalls));
+    }
+
+    /**
+     * Setter for functionCalls builder.
+     *
+     * <p>functionCalls: The function call to be executed.
+     */
+    public Builder functionCalls(FunctionCall.Builder... functionCallsBuilders) {
+      return functionCalls(
+          Arrays.asList(functionCallsBuilders).stream()
+              .map(FunctionCall.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract LiveServerToolCall build();
   }

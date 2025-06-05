@@ -27,6 +27,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -189,6 +190,16 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     @JsonProperty("responseModalities")
     public abstract Builder responseModalities(List<Modality> responseModalities);
 
+    /**
+     * Setter for responseModalities.
+     *
+     * <p>responseModalities: The requested modalities of the response. Represents the set of
+     * modalities that the model can return. Defaults to AUDIO if not specified.
+     */
+    public Builder responseModalities(Modality... responseModalities) {
+      return responseModalities(Arrays.asList(responseModalities));
+    }
+
     @CanIgnoreReturnValue
     public Builder responseModalitiesFromKnown(List<Modality.Known> knownTypes) {
       ImmutableList<Modality> listItems =
@@ -324,6 +335,33 @@ public abstract class LiveConnectConfig extends JsonSerializable {
      */
     @JsonProperty("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     *
+     * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
+     * perform an action, or set of actions, outside of knowledge and scope of the model.
+     */
+    public Builder tools(Tool... tools) {
+      return tools(Arrays.asList(tools));
+    }
+
+    /**
+     * Setter for tools builder.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     *
+     * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
+     * perform an action, or set of actions, outside of knowledge and scope of the model.
+     */
+    public Builder tools(Tool.Builder... toolsBuilders) {
+      return tools(
+          Arrays.asList(toolsBuilders).stream()
+              .map(Tool.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for sessionResumption.

@@ -49,9 +49,7 @@ public class LiveConvertersTest {
                     .media(
                         Blob.builder()
                             .mimeType("audio/mp3")
-                            .data(new byte[] {72, 101, 108, 108, 111, 33})
-                            .build())
-                    .build())
+                            .data(new byte[] {72, 101, 108, 108, 111, 33})))
             .build();
 
     final LiveConverters mldevLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
@@ -83,7 +81,7 @@ public class LiveConvertersTest {
 
     final LiveClientMessage message =
         LiveClientMessage.builder()
-            .realtimeInputParameters(LiveSendRealtimeInputParameters.builder().text("test").build())
+            .realtimeInputParameters(LiveSendRealtimeInputParameters.builder().text("test"))
             .build();
 
     final LiveConverters mldevLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
@@ -118,9 +116,7 @@ public class LiveConvertersTest {
                     .audio(
                         Blob.builder()
                             .mimeType("audio/mp3")
-                            .data(new byte[] {72, 101, 108, 108, 111, 33})
-                            .build())
-                    .build())
+                            .data(new byte[] {72, 101, 108, 108, 111, 33})))
             .build();
 
     final LiveConverters mldevLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
@@ -156,9 +152,7 @@ public class LiveConvertersTest {
                     .video(
                         Blob.builder()
                             .mimeType("audio/mp3")
-                            .data(new byte[] {72, 101, 108, 108, 111, 33})
-                            .build())
-                    .build())
+                            .data(new byte[] {72, 101, 108, 108, 111, 33})))
             .build();
 
     final LiveConverters mldevLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
@@ -178,22 +172,18 @@ public class LiveConvertersTest {
   public void testMultiSpeakerVoiceConfig_throws() {
     List<SpeakerVoiceConfig> speakerVoiceConfigs = new ArrayList<>();
     speakerVoiceConfigs.add(
-        SpeakerVoiceConfig
-            .builder()
+        SpeakerVoiceConfig.builder()
             .speaker("Alice")
             .voiceConfig(
                 VoiceConfig.builder()
-                    .prebuiltVoiceConfig(PrebuiltVoiceConfig.builder().voiceName("kore").build())
-                    .build())
+                    .prebuiltVoiceConfig(PrebuiltVoiceConfig.builder().voiceName("kore")))
             .build());
     speakerVoiceConfigs.add(
-        SpeakerVoiceConfig
-            .builder()
+        SpeakerVoiceConfig.builder()
             .speaker("Bob")
             .voiceConfig(
                 VoiceConfig.builder()
-                    .prebuiltVoiceConfig(PrebuiltVoiceConfig.builder().voiceName("puck").build())
-                    .build())
+                    .prebuiltVoiceConfig(PrebuiltVoiceConfig.builder().voiceName("puck")))
             .build());
 
     final LiveConnectConfig message =
@@ -201,11 +191,8 @@ public class LiveConvertersTest {
             .speechConfig(
                 SpeechConfig.builder()
                     .multiSpeakerVoiceConfig(
-                        MultiSpeakerVoiceConfig.builder()
-                            .speakerVoiceConfigs(speakerVoiceConfigs)
-                            .build())
-                    .build())
-        .build();
+                        MultiSpeakerVoiceConfig.builder().speakerVoiceConfigs(speakerVoiceConfigs)))
+            .build();
 
     final LiveConverters mldevLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
 

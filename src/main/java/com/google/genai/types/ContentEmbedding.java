@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,15 @@ public abstract class ContentEmbedding extends JsonSerializable {
      */
     @JsonProperty("values")
     public abstract Builder values(List<Float> values);
+
+    /**
+     * Setter for values.
+     *
+     * <p>values: A list of floats representing an embedding.
+     */
+    public Builder values(Float... values) {
+      return values(Arrays.asList(values));
+    }
 
     /**
      * Setter for statistics.

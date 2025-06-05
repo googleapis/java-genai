@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +66,29 @@ public abstract class EmbedContentResponse extends JsonSerializable {
      */
     @JsonProperty("embeddings")
     public abstract Builder embeddings(List<ContentEmbedding> embeddings);
+
+    /**
+     * Setter for embeddings.
+     *
+     * <p>embeddings: The embeddings for each request, in the same order as provided in the batch
+     * request.
+     */
+    public Builder embeddings(ContentEmbedding... embeddings) {
+      return embeddings(Arrays.asList(embeddings));
+    }
+
+    /**
+     * Setter for embeddings builder.
+     *
+     * <p>embeddings: The embeddings for each request, in the same order as provided in the batch
+     * request.
+     */
+    public Builder embeddings(ContentEmbedding.Builder... embeddingsBuilders) {
+      return embeddings(
+          Arrays.asList(embeddingsBuilders).stream()
+              .map(ContentEmbedding.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for metadata.

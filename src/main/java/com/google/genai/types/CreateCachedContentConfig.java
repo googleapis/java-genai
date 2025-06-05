@@ -18,6 +18,8 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,6 +27,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -149,6 +152,27 @@ public abstract class CreateCachedContentConfig extends JsonSerializable {
     public abstract Builder contents(List<Content> contents);
 
     /**
+     * Setter for contents.
+     *
+     * <p>contents: The content to cache.
+     */
+    public Builder contents(Content... contents) {
+      return contents(Arrays.asList(contents));
+    }
+
+    /**
+     * Setter for contents builder.
+     *
+     * <p>contents: The content to cache.
+     */
+    public Builder contents(Content.Builder... contentsBuilders) {
+      return contents(
+          Arrays.asList(contentsBuilders).stream()
+              .map(Content.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for systemInstruction.
      *
      * <p>systemInstruction: Developer set system instruction.
@@ -172,6 +196,27 @@ public abstract class CreateCachedContentConfig extends JsonSerializable {
      */
     @JsonProperty("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     */
+    public Builder tools(Tool... tools) {
+      return tools(Arrays.asList(tools));
+    }
+
+    /**
+     * Setter for tools builder.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     */
+    public Builder tools(Tool.Builder... toolsBuilders) {
+      return tools(
+          Arrays.asList(toolsBuilders).stream()
+              .map(Tool.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for toolConfig.

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -74,6 +75,16 @@ public abstract class FileStatus extends JsonSerializable {
      */
     @JsonProperty("details")
     public abstract Builder details(List<Map<String, Object>> details);
+
+    /**
+     * Setter for details.
+     *
+     * <p>details: A list of messages that carry the error details. There is a common set of message
+     * types for APIs to use.
+     */
+    public Builder details(Map<String, Object>... details) {
+      return details(Arrays.asList(details));
+    }
 
     /**
      * Setter for message.

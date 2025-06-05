@@ -18,6 +18,8 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +110,28 @@ public abstract class Tool extends JsonSerializable {
      */
     @JsonProperty("functionDeclarations")
     public abstract Builder functionDeclarations(List<FunctionDeclaration> functionDeclarations);
+
+    /**
+     * Setter for functionDeclarations.
+     *
+     * <p>functionDeclarations: List of function declarations that the tool supports.
+     */
+    public Builder functionDeclarations(FunctionDeclaration... functionDeclarations) {
+      return functionDeclarations(Arrays.asList(functionDeclarations));
+    }
+
+    /**
+     * Setter for functionDeclarations builder.
+     *
+     * <p>functionDeclarations: List of function declarations that the tool supports.
+     */
+    public Builder functionDeclarations(
+        FunctionDeclaration.Builder... functionDeclarationsBuilders) {
+      return functionDeclarations(
+          Arrays.asList(functionDeclarationsBuilders).stream()
+              .map(FunctionDeclaration.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for retrieval.
@@ -231,6 +256,16 @@ public abstract class Tool extends JsonSerializable {
      */
     @JsonIgnore
     public abstract Builder functions(List<Method> functions);
+
+    /**
+     * Setter for functions.
+     *
+     * <p>functions: The java.lang.reflect.Method instance. If provided, it will to be parsed into a
+     * list of FunctionDeclaration instances, and be assigned to the functionDeclarations field.
+     */
+    public Builder functions(Method... functions) {
+      return functions(Arrays.asList(functions));
+    }
 
     /**
      * Setter for codeExecution.

@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +61,27 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
      */
     @JsonProperty("speakerVoiceConfigs")
     public abstract Builder speakerVoiceConfigs(List<SpeakerVoiceConfig> speakerVoiceConfigs);
+
+    /**
+     * Setter for speakerVoiceConfigs.
+     *
+     * <p>speakerVoiceConfigs: The configuration for the speaker to use.
+     */
+    public Builder speakerVoiceConfigs(SpeakerVoiceConfig... speakerVoiceConfigs) {
+      return speakerVoiceConfigs(Arrays.asList(speakerVoiceConfigs));
+    }
+
+    /**
+     * Setter for speakerVoiceConfigs builder.
+     *
+     * <p>speakerVoiceConfigs: The configuration for the speaker to use.
+     */
+    public Builder speakerVoiceConfigs(SpeakerVoiceConfig.Builder... speakerVoiceConfigsBuilders) {
+      return speakerVoiceConfigs(
+          Arrays.asList(speakerVoiceConfigsBuilders).stream()
+              .map(SpeakerVoiceConfig.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract MultiSpeakerVoiceConfig build();
   }

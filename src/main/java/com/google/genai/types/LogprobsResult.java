@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,12 +71,56 @@ public abstract class LogprobsResult extends JsonSerializable {
     public abstract Builder chosenCandidates(List<LogprobsResultCandidate> chosenCandidates);
 
     /**
+     * Setter for chosenCandidates.
+     *
+     * <p>chosenCandidates: Length = total number of decoding steps. The chosen candidates may or
+     * may not be in top_candidates.
+     */
+    public Builder chosenCandidates(LogprobsResultCandidate... chosenCandidates) {
+      return chosenCandidates(Arrays.asList(chosenCandidates));
+    }
+
+    /**
+     * Setter for chosenCandidates builder.
+     *
+     * <p>chosenCandidates: Length = total number of decoding steps. The chosen candidates may or
+     * may not be in top_candidates.
+     */
+    public Builder chosenCandidates(LogprobsResultCandidate.Builder... chosenCandidatesBuilders) {
+      return chosenCandidates(
+          Arrays.asList(chosenCandidatesBuilders).stream()
+              .map(LogprobsResultCandidate.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for topCandidates.
      *
      * <p>topCandidates: Length = total number of decoding steps.
      */
     @JsonProperty("topCandidates")
     public abstract Builder topCandidates(List<LogprobsResultTopCandidates> topCandidates);
+
+    /**
+     * Setter for topCandidates.
+     *
+     * <p>topCandidates: Length = total number of decoding steps.
+     */
+    public Builder topCandidates(LogprobsResultTopCandidates... topCandidates) {
+      return topCandidates(Arrays.asList(topCandidates));
+    }
+
+    /**
+     * Setter for topCandidates builder.
+     *
+     * <p>topCandidates: Length = total number of decoding steps.
+     */
+    public Builder topCandidates(LogprobsResultTopCandidates.Builder... topCandidatesBuilders) {
+      return topCandidates(
+          Arrays.asList(topCandidatesBuilders).stream()
+              .map(LogprobsResultTopCandidates.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract LogprobsResult build();
   }

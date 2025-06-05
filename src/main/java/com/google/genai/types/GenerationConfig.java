@@ -27,6 +27,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -256,6 +257,15 @@ public abstract class GenerationConfig extends JsonSerializable {
     @JsonProperty("responseModalities")
     public abstract Builder responseModalities(List<Modality> responseModalities);
 
+    /**
+     * Setter for responseModalities.
+     *
+     * <p>responseModalities: Optional. The modalities of the response.
+     */
+    public Builder responseModalities(Modality... responseModalities) {
+      return responseModalities(Arrays.asList(responseModalities));
+    }
+
     @CanIgnoreReturnValue
     public Builder responseModalitiesFromKnown(List<Modality.Known> knownTypes) {
       ImmutableList<Modality> listItems =
@@ -344,6 +354,15 @@ public abstract class GenerationConfig extends JsonSerializable {
      */
     @JsonProperty("stopSequences")
     public abstract Builder stopSequences(List<String> stopSequences);
+
+    /**
+     * Setter for stopSequences.
+     *
+     * <p>stopSequences: Optional. Stop sequences.
+     */
+    public Builder stopSequences(String... stopSequences) {
+      return stopSequences(Arrays.asList(stopSequences));
+    }
 
     /**
      * Setter for temperature.

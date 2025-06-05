@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.File;
 import com.google.genai.types.FunctionDeclaration;
@@ -90,10 +89,7 @@ public class TransformersTest {
     Schema schema =
         Schema.builder()
             .type("OBJECT")
-            .anyOf(
-                ImmutableList.of(
-                    Schema.builder().type("STRING").build(),
-                    Schema.builder().type("NUMBER").build()))
+            .anyOf(Schema.builder().type("STRING"), Schema.builder().type("NUMBER"))
             .build();
     Schema transformedSchema = Transformers.tSchema(VERTEX_AI_CLIENT, schema);
     assertEquals(2, transformedSchema.anyOf().get().size());
@@ -104,8 +100,7 @@ public class TransformersTest {
 
   @Test
   public void testTSchema_Items_success() {
-    Schema schema =
-        Schema.builder().type("ARRAY").items(Schema.builder().type("STRING").build()).build();
+    Schema schema = Schema.builder().type("ARRAY").items(Schema.builder().type("STRING")).build();
     Schema transformedSchema = Transformers.tSchema(GEMINI_API_CLIENT, schema);
     assertEquals("STRING", transformedSchema.items().get().type().get().toString());
     assertEquals("ARRAY", transformedSchema.type().get().toString());
@@ -113,7 +108,8 @@ public class TransformersTest {
 
   @Test
   public void testTSchema_Required_success() {
-    Schema schema = Schema.builder()
+    Schema schema =
+        Schema.builder()
             .type("ARRAY")
             .items(
                 Schema.builder()
@@ -125,11 +121,9 @@ public class TransformersTest {
                             "ingredients",
                             Schema.builder()
                                 .type("ARRAY")
-                                .items(Schema.builder().type("STRING").build())
-                                .build()
-                            ))
-                    .required(ImmutableList.of("recipe_name", "ingredients"))
-                    .build())
+                                .items(Schema.builder().type("STRING"))
+                                .build()))
+                    .required("recipe_name", "ingredients"))
             .build();
     Schema transformedSchema = Transformers.tSchema(GEMINI_API_CLIENT, schema);
     assertEquals(schema, transformedSchema);
@@ -140,26 +134,23 @@ public class TransformersTest {
     Tool tool =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("functionName1")
-                        .description("functionDescription1")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(
-                                    ImmutableMap.of(
-                                        "recipeName",
-                                        Schema.builder().type("STRING").build(),
-                                        "ingredients",
-                                        Schema.builder()
-                                            .type("ARRAY")
-                                            .items(Schema.builder().type("STRING").build())
-                                            .build()))
-                                .required(ImmutableList.of("recipeName", "ingredients"))
-                                .build())
-                        .build()))
-            .googleSearch(GoogleSearch.builder().build())
+                FunctionDeclaration.builder()
+                    .name("functionName1")
+                    .description("functionDescription1")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(
+                                ImmutableMap.of(
+                                    "recipeName",
+                                    Schema.builder().type("STRING").build(),
+                                    "ingredients",
+                                    Schema.builder()
+                                        .type("ARRAY")
+                                        .items(Schema.builder().type("STRING"))
+                                        .build()))
+                            .required("recipeName", "ingredients")))
+            .googleSearch(GoogleSearch.builder())
             .build();
     Tool geminiTransformedTool = Transformers.tTool(GEMINI_API_CLIENT, tool);
     Tool vertexTransformedTool = Transformers.tTool(VERTEX_AI_CLIENT, tool);
@@ -180,69 +171,60 @@ public class TransformersTest {
     Tool originalTool =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("functionName1")
-                        .description("functionDescription1")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(
-                                    ImmutableMap.of(
-                                        "recipeName",
-                                        Schema.builder().type("STRING").build(),
-                                        "ingredients",
-                                        Schema.builder()
-                                            .type("ARRAY")
-                                            .items(Schema.builder().type("STRING").build())
-                                            .build()))
-                                .required(ImmutableList.of("recipeName", "ingredients"))
-                                .build())
-                        .build()))
-            .googleSearch(GoogleSearch.builder().build())
-            .functions(ImmutableList.of(method))
+                FunctionDeclaration.builder()
+                    .name("functionName1")
+                    .description("functionDescription1")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(
+                                ImmutableMap.of(
+                                    "recipeName",
+                                    Schema.builder().type("STRING").build(),
+                                    "ingredients",
+                                    Schema.builder()
+                                        .type("ARRAY")
+                                        .items(Schema.builder().type("STRING"))
+                                        .build()))
+                            .required("recipeName", "ingredients")))
+            .googleSearch(GoogleSearch.builder())
+            .functions(method)
             .build();
     Tool geminiTransformedTool = Transformers.tTool(GEMINI_API_CLIENT, originalTool);
     Tool vertexTransformedTool = Transformers.tTool(VERTEX_AI_CLIENT, originalTool);
     Tool expectedTool =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("functionUnderTest")
-                        .description("")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(properties)
-                                .required(
-                                    ImmutableList.of(
-                                        "stringParam",
-                                        "integerParam",
-                                        "doubleParam",
-                                        "floatParam",
-                                        "booleanParam"))
-                                .build())
-                        .build(),
-                    FunctionDeclaration.builder()
-                        .name("functionName1")
-                        .description("functionDescription1")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(
-                                    ImmutableMap.of(
-                                        "recipeName",
-                                        Schema.builder().type("STRING").build(),
-                                        "ingredients",
-                                        Schema.builder()
-                                            .type("ARRAY")
-                                            .items(Schema.builder().type("STRING").build())
-                                            .build()))
-                                .required(ImmutableList.of("recipeName", "ingredients"))
-                                .build())
-                        .build()))
-            .googleSearch(GoogleSearch.builder().build())
+                FunctionDeclaration.builder()
+                    .name("functionUnderTest")
+                    .description("")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(properties)
+                            .required(
+                                "stringParam",
+                                "integerParam",
+                                "doubleParam",
+                                "floatParam",
+                                "booleanParam")),
+                FunctionDeclaration.builder()
+                    .name("functionName1")
+                    .description("functionDescription1")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(
+                                ImmutableMap.of(
+                                    "recipeName",
+                                    Schema.builder().type("STRING").build(),
+                                    "ingredients",
+                                    Schema.builder()
+                                        .type("ARRAY")
+                                        .items(Schema.builder().type("STRING"))
+                                        .build()))
+                            .required("recipeName", "ingredients")))
+            .googleSearch(GoogleSearch.builder())
             .build();
     assertEquals(expectedTool, geminiTransformedTool);
     assertEquals(expectedTool, vertexTransformedTool);
@@ -253,53 +235,47 @@ public class TransformersTest {
     Tool originalTool =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("functionName1")
-                        .description("functionDescription1")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(
-                                    ImmutableMap.of(
-                                        "recipeName",
-                                        Schema.builder().type("STRING").build(),
-                                        "ingredients",
-                                        Schema.builder()
-                                            .type("ARRAY")
-                                            .items(Schema.builder().type("STRING").build())
-                                            .build()))
-                                .required(ImmutableList.of("recipeName", "ingredients"))
-                                .build())
-                        .build()))
-            .googleSearch(GoogleSearch.builder().build())
-            .functions(ImmutableList.of())
+                FunctionDeclaration.builder()
+                    .name("functionName1")
+                    .description("functionDescription1")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(
+                                ImmutableMap.of(
+                                    "recipeName",
+                                    Schema.builder().type("STRING").build(),
+                                    "ingredients",
+                                    Schema.builder()
+                                        .type("ARRAY")
+                                        .items(Schema.builder().type("STRING"))
+                                        .build()))
+                            .required("recipeName", "ingredients")))
+            .googleSearch(GoogleSearch.builder())
+            .functions()
             .build();
     Tool geminiTransformedTool = Transformers.tTool(GEMINI_API_CLIENT, originalTool);
     Tool vertexTransformedTool = Transformers.tTool(VERTEX_AI_CLIENT, originalTool);
     Tool expectedTool =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("functionName1")
-                        .description("functionDescription1")
-                        .parameters(
-                            Schema.builder()
-                                .type("OBJECT")
-                                .properties(
-                                    ImmutableMap.of(
-                                        "recipeName",
-                                        Schema.builder().type("STRING").build(),
-                                        "ingredients",
-                                        Schema.builder()
-                                            .type("ARRAY")
-                                            .items(Schema.builder().type("STRING").build())
-                                            .build()))
-                                .required(ImmutableList.of("recipeName", "ingredients"))
-                                .build())
-                        .build()))
-            .googleSearch(GoogleSearch.builder().build())
+                FunctionDeclaration.builder()
+                    .name("functionName1")
+                    .description("functionDescription1")
+                    .parameters(
+                        Schema.builder()
+                            .type("OBJECT")
+                            .properties(
+                                ImmutableMap.of(
+                                    "recipeName",
+                                    Schema.builder().type("STRING").build(),
+                                    "ingredients",
+                                    Schema.builder()
+                                        .type("ARRAY")
+                                        .items(Schema.builder().type("STRING"))
+                                        .build()))
+                            .required("recipeName", "ingredients")))
+            .googleSearch(GoogleSearch.builder())
             .build();
     assertEquals(expectedTool, geminiTransformedTool);
     assertEquals(expectedTool, vertexTransformedTool);
@@ -348,8 +324,7 @@ public class TransformersTest {
                     .uri(
                         "https://generativelanguage.googleapis.com/v1beta/files/"
                             + FILE_NAME
-                            + ":download?alt=media")
-                    .build())
+                            + ":download?alt=media"))
             .build();
     String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, generatedVideo);
     assertEquals(FILE_NAME, transformedFileName);
@@ -357,7 +332,7 @@ public class TransformersTest {
 
   @Test
   public void tFileName_generatedVideo_noUri_returnNull() {
-    GeneratedVideo generatedVideo = GeneratedVideo.builder().video(Video.builder().build()).build();
+    GeneratedVideo generatedVideo = GeneratedVideo.builder().video(Video.builder()).build();
     String transformedFileName = Transformers.tFileName(GEMINI_API_CLIENT, generatedVideo);
     assertEquals(null, transformedFileName);
   }

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +67,15 @@ public abstract class LiveServerToolCallCancellation extends JsonSerializable {
      */
     @JsonProperty("ids")
     public abstract Builder ids(List<String> ids);
+
+    /**
+     * Setter for ids.
+     *
+     * <p>ids: The ids of the tool calls to be cancelled.
+     */
+    public Builder ids(String... ids) {
+      return ids(Arrays.asList(ids));
+    }
 
     public abstract LiveServerToolCallCancellation build();
   }

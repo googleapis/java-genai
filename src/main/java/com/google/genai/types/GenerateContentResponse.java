@@ -18,6 +18,8 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -96,6 +98,27 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     public abstract Builder candidates(List<Candidate> candidates);
 
     /**
+     * Setter for candidates.
+     *
+     * <p>candidates: Response variations returned by the model.
+     */
+    public Builder candidates(Candidate... candidates) {
+      return candidates(Arrays.asList(candidates));
+    }
+
+    /**
+     * Setter for candidates builder.
+     *
+     * <p>candidates: Response variations returned by the model.
+     */
+    public Builder candidates(Candidate.Builder... candidatesBuilders) {
+      return candidates(
+          Arrays.asList(candidatesBuilders).stream()
+              .map(Candidate.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for createTime.
      *
      * <p>createTime: Timestamp when the request is made to the server.
@@ -119,6 +142,28 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     @JsonProperty("automaticFunctionCallingHistory")
     public abstract Builder automaticFunctionCallingHistory(
         List<Content> automaticFunctionCallingHistory);
+
+    /**
+     * Setter for automaticFunctionCallingHistory.
+     *
+     * <p>automaticFunctionCallingHistory: The history of automatic function calling.
+     */
+    public Builder automaticFunctionCallingHistory(Content... automaticFunctionCallingHistory) {
+      return automaticFunctionCallingHistory(Arrays.asList(automaticFunctionCallingHistory));
+    }
+
+    /**
+     * Setter for automaticFunctionCallingHistory builder.
+     *
+     * <p>automaticFunctionCallingHistory: The history of automatic function calling.
+     */
+    public Builder automaticFunctionCallingHistory(
+        Content.Builder... automaticFunctionCallingHistoryBuilders) {
+      return automaticFunctionCallingHistory(
+          Arrays.asList(automaticFunctionCallingHistoryBuilders).stream()
+              .map(Content.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for modelVersion.

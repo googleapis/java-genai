@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +61,27 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      */
     @JsonProperty("generatedImages")
     public abstract Builder generatedImages(List<GeneratedImage> generatedImages);
+
+    /**
+     * Setter for generatedImages.
+     *
+     * <p>generatedImages: Generated images.
+     */
+    public Builder generatedImages(GeneratedImage... generatedImages) {
+      return generatedImages(Arrays.asList(generatedImages));
+    }
+
+    /**
+     * Setter for generatedImages builder.
+     *
+     * <p>generatedImages: Generated images.
+     */
+    public Builder generatedImages(GeneratedImage.Builder... generatedImagesBuilders) {
+      return generatedImages(
+          Arrays.asList(generatedImagesBuilders).stream()
+              .map(GeneratedImage.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract UpscaleImageResponse build();
   }

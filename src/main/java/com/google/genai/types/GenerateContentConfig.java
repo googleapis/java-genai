@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -306,6 +309,16 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     public abstract Builder stopSequences(List<String> stopSequences);
 
     /**
+     * Setter for stopSequences.
+     *
+     * <p>stopSequences: List of strings that tells the model to stop generating text if one of the
+     * strings is encountered in the response.
+     */
+    public Builder stopSequences(String... stopSequences) {
+      return stopSequences(Arrays.asList(stopSequences));
+    }
+
+    /**
      * Setter for responseLogprobs.
      *
      * <p>responseLogprobs: Whether to return the log probabilities of the tokens that were chosen
@@ -429,6 +442,27 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     public abstract Builder safetySettings(List<SafetySetting> safetySettings);
 
     /**
+     * Setter for safetySettings.
+     *
+     * <p>safetySettings: Safety settings in the request to block unsafe content in the response.
+     */
+    public Builder safetySettings(SafetySetting... safetySettings) {
+      return safetySettings(Arrays.asList(safetySettings));
+    }
+
+    /**
+     * Setter for safetySettings builder.
+     *
+     * <p>safetySettings: Safety settings in the request to block unsafe content in the response.
+     */
+    public Builder safetySettings(SafetySetting.Builder... safetySettingsBuilders) {
+      return safetySettings(
+          Arrays.asList(safetySettingsBuilders).stream()
+              .map(SafetySetting.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for tools.
      *
      * <p>tools: Code that enables the system to interact with external systems to perform an action
@@ -436,6 +470,29 @@ public abstract class GenerateContentConfig extends JsonSerializable {
      */
     @JsonProperty("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: Code that enables the system to interact with external systems to perform an action
+     * outside of the knowledge and scope of the model.
+     */
+    public Builder tools(Tool... tools) {
+      return tools(Arrays.asList(tools));
+    }
+
+    /**
+     * Setter for tools builder.
+     *
+     * <p>tools: Code that enables the system to interact with external systems to perform an action
+     * outside of the knowledge and scope of the model.
+     */
+    public Builder tools(Tool.Builder... toolsBuilders) {
+      return tools(
+          Arrays.asList(toolsBuilders).stream()
+              .map(Tool.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for toolConfig.
@@ -478,6 +535,16 @@ public abstract class GenerateContentConfig extends JsonSerializable {
      */
     @JsonProperty("responseModalities")
     public abstract Builder responseModalities(List<String> responseModalities);
+
+    /**
+     * Setter for responseModalities.
+     *
+     * <p>responseModalities: The requested modalities of the response. Represents the set of
+     * modalities that the model can return.
+     */
+    public Builder responseModalities(String... responseModalities) {
+      return responseModalities(Arrays.asList(responseModalities));
+    }
 
     /**
      * Setter for mediaResolution.

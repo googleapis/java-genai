@@ -41,7 +41,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
@@ -86,7 +85,7 @@ public final class GenerateContentWithResponseSchema {
                                 .type(Type.Known.ARRAY)
                                 .items(Schema.builder().type(Type.Known.STRING))
                                 .build()))
-                    .required(ImmutableList.of("recipe_name", "ingredients")))
+                    .required("recipe_name", "ingredients"))
             .build();
     GenerateContentConfig config =
         GenerateContentConfig.builder()

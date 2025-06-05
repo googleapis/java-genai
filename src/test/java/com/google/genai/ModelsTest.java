@@ -293,8 +293,7 @@ public class ModelsTest {
             .config(
                 MaskReferenceConfig.builder()
                     .maskMode(MaskReferenceMode.Known.MASK_MODE_BACKGROUND)
-                    .maskDilation(0.0f)
-                    .build())
+                    .maskDilation(0.0f))
             .build();
     referenceImages.add(maskReferenceImage);
     EditImageResponse response =
@@ -340,8 +339,7 @@ public class ModelsTest {
             .config(
                 ControlReferenceConfig.builder()
                     .controlType(ControlReferenceType.Known.CONTROL_TYPE_SCRIBBLE)
-                    .enableControlImageComputation(true)
-                    .build())
+                    .enableControlImageComputation(true))
             .build();
     referenceImages.add(controlReferenceImage);
 
@@ -387,8 +385,7 @@ public class ModelsTest {
             .config(
                 SubjectReferenceConfig.builder()
                     .subjectType(SubjectReferenceType.Known.SUBJECT_TYPE_PRODUCT)
-                    .subjectDescription("Product logo")
-                    .build())
+                    .subjectDescription("Product logo"))
             .build();
     referenceImages.add(subjectReferenceImage);
 
@@ -433,7 +430,7 @@ public class ModelsTest {
         StyleReferenceImage.builder()
             .referenceImage(image)
             .referenceId(1)
-            .config(StyleReferenceConfig.builder().styleDescription("Watercolor").build())
+            .config(StyleReferenceConfig.builder().styleDescription("Watercolor"))
             .build();
     referenceImages.add(styleReferenceImage);
 
