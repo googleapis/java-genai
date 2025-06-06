@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/googleapis/java-genai/compare/v1.3.0...v1.4.0) (2025-06-06)
+
+
+### Features
+
+* RAG - Introducing context storing for Gemini Live API. ([d63d625](https://github.com/googleapis/java-genai/commit/d63d62583f554aca88062dfbf3c77cc65da812dd))
+* Support passing builder classes to setter methods ([996c994](https://github.com/googleapis/java-genai/commit/996c994d6a2697b8b79dd48a7460eed49a408884))
+
+
+### Documentation
+
+* Add javadoc for setter methods in types classes ([996c994](https://github.com/googleapis/java-genai/commit/996c994d6a2697b8b79dd48a7460eed49a408884))
+
 ## [1.3.0](https://github.com/googleapis/java-genai/compare/v1.2.0...v1.3.0) (2025-06-04)
 
 
