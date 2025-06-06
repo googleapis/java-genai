@@ -26,7 +26,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Class that represents the parameters for generating an image. */
+/** Class that represents the parameters for generating videos. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = GenerateVideosParameters.Builder.class)
@@ -42,9 +42,13 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
   @JsonProperty("prompt")
   public abstract Optional<String> prompt();
 
-  /** The input image for generating the videos. Optional if prompt is provided. */
+  /** The input image for generating the videos. Optional if prompt or video is provided. */
   @JsonProperty("image")
   public abstract Optional<Image> image();
+
+  /** The input video for video extension use cases. Optional if prompt or image is provided. */
+  @JsonProperty("video")
+  public abstract Optional<Video> video();
 
   /** Configuration for generating videos. */
   @JsonProperty("config")
@@ -87,7 +91,7 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for image.
      *
-     * <p>image: The input image for generating the videos. Optional if prompt is provided.
+     * <p>image: The input image for generating the videos. Optional if prompt or video is provided.
      */
     @JsonProperty("image")
     public abstract Builder image(Image image);
@@ -95,10 +99,29 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for image builder.
      *
-     * <p>image: The input image for generating the videos. Optional if prompt is provided.
+     * <p>image: The input image for generating the videos. Optional if prompt or video is provided.
      */
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    /**
+     * Setter for video.
+     *
+     * <p>video: The input video for video extension use cases. Optional if prompt or image is
+     * provided.
+     */
+    @JsonProperty("video")
+    public abstract Builder video(Video video);
+
+    /**
+     * Setter for video builder.
+     *
+     * <p>video: The input video for video extension use cases. Optional if prompt or image is
+     * provided.
+     */
+    public Builder video(Video.Builder videoBuilder) {
+      return video(videoBuilder.build());
     }
 
     /**

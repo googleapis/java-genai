@@ -69,6 +69,7 @@ import com.google.genai.types.UpscaleImageAPIConfig;
 import com.google.genai.types.UpscaleImageAPIParameters;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
+import com.google.genai.types.Video;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -1688,6 +1689,34 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoToMldev(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video", "uri"},
+          Common.getValueByPath(fromObject, new String[] {"uri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoBytes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video", "encodedVideo"},
+          Transformers.tBytes(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"videoBytes"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"encoding"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -1758,6 +1787,10 @@ public final class Models {
       throw new IllegalArgumentException("generateAudio parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"lastFrame"}))) {
+      throw new IllegalArgumentException("lastFrame parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -1789,6 +1822,10 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
+      throw new IllegalArgumentException("video parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -3911,6 +3948,34 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoToVertex(ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsUri"},
+          Common.getValueByPath(fromObject, new String[] {"uri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoBytes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bytesBase64Encoded"},
+          Transformers.tBytes(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"videoBytes"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -3999,6 +4064,17 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"generateAudio"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"lastFrame"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "lastFrame"},
+          imageToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
+              toObject));
+    }
+
     return toObject;
   }
 
@@ -4029,6 +4105,17 @@ public final class Models {
               apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"instances[0]", "video"},
+          videoToVertex(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject));
     }
 
@@ -6698,20 +6785,22 @@ public final class Models {
   }
 
   /**
-   * Generates videos given a GenAI model, and a prompt or an image.
+   * Generates videos given a GenAI model, and an input (text, image, or video).
    *
    * <p>This method is experimental.
    *
    * @param model the name of the GenAI model to use for generating videos
    * @param prompt the text prompt for generating the videos. Optional for image to video use cases.
    * @param image the input image for generating the videos. Optional if prompt is provided.
+   * @param video the input video for video extension use cases. Optional if prompt or image is
+   *     provided.
    * @param config a {@link com.google.genai.types.GenerateVideosConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
    *     generated videos.
    */
   public GenerateVideosOperation generateVideos(
-      String model, String prompt, Image image, GenerateVideosConfig config) {
+      String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
 
     GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
 
@@ -6723,6 +6812,9 @@ public final class Models {
     }
     if (!Common.isZero(image)) {
       parameterBuilder.image(image);
+    }
+    if (!Common.isZero(video)) {
+      parameterBuilder.video(video);
     }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
