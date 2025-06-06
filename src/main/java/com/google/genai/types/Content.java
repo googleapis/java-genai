@@ -18,6 +18,8 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -73,6 +75,29 @@ public abstract class Content extends JsonSerializable {
      */
     @JsonProperty("parts")
     public abstract Builder parts(List<Part> parts);
+
+    /**
+     * Setter for parts.
+     *
+     * <p>parts: List of parts that constitute a single message. Each part may have a different IANA
+     * MIME type.
+     */
+    public Builder parts(Part... parts) {
+      return parts(Arrays.asList(parts));
+    }
+
+    /**
+     * Setter for parts builder.
+     *
+     * <p>parts: List of parts that constitute a single message. Each part may have a different IANA
+     * MIME type.
+     */
+    public Builder parts(Part.Builder... partsBuilders) {
+      return parts(
+          Arrays.asList(partsBuilders).stream()
+              .map(Part.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for role.

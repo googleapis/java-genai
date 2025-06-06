@@ -63,21 +63,31 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
     @JsonProperty("subjectType")
     public abstract Builder subjectType(SubjectReferenceType subjectType);
 
+    /**
+     * Setter for subjectType given a known enum.
+     *
+     * <p>subjectType: The subject type of a subject reference image.
+     */
     @CanIgnoreReturnValue
     public Builder subjectType(SubjectReferenceType.Known knownType) {
       return subjectType(new SubjectReferenceType(knownType));
     }
 
+    /**
+     * Setter for subjectType given a string.
+     *
+     * <p>subjectType: The subject type of a subject reference image.
+     */
     @CanIgnoreReturnValue
     public Builder subjectType(String subjectType) {
       return subjectType(new SubjectReferenceType(subjectType));
     }
+
     /**
      * Setter for subjectDescription.
      *
      * <p>subjectDescription: Subject description for the image.
      */
-
     @JsonProperty("subjectDescription")
     public abstract Builder subjectDescription(String subjectDescription);
 

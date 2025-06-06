@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +73,27 @@ public abstract class ListCachedContentsResponse extends JsonSerializable {
      */
     @JsonProperty("cachedContents")
     public abstract Builder cachedContents(List<CachedContent> cachedContents);
+
+    /**
+     * Setter for cachedContents.
+     *
+     * <p>cachedContents: List of cached contents.
+     */
+    public Builder cachedContents(CachedContent... cachedContents) {
+      return cachedContents(Arrays.asList(cachedContents));
+    }
+
+    /**
+     * Setter for cachedContents builder.
+     *
+     * <p>cachedContents: List of cached contents.
+     */
+    public Builder cachedContents(CachedContent.Builder... cachedContentsBuilders) {
+      return cachedContents(
+          Arrays.asList(cachedContentsBuilders).stream()
+              .map(CachedContent.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract ListCachedContentsResponse build();
   }

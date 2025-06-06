@@ -88,39 +88,59 @@ public abstract class SafetyRating extends JsonSerializable {
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
 
+    /**
+     * Setter for category given a known enum.
+     *
+     * <p>category: Output only. Harm category.
+     */
     @CanIgnoreReturnValue
     public Builder category(HarmCategory.Known knownType) {
       return category(new HarmCategory(knownType));
     }
 
+    /**
+     * Setter for category given a string.
+     *
+     * <p>category: Output only. Harm category.
+     */
     @CanIgnoreReturnValue
     public Builder category(String category) {
       return category(new HarmCategory(category));
     }
+
     /**
      * Setter for probability.
      *
      * <p>probability: Output only. Harm probability levels in the content.
      */
-
     @JsonProperty("probability")
     public abstract Builder probability(HarmProbability probability);
 
+    /**
+     * Setter for probability given a known enum.
+     *
+     * <p>probability: Output only. Harm probability levels in the content.
+     */
     @CanIgnoreReturnValue
     public Builder probability(HarmProbability.Known knownType) {
       return probability(new HarmProbability(knownType));
     }
 
+    /**
+     * Setter for probability given a string.
+     *
+     * <p>probability: Output only. Harm probability levels in the content.
+     */
     @CanIgnoreReturnValue
     public Builder probability(String probability) {
       return probability(new HarmProbability(probability));
     }
+
     /**
      * Setter for probabilityScore.
      *
      * <p>probabilityScore: Output only. Harm probability score.
      */
-
     @JsonProperty("probabilityScore")
     public abstract Builder probabilityScore(Float probabilityScore);
 
@@ -132,21 +152,31 @@ public abstract class SafetyRating extends JsonSerializable {
     @JsonProperty("severity")
     public abstract Builder severity(HarmSeverity severity);
 
+    /**
+     * Setter for severity given a known enum.
+     *
+     * <p>severity: Output only. Harm severity levels in the content.
+     */
     @CanIgnoreReturnValue
     public Builder severity(HarmSeverity.Known knownType) {
       return severity(new HarmSeverity(knownType));
     }
 
+    /**
+     * Setter for severity given a string.
+     *
+     * <p>severity: Output only. Harm severity levels in the content.
+     */
     @CanIgnoreReturnValue
     public Builder severity(String severity) {
       return severity(new HarmSeverity(severity));
     }
+
     /**
      * Setter for severityScore.
      *
      * <p>severityScore: Output only. Harm severity score.
      */
-
     @JsonProperty("severityScore")
     public abstract Builder severityScore(Float severityScore);
 

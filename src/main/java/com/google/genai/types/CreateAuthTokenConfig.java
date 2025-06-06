@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -164,6 +165,15 @@ public abstract class CreateAuthTokenConfig extends JsonSerializable {
      */
     @JsonProperty("lockAdditionalFields")
     public abstract Builder lockAdditionalFields(List<String> lockAdditionalFields);
+
+    /**
+     * Setter for lockAdditionalFields.
+     *
+     * <p>lockAdditionalFields: Additional fields to lock in the effective LiveConnectParameters.
+     */
+    public Builder lockAdditionalFields(String... lockAdditionalFields) {
+      return lockAdditionalFields(Arrays.asList(lockAdditionalFields));
+    }
 
     public abstract CreateAuthTokenConfig build();
   }

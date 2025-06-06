@@ -18,8 +18,8 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import com.google.genai.types.Candidate;
@@ -32,16 +32,15 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class AsyncChatTest {
 
@@ -65,44 +64,32 @@ public class AsyncChatTest {
   GenerateContentResponse responseChunk1 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_1).build()))
-                              .role("model"))
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_1))
+                          .role("model")))
           .build();
 
   GenerateContentResponse responseChunk2 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_2).build()))
-                              .role("model"))
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_2))
+                          .role("model")))
           .build();
 
   GenerateContentResponse responseChunk3 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_3).build()))
-                              .role("model"))
-                      .finishReason(FinishReason.Known.STOP)
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_3))
+                          .role("model"))
+                  .finishReason(FinishReason.Known.STOP))
           .usageMetadata(
               GenerateContentResponseUsageMetadata.builder()
                   .promptTokenCount(10)
@@ -121,15 +108,11 @@ public class AsyncChatTest {
   GenerateContentResponse nonStreamingResponse =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(NON_STREAMING_RESPONSE).build()))
-                              .role("model"))
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(NON_STREAMING_RESPONSE))
+                          .role("model")))
           .build();
   String nonStreamData = nonStreamingResponse.toJson();
 

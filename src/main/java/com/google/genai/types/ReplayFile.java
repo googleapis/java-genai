@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +73,27 @@ public abstract class ReplayFile extends JsonSerializable {
      */
     @JsonProperty("interactions")
     public abstract Builder interactions(List<ReplayInteraction> interactions);
+
+    /**
+     * Setter for interactions.
+     *
+     * <p>interactions:
+     */
+    public Builder interactions(ReplayInteraction... interactions) {
+      return interactions(Arrays.asList(interactions));
+    }
+
+    /**
+     * Setter for interactions builder.
+     *
+     * <p>interactions:
+     */
+    public Builder interactions(ReplayInteraction.Builder... interactionsBuilders) {
+      return interactions(
+          Arrays.asList(interactionsBuilders).stream()
+              .map(ReplayInteraction.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract ReplayFile build();
   }

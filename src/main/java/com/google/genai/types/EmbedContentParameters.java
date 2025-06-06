@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,6 +83,27 @@ public abstract class EmbedContentParameters extends JsonSerializable {
      */
     @JsonProperty("contents")
     public abstract Builder contents(List<Content> contents);
+
+    /**
+     * Setter for contents.
+     *
+     * <p>contents: The content to embed. Only the `parts.text` fields will be counted.
+     */
+    public Builder contents(Content... contents) {
+      return contents(Arrays.asList(contents));
+    }
+
+    /**
+     * Setter for contents builder.
+     *
+     * <p>contents: The content to embed. Only the `parts.text` fields will be counted.
+     */
+    public Builder contents(Content.Builder... contentsBuilders) {
+      return contents(
+          Arrays.asList(contentsBuilders).stream()
+              .map(Content.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for config.

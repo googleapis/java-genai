@@ -57,7 +57,7 @@ public final class AfcUtilTest {
                   .properties(
                       ImmutableMap.of(
                           "input", Schema.builder().type(Type.Known.STRING).title("input").build()))
-                  .required(ImmutableList.of("input")))
+                  .required("input"))
           .build();
 
   private static FunctionDeclaration testFunctionDeclaration2 =
@@ -70,7 +70,7 @@ public final class AfcUtilTest {
                       ImmutableMap.of(
                           "input2",
                           Schema.builder().type(Type.Known.STRING).title("input2").build()))
-                  .required(ImmutableList.of("input2")))
+                  .required("input2"))
           .build();
 
   @BeforeEach
@@ -90,11 +90,7 @@ public final class AfcUtilTest {
   public void transformGenerateContentConfig_functionDeclaration_returnsTransformedConfig() {
     GenerateContentConfig config =
         GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(
-                    Tool.builder()
-                        .functionDeclarations(ImmutableList.of(testFunctionDeclaration1))
-                        .build()))
+            .tools(Tool.builder().functionDeclarations(testFunctionDeclaration1))
             .build();
     GenerateContentConfig transformedConfig =
         AfcUtil.transformGenerateContentConfig(mockApiClient, config);
@@ -108,20 +104,15 @@ public final class AfcUtilTest {
     GenerateContentConfig config =
         GenerateContentConfig.builder()
             .tools(
-                ImmutableList.of(
-                    Tool.builder()
-                        .functionDeclarations(ImmutableList.of(testFunctionDeclaration2))
-                        .functions(ImmutableList.of(testMethod1))
-                        .build()))
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration2)
+                    .functions(testMethod1))
             .build();
     GenerateContentConfig expectedConfig =
         GenerateContentConfig.builder()
             .tools(
-                ImmutableList.of(
-                    Tool.builder()
-                        .functionDeclarations(
-                            ImmutableList.of(testFunctionDeclaration1, testFunctionDeclaration2))
-                        .build()))
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration1, testFunctionDeclaration2))
             .build();
     GenerateContentConfig transformedConfig =
         AfcUtil.transformGenerateContentConfig(mockApiClient, config);
@@ -132,10 +123,7 @@ public final class AfcUtilTest {
   public void getFunctionMap_returnsFunctionMap() throws NoSuchMethodException {
     Method testMethod1 = AfcUtilTest.class.getMethod("testFunction1", String.class);
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(Tool.builder().functions(ImmutableList.of(testMethod1)).build()))
-            .build();
+        GenerateContentConfig.builder().tools(Tool.builder().functions(testMethod1)).build();
     ImmutableMap<String, Method> actualFunctionMap = AfcUtil.getFunctionMap(config);
     ImmutableMap<String, Method> expectedFunctionMap =
         ImmutableMap.of("testFunction1", testMethod1);
@@ -265,14 +253,9 @@ public final class AfcUtilTest {
     ImmutableMap<String, Method> functionMap =
         ImmutableMap.of(
             "testFunction1", AfcUtilTest.class.getMethod("testFunction1", String.class));
-    Content content =
-        Content.builder()
-            .parts(ImmutableList.of(Part.builder().functionCall(functionCall).build()))
-            .build();
+    Content content = Content.builder().parts(Part.builder().functionCall(functionCall)).build();
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().content(content).build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
     ImmutableList<Part> functionResponseParts =
         AfcUtil.getFunctionResponseParts(response, functionMap);
     ImmutableList<Part> expectedFunctionResponseParts =
@@ -297,14 +280,9 @@ public final class AfcUtilTest {
     FunctionCall functionCall =
         FunctionCall.builder().name("testFunction1").args(ImmutableMap.of("input", "test")).build();
     ImmutableMap<String, Method> functionMap = ImmutableMap.of();
-    Content content =
-        Content.builder()
-            .parts(ImmutableList.of(Part.builder().functionCall(functionCall).build()))
-            .build();
+    Content content = Content.builder().parts(Part.builder().functionCall(functionCall)).build();
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().content(content).build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
     ImmutableList<Part> functionResponseParts =
         AfcUtil.getFunctionResponseParts(response, functionMap);
     assertEquals(0, functionResponseParts.size());
@@ -316,12 +294,9 @@ public final class AfcUtilTest {
     ImmutableMap<String, Method> functionMap =
         ImmutableMap.of(
             "testFunction1", AfcUtilTest.class.getMethod("testFunction1", String.class));
-    Content content =
-        Content.builder().parts(ImmutableList.of(Part.builder().text("test").build())).build();
+    Content content = Content.fromParts(Part.fromText("test"));
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().content(content).build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
     ImmutableList<Part> functionResponseParts =
         AfcUtil.getFunctionResponseParts(response, functionMap);
     assertEquals(0, functionResponseParts.size());
@@ -336,14 +311,9 @@ public final class AfcUtilTest {
         ImmutableMap.of(
             "testFunction2",
             AfcUtilTest.class.getMethod("testFunction2", Integer.class, Integer.class));
-    Content content =
-        Content.builder()
-            .parts(ImmutableList.of(Part.builder().functionCall(functionCall).build()))
-            .build();
+    Content content = Content.fromParts(Part.builder().functionCall(functionCall).build());
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().content(content).build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
     ImmutableList<Part> functionResponseParts =
         AfcUtil.getFunctionResponseParts(response, functionMap);
     ImmutableList<Part> expectedFunctionResponseParts =
@@ -372,11 +342,7 @@ public final class AfcUtilTest {
   public void hasCallableTool_noFunctions_returnsFalse() {
     GenerateContentConfig config =
         GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(
-                    Tool.builder()
-                        .functionDeclarations(ImmutableList.of(testFunctionDeclaration1))
-                        .build()))
+            .tools(Tool.builder().functionDeclarations(testFunctionDeclaration1))
             .build();
     boolean hasCallableTool = AfcUtil.hasCallableTool(mockApiClient, config);
     assertEquals(false, hasCallableTool);
@@ -388,11 +354,9 @@ public final class AfcUtilTest {
     GenerateContentConfig config =
         GenerateContentConfig.builder()
             .tools(
-                ImmutableList.of(
-                    Tool.builder()
-                        .functionDeclarations(ImmutableList.of(testFunctionDeclaration2))
-                        .functions(ImmutableList.of(testMethod1))
-                        .build()))
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration2)
+                    .functions(testMethod1))
             .build();
     boolean hasCallableTool = AfcUtil.hasCallableTool(mockApiClient, config);
     assertEquals(true, hasCallableTool);

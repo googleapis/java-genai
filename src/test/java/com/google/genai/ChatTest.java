@@ -38,7 +38,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.HttpEntity;
@@ -74,53 +73,37 @@ public class ChatTest {
   GenerateContentResponse responseChunk1 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_1).build()))
-                              .role("model")
-                              .build())
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_1))
+                          .role("model")))
           .build();
 
   GenerateContentResponse responseChunk2 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_2).build()))
-                              .role("model")
-                              .build())
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_2))
+                          .role("model")))
           .build();
 
   GenerateContentResponse responseChunk3 =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(STREAMING_RESPONSE_CHUNK_3).build()))
-                              .role("model")
-                              .build())
-                      .finishReason(FinishReason.Known.STOP)
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(STREAMING_RESPONSE_CHUNK_3))
+                          .role("model"))
+                  .finishReason(FinishReason.Known.STOP))
           .usageMetadata(
               GenerateContentResponseUsageMetadata.builder()
                   .promptTokenCount(10)
                   .candidatesTokenCount(25)
-                  .totalTokenCount(35)
-                  .build())
+                  .totalTokenCount(35))
           .build();
 
   String jsonChunk1 = responseChunk1.toJson();
@@ -134,16 +117,11 @@ public class ChatTest {
   GenerateContentResponse nonStreamingResponse =
       GenerateContentResponse.builder()
           .candidates(
-              Arrays.asList(
-                  Candidate.builder()
-                      .content(
-                          Content.builder()
-                              .parts(
-                                  Arrays.asList(
-                                      Part.builder().text(NON_STREAMING_RESPONSE).build()))
-                              .role("model")
-                              .build())
-                      .build()))
+              Candidate.builder()
+                  .content(
+                      Content.builder()
+                          .parts(Part.builder().text(NON_STREAMING_RESPONSE))
+                          .role("model")))
           .build();
   String nonStreamData = nonStreamingResponse.toJson();
 
@@ -207,55 +185,33 @@ public class ChatTest {
   @Test
   public void testGetHistoryWithAfc() throws Exception {
     String userMessage = "Find theaters for Oppenheimer.";
-    Content userMessageContent =
-        Content.builder().role("user").parts(Arrays.asList(Part.fromText(userMessage))).build();
+    Content userMessageContent = Content.fromParts(Part.fromText(userMessage));
     Content functionCallContent =
-        Content.builder()
-            .role("model")
-            .parts(
-                Arrays.asList(
-                    Part.builder()
-                        .functionCall(
-                            FunctionCall.builder()
-                                .name("findTheaters")
-                                .args(
-                                    ImmutableMap.of(
-                                        "movie",
-                                        "Oppenheimer",
-                                        "location",
-                                        "New York, NY",
-                                        "time",
-                                        "10:00 PM"))
-                                .build())
-                        .build()))
-            .build();
+        Content.fromParts(
+            Part.fromFunctionCall(
+                "findTheaters",
+                ImmutableMap.of(
+                    "movie", "Oppenheimer", "location", "New York, NY", "time", "10:00 PM")));
 
     GenerateContentResponse functionResponse =
         GenerateContentResponse.builder()
             .candidates(
-                Arrays.asList(
-                    Candidate.builder()
-                        .content(functionCallContent)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(functionCallContent)
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     GenerateContentResponse finalResponse =
         GenerateContentResponse.builder()
             .candidates(
-                Arrays.asList(
-                    Candidate.builder()
-                        .content(
-                            Content.builder()
-                                .role("model")
-                                .parts(
-                                    Arrays.asList(
-                                        Part.fromText(
-                                            "I found AMC Metreon 16, AMC Kabuki 8, AMC Theater"
-                                                + " 11")))
-                                .build())
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(
+                        Content.builder()
+                            .role("model")
+                            .parts(
+                                Part.fromText(
+                                    "I found AMC Metreon 16, AMC Kabuki 8, AMC Theater" + " 11")))
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
@@ -271,9 +227,7 @@ public class ChatTest {
     Method method =
         ChatTest.class.getDeclaredMethod("findTheaters", String.class, String.class, String.class);
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .tools(Arrays.asList(Tool.builder().functions(Arrays.asList(method)).build()))
-            .build();
+        GenerateContentConfig.builder().tools(Tool.builder().functions(method)).build();
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp", config);
     assert chatSession.getHistory(false).size() == 0;
 
@@ -434,9 +388,9 @@ public class ChatTest {
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp");
 
     List<Part> emptyParts = new ArrayList<>();
-    emptyParts.add(Part.builder().build().fromText("Tell me something about cheese."));
+    emptyParts.add(Part.fromText("Tell me something about cheese."));
 
-    Content messageContent = Content.builder().parts(emptyParts).role("user").build();
+    Content messageContent = Content.builder().role("user").parts(emptyParts).build();
     chatSession.sendMessage(messageContent);
 
     // Curated history should be empty because the response has a finish reason of BLOCKLIST.
@@ -489,7 +443,7 @@ public class ChatTest {
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp");
 
     List<Part> parts = new ArrayList<>();
-    parts.add(Part.builder().text("Can you give me possible names for a cheese shop?").build());
+    parts.add(Part.fromText("Can you give me possible names for a cheese shop?"));
 
     Content messageContent = Content.builder().role("Cheesemonger").parts(parts).build();
 

@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +61,27 @@ public abstract class UrlContextMetadata extends JsonSerializable {
      */
     @JsonProperty("urlMetadata")
     public abstract Builder urlMetadata(List<UrlMetadata> urlMetadata);
+
+    /**
+     * Setter for urlMetadata.
+     *
+     * <p>urlMetadata: List of url context.
+     */
+    public Builder urlMetadata(UrlMetadata... urlMetadata) {
+      return urlMetadata(Arrays.asList(urlMetadata));
+    }
+
+    /**
+     * Setter for urlMetadata builder.
+     *
+     * <p>urlMetadata: List of url context.
+     */
+    public Builder urlMetadata(UrlMetadata.Builder... urlMetadataBuilders) {
+      return urlMetadata(
+          Arrays.asList(urlMetadataBuilders).stream()
+              .map(UrlMetadata.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract UrlContextMetadata build();
   }

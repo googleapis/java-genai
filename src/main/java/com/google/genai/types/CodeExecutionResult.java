@@ -69,22 +69,32 @@ public abstract class CodeExecutionResult extends JsonSerializable {
     @JsonProperty("outcome")
     public abstract Builder outcome(Outcome outcome);
 
+    /**
+     * Setter for outcome given a known enum.
+     *
+     * <p>outcome: Required. Outcome of the code execution.
+     */
     @CanIgnoreReturnValue
     public Builder outcome(Outcome.Known knownType) {
       return outcome(new Outcome(knownType));
     }
 
+    /**
+     * Setter for outcome given a string.
+     *
+     * <p>outcome: Required. Outcome of the code execution.
+     */
     @CanIgnoreReturnValue
     public Builder outcome(String outcome) {
       return outcome(new Outcome(outcome));
     }
+
     /**
      * Setter for output.
      *
      * <p>output: Optional. Contains stdout when code execution is successful, stderr or other
      * description otherwise.
      */
-
     @JsonProperty("output")
     public abstract Builder output(String output);
 

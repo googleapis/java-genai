@@ -95,33 +95,54 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     @JsonProperty("startOfSpeechSensitivity")
     public abstract Builder startOfSpeechSensitivity(StartSensitivity startOfSpeechSensitivity);
 
+    /**
+     * Setter for startOfSpeechSensitivity given a known enum.
+     *
+     * <p>startOfSpeechSensitivity: Determines how likely speech is to be detected.
+     */
     @CanIgnoreReturnValue
     public Builder startOfSpeechSensitivity(StartSensitivity.Known knownType) {
       return startOfSpeechSensitivity(new StartSensitivity(knownType));
     }
 
+    /**
+     * Setter for startOfSpeechSensitivity given a string.
+     *
+     * <p>startOfSpeechSensitivity: Determines how likely speech is to be detected.
+     */
     @CanIgnoreReturnValue
     public Builder startOfSpeechSensitivity(String startOfSpeechSensitivity) {
       return startOfSpeechSensitivity(new StartSensitivity(startOfSpeechSensitivity));
     }
+
     /**
      * Setter for endOfSpeechSensitivity.
      *
      * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
      */
-
     @JsonProperty("endOfSpeechSensitivity")
     public abstract Builder endOfSpeechSensitivity(EndSensitivity endOfSpeechSensitivity);
 
+    /**
+     * Setter for endOfSpeechSensitivity given a known enum.
+     *
+     * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
+     */
     @CanIgnoreReturnValue
     public Builder endOfSpeechSensitivity(EndSensitivity.Known knownType) {
       return endOfSpeechSensitivity(new EndSensitivity(knownType));
     }
 
+    /**
+     * Setter for endOfSpeechSensitivity given a string.
+     *
+     * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
+     */
     @CanIgnoreReturnValue
     public Builder endOfSpeechSensitivity(String endOfSpeechSensitivity) {
       return endOfSpeechSensitivity(new EndSensitivity(endOfSpeechSensitivity));
     }
+
     /**
      * Setter for prefixPaddingMs.
      *
@@ -130,7 +151,6 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
      * shorter speech can be recognized. However, this also increases the probability of false
      * positives.
      */
-
     @JsonProperty("prefixPaddingMs")
     public abstract Builder prefixPaddingMs(Integer prefixPaddingMs);
 

@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -164,6 +167,33 @@ public abstract class LiveClientSetup extends JsonSerializable {
      */
     @JsonProperty("tools")
     public abstract Builder tools(List<Tool> tools);
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     *
+     * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
+     * perform an action, or set of actions, outside of knowledge and scope of the model.
+     */
+    public Builder tools(Tool... tools) {
+      return tools(Arrays.asList(tools));
+    }
+
+    /**
+     * Setter for tools builder.
+     *
+     * <p>tools: A list of `Tools` the model may use to generate the next response.
+     *
+     * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
+     * perform an action, or set of actions, outside of knowledge and scope of the model.
+     */
+    public Builder tools(Tool.Builder... toolsBuilders) {
+      return tools(
+          Arrays.asList(toolsBuilders).stream()
+              .map(Tool.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for realtimeInputConfig.

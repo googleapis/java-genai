@@ -75,11 +75,21 @@ public abstract class ExecutableCode extends JsonSerializable {
     @JsonProperty("language")
     public abstract Builder language(Language language);
 
+    /**
+     * Setter for language given a known enum.
+     *
+     * <p>language: Required. Programming language of the `code`.
+     */
     @CanIgnoreReturnValue
     public Builder language(Language.Known knownType) {
       return language(new Language(knownType));
     }
 
+    /**
+     * Setter for language given a string.
+     *
+     * <p>language: Required. Programming language of the `code`.
+     */
     @CanIgnoreReturnValue
     public Builder language(String language) {
       return language(new Language(language));

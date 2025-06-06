@@ -103,22 +103,32 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @JsonProperty("behavior")
     public abstract Builder behavior(Behavior behavior);
 
+    /**
+     * Setter for behavior given a known enum.
+     *
+     * <p>behavior: Defines the function behavior.
+     */
     @CanIgnoreReturnValue
     public Builder behavior(Behavior.Known knownType) {
       return behavior(new Behavior(knownType));
     }
 
+    /**
+     * Setter for behavior given a string.
+     *
+     * <p>behavior: Defines the function behavior.
+     */
     @CanIgnoreReturnValue
     public Builder behavior(String behavior) {
       return behavior(new Behavior(behavior));
     }
+
     /**
      * Setter for description.
      *
      * <p>description: Optional. Description and purpose of the function. Model uses it to decide
      * how and whether to call the function.
      */
-
     @JsonProperty("description")
     public abstract Builder description(String description);
 

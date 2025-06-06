@@ -39,7 +39,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Chat;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
@@ -81,13 +80,10 @@ public final class ChatWithFunctionCall {
     Method method2 =
         ChatWithFunctionCall.class.getDeclaredMethod("divideTwoIntegers", int.class, int.class);
 
+    // Add the two methods as callable functions to the tool.
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(
-                    // Add the two methods as callable functions to the tool.
-                    Tool.builder().functions(ImmutableList.of(method1, method2)).build()))
-            .build();
+        GenerateContentConfig.builder().tools(Tool.builder().functions(method1, method2)).build();
+
     // Create a chat session.
     Chat chatSession = client.chats.create("gemini-2.0-flash-001", config);
 

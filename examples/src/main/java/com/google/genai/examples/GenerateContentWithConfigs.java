@@ -96,7 +96,7 @@ public final class GenerateContentWithConfigs {
             .maxOutputTokens(1024)
             .safetySettings(safetySettings)
             .systemInstruction(systemInstruction)
-            .tools(ImmutableList.of(googleSearchTool))
+            .tools(googleSearchTool)
             .build();
 
     GenerateContentResponse response =

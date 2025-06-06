@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,12 +69,30 @@ public abstract class SafetyAttributes extends JsonSerializable {
     public abstract Builder categories(List<String> categories);
 
     /**
+     * Setter for categories.
+     *
+     * <p>categories: List of RAI categories.
+     */
+    public Builder categories(String... categories) {
+      return categories(Arrays.asList(categories));
+    }
+
+    /**
      * Setter for scores.
      *
      * <p>scores: List of scores of each categories.
      */
     @JsonProperty("scores")
     public abstract Builder scores(List<Float> scores);
+
+    /**
+     * Setter for scores.
+     *
+     * <p>scores: List of scores of each categories.
+     */
+    public Builder scores(Float... scores) {
+      return scores(Arrays.asList(scores));
+    }
 
     /**
      * Setter for contentType.

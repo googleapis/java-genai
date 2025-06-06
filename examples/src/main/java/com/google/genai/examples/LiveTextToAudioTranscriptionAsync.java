@@ -90,11 +90,11 @@ public final class LiveTextToAudioTranscriptionAsync {
 
     LiveConnectConfig config =
         LiveConnectConfig.builder()
-            .responseModalitiesFromKnown(ImmutableList.of(Modality.Known.AUDIO))
+            .responseModalities(Modality.Known.AUDIO)
             .outputAudioTranscription(AudioTranscriptionConfig.builder())
             .systemInstruction(systemInstruction)
             .speechConfig(SpeechConfig.builder().languageCode("ja-JP"))
-            .tools(ImmutableList.of(googleSearchTool))
+            .tools(googleSearchTool)
             .build();
 
     CompletableFuture<Void> allDone = new CompletableFuture<>();
@@ -132,11 +132,7 @@ public final class LiveTextToAudioTranscriptionAsync {
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
-        .turns(
-            ImmutableList.of(
-                Content.builder()
-                    .parts(ImmutableList.of(Part.builder().text(text).build()))
-                    .build()))
+        .turns(Content.fromParts(Part.fromText(text)))
         .build();
   }
 
