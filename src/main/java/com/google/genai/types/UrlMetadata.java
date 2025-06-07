@@ -71,11 +71,21 @@ public abstract class UrlMetadata extends JsonSerializable {
     @JsonProperty("urlRetrievalStatus")
     public abstract Builder urlRetrievalStatus(UrlRetrievalStatus urlRetrievalStatus);
 
+    /**
+     * Setter for urlRetrievalStatus given a known enum.
+     *
+     * <p>urlRetrievalStatus: Status of the url retrieval.
+     */
     @CanIgnoreReturnValue
     public Builder urlRetrievalStatus(UrlRetrievalStatus.Known knownType) {
       return urlRetrievalStatus(new UrlRetrievalStatus(knownType));
     }
 
+    /**
+     * Setter for urlRetrievalStatus given a string.
+     *
+     * <p>urlRetrievalStatus: Status of the url retrieval.
+     */
     @CanIgnoreReturnValue
     public Builder urlRetrievalStatus(String urlRetrievalStatus) {
       return urlRetrievalStatus(new UrlRetrievalStatus(urlRetrievalStatus));

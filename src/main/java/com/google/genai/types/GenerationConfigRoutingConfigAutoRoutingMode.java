@@ -65,11 +65,21 @@ public abstract class GenerationConfigRoutingConfigAutoRoutingMode extends JsonS
     @JsonProperty("modelRoutingPreference")
     public abstract Builder modelRoutingPreference(ModelRoutingPreference modelRoutingPreference);
 
+    /**
+     * Setter for modelRoutingPreference given a known enum.
+     *
+     * <p>modelRoutingPreference: The model routing preference.
+     */
     @CanIgnoreReturnValue
     public Builder modelRoutingPreference(ModelRoutingPreference.Known knownType) {
       return modelRoutingPreference(new ModelRoutingPreference(knownType));
     }
 
+    /**
+     * Setter for modelRoutingPreference given a string.
+     *
+     * <p>modelRoutingPreference: The model routing preference.
+     */
     @CanIgnoreReturnValue
     public Builder modelRoutingPreference(String modelRoutingPreference) {
       return modelRoutingPreference(new ModelRoutingPreference(modelRoutingPreference));

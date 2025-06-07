@@ -66,22 +66,32 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     @JsonProperty("mode")
     public abstract Builder mode(DynamicRetrievalConfigMode mode);
 
+    /**
+     * Setter for mode given a known enum.
+     *
+     * <p>mode: The mode of the predictor to be used in dynamic retrieval.
+     */
     @CanIgnoreReturnValue
     public Builder mode(DynamicRetrievalConfigMode.Known knownType) {
       return mode(new DynamicRetrievalConfigMode(knownType));
     }
 
+    /**
+     * Setter for mode given a string.
+     *
+     * <p>mode: The mode of the predictor to be used in dynamic retrieval.
+     */
     @CanIgnoreReturnValue
     public Builder mode(String mode) {
       return mode(new DynamicRetrievalConfigMode(mode));
     }
+
     /**
      * Setter for dynamicThreshold.
      *
      * <p>dynamicThreshold: Optional. The threshold to be used in dynamic retrieval. If not set, a
      * system default value is used.
      */
-
     @JsonProperty("dynamicThreshold")
     public abstract Builder dynamicThreshold(Float dynamicThreshold);
 

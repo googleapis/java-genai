@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -89,12 +90,30 @@ public abstract class ReplayResponse extends JsonSerializable {
     public abstract Builder bodySegments(List<Map<String, Object>> bodySegments);
 
     /**
+     * Setter for bodySegments.
+     *
+     * <p>bodySegments:
+     */
+    public Builder bodySegments(Map<String, Object>... bodySegments) {
+      return bodySegments(Arrays.asList(bodySegments));
+    }
+
+    /**
      * Setter for sdkResponseSegments.
      *
      * <p>sdkResponseSegments:
      */
     @JsonProperty("sdkResponseSegments")
     public abstract Builder sdkResponseSegments(List<Map<String, Object>> sdkResponseSegments);
+
+    /**
+     * Setter for sdkResponseSegments.
+     *
+     * <p>sdkResponseSegments:
+     */
+    public Builder sdkResponseSegments(Map<String, Object>... sdkResponseSegments) {
+      return sdkResponseSegments(Arrays.asList(sdkResponseSegments));
+    }
 
     public abstract ReplayResponse build();
   }

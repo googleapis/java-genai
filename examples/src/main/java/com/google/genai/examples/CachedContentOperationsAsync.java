@@ -41,7 +41,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.AsyncPager;
 import com.google.genai.Client;
 import com.google.genai.types.CachedContent;
@@ -103,7 +102,7 @@ public final class CachedContentOperationsAsync {
                     CreateCachedContentConfig.builder()
                         .systemInstruction(Content.fromParts(Part.fromText("summarize the pdf")))
                         .expireTime(Instant.now().plus(Duration.ofHours(1)))
-                        .contents(ImmutableList.of(content))
+                        .contents(content)
                         .build()));
     cachedContentCreateFuture
         .thenAccept(

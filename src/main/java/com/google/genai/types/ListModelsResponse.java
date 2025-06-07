@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +73,27 @@ public abstract class ListModelsResponse extends JsonSerializable {
      */
     @JsonProperty("models")
     public abstract Builder models(List<Model> models);
+
+    /**
+     * Setter for models.
+     *
+     * <p>models:
+     */
+    public Builder models(Model... models) {
+      return models(Arrays.asList(models));
+    }
+
+    /**
+     * Setter for models builder.
+     *
+     * <p>models:
+     */
+    public Builder models(Model.Builder... modelsBuilders) {
+      return models(
+          Arrays.asList(modelsBuilders).stream()
+              .map(Model.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract ListModelsResponse build();
   }

@@ -60,11 +60,21 @@ public abstract class ModelSelectionConfig extends JsonSerializable {
     public abstract Builder featureSelectionPreference(
         FeatureSelectionPreference featureSelectionPreference);
 
+    /**
+     * Setter for featureSelectionPreference given a known enum.
+     *
+     * <p>featureSelectionPreference: Options for feature selection preference.
+     */
     @CanIgnoreReturnValue
     public Builder featureSelectionPreference(FeatureSelectionPreference.Known knownType) {
       return featureSelectionPreference(new FeatureSelectionPreference(knownType));
     }
 
+    /**
+     * Setter for featureSelectionPreference given a string.
+     *
+     * <p>featureSelectionPreference: Options for feature selection preference.
+     */
     @CanIgnoreReturnValue
     public Builder featureSelectionPreference(String featureSelectionPreference) {
       return featureSelectionPreference(new FeatureSelectionPreference(featureSelectionPreference));

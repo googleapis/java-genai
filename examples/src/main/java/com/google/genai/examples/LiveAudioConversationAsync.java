@@ -46,7 +46,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
 import com.google.genai.types.Blob;
@@ -161,7 +160,7 @@ public final class LiveAudioConversationAsync {
     String voiceName = "Aoede";
     LiveConnectConfig config =
         LiveConnectConfig.builder()
-            .responseModalitiesFromKnown(ImmutableList.of(Modality.Known.AUDIO))
+            .responseModalities(Modality.Known.AUDIO)
             .speechConfig(
                 SpeechConfig.builder()
                     .voiceConfig(

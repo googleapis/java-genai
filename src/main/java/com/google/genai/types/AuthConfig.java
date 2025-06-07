@@ -96,21 +96,31 @@ public abstract class AuthConfig extends JsonSerializable {
     @JsonProperty("authType")
     public abstract Builder authType(AuthType authType);
 
+    /**
+     * Setter for authType given a known enum.
+     *
+     * <p>authType: Type of auth scheme.
+     */
     @CanIgnoreReturnValue
     public Builder authType(AuthType.Known knownType) {
       return authType(new AuthType(knownType));
     }
 
+    /**
+     * Setter for authType given a string.
+     *
+     * <p>authType: Type of auth scheme.
+     */
     @CanIgnoreReturnValue
     public Builder authType(String authType) {
       return authType(new AuthType(authType));
     }
+
     /**
      * Setter for googleServiceAccountConfig.
      *
      * <p>googleServiceAccountConfig: Config for Google Service Account auth.
      */
-
     @JsonProperty("googleServiceAccountConfig")
     public abstract Builder googleServiceAccountConfig(
         AuthConfigGoogleServiceAccountConfig googleServiceAccountConfig);

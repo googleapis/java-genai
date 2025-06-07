@@ -66,28 +66,26 @@ public class GenerateContentResponseTest {
                   .outcome(Outcome.Known.OUTCOME_OK))
           .build();
 
-  private static final Content CONTENT_1 =
-      Content.builder().parts(ImmutableList.of(PART_1)).build();
-  private static final Content CONTENT_2 =
-      Content.builder().parts(ImmutableList.of(PART_2)).build();
+  private static final Content CONTENT_1 = Content.builder().parts(PART_1).build();
+  private static final Content CONTENT_2 = Content.builder().parts(PART_2).build();
   private static final Content CONTENT_WITH_MULTIPLE_PARTS =
-      Content.builder().parts(ImmutableList.of(PART_1, PART_2)).build();
+      Content.builder().parts(PART_1, PART_2).build();
   private static final Content CONTENT_WITH_FUNCTION_CALLS =
-      Content.builder().parts(ImmutableList.of(PART_FUNCTION_CALL_1, PART_FUNCTION_CALL_2)).build();
+      Content.builder().parts(PART_FUNCTION_CALL_1, PART_FUNCTION_CALL_2).build();
   private static final Content CONTENT_WITH_MIXED_PARTS =
-      Content.builder().parts(ImmutableList.of(PART_1, PART_FUNCTION_CALL_1)).build();
+      Content.builder().parts(PART_1, PART_FUNCTION_CALL_1).build();
   private static final Content CONTENT_WITH_EMPTY_PARTS =
       Content.builder().parts(ImmutableList.of()).build();
   private static final Content CONTENT_WITH_THOUGHT =
-      Content.builder().parts(ImmutableList.of(PART_1, PART_WITH_THOUGHT)).build();
+      Content.builder().parts(PART_1, PART_WITH_THOUGHT).build();
   private static final Content CONTENT_WITH_EXECUTABLE_CODE =
-      Content.builder().parts(ImmutableList.of(PART_WITH_EXECUTABLE_CODE)).build();
+      Content.builder().parts(PART_WITH_EXECUTABLE_CODE).build();
   private static final Content CONTENT_WITH_EXECUTABLE_CODE_AND_TEXT =
-      Content.builder().parts(ImmutableList.of(PART_WITH_EXECUTABLE_CODE, PART_1)).build();
+      Content.builder().parts(PART_WITH_EXECUTABLE_CODE, PART_1).build();
   private static final Content CONTENT_WITH_CODE_EXECUTION_RESULT =
-      Content.builder().parts(ImmutableList.of(PART_WITH_CODE_EXECUTION_RESULT)).build();
+      Content.builder().parts(PART_WITH_CODE_EXECUTION_RESULT).build();
   private static final Content CONTENT_WITH_CODE_EXECUTION_RESULT_AND_TEXT =
-      Content.builder().parts(ImmutableList.of(PART_WITH_CODE_EXECUTION_RESULT, PART_1)).build();
+      Content.builder().parts(PART_WITH_CODE_EXECUTION_RESULT, PART_1).build();
 
   private static final Candidate CANDIDATE_1 =
       Candidate.builder().content(CONTENT_1).finishReason(FinishReason.Known.STOP).build();
@@ -132,7 +130,7 @@ public class GenerateContentResponseTest {
   public void testParts_UnexpectedFinishReason() {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_UNEXPECTED_FINISH_REASON))
+            .candidates(CANDIDATE_WITH_UNEXPECTED_FINISH_REASON)
             .build();
 
     Exception e = assertThrows(IllegalArgumentException.class, () -> response.parts());
@@ -142,9 +140,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testParts_MultipleCandidates() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_1, CANDIDATE_2))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1, CANDIDATE_2).build();
 
     // Only the first candidate is used.
     assertEquals(ImmutableList.of(PART_1), response.parts());
@@ -153,16 +149,14 @@ public class GenerateContentResponseTest {
   @Test
   public void testParts_SinglePart() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder().candidates(ImmutableList.of(CANDIDATE_1)).build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1).build();
     assertEquals(ImmutableList.of(PART_1), response.parts());
   }
 
   @Test
   public void testParts_MultipleParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_MULTIPLE_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_MULTIPLE_PARTS).build();
 
     assertEquals(ImmutableList.of(PART_1, PART_2), response.parts());
   }
@@ -178,7 +172,7 @@ public class GenerateContentResponseTest {
   public void testText_UnexpectedFinishReason() {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_UNEXPECTED_FINISH_REASON))
+            .candidates(CANDIDATE_WITH_UNEXPECTED_FINISH_REASON)
             .build();
 
     Exception e = assertThrows(IllegalArgumentException.class, () -> response.text());
@@ -188,9 +182,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_MultipleCandidates() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_1, CANDIDATE_2))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1, CANDIDATE_2).build();
 
     String result = response.text();
 
@@ -200,9 +192,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_EmptyParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_EMPTY_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_EMPTY_PARTS).build();
 
     String result = response.text();
 
@@ -212,7 +202,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_PartWithText() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder().candidates(ImmutableList.of(CANDIDATE_1)).build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1).build();
 
     String result = response.text();
 
@@ -222,9 +212,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_MultiplePartsWithText() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_MULTIPLE_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_MULTIPLE_PARTS).build();
 
     String result = response.text();
 
@@ -234,9 +222,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_MultiplePartsWithThought() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_THOUGHT))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_THOUGHT).build();
 
     String result = response.text();
 
@@ -246,9 +232,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testText_MixedParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_MIXED_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_MIXED_PARTS).build();
 
     String result = response.text();
 
@@ -267,9 +251,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testFunctionCalls_EmptyParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_EMPTY_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_EMPTY_PARTS).build();
 
     ImmutableList<FunctionCall> result = response.functionCalls();
 
@@ -279,9 +261,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testFunctionCalls_PartWithFunctionCall() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_FUNCTION_CALLS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_FUNCTION_CALLS).build();
 
     ImmutableList<FunctionCall> result = response.functionCalls();
 
@@ -293,9 +273,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testFunctionCalls_MixedParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_MIXED_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_MIXED_PARTS).build();
 
     ImmutableList<FunctionCall> result = response.functionCalls();
 
@@ -315,9 +293,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testExecutableCode_EmptyContent() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder()).build();
 
     String result = response.executableCode();
 
@@ -327,9 +303,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testExecutableCode_EmptyParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_EMPTY_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_EMPTY_PARTS).build();
 
     String result = response.executableCode();
 
@@ -341,12 +315,11 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_EXECUTABLE_CODE)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build(),
-                    CANDIDATE_1))
+                Candidate.builder()
+                    .content(CONTENT_WITH_EXECUTABLE_CODE)
+                    .finishReason(FinishReason.Known.STOP)
+                    .build(),
+                CANDIDATE_1)
             .build();
 
     String result = response.executableCode();
@@ -359,11 +332,9 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_EXECUTABLE_CODE)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(CONTENT_WITH_EXECUTABLE_CODE)
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     String result = response.executableCode();
@@ -375,7 +346,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testExecutableCode_TextPart() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder().candidates(ImmutableList.of(CANDIDATE_1)).build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1).build();
 
     String result = response.executableCode();
 
@@ -387,11 +358,9 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_EXECUTABLE_CODE_AND_TEXT)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(CONTENT_WITH_EXECUTABLE_CODE_AND_TEXT)
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     String result = response.executableCode();
@@ -411,9 +380,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testCodeExecutionResult_EmptyContent() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(Candidate.builder().build()))
-            .build();
+        GenerateContentResponse.builder().candidates(Candidate.builder()).build();
 
     String result = response.codeExecutionResult();
 
@@ -423,9 +390,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testCodeExecutionResult_EmptyParts() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder()
-            .candidates(ImmutableList.of(CANDIDATE_WITH_EMPTY_PARTS))
-            .build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_WITH_EMPTY_PARTS).build();
 
     String result = response.codeExecutionResult();
 
@@ -437,12 +402,11 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_CODE_EXECUTION_RESULT)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build(),
-                    CANDIDATE_1))
+                Candidate.builder()
+                    .content(CONTENT_WITH_CODE_EXECUTION_RESULT)
+                    .finishReason(FinishReason.Known.STOP)
+                    .build(),
+                CANDIDATE_1)
             .build();
 
     String result = response.codeExecutionResult();
@@ -455,11 +419,9 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_CODE_EXECUTION_RESULT)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(CONTENT_WITH_CODE_EXECUTION_RESULT)
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     String result = response.codeExecutionResult();
@@ -470,7 +432,7 @@ public class GenerateContentResponseTest {
   @Test
   public void testCodeExecutionResult_TextPart() {
     GenerateContentResponse response =
-        GenerateContentResponse.builder().candidates(ImmutableList.of(CANDIDATE_1)).build();
+        GenerateContentResponse.builder().candidates(CANDIDATE_1).build();
 
     String result = response.codeExecutionResult();
 
@@ -482,11 +444,9 @@ public class GenerateContentResponseTest {
     GenerateContentResponse response =
         GenerateContentResponse.builder()
             .candidates(
-                ImmutableList.of(
-                    Candidate.builder()
-                        .content(CONTENT_WITH_CODE_EXECUTION_RESULT_AND_TEXT)
-                        .finishReason(FinishReason.Known.STOP)
-                        .build()))
+                Candidate.builder()
+                    .content(CONTENT_WITH_CODE_EXECUTION_RESULT_AND_TEXT)
+                    .finishReason(FinishReason.Known.STOP))
             .build();
 
     String result = response.codeExecutionResult();

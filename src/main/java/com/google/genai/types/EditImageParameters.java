@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +89,15 @@ public abstract class EditImageParameters extends JsonSerializable {
      */
     @JsonProperty("referenceImages")
     public abstract Builder referenceImages(List<ReferenceImageAPI> referenceImages);
+
+    /**
+     * Setter for referenceImages.
+     *
+     * <p>referenceImages: The reference images for Imagen 3 editing.
+     */
+    public Builder referenceImages(ReferenceImageAPI... referenceImages) {
+      return referenceImages(Arrays.asList(referenceImages));
+    }
 
     /**
      * Setter for config.

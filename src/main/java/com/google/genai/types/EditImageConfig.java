@@ -200,40 +200,60 @@ public abstract class EditImageConfig extends JsonSerializable {
     @JsonProperty("safetyFilterLevel")
     public abstract Builder safetyFilterLevel(SafetyFilterLevel safetyFilterLevel);
 
+    /**
+     * Setter for safetyFilterLevel given a known enum.
+     *
+     * <p>safetyFilterLevel: Filter level for safety filtering.
+     */
     @CanIgnoreReturnValue
     public Builder safetyFilterLevel(SafetyFilterLevel.Known knownType) {
       return safetyFilterLevel(new SafetyFilterLevel(knownType));
     }
 
+    /**
+     * Setter for safetyFilterLevel given a string.
+     *
+     * <p>safetyFilterLevel: Filter level for safety filtering.
+     */
     @CanIgnoreReturnValue
     public Builder safetyFilterLevel(String safetyFilterLevel) {
       return safetyFilterLevel(new SafetyFilterLevel(safetyFilterLevel));
     }
+
     /**
      * Setter for personGeneration.
      *
      * <p>personGeneration: Allows generation of people by the model.
      */
-
     @JsonProperty("personGeneration")
     public abstract Builder personGeneration(PersonGeneration personGeneration);
 
+    /**
+     * Setter for personGeneration given a known enum.
+     *
+     * <p>personGeneration: Allows generation of people by the model.
+     */
     @CanIgnoreReturnValue
     public Builder personGeneration(PersonGeneration.Known knownType) {
       return personGeneration(new PersonGeneration(knownType));
     }
 
+    /**
+     * Setter for personGeneration given a string.
+     *
+     * <p>personGeneration: Allows generation of people by the model.
+     */
     @CanIgnoreReturnValue
     public Builder personGeneration(String personGeneration) {
       return personGeneration(new PersonGeneration(personGeneration));
     }
+
     /**
      * Setter for includeSafetyAttributes.
      *
      * <p>includeSafetyAttributes: Whether to report the safety scores of each generated image and
      * the positive prompt in the response.
      */
-
     @JsonProperty("includeSafetyAttributes")
     public abstract Builder includeSafetyAttributes(boolean includeSafetyAttributes);
 
@@ -254,21 +274,31 @@ public abstract class EditImageConfig extends JsonSerializable {
     @JsonProperty("language")
     public abstract Builder language(ImagePromptLanguage language);
 
+    /**
+     * Setter for language given a known enum.
+     *
+     * <p>language: Language of the text in the prompt.
+     */
     @CanIgnoreReturnValue
     public Builder language(ImagePromptLanguage.Known knownType) {
       return language(new ImagePromptLanguage(knownType));
     }
 
+    /**
+     * Setter for language given a string.
+     *
+     * <p>language: Language of the text in the prompt.
+     */
     @CanIgnoreReturnValue
     public Builder language(String language) {
       return language(new ImagePromptLanguage(language));
     }
+
     /**
      * Setter for outputMimeType.
      *
      * <p>outputMimeType: MIME type of the generated image.
      */
-
     @JsonProperty("outputMimeType")
     public abstract Builder outputMimeType(String outputMimeType);
 
@@ -289,22 +319,32 @@ public abstract class EditImageConfig extends JsonSerializable {
     @JsonProperty("editMode")
     public abstract Builder editMode(EditMode editMode);
 
+    /**
+     * Setter for editMode given a known enum.
+     *
+     * <p>editMode: Describes the editing mode for the request.
+     */
     @CanIgnoreReturnValue
     public Builder editMode(EditMode.Known knownType) {
       return editMode(new EditMode(knownType));
     }
 
+    /**
+     * Setter for editMode given a string.
+     *
+     * <p>editMode: Describes the editing mode for the request.
+     */
     @CanIgnoreReturnValue
     public Builder editMode(String editMode) {
       return editMode(new EditMode(editMode));
     }
+
     /**
      * Setter for baseSteps.
      *
      * <p>baseSteps: The number of sampling steps. A higher value has better image quality, while a
      * lower value has better latency.
      */
-
     @JsonProperty("baseSteps")
     public abstract Builder baseSteps(Integer baseSteps);
 

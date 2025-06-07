@@ -41,7 +41,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.CachedContent;
 import com.google.genai.types.Content;
@@ -87,7 +86,7 @@ public final class CachedContentOperations {
         CreateCachedContentConfig.builder()
             .systemInstruction(Content.fromParts(Part.fromText("summarize the pdf")))
             .expireTime(Instant.now().plus(Duration.ofHours(1)))
-            .contents(ImmutableList.of(content))
+            .contents(content)
             .build();
 
     CachedContent cachedContent1 = client.caches.create("gemini-2.0-flash-001", config);

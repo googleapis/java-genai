@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -157,6 +158,16 @@ public abstract class TestTableItem extends JsonSerializable {
      */
     @JsonProperty("ignoreKeys")
     public abstract Builder ignoreKeys(List<String> ignoreKeys);
+
+    /**
+     * Setter for ignoreKeys.
+     *
+     * <p>ignoreKeys: Keys to ignore when comparing the request and response. This is useful for
+     * tests that are not deterministic.
+     */
+    public Builder ignoreKeys(String... ignoreKeys) {
+      return ignoreKeys(Arrays.asList(ignoreKeys));
+    }
 
     public abstract TestTableItem build();
   }

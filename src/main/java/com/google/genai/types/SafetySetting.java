@@ -68,47 +68,79 @@ public abstract class SafetySetting extends JsonSerializable {
     @JsonProperty("method")
     public abstract Builder method(HarmBlockMethod method);
 
+    /**
+     * Setter for method given a known enum.
+     *
+     * <p>method: Determines if the harm block method uses probability or probability and severity
+     * scores.
+     */
     @CanIgnoreReturnValue
     public Builder method(HarmBlockMethod.Known knownType) {
       return method(new HarmBlockMethod(knownType));
     }
 
+    /**
+     * Setter for method given a string.
+     *
+     * <p>method: Determines if the harm block method uses probability or probability and severity
+     * scores.
+     */
     @CanIgnoreReturnValue
     public Builder method(String method) {
       return method(new HarmBlockMethod(method));
     }
+
     /**
      * Setter for category.
      *
      * <p>category: Required. Harm category.
      */
-
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
 
+    /**
+     * Setter for category given a known enum.
+     *
+     * <p>category: Required. Harm category.
+     */
     @CanIgnoreReturnValue
     public Builder category(HarmCategory.Known knownType) {
       return category(new HarmCategory(knownType));
     }
 
+    /**
+     * Setter for category given a string.
+     *
+     * <p>category: Required. Harm category.
+     */
     @CanIgnoreReturnValue
     public Builder category(String category) {
       return category(new HarmCategory(category));
     }
+
     /**
      * Setter for threshold.
      *
      * <p>threshold: Required. The harm block threshold.
      */
-
     @JsonProperty("threshold")
     public abstract Builder threshold(HarmBlockThreshold threshold);
 
+    /**
+     * Setter for threshold given a known enum.
+     *
+     * <p>threshold: Required. The harm block threshold.
+     */
     @CanIgnoreReturnValue
     public Builder threshold(HarmBlockThreshold.Known knownType) {
       return threshold(new HarmBlockThreshold(knownType));
     }
 
+    /**
+     * Setter for threshold given a string.
+     *
+     * <p>threshold: Required. The harm block threshold.
+     */
     @CanIgnoreReturnValue
     public Builder threshold(String threshold) {
       return threshold(new HarmBlockThreshold(threshold));

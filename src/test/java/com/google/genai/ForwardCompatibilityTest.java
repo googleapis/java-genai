@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.ImmutableList;
 import com.google.genai.types.FeatureSelectionPreference;
 import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentConfig;
@@ -217,8 +216,8 @@ public class ForwardCompatibilityTest {
         GenerateContentConfig.builder()
             .modelSelectionConfig(
                 ModelSelectionConfig.builder()
-                    .featureSelectionPreference(FeatureSelectionPreference.Known.PRIORITIZE_QUALITY)
-                    .build())
+                    .featureSelectionPreference(
+                        FeatureSelectionPreference.Known.PRIORITIZE_QUALITY))
             .build();
   }
 
@@ -227,10 +226,7 @@ public class ForwardCompatibilityTest {
     GenerateContentConfig config =
         GenerateContentConfig.builder()
             .safetySettings(
-                ImmutableList.of(
-                    SafetySetting.builder()
-                        .threshold(new HarmBlockThreshold("NEW_UNKNOWN_VALUE"))
-                        .build()))
+                SafetySetting.builder().threshold(new HarmBlockThreshold("NEW_UNKNOWN_VALUE")))
             .build();
 
     Client client = Client.builder().build();

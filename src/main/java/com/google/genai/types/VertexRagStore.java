@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +92,15 @@ public abstract class VertexRagStore extends JsonSerializable {
     public abstract Builder ragCorpora(List<String> ragCorpora);
 
     /**
+     * Setter for ragCorpora.
+     *
+     * <p>ragCorpora: Optional. Deprecated. Please use rag_resources instead.
+     */
+    public Builder ragCorpora(String... ragCorpora) {
+      return ragCorpora(Arrays.asList(ragCorpora));
+    }
+
+    /**
      * Setter for ragResources.
      *
      * <p>ragResources: Optional. The representation of the rag source. It can be used to specify
@@ -97,6 +109,31 @@ public abstract class VertexRagStore extends JsonSerializable {
      */
     @JsonProperty("ragResources")
     public abstract Builder ragResources(List<VertexRagStoreRagResource> ragResources);
+
+    /**
+     * Setter for ragResources.
+     *
+     * <p>ragResources: Optional. The representation of the rag source. It can be used to specify
+     * corpus only or ragfiles. Currently only support one corpus or multiple files from one corpus.
+     * In the future we may open up multiple corpora support.
+     */
+    public Builder ragResources(VertexRagStoreRagResource... ragResources) {
+      return ragResources(Arrays.asList(ragResources));
+    }
+
+    /**
+     * Setter for ragResources builder.
+     *
+     * <p>ragResources: Optional. The representation of the rag source. It can be used to specify
+     * corpus only or ragfiles. Currently only support one corpus or multiple files from one corpus.
+     * In the future we may open up multiple corpora support.
+     */
+    public Builder ragResources(VertexRagStoreRagResource.Builder... ragResourcesBuilders) {
+      return ragResources(
+          Arrays.asList(ragResourcesBuilders).stream()
+              .map(VertexRagStoreRagResource.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     /**
      * Setter for ragRetrievalConfig.

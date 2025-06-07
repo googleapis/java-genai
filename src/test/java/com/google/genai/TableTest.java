@@ -245,17 +245,17 @@ public final class TableTest {
                   Map<String, Object> replayData = ReplayApiClient.loadReplayData(replayId);
                   Client client = createClient(vertexAI, wireMockServer);
 
-                  // Capture the request and store it to normalizedReplayData and normalizedRequestData
+                  // Capture the request and store it to normalizedReplayData and
+                  // normalizedRequestData
                   // so that we can check it later.
                   wireMockServer.addMockServiceRequestListener(
                       (request, response) -> {
                         try {
                           Map<String, Object> requestData =
-                          JsonSerializable.objectMapper.readValue(
-                              request.getBodyAsString(),
-                              new TypeReference<Map<String, Object>>() {});
-                          normalizedReplayData[0] =
-                              (Map<String, Object>) normalizeKeys(replayData);
+                              JsonSerializable.objectMapper.readValue(
+                                  request.getBodyAsString(),
+                                  new TypeReference<Map<String, Object>>() {});
+                          normalizedReplayData[0] = (Map<String, Object>) normalizeKeys(replayData);
                           normalizedRequestData[0] =
                               (Map<String, Object>) normalizeKeys(requestData);
                         } catch (IOException e) {
@@ -272,7 +272,13 @@ public final class TableTest {
                     Object response = method.invoke(module.get(client), parameters.toArray());
 
                     Object expectedRequest =
-                          getAtPath(normalizedReplayData[0], "interactions", 0, "request", "bodySegments", 0);
+                        getAtPath(
+                            normalizedReplayData[0],
+                            "interactions",
+                            0,
+                            "request",
+                            "bodySegments",
+                            0);
                     assertEquals(
                         expectedRequest,
                         normalizedRequestData[0],

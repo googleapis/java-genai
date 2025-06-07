@@ -212,39 +212,59 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("state")
     public abstract Builder state(FileState state);
 
+    /**
+     * Setter for state given a known enum.
+     *
+     * <p>state: Output only. Processing state of the File.
+     */
     @CanIgnoreReturnValue
     public Builder state(FileState.Known knownType) {
       return state(new FileState(knownType));
     }
 
+    /**
+     * Setter for state given a string.
+     *
+     * <p>state: Output only. Processing state of the File.
+     */
     @CanIgnoreReturnValue
     public Builder state(String state) {
       return state(new FileState(state));
     }
+
     /**
      * Setter for source.
      *
      * <p>source: Output only. The source of the `File`.
      */
-
     @JsonProperty("source")
     public abstract Builder source(FileSource source);
 
+    /**
+     * Setter for source given a known enum.
+     *
+     * <p>source: Output only. The source of the `File`.
+     */
     @CanIgnoreReturnValue
     public Builder source(FileSource.Known knownType) {
       return source(new FileSource(knownType));
     }
 
+    /**
+     * Setter for source given a string.
+     *
+     * <p>source: Output only. The source of the `File`.
+     */
     @CanIgnoreReturnValue
     public Builder source(String source) {
       return source(new FileSource(source));
     }
+
     /**
      * Setter for videoMetadata.
      *
      * <p>videoMetadata: Output only. Metadata for a video.
      */
-
     @JsonProperty("videoMetadata")
     public abstract Builder videoMetadata(Map<String, Object> videoMetadata);
 

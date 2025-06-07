@@ -95,29 +95,49 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     @JsonProperty("activityHandling")
     public abstract Builder activityHandling(ActivityHandling activityHandling);
 
+    /**
+     * Setter for activityHandling given a known enum.
+     *
+     * <p>activityHandling: Defines what effect activity has.
+     */
     @CanIgnoreReturnValue
     public Builder activityHandling(ActivityHandling.Known knownType) {
       return activityHandling(new ActivityHandling(knownType));
     }
 
+    /**
+     * Setter for activityHandling given a string.
+     *
+     * <p>activityHandling: Defines what effect activity has.
+     */
     @CanIgnoreReturnValue
     public Builder activityHandling(String activityHandling) {
       return activityHandling(new ActivityHandling(activityHandling));
     }
+
     /**
      * Setter for turnCoverage.
      *
      * <p>turnCoverage: Defines which input is included in the user's turn.
      */
-
     @JsonProperty("turnCoverage")
     public abstract Builder turnCoverage(TurnCoverage turnCoverage);
 
+    /**
+     * Setter for turnCoverage given a known enum.
+     *
+     * <p>turnCoverage: Defines which input is included in the user's turn.
+     */
     @CanIgnoreReturnValue
     public Builder turnCoverage(TurnCoverage.Known knownType) {
       return turnCoverage(new TurnCoverage(knownType));
     }
 
+    /**
+     * Setter for turnCoverage given a string.
+     *
+     * <p>turnCoverage: Defines which input is included in the user's turn.
+     */
     @CanIgnoreReturnValue
     public Builder turnCoverage(String turnCoverage) {
       return turnCoverage(new TurnCoverage(turnCoverage));

@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +65,29 @@ public abstract class CitationMetadata extends JsonSerializable {
      */
     @JsonProperty("citations")
     public abstract Builder citations(List<Citation> citations);
+
+    /**
+     * Setter for citations.
+     *
+     * <p>citations: Contains citation information when the model directly quotes, at length, from
+     * another source. Can include traditional websites and code repositories.
+     */
+    public Builder citations(Citation... citations) {
+      return citations(Arrays.asList(citations));
+    }
+
+    /**
+     * Setter for citations builder.
+     *
+     * <p>citations: Contains citation information when the model directly quotes, at length, from
+     * another source. Can include traditional websites and code repositories.
+     */
+    public Builder citations(Citation.Builder... citationsBuilders) {
+      return citations(
+          Arrays.asList(citationsBuilders).stream()
+              .map(Citation.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract CitationMetadata build();
   }

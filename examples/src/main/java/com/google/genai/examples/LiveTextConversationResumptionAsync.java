@@ -49,7 +49,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
@@ -110,7 +109,7 @@ public final class LiveTextConversationResumptionAsync {
 
     LiveConnectConfig config =
         LiveConnectConfig.builder()
-            .responseModalitiesFromKnown(ImmutableList.of(Modality.Known.TEXT))
+            .responseModalities(Modality.Known.TEXT)
             .sessionResumption(sessionResumptionConfig)
             .topP(0.8f)
             .seed(1234)
@@ -162,11 +161,7 @@ public final class LiveTextConversationResumptionAsync {
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
-        .turns(
-            ImmutableList.of(
-                Content.builder()
-                    .parts(ImmutableList.of(Part.builder().text(text).build()))
-                    .build()))
+        .turns(Content.fromParts(Part.fromText(text)))
         .build();
   }
 

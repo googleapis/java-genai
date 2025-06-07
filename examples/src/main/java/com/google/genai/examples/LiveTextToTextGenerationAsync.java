@@ -74,9 +74,7 @@ public final class LiveTextToTextGenerationAsync {
     }
 
     LiveConnectConfig config =
-        LiveConnectConfig.builder()
-            .responseModalitiesFromKnown(ImmutableList.of(Modality.Known.TEXT))
-            .build();
+        LiveConnectConfig.builder().responseModalities(Modality.Known.TEXT).build();
 
     CompletableFuture<Void> allDone = new CompletableFuture<>();
 
@@ -113,11 +111,7 @@ public final class LiveTextToTextGenerationAsync {
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
-        .turns(
-            ImmutableList.of(
-                Content.builder()
-                    .parts(ImmutableList.of(Part.builder().text(text).build()))
-                    .build()))
+        .turns(Content.fromParts(Part.fromText(text)))
         .build();
   }
 

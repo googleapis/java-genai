@@ -33,7 +33,6 @@ import static org.mockito.Mockito.when;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
@@ -431,10 +430,10 @@ public class HttpApiClientTest {
       WireMock.configureFor("localhost", wireMockServer.port());
       String expectedText = "This is Proxy speaking, Hello, World!";
       Part part = Part.builder().text(expectedText).build();
-      Content content = Content.builder().parts(ImmutableList.of(part)).build();
+      Content content = Content.fromParts(part);
       Candidate candidate = Candidate.builder().content(content).build();
       GenerateContentResponse fakeResponse =
-          GenerateContentResponse.builder().candidates(ImmutableList.of(candidate)).build();
+          GenerateContentResponse.builder().candidates(candidate).build();
       stubFor(
           post(urlMatching(".*"))
               .willReturn(

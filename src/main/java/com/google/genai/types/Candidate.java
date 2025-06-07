@@ -18,12 +18,15 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -157,21 +160,33 @@ public abstract class Candidate extends JsonSerializable {
     @JsonProperty("finishReason")
     public abstract Builder finishReason(FinishReason finishReason);
 
+    /**
+     * Setter for finishReason given a known enum.
+     *
+     * <p>finishReason: The reason why the model stopped generating tokens. If empty, the model has
+     * not stopped generating the tokens.
+     */
     @CanIgnoreReturnValue
     public Builder finishReason(FinishReason.Known knownType) {
       return finishReason(new FinishReason(knownType));
     }
 
+    /**
+     * Setter for finishReason given a string.
+     *
+     * <p>finishReason: The reason why the model stopped generating tokens. If empty, the model has
+     * not stopped generating the tokens.
+     */
     @CanIgnoreReturnValue
     public Builder finishReason(String finishReason) {
       return finishReason(new FinishReason(finishReason));
     }
+
     /**
      * Setter for urlContextMetadata.
      *
      * <p>urlContextMetadata: Metadata related to url context retrieval tool.
      */
-
     @JsonProperty("urlContextMetadata")
     public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
 
@@ -244,6 +259,29 @@ public abstract class Candidate extends JsonSerializable {
      */
     @JsonProperty("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
+
+    /**
+     * Setter for safetyRatings.
+     *
+     * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
+     * is at most one rating per category.
+     */
+    public Builder safetyRatings(SafetyRating... safetyRatings) {
+      return safetyRatings(Arrays.asList(safetyRatings));
+    }
+
+    /**
+     * Setter for safetyRatings builder.
+     *
+     * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
+     * is at most one rating per category.
+     */
+    public Builder safetyRatings(SafetyRating.Builder... safetyRatingsBuilders) {
+      return safetyRatings(
+          Arrays.asList(safetyRatingsBuilders).stream()
+              .map(SafetyRating.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract Candidate build();
   }

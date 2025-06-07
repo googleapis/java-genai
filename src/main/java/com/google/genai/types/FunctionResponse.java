@@ -111,22 +111,34 @@ public abstract class FunctionResponse extends JsonSerializable {
     @JsonProperty("scheduling")
     public abstract Builder scheduling(FunctionResponseScheduling scheduling);
 
+    /**
+     * Setter for scheduling given a known enum.
+     *
+     * <p>scheduling: Specifies how the response should be scheduled in the conversation. Only
+     * applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     */
     @CanIgnoreReturnValue
     public Builder scheduling(FunctionResponseScheduling.Known knownType) {
       return scheduling(new FunctionResponseScheduling(knownType));
     }
 
+    /**
+     * Setter for scheduling given a string.
+     *
+     * <p>scheduling: Specifies how the response should be scheduled in the conversation. Only
+     * applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     */
     @CanIgnoreReturnValue
     public Builder scheduling(String scheduling) {
       return scheduling(new FunctionResponseScheduling(scheduling));
     }
+
     /**
      * Setter for id.
      *
      * <p>id: Optional. The id of the function call this response is for. Populated by the client to
      * match the corresponding function call `id`.
      */
-
     @JsonProperty("id")
     public abstract Builder id(String id);
 

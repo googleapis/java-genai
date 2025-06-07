@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,15 +69,26 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     @JsonProperty("mode")
     public abstract Builder mode(FunctionCallingConfigMode mode);
 
+    /**
+     * Setter for mode given a known enum.
+     *
+     * <p>mode: Optional. Function calling mode.
+     */
     @CanIgnoreReturnValue
     public Builder mode(FunctionCallingConfigMode.Known knownType) {
       return mode(new FunctionCallingConfigMode(knownType));
     }
 
+    /**
+     * Setter for mode given a string.
+     *
+     * <p>mode: Optional. Function calling mode.
+     */
     @CanIgnoreReturnValue
     public Builder mode(String mode) {
       return mode(new FunctionCallingConfigMode(mode));
     }
+
     /**
      * Setter for allowedFunctionNames.
      *
@@ -84,9 +96,19 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
      * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
      * predict a function call from the set of function names provided.
      */
-
     @JsonProperty("allowedFunctionNames")
     public abstract Builder allowedFunctionNames(List<String> allowedFunctionNames);
+
+    /**
+     * Setter for allowedFunctionNames.
+     *
+     * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
+     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
+     * predict a function call from the set of function names provided.
+     */
+    public Builder allowedFunctionNames(String... allowedFunctionNames) {
+      return allowedFunctionNames(Arrays.asList(allowedFunctionNames));
+    }
 
     public abstract FunctionCallingConfig build();
   }

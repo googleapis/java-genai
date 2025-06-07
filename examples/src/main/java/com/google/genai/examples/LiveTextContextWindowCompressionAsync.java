@@ -78,7 +78,7 @@ public final class LiveTextContextWindowCompressionAsync {
 
     LiveConnectConfig config =
         LiveConnectConfig.builder()
-            .responseModalitiesFromKnown(ImmutableList.of(Modality.Known.TEXT))
+            .responseModalities(Modality.Known.TEXT)
             .contextWindowCompression(
                 ContextWindowCompressionConfig.builder()
                     .triggerTokens(1000L)
@@ -120,11 +120,7 @@ public final class LiveTextContextWindowCompressionAsync {
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
-        .turns(
-            ImmutableList.of(
-                Content.builder()
-                    .parts(ImmutableList.of(Part.builder().text(text).build()))
-                    .build()))
+        .turns(Content.fromParts(Part.fromText(text)))
         .build();
   }
 

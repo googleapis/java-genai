@@ -18,11 +18,14 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +67,31 @@ public abstract class ComputeTokensResponse extends JsonSerializable {
      */
     @JsonProperty("tokensInfo")
     public abstract Builder tokensInfo(List<TokensInfo> tokensInfo);
+
+    /**
+     * Setter for tokensInfo.
+     *
+     * <p>tokensInfo: Lists of tokens info from the input. A ComputeTokensRequest could have
+     * multiple instances with a prompt in each instance. We also need to return lists of tokens
+     * info for the request with multiple instances.
+     */
+    public Builder tokensInfo(TokensInfo... tokensInfo) {
+      return tokensInfo(Arrays.asList(tokensInfo));
+    }
+
+    /**
+     * Setter for tokensInfo builder.
+     *
+     * <p>tokensInfo: Lists of tokens info from the input. A ComputeTokensRequest could have
+     * multiple instances with a prompt in each instance. We also need to return lists of tokens
+     * info for the request with multiple instances.
+     */
+    public Builder tokensInfo(TokensInfo.Builder... tokensInfoBuilders) {
+      return tokensInfo(
+          Arrays.asList(tokensInfoBuilders).stream()
+              .map(TokensInfo.Builder::build)
+              .collect(toImmutableList()));
+    }
 
     public abstract ComputeTokensResponse build();
   }
