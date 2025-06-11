@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.0](https://github.com/googleapis/java-genai/compare/v1.3.0...v1.4.0) (2025-06-11)
+
+
+### Features
+
+* Add datastore_spec field for VertexAISearch ([8c8b47a](https://github.com/googleapis/java-genai/commit/8c8b47a79cbf9014325aeeab156f99db6181a265))
+* Add support for Veo frame interpolation and video extension ([94f5e41](https://github.com/googleapis/java-genai/commit/94f5e41da83de8caa24c27b32d430f8ea5e6d0d8))
+* RAG - Introducing context storing for Gemini Live API. ([d63d625](https://github.com/googleapis/java-genai/commit/d63d62583f554aca88062dfbf3c77cc65da812dd))
+* Support maxConnections and maxConnectionsPerHost in Client instantiation ([7a4a8ac](https://github.com/googleapis/java-genai/commit/7a4a8ac093adba2f0fb7b2558b41274da450010c))
+* Support passing builder classes to setter methods ([996c994](https://github.com/googleapis/java-genai/commit/996c994d6a2697b8b79dd48a7460eed49a408884))
+* Support passing builder varargs to setter methods ([0b08524](https://github.com/googleapis/java-genai/commit/0b08524b002b656c9c8a7a7f667a9efabb69dcfb))
+* Support varargs in Enum setter methods ([cd63fd0](https://github.com/googleapis/java-genai/commit/cd63fd0bdb124d8d2bebabc68f29a504ae1f3e7e))
+* Support varargs in setter methods ([0b08524](https://github.com/googleapis/java-genai/commit/0b08524b002b656c9c8a7a7f667a9efabb69dcfb))
+
+
+### Documentation
+
+* Add javadoc for setter methods in types classes ([996c994](https://github.com/googleapis/java-genai/commit/996c994d6a2697b8b79dd48a7460eed49a408884))
+
 ## [1.3.0](https://github.com/googleapis/java-genai/compare/v1.2.0...v1.3.0) (2025-06-04)
 
 
