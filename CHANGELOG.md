@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.1](https://github.com/googleapis/java-genai/compare/v1.4.0...v1.4.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* Add backwards compatibility for generateVideos in Java SDK ([504984a](https://github.com/googleapis/java-genai/commit/504984ad8bc30636e47a6838d89fe097766e9484))
+
+
+### Miscellaneous Chores
+
+* release 1.4.1 ([49a57d8](https://github.com/googleapis/java-genai/commit/49a57d878379729a14ccd4846af67c67bbaf2419))
+
 ## [1.4.0](https://github.com/googleapis/java-genai/compare/v1.3.0...v1.4.0) (2025-06-11)
 
 
