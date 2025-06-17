@@ -4487,6 +4487,7 @@ public final class Models {
   ObjectNode generateContentResponseFromMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"candidates"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"candidates"});
@@ -5337,6 +5338,7 @@ public final class Models {
   ObjectNode generateContentResponseFromVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"candidates"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"candidates"});
