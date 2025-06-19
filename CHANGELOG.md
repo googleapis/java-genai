@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/googleapis/java-genai/compare/v1.4.1...v1.5.0) (2025-06-19)
+
+
+### Features
+
+* Add a default 5 minutes timeout to the Java SDK. ([d80d23b](https://github.com/googleapis/java-genai/commit/d80d23b7a8cb440410f9dd9556ee1259352285ef))
+* enable json schema for controlled output and function declaration. ([35d93d8](https://github.com/googleapis/java-genai/commit/35d93d84a349cf1032d2cc61bf4e3128386759d6))
+* Parametrize model ID in Java genai samples and set hardcoded model IDs as default values if model ID not passed in by user. ([c1b0948](https://github.com/googleapis/java-genai/commit/c1b0948af51bc746cbf350e4b6a60b6199d3ffe2))
+* resolve deep conditional nesting in Live API examples for better readability. ([aa71865](https://github.com/googleapis/java-genai/commit/aa718657f53f4bd9132a9b00816e7f5581108dec))
+
+
+### Documentation
+
+* fix small typo in comments ([a6bfe36](https://github.com/googleapis/java-genai/commit/a6bfe36843bed1575a03c86a092a17b35e48fd9f))
+
 ## [1.4.1](https://github.com/googleapis/java-genai/compare/v1.4.0...v1.4.1) (2025-06-12)
 
 
