@@ -95,6 +95,7 @@ public final class LiveTextToAudioTranscriptionAsync {
     // Sets the Google Search tool in the config.
     Tool googleSearchTool = Tool.builder().googleSearch(GoogleSearch.builder()).build();
 
+    // Configures live session and audio transcription.
     LiveConnectConfig config =
         LiveConnectConfig.builder()
             .responseModalities(Modality.Known.AUDIO)
@@ -123,12 +124,16 @@ public final class LiveTextToAudioTranscriptionAsync {
                         // Receive messages from the live session.
                         return session.receive(message -> printLiveServerMessage(message, allDone));
                       })
+                  // Wait for the allDone future to complete, which is signaled in
+                  // printLiveServerMessage when the server is done sending messages.
                   .thenCompose(unused -> allDone)
+                  // Close the session.
                   .thenCompose(unused -> session.close());
             })
         .join();
   }
 
+  /** Wraps client message text. */
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
@@ -150,6 +155,8 @@ public final class LiveTextToAudioTranscriptionAsync {
           System.out.print(transcription.text().get());
         }
       }
+
+      // Check if the server's turn is complete and signal the allDone future if so.
       if (content.turnComplete().orElse(false)) {
         System.out.println();
         allDone.complete(null);
@@ -162,10 +169,12 @@ public final class LiveTextToAudioTranscriptionAsync {
         .flatMap(Collection::stream)
         .map(Part::inlineData)
         .filter(Optional::isPresent)
+        // Print some text to indicate that audio is returned.
         .forEach(inlineData -> System.out.print("Some audio bytes in inline_data..."));
   }
 
   private static void processGroundingMetadata(LiveServerContent content) {
+    // Print grounding metadata if present.
     content.groundingMetadata().stream()
         .flatMap(metadata -> metadata.groundingChunks().stream())
         .flatMap(Collection::stream)

@@ -120,6 +120,7 @@ public final class LiveTextConversationAsync {
     }
   }
 
+  /** Wraps client message text. */
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
@@ -129,7 +130,9 @@ public final class LiveTextConversationAsync {
 
   public static void printLiveServerMessage(
       LiveServerMessage message, CompletableFuture<Void> allDone) {
-    message.serverContent()
+    // Extract and print text from the model.
+    message
+        .serverContent()
         .flatMap(LiveServerContent::modelTurn)
         .flatMap(Content::parts)
         .ifPresent(parts -> parts.forEach(part -> part.text().ifPresent(System.out::print)));

@@ -128,12 +128,14 @@ public final class LiveTextConversationResumptionAsync {
 
     SessionResumptionConfig.Builder sessionResumptionConfigBuilder =
         SessionResumptionConfig.builder();
+    // Set the session handle if provided.
     if (sessionHandle != null) {
       System.out.println("Resuming session handle: " + sessionHandle);
       sessionResumptionConfigBuilder.handle(sessionHandle);
     }
     SessionResumptionConfig sessionResumptionConfig = sessionResumptionConfigBuilder.build();
 
+    // Configures live session and session resumption.
     LiveConnectConfig config =
         LiveConnectConfig.builder()
             .responseModalities(Modality.Known.TEXT)
@@ -179,6 +181,7 @@ public final class LiveTextConversationResumptionAsync {
     }
   }
 
+  /** Wraps client message text. */
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
@@ -188,6 +191,7 @@ public final class LiveTextConversationResumptionAsync {
 
   private static void printServerContent(
       LiveServerContent content, CompletableFuture<Void> allDone) {
+    // Extract and print text from the model.
     content.modelTurn().flatMap(Content::parts).stream()
         .flatMap(Collection::stream)
         .map(Part::text)

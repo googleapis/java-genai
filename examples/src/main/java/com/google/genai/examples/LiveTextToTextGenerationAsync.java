@@ -105,12 +105,16 @@ public final class LiveTextToTextGenerationAsync {
                         // Receive messages from the live session.
                         return session.receive(message -> printLiveServerMessage(message, allDone));
                       })
+                  // Wait for the allDone future to complete, which is signaled in
+                  // printLiveServerMessage when the server is done sending messages.
                   .thenCompose(unused -> allDone)
+                  // Close the session.
                   .thenCompose(unused -> session.close());
             })
         .join();
   }
 
+  /** Wraps client message text. */
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
@@ -120,11 +124,14 @@ public final class LiveTextToTextGenerationAsync {
 
   public static void printLiveServerMessage(
       LiveServerMessage message, CompletableFuture<Void> allDone) {
-    message.serverContent()
+    // Extract and print text from the model.
+    message
+        .serverContent()
         .flatMap(LiveServerContent::modelTurn)
         .flatMap(Content::parts)
         .ifPresent(parts -> parts.forEach(part -> part.text().ifPresent(System.out::print)));
 
+    // Check if the server's turn is complete and signal the allDone future if so.
     if (message.serverContent().flatMap(LiveServerContent::turnComplete).orElse(false)) {
       System.out.println();
       allDone.complete(null);
