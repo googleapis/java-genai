@@ -40,7 +40,7 @@ import org.jspecify.annotations.Nullable;
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
 abstract class ApiClient {
 
-  private static final String SDK_VERSION = "1.4.1"; // x-version-update:google-genai:released
+  private static final String SDK_VERSION = "1.5.0"; // x-version-update:google-genai:released
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
   CloseableHttpClient httpClient;
