@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/googleapis/java-genai/compare/v1.5.0...v1.6.0) (2025-06-20)
+
+
+### Features
+
+* allow users to access headers for generateContent method and generateContentStream ([0315357](https://github.com/googleapis/java-genai/commit/03153578ea64f0c34836ac62395aa867f44eac07))
+* configure release-please to automatically update package version across all files during releases. ([9131ac2](https://github.com/googleapis/java-genai/commit/9131ac24fde477afb25deb516c7ace51530ed8d9))
+* support client.caches.update method ([345c2b9](https://github.com/googleapis/java-genai/commit/345c2b93789913d6d84cdde9c30f86ec4041bd24))
+
+
+### Documentation
+
+* add more comments to make it easier to follow live api code, and to explain the usage of new concepts like thenCompose. ([96c792c](https://github.com/googleapis/java-genai/commit/96c792c3aa84f632e0b46bb986de403ecbf4edc1))
+* Update description of thinking_budget. ([265f20a](https://github.com/googleapis/java-genai/commit/265f20addd9e9e76c249e6042d653c8cec9f27a4))
+
 ## [1.5.0](https://github.com/googleapis/java-genai/compare/v1.4.1...v1.5.0) (2025-06-19)
 
 
