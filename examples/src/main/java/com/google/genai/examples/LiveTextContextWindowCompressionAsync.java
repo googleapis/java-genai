@@ -87,6 +87,7 @@ public final class LiveTextContextWindowCompressionAsync {
       modelId = args[0];
     }
 
+    // Configures live session and context window compression.
     LiveConnectConfig config =
         LiveConnectConfig.builder()
             .responseModalities(Modality.Known.TEXT)
@@ -114,12 +115,16 @@ public final class LiveTextContextWindowCompressionAsync {
                         // Receive messages from the live session.
                         return session.receive(message -> printLiveServerMessage(message, allDone));
                       })
+                  // Wait for the allDone future to complete, which is signaled in
+                  // printLiveServerMessage when the server is done sending messages.
                   .thenCompose(unused -> allDone)
+                  // Close the session.
                   .thenCompose(unused -> session.close());
             })
         .join();
   }
 
+  /** Wraps client message text. */
   public static LiveSendClientContentParameters clientContentFromText(String text) {
     return LiveSendClientContentParameters.builder()
         .turnComplete(true)
@@ -134,6 +139,7 @@ public final class LiveTextContextWindowCompressionAsync {
       return;
     }
 
+    // Print the content sent by the model.
     Content modelTurn = content.modelTurn().orElse(null);
     if (modelTurn != null) {
       for (Part part : modelTurn.parts().orElse(ImmutableList.of())) {
@@ -146,6 +152,7 @@ public final class LiveTextContextWindowCompressionAsync {
       }
     }
 
+    // Check if the server's turn is complete and signal the allDone future if so.
     if (content.turnComplete().orElse(false)) {
       System.out.println();
       allDone.complete(null);
