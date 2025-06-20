@@ -50,6 +50,21 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
   @JsonProperty("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
 
+  /**
+   * Whether to add an image enhancing step before upscaling. It is expected to suppress the noise
+   * and JPEG compression artifact from the input image.
+   */
+  @JsonProperty("enhanceInputImage")
+  public abstract Optional<Boolean> enhanceInputImage();
+
+  /**
+   * With a higher image preservation factor, the original image pixels are more respected. With a
+   * lower image preservation factor, the output image will have be more different from the input
+   * image, but maybe with finer details and fewer noises.
+   */
+  @JsonProperty("imagePreservationFactor")
+  public abstract Optional<Float> imagePreservationFactor();
+
   /** Instantiates a builder for UpscaleImageConfig. */
   public static Builder builder() {
     return new AutoValue_UpscaleImageConfig.Builder();
@@ -108,6 +123,25 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      */
     @JsonProperty("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
+
+    /**
+     * Setter for enhanceInputImage.
+     *
+     * <p>enhanceInputImage: Whether to add an image enhancing step before upscaling. It is expected
+     * to suppress the noise and JPEG compression artifact from the input image.
+     */
+    @JsonProperty("enhanceInputImage")
+    public abstract Builder enhanceInputImage(boolean enhanceInputImage);
+
+    /**
+     * Setter for imagePreservationFactor.
+     *
+     * <p>imagePreservationFactor: With a higher image preservation factor, the original image
+     * pixels are more respected. With a lower image preservation factor, the output image will have
+     * be more different from the input image, but maybe with finer details and fewer noises.
+     */
+    @JsonProperty("imagePreservationFactor")
+    public abstract Builder imagePreservationFactor(Float imagePreservationFactor);
 
     public abstract UpscaleImageConfig build();
   }

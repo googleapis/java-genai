@@ -78,7 +78,11 @@ public final class UpscaleImage {
             modelId,
             image,
             "x2",
-            UpscaleImageConfig.builder().outputMimeType("image/jpeg").build());
+            UpscaleImageConfig.builder()
+                .outputMimeType("image/jpeg")
+                .enhanceInputImage(true)
+                .imagePreservationFactor(0.6f)
+                .build());
 
     Image upscaledImage = upscaleImageResponse.generatedImages().get().get(0).image().get();
     // Do something with upscaledImage.
