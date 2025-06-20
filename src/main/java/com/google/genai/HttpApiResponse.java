@@ -17,42 +17,36 @@
 package com.google.genai;
 
 import com.google.genai.errors.ApiException;
-import com.google.genai.errors.GenAiIOException;
-import java.io.IOException;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
+import okhttp3.Headers;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /** Wraps a real HTTP response to expose the methods needed by the GenAI SDK. */
 final class HttpApiResponse extends ApiResponse {
 
-  private final CloseableHttpResponse response;
+  private final Response response;
 
   /** Constructs a HttpApiResponse instance with the response. */
-  public HttpApiResponse(CloseableHttpResponse response) {
+  public HttpApiResponse(Response response) {
     this.response = response;
   }
 
-  /** Returns the HttpEntity from the response. */
+  /** Returns the ResponseBody from the response. */
   @Override
-  public HttpEntity getEntity() {
+  public ResponseBody getBody() {
     ApiException.throwFromResponse(response);
-    return response.getEntity();
+    return response.body();
   }
 
   /** Returns all of the headers from the response. */
   @Override
-  public Header[] getHeaders() {
-    return response.getAllHeaders();
+  public Headers getHeaders() {
+    return response.headers();
   }
 
   /** Closes the Http response. */
   @Override
   public void close() {
-    try {
-      response.close();
-    } catch (IOException e) {
-      throw new GenAiIOException("Failed to close the HTTP response.", e);
-    }
+    response.close();
   }
 }

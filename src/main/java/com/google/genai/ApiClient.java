@@ -18,6 +18,7 @@ package com.google.genai;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
@@ -28,13 +29,11 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import okhttp3.ConnectionPool;
+import okhttp3.OkHttpClient;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
@@ -45,7 +44,7 @@ abstract class ApiClient {
   // {x-version-update-end:google-genai:released}
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
-  CloseableHttpClient httpClient;
+  OkHttpClient httpClient;
   HttpOptions httpOptions;
   final boolean vertexAI;
   final Optional<ClientOptions> clientOptions;
@@ -149,8 +148,7 @@ abstract class ApiClient {
       geminiApiKey = null;
     }
     if (googleApiKey != null && geminiApiKey != null) {
-      logger.warning(
-          "Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.");
+      logger.warning("Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.");
     }
     if (googleApiKey != null) {
       return googleApiKey;
@@ -158,22 +156,25 @@ abstract class ApiClient {
     return geminiApiKey;
   }
 
-  private CloseableHttpClient createHttpClient(
+  private OkHttpClient createHttpClient(
       Optional<Integer> timeout, Optional<ClientOptions> clientOptions) {
-    HttpClientBuilder builder = HttpClients.custom();
+    OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-    RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-    timeout.ifPresent(connectTimeout -> requestConfigBuilder.setConnectTimeout(connectTimeout));
-    builder.setDefaultRequestConfig(requestConfigBuilder.build());
+    timeout.ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+    int maxIdleConnections = 5;
+    long keepAliveDuration = 5;
 
-    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
-    clientOptions.ifPresent(
-        options -> {
-          options.maxConnections().ifPresent(connectionManager::setMaxTotal);
-          options.maxConnectionsPerHost().ifPresent(connectionManager::setDefaultMaxPerRoute);
-        });
-    builder.setConnectionManager(connectionManager);
+    if (clientOptions.isPresent()) {
+      ClientOptions options = clientOptions.get();
+      if (options.maxConnections().isPresent()) {
+        maxIdleConnections = options.maxConnections().get();
+      }
+      if (options.maxConnectionsPerHost().isPresent()) {
+        maxIdleConnections = options.maxConnectionsPerHost().get();
+      }
+    }
 
+    builder.connectionPool(new ConnectionPool(maxIdleConnections, keepAliveDuration, MINUTES));
     return builder.build();
   }
 
@@ -214,7 +215,7 @@ abstract class ApiClient {
   }
 
   /** Returns the HttpClient for API calls. */
-  CloseableHttpClient httpClient() {
+  OkHttpClient httpClient() {
     return httpClient;
   }
 
