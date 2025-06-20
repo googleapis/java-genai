@@ -22,11 +22,9 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.errors.GenAiIOException;
-import com.google.genai.types.HttpOptions;
 import com.google.genai.types.ClientOptions;
-import java.io.ByteArrayInputStream;
+import com.google.genai.types.HttpOptions;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,12 +35,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
-import org.apache.http.Header;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicStatusLine;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 // TODO(b/369384123): Currently the ReplayApiClient mirrors the HttpApiClient. We will refactor the
 // ReplayApiClient to use the ReplayFile as part of resolving b/369384123.
@@ -116,8 +114,8 @@ final class ReplayApiClient extends ApiClient {
       // fields like body_segments are not being populated. For now, we will just use basic JSON
       // parsing and switch to the generated JSON classes once we have the replays working.
       // convert JSON string to Map
-     return JsonSerializable.objectMapper.readValue(
-              replayData, new TypeReference<Map<String, Object>>() {});
+      return JsonSerializable.objectMapper.readValue(
+          replayData, new TypeReference<Map<String, Object>>() {});
     } catch (IOException e) {
       throw new GenAiIOException("Failed to read replay file: " + e, e);
     }
@@ -165,21 +163,32 @@ final class ReplayApiClient extends ApiClient {
         responseBody.append(bodySegment.toString());
       }
 
-      Header[] headers = headerMap.entrySet()
-              .stream()
-              .map(entry -> new BasicHeader(entry.getKey(), entry.getValue()))
-              .toArray(Header[]::new);
-
+      // Create a dummy request, which is required by the Response.Builder
+      Request dummyRequest =
+          new Request.Builder()
+              .url("https://replay.googleapis.com" + path)
+              .method(httpMethod, null)
+              .build();
+      Headers.Builder headersBuilder = new Headers.Builder();
+      headerMap.forEach(headersBuilder::add);
+      Headers okHttpHeaders = headersBuilder.build();
       String responseString = responseBody.toString();
-
-      BasicHttpEntity entity = new BasicHttpEntity();
-      entity.setContent(new ByteArrayInputStream(responseString.getBytes(StandardCharsets.UTF_8)));
-      entity.setContentLength(responseString.length());
-
-      StatusLine statusLine =
-          new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), statusCode, "OK");
-
-      return new ReplayApiResponse(entity, statusLine, headers);
+      String contentType = okHttpHeaders.get("Content-Type");
+      MediaType mediaType =
+          (contentType != null)
+              ? MediaType.parse(contentType)
+              : MediaType.parse("application/json; charset=utf-8");
+      ResponseBody okHttpResponseBody = ResponseBody.create(responseString, mediaType);
+      Response okHttpResponse =
+          new Response.Builder()
+              .request(dummyRequest)
+              .protocol(Protocol.HTTP_1_1)
+              .code(statusCode)
+              .message("OK")
+              .headers(okHttpHeaders)
+              .body(okHttpResponseBody)
+              .build();
+      return new ReplayApiResponse(okHttpResponse.body(), statusCode, okHttpHeaders);
     } else {
       // Note that if the client mode is "api", then the ReplayApiClient will not be used.
       throw new IllegalArgumentException("Invalid client mode: " + this.clientMode);

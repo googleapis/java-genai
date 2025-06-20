@@ -51,9 +51,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
 
 /**
  * Provides methods for interacting with the available GenAI files. Instantiating this class is not
@@ -517,10 +516,10 @@ public final class Files {
     try (ApiResponse response =
         this.apiClient.request(
             "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      HttpEntity entity = response.getEntity();
+      ResponseBody responseBody = response.getBody();
       String responseString;
       try {
-        responseString = EntityUtils.toString(entity);
+        responseString = responseBody.string();
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
@@ -578,18 +577,19 @@ public final class Files {
     try (ApiResponse response =
         this.apiClient.request(
             "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      HttpEntity entity = response.getEntity();
+      ResponseBody responseBody = response.getBody();
       String responseString;
       try {
-        responseString = EntityUtils.toString(entity);
+        responseString = responseBody.string();
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
 
       if (config.shouldReturnHttpResponse().orElse(false)) {
         Map<String, String> headers = new HashMap<>();
-        for (Header header : response.getHeaders()) {
-          headers.put(header.getName(), header.getValue());
+        Headers responseHeaders = response.getHeaders();
+        for (String headerName : responseHeaders.names()) {
+          headers.put(headerName, responseHeaders.get(headerName));
         }
         return CreateFileResponse.builder()
             .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString).build())
@@ -656,10 +656,10 @@ public final class Files {
     try (ApiResponse response =
         this.apiClient.request(
             "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      HttpEntity entity = response.getEntity();
+      ResponseBody responseBody = response.getBody();
       String responseString;
       try {
-        responseString = EntityUtils.toString(entity);
+        responseString = responseBody.string();
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
@@ -724,10 +724,10 @@ public final class Files {
     try (ApiResponse response =
         this.apiClient.request(
             "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      HttpEntity entity = response.getEntity();
+      ResponseBody responseBody = response.getBody();
       String responseString;
       try {
-        responseString = EntityUtils.toString(entity);
+        responseString = responseBody.string();
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
@@ -760,8 +760,8 @@ public final class Files {
         mimeType = Optional.empty();
       }
       String uploadUrl = createFileInApi(config, mimeType, size);
-      HttpEntity entity = uploadClient.upload(uploadUrl, inputStream, size);
-      return fileFromUploadHttpEntity(entity);
+      ResponseBody responseBody = uploadClient.upload(uploadUrl, inputStream, size);
+      return fileFromUploadResponseBody(responseBody);
     } catch (IOException e) {
       throw new GenAiIOException("Failed to upload file.", e);
     }
@@ -776,8 +776,8 @@ public final class Files {
    */
   public File upload(byte[] bytes, UploadFileConfig config) {
     String uploadUrl = createFileInApi(config, Optional.<String>empty(), bytes.length);
-    HttpEntity entity = uploadClient.upload(uploadUrl, bytes);
-    return fileFromUploadHttpEntity(entity);
+    ResponseBody responseBody = uploadClient.upload(uploadUrl, bytes);
+    return fileFromUploadResponseBody(responseBody);
   }
 
   /**
@@ -790,8 +790,8 @@ public final class Files {
    */
   public File upload(InputStream inputStream, long size, UploadFileConfig config) {
     String uploadUrl = createFileInApi(config, Optional.<String>empty(), size);
-    HttpEntity entity = uploadClient.upload(uploadUrl, inputStream, size);
-    return fileFromUploadHttpEntity(entity);
+    ResponseBody responseBody = uploadClient.upload(uploadUrl, inputStream, size);
+    return fileFromUploadResponseBody(responseBody);
   }
 
   /**
@@ -806,10 +806,10 @@ public final class Files {
     return upload(file, config);
   }
 
-  private File fileFromUploadHttpEntity(HttpEntity entity) {
+  private File fileFromUploadResponseBody(ResponseBody responseBody) {
     String responseString;
     try {
-      responseString = EntityUtils.toString(entity);
+      responseString = responseBody.string();
     } catch (IOException e) {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
@@ -967,8 +967,7 @@ public final class Files {
         this.apiClient.request(
             "get", String.format("files/%s:download?alt=media", fileName), "", httpOptions);
     try (FileOutputStream outputStream = new FileOutputStream(downloadPath)) {
-      HttpEntity entity = response.getEntity();
-      entity.writeTo(outputStream);
+      outputStream.write(response.getBody().bytes());
     } catch (IOException e) {
       throw new GenAiIOException("Failed to download file.", e);
     }

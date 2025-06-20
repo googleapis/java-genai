@@ -20,10 +20,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -368,11 +366,7 @@ public final class Client implements AutoCloseable {
   /** Closes the Client instance together with its instantiated http client. */
   @Override
   public void close() {
-    try {
-      apiClient.httpClient().close();
-    } catch (IOException e) {
-      throw new GenAiIOException("Failed to close the HTTP client.", e);
-    }
+    // OkHttp handles cleaning up as needed.
   }
 
   /**

@@ -48,13 +48,12 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <google.auth.version>1.33.0</google.auth.version>
     <google.api.version>2.47.0</google.api.version>
-    <apache.httpcomponents.httpclient.version>4.5.14</apache.httpcomponents.httpclient.version>
-    <apache.httpcomponents.httpcore.version>4.4.16</apache.httpcomponents.httpcore.version>
     <auto-value.version>1.11.0</auto-value.version>
     <jackson.version>2.17.2</jackson.version>
     <junit.version>5.11.4</junit.version>
     <mockito.version>3.12.4</mockito.version>
     <java-websocket.version>1.6.0</java-websocket.version>
+    <okhttp.version>4.12.0</okhttp.version>
   </properties>
 
   <distributionManagement>
@@ -85,16 +84,6 @@
       <groupId>com.google.auth</groupId>
       <artifactId>google-auth-library-oauth2-http</artifactId>
       <version>${google.auth.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>${apache.httpcomponents.httpclient.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
-      <version>${apache.httpcomponents.httpcore.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.auto.value</groupId>
@@ -130,6 +119,11 @@
       <groupId>org.java-websocket</groupId>
       <artifactId>Java-WebSocket</artifactId>
       <version>${java-websocket.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>${okhttp.version}</version>
     </dependency>
     <!-- JUnit 5 -->
     <dependency>
@@ -174,6 +168,12 @@
       <artifactId>wiremock-jre8</artifactId>
       <version>2.35.0</version>
       <scope>test</scope>
+    </dependency>
+    <!-- kotlin std lib-->
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jdk8</artifactId>
+      <version>1.9.10</version>
     </dependency>
   </dependencies>
 

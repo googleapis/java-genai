@@ -26,8 +26,8 @@ import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import java.lang.reflect.Field;
 import java.util.Optional;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.StringEntity;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -40,10 +40,10 @@ public class DefaultValuesTest {
     ApiResponse mockedResponse = Mockito.mock(ApiResponse.class);
     when(httpClientSpy.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
-    HttpEntity mockedEntity = Mockito.mock(HttpEntity.class);
     GenerateContentResponse returnResponse = GenerateContentResponse.builder().build();
-    StringEntity content = new StringEntity(returnResponse.toJson());
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody content =
+        ResponseBody.create(MediaType.get("application/json"), returnResponse.toJson());
+    when(mockedResponse.getBody()).thenReturn(content);
 
     Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a

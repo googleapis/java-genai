@@ -28,16 +28,13 @@ import com.google.genai.types.FinishReason;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.Part;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.StringEntity;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -46,20 +43,15 @@ public class AsyncChatTest {
 
   ApiClient mockedClient;
   ApiResponse mockedResponse;
-  HttpEntity mockedEntity;
   ApiResponse mockedResponse1;
   ApiResponse mockedResponse2;
   ApiResponse mockedResponse3;
-  HttpEntity mockedEntity1;
-  HttpEntity mockedEntity2;
-  HttpEntity mockedEntity3;
   Client client;
 
   private static final String STREAMING_RESPONSE_CHUNK_1 = "Once upon ";
   private static final String STREAMING_RESPONSE_CHUNK_2 = "a time, in a land";
   private static final String STREAMING_RESPONSE_CHUNK_3 = " far, far away...";
   private static final String NON_STREAMING_RESPONSE = "This is a non-streaming response.";
-  private Iterator<GenerateContentResponse> mockStreamIterator;
 
   GenerateContentResponse responseChunk1 =
       GenerateContentResponse.builder()
@@ -122,16 +114,12 @@ public class AsyncChatTest {
     mockedResponse = Mockito.mock(ApiResponse.class);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
-    mockedEntity = Mockito.mock(HttpEntity.class);
 
     client = Client.builder().build();
 
     mockedResponse1 = Mockito.mock(ApiResponse.class);
     mockedResponse2 = Mockito.mock(ApiResponse.class);
     mockedResponse3 = Mockito.mock(ApiResponse.class);
-    mockedEntity1 = Mockito.mock(HttpEntity.class);
-    mockedEntity2 = Mockito.mock(HttpEntity.class);
-    mockedEntity3 = Mockito.mock(HttpEntity.class);
   }
 
   @Test
@@ -151,12 +139,21 @@ public class AsyncChatTest {
     apiClientField.setAccessible(true);
     apiClientField.set(client.async.chats, mockedClient);
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content1 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}}]}}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+    ResponseBody content2 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
 
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse1.getBody()).thenReturn(content1);
+    when(mockedResponse2.getBody()).thenReturn(content2);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1, mockedResponse2);
 
     AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
 
@@ -175,12 +172,21 @@ public class AsyncChatTest {
     apiClientField.setAccessible(true);
     apiClientField.set(client.async.chats, mockedClient);
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content1 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}}]}}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+    ResponseBody content2 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
 
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse1.getBody()).thenReturn(content1);
+    when(mockedResponse2.getBody()).thenReturn(content2);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1, mockedResponse2);
 
     AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
 
@@ -205,24 +211,17 @@ public class AsyncChatTest {
 
     AsyncChat chatSession = client.async.chats.create("gemini-2.0-flash-exp", null);
 
-    InputStream inputStream1 =
-        new ByteArrayInputStream(streamData.getBytes(StandardCharsets.UTF_8));
-    InputStream inputStream2 =
-        new ByteArrayInputStream(streamData2.getBytes(StandardCharsets.UTF_8));
+    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
+    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    ResponseBody body3 = ResponseBody.create(MediaType.get("application/json"), nonStreamData);
 
-    InputStream inputStream3 =
-        new ByteArrayInputStream(nonStreamData.getBytes(StandardCharsets.UTF_8));
-
-    when(mockedResponse1.getEntity()).thenReturn(mockedEntity1);
-    when(mockedResponse2.getEntity()).thenReturn(mockedEntity2);
-    when(mockedResponse3.getEntity()).thenReturn(mockedEntity3);
-    when(mockedEntity1.getContent()).thenReturn(inputStream1);
-    when(mockedEntity2.getContent()).thenReturn(inputStream2);
-    when(mockedEntity3.getContent()).thenReturn(inputStream3);
+    when(mockedResponse1.getBody()).thenReturn(body1);
+    when(mockedResponse2.getBody()).thenReturn(body2);
+    when(mockedResponse3.getBody()).thenReturn(body3);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2, mockedResponse3);
 
-    assert chatSession.getHistory(false).size() == 0;
+    assert chatSession.getHistory(false).isEmpty();
 
     CompletableFuture<ResponseStream<GenerateContentResponse>> responseStreamFuture =
         chatSession.sendMessageStream("Tell me a story.", null);
@@ -292,19 +291,14 @@ public class AsyncChatTest {
 
     AsyncChat chatSession = client.async.chats.create("gemini-2.0-flash-exp", null);
 
-    InputStream inputStream1 =
-        new ByteArrayInputStream(streamData.getBytes(StandardCharsets.UTF_8));
-    InputStream inputStream2 =
-        new ByteArrayInputStream(streamData2.getBytes(StandardCharsets.UTF_8));
-
-    when(mockedResponse1.getEntity()).thenReturn(mockedEntity1);
-    when(mockedResponse2.getEntity()).thenReturn(mockedEntity2);
-    when(mockedEntity1.getContent()).thenReturn(inputStream1);
-    when(mockedEntity2.getContent()).thenReturn(inputStream2);
+    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
+    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    when(mockedResponse1.getBody()).thenReturn(body1);
+    when(mockedResponse2.getBody()).thenReturn(body2);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2);
 
-    assert chatSession.getHistory(false).size() == 0;
+    assert chatSession.getHistory(false).isEmpty();
 
     ResponseStream<GenerateContentResponse> responseStreamFuture =
         chatSession.sendMessageStream("Tell me a story.", null).join();
@@ -318,5 +312,7 @@ public class AsyncChatTest {
         assertThrows(
             IllegalStateException.class,
             () -> chatSession.sendMessageStream("Tell me another story."));
+
+    assert exception2.getMessage().equals("Response stream is not consumed");
   }
 }
