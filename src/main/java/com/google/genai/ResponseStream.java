@@ -29,9 +29,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.NoSuchElementException;
-import org.apache.http.HttpEntity;
+import java.util.logging.Logger;
 
 /** An iterable of datatype objects. */
 public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, AutoCloseable {
@@ -137,13 +136,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
   private final BufferedReader reader;
 
   public ResponseStream(Class<T> clazz, ApiResponse response, Object obj, String converterName) {
-    HttpEntity entity = response.getEntity();
-    InputStream responseStream;
-    try {
-      responseStream = entity.getContent();
-    } catch (IOException e) {
-      throw new GenAiIOException("Failed to read HTTP response.", e);
-    }
+    InputStream responseStream = response.getBody().byteStream();
     this.reader = new BufferedReader(new InputStreamReader(responseStream, StandardCharsets.UTF_8));
     this.iterator = new ResponseStreamIterator(clazz, this.reader, obj, converterName);
     this.response = response;
