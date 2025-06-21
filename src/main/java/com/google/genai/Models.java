@@ -3515,6 +3515,20 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"enhanceInputImage"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "upscaleConfig", "enhanceInputImage"},
+          Common.getValueByPath(fromObject, new String[] {"enhanceInputImage"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"imagePreservationFactor"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "upscaleConfig", "imagePreservationFactor"},
+          Common.getValueByPath(fromObject, new String[] {"imagePreservationFactor"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -6952,6 +6966,12 @@ public final class Models {
       }
       if (config.includeRaiReason().isPresent()) {
         builder = builder.includeRaiReason(config.includeRaiReason().get());
+      }
+      if (config.enhanceInputImage().isPresent()) {
+        builder = builder.enhanceInputImage(config.enhanceInputImage().get());
+      }
+      if (config.imagePreservationFactor().isPresent()) {
+        builder = builder.imagePreservationFactor(config.imagePreservationFactor().get());
       }
     }
 
