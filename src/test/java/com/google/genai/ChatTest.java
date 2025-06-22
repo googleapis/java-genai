@@ -38,10 +38,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.StringEntity;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -50,13 +49,12 @@ public class ChatTest {
 
   ApiClient mockedClient;
   ApiResponse mockedResponse;
-  HttpEntity mockedEntity;
   ApiResponse mockedResponse1;
   ApiResponse mockedResponse2;
   ApiResponse mockedResponse3;
-  HttpEntity mockedEntity1;
-  HttpEntity mockedEntity2;
-  HttpEntity mockedEntity3;
+  ResponseBody mockedBody1;
+  ResponseBody mockedBody2;
+  ResponseBody mockedBody3;
   Client client;
   Chats chatSession;
 
@@ -64,7 +62,6 @@ public class ChatTest {
   private static final String STREAMING_RESPONSE_CHUNK_2 = "a time, in a land";
   private static final String STREAMING_RESPONSE_CHUNK_3 = " far, far away...";
   private static final String NON_STREAMING_RESPONSE = "This is a non-streaming response.";
-  private Iterator<GenerateContentResponse> mockStreamIterator;
 
   public static String findTheaters(String movie, String location, String time) {
     return "AMC Metreon 16, AMC Kabuki 8, AMC Theater 11";
@@ -131,18 +128,15 @@ public class ChatTest {
     mockedResponse = Mockito.mock(ApiResponse.class);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
-    mockedEntity = Mockito.mock(HttpEntity.class);
 
     client = Client.builder().build();
 
     mockedResponse1 = Mockito.mock(ApiResponse.class);
     mockedResponse2 = Mockito.mock(ApiResponse.class);
     mockedResponse3 = Mockito.mock(ApiResponse.class);
-    mockedEntity1 = Mockito.mock(HttpEntity.class);
-    mockedEntity2 = Mockito.mock(HttpEntity.class);
-    mockedEntity3 = Mockito.mock(HttpEntity.class);
-
-    mockStreamIterator = Mockito.mock(ResponseStream.ResponseStreamIterator.class);
+    mockedBody1 = Mockito.mock(ResponseBody.class);
+    mockedBody2 = Mockito.mock(ResponseBody.class);
+    mockedBody3 = Mockito.mock(ResponseBody.class);
   }
 
   @Test
@@ -162,11 +156,12 @@ public class ChatTest {
   @Test
   public void testGetHistory() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"All Too Well, 10 Minute"
-                + " Version\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+                + " Version\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}}");
+    when(mockedResponse.getBody()).thenReturn(content);
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Chats.class.getDeclaredField("apiClient");
@@ -216,10 +211,12 @@ public class ChatTest {
 
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2);
-    StringEntity functionResponseStringEntity = new StringEntity(functionResponse.toJson());
-    when(mockedResponse1.getEntity()).thenReturn(functionResponseStringEntity);
-    StringEntity finalResponseStringEntity = new StringEntity(finalResponse.toJson());
-    when(mockedResponse2.getEntity()).thenReturn(finalResponseStringEntity);
+    ResponseBody functionResponseBody =
+        ResponseBody.create(MediaType.get("application/json"), functionResponse.toJson());
+    when(mockedResponse1.getBody()).thenReturn(functionResponseBody);
+    ResponseBody finalResponseBody =
+        ResponseBody.create(MediaType.get("application/json"), finalResponse.toJson());
+    when(mockedResponse2.getBody()).thenReturn(finalResponseBody);
 
     Field apiClientField = Chats.class.getDeclaredField("apiClient");
     apiClientField.setAccessible(true);
@@ -244,11 +241,20 @@ public class ChatTest {
   @Test
   public void testMultiTurnChat() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
-            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"I am doing great!\"}],"
-                + " \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody content1 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"I am doing"
+                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+    ResponseBody content2 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"I am doing"
+                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+    when(mockedResponse1.getBody()).thenReturn(content1);
+    when(mockedResponse2.getBody()).thenReturn(content2);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1, mockedResponse2);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -270,12 +276,13 @@ public class ChatTest {
   @Test
   public void testChatWithConfig() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
                 + " Bleu\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -294,12 +301,13 @@ public class ChatTest {
   @Test
   public void testInitConfigIsUsedWhenSendMessageConfigIsNull() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
                 + " Bleu\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -317,11 +325,21 @@ public class ChatTest {
   @Test
   public void testSendMessageContent() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content1 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+    ResponseBody content2 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+
+    when(mockedResponse1.getBody()).thenReturn(content1);
+    when(mockedResponse2.getBody()).thenReturn(content2);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1, mockedResponse2);
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Chats.class.getDeclaredField("apiClient");
@@ -345,11 +363,21 @@ public class ChatTest {
   @Test
   public void testSendMessageContentList() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content1 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+    ResponseBody content2 =
+        ResponseBody.create(
+            MediaType.get("application/json"),
+            "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+
+    when(mockedResponse1.getBody()).thenReturn(content1);
+    when(mockedResponse2.getBody()).thenReturn(content2);
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1, mockedResponse2);
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Chats.class.getDeclaredField("apiClient");
@@ -374,11 +402,12 @@ public class ChatTest {
 
   @Test
   public void testUnexpectedFinishReasonDoesNotAddToCuratedHistory() throws Exception {
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
                 + " cheddar\"}], \"role\":\"model\"}, \"finishReason\":\"BLOCKLIST\"}]}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -401,12 +430,13 @@ public class ChatTest {
   @Test
   public void testInvalidRoleThrows() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"Mr. Cheese\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
                 + " Bleu\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -428,12 +458,13 @@ public class ChatTest {
   @Test
   public void testInvalidHistoryThrows() throws Exception {
 
-    StringEntity content =
-        new StringEntity(
+    ResponseBody content =
+        ResponseBody.create(
+            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
                 + " Bleu\"}], \"role\":\"model\"}}]}}");
-    when(mockedResponse.getEntity()).thenReturn(content);
+    when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -464,20 +495,13 @@ public class ChatTest {
 
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp", null);
 
-    InputStream inputStream1 =
-        new ByteArrayInputStream(streamData.getBytes(StandardCharsets.UTF_8));
-    InputStream inputStream2 =
-        new ByteArrayInputStream(streamData2.getBytes(StandardCharsets.UTF_8));
+    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
+    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    ResponseBody body3 = ResponseBody.create(MediaType.get("application/json"), nonStreamData);
 
-    InputStream inputStream3 =
-        new ByteArrayInputStream(nonStreamData.getBytes(StandardCharsets.UTF_8));
-
-    when(mockedResponse1.getEntity()).thenReturn(mockedEntity1);
-    when(mockedResponse2.getEntity()).thenReturn(mockedEntity2);
-    when(mockedResponse3.getEntity()).thenReturn(mockedEntity3);
-    when(mockedEntity1.getContent()).thenReturn(inputStream1);
-    when(mockedEntity2.getContent()).thenReturn(inputStream2);
-    when(mockedEntity3.getContent()).thenReturn(inputStream3);
+    when(mockedResponse1.getBody()).thenReturn(body1);
+    when(mockedResponse2.getBody()).thenReturn(body2);
+    when(mockedResponse3.getBody()).thenReturn(body3);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2, mockedResponse3);
 
@@ -555,15 +579,10 @@ public class ChatTest {
 
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp", null);
 
-    InputStream inputStream1 =
-        new ByteArrayInputStream(streamData.getBytes(StandardCharsets.UTF_8));
-    InputStream inputStream2 =
-        new ByteArrayInputStream(streamData2.getBytes(StandardCharsets.UTF_8));
-
-    when(mockedResponse1.getEntity()).thenReturn(mockedEntity1);
-    when(mockedResponse2.getEntity()).thenReturn(mockedEntity2);
-    when(mockedEntity1.getContent()).thenReturn(inputStream1);
-    when(mockedEntity2.getContent()).thenReturn(inputStream2);
+    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
+    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    when(mockedResponse1.getBody()).thenReturn(body1);
+    when(mockedResponse2.getBody()).thenReturn(body2);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2);
 

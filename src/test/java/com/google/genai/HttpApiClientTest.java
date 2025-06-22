@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -43,19 +42,15 @@ import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Part;
 import java.lang.reflect.Field;
 import java.util.Optional;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
+import okhttp3.Call;
+import okhttp3.Dispatcher;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okio.Buffer;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -73,19 +68,29 @@ public class HttpApiClientTest {
   private static final Optional<HttpOptions> REQUEST_HTTP_OPTIONS =
       Optional.of(
           HttpOptions.builder()
-              .baseUrl("test-url")
+              .baseUrl("http://test-url")
               .apiVersion("test-api-version")
               .headers(ImmutableMap.of("test", "header"))
               .build());
   private static final String TEST_PATH = "test-path";
   private static final String TEST_REQUEST_JSON = "{\"test\": \"request-json\"}";
 
-  @Mock CloseableHttpClient mockHttpClient;
+  @Mock OkHttpClient mockHttpClient;
+  @Mock Call mockCall;
 
   private void setMockClient(HttpApiClient client) throws Exception {
-    mockHttpClient = Mockito.mock(CloseableHttpClient.class);
-    CloseableHttpResponse mockResponse = Mockito.mock(CloseableHttpResponse.class);
-    when(mockHttpClient.execute(any())).thenReturn(mockResponse);
+    mockHttpClient = Mockito.mock(OkHttpClient.class);
+    mockCall = Mockito.mock(Call.class);
+    Response mockResponse =
+        new Response.Builder()
+            .request(new Request.Builder().url("https://example.com").build())
+            .protocol(Protocol.HTTP_1_1)
+            .code(200)
+            .message("OK")
+            .body(ResponseBody.create(null, "{}"))
+            .build();
+    when(mockHttpClient.newCall(any())).thenReturn(mockCall);
+    when(mockCall.execute()).thenReturn(mockResponse);
     Field clientField = ApiClient.class.getDeclaredField("httpClient");
     clientField.setAccessible(true);
     clientField.set(client, mockHttpClient);
@@ -94,7 +99,7 @@ public class HttpApiClientTest {
     credentialsField.setAccessible(true);
     credentialsField.set(client, Optional.of(credentials));
   }
-
+  
   @Test
   public void testRequestPostMethodWithVertexAI() throws Exception {
     // Arrange
@@ -111,27 +116,26 @@ public class HttpApiClientTest {
     client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
 
     // Assert
-    ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
-    verify(mockHttpClient).execute(requestCaptor.capture());
-    HttpRequestBase capturedRequest = requestCaptor.getValue();
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
 
-    assertTrue(capturedRequest instanceof HttpPost);
-    assertEquals("POST", capturedRequest.getMethod());
+    assertEquals("POST", capturedRequest.method());
     assertEquals(
         String.format(
             "https://%s-aiplatform.googleapis.com/v1beta1/projects/%s/locations/%s/%s",
             LOCATION, PROJECT, LOCATION, TEST_PATH),
-        capturedRequest.getURI().toString());
-    Header authHeader = capturedRequest.getFirstHeader("Authorization");
-    assertNotNull(authHeader);
-    assertEquals("Bearer ", authHeader.getValue());
-    assertNull(capturedRequest.getFirstHeader("x-goog-api-key"));
+        capturedRequest.url().toString());
+    assertNotNull(capturedRequest.header("Authorization"));
+    assertEquals("Bearer", capturedRequest.header("Authorization"));
+    assertNull(capturedRequest.header("x-goog-api-key"));
 
-    HttpEntity entity = ((HttpPost) capturedRequest).getEntity();
-    assertNotNull(entity);
-    assertEquals(TEST_REQUEST_JSON, EntityUtils.toString(entity));
-    assertTrue(
-        entity.getContentType().getValue().contains(ContentType.APPLICATION_JSON.getMimeType()));
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    assertEquals(TEST_REQUEST_JSON, buffer.readUtf8());
+    assertEquals("application/json; charset=utf-8", body.contentType().toString());
   }
 
   @Test
@@ -145,19 +149,17 @@ public class HttpApiClientTest {
     client.request("GET", TEST_PATH, "", Optional.empty());
 
     // Assert
-    ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
-    verify(mockHttpClient).execute(requestCaptor.capture());
-    HttpRequestBase capturedRequest = requestCaptor.getValue();
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
 
-    assertTrue(capturedRequest instanceof HttpGet);
-    assertEquals("GET", capturedRequest.getMethod());
+    assertEquals("GET", capturedRequest.method());
     assertEquals(
         "https://generativelanguage.googleapis.com/v1beta/" + TEST_PATH,
-        capturedRequest.getURI().toString());
-    Header authHeader = capturedRequest.getFirstHeader("x-goog-api-key");
-    assertNotNull(authHeader);
-    assertEquals(API_KEY, authHeader.getValue());
-    assertNull(capturedRequest.getFirstHeader("Authorization"));
+        capturedRequest.url().toString());
+    assertNotNull(capturedRequest.header("x-goog-api-key"));
+    assertEquals(API_KEY, capturedRequest.header("x-goog-api-key"));
+    assertNull(capturedRequest.header("Authorization"));
   }
 
   @Test
@@ -171,19 +173,17 @@ public class HttpApiClientTest {
     client.request("DELETE", TEST_PATH, "", Optional.empty());
 
     // Assert
-    ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
-    verify(mockHttpClient).execute(requestCaptor.capture());
-    HttpRequestBase capturedRequest = requestCaptor.getValue();
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
 
-    assertTrue(capturedRequest instanceof HttpDelete);
-    assertEquals("DELETE", capturedRequest.getMethod());
+    assertEquals("DELETE", capturedRequest.method());
     assertEquals(
         "https://generativelanguage.googleapis.com/v1beta/" + TEST_PATH,
-        capturedRequest.getURI().toString());
-    Header authHeader = capturedRequest.getFirstHeader("x-goog-api-key");
-    assertNotNull(authHeader);
-    assertEquals(API_KEY, authHeader.getValue());
-    assertNull(capturedRequest.getFirstHeader("Authorization"));
+        capturedRequest.url().toString());
+    assertNotNull(capturedRequest.header("x-goog-api-key"));
+    assertEquals(API_KEY, capturedRequest.header("x-goog-api-key"));
+    assertNull(capturedRequest.header("Authorization"));
   }
 
   @Test
@@ -197,17 +197,15 @@ public class HttpApiClientTest {
     client.request("POST", TEST_PATH, TEST_REQUEST_JSON, REQUEST_HTTP_OPTIONS);
 
     // Assert
-    ArgumentCaptor<HttpRequestBase> requestCaptor = ArgumentCaptor.forClass(HttpRequestBase.class);
-    verify(mockHttpClient).execute(requestCaptor.capture());
-    HttpRequestBase capturedRequest = requestCaptor.getValue();
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
 
-    assertTrue(capturedRequest instanceof HttpPost);
-    assertEquals("POST", capturedRequest.getMethod());
+    assertEquals("POST", capturedRequest.method());
     // The request URL is set by the request-level http options.
-    assertEquals("test-url/test-api-version/" + TEST_PATH, capturedRequest.getURI().toString());
-    Header authHeader = capturedRequest.getFirstHeader("Authorization");
+    assertEquals("http://test-url/test-api-version/" + TEST_PATH, capturedRequest.url().toString());
     // Request should have the header set by the request-level http options.
-    assertEquals("header", capturedRequest.getFirstHeader("test").getValue());
+    assertEquals("header", capturedRequest.header("test"));
   }
 
   @Test
@@ -312,12 +310,10 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(Optional.of("api-key"), Optional.of(httpOptions), Optional.empty());
 
-    CloseableHttpClient httpClient = client.httpClient();
+    OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    RequestConfig config = getRequestConfig(httpClient);
-
-    assertEquals(5000, config.getConnectTimeout());
+    assertEquals(5000, httpClient.connectTimeoutMillis());
     assertEquals("api-key", client.apiKey());
     assertFalse(client.vertexAI());
   }
@@ -333,12 +329,10 @@ public class HttpApiClientTest {
         new HttpApiClient(
             project, location, credentials, Optional.of(httpOptions), Optional.empty());
 
-    CloseableHttpClient httpClient = client.httpClient();
+    OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    RequestConfig config = getRequestConfig(httpClient);
-
-    assertEquals(4999, config.getConnectTimeout());
+    assertEquals(4999, httpClient.connectTimeoutMillis());
     assertEquals("project", client.project());
     assertEquals("location", client.location());
     assertTrue(client.vertexAI());
@@ -350,12 +344,10 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(Optional.of("api-key"), Optional.of(httpOptions), Optional.empty());
 
-    CloseableHttpClient httpClient = client.httpClient();
+    OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    RequestConfig config = getRequestConfig(httpClient);
-
-    assertEquals(-1, config.getConnectTimeout());
+    assertEquals(300000, httpClient.connectTimeoutMillis());
     assertEquals("api-key", client.apiKey());
     assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
   }
@@ -371,12 +363,10 @@ public class HttpApiClientTest {
         new HttpApiClient(
             project, location, credentials, Optional.of(httpOptions), Optional.empty());
 
-    CloseableHttpClient httpClient = client.httpClient();
+    OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    RequestConfig config = getRequestConfig(httpClient);
-
-    assertEquals(-1, config.getConnectTimeout());
+    assertEquals(300000, httpClient.connectTimeoutMillis());
     assertEquals("project", client.project());
     assertEquals("location", client.location());
     assertTrue(client.vertexAI());
@@ -390,13 +380,12 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(Optional.of("api-key"), Optional.empty(), Optional.of(clientOptions));
 
-    PoolingHttpClientConnectionManager connectionManager =
-        getConnectionManager(client.httpClient());
+    Dispatcher dispatcher = client.httpClient().dispatcher();
 
     assertEquals("api-key", client.apiKey());
     assertFalse(client.vertexAI());
-    assertEquals(64, connectionManager.getMaxTotal());
-    assertEquals(16, connectionManager.getDefaultMaxPerRoute());
+    assertEquals(64, dispatcher.getMaxRequests());
+    assertEquals(16, dispatcher.getMaxRequestsPerHost());
   }
 
   @Test
@@ -411,14 +400,13 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(clientOptions));
 
-    PoolingHttpClientConnectionManager connectionManager =
-        getConnectionManager(client.httpClient());
+    Dispatcher dispatcher = client.httpClient().dispatcher();
 
     assertEquals("project", client.project());
     assertEquals("location", client.location());
     assertTrue(client.vertexAI());
-    assertEquals(64, connectionManager.getMaxTotal());
-    assertEquals(16, connectionManager.getDefaultMaxPerRoute());
+    assertEquals(64, dispatcher.getMaxRequests());
+    assertEquals(16, dispatcher.getMaxRequestsPerHost());
   }
 
   @Test
@@ -426,28 +414,15 @@ public class HttpApiClientTest {
     HttpApiClient client =
         new HttpApiClient(Optional.of("api-key"), Optional.empty(), Optional.empty());
 
-    PoolingHttpClientConnectionManager connectionManager =
-        getConnectionManager(client.httpClient());
+    Dispatcher dispatcher = client.httpClient().dispatcher();
 
-    // Default values for max connections and max connections per host are 20 and 2 respectively
-    // (set by the Apache HttpClient).
-    assertEquals(20, connectionManager.getMaxTotal());
-    assertEquals(2, connectionManager.getDefaultMaxPerRoute());
+    // Default values for max connections and max connections per host are 64 and 5 respectively
+    // (set by OkHttp). When maxConnectionsPerHost is not set, the dispatcher's maxRequestsPerHost
+    // should be equal to 5.
+    assertEquals(64, dispatcher.getMaxRequests());
+    assertEquals(5, dispatcher.getMaxRequestsPerHost());
     assertEquals("api-key", client.apiKey());
     assertFalse(client.vertexAI());
-  }
-
-  private RequestConfig getRequestConfig(CloseableHttpClient client) throws Exception {
-    Field configField = client.getClass().getDeclaredField("defaultConfig");
-    configField.setAccessible(true);
-    return (RequestConfig) configField.get(client);
-  }
-
-  private PoolingHttpClientConnectionManager getConnectionManager(CloseableHttpClient client)
-      throws Exception {
-    Field connectionManagerField = client.getClass().getDeclaredField("connManager");
-    connectionManagerField.setAccessible(true);
-    return (PoolingHttpClientConnectionManager) connectionManagerField.get(client);
   }
 
   @Test

@@ -16,15 +16,16 @@
 
 package com.google.genai;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
 
 /** The API response contains a response to a call to the GenAI APIs. */
 abstract class ApiResponse implements AutoCloseable {
-  /** Gets the HttpEntity. */
-  public abstract HttpEntity getEntity();
+  /** Gets the ResponseBody. */
+  public abstract ResponseBody getBody();
 
-  public abstract Header[] getHeaders();
+  /** Returns all of the headers from the response. */
+  public abstract Headers getHeaders();
 
   @Override
   public abstract void close();

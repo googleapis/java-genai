@@ -28,10 +28,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
-import org.apache.http.HttpEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import okhttp3.ResponseBody;
 
 public class UploadClientTest {
 
@@ -61,37 +61,37 @@ public class UploadClientTest {
   @Test
   public void upload_file_success() throws IOException {
     UploadClient uploadClient = new UploadClient(API_CLIENT, CHUNK_SIZE);
-    HttpEntity entity = uploadClient.upload(UPLOAD_URL, FILE_PATH);
+    ResponseBody responseBody = uploadClient.upload(UPLOAD_URL, FILE_PATH);
     assertBytesEqual(testBytes, API_CLIENT.files.get(UPLOAD_URL).uploadedBytes);
-    assertNotNull(entity);
+    assertNotNull(responseBody);
   }
 
   @Test
   public void upload_bytes_success() throws IOException {
     UploadClient uploadClient = new UploadClient(API_CLIENT, CHUNK_SIZE);
-    HttpEntity entity = uploadClient.upload(UPLOAD_URL, testBytes);
+    ResponseBody responseBody = uploadClient.upload(UPLOAD_URL, testBytes);
     assertBytesEqual(testBytes, API_CLIENT.files.get(UPLOAD_URL).uploadedBytes);
-    assertNotNull(entity);
+    assertNotNull(responseBody);
   }
 
   @Test
   public void upload_stream_success() throws IOException {
     UploadClient uploadClient = new UploadClient(API_CLIENT, CHUNK_SIZE);
-    HttpEntity entity;
+    ResponseBody responseBody;
     try (InputStream inputStream = new FileInputStream(FILE_PATH)) {
-      entity = uploadClient.upload(UPLOAD_URL, inputStream, testBytes.length);
+      responseBody = uploadClient.upload(UPLOAD_URL, inputStream, testBytes.length);
     }
     assertBytesEqual(testBytes, API_CLIENT.files.get(UPLOAD_URL).uploadedBytes);
-    assertNotNull(entity);
+    assertNotNull(responseBody);
   }
 
   @Test
   public void upload_file_with_retriable_error_success() throws IOException {
     API_CLIENT.makeFileUploadFail(UPLOAD_URL, 1);
     UploadClient uploadClient = new UploadClient(API_CLIENT, CHUNK_SIZE);
-    HttpEntity entity = uploadClient.upload(UPLOAD_URL, FILE_PATH);
+    ResponseBody responseBody = uploadClient.upload(UPLOAD_URL, FILE_PATH);
     assertBytesEqual(testBytes, API_CLIENT.files.get(UPLOAD_URL).uploadedBytes);
-    assertNotNull(entity);
+    assertNotNull(responseBody);
   }
 
   @Test

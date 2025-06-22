@@ -16,14 +16,13 @@
 
 package com.google.genai.errors;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /** General exception class for all exceptions originating from the GenAI API side. */
 public class ApiException extends BaseException {
@@ -51,13 +50,12 @@ public class ApiException extends BaseException {
    *
    * @param response The response from the API call.
    */
-  public static void throwFromResponse(CloseableHttpResponse response) {
-    StatusLine statusLine = response.getStatusLine();
-    int code = statusLine.getStatusCode();
-    if (code == HttpStatus.SC_OK) {
+  public static void throwFromResponse(Response response) {
+    int code = response.code();
+    if (code >= 200 && code < 300) {
       return;
     }
-    String status = statusLine.getReasonPhrase();
+    String status = response.message();
     String message = getErrorMessageFromResponse(response);
     if (code >= 400 && code < 500) { // Client errors.
       throw new ClientException(code, status, message);
@@ -72,15 +70,18 @@ public class ApiException extends BaseException {
    * Returns the error message from the response, if no error or error message is not found, then
    * returns an empty string.
    */
-  static String getErrorMessageFromResponse(CloseableHttpResponse response) {
-    HttpEntity entity = response.getEntity();
+  static String getErrorMessageFromResponse(Response response) {
+    ResponseBody responseBody = response.body();
     try {
-      String responseBody = EntityUtils.toString(entity);
-      if (responseBody == null || responseBody.isEmpty()) {
+      if (responseBody == null) {
+        return "";
+      }
+      String responseBodyString = responseBody.string();
+      if (isNullOrEmpty(responseBodyString)) {
         return "";
       }
       ObjectMapper mapper = new ObjectMapper();
-      JsonNode errorNode = mapper.readTree(responseBody).get("error");
+      JsonNode errorNode = mapper.readTree(responseBodyString).get("error");
       if (errorNode != null && errorNode.isObject()) {
         JsonNode messageNode = errorNode.get("message");
         if (messageNode != null && messageNode.isTextual()) {

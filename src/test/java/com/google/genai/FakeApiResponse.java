@@ -16,28 +16,28 @@
 
 package com.google.genai;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
 
 /** */
 public final class FakeApiResponse extends ApiResponse {
 
-  private final Header[] headers;
-  private final HttpEntity entity;
+  private final Headers headers;
+  private final ResponseBody body;
 
-  public FakeApiResponse(Header[] headers, HttpEntity entity) {
+  public FakeApiResponse(Headers headers, ResponseBody body) {
     this.headers = headers;
-    this.entity = entity;
+    this.body = body;
   }
 
   @Override
-  public Header[] getHeaders() {
+  public Headers getHeaders() {
     return headers;
   }
 
   @Override
-  public HttpEntity getEntity() {
-    return entity;
+  public ResponseBody getBody() {
+    return body;
   }
 
   @Override

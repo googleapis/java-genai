@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
 
 /** Client which handles the upload process for files on the SDK. */
 final class UploadClient {
@@ -50,28 +50,28 @@ final class UploadClient {
     this.chunkSize = chunkSize;
   }
 
-  public HttpEntity upload(String uploadUrl, String filePath) {
+  public ResponseBody upload(String uploadUrl, String filePath) {
     File file = new File(filePath);
-    HttpEntity entity;
+    ResponseBody responseBody;
     try (InputStream inputStream = new FileInputStream(file)) {
-      entity = upload(uploadUrl, inputStream, file.length());
+      responseBody = upload(uploadUrl, inputStream, file.length());
     } catch (IOException e) {
       throw new GenAiIOException("Failed to process input stream", e);
     }
-    return entity;
+    return responseBody;
   }
 
-  public HttpEntity upload(String uploadUrl, byte[] bytes) {
-    HttpEntity entity;
+  public ResponseBody upload(String uploadUrl, byte[] bytes) {
+    ResponseBody responseBody;
     try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
-      entity = upload(uploadUrl, inputStream, bytes.length);
+      responseBody = upload(uploadUrl, inputStream, bytes.length);
     } catch (IOException e) {
       throw new GenAiIOException("Failed to process input stream", e);
     }
-    return entity;
+    return responseBody;
   }
 
-  public HttpEntity upload(String uploadUrl, InputStream inputStream, long size) {
+  public ResponseBody upload(String uploadUrl, InputStream inputStream, long size) {
     String uploadCommand = "upload";
     byte[] buffer = new byte[chunkSize];
     int bytesRead;
@@ -119,11 +119,12 @@ final class UploadClient {
     ApiResponse response = null;
     while (retryCount < MAX_RETRY_COUNT) {
       response = apiClient.request("POST", uploadUrl, chunk, Optional.of(httpOptions));
-      Header[] headers = response.getHeaders();
-      for (Header header : headers) {
-        if (header.getName().equals("X-Goog-Upload-Status")) {
+      Headers headers = response.getHeaders();
+      if (headers != null) {
+        String headerValue = headers.get("X-Goog-Upload-Status");
+        if (headerValue != null) {
           uploadStatusHeaderFound = true;
-          uploadStatus = header.getValue();
+          uploadStatus = headerValue;
           break;
         }
       }
@@ -144,14 +145,14 @@ final class UploadClient {
     if (!uploadStatusHeaderFound) {
       throw new IllegalStateException("Upload failed. Retries exhausted, please try again.");
     }
-    return new UploadChunkResponse(uploadStatus, response.getEntity());
+    return new UploadChunkResponse(uploadStatus, response.getBody());
   }
 
   private static class UploadChunkResponse {
     private final String uploadStatus;
-    private final HttpEntity entity;
+    private final ResponseBody entity;
 
-    UploadChunkResponse(String uploadStatus, HttpEntity entity) {
+    UploadChunkResponse(String uploadStatus, ResponseBody entity) {
       this.uploadStatus = uploadStatus;
       this.entity = entity;
     }
@@ -160,7 +161,7 @@ final class UploadClient {
       return uploadStatus;
     }
 
-    public HttpEntity getEntity() {
+    public ResponseBody getEntity() {
       return entity;
     }
   }

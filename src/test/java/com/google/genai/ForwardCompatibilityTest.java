@@ -37,8 +37,8 @@ import com.google.genai.types.ModelSelectionConfig;
 import com.google.genai.types.SafetySetting;
 import java.lang.reflect.Field;
 import java.util.Optional;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.StringEntity;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -48,10 +48,10 @@ public class ForwardCompatibilityTest {
 
   ApiClient mockedClient;
   ApiResponse mockedResponse;
-  HttpEntity mockedEntity;
   Client client;
   GenerateContentResponse returnResponse;
   ObjectMapper objectMapper;
+  private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
   @BeforeEach
   void setUp() {
@@ -59,7 +59,6 @@ public class ForwardCompatibilityTest {
     mockedResponse = Mockito.mock(ApiResponse.class);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
-    mockedEntity = Mockito.mock(HttpEntity.class);
     returnResponse = GenerateContentResponse.builder().build();
 
     objectMapper = new ObjectMapper();
@@ -75,8 +74,8 @@ public class ForwardCompatibilityTest {
     objectNode.put("unknownFieldToTestForwardCompatibility", "Hello World!");
     String jsonString = objectMapper.writeValueAsString(objectNode);
 
-    StringEntity content = new StringEntity(jsonString);
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    when(mockedResponse.getBody()).thenReturn(responseBody);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -108,8 +107,8 @@ public class ForwardCompatibilityTest {
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    StringEntity content = new StringEntity(jsonString);
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    when(mockedResponse.getBody()).thenReturn(responseBody);
 
     Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -148,8 +147,8 @@ public class ForwardCompatibilityTest {
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    StringEntity content = new StringEntity(jsonString);
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    when(mockedResponse.getBody()).thenReturn(responseBody);
 
     Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -187,8 +186,8 @@ public class ForwardCompatibilityTest {
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    StringEntity content = new StringEntity(jsonString);
-    when(mockedResponse.getEntity()).thenReturn(content);
+    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    when(mockedResponse.getBody()).thenReturn(responseBody);
 
     Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -235,7 +234,7 @@ public class ForwardCompatibilityTest {
     Field apiClientField = Models.class.getDeclaredField("apiClient");
     apiClientField.setAccessible(true);
     apiClientField.set(client.models, mockedClient);
-    when(mockedResponse.getEntity()).thenReturn(new StringEntity("{}"));
+    when(mockedResponse.getBody()).thenReturn(ResponseBody.create(JSON, "{}"));
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);

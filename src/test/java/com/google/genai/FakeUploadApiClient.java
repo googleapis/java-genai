@@ -22,9 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.apache.http.Header;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.message.BasicHeader;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /** */
 public final class FakeUploadApiClient extends ApiClient {
@@ -96,7 +99,8 @@ public final class FakeUploadApiClient extends ApiClient {
       } else {
         fileUploadFailureCount.remove(path);
       }
-      return new FakeApiResponse(new Header[0], new BasicHttpEntity());
+      return new FakeApiResponse(
+          Headers.of(), ResponseBody.create(MediaType.get("text/plain"), ""));
     }
 
     file.uploadedByteCount += requestBytes.length;
@@ -104,15 +108,12 @@ public final class FakeUploadApiClient extends ApiClient {
       file.uploadedBytes.add(b);
     }
 
-    Header[] responseHeaders = new Header[1];
     boolean isFinalUpload = headers.get("X-Goog-Upload-Command").equals("upload, finalize");
+    String uploadStatus = isFinalUpload ? "final" : "active";
 
-    if (isFinalUpload) {
-      responseHeaders[0] = new BasicHeader("X-Goog-Upload-Status", "final");
-    } else {
-      responseHeaders[0] = new BasicHeader("X-Goog-Upload-Status", "active");
-    }
-    return new FakeApiResponse(responseHeaders, new BasicHttpEntity());
+    return new FakeApiResponse(
+        Headers.of("X-Goog-Upload-Status", uploadStatus),
+        ResponseBody.create(MediaType.get("text/plain"), ""));
   }
 
   public class UploadedFile {

@@ -50,14 +50,12 @@ import com.google.genai.types.MaskReferenceImage;
 import com.google.genai.types.MaskReferenceMode;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.ReferenceImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
-import org.apache.http.HttpException;
 
 /** An example of using the Unified Gen AI Java SDK to edit an image asynchronously. */
 public final class EditImageAsync {
-  public static void main(String[] args) throws IOException, HttpException {
+  public static void main(String[] args) {
     String modelId = "imagen-3.0-capability-001";
     if (args.length != 0) {
       modelId = args[0];

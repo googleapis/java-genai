@@ -32,8 +32,12 @@ import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Optional;
-import org.apache.http.impl.client.CloseableHttpClient;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.junit.jupiter.api.Test;
+import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
+import okhttp3.OkHttpClient;
 
 public class ClientTest {
   private static final String API_KEY = "api-key";
@@ -174,44 +178,5 @@ public class ClientTest {
 
     // Reset the base URLs after the test.
     Client.setDefaultBaseUrls(Optional.empty(), Optional.empty());
-  }
-
-  @Test
-  public void testCloseClient() throws Exception {
-    // Arrange
-    ApiClient apiClient = mock(ApiClient.class);
-    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
-    when(apiClient.httpClient()).thenReturn(httpClient);
-
-    Client client = Client.builder().apiKey(API_KEY).build();
-    Field apiClientField = Client.class.getDeclaredField("apiClient");
-    apiClientField.setAccessible(true);
-    apiClientField.set(client, apiClient);
-
-    // Act
-    client.close();
-
-    // Assert
-    verify(httpClient, times(1)).close();
-  }
-
-  @Test
-  public void testCloseClient_throwsException() throws Exception {
-    // Arrange
-    ApiClient apiClient = mock(ApiClient.class);
-    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
-    when(apiClient.httpClient()).thenReturn(httpClient);
-    doThrow(new IOException("Failed to close HTTP client.")).when(httpClient).close();
-
-    Client client = Client.builder().apiKey(API_KEY).build();
-    Field apiClientField = Client.class.getDeclaredField("apiClient");
-    apiClientField.setAccessible(true);
-    apiClientField.set(client, apiClient);
-
-    // Act
-    GenAiIOException exception = assertThrows(GenAiIOException.class, client::close);
-
-    // Assert
-    assertEquals("Failed to close the HTTP client.", exception.getMessage());
   }
 }

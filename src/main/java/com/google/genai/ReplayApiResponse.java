@@ -16,32 +16,37 @@
 
 package com.google.genai;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
+import okhttp3.Headers;
+import okhttp3.ResponseBody;
 
 // TODO(b/369384123): Change the replay API response to use the ReplayFile.
 /** Provides a simulated HTTP response from a replay file. */
 @ExcludeFromGeneratedCoverageReport
 final class ReplayApiResponse extends ApiResponse {
 
-  private final HttpEntity entity;
-  private final StatusLine statusLine;
-  private final Header[] headers;
+  private final ResponseBody body;
+  private final int statusCode;
+  private final Headers headers;
 
-  public ReplayApiResponse(HttpEntity entity, StatusLine statusLine, Header[] headers) {
-    this.entity = entity;
-    this.statusLine = statusLine;
+  public ReplayApiResponse(ResponseBody body, int statusCode, Headers headers) {
+    this.body = body;
+    this.statusCode = statusCode;
     this.headers = headers;
   }
 
   @Override
-  public HttpEntity getEntity() {
-    return this.entity;
+  public ResponseBody getBody() {
+    return this.body;
   }
 
   @Override
-  public Header[] getHeaders() { return this.headers;}
+  public Headers getHeaders() {
+    return this.headers;
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
 
   @Override
   public void close() {}
