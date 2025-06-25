@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.6.0](https://github.com/googleapis/java-genai/compare/v1.5.0...v1.6.0) (2025-06-25)
+
+
+### Features
+
+* Add compressionQuality enum for generate_videos ([b0e665b](https://github.com/googleapis/java-genai/commit/b0e665bf6ae09dc2146e49714a4855443a270776))
+* Add enhance_input_image and image_preservation_factor fields for upscale_image ([94a329a](https://github.com/googleapis/java-genai/commit/94a329abcd3c668065abfae511b55766ed051668))
+* allow users to access headers for generateContent method and generateContentStream ([0315357](https://github.com/googleapis/java-genai/commit/03153578ea64f0c34836ac62395aa867f44eac07))
+* Batches support in Java ([5ce13e9](https://github.com/googleapis/java-genai/commit/5ce13e9c79c4791d405b1dfa71c1d9358dc5a08d))
+* configure release-please to automatically update package version across all files during releases. ([9131ac2](https://github.com/googleapis/java-genai/commit/9131ac24fde477afb25deb516c7ace51530ed8d9))
+* expose the responseJsonSchema in GenerateContentConfig ([9d9acdb](https://github.com/googleapis/java-genai/commit/9d9acdb494358155cbb3c2ce3acbe55209bbdb7e))
+* support client.caches.update method ([345c2b9](https://github.com/googleapis/java-genai/commit/345c2b93789913d6d84cdde9c30f86ec4041bd24))
+
+
+### Documentation
+
+* add more comments to make it easier to follow live api code, and to explain the usage of new concepts like thenCompose. ([96c792c](https://github.com/googleapis/java-genai/commit/96c792c3aa84f632e0b46bb986de403ecbf4edc1))
+* improve generate images documentation ([44c21dd](https://github.com/googleapis/java-genai/commit/44c21dd78e0d0be0e681e991b15d3dae3be360f2))
+* Update description of thinking_budget. ([265f20a](https://github.com/googleapis/java-genai/commit/265f20addd9e9e76c249e6042d653c8cec9f27a4))
+
 ## [1.5.0](https://github.com/googleapis/java-genai/compare/v1.4.1...v1.5.0) (2025-06-19)
 
 
