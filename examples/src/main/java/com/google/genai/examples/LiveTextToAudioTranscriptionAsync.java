@@ -84,7 +84,7 @@ public final class LiveTextToAudioTranscriptionAsync {
     if (client.vertexAI()) {
       modelId = "gemini-2.0-flash-live-preview-04-09";
     } else {
-      modelId = "gemini-2.0-flash-live-001";
+      modelId = "gemini-live-2.5-flash-preview";
     }
     if (args.length != 0) {
       modelId = args[0];
