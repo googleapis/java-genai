@@ -503,6 +503,30 @@ final class Transformers {
     return name;
   }
 
+  public static JobState tTuningJobStatus(Object origin) {
+    String status;
+    if (origin instanceof String) {
+      status = (String) origin;
+    } else if (origin instanceof TextNode) {
+      status = ((TextNode) origin).textValue();
+    } else {
+      throw new IllegalArgumentException("Unsupported status type: " + origin.getClass());
+    }
+
+    switch (status) {
+      case "STATE_UNSPECIFIED":
+        return new JobState(JobState.Known.JOB_STATE_UNSPECIFIED);
+      case "CREATING":
+        return new JobState(JobState.Known.JOB_STATE_RUNNING);
+      case "ACTIVE":
+        return new JobState(JobState.Known.JOB_STATE_SUCCEEDED);
+      case "FAILED":
+        return new JobState(JobState.Known.JOB_STATE_FAILED);
+      default:
+        return new JobState(status);
+    }
+  }
+
   /** Formats a resource name given the resource name and resource prefix. */
   private static String getResourceName(
       ApiClient apiClient, String resourceName, String resourcePrefix) {
