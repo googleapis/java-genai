@@ -38,6 +38,14 @@ public abstract class SafetyRating extends JsonSerializable {
   @JsonProperty("category")
   public abstract Optional<HarmCategory> category();
 
+  /**
+   * Output only. The overwritten threshold for the safety category of Gemini 2.0 image out. If
+   * minors are detected in the output image, the threshold of each safety category will be
+   * overwritten if user sets a lower threshold.
+   */
+  @JsonProperty("overwrittenThreshold")
+  public abstract Optional<HarmBlockThreshold> overwrittenThreshold();
+
   /** Output only. Harm probability levels in the content. */
   @JsonProperty("probability")
   public abstract Optional<HarmProbability> probability();
@@ -106,6 +114,40 @@ public abstract class SafetyRating extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder category(String category) {
       return category(new HarmCategory(category));
+    }
+
+    /**
+     * Setter for overwrittenThreshold.
+     *
+     * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
+     * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
+     * safety category will be overwritten if user sets a lower threshold.
+     */
+    @JsonProperty("overwrittenThreshold")
+    public abstract Builder overwrittenThreshold(HarmBlockThreshold overwrittenThreshold);
+
+    /**
+     * Setter for overwrittenThreshold given a known enum.
+     *
+     * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
+     * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
+     * safety category will be overwritten if user sets a lower threshold.
+     */
+    @CanIgnoreReturnValue
+    public Builder overwrittenThreshold(HarmBlockThreshold.Known knownType) {
+      return overwrittenThreshold(new HarmBlockThreshold(knownType));
+    }
+
+    /**
+     * Setter for overwrittenThreshold given a string.
+     *
+     * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
+     * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
+     * safety category will be overwritten if user sets a lower threshold.
+     */
+    @CanIgnoreReturnValue
+    public Builder overwrittenThreshold(String overwrittenThreshold) {
+      return overwrittenThreshold(new HarmBlockThreshold(overwrittenThreshold));
     }
 
     /**

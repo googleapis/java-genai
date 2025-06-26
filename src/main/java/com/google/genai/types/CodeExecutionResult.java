@@ -27,8 +27,8 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Result of executing the [ExecutableCode]. Always follows a `part` containing the
- * [ExecutableCode].
+ * Result of executing the [ExecutableCode]. Only generated when using the [CodeExecution] tool, and
+ * always follows a `part` containing the [ExecutableCode].
  */
 @AutoValue
 @JsonDeserialize(builder = CodeExecutionResult.Builder.class)
