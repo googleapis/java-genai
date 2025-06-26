@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/googleapis/java-genai/compare/v1.6.0...v1.7.0) (2025-06-26)
+
+
+### Bug Fixes
+
+* Remove default timeout ([d1f6201](https://github.com/googleapis/java-genai/commit/d1f6201892de9f37b913044dd494c68b81bcc13a))
+
 ## [1.6.0](https://github.com/googleapis/java-genai/compare/v1.5.0...v1.6.0) (2025-06-25)
 
 
