@@ -26,7 +26,6 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -290,9 +289,6 @@ abstract class ApiClient {
           .baseUrl("https://generativelanguage.googleapis.com")
           .apiVersion("v1beta");
     }
-
-    defaultHttpOptionsBuilder.timeout(Math.toIntExact(Duration.ofMinutes(5).toMillis()));
-
     return defaultHttpOptionsBuilder.build();
   }
 
