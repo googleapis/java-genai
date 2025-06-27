@@ -86,6 +86,13 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
 
+  /**
+   * Optional. Tool to support the model interacting directly with the computer. If enabled, it
+   * automatically populates computer-use specific Function Declarations.
+   */
+  @JsonProperty("computerUse")
+  public abstract Optional<ToolComputerUse> computerUse();
+
   /** Instantiates a builder for Tool. */
   public static Builder builder() {
     return new AutoValue_Tool.Builder();
@@ -284,6 +291,25 @@ public abstract class Tool extends JsonSerializable {
      */
     public Builder codeExecution(ToolCodeExecution.Builder codeExecutionBuilder) {
       return codeExecution(codeExecutionBuilder.build());
+    }
+
+    /**
+     * Setter for computerUse.
+     *
+     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
+     * If enabled, it automatically populates computer-use specific Function Declarations.
+     */
+    @JsonProperty("computerUse")
+    public abstract Builder computerUse(ToolComputerUse computerUse);
+
+    /**
+     * Setter for computerUse builder.
+     *
+     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
+     * If enabled, it automatically populates computer-use specific Function Declarations.
+     */
+    public Builder computerUse(ToolComputerUse.Builder computerUseBuilder) {
+      return computerUse(computerUseBuilder.build());
     }
 
     public abstract Tool build();
