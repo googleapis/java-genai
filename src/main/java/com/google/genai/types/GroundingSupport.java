@@ -32,8 +32,9 @@ import java.util.Optional;
 @JsonDeserialize(builder = GroundingSupport.Builder.class)
 public abstract class GroundingSupport extends JsonSerializable {
   /**
-   * Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. This
-   * list must have the same size as the grounding_chunk_indices.
+   * Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. For
+   * Gemini 2.0 and before, this list must have the same size as the grounding_chunk_indices. For
+   * Gemini 2.5 and after, this list will be empty and should be ignored.
    */
   @JsonProperty("confidenceScores")
   public abstract Optional<List<Float>> confidenceScores();
@@ -71,7 +72,9 @@ public abstract class GroundingSupport extends JsonSerializable {
      * Setter for confidenceScores.
      *
      * <p>confidenceScores: Confidence score of the support references. Ranges from 0 to 1. 1 is the
-     * most confident. This list must have the same size as the grounding_chunk_indices.
+     * most confident. For Gemini 2.0 and before, this list must have the same size as the
+     * grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be
+     * ignored.
      */
     @JsonProperty("confidenceScores")
     public abstract Builder confidenceScores(List<Float> confidenceScores);
@@ -80,7 +83,9 @@ public abstract class GroundingSupport extends JsonSerializable {
      * Setter for confidenceScores.
      *
      * <p>confidenceScores: Confidence score of the support references. Ranges from 0 to 1. 1 is the
-     * most confident. This list must have the same size as the grounding_chunk_indices.
+     * most confident. For Gemini 2.0 and before, this list must have the same size as the
+     * grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be
+     * ignored.
      */
     public Builder confidenceScores(Float... confidenceScores) {
       return confidenceScores(Arrays.asList(confidenceScores));

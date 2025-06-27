@@ -41,7 +41,10 @@ public class BlockedReason {
     BLOCKLIST,
 
     /** Candidates blocked due to prohibited content. */
-    PROHIBITED_CONTENT
+    PROHIBITED_CONTENT,
+
+    /** Candidates blocked due to unsafe image generation content. */
+    IMAGE_SAFETY
   }
 
   private Known blockedReasonEnum;
