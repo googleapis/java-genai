@@ -261,6 +261,7 @@
           <executions>
             <execution>
               <id>attach-sources</id>
+              <phase>package</phase>
               <goals>
                 <goal>jar-no-fork</goal>
               </goals>
@@ -333,6 +334,110 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>0.10.2</version>
+        <extensions>true</extensions>
+        <configuration>
+          <buildArgs>
+            <buildArg>--no-fallback</buildArg>
+            <buildArg>--verbose</buildArg>
+          </buildArgs>
+        </configuration>
+      </plugin>
     </plugins>
-  </build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>src/main/resources/META-INF/native-image/com.google.genai/google-genai</directory>
+        <targetPath>META-INF/native-image/com.google.genai/google-genai</targetPath>
+      </resource>
+      <resource>
+        <directory>target/native-image</directory>
+        <targetPath>META-INF/native-image/com.google.genai/google-genai</targetPath>
+      </resource>
+    </resources>
+    </build>
+    <profiles>
+      <profile>
+        <id>native</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.graalvm.buildtools</groupId>
+              <artifactId>native-maven-plugin</artifactId>
+              <version>0.10.2</version>
+              <extensions>true</extensions>
+              <executions>
+                <execution>
+                  <id>build-native</id>
+                  <goals>
+                    <goal>compile-no-fork</goal>
+                  </goals>
+                  <phase>package</phase>
+                </execution>
+              </executions>
+              <configuration>
+                <buildArgs>
+                  <buildArg>--no-fallback</buildArg>
+                  <buildArg>--verbose</buildArg>
+                  <buildArg>-Ob</buildArg>
+                </buildArgs>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+      <profile>
+        <id>native-image</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.graalvm.buildtools</groupId>
+              <artifactId>native-maven-plugin</artifactId>
+              <version>0.10.2</version>
+              <extensions>true</extensions>
+              <executions>
+                <execution>
+                  <id>build-native</id>
+                  <goals>
+                    <goal>compile-no-fork</goal>
+                  </goals>
+                  <phase>package</phase>
+                </execution>
+              </executions>
+              <configuration>
+                <sharedLibrary>true</sharedLibrary>
+                <buildArgs>
+                  <buildArg>--no-fallback</buildArg>
+                  <buildArg>--verbose</buildArg>
+                  <buildArg>-O3</buildArg>
+                </buildArgs>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+      <profile>
+        <id>native-tests</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <argLine>@{argLine} -agentlib:native-image-agent=config-output-dir=target/native-image</argLine>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
 </project>

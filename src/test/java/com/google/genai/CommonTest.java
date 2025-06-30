@@ -151,6 +151,15 @@ public class CommonTest {
   }
 
   @Test
+  public void testFormatMap_nonValueNode() {
+    ObjectNode data = JsonSerializable.objectMapper.createObjectNode();
+    data.putObject("person").put("name", "John");
+    String template = "This is a {person}.";
+    String expected = "This is a {person}.";
+    assertEquals(expected, Common.formatMap(template, data));
+  }
+
+  @Test
   public void testIsZero_null() {
     assertTrue(Common.isZero(null));
   }
