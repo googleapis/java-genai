@@ -46,7 +46,19 @@ public class HarmCategory {
     /**
      * Deprecated: Election filter is not longer supported. The harm category is civic integrity.
      */
-    HARM_CATEGORY_CIVIC_INTEGRITY
+    HARM_CATEGORY_CIVIC_INTEGRITY,
+
+    /** The harm category is image hate. */
+    HARM_CATEGORY_IMAGE_HATE,
+
+    /** The harm category is image dangerous content. */
+    HARM_CATEGORY_IMAGE_DANGEROUS_CONTENT,
+
+    /** The harm category is image harassment. */
+    HARM_CATEGORY_IMAGE_HARASSMENT,
+
+    /** The harm category is image sexually explicit content. */
+    HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT
   }
 
   private Known harmCategoryEnum;

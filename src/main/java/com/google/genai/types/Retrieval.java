@@ -33,6 +33,10 @@ public abstract class Retrieval extends JsonSerializable {
   @JsonProperty("disableAttribution")
   public abstract Optional<Boolean> disableAttribution();
 
+  /** Use data source powered by external API for grounding. */
+  @JsonProperty("externalApi")
+  public abstract Optional<ExternalApi> externalApi();
+
   /** Set to use data source powered by Vertex AI Search. */
   @JsonProperty("vertexAiSearch")
   public abstract Optional<VertexAISearch> vertexAiSearch();
@@ -68,6 +72,23 @@ public abstract class Retrieval extends JsonSerializable {
      */
     @JsonProperty("disableAttribution")
     public abstract Builder disableAttribution(boolean disableAttribution);
+
+    /**
+     * Setter for externalApi.
+     *
+     * <p>externalApi: Use data source powered by external API for grounding.
+     */
+    @JsonProperty("externalApi")
+    public abstract Builder externalApi(ExternalApi externalApi);
+
+    /**
+     * Setter for externalApi builder.
+     *
+     * <p>externalApi: Use data source powered by external API for grounding.
+     */
+    public Builder externalApi(ExternalApi.Builder externalApiBuilder) {
+      return externalApi(externalApiBuilder.build());
+    }
 
     /**
      * Setter for vertexAiSearch.
