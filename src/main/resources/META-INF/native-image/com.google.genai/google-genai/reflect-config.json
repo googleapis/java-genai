@@ -12663,5 +12663,5132 @@
         "parameterTypes": []
       }
     ]
+  },
+  {
+    "name": "[B"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.deser.BeanDeserializerModifier;"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.deser.Deserializers;"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.deser.KeyDeserializers;"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.deser.ValueInstantiators;"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.ser.BeanSerializerModifier;"
+  },
+  {
+    "name": "[Lcom.fasterxml.jackson.databind.ser.Serializers;"
+  },
+  {
+    "name": "[Lcom.google.common.collect.ImmutableMapEntry;"
+  },
+  {
+    "name": "[Ljava.lang.Object;"
+  },
+  {
+    "name": "[Ljava.util.HashMap$Node;"
+  },
+  {
+    "name": "[Ljava.util.Map$Entry;"
+  },
+  {
+    "name": "[Lorg.eclipse.jetty.server.Handler;"
+  },
+  {
+    "name": "[Lorg.eclipse.jetty.servlet.ServletMapping;"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.fasterxml.jackson.databind.ext.Java7SupportImpl"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.FindStubMappingsByMetadataTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.GetAllScenariosTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.GetGlobalSettingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.GetRecordingStatusTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.ImportStubMappingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.PatchExtendedSettingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.RemoveServeEventTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.RemoveServeEventsByRequestPatternTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.RemoveServeEventsByStubMetadataTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.RemoveStubMappingsByMetadataTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.SetScenarioStateTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.StartRecordingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.StopRecordingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.CreateStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.DeleteStubFileTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.EditStubFileTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.EditStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.FindNearMissesForRequestPatternTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.FindNearMissesForRequestTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.FindNearMissesForUnmatchedTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.FindRequestsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.FindUnmatchedRequestsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetAllRequestsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetAllStubFilesTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetAllStubMappingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetCaCertTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetDocIndexTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetRecordingsIndexTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetRequestCountTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetServedStubTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GetSwaggerSpecTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.GlobalSettingsUpdateTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.OldCreateStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.OldEditStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.OldRemoveStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.OldResetRequestsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.RemoveStubMappingTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ResetRequestsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ResetScenariosTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ResetStubMappingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ResetTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ResetToDefaultMappingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.RootRedirectTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.RootTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.SaveMappingsTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.ShutdownServerTask"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.admin.tasks.SnapshotTask"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.client.BasicCredentials"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.common.Metadata"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.extension.Parameters"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.http.ChunkedDribbleDelay"
+  },
+  {
+    "name": "com.github.tomakehurst.wiremock.http.DelayDistribution"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.http.Fault"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.http.HttpHeadersJsonDeserializer"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.http.HttpHeadersJsonSerializer"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "fromString",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "value",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.http.RequestMethod"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "int",
+          "java.lang.String",
+          "java.lang.String",
+          "com.fasterxml.jackson.databind.JsonNode",
+          "java.lang.String",
+          "java.lang.String",
+          "com.github.tomakehurst.wiremock.http.HttpHeaders",
+          "com.github.tomakehurst.wiremock.http.HttpHeaders",
+          "java.lang.Integer",
+          "com.github.tomakehurst.wiremock.http.DelayDistribution",
+          "com.github.tomakehurst.wiremock.http.ChunkedDribbleDelay",
+          "java.lang.String",
+          "java.lang.String",
+          "com.github.tomakehurst.wiremock.http.Fault",
+          "java.util.List",
+          "com.github.tomakehurst.wiremock.extension.Parameters",
+          "java.lang.Boolean"
+        ]
+      },
+      {
+        "name": "getAdditionalProxyRequestHeaders",
+        "parameterTypes": []
+      },
+      {
+        "name": "getBase64Body",
+        "parameterTypes": []
+      },
+      {
+        "name": "getBody",
+        "parameterTypes": []
+      },
+      {
+        "name": "getBodyFileName",
+        "parameterTypes": []
+      },
+      {
+        "name": "getChunkedDribbleDelay",
+        "parameterTypes": []
+      },
+      {
+        "name": "getDelayDistribution",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFault",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFixedDelayMilliseconds",
+        "parameterTypes": []
+      },
+      {
+        "name": "getHeaders",
+        "parameterTypes": []
+      },
+      {
+        "name": "getJsonBody",
+        "parameterTypes": []
+      },
+      {
+        "name": "getProxyBaseUrl",
+        "parameterTypes": []
+      },
+      {
+        "name": "getProxyUrlPrefixToRemove",
+        "parameterTypes": []
+      },
+      {
+        "name": "getStatus",
+        "parameterTypes": []
+      },
+      {
+        "name": "getStatusMessage",
+        "parameterTypes": []
+      },
+      {
+        "name": "getTransformerParameters",
+        "parameterTypes": []
+      },
+      {
+        "name": "getTransformers",
+        "parameterTypes": []
+      },
+      {
+        "name": "isFromConfiguredStub",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.http.ResponseDefinition"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "com.github.tomakehurst.wiremock.core.Options",
+          "com.github.tomakehurst.wiremock.http.AdminRequestHandler",
+          "com.github.tomakehurst.wiremock.http.StubRequestHandler"
+        ]
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.jetty94.Jetty94HttpServer"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String",
+          "java.lang.String",
+          "char[]"
+        ]
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.jetty94.WritableFileOrClasspathKeyStoreSource"
+  },
+  {
+    "name": "com.github.tomakehurst.wiremock.matching.AnythingPattern"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.matching.ContentPatternDeserialiser"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.matching.CustomMatcherDefinition"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.matching.MultiValuePattern"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.matching.MultipartValuePattern"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.github.tomakehurst.wiremock.matching.MultipartValuePattern$MatchingType"
+  },
+  {
+    "name": "com.github.tomakehurst.wiremock.matching.NamedValueMatcher"
+  },
+  {
+    "name": "com.github.tomakehurst.wiremock.matching.RegexPattern"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String",
+          "com.github.tomakehurst.wiremock.matching.StringValuePattern",
+          "java.lang.Integer",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String",
+          "com.github.tomakehurst.wiremock.http.RequestMethod",
+          "java.util.Map",
+          "java.util.Map",
+          "java.util.Map",
+          "com.github.tomakehurst.wiremock.client.BasicCredentials",
+          "java.util.List",
+          "com.github.tomakehurst.wiremock.matching.CustomMatcherDefinition",
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "getBasicAuthCredentials",
+        "parameterTypes": []
+      },
+      {
+        "name": "getBodyPatterns",
+        "parameterTypes": []
+      },
+      {
+        "name": "getCookies",
+        "parameterTypes": []
+      },
+      {
+        "name": "getCustomMatcher",
+        "parameterTypes": []
+      },
+      {
+        "name": "getHeaders",
+        "parameterTypes": []
+      },
+      {
+        "name": "getHost",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMethod",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMultipartPatterns",
+        "parameterTypes": []
+      },
+      {
+        "name": "getPort",
+        "parameterTypes": []
+      },
+      {
+        "name": "getQueryParameters",
+        "parameterTypes": []
+      },
+      {
+        "name": "getScheme",
+        "parameterTypes": []
+      },
+      {
+        "name": "getUrl",
+        "parameterTypes": []
+      },
+      {
+        "name": "getUrlPath",
+        "parameterTypes": []
+      },
+      {
+        "name": "getUrlPathPattern",
+        "parameterTypes": []
+      },
+      {
+        "name": "getUrlPattern",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.matching.RequestPattern"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.matching.StringValuePatternJsonDeserializer"
+  },
+  {
+    "name": "com.github.tomakehurst.wiremock.matching.ValueMatcher"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.servlet.ContentTypeSettingFilter"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.servlet.TrailingSlashFilter"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.servlet.WireMockHandlerDispatchingServlet"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "getId",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMetadata",
+        "parameterTypes": []
+      },
+      {
+        "name": "getName",
+        "parameterTypes": []
+      },
+      {
+        "name": "getNewScenarioState",
+        "parameterTypes": []
+      },
+      {
+        "name": "getPostServeActions",
+        "parameterTypes": []
+      },
+      {
+        "name": "getPriority",
+        "parameterTypes": []
+      },
+      {
+        "name": "getRequest",
+        "parameterTypes": []
+      },
+      {
+        "name": "getRequiredScenarioState",
+        "parameterTypes": []
+      },
+      {
+        "name": "getResponse",
+        "parameterTypes": []
+      },
+      {
+        "name": "getScenarioName",
+        "parameterTypes": []
+      },
+      {
+        "name": "getUuid",
+        "parameterTypes": []
+      },
+      {
+        "name": "isPersistent",
+        "parameterTypes": []
+      },
+      {
+        "name": "setId",
+        "parameterTypes": [
+          "java.util.UUID"
+        ]
+      },
+      {
+        "name": "setRequest",
+        "parameterTypes": [
+          "com.github.tomakehurst.wiremock.matching.RequestPattern"
+        ]
+      },
+      {
+        "name": "setResponse",
+        "parameterTypes": [
+          "com.github.tomakehurst.wiremock.http.ResponseDefinition"
+        ]
+      },
+      {
+        "name": "setUuid",
+        "parameterTypes": [
+          "java.util.UUID"
+        ]
+      }
+    ],
+    "name": "com.github.tomakehurst.wiremock.stubbing.StubMapping"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.api.client.json.GenericJson"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.api.client.util.GenericData"
+  },
+  {
+    "name": "com.google.auth.Credentials"
+  },
+  {
+    "name": "com.google.auth.oauth2.GoogleCredentials"
+  },
+  {
+    "name": "com.google.auth.oauth2.OAuth2Credentials"
+  },
+  {
+    "name": "com.google.auth.oauth2.QuotaProjectIdProvider"
+  },
+  {
+    "name": "com.google.common.collect.BiMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.ImmutableBiMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.ImmutableCollection"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.ImmutableList"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.ImmutableMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.RegularImmutableMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.SingletonImmutableBiMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.common.collect.SingletonImmutableList"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionMap_emptyConfig_returnsEmptyFunctionMap",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionMap_nullConfig_returnsEmptyFunctionMap",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionMap_returnsFunctionMap",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionResponseParts_emptyFunctionCall_returnsEmptyFunctionResponseParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionResponseParts_emptyFunctionMap_returnsEmptyFunctionResponseParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionResponseParts_emptyResponse_returnsEmptyFunctionResponseParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionResponseParts_exceptionThrown_returnsFunctionResponseParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "getFunctionResponseParts_returnsFunctionResponseParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMaxRemoteCallsAfc_emptyConfig_returnsDefaultMaxRemoteCallsAfc",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMaxRemoteCallsAfc_emptyMaxRemoteCalls_returnsDefaultMaxRemoteCallsAfc",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMaxRemoteCallsAfc_nullConfig_returnsDefaultMaxRemoteCallsAfc",
+        "parameterTypes": []
+      },
+      {
+        "name": "getMaxRemoteCallsAfc_returnsMaxRemoteCallsAfc",
+        "parameterTypes": []
+      },
+      {
+        "name": "hasCallableTool_emptyTools_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "hasCallableTool_noFunctions_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "hasCallableTool_nullConfig_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "hasCallableTool_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldAppendAfcHistory_emptyConfig_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldAppendAfcHistory_ignoreCallHistory_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldAppendAfcHistory_nullConfig_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldDisableAfc_disableAfcAndMaxRemoteCalls_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldDisableAfc_disableAfc_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldDisableAfc_emptyConfig_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldDisableAfc_enableAfcMaxRemoteCallsNegative_returnsTrue",
+        "parameterTypes": []
+      },
+      {
+        "name": "shouldDisableAfc_nullConfig_returnsFalse",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFunction1",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "testFunction2",
+        "parameterTypes": [
+          "java.lang.Integer",
+          "java.lang.Integer"
+        ]
+      },
+      {
+        "name": "transformGenerateContentConfig_emptyConfig_returnsTransformedConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "transformGenerateContentConfig_functionDeclarationAndMethod_returnsTransformedConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "transformGenerateContentConfig_functionDeclaration_returnsTransformedConfig",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.AfcUtilTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.ApiClient"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.ApiClient$MockitoMock$1803701717"
+  },
+  {
+    "name": "com.google.genai.ApiResponse"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setUp",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCreateAsyncChatSession",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetAsyncChatMessage",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetHistoryAsync",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIterateOverAsyncResponseStream",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowsIfAsyncStreamResponseIsNotConsumed",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.AsyncChatTest"
+  },
+  {
+    "fields": [
+      {
+        "name": "apiClient"
+      }
+    ],
+    "name": "com.google.genai.AsyncChats"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "findTheaters",
+        "parameterTypes": [
+          "java.lang.String",
+          "java.lang.String",
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "setUp",
+        "parameterTypes": []
+      },
+      {
+        "name": "testChatWithConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCreateChatSession",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetHistory",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetHistoryWithAfc",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitConfigIsUsedWhenSendMessageConfigIsNull",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInvalidHistoryThrows",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInvalidRoleThrows",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIterateOverResponseStream",
+        "parameterTypes": []
+      },
+      {
+        "name": "testMultiTurnChat",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSendMessageContent",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSendMessageContentList",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowsIfStreamResponseIsNotConsumed",
+        "parameterTypes": []
+      },
+      {
+        "name": "testUnexpectedFinishReasonDoesNotAddToCuratedHistory",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.ChatTest"
+  },
+  {
+    "fields": [
+      {
+        "name": "apiClient"
+      }
+    ],
+    "name": "com.google.genai.Chats"
+  },
+  {
+    "fields": [
+      {
+        "name": "apiClient"
+      }
+    ],
+    "name": "com.google.genai.Client"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCloseClient",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCloseClient_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_mldev",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_setApiKeyInVertex_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_setBothApiKeyAndProject_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_setProjectInMldev_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_vertex",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitClientFromBuilder_withCredentialsAndHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testReplayClient_mldev",
+        "parameterTypes": []
+      },
+      {
+        "name": "testReplayClient_vertex",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSetDefaultBaseUrls",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.ClientTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFormatMap_emptyData",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFormatMap_missingKey",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFormatMap_nonValueNode",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFormatMap_simple",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_arrayObject",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_firstArrayElement",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_notFound",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_nullKeys",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_nullObject",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_self",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetValueByPath_simpleObject",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_boolean_false",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_boolean_true",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_character_nonzero",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_character_zero",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_null",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_number_nonzero",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_number_zero",
+        "parameterTypes": []
+      },
+      {
+        "name": "testIsZero_otherObject",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSetValueByPath_arrayObject",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSetValueByPath_arrayObject_existing",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSetValueByPath_firstArrayElement",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSetValueByPath_simpleObject",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.CommonTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testDefaultValues",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.DefaultValuesTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setUp",
+        "parameterTypes": []
+      },
+      {
+        "name": "testEnumForwardCompatibilityFinishReason",
+        "parameterTypes": []
+      },
+      {
+        "name": "testEnumForwardCompatibilitySafetyFilterLevel",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFinishReasonEnumReturnsEnum",
+        "parameterTypes": []
+      },
+      {
+        "name": "testForwardCompatibility",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInlineEnum",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.ForwardCompatibilityTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testClientInitializationWithBaseUrlFromEnvironment",
+        "parameterTypes": []
+      },
+      {
+        "name": "testClientInitializationWithBaseUrlFromHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testClientInitializationWithBaseUrlFromHttpOptionsOverridesSetDefaultBaseUrls",
+        "parameterTypes": []
+      },
+      {
+        "name": "testClientInitializationWithBaseUrlFromSetBaseUrls",
+        "parameterTypes": []
+      },
+      {
+        "name": "testClientInitializationWithBaseUrlFromSetBaseUrlsOverridesEnvironment",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientMLDevTimeout",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientMLDevWithNoHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientMldevCustomClientOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientMldevDefaultClientOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientNoTimeout",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientVertexCustomClientOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientVertexNoTimeout",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientVertexTimeout",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientVertexWithGlobalEndpoint",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientVertexWithNoHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testHttpClientWithCustomCredentials",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitHttpClientMldev",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitHttpClientMldevWithPartialHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitHttpClientVertex",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitHttpClientVertexWithPartialHttpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "testProxySetup",
+        "parameterTypes": []
+      },
+      {
+        "name": "testRequestDeleteMethodWithMldev",
+        "parameterTypes": []
+      },
+      {
+        "name": "testRequestGetMethodWithMldev",
+        "parameterTypes": []
+      },
+      {
+        "name": "testRequestPostMethodWithVertexAI",
+        "parameterTypes": []
+      },
+      {
+        "name": "testRequestWithHttpOptions",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.HttpApiClientTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.JsonSerializable"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testLiveSendRealtimeInputParameters_Audio_okay",
+        "parameterTypes": []
+      },
+      {
+        "name": "testLiveSendRealtimeInputParameters_BadBlob_throws",
+        "parameterTypes": []
+      },
+      {
+        "name": "testLiveSendRealtimeInputParameters_Media_wrapped",
+        "parameterTypes": []
+      },
+      {
+        "name": "testLiveSendRealtimeInputParameters_Text_okay",
+        "parameterTypes": []
+      },
+      {
+        "name": "testMultiSpeakerVoiceConfig_throws",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.LiveConvertersTest"
+  },
+  {
+    "fields": [
+      {
+        "name": "apiClient"
+      }
+    ],
+    "methods": [
+      {
+        "name": "generateContentResponseFromMldev",
+        "parameterTypes": [
+          "com.fasterxml.jackson.databind.JsonNode",
+          "com.fasterxml.jackson.databind.node.ObjectNode"
+        ]
+      }
+    ],
+    "name": "com.google.genai.Models"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.ModelsTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.OperationsTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPathNameMismatch",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPathTypeMismatch",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSanitizeSuccess",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.ReplaySanitizerTest"
+  },
+  {
+    "name": "com.google.genai.ResponseStream$ResponseStreamIterator"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.TableTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_noModels_returnEmptyArrayNode",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_nullResponse_returnNull",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_responseWithModels",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_responseWithPublisherModels",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_responseWithTunedModels",
+        "parameterTypes": []
+      },
+      {
+        "name": "tExtractModels_unsupportedType_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_file_noName_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_generatedVideo_noUri_returnNull",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_generatedVideo_noVideo_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_generatedVideo_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_string_file_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_string_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_textNode_file_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_unsupportedType_throwsException",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_video_noUri_returnNull",
+        "parameterTypes": []
+      },
+      {
+        "name": "tFileName_video_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_AnyOf_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_GeminiAPI_defaultValue_noChange",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_GeminiAPI_title_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_Items_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_Required_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTSchema_VertexAI_defaultValue_noChange",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTTool_Functions_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTTool_functionsEmpty_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "testTTool_noFunctions_success",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.TransformersTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setUp",
+        "parameterTypes": []
+      },
+      {
+        "name": "tearDown",
+        "parameterTypes": []
+      },
+      {
+        "name": "upload_bytes_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "upload_file_retries_exhausted_throws",
+        "parameterTypes": []
+      },
+      {
+        "name": "upload_file_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "upload_file_with_retriable_error_success",
+        "parameterTypes": []
+      },
+      {
+        "name": "upload_stream_success",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.UploadClientTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_EmptyBody",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_InvalidJson",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_MessageNotText",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_NoErrorNode",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_NoMessageNode",
+        "parameterTypes": []
+      },
+      {
+        "name": "testGetErrorMessage_ValidMessage",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowFromResponse_ClientError_ThrowsClientException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowFromResponse_OKStatus_DoesNotThrow",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowFromResponse_OtherError_ThrowsApiException",
+        "parameterTypes": []
+      },
+      {
+        "name": "testThrowFromResponse_ServerError_ThrowsServerException",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.errors.ApiExceptionTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitGenAiIOException_withCause",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitGenAiIOException_withMessage",
+        "parameterTypes": []
+      },
+      {
+        "name": "testInitGenAiIOException_withMessageAndCause",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.errors.GenAiIOExceptionTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ApiKeyConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthConfigGoogleServiceAccountConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthConfigHttpBasicAuthConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthConfigOauthConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthConfigOidcConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AuthType"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "data",
+        "parameterTypes": []
+      },
+      {
+        "name": "displayName",
+        "parameterTypes": []
+      },
+      {
+        "name": "mimeType",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Blob"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "avgLogprobs",
+        "parameterTypes": []
+      },
+      {
+        "name": "citationMetadata",
+        "parameterTypes": []
+      },
+      {
+        "name": "content",
+        "parameterTypes": []
+      },
+      {
+        "name": "finishMessage",
+        "parameterTypes": []
+      },
+      {
+        "name": "finishReason",
+        "parameterTypes": []
+      },
+      {
+        "name": "groundingMetadata",
+        "parameterTypes": []
+      },
+      {
+        "name": "index",
+        "parameterTypes": []
+      },
+      {
+        "name": "logprobsResult",
+        "parameterTypes": []
+      },
+      {
+        "name": "safetyRatings",
+        "parameterTypes": []
+      },
+      {
+        "name": "tokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "urlContextMetadata",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Candidate"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "parts",
+        "parameterTypes": []
+      },
+      {
+        "name": "role",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Content"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "contents",
+        "parameterTypes": []
+      },
+      {
+        "name": "displayName",
+        "parameterTypes": []
+      },
+      {
+        "name": "expireTime",
+        "parameterTypes": []
+      },
+      {
+        "name": "httpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "kmsKeyName",
+        "parameterTypes": []
+      },
+      {
+        "name": "systemInstruction",
+        "parameterTypes": []
+      },
+      {
+        "name": "toolConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "tools",
+        "parameterTypes": []
+      },
+      {
+        "name": "ttl",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_CreateCachedContentConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "args",
+        "parameterTypes": []
+      },
+      {
+        "name": "id",
+        "parameterTypes": []
+      },
+      {
+        "name": "name",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_FunctionCall"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "behavior",
+        "parameterTypes": []
+      },
+      {
+        "name": "description",
+        "parameterTypes": []
+      },
+      {
+        "name": "name",
+        "parameterTypes": []
+      },
+      {
+        "name": "parameters",
+        "parameterTypes": []
+      },
+      {
+        "name": "parametersJsonSchema",
+        "parameterTypes": []
+      },
+      {
+        "name": "response",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseJsonSchema",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_FunctionDeclaration"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "id",
+        "parameterTypes": []
+      },
+      {
+        "name": "name",
+        "parameterTypes": []
+      },
+      {
+        "name": "response",
+        "parameterTypes": []
+      },
+      {
+        "name": "scheduling",
+        "parameterTypes": []
+      },
+      {
+        "name": "willContinue",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_FunctionResponse"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "audioTimestamp",
+        "parameterTypes": []
+      },
+      {
+        "name": "automaticFunctionCalling",
+        "parameterTypes": []
+      },
+      {
+        "name": "cachedContent",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidateCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "frequencyPenalty",
+        "parameterTypes": []
+      },
+      {
+        "name": "httpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "labels",
+        "parameterTypes": []
+      },
+      {
+        "name": "logprobs",
+        "parameterTypes": []
+      },
+      {
+        "name": "maxOutputTokens",
+        "parameterTypes": []
+      },
+      {
+        "name": "mediaResolution",
+        "parameterTypes": []
+      },
+      {
+        "name": "modelSelectionConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "presencePenalty",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseJsonSchema",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseLogprobs",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseMimeType",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseModalities",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseSchema",
+        "parameterTypes": []
+      },
+      {
+        "name": "routingConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "safetySettings",
+        "parameterTypes": []
+      },
+      {
+        "name": "seed",
+        "parameterTypes": []
+      },
+      {
+        "name": "speechConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "stopSequences",
+        "parameterTypes": []
+      },
+      {
+        "name": "systemInstruction",
+        "parameterTypes": []
+      },
+      {
+        "name": "temperature",
+        "parameterTypes": []
+      },
+      {
+        "name": "thinkingConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "toolConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "tools",
+        "parameterTypes": []
+      },
+      {
+        "name": "topK",
+        "parameterTypes": []
+      },
+      {
+        "name": "topP",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_GenerateContentConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "config",
+        "parameterTypes": []
+      },
+      {
+        "name": "contents",
+        "parameterTypes": []
+      },
+      {
+        "name": "model",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_GenerateContentParameters"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "automaticFunctionCallingHistory",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "createTime",
+        "parameterTypes": []
+      },
+      {
+        "name": "modelVersion",
+        "parameterTypes": []
+      },
+      {
+        "name": "promptFeedback",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseId",
+        "parameterTypes": []
+      },
+      {
+        "name": "usageMetadata",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_GenerateContentResponse"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "cacheTokensDetails",
+        "parameterTypes": []
+      },
+      {
+        "name": "cachedContentTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidatesTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidatesTokensDetails",
+        "parameterTypes": []
+      },
+      {
+        "name": "promptTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "promptTokensDetails",
+        "parameterTypes": []
+      },
+      {
+        "name": "thoughtsTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "toolUsePromptTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "toolUsePromptTokensDetails",
+        "parameterTypes": []
+      },
+      {
+        "name": "totalTokenCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "trafficType",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_GenerateContentResponseUsageMetadata"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "timeRangeFilter",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_GoogleSearch"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "clientContent",
+        "parameterTypes": []
+      },
+      {
+        "name": "realtimeInput",
+        "parameterTypes": []
+      },
+      {
+        "name": "realtimeInputParameters",
+        "parameterTypes": []
+      },
+      {
+        "name": "setup",
+        "parameterTypes": []
+      },
+      {
+        "name": "toolResponse",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_LiveClientMessage"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "contextWindowCompression",
+        "parameterTypes": []
+      },
+      {
+        "name": "enableAffectiveDialog",
+        "parameterTypes": []
+      },
+      {
+        "name": "httpOptions",
+        "parameterTypes": []
+      },
+      {
+        "name": "inputAudioTranscription",
+        "parameterTypes": []
+      },
+      {
+        "name": "maxOutputTokens",
+        "parameterTypes": []
+      },
+      {
+        "name": "mediaResolution",
+        "parameterTypes": []
+      },
+      {
+        "name": "outputAudioTranscription",
+        "parameterTypes": []
+      },
+      {
+        "name": "proactivity",
+        "parameterTypes": []
+      },
+      {
+        "name": "realtimeInputConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "responseModalities",
+        "parameterTypes": []
+      },
+      {
+        "name": "seed",
+        "parameterTypes": []
+      },
+      {
+        "name": "sessionResumption",
+        "parameterTypes": []
+      },
+      {
+        "name": "speechConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "systemInstruction",
+        "parameterTypes": []
+      },
+      {
+        "name": "temperature",
+        "parameterTypes": []
+      },
+      {
+        "name": "tools",
+        "parameterTypes": []
+      },
+      {
+        "name": "topK",
+        "parameterTypes": []
+      },
+      {
+        "name": "topP",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_LiveConnectConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "activityEnd",
+        "parameterTypes": []
+      },
+      {
+        "name": "activityStart",
+        "parameterTypes": []
+      },
+      {
+        "name": "audio",
+        "parameterTypes": []
+      },
+      {
+        "name": "audioStreamEnd",
+        "parameterTypes": []
+      },
+      {
+        "name": "media",
+        "parameterTypes": []
+      },
+      {
+        "name": "text",
+        "parameterTypes": []
+      },
+      {
+        "name": "video",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_LiveSendRealtimeInputParameters"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "speakerVoiceConfigs",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_MultiSpeakerVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "codeExecutionResult",
+        "parameterTypes": []
+      },
+      {
+        "name": "executableCode",
+        "parameterTypes": []
+      },
+      {
+        "name": "fileData",
+        "parameterTypes": []
+      },
+      {
+        "name": "functionCall",
+        "parameterTypes": []
+      },
+      {
+        "name": "functionResponse",
+        "parameterTypes": []
+      },
+      {
+        "name": "inlineData",
+        "parameterTypes": []
+      },
+      {
+        "name": "text",
+        "parameterTypes": []
+      },
+      {
+        "name": "thought",
+        "parameterTypes": []
+      },
+      {
+        "name": "thoughtSignature",
+        "parameterTypes": []
+      },
+      {
+        "name": "videoMetadata",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Part"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "voiceName",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_PrebuiltVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "anyOf",
+        "parameterTypes": []
+      },
+      {
+        "name": "default_",
+        "parameterTypes": []
+      },
+      {
+        "name": "description",
+        "parameterTypes": []
+      },
+      {
+        "name": "enum_",
+        "parameterTypes": []
+      },
+      {
+        "name": "example",
+        "parameterTypes": []
+      },
+      {
+        "name": "format",
+        "parameterTypes": []
+      },
+      {
+        "name": "items",
+        "parameterTypes": []
+      },
+      {
+        "name": "maxItems",
+        "parameterTypes": []
+      },
+      {
+        "name": "maxLength",
+        "parameterTypes": []
+      },
+      {
+        "name": "maxProperties",
+        "parameterTypes": []
+      },
+      {
+        "name": "maximum",
+        "parameterTypes": []
+      },
+      {
+        "name": "minItems",
+        "parameterTypes": []
+      },
+      {
+        "name": "minLength",
+        "parameterTypes": []
+      },
+      {
+        "name": "minProperties",
+        "parameterTypes": []
+      },
+      {
+        "name": "minimum",
+        "parameterTypes": []
+      },
+      {
+        "name": "nullable",
+        "parameterTypes": []
+      },
+      {
+        "name": "pattern",
+        "parameterTypes": []
+      },
+      {
+        "name": "properties",
+        "parameterTypes": []
+      },
+      {
+        "name": "propertyOrdering",
+        "parameterTypes": []
+      },
+      {
+        "name": "required",
+        "parameterTypes": []
+      },
+      {
+        "name": "title",
+        "parameterTypes": []
+      },
+      {
+        "name": "type",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Schema"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "speaker",
+        "parameterTypes": []
+      },
+      {
+        "name": "voiceConfig",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_SpeakerVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "languageCode",
+        "parameterTypes": []
+      },
+      {
+        "name": "multiSpeakerVoiceConfig",
+        "parameterTypes": []
+      },
+      {
+        "name": "voiceConfig",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_SpeechConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "codeExecution",
+        "parameterTypes": []
+      },
+      {
+        "name": "enterpriseWebSearch",
+        "parameterTypes": []
+      },
+      {
+        "name": "functionDeclarations",
+        "parameterTypes": []
+      },
+      {
+        "name": "googleMaps",
+        "parameterTypes": []
+      },
+      {
+        "name": "googleSearch",
+        "parameterTypes": []
+      },
+      {
+        "name": "googleSearchRetrieval",
+        "parameterTypes": []
+      },
+      {
+        "name": "retrieval",
+        "parameterTypes": []
+      },
+      {
+        "name": "urlContext",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_Tool"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "endOffset",
+        "parameterTypes": []
+      },
+      {
+        "name": "fps",
+        "parameterTypes": []
+      },
+      {
+        "name": "startOffset",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_VideoMetadata"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "prebuiltVoiceConfig",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.AutoValue_VoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.AutomaticFunctionCallingConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Behavior"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Blob"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "data",
+        "parameterTypes": [
+          "byte[]"
+        ]
+      },
+      {
+        "name": "mimeType",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Blob$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.BlockedReason"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Candidate"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "content",
+        "parameterTypes": [
+          "com.google.genai.types.Content"
+        ]
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "finishReason",
+        "parameterTypes": [
+          "com.google.genai.types.FinishReason"
+        ]
+      },
+      {
+        "name": "safetyRatings",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Candidate$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Citation$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.CitationMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.CodeExecutionResult$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Content"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "parts",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "role",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Content$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testContentFromParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_ConcatenatesTextParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_EmptyParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_NoTextParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_NonTextParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_NullParts",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.ContentTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.CreateCachedContentConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "expireTime",
+        "parameterTypes": [
+          "java.time.Instant"
+        ]
+      },
+      {
+        "name": "ttl",
+        "parameterTypes": [
+          "java.time.Duration"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.CreateCachedContentConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSerializationDeserialization_nullFields",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSerializationDeserialization_withInstantAndDuration",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.CreateCachedContentConfigTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.DynamicRetrievalConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.DynamicRetrievalConfigMode"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.EnterpriseWebSearch$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ExecutableCode$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FeatureSelectionPreference"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FileData$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "toString",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.FinishReason"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionCall"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "args",
+        "parameterTypes": [
+          "java.util.Map"
+        ]
+      },
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "name",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.FunctionCall$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionCallingConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionCallingConfigMode"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionDeclaration"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "description",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "name",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "parameters",
+        "parameterTypes": [
+          "com.google.genai.types.Schema"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.FunctionDeclaration$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "fromMethodWithInstanceMethod_throwsIllegalArgumentException",
+        "parameterTypes": []
+      },
+      {
+        "name": "fromMethodWithInvalidParameterType_throwsIllegalArgumentException",
+        "parameterTypes": []
+      },
+      {
+        "name": "fromMethodWithParameterNames_returnsFunctionDeclaration",
+        "parameterTypes": []
+      },
+      {
+        "name": "fromMethodWithUnmatchedParameterNames_throwsIllegalArgumentException",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.FunctionDeclarationTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionResponse"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "name",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "response",
+        "parameterTypes": [
+          "java.util.Map"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.FunctionResponse$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.FunctionResponseScheduling"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerateContentConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "tools",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.GenerateContentConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerateContentParameters"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerateContentResponse"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "automaticFunctionCallingHistory",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidates",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "usageMetadata",
+        "parameterTypes": [
+          "com.google.genai.types.GenerateContentResponseUsageMetadata"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.GenerateContentResponse$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerateContentResponsePromptFeedback$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_EmptyCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_EmptyContent",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_EmptyParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_MultipleCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_MultipleParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_PartWithCodeExecutionResult",
+        "parameterTypes": []
+      },
+      {
+        "name": "testCodeExecutionResult_TextPart",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_EmptyCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_EmptyContent",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_EmptyParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_MultipleCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_MultipleParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_PartWithExecutableCode",
+        "parameterTypes": []
+      },
+      {
+        "name": "testExecutableCode_TextPart",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFunctionCalls_EmptyCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFunctionCalls_EmptyParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFunctionCalls_MixedParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testFunctionCalls_PartWithFunctionCall",
+        "parameterTypes": []
+      },
+      {
+        "name": "testParts_EmptyCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testParts_MultipleCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testParts_MultipleParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testParts_SinglePart",
+        "parameterTypes": []
+      },
+      {
+        "name": "testParts_UnexpectedFinishReason",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_EmptyCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_EmptyParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_MixedParts",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_MultipleCandidates",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_MultiplePartsWithText",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_MultiplePartsWithThought",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_PartWithText",
+        "parameterTypes": []
+      },
+      {
+        "name": "testText_UnexpectedFinishReason",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.GenerateContentResponseTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerateContentResponseUsageMetadata"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "candidatesTokenCount",
+        "parameterTypes": [
+          "java.lang.Integer"
+        ]
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "promptTokenCount",
+        "parameterTypes": [
+          "java.lang.Integer"
+        ]
+      },
+      {
+        "name": "totalTokenCount",
+        "parameterTypes": [
+          "java.lang.Integer"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.GenerateContentResponseUsageMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerationConfigRoutingConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerationConfigRoutingConfigAutoRoutingMode$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GenerationConfigRoutingConfigManualRoutingMode$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GoogleMaps$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GoogleSearch"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.GoogleSearch$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GoogleSearchRetrieval$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GoogleTypeDate$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GroundingChunk$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GroundingChunkRetrievedContext$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GroundingChunkWeb$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GroundingMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.GroundingSupport$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.HarmBlockMethod"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.HarmBlockThreshold"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.HarmCategory"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.HarmProbability"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.HarmSeverity"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.HttpOptions$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Interval$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Language"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LatLng$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LiveClientMessage"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LiveConnectConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LiveSendRealtimeInputParameters"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LogprobsResult$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LogprobsResultCandidate$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.LogprobsResultTopCandidates$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.MediaModality"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.MediaResolution"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ModalityTokenCount$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ModelRoutingPreference"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ModelSelectionConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.MultiSpeakerVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "speakerVoiceConfigs",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.MultiSpeakerVoiceConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Outcome"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Part"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "functionCall",
+        "parameterTypes": [
+          "com.google.genai.types.FunctionCall"
+        ]
+      },
+      {
+        "name": "functionResponse",
+        "parameterTypes": [
+          "com.google.genai.types.FunctionResponse"
+        ]
+      },
+      {
+        "name": "text",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Part$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPartFromBytes",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPartFromFunctionCall",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPartFromFunctionResponse",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPartFromText",
+        "parameterTypes": []
+      },
+      {
+        "name": "testPartFromUri",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.PartTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.PrebuiltVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "voiceName",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.PrebuiltVoiceConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagChunk$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagChunkPageSpan$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfigFilter$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfigHybridSearch$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfigRanking$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfigRankingLlmRanker$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RagRetrievalConfigRankingRankService$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Retrieval$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RetrievalConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.RetrievalMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "category",
+        "parameterTypes": [
+          "com.google.genai.types.HarmCategory"
+        ]
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.SafetyRating$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.SafetySetting$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Schema"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "items",
+        "parameterTypes": [
+          "com.google.genai.types.Schema"
+        ]
+      },
+      {
+        "name": "properties",
+        "parameterTypes": [
+          "java.util.Map"
+        ]
+      },
+      {
+        "name": "required",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "title",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "type",
+        "parameterTypes": [
+          "com.google.genai.types.Type"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Schema$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.SearchEntryPoint$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Segment$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.SpeakerVoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "speaker",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "voiceConfig",
+        "parameterTypes": [
+          "com.google.genai.types.VoiceConfig"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.SpeakerVoiceConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.SpeechConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "multiSpeakerVoiceConfig",
+        "parameterTypes": [
+          "com.google.genai.types.MultiSpeakerVoiceConfig"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.SpeechConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ThinkingConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.Tool"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "functionDeclarations",
+        "parameterTypes": [
+          "java.util.List"
+        ]
+      },
+      {
+        "name": "googleSearch",
+        "parameterTypes": [
+          "com.google.genai.types.GoogleSearch"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.Tool$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ToolCodeExecution$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.ToolConfig$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.TrafficType"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      },
+      {
+        "name": "toString",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.Type"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.UrlContext$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.UrlContextMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.UrlMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.UrlRetrievalStatus"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VertexAISearch$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VertexAISearchDataStoreSpec$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VertexRagStore$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VertexRagStoreRagResource$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VideoMetadata"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "endOffset",
+        "parameterTypes": [
+          "java.time.Duration"
+        ]
+      },
+      {
+        "name": "startOffset",
+        "parameterTypes": [
+          "java.time.Duration"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.VideoMetadata$Builder"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSerializationDeserialization_nullDurations",
+        "parameterTypes": []
+      },
+      {
+        "name": "testSerializationDeserialization_withDurations",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.google.genai.types.VideoMetadataTest"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "com.google.genai.types.VoiceConfig"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "build",
+        "parameterTypes": []
+      },
+      {
+        "name": "create",
+        "parameterTypes": []
+      },
+      {
+        "name": "prebuiltVoiceConfig",
+        "parameterTypes": [
+          "com.google.genai.types.PrebuiltVoiceConfig"
+        ]
+      }
+    ],
+    "name": "com.google.genai.types.VoiceConfig$Builder"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.AESCipher$General"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.ARCFOURCipher"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.DESCipher"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.DESedeCipher"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.crypto.provider.GaloisCounterMode$AESGCM"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl"
+  },
+  {
+    "name": "java.io.Closeable"
+  },
+  {
+    "name": "java.io.Serializable"
+  },
+  {
+    "name": "java.lang.AutoCloseable"
+  },
+  {
+    "name": "java.lang.Boolean"
+  },
+  {
+    "name": "java.lang.Byte"
+  },
+  {
+    "methods": [
+      {
+        "name": "getModule",
+        "parameterTypes": []
+      },
+      {
+        "name": "getNestHost",
+        "parameterTypes": []
+      },
+      {
+        "name": "isSealed",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.Class"
+  },
+  {
+    "name": "java.lang.ClassLoader"
+  },
+  {
+    "name": "java.lang.Cloneable"
+  },
+  {
+    "name": "java.lang.Comparable"
+  },
+  {
+    "methods": [
+      {
+        "name": "forRemoval",
+        "parameterTypes": []
+      },
+      {
+        "name": "since",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.Deprecated"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.lang.Double"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.lang.Float"
+  },
+  {
+    "name": "java.lang.Integer"
+  },
+  {
+    "name": "java.lang.Iterable"
+  },
+  {
+    "name": "java.lang.Long"
+  },
+  {
+    "methods": [
+      {
+        "name": "canRead",
+        "parameterTypes": [
+          "java.lang.Module"
+        ]
+      },
+      {
+        "name": "getLayer",
+        "parameterTypes": []
+      },
+      {
+        "name": "getName",
+        "parameterTypes": []
+      },
+      {
+        "name": "isOpen",
+        "parameterTypes": [
+          "java.lang.String",
+          "java.lang.Module"
+        ]
+      }
+    ],
+    "name": "java.lang.Module"
+  },
+  {
+    "methods": [
+      {
+        "name": "configuration",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.ModuleLayer"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.lang.Number"
+  },
+  {
+    "allDeclaredFields": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.Object"
+  },
+  {
+    "methods": [
+      {
+        "name": "version",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.Runtime"
+  },
+  {
+    "methods": [
+      {
+        "name": "major",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.Runtime$Version"
+  },
+  {
+    "name": "java.lang.SecurityManager"
+  },
+  {
+    "name": "java.lang.Short"
+  },
+  {
+    "name": "java.lang.String"
+  },
+  {
+    "name": "java.lang.System"
+  },
+  {
+    "name": "java.lang.constant.Constable"
+  },
+  {
+    "name": "java.lang.constant.ConstantDesc"
+  },
+  {
+    "methods": [
+      {
+        "name": "lookup",
+        "parameterTypes": []
+      },
+      {
+        "name": "privateLookupIn",
+        "parameterTypes": [
+          "java.lang.Class",
+          "java.lang.invoke.MethodHandles$Lookup"
+        ]
+      }
+    ],
+    "name": "java.lang.invoke.MethodHandles"
+  },
+  {
+    "methods": [
+      {
+        "name": "defineClass",
+        "parameterTypes": [
+          "byte[]"
+        ]
+      },
+      {
+        "name": "lookupClass",
+        "parameterTypes": []
+      },
+      {
+        "name": "lookupModes",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.invoke.MethodHandles$Lookup"
+  },
+  {
+    "methods": [
+      {
+        "name": "getRuntimeMXBean",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.management.ManagementFactory"
+  },
+  {
+    "methods": [
+      {
+        "name": "getUptime",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.management.RuntimeMXBean"
+  },
+  {
+    "methods": [
+      {
+        "name": "findModule",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "java.lang.module.Configuration"
+  },
+  {
+    "methods": [
+      {
+        "name": "location",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.module.ModuleReference"
+  },
+  {
+    "methods": [
+      {
+        "name": "reference",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.module.ResolvedModule"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedGenericComponentType",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.AnnotatedArrayType"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedActualTypeArguments",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.AnnotatedParameterizedType"
+  },
+  {
+    "methods": [
+      {
+        "name": "getType",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.AnnotatedType"
+  },
+  {
+    "name": "java.lang.reflect.AnnotatedTypeVariable"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedUpperBounds",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.AnnotatedWildcardType"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedExceptionTypes",
+        "parameterTypes": []
+      },
+      {
+        "name": "getAnnotatedParameterTypes",
+        "parameterTypes": []
+      },
+      {
+        "name": "getAnnotatedReceiverType",
+        "parameterTypes": []
+      },
+      {
+        "name": "getParameterCount",
+        "parameterTypes": []
+      },
+      {
+        "name": "getParameters",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.Executable"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedReturnType",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.Method"
+  },
+  {
+    "methods": [
+      {
+        "name": "getModifiers",
+        "parameterTypes": []
+      },
+      {
+        "name": "getName",
+        "parameterTypes": []
+      },
+      {
+        "name": "isNamePresent",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.Parameter"
+  },
+  {
+    "methods": [
+      {
+        "name": "getAnnotatedBounds",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.lang.reflect.TypeVariable"
+  },
+  {
+    "name": "java.security.AccessController"
+  },
+  {
+    "name": "java.security.AlgorithmParametersSpi"
+  },
+  {
+    "name": "java.security.KeyStoreSpi"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.util.AbstractCollection"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.util.AbstractMap"
+  },
+  {
+    "name": "java.util.Collection"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.util.HashMap"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "java.util.HashSet"
+  },
+  {
+    "name": "java.util.Iterator"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.util.LinkedHashMap"
+  },
+  {
+    "name": "java.util.List"
+  },
+  {
+    "name": "java.util.Map"
+  },
+  {
+    "name": "java.util.RandomAccess"
+  },
+  {
+    "name": "java.util.SequencedMap"
+  },
+  {
+    "allDeclaredFields": true,
+    "name": "java.util.UUID"
+  },
+  {
+    "name": "javax.annotation.Nullable"
+  },
+  {
+    "name": "kotlin.jvm.JvmInline"
+  },
+  {
+    "name": "net.bytebuddy.description.method.MethodDescription$InDefinedShape$AbstractBase$Executable"
+  },
+  {
+    "name": "net.bytebuddy.description.method.ParameterDescription$ForLoadedParameter$Parameter"
+  },
+  {
+    "name": "net.bytebuddy.description.method.ParameterList$ForLoadedExecutable$Executable"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDefinition$Sort$AnnotatedType"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$ForLoadedType$Dispatcher"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedExecutableExceptionType$Dispatcher"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedExecutableParameterType$Dispatcher"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$Delegator$ForLoadedMethodReturnType$Dispatcher"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForComponentType$AnnotatedParameterizedType"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForTypeArgument$AnnotatedParameterizedType"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForTypeVariableBoundType$AnnotatedTypeVariable"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForTypeVariableBoundType$OfFormalTypeVariable$FormalTypeVariable"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForWildcardLowerBoundType$AnnotatedWildcardType"
+  },
+  {
+    "name": "net.bytebuddy.description.type.TypeDescription$Generic$AnnotationReader$ForWildcardUpperBoundType$AnnotatedWildcardType"
+  },
+  {
+    "name": "net.bytebuddy.dynamic.loading.ClassInjector$UsingLookup$MethodHandles"
+  },
+  {
+    "name": "net.bytebuddy.dynamic.loading.ClassInjector$UsingLookup$MethodHandles$Lookup"
+  },
+  {
+    "name": "net.bytebuddy.dynamic.loading.ClassInjector$UsingReflection$System"
+  },
+  {
+    "methods": [
+      {
+        "name": "includeSelf",
+        "parameterTypes": []
+      },
+      {
+        "name": "value",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.AllArguments"
+  },
+  {
+    "methods": [
+      {
+        "name": "bindingMechanic",
+        "parameterTypes": []
+      },
+      {
+        "name": "value",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.Argument"
+  },
+  {
+    "name": "net.bytebuddy.implementation.bind.annotation.Default"
+  },
+  {
+    "name": "net.bytebuddy.implementation.bind.annotation.DefaultCall"
+  },
+  {
+    "name": "net.bytebuddy.implementation.bind.annotation.DefaultMethod"
+  },
+  {
+    "methods": [
+      {
+        "name": "declaringType",
+        "parameterTypes": []
+      },
+      {
+        "name": "value",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.FieldValue"
+  },
+  {
+    "methods": [
+      {
+        "name": "cache",
+        "parameterTypes": []
+      },
+      {
+        "name": "privileged",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.Origin"
+  },
+  {
+    "name": "net.bytebuddy.implementation.bind.annotation.StubValue"
+  },
+  {
+    "name": "net.bytebuddy.implementation.bind.annotation.Super"
+  },
+  {
+    "methods": [
+      {
+        "name": "fallbackToDefault",
+        "parameterTypes": []
+      },
+      {
+        "name": "nullIfImpossible",
+        "parameterTypes": []
+      },
+      {
+        "name": "serializableProxy",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.SuperCall"
+  },
+  {
+    "methods": [
+      {
+        "name": "optional",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.implementation.bind.annotation.This"
+  },
+  {
+    "name": "net.bytebuddy.utility.Invoker"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "net.bytebuddy.utility.Invoker$Dispatcher"
+  },
+  {
+    "name": "net.bytebuddy.utility.JavaModule$Module"
+  },
+  {
+    "name": "net.bytebuddy.utility.JavaModule$Resolver"
+  },
+  {
+    "name": "org.apache.commons.logging.LogFactory"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.String"
+        ]
+      }
+    ],
+    "name": "org.apache.commons.logging.impl.Jdk14Logger"
+  },
+  {
+    "name": "org.apache.commons.logging.impl.Log4JLogger"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.apache.commons.logging.impl.LogFactoryImpl"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.apache.commons.logging.impl.WeakHashtable"
+  },
+  {
+    "name": "org.apache.http.HttpEntity"
+  },
+  {
+    "name": "org.apache.http.HttpMessage"
+  },
+  {
+    "name": "org.apache.http.HttpResponse"
+  },
+  {
+    "name": "org.apache.http.client.HttpClient"
+  },
+  {
+    "name": "org.apache.http.client.methods.CloseableHttpResponse"
+  },
+  {
+    "name": "org.apache.http.impl.client.CloseableHttpClient"
+  },
+  {
+    "fields": [
+      {
+        "name": "connManager"
+      },
+      {
+        "name": "defaultConfig"
+      }
+    ],
+    "name": "org.apache.http.impl.client.InternalHttpClient"
+  },
+  {
+    "name": "org.apache.maven.surefire.booter.spi.LegacyMasterProcessChannelProcessorFactory"
+  },
+  {
+    "name": "org.apache.maven.surefire.booter.spi.SurefireMasterProcessChannelProcessorFactory"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "org.apache.maven.surefire.api.provider.ProviderParameters"
+        ]
+      }
+    ],
+    "name": "org.apache.maven.surefire.junitplatform.JUnitPlatformProvider"
+  },
+  {
+    "name": "org.apiguardian.api.API"
+  },
+  {
+    "name": "org.eclipse.jetty.http.Http1FieldPreEncoder"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.eclipse.jetty.http.pathmap.PathSpecSet"
+  },
+  {
+    "name": "org.eclipse.jetty.http2.hpack.HpackFieldPreEncoder"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "addIncludedMethods",
+        "parameterTypes": [
+          "java.lang.String[]"
+        ]
+      }
+    ],
+    "name": "org.eclipse.jetty.server.handler.gzip.GzipHandler"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.eclipse.jetty.servlets.CrossOriginFilter"
+  },
+  {
+    "name": "org.eclipse.jetty.servlets.gzip.GzipHandler"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.eclipse.jetty.util.ModuleLocation"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.eclipse.jetty.util.RegexSet"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.eclipse.jetty.util.log.Slf4jLog"
+  },
+  {
+    "name": "org.jspecify.annotations.Nullable"
+  },
+  {
+    "name": "org.junit.internal.AssumptionViolatedException"
+  },
+  {
+    "name": "org.junit.jupiter.api.Disabled"
+  },
+  {
+    "name": "org.junit.jupiter.api.DisplayName"
+  },
+  {
+    "name": "org.junit.jupiter.api.Test"
+  },
+  {
+    "name": "org.junit.jupiter.api.TestFactory"
+  },
+  {
+    "name": "org.junit.jupiter.api.TestTemplate"
+  },
+  {
+    "name": "org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.junit.jupiter.api.condition.EnabledIfEnvironmentVariableCondition"
+  },
+  {
+    "name": "org.junit.jupiter.api.extension.ExtendWith"
+  },
+  {
+    "name": "org.junit.jupiter.engine.JupiterTestEngine"
+  },
+  {
+    "name": "org.junit.jupiter.params.ParameterizedTest"
+  },
+  {
+    "name": "org.junit.jupiter.params.provider.ArgumentsSource"
+  },
+  {
+    "name": "org.junit.jupiter.params.provider.CsvSource"
+  },
+  {
+    "name": "org.junit.jupiter.params.provider.ValueSource"
+  },
+  {
+    "name": "org.junit.platform.commons.annotation.Testable"
+  },
+  {
+    "methods": [
+      {
+        "name": "getLauncher",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.junit.platform.launcher.LauncherSession"
+  },
+  {
+    "methods": [
+      {
+        "name": "openSession",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.junit.platform.launcher.core.LauncherFactory"
+  },
+  {
+    "name": "org.junit.platform.launcher.listeners.UniqueIdTrackingListener"
+  },
+  {
+    "name": "org.mockito.Mock"
+  },
+  {
+    "name": "org.mockito.configuration.MockitoConfiguration"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.configuration.InjectingAnnotationEngine"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.configuration.plugins.DefaultPluginSwitch"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker"
+  },
+  {
+    "name": "org.mockito.internal.creation.bytebuddy.MockAccess"
+  },
+  {
+    "name": "org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$DispatcherDefaultingToRealMethod"
+  },
+  {
+    "name": "org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$ForEquals"
+  },
+  {
+    "name": "org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$ForHashCode"
+  },
+  {
+    "name": "org.mockito.internal.creation.bytebuddy.MockMethodInterceptor$ForWriteReplace"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.creation.instance.DefaultInstantiatorProvider"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.exceptions.stacktrace.DefaultStackTraceCleanerProvider"
+  },
+  {
+    "name": "org.mockito.internal.matchers.Any"
+  },
+  {
+    "name": "org.mockito.internal.matchers.CapturingMatcher"
+  },
+  {
+    "name": "org.mockito.internal.matchers.InstanceOf"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.util.ConsoleMockitoLogger"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "org.mockito.internal.util.reflection.ReflectionMemberAccessor"
+  },
+  {
+    "name": "sun.misc.SharedSecrets"
+  },
+  {
+    "methods": [
+      {
+        "name": "getReflectionFactory",
+        "parameterTypes": []
+      },
+      {
+        "name": "newConstructorForSerialization",
+        "parameterTypes": [
+          "java.lang.Class",
+          "java.lang.reflect.Constructor"
+        ]
+      }
+    ],
+    "name": "sun.reflect.ReflectionFactory"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.pkcs12.PKCS12KeyStore"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.security.SecureRandomParameters"
+        ]
+      }
+    ],
+    "name": "sun.security.provider.NativePRNG"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.provider.SHA"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.provider.X509Factory"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.rsa.RSAKeyFactory$Legacy"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.ssl.SSLContextImpl$TLSContext"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ],
+    "name": "sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.AuthorityInfoAccessExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.AuthorityKeyIdentifierExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.BasicConstraintsExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.CRLDistributionPointsExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.CertificatePoliciesExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.ExtendedKeyUsageExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.IssuerAlternativeNameExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.KeyUsageExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.NetscapeCertTypeExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.PrivateKeyUsageExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.SubjectAlternativeNameExtension"
+  },
+  {
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "java.lang.Boolean",
+          "java.lang.Object"
+        ]
+      }
+    ],
+    "name": "sun.security.x509.SubjectKeyIdentifierExtension"
   }
 ]

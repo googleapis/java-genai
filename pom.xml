@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.google.genai</groupId>
   <artifactId>google-genai</artifactId>
   <name>google-genai</name>
-  <version>1.7.0-SNAPSHOT</version><!-- {x-version-update:google-genai:current} -->
+  <version>1.7.0-SNAPSHOT
+  </version><!-- {x-version-update:google-genai:current} -->
   <packaging>jar</packaging>
   <description>
     Java idiomatic SDK for the Gemini Developer APIs and Vertex AI APIs.
@@ -61,7 +62,9 @@
     <repository>
       <id>ossrh</id>
       <name>Central Repository OSSRH</name>
-      <url>https://google.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <url>
+        https://google.oss.sonatype.org/service/local/staging/deploy/maven2/
+      </url>
     </repository>
     <snapshotRepository>
       <id>ossrh</id>
@@ -131,7 +134,7 @@
       <artifactId>Java-WebSocket</artifactId>
       <version>${java-websocket.version}</version>
     </dependency>
-    <!-- JUnit 5 -->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -156,14 +159,14 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- Mockito -->
+
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- jspecify -->
+
     <dependency>
       <groupId>org.jspecify</groupId>
       <artifactId>jspecify</artifactId>
@@ -178,14 +181,14 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
@@ -207,16 +210,17 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.5.2</version>
           <dependencies>
-          <!-- tree view output test results: https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html#external-extensions-for-the-plugin -->
-              <dependency>
-                  <groupId>me.fabriciorby</groupId>
-                  <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
-                  <version>0.1.0</version>
-              </dependency>
+
+            <dependency>
+              <groupId>me.fabriciorby</groupId>
+              <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+              <version>0.1.0</version>
+            </dependency>
           </dependencies>
           <configuration>
-              <reportFormat>plain</reportFormat>
-              <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
+            <reportFormat>plain</reportFormat>
+            <statelessTestsetInfoReporter
+                implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
           </configuration>
         </plugin>
         <plugin>
@@ -231,7 +235,7 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
@@ -286,7 +290,8 @@
             <show>public</show>
             <doclint>html</doclint>
             <nohelp>true</nohelp>
-            <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+            <outputDirectory>${project.build.directory}/javadoc
+            </outputDirectory>
             <doctitle>Google Gen AI Java SDK</doctitle>
             <source>${maven.compiler.source}</source>
             <encoding>UTF-8</encoding>
@@ -350,82 +355,24 @@
           </buildArgs>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <filtering>false</filtering>
+        </configuration>
+      </plugin>
     </plugins>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-      </resource>
-      <resource>
-        <directory>src/main/resources/META-INF/native-image/com.google.genai/google-genai</directory>
-        <targetPath>META-INF/native-image/com.google.genai/google-genai</targetPath>
-      </resource>
-      <resource>
-        <directory>target/native-image</directory>
-        <targetPath>META-INF/native-image/com.google.genai/google-genai</targetPath>
+        <filtering>false</filtering>
       </resource>
     </resources>
-    </build>
-    <profiles>
-      <profile>
-        <id>native</id>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.graalvm.buildtools</groupId>
-              <artifactId>native-maven-plugin</artifactId>
-              <version>0.10.2</version>
-              <extensions>true</extensions>
-              <executions>
-                <execution>
-                  <id>build-native</id>
-                  <goals>
-                    <goal>compile-no-fork</goal>
-                  </goals>
-                  <phase>package</phase>
-                </execution>
-              </executions>
-              <configuration>
-                <buildArgs>
-                  <buildArg>--no-fallback</buildArg>
-                  <buildArg>--verbose</buildArg>
-                  <buildArg>-Ob</buildArg>
-                </buildArgs>
-              </configuration>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
-      <profile>
-        <id>native-image</id>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.graalvm.buildtools</groupId>
-              <artifactId>native-maven-plugin</artifactId>
-              <version>0.10.2</version>
-              <extensions>true</extensions>
-              <executions>
-                <execution>
-                  <id>build-native</id>
-                  <goals>
-                    <goal>compile-no-fork</goal>
-                  </goals>
-                  <phase>package</phase>
-                </execution>
-              </executions>
-              <configuration>
-                <sharedLibrary>true</sharedLibrary>
-                <buildArgs>
-                  <buildArg>--no-fallback</buildArg>
-                  <buildArg>--verbose</buildArg>
-                  <buildArg>-O3</buildArg>
-                </buildArgs>
-              </configuration>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
-      <profile>
+  </build>
+  <profiles>
+
+    <profile>
         <id>native-tests</id>
         <build>
           <plugins>
@@ -439,5 +386,35 @@
           </plugins>
         </build>
       </profile>
-    </profiles>
+    <profile>
+      <id>native-image</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>0.10.2</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <sharedLibrary>true</sharedLibrary>
+              <buildArgs>
+                <buildArg>--no-fallback</buildArg>
+                <buildArg>--verbose</buildArg>
+                <buildArg>-O3</buildArg>
+              </buildArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

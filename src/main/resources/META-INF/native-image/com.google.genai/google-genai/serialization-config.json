@@ -1,0 +1,9 @@
+[
+  {
+    "name": "com.google.auth.oauth2.GoogleCredentials$MockitoMock$413565573",
+    "customTargetConstructorClass": "java.lang.Object"
+  },
+  {
+    "name": "org.junit.platform.launcher.TestIdentifier$SerializedForm"
+  }
+]
