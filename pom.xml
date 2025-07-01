@@ -385,9 +385,10 @@
             </plugin>
           </plugins>
         </build>
-      </profile>
+    </profile>
+    <!--
     <profile>
-      <id>native-image</id>
+      <id>native</id>
       <build>
         <plugins>
           <plugin>
@@ -407,8 +408,8 @@
             <configuration>
               <sharedLibrary>true</sharedLibrary>
               <buildArgs>
-                <buildArg>--no-fallback</buildArg>
-                <buildArg>--verbose</buildArg>
+                <buildArg>-no-fallback</buildArg>
+                <buildArg>-verbose</buildArg>
                 <buildArg>-O3</buildArg>
               </buildArgs>
             </configuration>
@@ -416,5 +417,6 @@
         </plugins>
       </build>
     </profile>
+    -->
   </profiles>
 </project>
