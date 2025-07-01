@@ -4676,6 +4676,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -6208,6 +6209,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
