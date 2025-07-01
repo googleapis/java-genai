@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7.0](https://github.com/googleapis/java-genai/compare/v1.6.0...v1.7.0) (2025-07-01)
+
+
+### Features
+
+* Support Batches delete ([782465d](https://github.com/googleapis/java-genai/commit/782465d9c85c3637586fef490983771c4b4b5df0))
+* Support different media input in Vertex Live API ([7f4c6bf](https://github.com/googleapis/java-genai/commit/7f4c6bf58804764d568bd3412086ead75a388df0))
+
+
+### Bug Fixes
+
+* Remove default timeout ([d1f6201](https://github.com/googleapis/java-genai/commit/d1f6201892de9f37b913044dd494c68b81bcc13a))
+
 ## [1.6.0](https://github.com/googleapis/java-genai/compare/v1.5.0...v1.6.0) (2025-06-25)
 
 
