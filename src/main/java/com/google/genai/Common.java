@@ -19,6 +19,7 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.errors.GenAiIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -27,13 +28,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jspecify.annotations.Nullable;
-import com.google.genai.errors.GenAiIOException;
 
 /** Common utility methods for the GenAI SDK. */
 final class Common {
 
   private Common() {}
+
+  private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
   /**
    * Sets the value of an object by a path.
@@ -161,7 +165,8 @@ final class Common {
       } else {
         if (currentObject.isObject() && ((ObjectNode) currentObject).has(key)) {
           currentObject = ((ObjectNode) currentObject).get(key);
-        } else {
+        }
+        else {
           return null;
         }
       }
@@ -171,20 +176,30 @@ final class Common {
   }
 
   static String formatMap(String template, JsonNode data) {
-    if (data == null) {
+    if (data == null || !data.isObject()) {
       return template;
     }
 
-    Iterator<Map.Entry<String, JsonNode>> fields = data.fields();
-    while (fields.hasNext()) {
-      Map.Entry<String, JsonNode> field = fields.next();
-      String key = field.getKey();
-      String placeholder = "{" + key + "}";
-      if (template.contains(placeholder)) {
-        template = template.replace(placeholder, data.get(key).asText());
+    System.out.println("Template " + template);
+    System.out.println("Data " + data);
+
+    Matcher matcher = PLACEHOLDER_PATTERN.matcher(template);
+    StringBuffer resultBuffer = new StringBuffer();
+
+    while (matcher.find()) {
+      String key = matcher.group(1);
+      // JsonNode valueNode = data.get(key);
+      JsonNode valueNode = data.path(key);
+
+      if (valueNode != null && valueNode.isValueNode()) {
+        String replacement = valueNode.asText();
+        matcher.appendReplacement(resultBuffer, Matcher.quoteReplacement(replacement));
       }
     }
-    return template;
+    matcher.appendTail(resultBuffer);
+
+    System.out.println("Template " + template);
+    return resultBuffer.toString();
   }
 
   static boolean isZero(Object obj) {

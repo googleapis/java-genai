@@ -1,0 +1,166 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "META-INF/services/com.google.auth.http.HttpTransportFactory"
+      },
+      {
+        "pattern": "META-INF/services/java.lang.System$LoggerFinder"
+      },
+      {
+        "pattern": "META-INF/services/java.net.spi.URLStreamHandlerProvider"
+      },
+      {
+        "pattern": "META-INF/services/java.nio.channels.spi.SelectorProvider"
+      },
+      {
+        "pattern": "META-INF/services/java.time.zone.ZoneRulesProvider"
+      },
+      {
+        "pattern": "META-INF/services/java.util.spi.ResourceBundleControlProvider"
+      },
+      {
+        "pattern": "META-INF/services/javax.xml.transform.TransformerFactory"
+      },
+      {
+        "pattern": "META-INF/services/javax.xml.xpath.XPathFactory"
+      },
+      {
+        "pattern": "META-INF/services/org.apache.commons.logging.LogFactory"
+      },
+      {
+        "pattern": "META-INF/services/org.apache.maven.surefire.spi.MasterProcessChannelProcessorFactory"
+      },
+      {
+        "pattern": "META-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder"
+      },
+      {
+        "pattern": "META-INF/services/org.junit.platform.engine.TestEngine"
+      },
+      {
+        "pattern": "META-INF/services/org.junit.platform.launcher.LauncherDiscoveryListener"
+      },
+      {
+        "pattern": "META-INF/services/org.junit.platform.launcher.LauncherSessionListener"
+      },
+      {
+        "pattern": "META-INF/services/org.junit.platform.launcher.PostDiscoveryFilter"
+      },
+      {
+        "pattern": "META-INF/services/org.junit.platform.launcher.TestExecutionListener"
+      },
+      {
+        "pattern": "META-INF/services/org.slf4j.spi.SLF4JServiceProvider"
+      },
+      {
+        "pattern": "assets"
+      },
+      {
+        "pattern": "assets/swagger-ui/index.html"
+      },
+      {
+        "pattern": "commons-logging.properties"
+      },
+      {
+        "pattern": "javax/servlet/LocalStrings.properties"
+      },
+      {
+        "pattern": "javax/servlet/LocalStrings_en.properties"
+      },
+      {
+        "pattern": "javax/servlet/LocalStrings_en_CA.properties"
+      },
+      {
+        "pattern": "javax/servlet/http/LocalStrings.properties"
+      },
+      {
+        "pattern": "javax/servlet/http/LocalStrings_en.properties"
+      },
+      {
+        "pattern": "javax/servlet/http/LocalStrings_en_CA.properties"
+      },
+      {
+        "pattern": "jetty-logging-mac-os-x.properties"
+      },
+      {
+        "pattern": "jetty-logging.properties"
+      },
+      {
+        "pattern": "junit-platform.properties"
+      },
+      {
+        "pattern": "keystore"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.AnnotationEngine"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.InstantiatorProvider"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.InstantiatorProvider2"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.MemberAccessor"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.MockMaker"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.MockResolver"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.MockitoLogger"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.PluginSwitch"
+      },
+      {
+        "pattern": "mockito-extensions/org.mockito.plugins.StackTraceCleanerProvider"
+      },
+      {
+        "pattern": "mozilla/public-suffix-list.txt"
+      },
+      {
+        "pattern": "org/apache/hc/client5/version.properties"
+      },
+      {
+        "pattern": "org/apache/http/client/version.properties"
+      },
+      {
+        "pattern": "org/eclipse/jetty/http/encoding.properties"
+      },
+      {
+        "pattern": "org/eclipse/jetty/http/mime.properties"
+      },
+      {
+        "pattern": "org/eclipse/jetty/version/build.properties"
+      },
+      {
+        "pattern": "org/jacoco/agent/rt/internal_aeaf9ab/core/jacoco.properties"
+      },
+      {
+        "pattern": "org/jacoco/agent/rt/internal_aeaf9ab/core/jacoco_en.properties"
+      },
+      {
+        "pattern": "org/jacoco/agent/rt/internal_aeaf9ab/core/jacoco_en_CA.properties"
+      },
+      {
+        "pattern": "org/slf4j/impl/StaticLoggerBinder.class"
+      },
+      {
+        "pattern": "jdk/internal/icu/impl/data/icudt76b/nfc.nrm"
+      },
+      {
+        "pattern": "sun/util/logging/resources/logging_en.properties"
+      },
+      {
+        "pattern": "sun/util/logging/resources/logging_en_CA.properties"
+      },
+      {
+        "pattern": "jdk/xml/internal/jdkcatalog/JDKCatalog.xml"
+      }
+    ],
+    "excludes": []
+  }
+}
