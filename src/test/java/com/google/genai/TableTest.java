@@ -142,7 +142,8 @@ public final class TableTest {
     if (testName.contains("models.edit_image")
         || testName.contains("models.generate_content.test_speech_with_config")
         || testName.contains(
-            "models.generate_content.test_logprobs_zero_with_response_logprobs_true")) {
+            "models.generate_content.test_logprobs_zero_with_response_logprobs_true")
+        || testName.contains("batches.create.test_with_image_blob")) {
       String msg = " => Test skipped: replay tests are not supported for edit_image";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
