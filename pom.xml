@@ -6,7 +6,7 @@
   <groupId>com.google.genai</groupId>
   <artifactId>google-genai</artifactId>
   <name>google-genai</name>
-  <version>1.7.0-SNAPSHOT
+  <version>1.8.0-SNAPSHOT
   </version><!-- {x-version-update:google-genai:current} -->
   <packaging>jar</packaging>
   <description>
@@ -386,37 +386,5 @@
           </plugins>
         </build>
     </profile>
-    <!--
-    <profile>
-      <id>native</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.graalvm.buildtools</groupId>
-            <artifactId>native-maven-plugin</artifactId>
-            <version>0.10.2</version>
-            <extensions>true</extensions>
-            <executions>
-              <execution>
-                <id>build-native</id>
-                <goals>
-                  <goal>compile-no-fork</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-            <configuration>
-              <sharedLibrary>true</sharedLibrary>
-              <buildArgs>
-                <buildArg>-no-fallback</buildArg>
-                <buildArg>-verbose</buildArg>
-                <buildArg>-O3</buildArg>
-              </buildArgs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    -->
   </profiles>
 </project>
