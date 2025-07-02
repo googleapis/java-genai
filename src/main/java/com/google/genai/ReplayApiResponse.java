@@ -17,7 +17,12 @@
 package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.genai.errors.ApiException;
+import com.google.genai.errors.GenAiIOException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -26,21 +31,44 @@ import okhttp3.ResponseBody;
 @ExcludeFromGeneratedCoverageReport
 final class ReplayApiResponse extends ApiResponse {
 
-  private final JsonNode body;
+  private final ResponseBody body;
   private final int statusCode;
   private final Headers headers;
+  private final ArrayNode bodySegments;
 
-  public ReplayApiResponse(JsonNode body, int statusCode, Headers headers) {
-    this.body = body;
+  public ReplayApiResponse(ArrayNode bodySegments, int statusCode, Headers headers) {
+    this.bodySegments = bodySegments;
     this.statusCode = statusCode;
     this.headers = headers;
+    if (bodySegments.size() == 0) {
+      this.body = ResponseBody.create(MediaType.parse("application/json"), "");
+    } else if (bodySegments.size() == 1) {
+      // For unary response
+      this.body =
+          ResponseBody.create(
+              MediaType.parse("application/json"),
+              JsonSerializable.toJsonString(bodySegments.get(0)));
+    } else {
+      // For streaming response
+      try {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] newline = "\n".getBytes(StandardCharsets.UTF_8);
+        for (JsonNode segment : bodySegments) {
+          outputStream.write(JsonSerializable.objectMapper.writeValueAsBytes(segment));
+          outputStream.write(newline);
+        }
+        this.body =
+            ResponseBody.create(outputStream.toByteArray(), MediaType.parse("application/json"));
+      } catch (IOException e) {
+        throw new GenAiIOException("Failed to convert body segments to a JSON string.", e);
+      }
+    }
   }
 
   @Override
   public ResponseBody getBody() {
-    ApiException.throwFromErrorNode(body, statusCode);
-    return ResponseBody.create(
-        JsonSerializable.toJsonString(body), MediaType.parse("application/json"));
+    ApiException.throwFromErrorNode(bodySegments, statusCode);
+    return this.body;
   }
 
   @Override

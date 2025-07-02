@@ -270,7 +270,7 @@ public final class TableTest {
     String testsReplaysPath = replaysPath + "/tests";
     String replayMode = System.getenv("GOOGLE_GENAI_CLIENT_MODE");
     if (replayMode == null) {
-      replayMode = "auto";
+      replayMode = "replay";
     }
     DebugConfig debugConfig = new DebugConfig(replayMode, "", testsReplaysPath);
 

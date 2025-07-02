@@ -272,8 +272,7 @@ public final class Client implements AutoCloseable {
     }
 
     this.debugConfig = debugConfig.orElse(new DebugConfig());
-    if (this.debugConfig.clientMode().equals("replay")
-        || this.debugConfig.clientMode().equals("auto")) {
+    if (this.debugConfig.clientMode().equals("replay")) {
       if (!useVertexAI) {
         this.apiClient =
             new ReplayApiClient(
@@ -353,7 +352,7 @@ public final class Client implements AutoCloseable {
     return debugConfig;
   }
 
-  /** Returns the client mode. If it's "replay" or "auto", then the client is in testing mode. */
+  /** Returns the client mode. If it's "replay", then the client is in testing mode. */
   String clientMode() {
     return debugConfig.clientMode();
   }

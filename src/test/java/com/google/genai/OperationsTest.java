@@ -19,7 +19,6 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,11 +29,14 @@ import org.junit.jupiter.params.provider.ValueSource;
     matches = ".*genai/replays.*")
 public class OperationsTest {
   private Client createClient(boolean vertexAI, String replayId) {
-    // Use the API mode until the replay mode is complete.
+    String clientMode = System.getenv("GOOGLE_GENAI_CLIENT_MODE");
     DebugConfig debugConfig =
-        new DebugConfig("api", "", System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
+        new DebugConfig(
+            clientMode == null ? "replay" : clientMode,
+            "",
+            System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
     Client client = Client.builder().debugConfig(debugConfig).vertexAI(vertexAI).build();
-    if (client.clientMode().equals("replay") || client.clientMode().equals("auto")) {
+    if (client.clientMode().equals("replay")) {
       client.setReplayId(replayId);
     }
     return client;
@@ -46,27 +48,29 @@ public class OperationsTest {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
-        createClient(vertexAI, "tests/operations/test_get_videos_operation." + suffix + ".json");
+        createClient(
+            vertexAI,
+            "tests/models/generate_videos/test_create_operation_to_poll." + suffix + ".json");
+
+    String operationName =
+        vertexAI
+            ? "projects/<project>/locations/<location>/publishers/google/models/veo-2.0-generate-001/operations/ddb46542-07ed-4000-958d-655fbffb05a4"
+            : "models/veo-2.0-generate-001/operations/ren0ubieaocs";
 
     // Act
-    GenerateVideosConfig generateVideosConfig =
-        GenerateVideosConfig.builder().numberOfVideos(1).build();
-
     GenerateVideosOperation generateVideosOperation =
-        client.models.generateVideos(
-            "veo-2.0-generate-001",
-            "A neon hologram of a cat driving at top speed",
-            null,
-            null,
-            generateVideosConfig);
+        client.operations.getVideosOperation(
+            GenerateVideosOperation.builder().name(operationName).build(), null);
 
     // GenerateVideosOperation.done() is empty if the operation is not done.
     while (!generateVideosOperation.done().filter(Boolean::booleanValue).isPresent()) {
       try {
-        Thread.sleep(10000); // Sleep for 10 seconds.
+        if (!client.clientMode().equals("replay")) {
+          Thread.sleep(10000); // Sleep for 10 seconds.
+          System.out.println("Waiting for operation to complete...");
+        }
         generateVideosOperation =
             client.operations.getVideosOperation(generateVideosOperation, null);
-        System.out.println("Waiting for operation to complete...");
       } catch (InterruptedException e) {
         System.out.println("Thread was interrupted while sleeping.");
         Thread.currentThread().interrupt();

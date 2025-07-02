@@ -20,6 +20,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.api.core.InternalApi;
 import java.io.IOException;
 import okhttp3.Response;
@@ -150,17 +151,17 @@ public class ApiException extends BaseException {
     }
   }
 
-  /** Throws an ApiException from a {@link JsonNode}. This method is for internal use only. */
+  /** Throws an ApiException from a {@link ArrayNode}. This method is for internal use only. */
   @InternalApi
-  public static void throwFromErrorNode(JsonNode errorNode, int code) {
+  public static void throwFromErrorNode(ArrayNode errorNode, int code) {
     if (code == 200) {
       return;
     }
-    if (errorNode == null || !errorNode.isObject()) {
+    if (errorNode == null || errorNode.size() == 0) {
       return;
     }
     String message = "";
-    JsonNode messageNode = errorNode.get("message");
+    JsonNode messageNode = errorNode.get(0).get("message");
     if (messageNode != null && messageNode.isTextual()) {
       message = messageNode.asText();
     }
