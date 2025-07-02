@@ -22,60 +22,119 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.ComputeTokensResponse;
 import com.google.genai.types.Content;
 import com.google.genai.types.ControlReferenceConfig;
 import com.google.genai.types.ControlReferenceImage;
-import com.google.genai.types.ControlReferenceType;
 import com.google.genai.types.CountTokensResponse;
 import com.google.genai.types.EditImageConfig;
 import com.google.genai.types.EditImageResponse;
-import com.google.genai.types.EditMode;
+import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
 import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
-import com.google.genai.types.MaskReferenceMode;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
 import com.google.genai.types.RawReferenceImage;
-import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.StyleReferenceConfig;
 import com.google.genai.types.StyleReferenceImage;
 import com.google.genai.types.SubjectReferenceConfig;
 import com.google.genai.types.SubjectReferenceImage;
-import com.google.genai.types.SubjectReferenceType;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @EnabledIfEnvironmentVariable(
     named = "GOOGLE_GENAI_REPLAYS_DIRECTORY",
     matches = ".*genai/replays.*")
 public class ModelsTest {
+
+  private static final String GEMINI_MODEL_NAME = "gemini-1.5-flash";
+  private static final String EMBEDDING_MODEL_NAME = "text-embedding-004";
+  private static final String IMAGEN_MODEL_NAME = "imagen-3.0-capability-001";
+
+  /** Creates a client for the given Vertex AI flag and replay ID. */
   private Client createClient(boolean vertexAI, String replayId) {
+    String clientMode = System.getenv("GOOGLE_GENAI_CLIENT_MODE");
     DebugConfig debugConfig =
-        new DebugConfig("api", "", System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
+        new DebugConfig(
+            clientMode == null ? "replay" : clientMode,
+            "",
+            System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
     Client client = Client.builder().debugConfig(debugConfig).vertexAI(vertexAI).build();
-    if (client.clientMode().equals("replay") || client.clientMode().equals("auto")) {
+    if (client.clientMode().equals("replay")) {
       client.setReplayId(replayId);
     }
     return client;
   }
 
-  private static final String GEMINI_MODEL_NAME = "gemini-2.0-flash-001";
-  private static final String EMBEDDING_MODEL_NAME = "text-embedding-004";
-  private static final String PROMPT_TEXT = "Tell me a story in 300 words.";
-  private static final String PROMPT_TEXT_2 = "What is your name?";
-  private static final String PROMPT_TEXT_3 = "What is your age?";
+  /** Creates a raw reference image for edit image tests. */
+  private RawReferenceImage createRawReferenceImage() throws Exception {
+    URL resourceUrl = getClass().getClassLoader().getResource("google.png");
+    Path filePath = Paths.get(resourceUrl.toURI());
+    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    return RawReferenceImage.builder().referenceImage(image).referenceId(1).build();
+  }
+
+  /** Creates a mask reference image for edit image tests. */
+  private MaskReferenceImage createMaskReferenceImage() {
+    return MaskReferenceImage.builder()
+        .referenceId(2)
+        .config(MaskReferenceConfig.builder().maskMode("MASK_MODE_BACKGROUND").maskDilation(0.06f))
+        .build();
+  }
+
+  /** Creates a control reference image for edit image tests. */
+  private ControlReferenceImage createControlReferenceImage() throws Exception {
+    URL resourceUrl = getClass().getClassLoader().getResource("checkerboard.png");
+    Path filePath = Paths.get(resourceUrl.toURI());
+    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    return ControlReferenceImage.builder()
+        .referenceId(2)
+        .referenceImage(image)
+        .config(
+            ControlReferenceConfig.builder()
+                .controlType("CONTROL_TYPE_SCRIBBLE")
+                .enableControlImageComputation(false))
+        .build();
+  }
+
+  /** Creates a subject reference image for edit image tests. */
+  private SubjectReferenceImage createSubjectReferenceImage() throws Exception {
+    URL resourceUrl = getClass().getClassLoader().getResource("google.png");
+    Path filePath = Paths.get(resourceUrl.toURI());
+    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    return SubjectReferenceImage.builder()
+        .referenceId(1)
+        .referenceImage(image)
+        .config(
+            SubjectReferenceConfig.builder()
+                .subjectType("SUBJECT_TYPE_PRODUCT")
+                .subjectDescription("A product logo that is a multi-colored letter G"))
+        .build();
+  }
+
+  /** Creates a style reference image for edit image tests. */
+  private StyleReferenceImage createStyleReferenceImage() throws Exception {
+    URL resourceUrl = getClass().getClassLoader().getResource("google.png");
+    Path filePath = Paths.get(resourceUrl.toURI());
+    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    return StyleReferenceImage.builder()
+        .referenceId(1)
+        .referenceImage(image)
+        .config(StyleReferenceConfig.builder().styleDescription("glowing style"))
+        .build();
+  }
 
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
@@ -83,13 +142,14 @@ public class ModelsTest {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
-        createClient(
-            vertexAI, "tests/models/generate_content/test_sync_stream." + suffix + ".json");
+        createClient(vertexAI, "tests/models/generate_content/test_sync." + suffix + ".json");
 
     // Act
     GenerateContentResponse response =
         client.models.generateContent(
-            GEMINI_MODEL_NAME, Content.fromParts(Part.fromText(PROMPT_TEXT)), null);
+            GEMINI_MODEL_NAME,
+            Content.fromParts(Part.fromText("Tell me a story in 300 words.")),
+            null);
 
     // Assert
     assertNotNull(response.text());
@@ -105,8 +165,13 @@ public class ModelsTest {
             vertexAI, "tests/models/generate_content/test_sync_stream." + suffix + ".json");
 
     // Act
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .httpOptions(HttpOptions.builder().headers(ImmutableMap.of("test", "headers")))
+            .build();
     ResponseStream<GenerateContentResponse> responseStream =
-        client.models.generateContentStream(GEMINI_MODEL_NAME, PROMPT_TEXT, null);
+        client.models.generateContentStream(
+            GEMINI_MODEL_NAME, "Tell me a story in 300 words.", config);
 
     // Assert
     int chunks = 0;
@@ -125,14 +190,27 @@ public class ModelsTest {
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
         createClient(
-            vertexAI, "tests/models/generate_content/test_sync_stream." + suffix + ".json");
+            vertexAI,
+            "tests/models/generate_content/test_simple_shared_generation_config_stream."
+                + suffix
+                + ".json");
 
     // Act
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .maxOutputTokens(400)
+            .topK(2f)
+            .temperature(0.5f)
+            .topP(0.5f)
+            .responseMimeType("application/json")
+            .stopSequences("\n")
+            .seed(42)
+            .build();
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
             GEMINI_MODEL_NAME,
-            Content.fromParts(Part.fromText(PROMPT_TEXT)),
-            GenerateContentConfig.builder().maxOutputTokens(300).build());
+            Content.fromParts(Part.fromText("tell me a story in 300 words")),
+            config);
 
     // Assert
     int chunks = 0;
@@ -154,7 +232,7 @@ public class ModelsTest {
 
     // Act
     EmbedContentResponse response =
-        client.models.embedContent(EMBEDDING_MODEL_NAME, PROMPT_TEXT_2, null);
+        client.models.embedContent(EMBEDDING_MODEL_NAME, "What is your name?", null);
 
     // Assert
     assertTrue(response.embeddings().isPresent());
@@ -172,9 +250,16 @@ public class ModelsTest {
             "tests/models/embed_content/test_multi_texts_with_config." + suffix + ".json");
 
     // Act
+    EmbedContentConfig config =
+        EmbedContentConfig.builder()
+            .outputDimensionality(10)
+            .title("test_title")
+            .taskType("RETRIEVAL_DOCUMENT")
+            .httpOptions(HttpOptions.builder().headers(ImmutableMap.of("test", "headers")))
+            .build();
     EmbedContentResponse response =
         client.models.embedContent(
-            EMBEDDING_MODEL_NAME, ImmutableList.of(PROMPT_TEXT_2, PROMPT_TEXT_3), null);
+            EMBEDDING_MODEL_NAME, ImmutableList.of("What is your name?", "I am a model."), config);
 
     // Assert
     assertTrue(response.embeddings().isPresent());
@@ -191,7 +276,7 @@ public class ModelsTest {
 
     // Act
     CountTokensResponse response =
-        client.models.countTokens(GEMINI_MODEL_NAME, PROMPT_TEXT, null);
+        client.models.countTokens(GEMINI_MODEL_NAME, "Tell me a story in 300 words.", null);
 
     // Assert
     assertTrue(response.totalTokens().isPresent());
@@ -212,15 +297,15 @@ public class ModelsTest {
 
     // Act
     ComputeTokensResponse response =
-        client.models.computeTokens(GEMINI_MODEL_NAME, PROMPT_TEXT, null);
+        client.models.computeTokens(GEMINI_MODEL_NAME, "Tell me a story in 300 words.", null);
 
     // Assert
     assertTrue(response.tokensInfo().isPresent());
   }
 
   @ParameterizedTest
-  @CsvSource({"false, false", "false, true", "true,  false", "true,  true"})
-  public void testListModels(boolean vertexAI, boolean queryBase) throws Exception {
+  @ValueSource(booleans = {false, true})
+  public void testListModels(boolean vertexAI) throws Exception {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
@@ -228,11 +313,11 @@ public class ModelsTest {
 
     // Act
     Pager<Model> pager =
-        client.models.list(ListModelsConfig.builder().pageSize(5).queryBase(queryBase).build());
+        client.models.list(ListModelsConfig.builder().pageSize(10).queryBase(true).build());
 
     // Assert
-    assertEquals(5, pager.size());
-    assertTrue(pager.size() <= 5);
+    assertEquals(10, pager.size());
+    assertTrue(pager.size() <= 10);
     for (Model model : pager) {
       assertTrue(model.name().isPresent());
     }
@@ -246,7 +331,8 @@ public class ModelsTest {
   public void testListModel_filterThrowException(boolean vertexAI) throws Exception {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
-    Client client = createClient(vertexAI, "tests/models/get/test_list_model." + suffix + ".json");
+    Client client =
+        createClient(vertexAI, "tests/models/list/test_base_models_pager." + suffix + ".json");
 
     // Act
     IllegalArgumentException exception =
@@ -271,181 +357,183 @@ public class ModelsTest {
         createClient(
             vertexAI, "tests/models/edit_image/test_edit_mask_inpaint_insert." + suffix + ".json");
 
-    // Act
-    // Base image created using generateImages with prompt:
-    // "An umbrella in the foreground, and a rainy night sky in the background"
-    URL resourceUrl = getClass().getClassLoader().getResource("umbrella.jpg");
-    Path filePath = Paths.get(resourceUrl.toURI());
-    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
-
-    EditImageConfig editImageConfig =
+    EditImageConfig config =
         EditImageConfig.builder()
-            .editMode(EditMode.Known.EDIT_MODE_INPAINT_INSERTION)
+            .editMode("EDIT_MODE_INPAINT_INSERTION")
             .numberOfImages(1)
+            .negativePrompt("human")
+            .guidanceScale(15.0f)
+            .safetyFilterLevel("BLOCK_MEDIUM_AND_ABOVE")
+            .personGeneration("DONT_ALLOW")
+            .includeSafetyAttributes(false)
+            .includeRaiReason(true)
             .outputMimeType("image/jpeg")
+            .outputCompressionQuality(80)
+            .baseSteps(32)
             .build();
 
-    ArrayList<ReferenceImage> referenceImages = new ArrayList<>();
-    RawReferenceImage rawReferenceImage =
-        RawReferenceImage.builder().referenceImage(image).referenceId(1).build();
-    referenceImages.add(rawReferenceImage);
+    // Act
+    if (vertexAI) {
+      EditImageResponse response =
+          client.models.editImage(
+              IMAGEN_MODEL_NAME,
+              "Sunlight and clear weather",
+              Arrays.asList(createRawReferenceImage(), createMaskReferenceImage()),
+              config);
 
-    MaskReferenceImage maskReferenceImage =
-        MaskReferenceImage.builder()
-            .referenceId(2)
-            .config(
-                MaskReferenceConfig.builder()
-                    .maskMode(MaskReferenceMode.Known.MASK_MODE_BACKGROUND)
-                    .maskDilation(0.0f))
-            .build();
-    referenceImages.add(maskReferenceImage);
-    EditImageResponse response =
-        client.models.editImage(
-            "imagen-3.0-capability-001",
-            "Sunlight and clear sky",
-            referenceImages,
-            editImageConfig);
-
-    // Assert
-    assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      // Assert
+      assertTrue(response.generatedImages().get().get(0).image().isPresent());
+    } else {
+      UnsupportedOperationException exception =
+          assertThrows(
+              UnsupportedOperationException.class,
+              () ->
+                  client.models.editImage(
+                      IMAGEN_MODEL_NAME,
+                      "Sunlight and clear weather",
+                      Arrays.asList(createRawReferenceImage(), createMaskReferenceImage()),
+                      config));
+      // Assert
+      assertEquals(
+          "This method is not supported by the Gemini Developer API.", exception.getMessage());
+    }
   }
 
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testEditImage_withControlReference(boolean vertexAI) throws Exception {
-    if (!vertexAI) {
-      // EditImage is not supported in MLDev.
-      return;
-    }
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
-        createClient(vertexAI, "tests/models/edit_image/test_edit_control." + suffix + ".json");
+        createClient(
+            vertexAI,
+            "tests/models/edit_image/test_edit_control_user_provided." + suffix + ".json");
+
+    EditImageConfig config =
+        EditImageConfig.builder()
+            .numberOfImages(1)
+            .aspectRatio("9:16")
+            .includeRaiReason(true)
+            .build();
 
     // Act
-    // Base image created using generateImages with prompt:
-    // "A square, circle, and triangle with a white background"
-    URL resourceUrl = getClass().getClassLoader().getResource("shapes.jpg");
-    Path filePath = Paths.get(resourceUrl.toURI());
-    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    if (vertexAI) {
+      EditImageResponse response =
+          client.models.editImage(
+              IMAGEN_MODEL_NAME,
+              "Change the colors aligning with the scribble map [2]",
+              Arrays.asList(createRawReferenceImage(), createControlReferenceImage()),
+              config);
 
-    // Control reference.
-    EditImageConfig editImageConfig =
-        EditImageConfig.builder().numberOfImages(1).outputMimeType("image/jpeg").build();
-
-    ArrayList<ReferenceImage> referenceImages = new ArrayList<>();
-
-    ControlReferenceImage controlReferenceImage =
-        ControlReferenceImage.builder()
-            .referenceId(1)
-            .referenceImage(image)
-            .config(
-                ControlReferenceConfig.builder()
-                    .controlType(ControlReferenceType.Known.CONTROL_TYPE_SCRIBBLE)
-                    .enableControlImageComputation(true))
-            .build();
-    referenceImages.add(controlReferenceImage);
-
-    EditImageResponse response =
-        client.models.editImage(
-            "imagen-3.0-capability-001",
-            "Change the colors aligning with the scribble map [1].",
-            referenceImages,
-            editImageConfig);
-
-    // Assert
-    assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      // Assert
+      assertTrue(response.generatedImages().get().get(0).image().isPresent());
+    } else {
+      UnsupportedOperationException exception =
+          assertThrows(
+              UnsupportedOperationException.class,
+              () ->
+                  client.models.editImage(
+                      IMAGEN_MODEL_NAME,
+                      "Change the colors aligning with the scribble map [2]",
+                      Arrays.asList(createRawReferenceImage(), createControlReferenceImage()),
+                      config));
+      // Assert
+      assertEquals(
+          "This method is not supported by the Gemini Developer API.", exception.getMessage());
+    }
   }
 
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testEditImage_withSubjectReference(boolean vertexAI) throws Exception {
-    if (!vertexAI) {
-      // EditImage is not supported in MLDev.
-      return;
-    }
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
-        createClient(vertexAI, "tests/models/edit_image/test_edit_subject." + suffix + ".json");
+        createClient(
+            vertexAI,
+            "tests/models/edit_image/test_edit_subject_image_customization." + suffix + ".json");
+
+    EditImageConfig config =
+        EditImageConfig.builder()
+            .numberOfImages(1)
+            .aspectRatio("9:16")
+            .includeRaiReason(true)
+            .build();
 
     // Act
-    // Base image created using generateImages with prompt:
-    // "A logo with the letters 'SERN' in a futuristic font with a white background"
-    URL resourceUrl = getClass().getClassLoader().getResource("logo.jpg");
-    Path filePath = Paths.get(resourceUrl.toURI());
-    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    if (vertexAI) {
+      EditImageResponse response =
+          client.models.editImage(
+              IMAGEN_MODEL_NAME,
+              "Generate an image containing a mug with the product logo [1] visible on the side of"
+                  + " the mug.",
+              Arrays.asList(createSubjectReferenceImage()),
+              config);
 
-    // Subject reference.
-    EditImageConfig editImageConfig =
-        EditImageConfig.builder().numberOfImages(1).outputMimeType("image/jpeg").build();
-
-    ArrayList<ReferenceImage> referenceImages = new ArrayList<>();
-    SubjectReferenceImage subjectReferenceImage =
-        SubjectReferenceImage.builder()
-            .referenceImage(image)
-            .referenceId(1)
-            .config(
-                SubjectReferenceConfig.builder()
-                    .subjectType(SubjectReferenceType.Known.SUBJECT_TYPE_PRODUCT)
-                    .subjectDescription("Product logo"))
-            .build();
-    referenceImages.add(subjectReferenceImage);
-
-    EditImageResponse response =
-        client.models.editImage(
-            "imagen-3.0-capability-001",
-            "Generate an image containing a mug with the product logo [1] visible on the side of"
-                + " the mug.",
-            referenceImages,
-            editImageConfig);
-
-    // Assert
-    assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      // Assert
+      assertTrue(response.generatedImages().get().get(0).image().isPresent());
+    } else {
+      UnsupportedOperationException exception =
+          assertThrows(
+              UnsupportedOperationException.class,
+              () ->
+                  client.models.editImage(
+                      IMAGEN_MODEL_NAME,
+                      "Generate an image containing a mug with the product logo [1] visible on the"
+                          + " side of the mug.",
+                      Arrays.asList(createSubjectReferenceImage()),
+                      config));
+      // Assert
+      assertEquals(
+          "This method is not supported by the Gemini Developer API.", exception.getMessage());
+    }
   }
 
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testEditImage_withStyleTransfer(boolean vertexAI) throws Exception {
-    if (!vertexAI) {
-      // EditImage is not supported in MLDev.
-      return;
-    }
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
         createClient(
-            vertexAI, "tests/models/edit_image/test_edit_style_transfer." + suffix + ".json");
+            vertexAI,
+            "tests/models/edit_image/test_edit_style_reference_image_customization."
+                + suffix
+                + ".json");
+
+    EditImageConfig config =
+        EditImageConfig.builder()
+            .numberOfImages(1)
+            .aspectRatio("9:16")
+            .includeRaiReason(true)
+            .build();
 
     // Act
-    // Base image created using generateImages with prompt:
-    // "A starry night sky painted with watercolors"
-    URL resourceUrl = getClass().getClassLoader().getResource("watercolor_night_sky.jpg");
-    Path filePath = Paths.get(resourceUrl.toURI());
-    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
+    if (vertexAI) {
+      EditImageResponse response =
+          client.models.editImage(
+              IMAGEN_MODEL_NAME,
+              "Generate an image in glowing style [1] based on the following caption: A church in"
+                  + " the mountain.",
+              Arrays.asList(createStyleReferenceImage()),
+              config);
 
-    // Style transfer.
-    EditImageConfig editImageConfig =
-        EditImageConfig.builder().numberOfImages(1).outputMimeType("image/jpeg").build();
-
-    ArrayList<ReferenceImage> referenceImages = new ArrayList<>();
-    StyleReferenceImage styleReferenceImage =
-        StyleReferenceImage.builder()
-            .referenceImage(image)
-            .referenceId(1)
-            .config(StyleReferenceConfig.builder().styleDescription("Watercolor"))
-            .build();
-    referenceImages.add(styleReferenceImage);
-
-    EditImageResponse response =
-        client.models.editImage(
-            "imagen-3.0-capability-001",
-            "Generate an image in the style of [1] based on the following caption: A church in the"
-                + " mountain.",
-            referenceImages,
-            editImageConfig);
-
-    // Assert
-    assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      // Assert
+      assertTrue(response.generatedImages().get().get(0).image().isPresent());
+    } else {
+      UnsupportedOperationException exception =
+          assertThrows(
+              UnsupportedOperationException.class,
+              () ->
+                  client.models.editImage(
+                      IMAGEN_MODEL_NAME,
+                      "Generate an image in glowing style [1] based on the following caption: A"
+                          + " church in the mountain.",
+                      Arrays.asList(createStyleReferenceImage()),
+                      config));
+      // Assert
+      assertEquals(
+          "This method is not supported by the Gemini Developer API.", exception.getMessage());
+    }
   }
 }

@@ -101,7 +101,7 @@ final class ReplayApiClient extends ApiClient {
     try (Stream<String> stream = Files.lines(path)) {
       return stream.collect(joining(System.lineSeparator()));
     } catch (IOException e) {
-      throw new GenAiIOException("Failed to read replay file. ", e);
+      throw new GenAiIOException("Failed to read replay file from path: " + path.toString(), e);
     }
   }
 
@@ -125,7 +125,7 @@ final class ReplayApiClient extends ApiClient {
   @Override
   public ApiResponse request(
       String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
-    if (this.clientMode.equals("replay") || this.clientMode.equals("auto")) {
+    if (this.clientMode.equals("replay")) {
       ReplayInteraction currentInteraction = replayInteractions.get(this.replayInteractionIndex);
       this.replayInteractionIndex++;
       matchRequest(
@@ -203,13 +203,11 @@ final class ReplayApiClient extends ApiClient {
     if (replayResponse == null) {
       throw new IllegalArgumentException("Replay response is null.");
     }
-    // Replay response body_segments is a list of JSON objects for streaming support. Here we
-    // only read the first body segment.
-    // TODO(jayceeli): Support streaming responses.
     JsonNode bodyNode =
-        JsonSerializable.toJsonNode(replayResponse.bodySegments().orElse(new ArrayList<>()).get(0));
+        JsonSerializable.toJsonNode(replayResponse.bodySegments().orElse(new ArrayList<>()));
     Headers headers = Headers.of(replayResponse.headers().orElse(ImmutableMap.of()));
-    return new ReplayApiResponse(bodyNode, replayResponse.statusCode().orElse(0), headers);
+    return new ReplayApiResponse(
+        (ArrayNode) bodyNode, replayResponse.statusCode().orElse(0), headers);
   }
 
   /**

@@ -122,8 +122,10 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
           return null;
         } else if (line.length() == 0) {
           return readNextJson();
-        } else {
+        } else if (line.startsWith("data: ")) {
           return line.substring("data: ".length());
+        } else {
+          return line;
         }
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read next JSON object from the stream", e);
