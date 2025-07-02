@@ -1075,6 +1075,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
+    }
+
     return toObject;
   }
 
@@ -1155,6 +1162,13 @@ final class LiveConverters {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     return toObject;
@@ -1916,8 +1930,11 @@ final class LiveConverters {
           Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audio"}))) {
-      throw new IllegalArgumentException("audio parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Transformers.tAudioBlob(Common.getValueByPath(fromObject, new String[] {"audio"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
@@ -1927,12 +1944,18 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
-      throw new IllegalArgumentException("video parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video"},
+          Transformers.tImageBlob(Common.getValueByPath(fromObject, new String[] {"video"})));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"text"}))) {
-      throw new IllegalArgumentException("text parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
@@ -2285,20 +2308,29 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"mediaChunks"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audio"}))) {
-      throw new IllegalArgumentException("audio parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Common.getValueByPath(fromObject, new String[] {"audio"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}))) {
       throw new IllegalArgumentException("audioStreamEnd parameter is not supported in Vertex AI.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
-      throw new IllegalArgumentException("video parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video"},
+          Common.getValueByPath(fromObject, new String[] {"video"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"text"}))) {
-      throw new IllegalArgumentException("text parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
@@ -2554,6 +2586,12 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode liveServerSetupCompleteFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sessionId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sessionId"},
+          Common.getValueByPath(fromObject, new String[] {"sessionId"}));
+    }
 
     return toObject;
   }

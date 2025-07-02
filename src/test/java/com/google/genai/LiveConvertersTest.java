@@ -89,14 +89,11 @@ public class LiveConvertersTest {
 
     final LiveConverters vertexLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
 
-    assertThrows(
-        IllegalArgumentException.class, // Expected exception type
-        () ->
-            vertexLiveConverters.liveClientMessageToVertex(
-                JsonSerializable.toJsonNode(message),
-                JsonSerializable.objectMapper
-                    .createObjectNode()) // Code that should throw the exception
-        );
+    ObjectNode transformedVertex =
+        vertexLiveConverters.liveClientMessageToVertex(
+            JsonSerializable.toJsonNode(message), JsonSerializable.objectMapper.createObjectNode());
+
+    assertEquals(transformedVertex.get("realtime_input").get("text").asText(), "test");
   }
 
   @Test
@@ -122,14 +119,12 @@ public class LiveConvertersTest {
 
     final LiveConverters vertexLiveConverters = new LiveConverters(GEMINI_API_CLIENT);
 
-    assertThrows(
-        IllegalArgumentException.class, // Expected exception type
-        () ->
-            vertexLiveConverters.liveClientMessageToVertex(
-                JsonSerializable.toJsonNode(message),
-                JsonSerializable.objectMapper
-                    .createObjectNode()) // Code that should throw the exception
-        );
+    ObjectNode transformedVertex =
+        vertexLiveConverters.liveClientMessageToVertex(
+            JsonSerializable.toJsonNode(message), JsonSerializable.objectMapper.createObjectNode());
+
+    assertEquals(
+        transformedVertex.get("realtime_input").get("audio").get("mimeType").asText(), "audio/mp3");
   }
 
   @Test

@@ -25,44 +25,56 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Sent in response to a `LiveGenerateContentSetup` message from the client. */
+/**
+ * The generic reusable api auth config. Deprecated. Please use AuthConfig
+ * (google/cloud/aiplatform/master/auth.proto) instead.
+ */
 @AutoValue
-@JsonDeserialize(builder = LiveServerSetupComplete.Builder.class)
-public abstract class LiveServerSetupComplete extends JsonSerializable {
-  /** The session id of the live session. */
-  @JsonProperty("sessionId")
-  public abstract Optional<String> sessionId();
+@JsonDeserialize(builder = ApiAuth.Builder.class)
+public abstract class ApiAuth extends JsonSerializable {
+  /** The API secret. */
+  @JsonProperty("apiKeyConfig")
+  public abstract Optional<ApiAuthApiKeyConfig> apiKeyConfig();
 
-  /** Instantiates a builder for LiveServerSetupComplete. */
+  /** Instantiates a builder for ApiAuth. */
   public static Builder builder() {
-    return new AutoValue_LiveServerSetupComplete.Builder();
+    return new AutoValue_ApiAuth.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for LiveServerSetupComplete. */
+  /** Builder for ApiAuth. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `LiveServerSetupComplete.builder()` for instantiation. */
+    /** For internal usage. Please use `ApiAuth.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_LiveServerSetupComplete.Builder();
+      return new AutoValue_ApiAuth.Builder();
     }
 
     /**
-     * Setter for sessionId.
+     * Setter for apiKeyConfig.
      *
-     * <p>sessionId: The session id of the live session.
+     * <p>apiKeyConfig: The API secret.
      */
-    @JsonProperty("sessionId")
-    public abstract Builder sessionId(String sessionId);
+    @JsonProperty("apiKeyConfig")
+    public abstract Builder apiKeyConfig(ApiAuthApiKeyConfig apiKeyConfig);
 
-    public abstract LiveServerSetupComplete build();
+    /**
+     * Setter for apiKeyConfig builder.
+     *
+     * <p>apiKeyConfig: The API secret.
+     */
+    public Builder apiKeyConfig(ApiAuthApiKeyConfig.Builder apiKeyConfigBuilder) {
+      return apiKeyConfig(apiKeyConfigBuilder.build());
+    }
+
+    public abstract ApiAuth build();
   }
 
-  /** Deserializes a JSON string to a LiveServerSetupComplete object. */
-  public static LiveServerSetupComplete fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, LiveServerSetupComplete.class);
+  /** Deserializes a JSON string to a ApiAuth object. */
+  public static ApiAuth fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, ApiAuth.class);
   }
 }

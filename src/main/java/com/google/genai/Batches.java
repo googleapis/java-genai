@@ -29,6 +29,9 @@ import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CancelBatchJobParameters;
 import com.google.genai.types.CreateBatchJobConfig;
 import com.google.genai.types.CreateBatchJobParameters;
+import com.google.genai.types.DeleteBatchJobConfig;
+import com.google.genai.types.DeleteBatchJobParameters;
+import com.google.genai.types.DeleteResourceJob;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.GetBatchJobParameters;
 import com.google.genai.types.HttpOptions;
@@ -700,6 +703,13 @@ public final class Batches {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     return toObject;
@@ -1622,6 +1632,28 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          Common.getValueByPath(fromObject, new String[] {"config"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode videoMetadataToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
@@ -2305,6 +2337,13 @@ public final class Batches {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     return toObject;
@@ -3207,6 +3246,28 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteBatchJobParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          Common.getValueByPath(fromObject, new String[] {"config"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode jobErrorFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -3825,6 +3886,13 @@ public final class Batches {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     return toObject;
@@ -4632,6 +4700,36 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteResourceJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"done"},
+          Common.getValueByPath(fromObject, new String[] {"done"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          jobErrorFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"error"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode jobErrorFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
@@ -5339,6 +5437,13 @@ public final class Batches {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     return toObject;
@@ -6126,6 +6231,36 @@ public final class Batches {
     return toObject;
   }
 
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteResourceJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"done"},
+          Common.getValueByPath(fromObject, new String[] {"done"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          jobErrorFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"error"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
   BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
 
     CreateBatchJobParameters.Builder parameterBuilder = CreateBatchJobParameters.builder();
@@ -6196,7 +6331,7 @@ public final class Batches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "files/abc" using the Gemini Developer AI client.
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
    * @param config A {@link GetBatchJobConfig} for configuring the get request.
    * @return A {@link BatchJob} object that contains the info of the batch job.
    */
@@ -6267,7 +6402,7 @@ public final class Batches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "files/abc" using the Gemini Developer AI client.
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
    * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
    */
   public void cancel(String name, CancelBatchJobConfig config) {
@@ -6370,6 +6505,76 @@ public final class Batches {
         responseNode = listBatchJobsResponseFromMldev(responseNode, null);
       }
       return JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
+    }
+  }
+
+  /**
+   * Deletes a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
+   */
+  public DeleteResourceJob delete(String name, DeleteBatchJobConfig config) {
+
+    DeleteBatchJobParameters.Builder parameterBuilder = DeleteBatchJobParameters.builder();
+
+    if (!Common.isZero(name)) {
+      parameterBuilder.name(name);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      body = deleteBatchJobParametersToVertex(this.apiClient, parameterNode, null);
+      path = Common.formatMap("batchPredictionJobs/{name}", body.get("_url"));
+    } else {
+      body = deleteBatchJobParametersToMldev(this.apiClient, parameterNode, null);
+      if (body.get("_url") != null) {
+        path = Common.formatMap("batches/{name}", body.get("_url"));
+      } else {
+        path = "batches/{name}";
+      }
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    body.remove("config");
+
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
+      HttpEntity entity = response.getEntity();
+      String responseString;
+      try {
+        responseString = EntityUtils.toString(entity);
+      } catch (IOException e) {
+        throw new GenAiIOException("Failed to read HTTP response.", e);
+      }
+
+      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+      if (this.apiClient.vertexAI()) {
+        responseNode = deleteResourceJobFromVertex(responseNode, null);
+      } else {
+        responseNode = deleteResourceJobFromMldev(responseNode, null);
+      }
+      return JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
     }
   }
 

@@ -25,6 +25,8 @@ import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
 import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CreateBatchJobConfig;
+import com.google.genai.types.DeleteBatchJobConfig;
+import com.google.genai.types.DeleteResourceJob;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.ListBatchJobsConfig;
 import java.util.concurrent.CompletableFuture;
@@ -43,7 +45,7 @@ public final class AsyncBatches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "files/abc" using the Gemini Developer AI client.
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
    * @param config A {@link GetBatchJobConfig} for configuring the get request.
    * @return A {@link BatchJob} object that contains the info of the batch job.
    */
@@ -56,11 +58,23 @@ public final class AsyncBatches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "files/abc" using the Gemini Developer AI client.
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
    * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
    */
   public CompletableFuture<Void> cancel(String name, CancelBatchJobConfig config) {
     return CompletableFuture.runAsync(() -> batches.cancel(name, config));
+  }
+
+  /**
+   * Asynchronously deletes a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
+   */
+  public CompletableFuture<DeleteResourceJob> delete(String name, DeleteBatchJobConfig config) {
+    return CompletableFuture.supplyAsync(() -> batches.delete(name, config));
   }
 
   /**
