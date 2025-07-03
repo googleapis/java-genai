@@ -62,6 +62,10 @@ public final class TableTest {
     String originalMethodName = segments[1];
     String methodName = Common.snakeToCamel(originalMethodName);
 
+    if (methodName.equals("privateTune") && !vertexAI) {
+      methodName = "privateTuneMldev";
+    }
+
     String[] replayPathSegments = path.split("/");
     String replayFilePath = "";
     for (int i = 0; i < replayPathSegments.length; i++) {

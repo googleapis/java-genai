@@ -101,7 +101,36 @@ final class Common {
       }
     }
 
-    currentObject.put(path[path.length - 1], JsonSerializable.toJsonNode(value));
+    String keyToSet = path[path.length - 1];
+    JsonNode existingData = currentObject.get(keyToSet);
+    JsonNode valueNode = JsonSerializable.toJsonNode(value);
+
+    if (existingData != null) {
+      // Don't overwrite existing non-empty value with new empty value.
+      if (value == null || valueNode.isNull() || valueNode.isEmpty()) {
+        return;
+      }
+
+      // Don't fail when overwriting value with same value
+      if (valueNode.equals(existingData)) {
+        return;
+      }
+
+      // Instead of overwriting dictionary with another dictionary, merge them.
+      if (existingData.isObject() && valueNode.isObject()) {
+        ((ObjectNode) existingData).setAll((ObjectNode) valueNode);
+      } else {
+        throw new IllegalArgumentException(
+            "Cannot set value for an existing key. Key: "
+                + keyToSet
+                + "; Existing value: "
+                + existingData
+                + "; New value: "
+                + valueNode);
+      }
+    } else {
+      currentObject.set(keyToSet, valueNode);
+    }
   }
 
   /**
