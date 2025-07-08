@@ -1580,6 +1580,13 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode generateVideosSourceToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -3780,6 +3787,13 @@ public final class Models {
           new String[] {"mimeType"},
           Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode generateVideosSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     return toObject;
   }
@@ -6552,7 +6566,7 @@ public final class Models {
    * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
    *     generated videos.
    */
-  public GenerateVideosOperation generateVideos(
+  GenerateVideosOperation privateGenerateVideos(
       String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
 
     GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
@@ -6917,6 +6931,26 @@ public final class Models {
     UpscaleImageAPIConfig apiConfig = builder.build();
 
     return privateUpscaleImage(model, image, upscaleFactor, apiConfig);
+  }
+
+  /**
+   * Generates videos given a GenAI model, and an input (text, image, or video).
+   *
+   * <p>This method is experimental.
+   *
+   * @param model the name of the GenAI model to use for generating videos
+   * @param prompt the text prompt for generating the videos. Optional for image to video use cases.
+   * @param image the input image for generating the videos. Optional if prompt is provided.
+   * @param video the input video for video extension use cases. Optional if prompt or image is
+   *     provided.
+   * @param config a {@link com.google.genai.types.GenerateVideosConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
+   *     generated videos.
+   */
+  public GenerateVideosOperation generateVideos(
+      String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
+    return privateGenerateVideos(model, prompt, image, video, config);
   }
 
   /**
