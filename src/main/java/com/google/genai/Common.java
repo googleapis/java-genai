@@ -101,7 +101,9 @@ final class Common {
       }
     }
 
-    currentObject.put(path[path.length - 1], JsonSerializable.toJsonNode(value));
+    String keyToSet = path[path.length - 1];
+    JsonNode valueNode = JsonSerializable.toJsonNode(value);
+    Transformers.updateJsonNode(currentObject, keyToSet, valueNode);
   }
 
   /**

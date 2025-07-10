@@ -27,7 +27,9 @@ import com.google.genai.types.ListBatchJobsConfig;
 import com.google.genai.types.ListCachedContentsConfig;
 import com.google.genai.types.ListFilesConfig;
 import com.google.genai.types.ListModelsConfig;
+import com.google.genai.types.ListTuningJobsConfig;
 import com.google.genai.types.Model;
+import com.google.genai.types.TuningJob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,8 @@ abstract class BasePager<T extends JsonSerializable> {
     MODELS("models", Model.class, ListModelsConfig.class),
     CACHED_CONTENTS("cachedContents", CachedContent.class, ListCachedContentsConfig.class),
     FILES("files", File.class, ListFilesConfig.class),
-    BATCH_JOBS("batchJobs", BatchJob.class, ListBatchJobsConfig.class);
+    BATCH_JOBS("batchJobs", BatchJob.class, ListBatchJobsConfig.class),
+    TUNING_JOBS("tuningJobs", TuningJob.class, ListTuningJobsConfig.class);
 
     private final String fieldName;
     private final Class<? extends JsonSerializable> itemClass;

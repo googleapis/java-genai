@@ -30,6 +30,7 @@ import com.google.genai.types.File;
 import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.GeneratedVideo;
 import com.google.genai.types.GoogleSearch;
+import com.google.genai.types.JobState;
 import com.google.genai.types.Schema;
 import com.google.genai.types.Tool;
 import com.google.genai.types.Video;
@@ -413,5 +414,94 @@ public class TransformersTest {
     JsonNode models = Transformers.tExtractModels(origin);
     assertTrue(models instanceof ArrayNode);
     assertEquals(1, models.size());
+  }
+
+  @Test
+  public void tTuningJobStatus_stringInput() {
+    assertEquals(
+        JobState.Known.JOB_STATE_UNSPECIFIED,
+        Transformers.tTuningJobStatus("STATE_UNSPECIFIED").knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_RUNNING, Transformers.tTuningJobStatus("CREATING").knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_SUCCEEDED, Transformers.tTuningJobStatus("ACTIVE").knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_FAILED, Transformers.tTuningJobStatus("FAILED").knownEnum());
+  }
+
+  @Test
+  public void tTuningJobStatus_textNodeInput() {
+    assertEquals(
+        JobState.Known.JOB_STATE_UNSPECIFIED,
+        Transformers.tTuningJobStatus(JsonNodeFactory.instance.textNode("STATE_UNSPECIFIED"))
+            .knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_RUNNING,
+        Transformers.tTuningJobStatus(JsonNodeFactory.instance.textNode("CREATING")).knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_SUCCEEDED,
+        Transformers.tTuningJobStatus(JsonNodeFactory.instance.textNode("ACTIVE")).knownEnum());
+    assertEquals(
+        JobState.Known.JOB_STATE_FAILED,
+        Transformers.tTuningJobStatus(JsonNodeFactory.instance.textNode("FAILED")).knownEnum());
+  }
+
+  @Test
+  public void tTuningJobStatus_unsupportedType_throwsException() {
+    assertThrows(
+        IllegalArgumentException.class, () -> Transformers.tTuningJobStatus(new UnsupportedType()));
+  }
+
+  @Test
+  public void updateJsonNode_addNewKey() {
+    ObjectNode node = JsonNodeFactory.instance.objectNode();
+    TextNode value = JsonNodeFactory.instance.textNode("testValue");
+    Transformers.updateJsonNode(node, "newKey", value);
+    assertEquals(value, node.get("newKey"));
+  }
+
+  @Test
+  public void updateJsonNode_overwriteWithNull_noChange() {
+    ObjectNode node = JsonNodeFactory.instance.objectNode();
+    TextNode initialValue = JsonNodeFactory.instance.textNode("initialValue");
+    node.set("existingKey", initialValue);
+    Transformers.updateJsonNode(node, "existingKey", null);
+    assertEquals(initialValue, node.get("existingKey"));
+  }
+
+  @Test
+  public void updateJsonNode_overwriteWithSameValue_noChange() {
+    ObjectNode node = JsonNodeFactory.instance.objectNode();
+    TextNode value = JsonNodeFactory.instance.textNode("sameValue");
+    node.set("existingKey", value);
+    Transformers.updateJsonNode(
+        node, "existingKey", JsonNodeFactory.instance.textNode("sameValue"));
+    assertEquals(value, node.get("existingKey"));
+  }
+
+  @Test
+  public void updateJsonNode_mergeObjects() {
+    ObjectNode node = JsonNodeFactory.instance.objectNode();
+    ObjectNode initialObj = JsonNodeFactory.instance.objectNode();
+    initialObj.put("a", "1");
+    node.set("objectKey", initialObj);
+
+    ObjectNode newObj = JsonNodeFactory.instance.objectNode();
+    newObj.put("b", "2");
+    Transformers.updateJsonNode(node, "objectKey", newObj);
+
+    ObjectNode expectedObj = JsonNodeFactory.instance.objectNode();
+    expectedObj.put("a", "1");
+    expectedObj.put("b", "2");
+    assertEquals(expectedObj, node.get("objectKey"));
+  }
+
+  @Test
+  public void updateJsonNode_overwriteWithEmptyNode_noChange() {
+    ObjectNode node = JsonNodeFactory.instance.objectNode();
+    TextNode initialValue = JsonNodeFactory.instance.textNode("initial");
+    node.set("key", initialValue);
+    Transformers.updateJsonNode(node, "key", JsonNodeFactory.instance.objectNode());
+    assertEquals(initialValue, node.get("key"));
   }
 }
