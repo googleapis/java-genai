@@ -51,6 +51,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Optional;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -72,7 +73,20 @@ public class ModelsTest {
             clientMode == null ? "replay" : clientMode,
             "",
             System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
-    Client client = Client.builder().debugConfig(debugConfig).vertexAI(vertexAI).build();
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    String project = Optional.ofNullable(System.getenv("GOOGLE_GENAI_PROJECT")).orElse("project");
+    String location =
+        Optional.ofNullable(System.getenv("GOOGLE_GENAI_LOCATION")).orElse("location");
+
+    Client.Builder clientBuilder = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig);
+
+    if (vertexAI) {
+      clientBuilder.project(project).location(location);
+    } else {
+      clientBuilder.apiKey(apiKey);
+    }
+    Client client = clientBuilder.build();
+
     if (client.clientMode().equals("replay")) {
       client.setReplayId(replayId);
     }
@@ -367,6 +381,7 @@ public class ModelsTest {
             .outputMimeType("image/jpeg")
             .outputCompressionQuality(80)
             .baseSteps(32)
+            .addWatermark(false)
             .build();
 
     // Act

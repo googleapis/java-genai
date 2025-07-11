@@ -522,7 +522,8 @@ public class HttpApiClientTest {
               .baseUrl("http://localhost:" + wireMockServer.port())
               .apiVersion("v1beta")
               .build();
-      Client client = Client.builder().vertexAI(false).httpOptions(httpOptions).build();
+      Client client =
+          Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
 
       GenerateContentResponse response =
           client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
@@ -537,7 +538,8 @@ public class HttpApiClientTest {
   public void testClientInitializationWithBaseUrlFromHttpOptions() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder().baseUrl("https://custom-base-url.googleapis.com/").build();
-    Client client = Client.builder().vertexAI(false).httpOptions(httpOptions).build();
+    Client client =
+        Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -550,7 +552,8 @@ public class HttpApiClientTest {
         HttpOptions.builder().baseUrl("https://custom-base-url.googleapis.com/").build();
     Client.setDefaultBaseUrls(
         Optional.of("https://gemini-base-url.googleapis.com/"), Optional.empty());
-    Client client = Client.builder().vertexAI(false).httpOptions(httpOptions).build();
+    Client client =
+        Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -560,7 +563,7 @@ public class HttpApiClientTest {
   public void testClientInitializationWithBaseUrlFromSetBaseUrls() throws Exception {
     Client.setDefaultBaseUrls(
         Optional.of("https://custom-base-url.googleapis.com/"), Optional.empty());
-    Client client = Client.builder().vertexAI(false).build();
+    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -575,6 +578,7 @@ public class HttpApiClientTest {
         Optional.of("https://custom-base-url.googleapis.com/"), Optional.empty());
     Client client =
         Client.builder()
+            .apiKey(API_KEY)
             .vertexAI(false)
             .environmentVariables(
                 ImmutableMap.of(
@@ -591,6 +595,7 @@ public class HttpApiClientTest {
   public void testClientInitializationWithBaseUrlFromEnvironment() throws Exception {
     Client client =
         Client.builder()
+            .apiKey(API_KEY)
             .vertexAI(false)
             .environmentVariables(
                 ImmutableMap.of(

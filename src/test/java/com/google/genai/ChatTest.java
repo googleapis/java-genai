@@ -26,19 +26,16 @@ import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
 import com.google.genai.types.FinishReason;
-import com.google.genai.types.FunctionCall;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
@@ -129,7 +126,8 @@ public class ChatTest {
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
 
-    client = Client.builder().build();
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    client = Client.builder().apiKey(apiKey).vertexAI(false).build();
 
     mockedResponse1 = Mockito.mock(ApiResponse.class);
     mockedResponse2 = Mockito.mock(ApiResponse.class);

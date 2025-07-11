@@ -149,7 +149,7 @@ abstract class ApiClient {
     this.httpClient = createHttpClient(httpOptions.timeout(), clientOptions);
   }
 
-  private String getApiKeyFromEnv() {
+  static String getApiKeyFromEnv() {
     String googleApiKey = System.getenv("GOOGLE_API_KEY");
     if (googleApiKey != null && googleApiKey.isEmpty()) {
       googleApiKey = null;

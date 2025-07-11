@@ -31,6 +31,7 @@ import com.google.genai.types.Part;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import okhttp3.MediaType;
@@ -115,7 +116,8 @@ public class AsyncChatTest {
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse);
 
-    client = Client.builder().build();
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    client = Client.builder().apiKey(apiKey).vertexAI(false).build();
 
     mockedResponse1 = Mockito.mock(ApiResponse.class);
     mockedResponse2 = Mockito.mock(ApiResponse.class);

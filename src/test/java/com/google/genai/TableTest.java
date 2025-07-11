@@ -283,8 +283,19 @@ public final class TableTest {
       replayMode = "replay";
     }
     DebugConfig debugConfig = new DebugConfig(replayMode, "", testsReplaysPath);
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    String project = Optional.ofNullable(System.getenv("GOOGLE_GENAI_PROJECT")).orElse("project");
+    String location =
+        Optional.ofNullable(System.getenv("GOOGLE_GENAI_LOCATION")).orElse("location");
 
-    return Client.builder().vertexAI(vertexAI).debugConfig(debugConfig).build();
+    Client.Builder clientBuilder = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig);
+
+    if (vertexAI) {
+      clientBuilder.project(project).location(location);
+    } else {
+      clientBuilder.apiKey(apiKey);
+    }
+    return clientBuilder.build();
   }
 
   private static Object normalizeKeys(Object data) {
