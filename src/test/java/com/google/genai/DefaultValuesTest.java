@@ -45,7 +45,8 @@ public class DefaultValuesTest {
         ResponseBody.create(MediaType.get("application/json"), returnResponse.toJson());
     when(mockedResponse.getBody()).thenReturn(content);
 
-    Client client = Client.builder().build();
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    Client client = Client.builder().apiKey(apiKey).vertexAI(false).build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Models.class.getDeclaredField("apiClient");

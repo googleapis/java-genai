@@ -63,7 +63,8 @@ public class ForwardCompatibilityTest {
 
     objectMapper = new ObjectMapper();
 
-    client = Client.builder().build();
+    String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
+    client = Client.builder().apiKey(apiKey).vertexAI(false).build();
   }
 
   @Test
@@ -110,7 +111,6 @@ public class ForwardCompatibilityTest {
     ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
-    Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Models.class.getDeclaredField("apiClient");
@@ -150,7 +150,6 @@ public class ForwardCompatibilityTest {
     ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
-    Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
     Field apiClientField = Models.class.getDeclaredField("apiClient");
@@ -189,7 +188,6 @@ public class ForwardCompatibilityTest {
     ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
-    Client client = Client.builder().build();
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on
     Field apiClientField = Models.class.getDeclaredField("apiClient");
