@@ -3330,6 +3330,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"addWatermark"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "addWatermark"},
+          Common.getValueByPath(fromObject, new String[] {"addWatermark"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"editMode"}) != null) {
       Common.setValueByPath(
           parentObject,

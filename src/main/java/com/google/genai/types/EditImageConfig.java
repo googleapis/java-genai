@@ -100,6 +100,10 @@ public abstract class EditImageConfig extends JsonSerializable {
   @JsonProperty("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
 
+  /** Whether to add a watermark to the generated images. */
+  @JsonProperty("addWatermark")
+  public abstract Optional<Boolean> addWatermark();
+
   /** Describes the editing mode for the request. */
   @JsonProperty("editMode")
   public abstract Optional<EditMode> editMode();
@@ -314,6 +318,14 @@ public abstract class EditImageConfig extends JsonSerializable {
      */
     @JsonProperty("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
+
+    /**
+     * Setter for addWatermark.
+     *
+     * <p>addWatermark: Whether to add a watermark to the generated images.
+     */
+    @JsonProperty("addWatermark")
+    public abstract Builder addWatermark(boolean addWatermark);
 
     /**
      * Setter for editMode.
