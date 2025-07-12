@@ -337,6 +337,7 @@ To get a response in JSON by passing in a response schema to the
 ```java
 package <your package name>;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
@@ -348,13 +349,18 @@ public class GenerateContentWithSchema {
   public static void main(String[] args) {
     Client client = new Client();
 
-    Schema schema =
-        Schema.builder()
-            .type("object")
-            .properties(
-                ImmutableMap.of(
-                    "name", Schema.builder().type(Type.Known.STRING).description("Your Name").build()))
-            .build();
+    ImmutableMap<String, Object> schema = ImmutableMap.of(
+        "type", "object",
+        "properties", ImmutableMap.of(
+            "recipe_name", ImmutableMap.of("type", "string"),
+            "ingredients", ImmutableMap.of(
+                "type", "array",
+                "items", ImmutableMap.of("type", "string")
+            )
+        ),
+        "required", ImmutableList.of("recipe_name", "ingredients")
+    );
+
     GenerateContentConfig config =
         GenerateContentConfig.builder()
             .responseMimeType("application/json")
