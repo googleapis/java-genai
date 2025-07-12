@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0](https://github.com/googleapis/java-genai/compare/v1.8.0...v1.9.0) (2025-07-12)
+
+
+### Features
+
+* Add `addWatermark` parameter to the edit image configuration. ([c4598da](https://github.com/googleapis/java-genai/commit/c4598da0903d5dacb0c7bb4462aec1226ba259bf))
+
+
+### Documentation
+
+* Update generated video resolution config docstring ([9a2ced8](https://github.com/googleapis/java-genai/commit/9a2ced8ed3a1896b8170cc9ca117b61cb9eea705))
+
 ## [1.8.0](https://github.com/googleapis/java-genai/compare/v1.7.0...v1.8.0) (2025-07-09)
 
 
