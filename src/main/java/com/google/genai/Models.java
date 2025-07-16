@@ -69,6 +69,10 @@ import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.ReferenceImageAPI;
 import com.google.genai.types.SafetyAttributes;
+import com.google.genai.types.SegmentImageConfig;
+import com.google.genai.types.SegmentImageParameters;
+import com.google.genai.types.SegmentImageResponse;
+import com.google.genai.types.SegmentImageSource;
 import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.UpdateModelParameters;
 import com.google.genai.types.UpscaleImageAPIConfig;
@@ -3679,6 +3683,132 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode scribbleImageToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode segmentImageSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "prompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "image"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scribbleImage"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "scribble"},
+          scribbleImageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"scribbleImage"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode segmentImageConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maxPredictions"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "maxPredictions"},
+          Common.getValueByPath(fromObject, new String[] {"maxPredictions"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"confidenceThreshold"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "confidenceThreshold"},
+          Common.getValueByPath(fromObject, new String[] {"confidenceThreshold"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maskDilation"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "maskDilation"},
+          Common.getValueByPath(fromObject, new String[] {"maskDilation"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"binaryColorThreshold"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "binaryColorThreshold"},
+          Common.getValueByPath(fromObject, new String[] {"binaryColorThreshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode segmentImageParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          segmentImageSourceToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          segmentImageConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode getModelParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -5606,6 +5736,71 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode entityLabelFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"label"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"label"},
+          Common.getValueByPath(fromObject, new String[] {"label"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"score"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"score"},
+          Common.getValueByPath(fromObject, new String[] {"score"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode generatedImageMaskFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mask"},
+          imageFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"labels"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(entityLabelFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"labels"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode segmentImageResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(generatedImageMaskFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"generatedMasks"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode endpointFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
@@ -6431,6 +6626,82 @@ public final class Models {
             "This method is only supported in the Vertex AI client.");
       }
       return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
+    }
+  }
+
+  /**
+   * Segments an image, creating a mask of a specified area.
+   *
+   * @param model the name of the GenAI model to use for image segmentation
+   * @param source a {@link com.google.genai.types.SegmentImageSource} An object containing the
+   *     source inputs (prompt, image, scribbleImmage) for image segmentation. The prompt is
+   *     required for prompt mode and semantic mode, disallowed for other modes. scribbleImage is
+   *     required for the interactive mode, disallowed for other modes.
+   * @param config a {@link com.google.genai.types.SegmentImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.SegmentImageResponse} instance that contains the
+   *     generated mask.
+   */
+  public SegmentImageResponse segmentImage(
+      String model, SegmentImageSource source, SegmentImageConfig config) {
+
+    SegmentImageParameters.Builder parameterBuilder = SegmentImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(source)) {
+      parameterBuilder.source(source);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      body = segmentImageParametersToVertex(this.apiClient, parameterNode, null);
+      path = Common.formatMap("{model}:predict", body.get("_url"));
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    body.remove("config");
+
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
+      ResponseBody responseBody = response.getBody();
+      String responseString;
+      try {
+        responseString = responseBody.string();
+      } catch (IOException e) {
+        throw new GenAiIOException("Failed to read HTTP response.", e);
+      }
+
+      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+      if (this.apiClient.vertexAI()) {
+        responseNode = segmentImageResponseFromVertex(responseNode, null);
+      } else {
+        throw new UnsupportedOperationException(
+            "This method is only supported in the Vertex AI client.");
+      }
+      return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
     }
   }
 

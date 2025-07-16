@@ -46,6 +46,9 @@ import com.google.genai.types.RecontextImageConfig;
 import com.google.genai.types.RecontextImageResponse;
 import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
+import com.google.genai.types.SegmentImageConfig;
+import com.google.genai.types.SegmentImageResponse;
+import com.google.genai.types.SegmentImageSource;
 import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
@@ -85,6 +88,24 @@ public final class AsyncModels {
   public CompletableFuture<RecontextImageResponse> recontextImage(
       String model, RecontextImageSource source, RecontextImageConfig config) {
     return CompletableFuture.supplyAsync(() -> models.recontextImage(model, source, config));
+  }
+
+  /**
+   * Asynchronously segments an image, creating a mask of a specified area.
+   *
+   * @param model the name of the GenAI model to use for image segmentation
+   * @param source a {@link com.google.genai.types.SegmentImageSource} An object containing the
+   *     source inputs (prompt, image, scribbleImmage) for image segmentation. The prompt is
+   *     required for prompt mode and semantic mode, disallowed for other modes. scribbleImage is
+   *     required for the interactive mode, disallowed for other modes.
+   * @param config a {@link com.google.genai.types.SegmentImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.SegmentImageResponse} instance that contains the
+   *     generated mask.
+   */
+  public CompletableFuture<SegmentImageResponse> segmentImage(
+      String model, SegmentImageSource source, SegmentImageConfig config) {
+    return CompletableFuture.supplyAsync(() -> models.segmentImage(model, source, config));
   }
 
   /**
