@@ -39,6 +39,7 @@ public class ClientTest {
   private static final HttpOptions HTTP_OPTIONS = HttpOptions.builder().baseUrl("test-url").build();
   private static final DebugConfig DEBUG_CONFIG =
       new DebugConfig("replay", "replay-id", "replay-dir");
+  private static final GoogleCredentials CREDENTIALS = GoogleCredentials.newBuilder().build();
 
   @Test
   public void testInitClientFromBuilder_mldev() {
@@ -56,7 +57,13 @@ public class ClientTest {
   @Test
   public void testInitClientFromBuilder_vertex() {
     // Act
-    Client client = Client.builder().project(PROJECT).location(LOCATION).vertexAI(true).build();
+    Client client =
+        Client.builder()
+            .project(PROJECT)
+            .location(LOCATION)
+            .credentials(CREDENTIALS)
+            .vertexAI(true)
+            .build();
 
     // Assert
     assertEquals(null, client.apiKey());
@@ -75,8 +82,8 @@ public class ClientTest {
         Client.builder()
             .project(PROJECT)
             .location(LOCATION)
+            .credentials(CREDENTIALS)
             .vertexAI(true)
-            .credentials(mock(GoogleCredentials.class))
             .httpOptions(HTTP_OPTIONS)
             .build();
 
@@ -109,6 +116,7 @@ public class ClientTest {
         Client.builder()
             .project(PROJECT)
             .location(LOCATION)
+            .credentials(CREDENTIALS)
             .vertexAI(true)
             .debugConfig(DEBUG_CONFIG)
             .build();
@@ -165,7 +173,12 @@ public class ClientTest {
     // Act
     Client.setDefaultBaseUrls(Optional.of("gemini-base-url"), Optional.of("vertex-base-url"));
     Client vertexClient =
-        Client.builder().project(PROJECT).location(LOCATION).vertexAI(true).build();
+        Client.builder()
+            .project(PROJECT)
+            .location(LOCATION)
+            .credentials(CREDENTIALS)
+            .vertexAI(true)
+            .build();
     Client mldevClient = Client.builder().apiKey(API_KEY).vertexAI(false).build();
 
     assertEquals("gemini-base-url", mldevClient.baseUrl().orElse(null));

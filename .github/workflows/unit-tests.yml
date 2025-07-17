@@ -14,10 +14,8 @@ jobs:
     strategy:
       matrix:
         java: [8, 11, 17, 21]
-        testgroup: [
-          # Includes everything in tests/ except the ones listed here
-          '**/*,!com.google.genai.ClientTest,!com.google.genai.TableTest,!com.google.genai.HttpApiClientTest,!com.google.genai.ModelsTest,!com.google.genai.OperationsTest'
-        ]
+        testgroup: ['**/*']
+      fail-fast: false
     name: unit-test (${{matrix.java}})
     steps:
     - uses: actions/checkout@v4
@@ -28,5 +26,3 @@ jobs:
         cache: 'maven'
     - name: Java Unit Tests
       run: mvn clean test -Dtest=${{matrix.testgroup}}
-      env:
-        GOOGLE_API_KEY: testkey
