@@ -4347,6 +4347,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"embeddings"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"embeddings"});
@@ -4458,6 +4459,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -4515,6 +4517,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode modelFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4580,6 +4583,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4614,6 +4618,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"totalTokens"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4710,6 +4715,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5190,6 +5196,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"predictions[]", "embeddings"}) != null) {
       ArrayNode keyArray =
           (ArrayNode)
@@ -5315,6 +5322,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -5345,6 +5353,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode editImageResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -5363,6 +5372,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode upscaleImageResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -5458,6 +5468,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode modelFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5540,6 +5551,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5574,6 +5586,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"totalTokens"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5587,6 +5600,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode computeTokensResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"tokensInfo"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5675,6 +5689,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
