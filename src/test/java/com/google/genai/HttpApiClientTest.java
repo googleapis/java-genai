@@ -33,6 +33,7 @@ import static org.mockito.Mockito.when;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.Candidate;
@@ -78,6 +79,10 @@ public class HttpApiClientTest {
               .build());
   private static final String TEST_PATH = "test-path";
   private static final String TEST_REQUEST_JSON = "{\"test\": \"request-json\"}";
+  private static final GoogleCredentials CREDENTIALS =
+      GoogleCredentials.newBuilder()
+          .setAccessToken(AccessToken.newBuilder().setTokenValue("").build())
+          .build();
 
   @Mock OkHttpClient mockHttpClient;
   @Mock Call mockCall;
@@ -98,10 +103,6 @@ public class HttpApiClientTest {
     Field clientField = ApiClient.class.getDeclaredField("httpClient");
     clientField.setAccessible(true);
     clientField.set(client, mockHttpClient);
-    GoogleCredentials credentials = Mockito.mock(GoogleCredentials.class);
-    Field credentialsField = ApiClient.class.getDeclaredField("credentials");
-    credentialsField.setAccessible(true);
-    credentialsField.set(client, Optional.of(credentials));
   }
 
   @Test
@@ -112,7 +113,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.empty(),
             Optional.empty());
     setMockClient(client);
@@ -279,7 +280,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.of(httpOptions),
             Optional.empty());
 
@@ -380,7 +381,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.of(httpOptions),
             Optional.empty());
 
@@ -415,7 +416,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.of(httpOptions),
             Optional.empty());
 
@@ -448,7 +449,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.empty(),
             Optional.empty());
 
@@ -486,7 +487,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.empty(),
             Optional.of(clientOptions));
 
@@ -517,16 +518,15 @@ public class HttpApiClientTest {
 
   @Test
   public void testHttpClientWithCustomCredentials() throws Exception {
-    GoogleCredentials credentials = Mockito.mock(GoogleCredentials.class);
     HttpApiClient client =
         new HttpApiClient(
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of(LOCATION),
-            Optional.of(credentials),
+            Optional.of(CREDENTIALS),
             Optional.empty(),
             Optional.empty());
-    assertEquals(credentials, client.credentials.get());
+    assertEquals(CREDENTIALS, client.credentials.get());
   }
 
   @Test
@@ -537,7 +537,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of("global"),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.of(httpOptions),
             Optional.empty());
 
@@ -553,7 +553,7 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(PROJECT),
             Optional.of("global"),
-            Optional.empty(),
+            Optional.of(CREDENTIALS),
             Optional.empty(),
             Optional.empty());
 
@@ -674,7 +674,13 @@ public class HttpApiClientTest {
         .thenReturn(ImmutableMap.of("vertexBaseUrl", "https://vertex-base-url.googleapis.com/"));
     Client.setDefaultBaseUrls(
         Optional.empty(), Optional.of("https://custom-base-url.googleapis.com/"));
-    Client client = Client.builder().project(PROJECT).location(LOCATION).vertexAI(true).build();
+    Client client =
+        Client.builder()
+            .project(PROJECT)
+            .location(LOCATION)
+            .credentials(CREDENTIALS)
+            .vertexAI(true)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -700,7 +706,13 @@ public class HttpApiClientTest {
     mockedStaticApiClient
         .when(ApiClient::defaultEnvironmentVariables)
         .thenReturn(ImmutableMap.of("vertexBaseUrl", "https://custom-base-url.googleapis.com/"));
-    Client client = Client.builder().project(PROJECT).location(LOCATION).vertexAI(true).build();
+    Client client =
+        Client.builder()
+            .project(PROJECT)
+            .location(LOCATION)
+            .credentials(CREDENTIALS)
+            .vertexAI(true)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");

@@ -269,20 +269,7 @@ abstract class ApiClient {
       } catch (IOException e) {
         throw new GenAiIOException("Failed to refresh credentials.", e);
       }
-      String accessToken;
-      try {
-        accessToken = cred.getAccessToken().getTokenValue();
-      } catch (NullPointerException e) {
-        // For test cases where the access token is not available.
-        if (e.getMessage()
-            .contains(
-                "because the return value of"
-                    + " \"com.google.auth.oauth2.GoogleCredentials.getAccessToken()\" is null")) {
-          accessToken = "";
-        } else {
-          throw e;
-        }
-      }
+      String accessToken = cred.getAccessToken().getTokenValue();
       request.header("Authorization", "Bearer " + accessToken);
 
       if (cred.getQuotaProjectId() != null) {
