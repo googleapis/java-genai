@@ -4605,6 +4605,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5565,6 +5566,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,

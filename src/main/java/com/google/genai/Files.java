@@ -435,6 +435,7 @@ public final class Files {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
           toObject,
