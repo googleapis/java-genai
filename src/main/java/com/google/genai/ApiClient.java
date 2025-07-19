@@ -241,7 +241,7 @@ abstract class ApiClient {
     HttpOptions mergedHttpOptions = mergeHttpOptions(requestHttpOptions.orElse(null));
     if (httpMethod.equalsIgnoreCase("POST")) {
       RequestBody body =
-          RequestBody.create(MediaType.get("application/octet-stream"), requestBytes);
+          RequestBody.create(requestBytes, MediaType.get("application/octet-stream"));
       Request.Builder requestBuilder = new Request.Builder().url(url).post(body);
       setHeaders(requestBuilder, mergedHttpOptions);
       return requestBuilder.build();

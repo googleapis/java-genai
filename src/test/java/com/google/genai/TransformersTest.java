@@ -386,7 +386,7 @@ public class TransformersTest {
   @Test
   public void tExtractModels_responseWithModels() {
     ObjectNode origin = JsonSerializable.objectMapper.createObjectNode();
-    origin.put(
+    origin.set(
         "models", JsonSerializable.objectMapper.createArrayNode().add("model-1").add("model-2"));
 
     JsonNode models = Transformers.tExtractModels(origin);
@@ -397,7 +397,7 @@ public class TransformersTest {
   @Test
   public void tExtractModels_responseWithTunedModels() {
     ObjectNode origin = JsonSerializable.objectMapper.createObjectNode();
-    origin.put("tunedModels", JsonSerializable.objectMapper.createArrayNode().add("tuned-model-1"));
+    origin.set("tunedModels", JsonSerializable.objectMapper.createArrayNode().add("tuned-model-1"));
 
     JsonNode models = Transformers.tExtractModels(origin);
     assertTrue(models instanceof ArrayNode);
@@ -407,7 +407,7 @@ public class TransformersTest {
   @Test
   public void tExtractModels_responseWithPublisherModels() {
     ObjectNode origin = JsonSerializable.objectMapper.createObjectNode();
-    origin.put(
+    origin.set(
         "publisherModels",
         JsonSerializable.objectMapper.createArrayNode().add("publisher-model-1"));
 

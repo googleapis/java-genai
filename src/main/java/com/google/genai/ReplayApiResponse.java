@@ -46,8 +46,8 @@ final class ReplayApiResponse extends ApiResponse {
       // For unary response
       this.body =
           ResponseBody.create(
-              MediaType.parse("application/json"),
-              JsonSerializable.toJsonString(bodySegments.get(0)));
+              JsonSerializable.toJsonString(bodySegments.get(0)),
+              MediaType.parse("application/json"));
     } else {
       // For streaming response
       try {

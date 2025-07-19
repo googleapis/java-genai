@@ -224,7 +224,7 @@ class ApiExceptionTest {
         .protocol(Protocol.HTTP_1_1)
         .code(statusCode)
         .message(reasonPhrase)
-        .body(body != null ? ResponseBody.create(MediaType.get("application/json"), body) : null)
+        .body(body != null ? ResponseBody.create(body, MediaType.get("application/json")) : null)
         .build();
   }
 
@@ -234,7 +234,7 @@ class ApiExceptionTest {
     node.put("status", status);
     node.put("code", code);
     ObjectNode errorNode = OBJECT_MAPPER.createObjectNode();
-    errorNode.put("error", node);
+    errorNode.set("error", node);
     return OBJECT_MAPPER.createArrayNode().add(errorNode);
   }
 }

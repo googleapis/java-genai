@@ -156,9 +156,9 @@ public class ChatTest {
 
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"All Too Well, 10 Minute"
-                + " Version\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}}");
+                + " Version\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
     // Make the apiClient field public so that it can be spied on in the tests. This is a
     // workaround for the fact that the ApiClient is a final class and cannot be spied on directly.
@@ -210,10 +210,10 @@ public class ChatTest {
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
         .thenReturn(mockedResponse1, mockedResponse2);
     ResponseBody functionResponseBody =
-        ResponseBody.create(MediaType.get("application/json"), functionResponse.toJson());
+        ResponseBody.create(functionResponse.toJson(), MediaType.get("application/json"));
     when(mockedResponse1.getBody()).thenReturn(functionResponseBody);
     ResponseBody finalResponseBody =
-        ResponseBody.create(MediaType.get("application/json"), finalResponse.toJson());
+        ResponseBody.create(finalResponse.toJson(), MediaType.get("application/json"));
     when(mockedResponse2.getBody()).thenReturn(finalResponseBody);
 
     Field apiClientField = Chats.class.getDeclaredField("apiClient");
@@ -241,14 +241,14 @@ public class ChatTest {
 
     ResponseBody content1 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"I am doing"
-                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
     ResponseBody content2 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"I am doing"
-                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " great!\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
@@ -276,10 +276,10 @@ public class ChatTest {
 
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
-                + " Bleu\"}], \"role\":\"model\"}}]}}");
+                + " Bleu\"}], \"role\":\"model\"}}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -301,10 +301,10 @@ public class ChatTest {
 
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
-                + " Bleu\"}], \"role\":\"model\"}}]}}");
+                + " Bleu\"}], \"role\":\"model\"}}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -325,14 +325,14 @@ public class ChatTest {
 
     ResponseBody content1 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
     ResponseBody content2 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
@@ -363,14 +363,14 @@ public class ChatTest {
 
     ResponseBody content1 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
     ResponseBody content2 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}");
+                + " cheddar\"}],\"role\":\"model\"},\"finishReason\":\"STOP\"}]}}",
+            MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
@@ -402,9 +402,9 @@ public class ChatTest {
   public void testUnexpectedFinishReasonDoesNotAddToCuratedHistory() throws Exception {
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"It's better with"
-                + " cheddar\"}], \"role\":\"model\"}, \"finishReason\":\"BLOCKLIST\"}]}");
+                + " cheddar\"}], \"role\":\"model\"}, \"finishReason\":\"BLOCKLIST\"}]}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -430,10 +430,10 @@ public class ChatTest {
 
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"Mr. Cheese\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
-                + " Bleu\"}], \"role\":\"model\"}}]}}");
+                + " Bleu\"}], \"role\":\"model\"}}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -458,10 +458,10 @@ public class ChatTest {
 
     ResponseBody content =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"The Gouda Life\"}],"
                 + " \"role\":\"model\"}}, {\"content\": {\"parts\":[{\"text\":\"Something"
-                + " Bleu\"}], \"role\":\"model\"}}]}}");
+                + " Bleu\"}], \"role\":\"model\"}}]}}",
+            MediaType.get("application/json"));
     when(mockedResponse.getBody()).thenReturn(content);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -493,9 +493,9 @@ public class ChatTest {
 
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp", null);
 
-    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
-    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
-    ResponseBody body3 = ResponseBody.create(MediaType.get("application/json"), nonStreamData);
+    ResponseBody body1 = ResponseBody.create(streamData, MediaType.get("application/json"));
+    ResponseBody body2 = ResponseBody.create(streamData2, MediaType.get("application/json"));
+    ResponseBody body3 = ResponseBody.create(nonStreamData, MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
@@ -577,8 +577,8 @@ public class ChatTest {
 
     Chat chatSession = client.chats.create("gemini-2.0-flash-exp", null);
 
-    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
-    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    ResponseBody body1 = ResponseBody.create(streamData, MediaType.get("application/json"));
+    ResponseBody body2 = ResponseBody.create(streamData2, MediaType.get("application/json"));
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))
