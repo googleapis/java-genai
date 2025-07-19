@@ -143,14 +143,14 @@ public class AsyncChatTest {
 
     ResponseBody content1 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}",
+            MediaType.get("application/json"));
     ResponseBody content2 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}",
+            MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
@@ -176,14 +176,14 @@ public class AsyncChatTest {
 
     ResponseBody content1 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}",
+            MediaType.get("application/json"));
     ResponseBody content2 =
         ResponseBody.create(
-            MediaType.get("application/json"),
             "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Once upon a time, there was a"
-                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}");
+                + " cheese shop\"}], \"role\":\"model\"}, \"finishReason\":\"STOP\"}]}",
+            MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
@@ -213,9 +213,9 @@ public class AsyncChatTest {
 
     AsyncChat chatSession = client.async.chats.create("gemini-2.0-flash-exp", null);
 
-    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
-    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
-    ResponseBody body3 = ResponseBody.create(MediaType.get("application/json"), nonStreamData);
+    ResponseBody body1 = ResponseBody.create(streamData, MediaType.get("application/json"));
+    ResponseBody body2 = ResponseBody.create(streamData2, MediaType.get("application/json"));
+    ResponseBody body3 = ResponseBody.create(nonStreamData, MediaType.get("application/json"));
 
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
@@ -293,8 +293,8 @@ public class AsyncChatTest {
 
     AsyncChat chatSession = client.async.chats.create("gemini-2.0-flash-exp", null);
 
-    ResponseBody body1 = ResponseBody.create(MediaType.get("application/json"), streamData);
-    ResponseBody body2 = ResponseBody.create(MediaType.get("application/json"), streamData2);
+    ResponseBody body1 = ResponseBody.create(streamData, MediaType.get("application/json"));
+    ResponseBody body2 = ResponseBody.create(streamData2, MediaType.get("application/json"));
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
     when(mockedClient.request(anyString(), anyString(), anyString(), any()))

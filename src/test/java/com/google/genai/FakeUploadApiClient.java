@@ -100,7 +100,7 @@ public final class FakeUploadApiClient extends ApiClient {
         fileUploadFailureCount.remove(path);
       }
       return new FakeApiResponse(
-          Headers.of(), ResponseBody.create(MediaType.get("text/plain"), ""));
+          Headers.of(), ResponseBody.create("", MediaType.get("text/plain")));
     }
 
     file.uploadedByteCount += requestBytes.length;
@@ -113,7 +113,7 @@ public final class FakeUploadApiClient extends ApiClient {
 
     return new FakeApiResponse(
         Headers.of("X-Goog-Upload-Status", uploadStatus),
-        ResponseBody.create(MediaType.get("text/plain"), ""));
+        ResponseBody.create("", MediaType.get("text/plain")));
   }
 
   public class UploadedFile {

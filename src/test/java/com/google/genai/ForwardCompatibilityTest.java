@@ -75,7 +75,7 @@ public class ForwardCompatibilityTest {
     objectNode.put("unknownFieldToTestForwardCompatibility", "Hello World!");
     String jsonString = objectMapper.writeValueAsString(objectNode);
 
-    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    ResponseBody responseBody = ResponseBody.create(jsonString, JSON);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -108,7 +108,7 @@ public class ForwardCompatibilityTest {
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    ResponseBody responseBody = ResponseBody.create(jsonString, JSON);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -147,7 +147,7 @@ public class ForwardCompatibilityTest {
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    ResponseBody responseBody = ResponseBody.create(jsonString, JSON);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -180,12 +180,12 @@ public class ForwardCompatibilityTest {
 
     safetyRatingsObjectNode.put("category", "UNKNOWN_SAFETY_RATING_VALUE");
     safetyRatingsArray.add(safetyRatingsObjectNode);
-    candidateObject.put("safetyRatings", safetyRatingsArray);
+    candidateObject.set("safetyRatings", safetyRatingsArray);
     candidatesArray.add(candidateObject);
     rootObjectNode.putArray("candidates").addAll(candidatesArray);
 
     String jsonString = objectMapper.writeValueAsString(rootNode);
-    ResponseBody responseBody = ResponseBody.create(JSON, jsonString);
+    ResponseBody responseBody = ResponseBody.create(jsonString, JSON);
     when(mockedResponse.getBody()).thenReturn(responseBody);
 
     // Make the apiClient field public so that it can be spied on in the tests. This is a
@@ -232,7 +232,7 @@ public class ForwardCompatibilityTest {
     Field apiClientField = Models.class.getDeclaredField("apiClient");
     apiClientField.setAccessible(true);
     apiClientField.set(client.models, mockedClient);
-    when(mockedResponse.getBody()).thenReturn(ResponseBody.create(JSON, "{}"));
+    when(mockedResponse.getBody()).thenReturn(ResponseBody.create("{}", JSON));
 
     GenerateContentResponse response =
         client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", config);
