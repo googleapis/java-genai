@@ -83,7 +83,6 @@ public abstract class JsonSerializable {
   static {
     objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
     objectMapper.registerModule(new Jdk8Module());
-    objectMapper.registerModule(new JavaTimeModule());
     // Disable writing dates as timestamps to use ISO-8601 string format for Instant
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -98,7 +97,6 @@ public abstract class JsonSerializable {
     // provided by JavaTimeModule.
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.registerModule(customModule);
-
   }
 
   /** Serializes the instance to a Json string. */
