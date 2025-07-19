@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://github.com/googleapis/java-genai/compare/v1.9.0...v1.10.0) (2025-07-19)
+
+
+### Features
+
+* Add generateVideosFromSource in Go, refactor private generateVideos ([c683835](https://github.com/googleapis/java-genai/commit/c683835593e74673e44f981ab8b0e0c7dbb105cd))
+* Add image_size field for Vertex Imagen 4 generation ([950c0c6](https://github.com/googleapis/java-genai/commit/950c0c657f786039e3a301bf1237a57ae324ff62))
+
+
+### Bug Fixes
+
+* **live:** Enhance security by moving api key from query parameters to header ([e48c7f1](https://github.com/googleapis/java-genai/commit/e48c7f1e73dadf5c5198f9b58cea322deb7a4ed0))
+
 ## [1.9.0](https://github.com/googleapis/java-genai/compare/v1.8.0...v1.9.0) (2025-07-16)
 
 
