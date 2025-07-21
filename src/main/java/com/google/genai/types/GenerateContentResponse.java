@@ -41,6 +41,10 @@ import org.jspecify.annotations.Nullable;
 @AutoValue
 @JsonDeserialize(builder = GenerateContentResponse.Builder.class)
 public abstract class GenerateContentResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** Response variations returned by the model. */
   @JsonProperty("candidates")
   public abstract Optional<List<Candidate>> candidates();
@@ -87,6 +91,23 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_GenerateContentResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
