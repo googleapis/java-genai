@@ -85,6 +85,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("tunedModel")
   public abstract Optional<TunedModel> tunedModel();
 
+  /** The pre-tuned model for continuous tuning. */
+  @JsonProperty("preTunedModel")
+  public abstract Optional<PreTunedModel> preTunedModel();
+
   /** Tuning Spec for Supervised Fine Tuning. */
   @JsonProperty("supervisedTuningSpec")
   public abstract Optional<SupervisedTuningSpec> supervisedTuningSpec();
@@ -293,6 +297,23 @@ public abstract class TuningJob extends JsonSerializable {
      */
     public Builder tunedModel(TunedModel.Builder tunedModelBuilder) {
       return tunedModel(tunedModelBuilder.build());
+    }
+
+    /**
+     * Setter for preTunedModel.
+     *
+     * <p>preTunedModel: The pre-tuned model for continuous tuning.
+     */
+    @JsonProperty("preTunedModel")
+    public abstract Builder preTunedModel(PreTunedModel preTunedModel);
+
+    /**
+     * Setter for preTunedModel builder.
+     *
+     * <p>preTunedModel: The pre-tuned model for continuous tuning.
+     */
+    public Builder preTunedModel(PreTunedModel.Builder preTunedModelBuilder) {
+      return preTunedModel(preTunedModelBuilder.build());
     }
 
     /**
