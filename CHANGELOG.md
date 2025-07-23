@@ -5,9 +5,7 @@
 
 ### Features
 
-* Add generateVideosFromSource in Go, refactor private generateVideos ([c683835](https://github.com/googleapis/java-genai/commit/c683835593e74673e44f981ab8b0e0c7dbb105cd))
 * Add image_size field for Vertex Imagen 4 generation ([950c0c6](https://github.com/googleapis/java-genai/commit/950c0c657f786039e3a301bf1237a57ae324ff62))
-* return headers for list method in all modules. ([45a027b](https://github.com/googleapis/java-genai/commit/45a027b2d0aef1219ec05ac9874f6493180abf94))
 * Support API keys for VertexAI mode for Java SDK ([826c0dc](https://github.com/googleapis/java-genai/commit/826c0dca02e06fcb6c7980259b23e955db176ec6))
 * Support http headers in GenerateContentResponse ([5282774](https://github.com/googleapis/java-genai/commit/528277406279d772c01ac2a48544962408ac235b))
 
