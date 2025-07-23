@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.10.0](https://github.com/googleapis/java-genai/compare/v1.9.0...v1.10.0) (2025-07-23)
+
+
+### Features
+
+* Add generateVideosFromSource in Go, refactor private generateVideos ([c683835](https://github.com/googleapis/java-genai/commit/c683835593e74673e44f981ab8b0e0c7dbb105cd))
+* Add image_size field for Vertex Imagen 4 generation ([950c0c6](https://github.com/googleapis/java-genai/commit/950c0c657f786039e3a301bf1237a57ae324ff62))
+* return headers for list method in all modules. ([45a027b](https://github.com/googleapis/java-genai/commit/45a027b2d0aef1219ec05ac9874f6493180abf94))
+* Support API keys for VertexAI mode for Java SDK ([826c0dc](https://github.com/googleapis/java-genai/commit/826c0dca02e06fcb6c7980259b23e955db176ec6))
+* Support http headers in GenerateContentResponse ([5282774](https://github.com/googleapis/java-genai/commit/528277406279d772c01ac2a48544962408ac235b))
+
+
+### Bug Fixes
+
+* Defer loading ADC when credentials is provided explicitly in Live API ([a540614](https://github.com/googleapis/java-genai/commit/a5406140aeaf9774265a5bcce79dae0707ed9287))
+* **live:** Enhance security by moving api key from query parameters to header ([e48c7f1](https://github.com/googleapis/java-genai/commit/e48c7f1e73dadf5c5198f9b58cea322deb7a4ed0))
+* Pager throws an exception if list request returns nothing(correct behavior is returning a Pager without any items in it) ([0a2301b](https://github.com/googleapis/java-genai/commit/0a2301b19fcd3e4d3694d42780da8f5ffe5f9207))
+
+
+### Documentation
+
+* Update README with latest features in Client ([dcf70cc](https://github.com/googleapis/java-genai/commit/dcf70cc64a93355cdc6a2eedf172399dd332750e))
+
 ## [1.9.0](https://github.com/googleapis/java-genai/compare/v1.8.0...v1.9.0) (2025-07-16)
 
 
