@@ -21,14 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
 import com.google.genai.types.TuningDataset;
-import com.google.genai.types.TuningExample;
 import com.google.genai.types.TuningJob;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -87,38 +83,22 @@ public class TuningsTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testTuneUntilSuccess(boolean vertexAI) {
+    if (!vertexAI) { // MLDev test removed, tune not supported anymore
+      return;
+    }
+
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
         TestUtils.createClient(
             vertexAI, "tests/tunings/end_to_end/test_tune_until_success." + suffix + ".json");
 
-    TuningJob job;
-    if (vertexAI) {
-      TuningDataset tuningDataset =
-          TuningDataset.builder()
-              .gcsUri(
-                  "gs://cloud-samples-data/ai-platform/generative_ai/gemini-2_0/text/sft_train_data.jsonl")
-              .build();
-      job = client.tunings.tune("gemini-2.0-flash-001", tuningDataset, null);
-    } else {
-      // Technically not supported anymore (via API) but the replay test only verifies logic
-      List<TuningExample> examples = new ArrayList<>();
-      for (int i = 0; i < 5; i++) {
-        examples.add(
-            TuningExample.builder()
-                .textInput(String.format("Input text %d", i))
-                .output(String.format("Output text %d", i))
-                .build());
-      }
-
-      TuningDataset tuningDataset = TuningDataset.builder().examples(examples).build();
-      CreateTuningJobConfig config =
-          CreateTuningJobConfig.builder()
-              .tunedModelDisplayName("test_dataset_examples model")
-              .build();
-      job = client.tunings.tune("models/gemini-1.0-pro-001", tuningDataset, config);
-    }
+    TuningDataset tuningDataset =
+        TuningDataset.builder()
+            .gcsUri(
+                "gs://cloud-samples-data/ai-platform/generative_ai/gemini-2_0/text/sft_train_data.jsonl")
+            .build();
+    TuningJob job = client.tunings.tune("gemini-2.0-flash-001", tuningDataset, null);
 
     // Act
     TuningJob currentJob = job;

@@ -411,6 +411,9 @@ abstract class ApiClient {
     if (httpOptionsToApply.timeout().isPresent()) {
       mergedHttpOptionsBuilder.timeout(httpOptionsToApply.timeout().get());
     }
+    if (httpOptionsToApply.proxy().isPresent()) {
+      mergedHttpOptionsBuilder.proxy(httpOptionsToApply.proxy().get()); 
+    }
     if (httpOptionsToApply.headers().isPresent()) {
       Stream<Map.Entry<String, String>> headersStream =
           Stream.concat(
