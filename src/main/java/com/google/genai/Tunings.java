@@ -112,26 +112,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningExampleToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"textInput"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"textInput"},
-          Common.getValueByPath(fromObject, new String[] {"textInput"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"output"},
-          Common.getValueByPath(fromObject, new String[] {"output"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
@@ -141,17 +121,6 @@ public final class Tunings {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}))) {
       throw new IllegalArgumentException(
           "vertexDatasetResource parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"examples"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"examples"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tuningExampleToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"examples", "examples"}, result);
     }
 
     return toObject;
@@ -199,20 +168,6 @@ public final class Tunings {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"adapterSize"}))) {
       throw new IllegalArgumentException("adapterSize parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"tuningTask", "hyperparameters", "batchSize"},
-          Common.getValueByPath(fromObject, new String[] {"batchSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"tuningTask", "hyperparameters", "learningRate"},
-          Common.getValueByPath(fromObject, new String[] {"learningRate"}));
     }
 
     return toObject;
@@ -332,10 +287,6 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
-      throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
-    }
-
     return toObject;
   }
 
@@ -413,14 +364,6 @@ public final class Tunings {
           parentObject,
           new String[] {"supervisedTuningSpec", "hyperParameters", "adapterSize"},
           Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"batchSize"}))) {
-      throw new IllegalArgumentException("batchSize parameter is not supported in Vertex AI.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"learningRate"}))) {
-      throw new IllegalArgumentException("learningRate parameter is not supported in Vertex AI.");
     }
 
     return toObject;

@@ -71,20 +71,6 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
 
-  /**
-   * The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will be used based
-   * on the number of training examples.
-   */
-  @JsonProperty("batchSize")
-  public abstract Optional<Integer> batchSize();
-
-  /**
-   * The learning rate hyperparameter for tuning. If not set, a default of 0.001 or 0.0002 will be
-   * calculated based on the number of training examples.
-   */
-  @JsonProperty("learningRate")
-  public abstract Optional<Float> learningRate();
-
   /** Instantiates a builder for CreateTuningJobConfig. */
   public static Builder builder() {
     return new AutoValue_CreateTuningJobConfig.Builder();
@@ -209,24 +195,6 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     public Builder adapterSize(String adapterSize) {
       return adapterSize(new AdapterSize(adapterSize));
     }
-
-    /**
-     * Setter for batchSize.
-     *
-     * <p>batchSize: The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will
-     * be used based on the number of training examples.
-     */
-    @JsonProperty("batchSize")
-    public abstract Builder batchSize(Integer batchSize);
-
-    /**
-     * Setter for learningRate.
-     *
-     * <p>learningRate: The learning rate hyperparameter for tuning. If not set, a default of 0.001
-     * or 0.0002 will be calculated based on the number of training examples.
-     */
-    @JsonProperty("learningRate")
-    public abstract Builder learningRate(Float learningRate);
 
     public abstract CreateTuningJobConfig build();
   }
