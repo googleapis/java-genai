@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.net.Proxy;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,6 +46,10 @@ public abstract class HttpOptions extends JsonSerializable {
   /** Timeout for the request in milliseconds. */
   @JsonProperty("timeout")
   public abstract Optional<Integer> timeout();
+
+  /** Proxy configuration for the HTTP requests. */
+  @JsonProperty("proxy")
+  public abstract Optional<Proxy> proxy();
 
   /**
    * Extra parameters to add to the request body. The structure must match the backend API's request
@@ -102,6 +107,14 @@ public abstract class HttpOptions extends JsonSerializable {
      */
     @JsonProperty("timeout")
     public abstract Builder timeout(Integer timeout);
+
+    /**
+     * Setter for proxy.
+     *
+     * <p>proxy: Proxy configuration for the HTTP requests.
+     */
+    @JsonProperty("proxy")
+    public abstract Builder proxy(Proxy proxy);
 
     /**
      * Setter for extraBody.
