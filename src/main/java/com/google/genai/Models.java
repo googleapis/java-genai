@@ -62,6 +62,10 @@ import com.google.genai.types.ListModelsParameters;
 import com.google.genai.types.ListModelsResponse;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
+import com.google.genai.types.RecontextImageConfig;
+import com.google.genai.types.RecontextImageParameters;
+import com.google.genai.types.RecontextImageResponse;
+import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.ReferenceImageAPI;
 import com.google.genai.types.SafetyAttributes;
@@ -1309,8 +1313,11 @@ public final class Models {
       throw new IllegalArgumentException("addWatermark parameter is not supported in Gemini API.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageSize"}))) {
-      throw new IllegalArgumentException("imageSize parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "sampleImageSize"},
+          Common.getValueByPath(fromObject, new String[] {"imageSize"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}))) {
@@ -3519,6 +3526,162 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode productImageToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"productImage"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"productImage"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode recontextImageSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "prompt"},
+          Common.getValueByPath(fromObject, new String[] {"prompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personImage"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "personImage", "image"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"personImage"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"productImages"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"productImages"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(productImageToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(parentObject, new String[] {"instances[0]", "productImages"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode recontextImageConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "sampleCount"},
+          Common.getValueByPath(fromObject, new String[] {"numberOfImages"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"baseSteps"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "editConfig", "baseSteps"},
+          Common.getValueByPath(fromObject, new String[] {"baseSteps"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "storageUri"},
+          Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"seed"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "seed"},
+          Common.getValueByPath(fromObject, new String[] {"seed"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "safetySetting"},
+          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"outputMimeType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "outputOptions", "compressionQuality"},
+          Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "enhancePrompt"},
+          Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode recontextImageParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          recontextImageSourceToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          recontextImageConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode getModelParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -4349,6 +4512,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"promptFeedback"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseId"},
+          Common.getValueByPath(fromObject, new String[] {"responseId"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5145,13 +5315,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"createTime"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"responseId"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseId"},
-          Common.getValueByPath(fromObject, new String[] {"responseId"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"modelVersion"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5164,6 +5327,13 @@ public final class Models {
           toObject,
           new String[] {"promptFeedback"},
           Common.getValueByPath(fromObject, new String[] {"promptFeedback"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseId"},
+          Common.getValueByPath(fromObject, new String[] {"responseId"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
@@ -5412,6 +5582,24 @@ public final class Models {
   ObjectNode upscaleImageResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
+    if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode recontextImageResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -6170,6 +6358,89 @@ public final class Models {
             "This method is only supported in the Vertex AI client.");
       }
       return JsonSerializable.fromJsonNode(responseNode, UpscaleImageResponse.class);
+    }
+  }
+
+  /**
+   * Recontextualizes an image.
+   *
+   * <p>There are two types of recontextualization currently supported: 1) Imagen Product Recontext
+   * - Generate images of products in new scenes and contexts. 2) Virtual Try-On: Generate images of
+   * persons modeling fashion products.
+   *
+   * @param model the name of the GenAI model to use for image recontext
+   * @param source a {@link com.google.genai.types.RecontextImageSource} An object containing the
+   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is optional
+   *     for product recontext and disallowed for virtual try-on. personImage is required for
+   *     virtual try-on, disallowed for product recontext. productImages is required for both
+   *     product recontext and virtual try-on. Only one product image is supported for virtual
+   *     try-on, and up to 3 product images (different angles of the same product) are supported for
+   *     product recontext.
+   * @param config a {@link com.google.genai.types.RecontextImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.RecontextImageResponse} instance that contains the
+   *     generated images.
+   */
+  public RecontextImageResponse recontextImage(
+      String model, RecontextImageSource source, RecontextImageConfig config) {
+
+    RecontextImageParameters.Builder parameterBuilder = RecontextImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(source)) {
+      parameterBuilder.source(source);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      body = recontextImageParametersToVertex(this.apiClient, parameterNode, null);
+      path = Common.formatMap("{model}:predict", body.get("_url"));
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    body.remove("config");
+
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
+      ResponseBody responseBody = response.getBody();
+      String responseString;
+      try {
+        responseString = responseBody.string();
+      } catch (IOException e) {
+        throw new GenAiIOException("Failed to read HTTP response.", e);
+      }
+
+      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+      if (this.apiClient.vertexAI()) {
+        responseNode = recontextImageResponseFromVertex(responseNode, null);
+      } else {
+        throw new UnsupportedOperationException(
+            "This method is only supported in the Vertex AI client.");
+      }
+      return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
     }
   }
 

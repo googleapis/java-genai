@@ -19,6 +19,8 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
@@ -32,6 +34,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -42,7 +45,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jspecify.annotations.Nullable;
-
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
 abstract class ApiClient {
@@ -241,6 +243,7 @@ abstract class ApiClient {
   }
 
   /** Builds a HTTP request given the http method, path, and request json string. */
+  @SuppressWarnings("unchecked")
   protected Request buildRequest(
       String httpMethod,
       String path,
@@ -285,12 +288,31 @@ abstract class ApiClient {
       throw new IllegalArgumentException("Unsupported HTTP method: " + capitalizedHttpMethod);
     }
 
+    ObjectMapper objectMapper = new ObjectMapper();
     RequestBody body;
     if (METHODS_WITH_BODY.contains(capitalizedHttpMethod)) {
       body = RequestBody.create(requestJson, MediaType.parse("application/json"));
     } else {
       body = null;
     }
+
+    if (mergedHttpOptions.extraBody().isPresent() && body != null) {
+      try {
+        Map<String, Object> requestBodyMap = objectMapper.readValue(requestJson, Map.class);
+        mergeMaps(requestBodyMap, mergedHttpOptions.extraBody().get());
+        requestJson = objectMapper.writeValueAsString(requestBodyMap);
+        body = RequestBody.create(requestJson, MediaType.parse("application/json"));
+      } catch (JsonProcessingException e) {
+        logger.warning("Failed to merge extraBody into request body: " + e.getMessage());
+        // If merging fails, proceed with the original request body
+        body = RequestBody.create(requestJson, MediaType.parse("application/json"));
+      }
+    } else if (mergedHttpOptions.extraBody().isPresent()) {
+      logger.warning(
+          "HttpOptions.extraBody is set, but the HTTP method does not support a request body. "
+              + "The extraBody will be ignored.");
+    }
+
     Request.Builder requestBuilder =
         new Request.Builder().url(requestUrl).method(capitalizedHttpMethod, body);
 
@@ -387,6 +409,47 @@ abstract class ApiClient {
     return httpClient;
   }
 
+  /**
+   * Merges two maps recursively. If a key exists in both maps, the value from `source` overwrites
+   * the value in `target`. If the value is a list, then update the whole list. A warning is logged
+   * if the types of the values for the same key are different.
+   *
+   * @param target The target map to merge into.
+   * @param source The source map to merge from.
+   */
+  @SuppressWarnings("unchecked")
+  private void mergeMaps(Map<String, Object> target, Map<String, Object> source) {
+    for (Map.Entry<String, Object> entry : source.entrySet()) {
+      String key = entry.getKey();
+      Object sourceValue = entry.getValue();
+
+      if (target.containsKey(key)) {
+        Object targetValue = target.get(key);
+
+        if (targetValue instanceof Map && sourceValue instanceof Map) {
+          // Both values are maps, recursively merge them
+          mergeMaps((Map<String, Object>) targetValue, (Map<String, Object>) sourceValue);
+        } else if (targetValue instanceof List && sourceValue instanceof List) {
+          // Both values are lists, replace the target list with the source list
+          target.put(key, sourceValue);
+        } else {
+          // Values are not both maps or both lists, check if they have the same type
+          if (targetValue.getClass() != sourceValue.getClass()) {
+            logger.warning(
+                String.format(
+                    "Type mismatch for key '%s'. Original type: %s, new type: %s.  Overwriting"
+                        + " with the new value.",
+                    key, targetValue.getClass().getName(), sourceValue.getClass().getName()));
+          }
+          target.put(key, sourceValue);
+        }
+      } else {
+        // Key does not exist in target, add it
+        target.put(key, sourceValue);
+      }
+    }
+  }
+
   private Optional<Map<String, String>> getTimeoutHeader(HttpOptions httpOptionsToApply) {
     if (httpOptionsToApply.timeout().isPresent()) {
       int timeoutInSeconds = (int) Math.ceil((double) httpOptionsToApply.timeout().get() / 1000.0);
@@ -430,6 +493,9 @@ abstract class ApiClient {
           headersStream.collect(
               toImmutableMap(Map.Entry::getKey, Map.Entry::getValue, (val1, val2) -> val2));
       mergedHttpOptionsBuilder.headers(mergedHeaders);
+    }
+    if (httpOptionsToApply.extraBody().isPresent()) {
+      mergedHttpOptionsBuilder.extraBody(httpOptionsToApply.extraBody().get());
     }
     return mergedHttpOptionsBuilder.build();
   }

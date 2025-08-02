@@ -25,4 +25,4 @@ jobs:
         java-version: ${{matrix.java}}
         cache: 'maven'
     - name: Java Unit Tests
-      run: mvn clean test -Dtest=${{matrix.testgroup}}
+      run: mvn clean test -Dtest=${{matrix.testgroup}} -Djacoco.skip=true

@@ -16,6 +16,7 @@
 
 package com.google.genai;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -33,6 +34,8 @@ import static org.mockito.Mockito.when;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
@@ -59,6 +62,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import java.io.IOException;
+import java.util.Map;
 
 @ExtendWith(EnvironmentVariablesMockingExtension.class)
 public class HttpApiClientTest {
@@ -212,6 +217,233 @@ public class HttpApiClientTest {
     assertEquals("http://test-url/test-api-version/" + TEST_PATH, capturedRequest.url().toString());
     // Request should have the header set by the request-level http options.
     assertEquals("header", capturedRequest.header("test"));
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_addNewKey() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("newKey", "newValue")).build();
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of("test", "request-json", "newKey", "newValue");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteKey() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("test", "overwritten")).build();
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap = ImmutableMap.of("test", "overwritten");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_recursiveMerge() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"nested\": {\"key1\": \"value1\"}, \"key_to_keep\": \"v_keep\"}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(ImmutableMap.of("nested", ImmutableMap.of("key2", "value2")))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of(
+            "nested", ImmutableMap.of("key1", "value1", "key2", "value2"),
+            "key_to_keep",
+            "v_keep");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteList() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"list\": [1, 2]}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(ImmutableMap.of("list", com.google.common.collect.ImmutableList.of(3, 4)))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of("list", com.google.common.collect.ImmutableList.of(3, 4));
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteWithDifferentType() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"key\": \"string_value\"}";
+    HttpOptions httpOptions = HttpOptions.builder().extraBody(ImmutableMap.of("key", 123)).build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap = ImmutableMap.of("key", 123);
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_complexMerge() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson =
+        "{\"a\": 1, \"b\": {\"c\": 2, \"d\": [\"x\", \"y\"]}, \"e\": \"original\"}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(
+                ImmutableMap.of(
+                    "b",
+                    ImmutableMap.of(
+                        "d", com.google.common.collect.ImmutableList.of("z"), "f", "new_f"),
+                    "e",
+                    "overwritten"))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of(
+            "a",
+            1,
+            "b",
+            ImmutableMap.of(
+                "c", 2, "d", com.google.common.collect.ImmutableList.of("z"), "f", "new_f"),
+            "e",
+            "overwritten");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_getNoBody() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("newKey", "newValue")).build();
+
+    // Act
+    client.request("GET", TEST_PATH, "", Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    assertNull(capturedRequest.body());
   }
 
   @Test

@@ -1889,6 +1889,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"promptFeedback"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseId"},
+          Common.getValueByPath(fromObject, new String[] {"responseId"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2076,6 +2083,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteResourceJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2307,6 +2315,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteResourceJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,

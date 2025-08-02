@@ -51,6 +51,14 @@ public abstract class HttpOptions extends JsonSerializable {
   @JsonProperty("proxy")
   public abstract Optional<Proxy> proxy();
 
+  /**
+   * Extra parameters to add to the request body. The structure must match the backend API's request
+   * structure. - VertexAI backend API docs: https://cloud.google.com/vertex-ai/docs/reference/rest
+   * - GeminiAPI backend API docs: https://ai.google.dev/api/rest
+   */
+  @JsonProperty("extraBody")
+  public abstract Optional<Map<String, Object>> extraBody();
+
   /** Instantiates a builder for HttpOptions. */
   public static Builder builder() {
     return new AutoValue_HttpOptions.Builder();
@@ -107,6 +115,17 @@ public abstract class HttpOptions extends JsonSerializable {
      */
     @JsonProperty("proxy")
     public abstract Builder proxy(Proxy proxy);
+
+    /**
+     * Setter for extraBody.
+     *
+     * <p>extraBody: Extra parameters to add to the request body. The structure must match the
+     * backend API's request structure. - VertexAI backend API docs:
+     * https://cloud.google.com/vertex-ai/docs/reference/rest - GeminiAPI backend API docs:
+     * https://ai.google.dev/api/rest
+     */
+    @JsonProperty("extraBody")
+    public abstract Builder extraBody(Map<String, Object> extraBody);
 
     public abstract HttpOptions build();
   }

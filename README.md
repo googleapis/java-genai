@@ -178,11 +178,11 @@ Client client = Client.builder()
 ```
 
 ### Interact with models
-The Gen AI Java SDK allows you to access the service programmatically.
+The Google Gen AI Java SDK allows you to access the service programmatically.
 The following code snippets are some basic usages of model inferencing.
 
 #### Generate Content
-Use `generateContent` method for the most basic text generation.
+Use `generateContent` method for the most basic content generation.
 
 ##### with text input
 
@@ -199,10 +199,17 @@ public class GenerateContentWithTextInput {
     Client client = new Client();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-001", "What is your name?", null);
+        client.models.generateContent("gemini-2.5-flash", "What is your name?", null);
 
     // Gets the text string from the response by the quick accessor method `text()`.
     System.out.println("Unary response: " + response.text());
+
+    // Gets the http headers from the response.
+    response
+        .sdkHttpResponse()
+        .ifPresent(
+            httpResponse ->
+                System.out.println("Response headers: " + httpResponse.headers().orElse(null)));
   }
 }
 ```
@@ -232,7 +239,68 @@ public class GenerateContentWithImageInput {
             Part.fromUri("gs://path/to/image.jpg", "image/jpeg"));
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-001", content, null);
+        client.models.generateContent("gemini-2.5-flash", content, null);
+
+    System.out.println("Response: " + response.text());
+  }
+}
+```
+
+##### Generate Content with extra configs
+To set configurations like System Instructions and Safety Settings, you can pass
+a `GenerateContentConfig` to the `GenerateContent` method.
+
+```java
+package <your package name>;
+
+import com.google.common.collect.ImmutableList;
+import com.google.genai.Client;
+import com.google.genai.types.Content;
+import com.google.genai.types.GenerateContentConfig;
+import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.GoogleSearch;
+import com.google.genai.types.HarmBlockThreshold;
+import com.google.genai.types.HarmCategory;
+import com.google.genai.types.Part;
+import com.google.genai.types.SafetySetting;
+import com.google.genai.types.ThinkingConfig;
+import com.google.genai.types.Tool;
+
+public class GenerateContentWithConfigs {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    // Sets the safety settings in the config.
+    ImmutableList<SafetySetting> safetySettings =
+        ImmutableList.of(
+            SafetySetting.builder()
+                .category(HarmCategory.Known.HARM_CATEGORY_HATE_SPEECH)
+                .threshold(HarmBlockThreshold.Known.BLOCK_ONLY_HIGH)
+                .build(),
+            SafetySetting.builder()
+                .category(HarmCategory.Known.HARM_CATEGORY_DANGEROUS_CONTENT)
+                .threshold(HarmBlockThreshold.Known.BLOCK_LOW_AND_ABOVE)
+                .build());
+
+    // Sets the system instruction in the config.
+    Content systemInstruction = Content.fromParts(Part.fromText("You are a history teacher."));
+
+    // Sets the Google Search tool in the config.
+    Tool googleSearchTool = Tool.builder().googleSearch(GoogleSearch.builder()).build();
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            // Sets the thinking budget to 0 to disable thinking mode
+            .thinkingConfig(ThinkingConfig.builder().thinkingBudget(0))
+            .candidateCount(1)
+            .maxOutputTokens(1024)
+            .safetySettings(safetySettings)
+            .systemInstruction(systemInstruction)
+            .tools(googleSearchTool)
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent("gemini-2.5-flash", "Tell me the history of LLM", config);
 
     System.out.println("Response: " + response.text());
   }
@@ -287,14 +355,12 @@ public class GenerateContentWithFunctionCall {
 
     GenerateContentConfig config =
         GenerateContentConfig.builder()
-            .tools(
-                ImmutableList.of(
-                    Tool.builder().functions(ImmutableList.of(method)).build()))
+            .tools(Tool.builder().functions(method))
             .build();
 
     GenerateContentResponse response =
         client.models.generateContent(
-            "gemini-2.0-flash-001",
+            "gemini-2.5-flash",
             "What is the weather in Vancouver?",
             config);
 
@@ -306,7 +372,7 @@ public class GenerateContentWithFunctionCall {
 }
 ```
 
-#### Stream Generated Content
+##### Stream Generated Content
 To get a streamed response, you can use the `generateContentStream` method:
 
 ```java
@@ -318,13 +384,11 @@ import com.google.genai.types.GenerateContentResponse;
 
 public class StreamGeneration {
   public static void main(String[] args) {
-    // Instantiate the client using Vertex API. The client gets the project and location from the
-    // environment variables `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
-    Client client = Client.builder().vertexAI(true).build();
+    Client client = new Client();
 
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            "gemini-2.0-flash-001", "Tell me a story in 300 words.", null);
+            "gemini-2.5-flash", "Tell me a story in 300 words.", null);
 
     System.out.println("Streaming response: ");
     for (GenerateContentResponse res : responseStream) {
@@ -338,7 +402,7 @@ public class StreamGeneration {
 }
 ```
 
-#### Async Generate Content
+##### Async Generate Content
 To get a response asynchronously, you can use the `generateContent` method from
 the `client.async.models` namespace.
 
@@ -351,12 +415,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class GenerateContentAsync {
   public static void main(String[] args) {
-    // Instantiates the client using Gemini API, and sets the API key in the builder.
-    Client client = Client.builder().apiKey("your-api-key").build();
+    Client client = new Client();
 
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-2.0-flash-001", "Introduce Google AI Studio.", null);
+            "gemini-2.5-flash", "Introduce Google AI Studio.", null);
 
     responseFuture
         .thenAccept(
@@ -368,65 +431,7 @@ public class GenerateContentAsync {
 }
 ```
 
-#### Generate Content with extra configs
-To set configurations like System Instructions and Safety Settings, you can pass
-a `GenerateContentConfig` to the `GenerateContent` method.
-
-```java
-package <your package name>;
-
-import com.google.common.collect.ImmutableList;
-import com.google.genai.Client;
-import com.google.genai.types.Content;
-import com.google.genai.types.GenerateContentConfig;
-import com.google.genai.types.GenerateContentResponse;
-import com.google.genai.types.GoogleSearch;
-import com.google.genai.types.HarmBlockThreshold;
-import com.google.genai.types.HarmCategory;
-import com.google.genai.types.Part;
-import com.google.genai.types.SafetySetting;
-import com.google.genai.types.Tool;
-
-public class GenerateContentWithConfigs {
-  public static void main(String[] args) {
-    Client client = new Client();
-
-    // Sets the safety settings in the config.
-    ImmutableList<SafetySetting> safetySettings =
-        ImmutableList.of(
-            SafetySetting.builder()
-                .category(HarmCategory.Known.HARM_CATEGORY_HATE_SPEECH)
-                .threshold(HarmBlockThreshold.Known.BLOCK_ONLY_HIGH)
-                .build(),
-            SafetySetting.builder()
-                .category(HarmCategory.Known.HARM_CATEGORY_DANGEROUS_CONTENT)
-                .threshold(HarmBlockThreshold.Known.BLOCK_LOW_AND_ABOVE)
-                .build());
-
-    // Sets the system instruction in the config.
-    Content systemInstruction = Content.fromParts(Part.fromText("You are a history teacher."));
-
-    // Sets the Google Search tool in the config.
-    Tool googleSearchTool = Tool.builder().googleSearch(GoogleSearch.builder().build()).build();
-
-    GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .candidateCount(1)
-            .maxOutputTokens(1024)
-            .safetySettings(safetySettings)
-            .systemInstruction(systemInstruction)
-            .tools(ImmutableList.of(googleSearchTool))
-            .build();
-
-    GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-001", "Tell me the history of LLM", config);
-
-    System.out.println("Response: " + response.text());
-  }
-}
-```
-
-#### Generate Content with JSON response schema
+##### Generate Content with JSON response schema
 To get a response in JSON by passing in a response schema to the
 `GenerateContent` API.
 
@@ -465,12 +470,348 @@ public class GenerateContentWithSchema {
             .build();
 
     GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-001", "Tell me your name", config);
+        client.models.generateContent("gemini-2.5-flash", "Tell me your name", config);
 
     System.out.println("Response: " + response.text());
   }
 }
 ```
+
+#### Count Tokens and Compute Tokens
+
+The `countTokens` method allows you to calculate the number of tokens your
+prompt will use before sending it to the model, helping you manage costs and
+stay within the context window.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.CountTokensResponse;
+
+public class CountTokens {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    CountTokensResponse response =
+        client.models.countTokens("gemini-2.5-flash", "What is your name?", null);
+
+    System.out.println("Count tokens response: " + response);
+  }
+}
+```
+
+The `computeTokens` method returns the Tokens Info that contains tokens and
+token IDs given your prompt. This method is only supported in Vertex AI.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.ComputeTokensResponse;
+
+public class ComputeTokens {
+  public static void main(String[] args) {
+    Client client = Client.builder().vertexAI(true).build();
+
+    ComputeTokensResponse response =
+        client.models.computeTokens("gemini-2.5-flash", "What is your name?", null);
+
+    System.out.println("Compute tokens response: " + response);
+  }
+}
+```
+
+#### Embed Content
+
+The `embedContent` method allows you to generate embeddings for words, phrases,
+sentences, and code. Note that only text embedding is supported in this method.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.EmbedContentResponse;
+
+public class EmbedContent {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    EmbedContentResponse response =
+        client.models.embedContent("gemini-embedding-001", "why is the sky blue?", null);
+
+    System.out.println("Embedding response: " + response);
+  }
+}
+```
+
+### Imagen
+
+Imagen is a text-to-image GenAI service.
+
+#### Generate Images
+
+The `generateImages` method helps you create high-quality, unique images given a
+text prompt.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateImagesConfig;
+import com.google.genai.types.GenerateImagesResponse;
+import com.google.genai.types.Image;
+
+public class GenerateImages {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    GenerateImagesConfig config =
+        GenerateImagesConfig.builder()
+            .numberOfImages(1)
+            .outputMimeType("image/jpeg")
+            .includeSafetyAttributes(true)
+            .build();
+
+    GenerateImagesResponse response =
+        client.models.generateImages(
+            "imagen-3.0-generate-002", "Robot holding a red skateboard", config);
+
+    response.generatedImages().ifPresent(
+        images -> {
+            System.out.println("Generated " + images.size() + " images.");
+            Image image = images.get(0).image().orElse(null);
+            // Do something with the image.
+        }
+    );
+  }
+}
+```
+
+#### Upscale Image
+
+The `upscaleImage` method allows you to upscale an image. This feature is only
+supported in Vertex AI.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.Image;
+import com.google.genai.types.UpscaleImageConfig;
+import com.google.genai.types.UpscaleImageResponse;
+
+public class UpscaleImage {
+  public static void main(String[] args) {
+    Client client = Client.builder().vertexAI(true).build();
+
+    Image image = Image.fromFile("path/to/your/image");
+
+    UpscaleImageConfig config =
+        UpscaleImageConfig.builder()
+            .outputMimeType("image/jpeg")
+            .enhanceInputImage(true)
+            .imagePreservationFactor(0.6f)
+            .build();
+
+    UpscaleImageResponse response =
+        client.models.upscaleImage("imagen-3.0-generate-002", image, "x2", config);
+
+    response.generatedImages().ifPresent(
+        images -> {
+            Image upscaledImage = images.get(0).image().orElse(null);
+            // Do something with the upscaled image.
+        }
+    );
+  }
+}
+```
+
+#### Edit Image
+
+The `editImage` method lets you edit an image. You can input reference images
+(ex. mask reference for inpainting, or style reference for style transfer) in
+addition to a text prompt to guide the editing.
+
+This feature uses a different model than `generateImages` and `upscaleImage`. It
+is only supported in Vertex AI.
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.EditImageConfig;
+import com.google.genai.types.EditImageResponse;
+import com.google.genai.types.EditMode;
+import com.google.genai.types.Image;
+import com.google.genai.types.MaskReferenceConfig;
+import com.google.genai.types.MaskReferenceImage;
+import com.google.genai.types.MaskReferenceMode;
+import com.google.genai.types.RawReferenceImage;
+import com.google.genai.types.ReferenceImage;
+import java.util.ArrayList;
+
+public class EditImage {
+  public static void main(String[] args) {
+    Client client = Client.builder().vertexAI(true).build();
+
+    Image image = Image.fromFile("path/to/your/image");
+
+    // Edit image with a mask.
+    EditImageConfig config =
+        EditImageConfig.builder()
+            .editMode(EditMode.Known.EDIT_MODE_INPAINT_INSERTION)
+            .numberOfImages(1)
+            .outputMimeType("image/jpeg")
+            .build();
+
+    ArrayList<ReferenceImage> referenceImages = new ArrayList<>();
+    RawReferenceImage rawReferenceImage =
+        RawReferenceImage.builder().referenceImage(image).referenceId(1).build();
+    referenceImages.add(rawReferenceImage);
+
+    MaskReferenceImage maskReferenceImage =
+        MaskReferenceImage.builder()
+            .referenceId(2)
+            .config(
+                MaskReferenceConfig.builder()
+                    .maskMode(MaskReferenceMode.Known.MASK_MODE_BACKGROUND)
+                    .maskDilation(0.0f))
+            .build();
+    referenceImages.add(maskReferenceImage);
+
+    EditImageResponse response =
+        client.models.editImage(
+            "imagen-3.0-capability-001", "Sunlight and clear sky", referenceImages, config);
+
+    response.generatedImages().ifPresent(
+        images -> {
+            Image editedImage = images.get(0).image().orElse(null);
+            // Do something with the edited image.
+        }
+    );
+  }
+}
+```
+
+### Veo
+
+Veo is a video generation GenAI service.
+
+#### Generate Videos (Text to Video)
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateVideosConfig;
+import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.Video;
+
+public class GenerateVideosWithText {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    GenerateVideosConfig config =
+        GenerateVideosConfig.builder()
+            .numberOfVideos(1)
+            .enhancePrompt(true)
+            .durationSeconds(5)
+            .build();
+
+    // generateVideos returns an operation
+    GenerateVideosOperation operation =
+        client.models.generateVideos(
+            "veo-2.0-generate-001", "A neon hologram of a cat driving at top speed", null, config);
+
+    // When the operation hasn't been finished, operation.done() is empty
+    while (!operation.done().isPresent()) {
+        try {
+            System.out.println("Waiting for operation to complete...");
+            Thread.sleep(10000);
+            // Sleep for 10 seconds and check the operation again
+            operation = client.operations.getVideosOperation(operation, null);
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted while sleeping.");
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    operation.response().ifPresent(
+        response -> {
+            response.generatedVideos().ifPresent(
+                videos -> {
+                    System.out.println("Generated " + videos.size() + " videos.");
+                    Video video = videos.get(0).video().orElse(null);
+                    // Do something with the generated video
+                }
+            );
+        }
+    );
+  }
+}
+```
+
+#### Generate Videos (Image to Video)
+
+```java
+package <your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateVideosConfig;
+import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.Image;
+import com.google.genai.types.Video;
+
+public class GenerateVideosWithImage {
+  public static void main(String[] args) {
+    Client client = new Client();
+
+    Image image = Image.fromFile("path/to/your/image");
+
+    GenerateVideosConfig config =
+        GenerateVideosConfig.builder()
+            .numberOfVideos(1)
+            .enhancePrompt(true)
+            .durationSeconds(5)
+            .build();
+
+    // generateVideos returns an operation
+    GenerateVideosOperation operation =
+        client.models.generateVideos(
+            "veo-2.0-generate-001",
+            "Night sky",
+            image,
+            config);
+
+    // When the operation hasn't been finished, operation.done() is empty
+    while (!operation.done().isPresent()) {
+        try {
+            System.out.println("Waiting for operation to complete...");
+            Thread.sleep(10000);
+            // Sleep for 10 seconds and check the operation again
+            operation = client.operations.getVideosOperation(operation, null);
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted while sleeping.");
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    operation.response().ifPresent(
+        response -> {
+            response.generatedVideos().ifPresent(
+                videos -> {
+                    System.out.println("Generated " + videos.size() + " videos.");
+                    Video video = videos.get(0).video().orElse(null);
+                    // Do something with the generated video
+                }
+            );
+        }
+    );
+  }
+}
+```
+
 
 ## Versioning
 

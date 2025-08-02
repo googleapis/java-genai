@@ -42,6 +42,9 @@ import com.google.genai.types.GetModelConfig;
 import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
 import com.google.genai.types.Model;
+import com.google.genai.types.RecontextImageConfig;
+import com.google.genai.types.RecontextImageResponse;
+import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.UpdateModelConfig;
 import com.google.genai.types.UpscaleImageConfig;
@@ -57,6 +60,31 @@ public final class AsyncModels {
 
   public AsyncModels(ApiClient apiClient) {
     this.models = new Models(apiClient);
+  }
+
+  /**
+   * Asynchronously recontextualizes an image.
+   *
+   * <p>There are two types of recontextualization currently supported: 1) Imagen Product Recontext
+   * - Generate images of products in new scenes and contexts. 2) Virtual Try-On: Generate images of
+   * persons modeling fashion products.
+   *
+   * @param model the name of the GenAI model to use for image recontext
+   * @param source a {@link com.google.genai.types.RecontextImageSource} An object containing the
+   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is optional
+   *     for product recontext and disallowed for virtual try-on. personImage is required for
+   *     virtual try-on, disallowed for product recontext. productImages is required for both
+   *     product recontext and virtual try-on. Only one product image is supported for virtual
+   *     try-on, and up to 3 product images (different angles of the same product) are supported for
+   *     product recontext.
+   * @param config a {@link com.google.genai.types.RecontextImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.RecontextImageResponse} instance that contains the
+   *     generated images.
+   */
+  public CompletableFuture<RecontextImageResponse> recontextImage(
+      String model, RecontextImageSource source, RecontextImageConfig config) {
+    return CompletableFuture.supplyAsync(() -> models.recontextImage(model, source, config));
   }
 
   /**

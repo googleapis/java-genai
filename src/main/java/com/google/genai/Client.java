@@ -26,7 +26,7 @@ import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.util.Optional;
 
-/** Client class for GenAI. */
+/** Client class for GenAI. This class is thread-safe. */
 public final class Client implements AutoCloseable {
 
   /** Async class for GenAI. */
