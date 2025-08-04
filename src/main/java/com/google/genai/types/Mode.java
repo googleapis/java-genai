@@ -105,3 +105,4 @@ public class Mode {
     return this.modeEnum;
   }
 }
+

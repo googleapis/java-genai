@@ -149,3 +149,4 @@ public class FinishReason {
     return this.finishReasonEnum;
   }
 }
+

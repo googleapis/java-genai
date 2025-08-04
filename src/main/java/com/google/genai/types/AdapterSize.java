@@ -121,3 +121,4 @@ public class AdapterSize {
     return this.adapterSizeEnum;
   }
 }
+

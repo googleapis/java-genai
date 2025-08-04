@@ -115,3 +115,4 @@ public class UrlRetrievalStatus {
     return this.urlRetrievalStatusEnum;
   }
 }
+

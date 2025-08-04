@@ -112,3 +112,4 @@ public class MaskReferenceMode {
     return this.maskReferenceModeEnum;
   }
 }
+

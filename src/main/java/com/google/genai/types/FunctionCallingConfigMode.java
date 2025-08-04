@@ -124,3 +124,4 @@ public class FunctionCallingConfigMode {
     return this.functionCallingConfigModeEnum;
   }
 }
+

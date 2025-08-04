@@ -111,3 +111,4 @@ public class DynamicRetrievalConfigMode {
     return this.dynamicRetrievalConfigModeEnum;
   }
 }
+

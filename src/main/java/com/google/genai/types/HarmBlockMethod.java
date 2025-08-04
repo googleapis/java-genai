@@ -112,3 +112,4 @@ public class HarmBlockMethod {
     return this.harmBlockMethodEnum;
   }
 }
+

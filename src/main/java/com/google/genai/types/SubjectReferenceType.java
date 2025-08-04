@@ -110,3 +110,4 @@ public class SubjectReferenceType {
     return this.subjectReferenceTypeEnum;
   }
 }
+

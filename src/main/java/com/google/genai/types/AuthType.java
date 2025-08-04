@@ -120,3 +120,4 @@ public class AuthType {
     return this.authTypeEnum;
   }
 }
+

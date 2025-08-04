@@ -110,3 +110,4 @@ public class SafetyFilterLevel {
     return this.safetyFilterLevelEnum;
   }
 }
+
