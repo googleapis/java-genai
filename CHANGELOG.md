@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.11.0](https://github.com/googleapis/java-genai/compare/v1.10.0...v1.11.0) (2025-08-06)
+
+
+### Features
+
+* Add image_size field for Gemini Developer API Imagen 4 generation ([c50c755](https://github.com/googleapis/java-genai/commit/c50c755c08efbed5a62e1006890b1d0bd9956702))
+* allow methods in batch to return headers in sdk_http_response by default ([f937dd1](https://github.com/googleapis/java-genai/commit/f937dd1752e8a774e06d9afc6953211bd569fc35))
+* allow methods in models to return headers in sdk_http_response by default. ([7415e88](https://github.com/googleapis/java-genai/commit/7415e88f7520c695afc63f937b8b547c2877f4f6))
+* allow methods in tuning to return headers in sdk_http_response by default ([1b1205b](https://github.com/googleapis/java-genai/commit/1b1205b052a6d1d6782c6cdc190afdb48113ee9c))
+* enable responseId for Gemini Developer API ([4912ff4](https://github.com/googleapis/java-genai/commit/4912ff421d6d3bc40edd70a939f71f5f33f58597))
+* support extraBody in HttpOptions class ([036bac8](https://github.com/googleapis/java-genai/commit/036bac89fda15022ec4d9c5c73ba81ad0a6cc9be))
+* Support image recontext on Vertex ([e7de8c8](https://github.com/googleapis/java-genai/commit/e7de8c83bbd2e7e37c2198c3501e2d5bee58c0a2))
+* Support new enum types for UrlRetrievalStatus ([cb27222](https://github.com/googleapis/java-genai/commit/cb27222a7f7cdf442a7d6b61496709f7cf084a91))
+* support response headers in Go for all methods. ([222b41e](https://github.com/googleapis/java-genai/commit/222b41e196afc13775cc22292a58567d7b4859fa))
+
+
+### Bug Fixes
+
+* Remove duplicate JavaTimeModule in JsonSerializable ([a7dbd4c](https://github.com/googleapis/java-genai/commit/a7dbd4c527456f20aa5d154bde14f74f6e66d174))
+
+
+### Documentation
+
+* Add Imagen and Veo to README ([cc0a0aa](https://github.com/googleapis/java-genai/commit/cc0a0aa28cae618acf617ab92819df78d80afea5))
+* Add latest models features in README ([a2eccaf](https://github.com/googleapis/java-genai/commit/a2eccafae5c6c9b82341a148b572bf9bc80f241b))
+* mark Client as thread safe and Chat as not thread safe ([be3e50e](https://github.com/googleapis/java-genai/commit/be3e50e4217780329c0636fd7f8a1b743e7f9597))
+
 ## [1.10.0](https://github.com/googleapis/java-genai/compare/v1.9.0...v1.10.0) (2025-07-23)
 
 
