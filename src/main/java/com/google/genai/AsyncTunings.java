@@ -25,6 +25,7 @@ import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.GetTuningJobConfig;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
+import com.google.genai.types.PreTunedModel;
 import com.google.genai.types.TuningDataset;
 import com.google.genai.types.TuningJob;
 import com.google.genai.types.TuningOperation;
@@ -96,10 +97,16 @@ public final class AsyncTunings {
     return CompletableFuture.supplyAsync(
         () -> {
           if (tunings.apiClient.vertexAI()) {
-            return tunings.privateTune(baseModel, trainingDataset, config);
+            if (baseModel.startsWith("projects/")) {
+              PreTunedModel preTunedModel =
+                  PreTunedModel.builder().tunedModelName(baseModel).build();
+              return tunings.privateTune(null, preTunedModel, trainingDataset, config);
+            } else {
+              return tunings.privateTune(baseModel, null, trainingDataset, config);
+            }
           } else {
             TuningOperation operation =
-                tunings.privateTuneMldev(baseModel, trainingDataset, config);
+                tunings.privateTuneMldev(baseModel, null, trainingDataset, config);
             String tunedModelName = "";
             if (operation.metadata().isPresent()
                 && operation.metadata().get().containsKey("tunedModel")) {
