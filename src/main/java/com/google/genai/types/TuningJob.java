@@ -118,10 +118,6 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("customBaseModel")
   public abstract Optional<String> customBaseModel();
 
-  /** Tuning Spec for Distillation. */
-  @JsonProperty("distillationSpec")
-  public abstract Optional<DistillationSpec> distillationSpec();
-
   /** Output only. The Experiment associated with this TuningJob. */
   @JsonProperty("experiment")
   public abstract Optional<String> experiment();
@@ -150,18 +146,6 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("pipelineJob")
   public abstract Optional<String> pipelineJob();
 
-  /** Tuning Spec for Preference Optimization. */
-  @JsonProperty("preferenceOptimizationSpec")
-  public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
-
-  /** Output only. Reserved for future use. */
-  @JsonProperty("satisfiesPzi")
-  public abstract Optional<Boolean> satisfiesPzi();
-
-  /** Output only. Reserved for future use. */
-  @JsonProperty("satisfiesPzs")
-  public abstract Optional<Boolean> satisfiesPzs();
-
   /**
    * The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure
    * Fine-Tuned Service Agent in the project will be used. See
@@ -178,10 +162,6 @@ public abstract class TuningJob extends JsonSerializable {
    */
   @JsonProperty("tunedModelDisplayName")
   public abstract Optional<String> tunedModelDisplayName();
-
-  /** Tuning Spec for Veo Tuning. */
-  @JsonProperty("veoTuningSpec")
-  public abstract Optional<VeoTuningSpec> veoTuningSpec();
 
   /** Instantiates a builder for TuningJob. */
   @ExcludeFromGeneratedCoverageReport
@@ -428,23 +408,6 @@ public abstract class TuningJob extends JsonSerializable {
     public abstract Builder customBaseModel(String customBaseModel);
 
     /**
-     * Setter for distillationSpec.
-     *
-     * <p>distillationSpec: Tuning Spec for Distillation.
-     */
-    @JsonProperty("distillationSpec")
-    public abstract Builder distillationSpec(DistillationSpec distillationSpec);
-
-    /**
-     * Setter for distillationSpec builder.
-     *
-     * <p>distillationSpec: Tuning Spec for Distillation.
-     */
-    public Builder distillationSpec(DistillationSpec.Builder distillationSpecBuilder) {
-      return distillationSpec(distillationSpecBuilder.build());
-    }
-
-    /**
      * Setter for experiment.
      *
      * <p>experiment: Output only. The Experiment associated with this TuningJob.
@@ -483,41 +446,6 @@ public abstract class TuningJob extends JsonSerializable {
     public abstract Builder pipelineJob(String pipelineJob);
 
     /**
-     * Setter for preferenceOptimizationSpec.
-     *
-     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
-     */
-    @JsonProperty("preferenceOptimizationSpec")
-    public abstract Builder preferenceOptimizationSpec(
-        PreferenceOptimizationSpec preferenceOptimizationSpec);
-
-    /**
-     * Setter for preferenceOptimizationSpec builder.
-     *
-     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
-     */
-    public Builder preferenceOptimizationSpec(
-        PreferenceOptimizationSpec.Builder preferenceOptimizationSpecBuilder) {
-      return preferenceOptimizationSpec(preferenceOptimizationSpecBuilder.build());
-    }
-
-    /**
-     * Setter for satisfiesPzi.
-     *
-     * <p>satisfiesPzi: Output only. Reserved for future use.
-     */
-    @JsonProperty("satisfiesPzi")
-    public abstract Builder satisfiesPzi(boolean satisfiesPzi);
-
-    /**
-     * Setter for satisfiesPzs.
-     *
-     * <p>satisfiesPzs: Output only. Reserved for future use.
-     */
-    @JsonProperty("satisfiesPzs")
-    public abstract Builder satisfiesPzs(boolean satisfiesPzs);
-
-    /**
      * Setter for serviceAccount.
      *
      * <p>serviceAccount: The service account that the tuningJob workload runs as. If not specified,
@@ -537,23 +465,6 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("tunedModelDisplayName")
     public abstract Builder tunedModelDisplayName(String tunedModelDisplayName);
-
-    /**
-     * Setter for veoTuningSpec.
-     *
-     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
-     */
-    @JsonProperty("veoTuningSpec")
-    public abstract Builder veoTuningSpec(VeoTuningSpec veoTuningSpec);
-
-    /**
-     * Setter for veoTuningSpec builder.
-     *
-     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
-     */
-    public Builder veoTuningSpec(VeoTuningSpec.Builder veoTuningSpecBuilder) {
-      return veoTuningSpec(veoTuningSpecBuilder.build());
-    }
 
     public abstract TuningJob build();
   }
