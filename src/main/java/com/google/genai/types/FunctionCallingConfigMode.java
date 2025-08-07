@@ -50,6 +50,14 @@ public class FunctionCallingConfigMode {
      */
     NONE,
 
+    /**
+     * Model decides to predict either a function call or a natural language response, but will
+     * validate function calls with constrained decoding. If "allowed_function_names" are set, the
+     * predicted function call will be limited to any one of "allowed_function_names", else the
+     * predicted function call will be any one of the provided "function_declarations".
+     */
+    VALIDATED,
+
     FUNCTION_CALLING_CONFIG_MODE_UNSPECIFIED
   }
 
