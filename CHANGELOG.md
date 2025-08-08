@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/googleapis/java-genai/compare/v1.11.0...v1.12.0) (2025-08-08)
+
+
+### Documentation
+
+* Remove no-op PRs from changelog. ([c498c8b](https://github.com/googleapis/java-genai/commit/c498c8b0cb84fa6ba39062493c2bd88b2a06a862))
+
 ## [1.11.0](https://github.com/googleapis/java-genai/compare/v1.10.0...v1.11.0) (2025-08-06)
 
 
