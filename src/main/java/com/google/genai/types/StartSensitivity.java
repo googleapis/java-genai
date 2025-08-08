@@ -109,3 +109,4 @@ public class StartSensitivity {
     return this.startSensitivityEnum;
   }
 }
+

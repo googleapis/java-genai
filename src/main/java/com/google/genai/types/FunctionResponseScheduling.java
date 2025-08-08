@@ -120,3 +120,4 @@ public class FunctionResponseScheduling {
     return this.functionResponseSchedulingEnum;
   }
 }
+

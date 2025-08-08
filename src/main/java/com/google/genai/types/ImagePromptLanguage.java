@@ -126,3 +126,4 @@ public class ImagePromptLanguage {
     return this.imagePromptLanguageEnum;
   }
 }
+

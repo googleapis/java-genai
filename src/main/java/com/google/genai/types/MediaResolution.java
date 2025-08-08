@@ -112,3 +112,4 @@ public class MediaResolution {
     return this.mediaResolutionEnum;
   }
 }
+

@@ -123,3 +123,4 @@ public class Type {
     return this.typeEnum;
   }
 }
+

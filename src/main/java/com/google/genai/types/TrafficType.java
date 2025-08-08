@@ -112,3 +112,4 @@ public class TrafficType {
     return this.trafficTypeEnum;
   }
 }
+

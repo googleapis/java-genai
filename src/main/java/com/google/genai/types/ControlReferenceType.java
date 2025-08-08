@@ -110,3 +110,4 @@ public class ControlReferenceType {
     return this.controlReferenceTypeEnum;
   }
 }
+

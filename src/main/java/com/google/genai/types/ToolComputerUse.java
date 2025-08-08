@@ -16,6 +16,7 @@
 
 // Auto-generated code. Do not edit.
 
+
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

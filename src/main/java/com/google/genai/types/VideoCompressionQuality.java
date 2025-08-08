@@ -111,3 +111,4 @@ public class VideoCompressionQuality {
     return this.videoCompressionQualityEnum;
   }
 }
+

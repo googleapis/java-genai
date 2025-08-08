@@ -108,3 +108,4 @@ public class FeatureSelectionPreference {
     return this.featureSelectionPreferenceEnum;
   }
 }
+

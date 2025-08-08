@@ -109,3 +109,4 @@ public class EndSensitivity {
     return this.endSensitivityEnum;
   }
 }
+

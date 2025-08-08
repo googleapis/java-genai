@@ -118,3 +118,4 @@ public class Behavior {
     return this.behaviorEnum;
   }
 }
+

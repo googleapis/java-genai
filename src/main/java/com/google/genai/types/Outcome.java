@@ -115,3 +115,4 @@ public class Outcome {
     return this.outcomeEnum;
   }
 }
+

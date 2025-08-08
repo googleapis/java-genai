@@ -118,3 +118,4 @@ public class EditMode {
     return this.editModeEnum;
   }
 }
+
