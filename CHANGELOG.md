@@ -9,11 +9,6 @@
 * support document name in grounding metadata ([8273922](https://github.com/googleapis/java-genai/commit/8273922ebfbce4ffafa8993bcc6928b47b5ff821))
 * Support exclude_domains in Google Search and Enterprise Web Search ([e975d28](https://github.com/googleapis/java-genai/commit/e975d284f78e0c9a3cd2199d304b4739bad36fe1))
 
-
-### Documentation
-
-* Remove no-op PRs from changelog. ([c498c8b](https://github.com/googleapis/java-genai/commit/c498c8b0cb84fa6ba39062493c2bd88b2a06a862))
-
 ## [1.11.0](https://github.com/googleapis/java-genai/compare/v1.10.0...v1.11.0) (2025-08-06)
 
 
