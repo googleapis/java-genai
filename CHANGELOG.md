@@ -5,8 +5,6 @@
 
 ### Features
 
-* add an _exclude_fields characteristic in the config for unused values to avoid unnecessary and unused code in converter and type generation. ([bee4e3e](https://github.com/googleapis/java-genai/commit/bee4e3e26c936f6de67b31e33ace4ac3b26142f0))
-* Add evaluation support to Vertex tuning ([7c0bb19](https://github.com/googleapis/java-genai/commit/7c0bb196136091db95585924d576fd8f6922a2f2))
 * enable continuous fine-tuning on a pre-tuned model in the SDK. ([e49d350](https://github.com/googleapis/java-genai/commit/e49d3509355f717d391a88b6ff1a6f4f6d83fddc))
 * support document name in grounding metadata ([8273922](https://github.com/googleapis/java-genai/commit/8273922ebfbce4ffafa8993bcc6928b47b5ff821))
 * Support exclude_domains in Google Search and Enterprise Web Search ([e975d28](https://github.com/googleapis/java-genai/commit/e975d284f78e0c9a3cd2199d304b4739bad36fe1))
