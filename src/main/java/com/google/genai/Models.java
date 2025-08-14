@@ -3669,6 +3669,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"addWatermark"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "addWatermark"},
+          Common.getValueByPath(fromObject, new String[] {"addWatermark"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
       Common.setValueByPath(
           parentObject,

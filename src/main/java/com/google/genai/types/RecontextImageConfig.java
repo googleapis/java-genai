@@ -61,6 +61,10 @@ public abstract class RecontextImageConfig extends JsonSerializable {
   @JsonProperty("personGeneration")
   public abstract Optional<PersonGeneration> personGeneration();
 
+  /** Whether to add a SynthID watermark to the generated images. */
+  @JsonProperty("addWatermark")
+  public abstract Optional<Boolean> addWatermark();
+
   /** MIME type of the generated image. */
   @JsonProperty("outputMimeType")
   public abstract Optional<String> outputMimeType();
@@ -196,6 +200,14 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     public Builder personGeneration(String personGeneration) {
       return personGeneration(new PersonGeneration(personGeneration));
     }
+
+    /**
+     * Setter for addWatermark.
+     *
+     * <p>addWatermark: Whether to add a SynthID watermark to the generated images.
+     */
+    @JsonProperty("addWatermark")
+    public abstract Builder addWatermark(boolean addWatermark);
 
     /**
      * Setter for outputMimeType.
