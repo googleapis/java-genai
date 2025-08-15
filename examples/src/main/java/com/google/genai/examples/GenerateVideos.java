@@ -86,8 +86,7 @@ public final class GenerateVideos {
     while (!generateVideosOperation.done().filter(Boolean::booleanValue).isPresent()) {
       try {
         Thread.sleep(10000); // Sleep for 10 seconds.
-        generateVideosOperation =
-            client.operations.getVideosOperation(generateVideosOperation, null);
+        generateVideosOperation = client.operations.get(generateVideosOperation, null);
         System.out.println("Waiting for operation to complete...");
       } catch (InterruptedException e) {
         System.out.println("Thread was interrupted while sleeping.");
