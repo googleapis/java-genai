@@ -57,6 +57,10 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @JsonProperty("automaticFunctionCallingHistory")
   public abstract Optional<List<Content>> automaticFunctionCallingHistory();
 
+  /** Usage metadata about the response(s). */
+  @JsonProperty("usageMetadata")
+  public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
+
   /** Output only. The model version used to generate the response. */
   @JsonProperty("modelVersion")
   public abstract Optional<String> modelVersion();
@@ -73,10 +77,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
    */
   @JsonProperty("responseId")
   public abstract Optional<String> responseId();
-
-  /** Usage metadata about the response(s). */
-  @JsonProperty("usageMetadata")
-  public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
 
   /** Instantiates a builder for GenerateContentResponse. */
   @ExcludeFromGeneratedCoverageReport
@@ -182,6 +182,24 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     }
 
     /**
+     * Setter for usageMetadata.
+     *
+     * <p>usageMetadata: Usage metadata about the response(s).
+     */
+    @JsonProperty("usageMetadata")
+    public abstract Builder usageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
+
+    /**
+     * Setter for usageMetadata builder.
+     *
+     * <p>usageMetadata: Usage metadata about the response(s).
+     */
+    public Builder usageMetadata(
+        GenerateContentResponseUsageMetadata.Builder usageMetadataBuilder) {
+      return usageMetadata(usageMetadataBuilder.build());
+    }
+
+    /**
      * Setter for modelVersion.
      *
      * <p>modelVersion: Output only. The model version used to generate the response.
@@ -219,24 +237,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      */
     @JsonProperty("responseId")
     public abstract Builder responseId(String responseId);
-
-    /**
-     * Setter for usageMetadata.
-     *
-     * <p>usageMetadata: Usage metadata about the response(s).
-     */
-    @JsonProperty("usageMetadata")
-    public abstract Builder usageMetadata(GenerateContentResponseUsageMetadata usageMetadata);
-
-    /**
-     * Setter for usageMetadata builder.
-     *
-     * <p>usageMetadata: Usage metadata about the response(s).
-     */
-    public Builder usageMetadata(
-        GenerateContentResponseUsageMetadata.Builder usageMetadataBuilder) {
-      return usageMetadata(usageMetadataBuilder.build());
-    }
 
     public abstract GenerateContentResponse build();
   }
