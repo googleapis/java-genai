@@ -1879,6 +1879,83 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode generateContentResponseUsageMetadataFromMldev(
+      JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"cacheTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"cacheTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"cacheTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"cachedContentTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"cachedContentTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"cachedContentTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"candidatesTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"candidatesTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"candidatesTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"candidatesTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"candidatesTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"candidatesTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"promptTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"promptTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"promptTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"promptTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtsTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtsTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtsTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolUsePromptTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokenCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolUsePromptTokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"toolUsePromptTokensDetails"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"totalTokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"totalTokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"totalTokenCount"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
@@ -1900,6 +1977,16 @@ public final class Batches {
       Common.setValueByPath(toObject, new String[] {"candidates"}, result);
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"usageMetadata"},
+          generateContentResponseUsageMetadataFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"modelVersion"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1919,13 +2006,6 @@ public final class Batches {
           toObject,
           new String[] {"responseId"},
           Common.getValueByPath(fromObject, new String[] {"responseId"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"usageMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"usageMetadata"}));
     }
 
     return toObject;
