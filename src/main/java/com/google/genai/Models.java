@@ -1693,6 +1693,11 @@ public final class Models {
       throw new IllegalArgumentException("lastFrame parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"referenceImages"}))) {
+      throw new IllegalArgumentException(
+          "referenceImages parameter is not supported in Gemini API.");
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"compressionQuality"}))) {
       throw new IllegalArgumentException(
           "compressionQuality parameter is not supported in Gemini API.");
@@ -4143,6 +4148,29 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoGenerationReferenceImageToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"referenceType"},
+          Common.getValueByPath(fromObject, new String[] {"referenceType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -4238,6 +4266,19 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceImages"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"referenceImages"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(
+            videoGenerationReferenceImageToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(parentObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"compressionQuality"}) != null) {
