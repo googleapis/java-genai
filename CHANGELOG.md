@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.13.0](https://github.com/googleapis/java-genai/compare/v1.12.0...v1.13.0) (2025-08-18)
+
+
+### Features
+
+* expose JsonSerializable.stringToJsonNode to help user better use *JsonSchema fields. ([35d783b](https://github.com/googleapis/java-genai/commit/35d783b5d1655b6f0d52afefa633c608f39d4e01))
+* Return response headers for all methods (except streaming methods) ([7e8b71b](https://github.com/googleapis/java-genai/commit/7e8b71b0769362a728e2bf9b93738563113a4edc))
+* Support Imagen image segmentation on Vertex ([e2a561b](https://github.com/googleapis/java-genai/commit/e2a561b11b53f3a7cc30aacb4a0dcf6a26e01645))
+* Support Veo 2 Reference Images to Video Generation on Vertex ([2f5580f](https://github.com/googleapis/java-genai/commit/2f5580fd1e78d6e8e4f371f291dacf98c7c617ef))
+
 ## [1.12.0](https://github.com/googleapis/java-genai/compare/v1.11.0...v1.12.0) (2025-08-13)
 
 
