@@ -80,14 +80,13 @@ public final class LiveTextToAudioTranscriptionAsync {
       System.out.println("Using Gemini Developer API");
     }
 
-    String modelId;
-    if (client.vertexAI()) {
-      modelId = "gemini-2.0-flash-live-preview-04-09";
-    } else {
-      modelId = "gemini-live-2.5-flash-preview";
-    }
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else if (client.vertexAI()) {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME;
+    } else {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME_PREVIEW;
     }
 
     // Sets the system instruction in the config.

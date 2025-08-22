@@ -56,12 +56,12 @@ import java.util.concurrent.CompletableFuture;
  */
 public final class FileOperationsAsync {
   public static void main(String[] args) {
-
-    if (args.length == 0) {
-      System.out.println("Please provide a file path on the -Dexec.args argument.");
-      return;
+    final String filePath;
+    if (args.length != 0) {
+      filePath = args[0];
+    } else {
+      filePath = Constants.UPLOAD_FILE_PATH;
     }
-    String filePath = args[0];
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
@@ -74,7 +74,8 @@ public final class FileOperationsAsync {
     Client client = new Client();
 
     if (client.vertexAI()) {
-      System.out.println("Using Vertex AI");
+      System.out.println("Vertex AI API is not supported for this example.");
+      System.exit(0);
     } else {
       System.out.println("Using Gemini Developer API");
     }

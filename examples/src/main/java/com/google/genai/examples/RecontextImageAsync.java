@@ -57,9 +57,11 @@ import java.util.concurrent.CompletableFuture;
  */
 public final class RecontextImageAsync {
   public static void main(String[] args) {
-    String modelId = "imagen-product-recontext-preview-06-30";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.IMAGEN_RECONTEXT_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -75,7 +77,8 @@ public final class RecontextImageAsync {
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println("Gemini Developer API is not supported for this example.");
+      System.exit(0);
     }
 
     Image productImageBackpack =

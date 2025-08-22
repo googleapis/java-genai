@@ -51,9 +51,11 @@ import com.google.genai.types.HttpOptions;
 /** An example of setting http options at request level. */
 public final class RequestLevelHttpOptions {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
