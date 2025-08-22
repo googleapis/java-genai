@@ -50,7 +50,6 @@ import com.google.genai.types.DeleteCachedContentResponse;
 import com.google.genai.types.ListCachedContentsConfig;
 import com.google.genai.types.Part;
 import com.google.genai.types.UpdateCachedContentConfig;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -63,9 +62,11 @@ import org.jspecify.annotations.Nullable;
 public final class CachedContentOperations {
 
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

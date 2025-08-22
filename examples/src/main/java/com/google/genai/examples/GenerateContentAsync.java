@@ -47,9 +47,11 @@ import java.util.concurrent.CompletableFuture;
 /** An example of using the Unified Gen AI Java SDK to generate content asynchronously. */
 public final class GenerateContentAsync {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

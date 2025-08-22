@@ -48,9 +48,11 @@ import com.google.genai.types.UpscaleImageResponse;
 /** An example of using the Unified Gen AI Java SDK to upscale an image. */
 public final class UpscaleImage {
   public static void main(String[] args) {
-    String modelId = "imagen-3.0-generate-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.IMAGEN_COMPATIBILITY_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

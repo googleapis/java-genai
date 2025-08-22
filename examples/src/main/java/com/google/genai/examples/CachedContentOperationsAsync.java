@@ -66,11 +66,11 @@ import org.jspecify.annotations.Nullable;
 public final class CachedContentOperationsAsync {
 
   public static void main(String[] args) {
-    String modelId;
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = "gemini-2.0-flash-001";
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

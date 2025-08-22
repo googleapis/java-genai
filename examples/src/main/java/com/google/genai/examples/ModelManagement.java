@@ -49,12 +49,12 @@ import com.google.genai.types.UpdateModelConfig;
 public final class ModelManagement {
 
   public static void main(String[] args) {
-    if (args.length == 0) {
-      System.out.println("Please provide a model ID on the -Dexec.args argument.");
-      return;
+    final String modelId;
+    if (args.length != 0) {
+      modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
-
-    String modelId = args[0];
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
