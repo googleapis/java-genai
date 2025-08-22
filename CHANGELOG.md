@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.14.0](https://github.com/googleapis/java-genai/compare/v1.13.0...v1.14.0) (2025-08-22)
+
+
+### Features
+
+* Add add_watermark field for recontext_image (Virtual Try-On, Product Recontext) ([5aacbc0](https://github.com/googleapis/java-genai/commit/5aacbc06435fb36fffde0c3641b3077493f13577))
+
+
+### Bug Fixes
+
+* Fix the bug that files.create doesn't return the upload URL correctly ([eb40c5f](https://github.com/googleapis/java-genai/commit/eb40c5f7f255b46a7a820da044e210127c7aac18))
+
+
+### Documentation
+
+* update TokensInfo docstring ([48eba7f](https://github.com/googleapis/java-genai/commit/48eba7fcb369537ca4266ec61107e016f7c242ed))
+
 ## [1.13.0](https://github.com/googleapis/java-genai/compare/v1.12.0...v1.13.0) (2025-08-18)
 
 
