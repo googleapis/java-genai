@@ -6450,6 +6450,22 @@ public final class Models {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
 
+      if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
+        Headers responseHeaders = response.getHeaders();
+        if (responseHeaders == null) {
+          return GenerateContentResponse.builder()
+              .sdkHttpResponse(HttpResponse.builder().body(responseString))
+              .build();
+        }
+        Map<String, String> headers = new HashMap<>();
+        for (String headerName : responseHeaders.names()) {
+          headers.put(headerName, responseHeaders.get(headerName));
+        }
+        return GenerateContentResponse.builder()
+            .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
+            .build();
+      }
+
       JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
       if (this.apiClient.vertexAI()) {
         responseNode = generateContentResponseFromVertex(responseNode, null);
