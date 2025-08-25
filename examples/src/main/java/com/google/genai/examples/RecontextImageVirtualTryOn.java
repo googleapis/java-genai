@@ -53,9 +53,11 @@ import java.util.ArrayList;
 /** An example of using the Unified Gen AI Java SDK to recontextualize an image (virtual try-on). */
 public final class RecontextImageVirtualTryOn {
   public static void main(String[] args) {
-    String modelId = "virtual-try-on-exp-05-31";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.VIRTUAL_TRY_ON_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -71,7 +73,8 @@ public final class RecontextImageVirtualTryOn {
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println("Gemini Developer API is not supported for this example.");
+      System.exit(0);
     }
 
     Image productImagePants =

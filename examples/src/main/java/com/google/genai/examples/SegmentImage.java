@@ -52,9 +52,11 @@ import com.google.genai.types.SegmentMode;
 /** An example of using the Unified Gen AI Java SDK to segment an image. */
 public final class SegmentImage {
   public static void main(String[] args) {
-    String modelId = "image-segmentation-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.SEGMENT_IMAGE_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -70,7 +72,8 @@ public final class SegmentImage {
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println("Gemini Developer API is not supported for this example.");
+      System.exit(0);
     }
 
     // Base image created using generateImages with prompt:
