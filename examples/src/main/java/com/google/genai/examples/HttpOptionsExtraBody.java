@@ -40,22 +40,23 @@
  */
 package com.google.genai.examples;
 
-import com.google.genai.Client;
-import com.google.genai.types.HttpOptions;
-import com.google.genai.types.GenerateContentConfig;
-import com.google.genai.types.GenerateContentResponse;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentConfig;
+import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.HttpOptions;
 
 /**
  * An example of using HttpOption extraBody to inject additional parameters to http request body.
  */
 public final class HttpOptionsExtraBody {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API.

@@ -49,9 +49,11 @@ import java.util.concurrent.CompletableFuture;
 /** An example of using the Unified Gen AI Java SDK to generate images asynchronously. */
 public final class GenerateImagesAsync {
   public static void main(String[] args) {
-    String modelId = "imagen-3.0-generate-002";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.IMAGEN_GENERATE_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

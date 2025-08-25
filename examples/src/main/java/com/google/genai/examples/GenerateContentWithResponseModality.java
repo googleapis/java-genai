@@ -49,9 +49,11 @@ import com.google.genai.types.GenerateContentResponse;
 /** An example of using the Unified Gen AI Java SDK to generate content with response modality. */
 public final class GenerateContentWithResponseModality {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-preview-image-generation";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_IMAGE_GENERATION_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
