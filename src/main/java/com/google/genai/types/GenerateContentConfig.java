@@ -44,6 +44,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("httpOptions")
   public abstract Optional<HttpOptions> httpOptions();
 
+  /** If true, the raw HTTP response will be returned in the 'sdk_http_response' field. */
+  @JsonProperty("shouldReturnHttpResponse")
+  public abstract Optional<Boolean> shouldReturnHttpResponse();
+
   /**
    * Instructions for the model to steer it toward better performance. For example, "Answer as
    * concisely as possible" or "Don't use technical terms in your response".
@@ -249,6 +253,15 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
     }
+
+    /**
+     * Setter for shouldReturnHttpResponse.
+     *
+     * <p>shouldReturnHttpResponse: If true, the raw HTTP response will be returned in the
+     * 'sdk_http_response' field.
+     */
+    @JsonProperty("shouldReturnHttpResponse")
+    public abstract Builder shouldReturnHttpResponse(boolean shouldReturnHttpResponse);
 
     /**
      * Setter for systemInstruction.

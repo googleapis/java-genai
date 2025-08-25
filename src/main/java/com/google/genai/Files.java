@@ -621,7 +621,7 @@ public final class Files {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
 
-      if (config.shouldReturnHttpResponse().orElse(false)) {
+      if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
         Headers responseHeaders = response.getHeaders();
         if (responseHeaders == null) {
           return CreateFileResponse.builder()
