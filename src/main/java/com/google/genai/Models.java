@@ -3521,6 +3521,13 @@ public final class Models {
   ObjectNode upscaleImageAPIConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
+    if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "storageUri"},
+          Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -7843,6 +7850,9 @@ public final class Models {
 
     UpscaleImageAPIConfig.Builder builder = UpscaleImageAPIConfig.builder();
     if (config != null) {
+      if (config.outputGcsUri().isPresent()) {
+        builder = builder.outputGcsUri(config.outputGcsUri().get());
+      }
       if (config.outputMimeType().isPresent()) {
         builder = builder.outputMimeType(config.outputMimeType().get());
       }
