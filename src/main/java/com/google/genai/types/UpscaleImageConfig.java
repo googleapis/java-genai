@@ -38,6 +38,10 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
   @JsonProperty("httpOptions")
   public abstract Optional<HttpOptions> httpOptions();
 
+  /** Cloud Storage URI used to store the generated images. */
+  @JsonProperty("outputGcsUri")
+  public abstract Optional<String> outputGcsUri();
+
   /** Whether to include a reason for filtered-out images in the response. */
   @JsonProperty("includeRaiReason")
   public abstract Optional<Boolean> includeRaiReason();
@@ -99,6 +103,14 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
     }
+
+    /**
+     * Setter for outputGcsUri.
+     *
+     * <p>outputGcsUri: Cloud Storage URI used to store the generated images.
+     */
+    @JsonProperty("outputGcsUri")
+    public abstract Builder outputGcsUri(String outputGcsUri);
 
     /**
      * Setter for includeRaiReason.
