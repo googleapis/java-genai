@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.0](https://github.com/googleapis/java-genai/compare/v1.14.0...v1.15.0) (2025-08-25)
+
+
+### Features
+
+* add `sdkHttpResponse.headers` to *Delete responses. ([4be038d](https://github.com/googleapis/java-genai/commit/4be038de86c782d103d21258db51055f35e5af21))
+* Support GenerateVideosSource for Veo GenerateVideos ([c26af63](https://github.com/googleapis/java-genai/commit/c26af6396002cf21c0ed272290d44b09b6a41840))
+
 ## [1.14.0](https://github.com/googleapis/java-genai/compare/v1.13.0...v1.14.0) (2025-08-22)
 
 
