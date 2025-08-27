@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -35,10 +36,10 @@ public abstract class VideoGenerationReferenceImage extends JsonSerializable {
 
   /**
    * The type of the reference image, which defines how the reference image will be used to generate
-   * the video. Supported values are 'asset' or 'style'.
+   * the video.
    */
   @JsonProperty("referenceType")
-  public abstract Optional<String> referenceType();
+  public abstract Optional<VideoGenerationReferenceType> referenceType();
 
   /** Instantiates a builder for VideoGenerationReferenceImage. */
   @ExcludeFromGeneratedCoverageReport
@@ -81,10 +82,32 @@ public abstract class VideoGenerationReferenceImage extends JsonSerializable {
      * Setter for referenceType.
      *
      * <p>referenceType: The type of the reference image, which defines how the reference image will
-     * be used to generate the video. Supported values are 'asset' or 'style'.
+     * be used to generate the video.
      */
     @JsonProperty("referenceType")
-    public abstract Builder referenceType(String referenceType);
+    public abstract Builder referenceType(VideoGenerationReferenceType referenceType);
+
+    /**
+     * Setter for referenceType given a known enum.
+     *
+     * <p>referenceType: The type of the reference image, which defines how the reference image will
+     * be used to generate the video.
+     */
+    @CanIgnoreReturnValue
+    public Builder referenceType(VideoGenerationReferenceType.Known knownType) {
+      return referenceType(new VideoGenerationReferenceType(knownType));
+    }
+
+    /**
+     * Setter for referenceType given a string.
+     *
+     * <p>referenceType: The type of the reference image, which defines how the reference image will
+     * be used to generate the video.
+     */
+    @CanIgnoreReturnValue
+    public Builder referenceType(String referenceType) {
+      return referenceType(new VideoGenerationReferenceType(referenceType));
+    }
 
     public abstract VideoGenerationReferenceImage build();
   }
