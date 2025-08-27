@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.15.0](https://github.com/googleapis/java-genai/compare/v1.14.0...v1.15.0) (2025-08-27)
+
+
+### Features
+
+* add `sdkHttpResponse.headers` to *Delete responses. ([4be038d](https://github.com/googleapis/java-genai/commit/4be038de86c782d103d21258db51055f35e5af21))
+* Add output_gcs_uri to Imagen upscale_image ([7649467](https://github.com/googleapis/java-genai/commit/76494678d3937229778c5063b4f4ff340f977bba))
+* add the response body for generateContent ([6e28ab4](https://github.com/googleapis/java-genai/commit/6e28ab4236565be61fb11e79ca9f2f31a2013598))
+* add the response body for generateContent ([b2a5b3f](https://github.com/googleapis/java-genai/commit/b2a5b3f5a6ef7a8bb4d011980d90ffdc3c745603))
+* Add VALIDATED mode into FunctionCallingConfigMode ([4bb8680](https://github.com/googleapis/java-genai/commit/4bb868046199d3249f75ede213ef7d77e0b7783f))
+* Add VideoGenerationReferenceType enum for generate_videos ([df9d910](https://github.com/googleapis/java-genai/commit/df9d910537ec7de6188f777801b4d50e84cd91e7))
+* Support GenerateVideosSource for Veo GenerateVideos ([c26af63](https://github.com/googleapis/java-genai/commit/c26af6396002cf21c0ed272290d44b09b6a41840))
+* support tunings.cancel in the genai SDK for Python, Java, JS, and Go ([9982251](https://github.com/googleapis/java-genai/commit/9982251d2dd80d3151aefb4462d9e4864d8e064e))
+
+
+### Documentation
+
+* Refactor model IDs into a Constants class ([dacd787](https://github.com/googleapis/java-genai/commit/dacd7875d41f810e50f2655e5d0e62f031197e61))
+
 ## [1.14.0](https://github.com/googleapis/java-genai/compare/v1.13.0...v1.14.0) (2025-08-22)
 
 
