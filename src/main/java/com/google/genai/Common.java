@@ -102,8 +102,13 @@ final class Common {
     }
 
     String keyToSet = path[path.length - 1];
-    JsonNode valueNode = JsonSerializable.toJsonNode(value);
-    Transformers.updateJsonNode(currentObject, keyToSet, valueNode);
+    if (keyToSet.equals("_self") && value instanceof ObjectNode) {
+      ObjectNode sourceNode = (ObjectNode) value;
+      currentObject.setAll(sourceNode);
+    } else {
+      JsonNode valueNode = JsonSerializable.toJsonNode(value);
+      Transformers.updateJsonNode(currentObject, keyToSet, valueNode);
+    }
   }
 
   /**
