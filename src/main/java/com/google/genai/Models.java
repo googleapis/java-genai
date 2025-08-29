@@ -1684,8 +1684,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"resolution"}))) {
-      throw new IllegalArgumentException("resolution parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"resolution"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "resolution"},
+          Common.getValueByPath(fromObject, new String[] {"resolution"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
