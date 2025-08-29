@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/googleapis/java-genai/compare/v1.15.0...v1.16.0) (2025-08-29)
+
+
+### Features
+
+* add the response body for generateContent ([a011580](https://github.com/googleapis/java-genai/commit/a0115804e438bac120d5155c91ece53c79ada677))
+
+
+### Documentation
+
+* Refactor/update docstrings for Imagen and Veo ([2470101](https://github.com/googleapis/java-genai/commit/24701018feb91d147bf1817b04752e2595bf40ab))
+
 ## [1.15.0](https://github.com/googleapis/java-genai/compare/v1.14.0...v1.15.0) (2025-08-27)
 
 
