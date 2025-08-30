@@ -20,47 +20,35 @@ package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import com.google.genai.OperationsConverters;
 import java.util.Map;
 import java.util.Optional;
 
 /** A video generation operation. */
 @AutoValue
 @JsonDeserialize(builder = GenerateVideosOperation.Builder.class)
-public abstract class GenerateVideosOperation extends JsonSerializable {
-  /**
-   * The server-assigned name, which is only unique within the same service that originally returns
-   * it. If you use the default HTTP mapping, the `name` should be a resource name ending with
-   * `operations/{unique_id}`.
-   */
-  @JsonProperty("name")
-  public abstract Optional<String> name();
-
-  /**
-   * Service-specific metadata associated with the operation. It typically contains progress
-   * information and common metadata such as create time. Some services might not provide such
-   * metadata. Any method that returns a long-running operation should document the metadata type,
-   * if any.
-   */
-  @JsonProperty("metadata")
-  public abstract Optional<Map<String, Object>> metadata();
-
-  /**
-   * If the value is `false`, it means the operation is still in progress. If `true`, the operation
-   * is completed, and either `error` or `response` is available.
-   */
-  @JsonProperty("done")
-  public abstract Optional<Boolean> done();
-
-  /** The error result of the operation in case of failure or cancellation. */
-  @JsonProperty("error")
-  public abstract Optional<Map<String, Object>> error();
-
+public abstract class GenerateVideosOperation
+    extends Operation<GenerateVideosResponse, GenerateVideosOperation> {
   /** The generated videos. */
   @JsonProperty("response")
+  @Override
   public abstract Optional<GenerateVideosResponse> response();
+
+  @Override
+  public GenerateVideosOperation fromApiResponse(JsonNode apiResponse, boolean isVertexAi) {
+    OperationsConverters converter = new OperationsConverters(null);
+    JsonNode response = null;
+    if (isVertexAi) {
+      response = converter.generateVideosOperationFromVertex(apiResponse, null);
+    } else {
+      response = converter.generateVideosOperationFromMldev(apiResponse, null);
+    }
+    return JsonSerializable.fromJsonNode(response, GenerateVideosOperation.class);
+  }
 
   /** Instantiates a builder for GenerateVideosOperation. */
   @ExcludeFromGeneratedCoverageReport
