@@ -132,6 +132,31 @@ public final class Caches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -178,6 +203,16 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -190,13 +225,6 @@ public final class Caches {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
@@ -868,6 +896,30 @@ public final class Caches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"id"}))) {
+      throw new IllegalArgumentException("id parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -914,6 +966,16 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -926,13 +988,6 @@ public final class Caches {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
