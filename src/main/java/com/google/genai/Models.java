@@ -1729,6 +1729,10 @@ public final class Models {
           "referenceImages parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mask"}))) {
+      throw new IllegalArgumentException("mask parameter is not supported in Gemini API.");
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"compressionQuality"}))) {
       throw new IllegalArgumentException(
           "compressionQuality parameter is not supported in Gemini API.");
@@ -4259,6 +4263,29 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoGenerationMaskToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_self"},
+          imageToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maskMode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"maskMode"},
+          Common.getValueByPath(fromObject, new String[] {"maskMode"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -4367,6 +4394,15 @@ public final class Models {
             videoGenerationReferenceImageToVertex(JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(parentObject, new String[] {"instances[0]", "referenceImages"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mask"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "mask"},
+          videoGenerationMaskToVertex(
+              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"mask"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"compressionQuality"}) != null) {

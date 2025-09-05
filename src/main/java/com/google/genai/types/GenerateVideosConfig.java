@@ -111,6 +111,10 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("referenceImages")
   public abstract Optional<List<VideoGenerationReferenceImage>> referenceImages();
 
+  /** The mask to use for generating videos. */
+  @JsonProperty("mask")
+  public abstract Optional<VideoGenerationMask> mask();
+
   /** Compression quality of the generated videos. */
   @JsonProperty("compressionQuality")
   public abstract Optional<VideoCompressionQuality> compressionQuality();
@@ -306,6 +310,23 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
           Arrays.asList(referenceImagesBuilders).stream()
               .map(VideoGenerationReferenceImage.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    /**
+     * Setter for mask.
+     *
+     * <p>mask: The mask to use for generating videos.
+     */
+    @JsonProperty("mask")
+    public abstract Builder mask(VideoGenerationMask mask);
+
+    /**
+     * Setter for mask builder.
+     *
+     * <p>mask: The mask to use for generating videos.
+     */
+    public Builder mask(VideoGenerationMask.Builder maskBuilder) {
+      return mask(maskBuilder.build());
     }
 
     /**
