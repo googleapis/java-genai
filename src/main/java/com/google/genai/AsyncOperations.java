@@ -20,6 +20,7 @@ package com.google.genai;
 
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
+import com.google.genai.types.Operation;
 import java.util.concurrent.CompletableFuture;
 
 /** Async module of {@link Operations} */
@@ -40,5 +41,17 @@ public final class AsyncOperations {
   public CompletableFuture<GenerateVideosOperation> getVideosOperation(
       GenerateVideosOperation operation, GetOperationConfig config) {
     return CompletableFuture.supplyAsync(() -> operations.getVideosOperation(operation, config));
+  }
+
+  /**
+   * Gets the status of an Operation.
+   *
+   * @param operation An Operation.
+   * @param config The configuration for getting the operation.
+   * @return An Operation with the updated status of the operation.
+   */
+  public <T, U extends Operation<T, U>> CompletableFuture<U> get(
+      U operation, GetOperationConfig config) {
+    return CompletableFuture.supplyAsync(() -> operations.get(operation, config));
   }
 }

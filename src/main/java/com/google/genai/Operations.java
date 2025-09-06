@@ -29,6 +29,7 @@ import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
 import com.google.genai.types.GetOperationParameters;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.Operation;
 import java.io.IOException;
 import java.util.Optional;
 import okhttp3.ResponseBody;
@@ -355,8 +356,7 @@ public final class Operations {
     return toObject;
   }
 
-  GenerateVideosOperation privateGetVideosOperation(
-      String operationName, GetOperationConfig config) {
+  JsonNode privateGetVideosOperation(String operationName, GetOperationConfig config) {
 
     GetOperationParameters.Builder parameterBuilder = GetOperationParameters.builder();
 
@@ -408,17 +408,11 @@ public final class Operations {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateVideosOperationFromVertex(responseNode, null);
-      } else {
-        responseNode = generateVideosOperationFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+      return JsonSerializable.stringToJsonNode(responseString);
     }
   }
 
-  GenerateVideosOperation privateFetchPredictVideosOperation(
+  JsonNode privateFetchPredictVideosOperation(
       String operationName, String resourceName, FetchPredictOperationConfig config) {
 
     FetchPredictOperationParameters.Builder parameterBuilder =
@@ -471,14 +465,7 @@ public final class Operations {
         throw new GenAiIOException("Failed to read HTTP response.", e);
       }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateVideosOperationFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+      return JsonSerializable.stringToJsonNode(responseString);
     }
   }
 
@@ -491,9 +478,8 @@ public final class Operations {
    */
   public GenerateVideosOperation getVideosOperation(
       GenerateVideosOperation operation, GetOperationConfig config) {
-
     if (!operation.name().isPresent()) {
-      throw new Error("Operation name is required.");
+      throw new IllegalArgumentException("Operation name is required.");
     }
 
     if (this.apiClient.vertexAI()) {
@@ -501,10 +487,40 @@ public final class Operations {
 
       FetchPredictOperationConfig fetchConfig = FetchPredictOperationConfig.builder().build();
 
-      return this.privateFetchPredictVideosOperation(
-          operation.name().get(), resourceName, fetchConfig);
+      JsonNode response =
+          this.privateFetchPredictVideosOperation(
+              operation.name().get(), resourceName, fetchConfig);
+      return operation.fromApiResponse(response, true);
     } else {
-      return this.privateGetVideosOperation(operation.name().get(), config);
+      JsonNode response = this.privateGetVideosOperation(operation.name().get(), config);
+      return operation.fromApiResponse(response, false);
+    }
+  }
+
+  /**
+   * Gets the status of an Operation.
+   *
+   * @param operation An Operation.
+   * @param config The configuration for getting the operation.
+   * @return An Operation with the updated status of the operation.
+   */
+  public <T, U extends Operation<T, U>> U get(U operation, GetOperationConfig config) {
+    if (!operation.name().isPresent()) {
+      throw new IllegalArgumentException("Operation name is required.");
+    }
+
+    if (this.apiClient.vertexAI()) {
+      String resourceName = operation.name().get().split("/operations/")[0];
+
+      FetchPredictOperationConfig fetchConfig = FetchPredictOperationConfig.builder().build();
+
+      JsonNode response =
+          this.privateFetchPredictVideosOperation(
+              operation.name().get(), resourceName, fetchConfig);
+      return operation.fromApiResponse(response, true);
+    } else {
+      JsonNode response = this.privateGetVideosOperation(operation.name().get(), config);
+      return operation.fromApiResponse(response, false);
     }
   }
 }
