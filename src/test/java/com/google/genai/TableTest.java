@@ -57,7 +57,14 @@ public final class TableTest {
     String testMethod = testTableFile.testMethod().get();
     String[] segments = testMethod.split("\\.");
     if (segments.length != 2) {
-      throw new RuntimeException("Invalid test method: " + testMethod);
+      String msg = " => Test skipped: multistep test " + testMethod + " not supported in Java";
+      List<DynamicTest> dynamicTests = new ArrayList<>();
+      for (TestTableItem testTableItem : testTableFile.testTable().get()) {
+        String testName =
+            String.format("%s.%s.%s", testMethod, testTableItem.name().get(), suffix);
+        dynamicTests.add(DynamicTest.dynamicTest(testName + msg, () -> {}));
+      }
+      return dynamicTests;
     }
     String originalModuleName = segments[0];
     String moduleName = Common.snakeToCamel(originalModuleName);
@@ -299,6 +306,10 @@ public final class TableTest {
   Collection<DynamicTest> createTests() throws IOException {
     String replaysPath = System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY");
     String testsReplaysPath = replaysPath + "/tests";
+    String testsSubDir = System.getenv("GOOGLE_GENAI_TESTS_SUBDIR");
+    if (testsSubDir != null) {
+      testsReplaysPath += "/" + testsSubDir;
+    }
     Collection<DynamicTest> dynamicTests = new ArrayList<>();
     Files.walk(Paths.get(testsReplaysPath))
         .filter(Files::isRegularFile)
