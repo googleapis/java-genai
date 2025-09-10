@@ -65,13 +65,6 @@ final class OperationsConverters {
           Common.getValueByPath(fromObject, new String[] {"resourceName"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -270,13 +263,6 @@ final class OperationsConverters {
           Common.getValueByPath(fromObject, new String[] {"operationName"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -288,13 +274,6 @@ final class OperationsConverters {
           toObject,
           new String[] {"_url", "operationName"},
           Common.getValueByPath(fromObject, new String[] {"operationName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
