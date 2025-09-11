@@ -7967,12 +7967,13 @@ public final class Models {
    * @param model the name of the GenAI model to use for editing capabilities
    * @param prompt the prompt to edit the image
    * @param referenceImages a {@link List<com.google.genai.types.ReferenceImage>} to send to use for
-   *     editing. The 5 types of reference images are: {@link
+   *     editing. The 6 types of reference images are: {@link
    *     com.google.genai.types.RawReferenceImage}, {@link
    *     com.google.genai.types.MaskReferenceImage}, {@link
    *     com.google.genai.types.ControlReferenceImage}, {@link
    *     com.google.genai.types.StyleReferenceImage}, {@link
-   *     com.google.genai.types.SubjectReferenceImage},
+   *     com.google.genai.types.SubjectReferenceImage}, {@link
+   *     com.google.genai.types.ContentReferenceImage}
    * @param config a {@link com.google.genai.types.EditImageConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the edited
