@@ -918,10 +918,16 @@ final class LiveConverters {
   ObjectNode liveSendRealtimeInputParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaChunks"},
-          Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(item);
+      }
+      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
@@ -2235,10 +2241,16 @@ final class LiveConverters {
   ObjectNode liveSendRealtimeInputParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaChunks"},
-          Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(item);
+      }
+      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
