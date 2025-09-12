@@ -41,7 +41,7 @@ public abstract class EditImageParameters extends JsonSerializable {
   @JsonProperty("prompt")
   public abstract Optional<String> prompt();
 
-  /** The reference images for Imagen 3 editing. */
+  /** The reference images for editing. */
   @JsonProperty("referenceImages")
   public abstract Optional<List<ReferenceImageAPI>> referenceImages();
 
@@ -86,7 +86,7 @@ public abstract class EditImageParameters extends JsonSerializable {
     /**
      * Setter for referenceImages.
      *
-     * <p>referenceImages: The reference images for Imagen 3 editing.
+     * <p>referenceImages: The reference images for editing.
      */
     @JsonProperty("referenceImages")
     public abstract Builder referenceImages(List<ReferenceImageAPI> referenceImages);
@@ -94,7 +94,7 @@ public abstract class EditImageParameters extends JsonSerializable {
     /**
      * Setter for referenceImages.
      *
-     * <p>referenceImages: The reference images for Imagen 3 editing.
+     * <p>referenceImages: The reference images for editing.
      */
     public Builder referenceImages(ReferenceImageAPI... referenceImages) {
       return referenceImages(Arrays.asList(referenceImages));
