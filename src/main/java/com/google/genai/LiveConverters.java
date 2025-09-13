@@ -2925,6 +2925,13 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"waitingForInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"waitingForInput"},
+          Common.getValueByPath(fromObject, new String[] {"waitingForInput"}));
+    }
+
     return toObject;
   }
 
@@ -3500,6 +3507,13 @@ final class LiveConverters {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"outputTranscription"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"waitingForInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"waitingForInput"},
+          Common.getValueByPath(fromObject, new String[] {"waitingForInput"}));
     }
 
     return toObject;

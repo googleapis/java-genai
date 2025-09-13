@@ -87,6 +87,13 @@ public abstract class LiveServerContent extends JsonSerializable {
   @JsonProperty("urlContextMetadata")
   public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
+  /**
+   * If true, indicates that the model is not generating content because it is waiting for more
+   * input from the user, e.g. because it expects the user to continue talking.
+   */
+  @JsonProperty("waitingForInput")
+  public abstract Optional<Boolean> waitingForInput();
+
   /** Instantiates a builder for LiveServerContent. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -228,6 +235,15 @@ public abstract class LiveServerContent extends JsonSerializable {
     public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
       return urlContextMetadata(urlContextMetadataBuilder.build());
     }
+
+    /**
+     * Setter for waitingForInput.
+     *
+     * <p>waitingForInput: If true, indicates that the model is not generating content because it is
+     * waiting for more input from the user, e.g. because it expects the user to continue talking.
+     */
+    @JsonProperty("waitingForInput")
+    public abstract Builder waitingForInput(boolean waitingForInput);
 
     public abstract LiveServerContent build();
   }
