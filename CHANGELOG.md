@@ -5,7 +5,6 @@
 
 ### Features
 
-* [Python] Implement async embedding batches for MLDev. ([12ddfce](https://github.com/googleapis/java-genai/commit/12ddfce328909ece245e78a5170efe561e3ab499))
 * Add 'turn_complete_reason' and 'waiting_for_input' fields. ([5bc4873](https://github.com/googleapis/java-genai/commit/5bc48732fd9281162942b158de34173343d7b179))
 * Add `VideoGenerationMaskMode` enum for Veo 2 Editing ([e5c8277](https://github.com/googleapis/java-genai/commit/e5c82778586dfee4ed7d04a9eabb2a4d8eac6185))
 * Add labels to create tuning job config ([695e17a](https://github.com/googleapis/java-genai/commit/695e17a7b1adebbccb1651d30b768d27f81c3977))
