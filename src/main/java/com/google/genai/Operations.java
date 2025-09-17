@@ -355,8 +355,7 @@ public final class Operations {
     return toObject;
   }
 
-  GenerateVideosOperation privateGetVideosOperation(
-      String operationName, GetOperationConfig config) {
+  GenerateVideosOperation privateGetOperation(String operationName, GetOperationConfig config) {
 
     GetOperationParameters.Builder parameterBuilder = GetOperationParameters.builder();
 
@@ -504,7 +503,7 @@ public final class Operations {
       return this.privateFetchPredictVideosOperation(
           operation.name().get(), resourceName, fetchConfig);
     } else {
-      return this.privateGetVideosOperation(operation.name().get(), config);
+      return this.privateGetOperation(operation.name().get(), config);
     }
   }
 }
