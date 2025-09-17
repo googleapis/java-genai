@@ -232,6 +232,45 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -288,6 +327,16 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          functionResponseToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -300,13 +349,6 @@ final class LiveConverters {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -1171,45 +1213,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"willContinue"},
-          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"scheduling"},
-          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode liveClientToolResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
@@ -1446,6 +1449,45 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -1502,6 +1544,16 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          functionResponseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1514,13 +1566,6 @@ final class LiveConverters {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -2491,39 +2536,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
-      throw new IllegalArgumentException("willContinue parameter is not supported in Vertex AI.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"scheduling"}))) {
-      throw new IllegalArgumentException("scheduling parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode liveClientToolResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
@@ -2697,6 +2709,45 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -2753,6 +2804,16 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          functionResponseFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2765,13 +2826,6 @@ final class LiveConverters {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -3336,6 +3390,45 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
@@ -3392,6 +3485,16 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          functionResponseFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3404,13 +3507,6 @@ final class LiveConverters {
           toObject,
           new String[] {"executableCode"},
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
