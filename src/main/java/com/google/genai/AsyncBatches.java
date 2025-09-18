@@ -20,6 +20,7 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
@@ -29,15 +30,32 @@ import com.google.genai.types.DeleteBatchJobConfig;
 import com.google.genai.types.DeleteResourceJob;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.ListBatchJobsConfig;
+import com.google.genai.types.ListBatchJobsResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 /** Async module of {@link Batches} */
 public final class AsyncBatches {
+
   Batches batches;
+  ApiClient apiClient;
 
   public AsyncBatches(ApiClient apiClient) {
     this.batches = new Batches(apiClient);
+    this.apiClient = apiClient;
+  }
+
+  CompletableFuture<BatchJob> privateCreate(
+      String model, BatchJobSource src, CreateBatchJobConfig config) {
+    BuiltRequest builtRequest = batches.buildRequestForPrivateCreate(model, src, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForPrivateCreate(res, config);
+              }
+            });
   }
 
   /**
@@ -50,7 +68,15 @@ public final class AsyncBatches {
    * @return A {@link BatchJob} object that contains the info of the batch job.
    */
   public CompletableFuture<BatchJob> get(String name, GetBatchJobConfig config) {
-    return CompletableFuture.supplyAsync(() -> batches.get(name, config));
+    BuiltRequest builtRequest = batches.buildRequestForGet(name, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForGet(res, config);
+              }
+            });
   }
 
   /**
@@ -62,7 +88,25 @@ public final class AsyncBatches {
    * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
    */
   public CompletableFuture<Void> cancel(String name, CancelBatchJobConfig config) {
-    return CompletableFuture.runAsync(() -> batches.cancel(name, config));
+    BuiltRequest builtRequest = batches.buildRequestForCancel(name, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenAccept(
+            response -> {
+              try (ApiResponse res = response) {}
+            });
+  }
+
+  CompletableFuture<ListBatchJobsResponse> privateList(ListBatchJobsConfig config) {
+    BuiltRequest builtRequest = batches.buildRequestForPrivateList(config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForPrivateList(res, config);
+              }
+            });
   }
 
   /**
@@ -74,7 +118,15 @@ public final class AsyncBatches {
    * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
    */
   public CompletableFuture<DeleteResourceJob> delete(String name, DeleteBatchJobConfig config) {
-    return CompletableFuture.supplyAsync(() -> batches.delete(name, config));
+    BuiltRequest builtRequest = batches.buildRequestForDelete(name, config);
+    return this.apiClient
+        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForDelete(res, config);
+              }
+            });
   }
 
   /**

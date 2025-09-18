@@ -18,16 +18,50 @@
 
 package com.google.genai;
 
+import com.google.genai.Common.BuiltRequest;
+import com.google.genai.types.FetchPredictOperationConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
 import java.util.concurrent.CompletableFuture;
 
 /** Async module of {@link Operations} */
 public final class AsyncOperations {
+
   Operations operations;
+  ApiClient apiClient;
 
   public AsyncOperations(ApiClient apiClient) {
     this.operations = new Operations(apiClient);
+    this.apiClient = apiClient;
+  }
+
+  CompletableFuture<GenerateVideosOperation> privateGetVideosOperation(
+      String operationName, GetOperationConfig config) {
+    BuiltRequest builtRequest =
+        operations.buildRequestForPrivateGetVideosOperation(operationName, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return operations.processResponseForPrivateGetVideosOperation(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<GenerateVideosOperation> privateFetchPredictVideosOperation(
+      String operationName, String resourceName, FetchPredictOperationConfig config) {
+    BuiltRequest builtRequest =
+        operations.buildRequestForPrivateFetchPredictVideosOperation(
+            operationName, resourceName, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return operations.processResponseForPrivateFetchPredictVideosOperation(res, config);
+              }
+            });
   }
 
   /**
