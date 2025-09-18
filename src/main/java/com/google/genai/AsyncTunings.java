@@ -20,12 +20,14 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CancelTuningJobConfig;
 import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.GetTuningJobConfig;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
+import com.google.genai.types.ListTuningJobsResponse;
 import com.google.genai.types.PreTunedModel;
 import com.google.genai.types.TuningDataset;
 import com.google.genai.types.TuningJob;
@@ -35,10 +37,37 @@ import java.util.function.Function;
 
 /** Async module of {@link Tunings} */
 public final class AsyncTunings {
+
   Tunings tunings;
+  ApiClient apiClient;
 
   public AsyncTunings(ApiClient apiClient) {
     this.tunings = new Tunings(apiClient);
+    this.apiClient = apiClient;
+  }
+
+  CompletableFuture<TuningJob> privateGet(String name, GetTuningJobConfig config) {
+    BuiltRequest builtRequest = tunings.buildRequestForPrivateGet(name, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return tunings.processResponseForPrivateGet(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<ListTuningJobsResponse> privateList(ListTuningJobsConfig config) {
+    BuiltRequest builtRequest = tunings.buildRequestForPrivateList(config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return tunings.processResponseForPrivateList(res, config);
+              }
+            });
   }
 
   /**
@@ -49,7 +78,47 @@ public final class AsyncTunings {
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
   public CompletableFuture<Void> cancel(String name, CancelTuningJobConfig config) {
-    return CompletableFuture.runAsync(() -> tunings.cancel(name, config));
+    BuiltRequest builtRequest = tunings.buildRequestForCancel(name, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenAccept(
+            response -> {
+              try (ApiResponse res = response) {}
+            });
+  }
+
+  CompletableFuture<TuningJob> privateTune(
+      String baseModel,
+      PreTunedModel preTunedModel,
+      TuningDataset trainingDataset,
+      CreateTuningJobConfig config) {
+    BuiltRequest builtRequest =
+        tunings.buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return tunings.processResponseForPrivateTune(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<TuningOperation> privateTuneMldev(
+      String baseModel,
+      PreTunedModel preTunedModel,
+      TuningDataset trainingDataset,
+      CreateTuningJobConfig config) {
+    BuiltRequest builtRequest =
+        tunings.buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return tunings.processResponseForPrivateTuneMldev(res, config);
+              }
+            });
   }
 
   /**

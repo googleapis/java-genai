@@ -46,15 +46,14 @@ public class AsyncFilesTest {
 
     // Act
     if (vertexAI) {
-      ExecutionException exception =
+      UnsupportedOperationException exception =
           assertThrows(
-              ExecutionException.class, () -> client.async.files.get(fileName, null).get());
+              UnsupportedOperationException.class,
+              () -> client.async.files.get(fileName, null).get());
 
       // Assert
       assertEquals(
-          "This method is only supported in the Gemini Developer client.",
-          exception.getCause().getMessage());
-      assertTrue(exception.getCause() instanceof UnsupportedOperationException);
+          "This method is only supported in the Gemini Developer client.", exception.getMessage());
     } else {
       File file = client.async.files.get(fileName, null).get();
 

@@ -25,7 +25,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
@@ -34,6 +33,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import okhttp3.Dispatcher;
@@ -363,12 +363,25 @@ abstract class ApiClient {
   }
 
   /** Sends a Http request given the http method, path, and request json string. */
-  @CanIgnoreReturnValue
   public abstract ApiResponse request(
       String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
 
   /** Sends a Http request given the http method, path, and request bytes. */
   public abstract ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request json string, and http
+   * options.
+   */
+  public abstract CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request bytes, and http
+   * options.
+   */
+  public abstract CompletableFuture<ApiResponse> asyncRequest(
       String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
 
   /** Returns the library version. */

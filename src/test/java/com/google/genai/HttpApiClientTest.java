@@ -16,7 +16,6 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -29,25 +28,32 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Part;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
@@ -62,8 +68,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import java.io.IOException;
-import java.util.Map;
 
 @ExtendWith(EnvironmentVariablesMockingExtension.class)
 public class HttpApiClientTest {
@@ -456,6 +460,95 @@ public class HttpApiClientTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> client.request("INVALID_METHOD", TEST_PATH, TEST_REQUEST_JSON, Optional.empty()));
+  }
+
+  @Test
+  public void testAsyncRequest_Success() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+    setMockClient(client);
+
+    String responseJson = "{\"fake\":\"response\"}";
+    Response mockResponse =
+        new Response.Builder()
+            .request(new Request.Builder().url("https://example.com").build())
+            .protocol(Protocol.HTTP_1_1)
+            .code(200)
+            .message("OK")
+            .body(ResponseBody.create(responseJson, null))
+            .build();
+
+    // Capture the Callback passed to enqueue
+    ArgumentCaptor<Callback> callbackCaptor = ArgumentCaptor.forClass(Callback.class);
+    doNothing().when(mockCall).enqueue(callbackCaptor.capture());
+
+    // Act
+    CompletableFuture<ApiResponse> future =
+        client.asyncRequest("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
+
+    // Assert (Request was built correctly)
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+    assertEquals("POST", capturedRequest.method());
+    assertTrue(capturedRequest.url().toString().endsWith(TEST_PATH));
+
+    // Act (Simulate the async response)
+    Callback callback = callbackCaptor.getValue();
+    callback.onResponse(mockCall, mockResponse);
+
+    // Assert (Future completed successfully)
+    assertFalse(future.isCompletedExceptionally());
+    assertNotNull(future.get());
+    assertEquals(responseJson, future.get().getBody().string());
+  }
+
+  @Test
+  public void testAsyncRequest_Failure() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+
+    IOException networkError = new IOException("Fake network error");
+
+    // Capture the Callback passed to enqueue
+    ArgumentCaptor<Callback> callbackCaptor = ArgumentCaptor.forClass(Callback.class);
+    doNothing().when(mockCall).enqueue(callbackCaptor.capture());
+
+    // Act
+    CompletableFuture<ApiResponse> future =
+        client.asyncRequest("GET", TEST_PATH, "", Optional.empty());
+
+    // Assert (Request was built)
+    verify(mockHttpClient).newCall(any(Request.class));
+
+    // Act (Simulate the async failure)
+    Callback callback = callbackCaptor.getValue();
+    callback.onFailure(mockCall, networkError);
+
+    // Assert (Future completed exceptionally)
+    assertTrue(future.isCompletedExceptionally());
+
+    // Check that the exception was wrapped in GenAiIOException
+    Exception ex =
+        assertThrows(
+            ExecutionException.class,
+            () -> future.get(),
+            "Expected CompletableFuture.get() to throw ExecutionException");
+
+    Throwable cause = ex.getCause();
+    assertNotNull(cause);
+    assertEquals(GenAiIOException.class, cause.getClass());
+    assertEquals("Failed to execute HTTP request.", cause.getMessage());
+    assertEquals(networkError, cause.getCause());
   }
 
   @Test

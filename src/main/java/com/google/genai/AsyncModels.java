@@ -20,6 +20,9 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ComputeTokensConfig;
 import com.google.genai.types.ComputeTokensResponse;
@@ -42,28 +45,124 @@ import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.GetModelConfig;
 import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
+import com.google.genai.types.ListModelsResponse;
 import com.google.genai.types.Model;
+import com.google.genai.types.Part;
 import com.google.genai.types.RecontextImageConfig;
 import com.google.genai.types.RecontextImageResponse;
 import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
+import com.google.genai.types.ReferenceImageAPI;
 import com.google.genai.types.SegmentImageConfig;
 import com.google.genai.types.SegmentImageResponse;
 import com.google.genai.types.SegmentImageSource;
 import com.google.genai.types.UpdateModelConfig;
+import com.google.genai.types.UpscaleImageAPIConfig;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
 import com.google.genai.types.Video;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 /** Async module of {@link Models} */
 public final class AsyncModels {
+
   Models models;
+  ApiClient apiClient;
 
   public AsyncModels(ApiClient apiClient) {
     this.models = new Models(apiClient);
+    this.apiClient = apiClient;
+  }
+
+  CompletableFuture<GenerateContentResponse> privateGenerateContent(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateGenerateContent(model, contents, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateGenerateContent(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<ResponseStream<GenerateContentResponse>> privateGenerateContentStream(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateGenerateContentStream(model, contents, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              return models.processResponseForPrivateGenerateContentStream(response, config);
+            });
+  }
+
+  CompletableFuture<EmbedContentResponse> privateEmbedContent(
+      String model, List<Content> contents, EmbedContentConfig config) {
+    BuiltRequest builtRequest = models.buildRequestForPrivateEmbedContent(model, contents, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateEmbedContent(res, config);
+              }
+            });
+  }
+
+  /** Asynchronously private method for generating images. */
+  CompletableFuture<GenerateImagesResponse> privateGenerateImages(
+      String model, String prompt, GenerateImagesConfig config) {
+    BuiltRequest builtRequest = models.buildRequestForPrivateGenerateImages(model, prompt, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateGenerateImages(res, config);
+              }
+            });
+  }
+
+  /** Asynchronously private method for editing an image. */
+  CompletableFuture<EditImageResponse> privateEditImage(
+      String model,
+      String prompt,
+      List<ReferenceImageAPI> referenceImages,
+      EditImageConfig config) {
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateEditImage(res, config);
+              }
+            });
+  }
+
+  /** Asynchronously private method for upscaling an image. */
+  CompletableFuture<UpscaleImageResponse> privateUpscaleImage(
+      String model, Image image, String upscaleFactor, UpscaleImageAPIConfig config) {
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateUpscaleImage(res, config);
+              }
+            });
   }
 
   /**
@@ -88,7 +187,15 @@ public final class AsyncModels {
    */
   public CompletableFuture<RecontextImageResponse> recontextImage(
       String model, RecontextImageSource source, RecontextImageConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.recontextImage(model, source, config));
+    BuiltRequest builtRequest = models.buildRequestForRecontextImage(model, source, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForRecontextImage(res, config);
+              }
+            });
   }
 
   /**
@@ -106,7 +213,15 @@ public final class AsyncModels {
    */
   public CompletableFuture<SegmentImageResponse> segmentImage(
       String model, SegmentImageSource source, SegmentImageConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.segmentImage(model, source, config));
+    BuiltRequest builtRequest = models.buildRequestForSegmentImage(model, source, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForSegmentImage(res, config);
+              }
+            });
   }
 
   /**
@@ -115,7 +230,27 @@ public final class AsyncModels {
    * @example ```java Model model = client.models.get("gemini-2.0-flash"); ```
    */
   public CompletableFuture<Model> get(String model, GetModelConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.get(model, config));
+    BuiltRequest builtRequest = models.buildRequestForGet(model, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForGet(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<ListModelsResponse> privateList(ListModelsConfig config) {
+    BuiltRequest builtRequest = models.buildRequestForPrivateList(config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateList(res, config);
+              }
+            });
   }
 
   /**
@@ -130,7 +265,15 @@ public final class AsyncModels {
    *     description") .build()); ```
    */
   public CompletableFuture<Model> update(String model, UpdateModelConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.update(model, config));
+    BuiltRequest builtRequest = models.buildRequestForUpdate(model, config);
+    return this.apiClient
+        .asyncRequest("patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForUpdate(res, config);
+              }
+            });
   }
 
   /**
@@ -139,7 +282,15 @@ public final class AsyncModels {
    * @example ```java Model model = client.models.delete("tunedModels/12345"); ```
    */
   public CompletableFuture<DeleteModelResponse> delete(String model, DeleteModelConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.delete(model, config));
+    BuiltRequest builtRequest = models.buildRequestForDelete(model, config);
+    return this.apiClient
+        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForDelete(res, config);
+              }
+            });
   }
 
   /**
@@ -154,7 +305,15 @@ public final class AsyncModels {
    */
   public CompletableFuture<CountTokensResponse> countTokens(
       String model, List<Content> contents, CountTokensConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.countTokens(model, contents, config));
+    BuiltRequest builtRequest = models.buildRequestForCountTokens(model, contents, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForCountTokens(res, config);
+              }
+            });
   }
 
   /**
@@ -169,8 +328,38 @@ public final class AsyncModels {
    */
   public CompletableFuture<ComputeTokensResponse> computeTokens(
       String model, List<Content> contents, ComputeTokensConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.computeTokens(model, contents, config));
+    BuiltRequest builtRequest = models.buildRequestForComputeTokens(model, contents, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForComputeTokens(res, config);
+              }
+            });
   }
+
+  /** Asynchronously private method for generating videos. */
+  CompletableFuture<GenerateVideosOperation> privateGenerateVideos(
+      String model,
+      String prompt,
+      Image image,
+      Video video,
+      GenerateVideosSource source,
+      GenerateVideosConfig config) {
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApply(
+            response -> {
+              try (ApiResponse res = response) {
+                return models.processResponseForPrivateGenerateVideos(res, config);
+              }
+            });
+  }
+
+  private static final Logger logger = Logger.getLogger(AsyncModels.class.getName());
 
   /**
    * Asynchronously counts tokens given a GenAI model and a text string.
@@ -202,6 +391,79 @@ public final class AsyncModels {
     return CompletableFuture.supplyAsync(() -> models.computeTokens(model, text, config));
   }
 
+  /** A private helper class to pass the result of the AFC loop up the async chain. */
+  private static class AfcLoopResult {
+    final GenerateContentResponse response;
+    final List<Content> history;
+
+    AfcLoopResult(GenerateContentResponse response, List<Content> history) {
+      this.response = response;
+      this.history = history;
+    }
+  }
+
+  /**
+   * Represents a single iteration of the asynchronous AFC loop. This method calls itself
+   * recursively inside a .thenCompose() block to chain asynchronous calls sequentially.
+   */
+  private CompletableFuture<AfcLoopResult> privateGenerateContentLoopAsync(
+      String model,
+      List<Content> contents,
+      GenerateContentConfig transformedConfig,
+      ImmutableMap<String, Method> functionMap,
+      List<Content> automaticFunctionCallingHistory,
+      int remainingRemoteCalls,
+      int initialMaxCalls) {
+
+    logger.info(
+        String.format(
+            "Automatic function calling remote call %d is done",
+            (initialMaxCalls - remainingRemoteCalls + 1)));
+
+    return privateGenerateContent(model, contents, transformedConfig)
+        .thenCompose(
+            response -> {
+              if (remainingRemoteCalls - 1 <= 0) {
+                logger.info("Reached max remote calls for automatic function calling.");
+                return CompletableFuture.completedFuture(
+                    new AfcLoopResult(response, automaticFunctionCallingHistory));
+              }
+
+              if (!response.candidates().isPresent()
+                  || response.candidates().get().isEmpty()
+                  || !response.candidates().get().get(0).content().isPresent()
+                  || !response.candidates().get().get(0).content().get().parts().isPresent()
+                  || response.candidates().get().get(0).content().get().parts().get().isEmpty()) {
+                return CompletableFuture.completedFuture(
+                    new AfcLoopResult(response, automaticFunctionCallingHistory));
+              }
+
+              ImmutableList<Part> functionResponseParts =
+                  AfcUtil.getFunctionResponseParts(response, functionMap);
+              if (functionResponseParts.isEmpty()) {
+                return CompletableFuture.completedFuture(
+                    new AfcLoopResult(response, automaticFunctionCallingHistory));
+              }
+
+              Content functionCallContent = response.candidates().get().get(0).content().get();
+              Content functionResponseContent =
+                  Content.builder().role("user").parts(functionResponseParts).build();
+
+              List<Content> newHistory = new ArrayList<>(automaticFunctionCallingHistory);
+              newHistory.add(functionCallContent);
+              newHistory.add(functionResponseContent);
+
+              return privateGenerateContentLoopAsync(
+                  model,
+                  newHistory,
+                  transformedConfig,
+                  functionMap,
+                  newHistory,
+                  remainingRemoteCalls - 1,
+                  initialMaxCalls);
+            });
+  }
+
   /**
    * Asynchronously generates content given a GenAI model and a list of content.
    *
@@ -214,7 +476,42 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateContentResponse> generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.generateContent(model, contents, config));
+    GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
+    if (AfcUtil.shouldDisableAfc(transformedConfig)) {
+      return privateGenerateContent(model, contents, transformedConfig);
+    }
+
+    ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
+    if (functionMap.isEmpty()) {
+      return privateGenerateContent(model, contents, transformedConfig);
+    }
+
+    int maxRemoteCalls = AfcUtil.getMaxRemoteCallsAfc(transformedConfig);
+    logger.info(
+        String.format(
+            "Automatic function calling is enabled with max remote calls: %d", maxRemoteCalls));
+    List<Content> automaticFunctionCallingHistory = new ArrayList<>(contents);
+
+    return privateGenerateContentLoopAsync(
+            model,
+            contents,
+            transformedConfig,
+            functionMap,
+            automaticFunctionCallingHistory,
+            maxRemoteCalls,
+            maxRemoteCalls)
+        .thenApply(
+            loopResult -> {
+              if (AfcUtil.shouldAppendAfcHistory(transformedConfig)) {
+                ObjectNode responseNode =
+                    JsonSerializable.objectMapper.valueToTree(loopResult.response);
+                responseNode.set(
+                    "automaticFunctionCallingHistory",
+                    JsonSerializable.objectMapper.valueToTree(loopResult.history));
+                return JsonSerializable.fromJsonNode(responseNode, GenerateContentResponse.class);
+              }
+              return loopResult.response;
+            });
   }
 
   /**
@@ -260,8 +557,16 @@ public final class AsyncModels {
    */
   public CompletableFuture<ResponseStream<GenerateContentResponse>> generateContentStream(
       String model, List<Content> contents, GenerateContentConfig config) {
-    return CompletableFuture.supplyAsync(
-        () -> models.generateContentStream(model, contents, config));
+    GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
+    if (AfcUtil.hasCallableTool(config) && !AfcUtil.shouldDisableAfc(transformedConfig)) {
+      logger.warning(
+          "In generateContentStream method, detected that automatic function calling is enabled in"
+              + " the config.AutomaticFunctionCalling(), and callable tool is present in the"
+              + " config.tools() list. Automatic function calling is not supported in streaming"
+              + " methods at the moment, will just return the function call parts from model if"
+              + " there is any.");
+    }
+    return privateGenerateContentStream(model, contents, transformedConfig);
   }
 
   /**
