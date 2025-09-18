@@ -63,7 +63,7 @@ public class HttpApiClient extends ApiClient {
 
   /** Sends a Http request given the http method, path, request bytes, and http options. */
   @Override
-  public ApiResponse request(
+  public HttpApiResponse request(
       String httpMethod,
       String url,
       byte[] requestBytes,

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CancelTuningJobConfig;
 import com.google.genai.types.CancelTuningJobParameters;
@@ -1034,7 +1035,8 @@ public final class Tunings {
     return toObject;
   }
 
-  TuningJob privateGet(String name, GetTuningJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGet(String name, GetTuningJobConfig config) {
 
     GetTuningJobParameters.Builder parameterBuilder = GetTuningJobParameters.builder();
 
@@ -1075,40 +1077,50 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  TuningJob processResponseForPrivateGet(ApiResponse response, GetTuningJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = tuningJobFromVertex(responseNode, null);
+    } else {
+      responseNode = tuningJobFromMldev(responseNode, null);
+    }
+
+    TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  TuningJob privateGet(String name, GetTuningJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateGet(name, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = tuningJobFromVertex(responseNode, null);
-      } else {
-        responseNode = tuningJobFromMldev(responseNode, null);
-      }
-
-      TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateGet(response, config);
     }
   }
 
-  ListTuningJobsResponse privateList(ListTuningJobsConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListTuningJobsConfig config) {
 
     ListTuningJobsParameters.Builder parameterBuilder = ListTuningJobsParameters.builder();
 
@@ -1146,48 +1158,52 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListTuningJobsResponse processResponseForPrivateList(
+      ApiResponse response, ListTuningJobsConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = listTuningJobsResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = listTuningJobsResponseFromMldev(responseNode, null);
+    }
+
+    ListTuningJobsResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListTuningJobsResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  ListTuningJobsResponse privateList(ListTuningJobsConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = listTuningJobsResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = listTuningJobsResponseFromMldev(responseNode, null);
-      }
-
-      ListTuningJobsResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ListTuningJobsResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
-  /**
-   * Cancels a tuning job resource.
-   *
-   * @param name The resource name of the tuning job. For Vertex, this is the full resource name.
-   *     For Gemini API, this is `tunedModels/{id}`.
-   * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
-   */
-  public void cancel(String name, CancelTuningJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForCancel(String name, CancelTuningJobConfig config) {
 
     CancelTuningJobParameters.Builder parameterBuilder = CancelTuningJobParameters.builder();
 
@@ -1228,10 +1244,28 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    this.apiClient.request("post", path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
   }
 
-  TuningJob privateTune(
+  /**
+   * Cancels a tuning job resource.
+   *
+   * @param name The resource name of the tuning job. For Vertex, this is the full resource name.
+   *     For Gemini API, this is `tunedModels/{id}`.
+   * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
+   */
+  public void cancel(String name, CancelTuningJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForCancel(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return;
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateTune(
       String baseModel,
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
@@ -1279,41 +1313,56 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  TuningJob processResponseForPrivateTune(ApiResponse response, CreateTuningJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = tuningJobFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  TuningJob privateTune(
+      String baseModel,
+      PreTunedModel preTunedModel,
+      TuningDataset trainingDataset,
+      CreateTuningJobConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = tuningJobFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-
-      TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateTune(response, config);
     }
   }
 
-  TuningOperation privateTuneMldev(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateTuneMldev(
       String baseModel,
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
@@ -1365,38 +1414,53 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  TuningOperation processResponseForPrivateTuneMldev(
+      ApiResponse response, CreateTuningJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      responseNode = tuningOperationFromMldev(responseNode, null);
+    }
+
+    TuningOperation sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, TuningOperation.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  TuningOperation privateTuneMldev(
+      String baseModel,
+      PreTunedModel preTunedModel,
+      TuningDataset trainingDataset,
+      CreateTuningJobConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Gemini Developer client.");
-      } else {
-        responseNode = tuningOperationFromMldev(responseNode, null);
-      }
-
-      TuningOperation sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, TuningOperation.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateTuneMldev(response, config);
     }
   }
 
