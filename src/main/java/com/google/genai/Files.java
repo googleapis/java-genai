@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Ascii;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CreateFileConfig;
 import com.google.genai.types.CreateFileParameters;
@@ -490,13 +491,8 @@ public final class Files {
     return toObject;
   }
 
-  /**
-   * Lists all files from the service.
-   *
-   * @param config - Optional, configuration for the list method.
-   * @return The ListFilesResponse, the response for the list method.
-   */
-  ListFilesResponse privateList(ListFilesConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListFilesConfig config) {
 
     ListFilesParameters.Builder parameterBuilder = ListFilesParameters.builder();
 
@@ -534,42 +530,58 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListFilesResponse processResponseForPrivateList(ApiResponse response, ListFilesConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      responseNode = listFilesResponseFromMldev(responseNode, null);
+    }
+
+    ListFilesResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListFilesResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /**
+   * Lists all files from the service.
+   *
+   * @param config - Optional, configuration for the list method.
+   * @return The ListFilesResponse, the response for the list method.
+   */
+  ListFilesResponse privateList(ListFilesConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Gemini Developer client.");
-      } else {
-        responseNode = listFilesResponseFromMldev(responseNode, null);
-      }
-
-      ListFilesResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ListFilesResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
-  CreateFileResponse privateCreate(File file, CreateFileConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateCreate(File file, CreateFileConfig config) {
 
     CreateFileParameters.Builder parameterBuilder = CreateFileParameters.builder();
 
@@ -610,52 +622,59 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
-        Headers responseHeaders = response.getHeaders();
-        if (responseHeaders == null) {
-          return CreateFileResponse.builder()
-              .sdkHttpResponse(HttpResponse.builder().body(responseString))
-              .build();
-        }
-        Map<String, String> headers = new HashMap<>();
-        for (String headerName : responseHeaders.names()) {
-          headers.put(headerName, responseHeaders.get(headerName));
-        }
+  /** A shared processResponse function for both sync and async methods. */
+  CreateFileResponse processResponseForPrivateCreate(
+      ApiResponse response, CreateFileConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
+      Headers responseHeaders = response.getHeaders();
+      if (responseHeaders == null) {
         return CreateFileResponse.builder()
-            .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
+            .sdkHttpResponse(HttpResponse.builder().body(responseString))
             .build();
       }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Gemini Developer client.");
-      } else {
-        responseNode = createFileResponseFromMldev(responseNode, null);
+      Map<String, String> headers = new HashMap<>();
+      for (String headerName : responseHeaders.names()) {
+        headers.put(headerName, responseHeaders.get(headerName));
       }
-      return JsonSerializable.fromJsonNode(responseNode, CreateFileResponse.class);
+      return CreateFileResponse.builder()
+          .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
+          .build();
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      responseNode = createFileResponseFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, CreateFileResponse.class);
+  }
+
+  CreateFileResponse privateCreate(File file, CreateFileConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateCreate(file, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateCreate(response, config);
     }
   }
 
-  /**
-   * Retrieves the file information from the service.
-   *
-   * @param name - The name identifier for the file to retrieve.
-   * @param config - Optional, configuration for the get method.
-   * @return A File object representing the file.
-   */
-  public File get(String name, GetFileConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForGet(String name, GetFileConfig config) {
 
     GetFileParameters.Builder parameterBuilder = GetFileParameters.builder();
 
@@ -696,36 +715,49 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Gemini Developer client.");
-      } else {
-        responseNode = fileFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, File.class);
+  /** A shared processResponse function for both sync and async methods. */
+  File processResponseForGet(ApiResponse response, GetFileConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      responseNode = fileFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, File.class);
   }
 
   /**
-   * Deletes a remotely stored file.
+   * Retrieves the file information from the service.
    *
-   * @param name - The name identifier for the file to delete.
-   * @param config - Optional, configuration for the delete method.
-   * @return The DeleteFileResponse, the response for the delete method.
+   * @param name - The name identifier for the file to retrieve.
+   * @param config - Optional, configuration for the get method.
+   * @return A File object representing the file.
    */
-  public DeleteFileResponse delete(String name, DeleteFileConfig config) {
+  public File get(String name, GetFileConfig config) {
+    BuiltRequest builtRequest = buildRequestForGet(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForGet(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForDelete(String name, DeleteFileConfig config) {
 
     DeleteFileParameters.Builder parameterBuilder = DeleteFileParameters.builder();
 
@@ -766,38 +798,54 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  DeleteFileResponse processResponseForDelete(ApiResponse response, DeleteFileConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      responseNode = deleteFileResponseFromMldev(responseNode, null);
+    }
+
+    DeleteFileResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, DeleteFileResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /**
+   * Deletes a remotely stored file.
+   *
+   * @param name - The name identifier for the file to delete.
+   * @param config - Optional, configuration for the delete method.
+   * @return The DeleteFileResponse, the response for the delete method.
+   */
+  public DeleteFileResponse delete(String name, DeleteFileConfig config) {
+    BuiltRequest builtRequest = buildRequestForDelete(name, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Gemini Developer client.");
-      } else {
-        responseNode = deleteFileResponseFromMldev(responseNode, null);
-      }
-
-      DeleteFileResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, DeleteFileResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForDelete(response, config);
     }
   }
 

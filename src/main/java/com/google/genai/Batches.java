@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
@@ -2512,7 +2513,9 @@ public final class Batches {
     return toObject;
   }
 
-  BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateCreate(
+      String model, BatchJobSource src, CreateBatchJobConfig config) {
 
     CreateBatchJobParameters.Builder parameterBuilder = CreateBatchJobParameters.builder();
 
@@ -2556,37 +2559,41 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForPrivateCreate(ApiResponse response, CreateBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = batchJobFromVertex(responseNode, null);
+    } else {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  }
+
+  BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateCreate(model, src, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = batchJobFromVertex(responseNode, null);
-      } else {
-        responseNode = batchJobFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateCreate(response, config);
     }
   }
 
-  /**
-   * Gets a batch job resource.
-   *
-   * @param name A fully-qualified BatchJob resource name or ID. Example:
-   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link GetBatchJobConfig} for configuring the get request.
-   * @return A {@link BatchJob} object that contains the info of the batch job.
-   */
-  public BatchJob get(String name, GetBatchJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForGet(String name, GetBatchJobConfig config) {
 
     GetBatchJobParameters.Builder parameterBuilder = GetBatchJobParameters.builder();
 
@@ -2627,36 +2634,50 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = batchJobFromVertex(responseNode, null);
-      } else {
-        responseNode = batchJobFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForGet(ApiResponse response, GetBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = batchJobFromVertex(responseNode, null);
+    } else {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
   }
 
   /**
-   * Cancels a batch job resource.
+   * Gets a batch job resource.
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
    *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
+   * @param config A {@link GetBatchJobConfig} for configuring the get request.
+   * @return A {@link BatchJob} object that contains the info of the batch job.
    */
-  public void cancel(String name, CancelBatchJobConfig config) {
+  public BatchJob get(String name, GetBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForGet(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForGet(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForCancel(String name, CancelBatchJobConfig config) {
 
     CancelBatchJobParameters.Builder parameterBuilder = CancelBatchJobParameters.builder();
 
@@ -2697,10 +2718,29 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    this.apiClient.request("post", path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
   }
 
-  ListBatchJobsResponse privateList(ListBatchJobsConfig config) {
+  /**
+   * Cancels a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
+   */
+  public void cancel(String name, CancelBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForCancel(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return;
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListBatchJobsConfig config) {
 
     ListBatchJobsParameters.Builder parameterBuilder = ListBatchJobsParameters.builder();
 
@@ -2738,49 +2778,52 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListBatchJobsResponse processResponseForPrivateList(
+      ApiResponse response, ListBatchJobsConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = listBatchJobsResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = listBatchJobsResponseFromMldev(responseNode, null);
+    }
+
+    ListBatchJobsResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  ListBatchJobsResponse privateList(ListBatchJobsConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = listBatchJobsResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = listBatchJobsResponseFromMldev(responseNode, null);
-      }
-
-      ListBatchJobsResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
-  /**
-   * Deletes a batch job resource.
-   *
-   * @param name A fully-qualified BatchJob resource name or ID. Example:
-   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
-   */
-  public DeleteResourceJob delete(String name, DeleteBatchJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForDelete(String name, DeleteBatchJobConfig config) {
 
     DeleteBatchJobParameters.Builder parameterBuilder = DeleteBatchJobParameters.builder();
 
@@ -2821,37 +2864,54 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  DeleteResourceJob processResponseForDelete(ApiResponse response, DeleteBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = deleteResourceJobFromVertex(responseNode, null);
+    } else {
+      responseNode = deleteResourceJobFromMldev(responseNode, null);
+    }
+
+    DeleteResourceJob sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /**
+   * Deletes a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
+   */
+  public DeleteResourceJob delete(String name, DeleteBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForDelete(name, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = deleteResourceJobFromVertex(responseNode, null);
-      } else {
-        responseNode = deleteResourceJobFromMldev(responseNode, null);
-      }
-
-      DeleteResourceJob sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForDelete(response, config);
     }
   }
 
