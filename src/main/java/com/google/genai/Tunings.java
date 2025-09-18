@@ -55,70 +55,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode getTuningJobParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageSize"},
-          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageToken"},
-          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "filter"},
-          Common.getValueByPath(fromObject, new String[] {"filter"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          listTuningJobsConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -139,46 +75,20 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningExampleToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"textInput"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"textInput"},
-          Common.getValueByPath(fromObject, new String[] {"textInput"}));
+          new String[] {"_url", "name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"output"},
-          Common.getValueByPath(fromObject, new String[] {"output"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningDatasetToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
-      throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}))) {
-      throw new IllegalArgumentException(
-          "vertexDatasetResource parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"examples"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"examples"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tuningExampleToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"examples", "examples"}, result);
+          new String[] {"config"},
+          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
@@ -250,174 +160,6 @@ public final class Tunings {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
       throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode createTuningJobParametersPrivateToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"baseModel"},
-          Common.getValueByPath(fromObject, new String[] {"baseModel"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"preTunedModel"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"preTunedModel"},
-          Common.getValueByPath(fromObject, new String[] {"preTunedModel"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tuningTask", "trainingData"},
-          tuningDatasetToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          createTuningJobConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode getTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageSize"},
-          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageToken"},
-          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "filter"},
-          Common.getValueByPath(fromObject, new String[] {"filter"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          listTuningJobsConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
-      throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningValidationDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"validationDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
     }
 
     return toObject;
@@ -505,6 +247,46 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode createTuningJobParametersPrivateToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"baseModel"},
+          Common.getValueByPath(fromObject, new String[] {"baseModel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"preTunedModel"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"preTunedModel"},
+          Common.getValueByPath(fromObject, new String[] {"preTunedModel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tuningTask", "trainingData"},
+          tuningDatasetToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          createTuningJobConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToVertex(
       JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -546,6 +328,232 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode getTuningJobParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          Common.getValueByPath(fromObject, new String[] {"config"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode getTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          Common.getValueByPath(fromObject, new String[] {"config"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "pageSize"},
+          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "pageToken"},
+          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "filter"},
+          Common.getValueByPath(fromObject, new String[] {"filter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "pageSize"},
+          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "pageToken"},
+          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "filter"},
+          Common.getValueByPath(fromObject, new String[] {"filter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          listTuningJobsConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          listTuningJobsConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"nextPageToken"},
+          Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tunedModels"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"tunedModels"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(tuningJobFromMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listTuningJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"nextPageToken"},
+          Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tuningJobs"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"tuningJobs"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tunedModelCheckpointFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"checkpointId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"checkpointId"},
+          Common.getValueByPath(fromObject, new String[] {"checkpointId"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"epoch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"epoch"},
+          Common.getValueByPath(fromObject, new String[] {"epoch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"step"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"step"},
+          Common.getValueByPath(fromObject, new String[] {"step"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endpoint"},
+          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode tunedModelFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -560,6 +568,108 @@ public final class Tunings {
           toObject,
           new String[] {"endpoint"},
           Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tunedModelFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endpoint"},
+          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"checkpoints"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"checkpoints"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(tunedModelCheckpointFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"checkpoints"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tuningDatasetToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
+      throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}))) {
+      throw new IllegalArgumentException(
+          "vertexDatasetResource parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"examples"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"examples"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(tuningExampleToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"examples", "examples"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tuningDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
+      throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tuningExampleToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"textInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"textInput"},
+          Common.getValueByPath(fromObject, new String[] {"textInput"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"output"},
+          Common.getValueByPath(fromObject, new String[] {"output"}));
     }
 
     return toObject;
@@ -688,145 +798,6 @@ public final class Tunings {
           toObject,
           new String[] {"tunedModelDisplayName"},
           Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sdkHttpResponse"},
-          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"nextPageToken"},
-          Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tunedModels"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"tunedModels"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tuningJobFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sdkHttpResponse"},
-          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"metadata"},
-          Common.getValueByPath(fromObject, new String[] {"metadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"done"},
-          Common.getValueByPath(fromObject, new String[] {"done"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          Common.getValueByPath(fromObject, new String[] {"error"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tunedModelCheckpointFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"checkpointId"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"checkpointId"},
-          Common.getValueByPath(fromObject, new String[] {"checkpointId"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"epoch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"epoch"},
-          Common.getValueByPath(fromObject, new String[] {"epoch"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"step"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"step"},
-          Common.getValueByPath(fromObject, new String[] {"step"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endpoint"},
-          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tunedModelFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endpoint"},
-          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"checkpoints"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"checkpoints"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tunedModelCheckpointFromVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"checkpoints"}, result);
     }
 
     return toObject;
@@ -1003,7 +974,7 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -1012,23 +983,52 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"nextPageToken"},
-          Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"tuningJobs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"tuningJobs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
+    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"metadata"},
+          Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
 
-      for (JsonNode item : keyArray) {
-        result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
+    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"done"},
+          Common.getValueByPath(fromObject, new String[] {"done"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          Common.getValueByPath(fromObject, new String[] {"error"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode tuningValidationDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
     }
 
     return toObject;

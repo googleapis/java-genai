@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.17.0](https://github.com/googleapis/java-genai/compare/v1.16.0...v1.17.0) (2025-09-16)
+
+
+### Features
+
+* Add 'turn_complete_reason' and 'waiting_for_input' fields. ([5bc4873](https://github.com/googleapis/java-genai/commit/5bc48732fd9281162942b158de34173343d7b179))
+* Add `VideoGenerationMaskMode` enum for Veo 2 Editing ([e5c8277](https://github.com/googleapis/java-genai/commit/e5c82778586dfee4ed7d04a9eabb2a4d8eac6185))
+* Add labels to create tuning job config ([695e17a](https://github.com/googleapis/java-genai/commit/695e17a7b1adebbccb1651d30b768d27f81c3977))
+* generate the function_call class's converters ([38703c7](https://github.com/googleapis/java-genai/commit/38703c726606cbe1b6f5f5f4eb809310b0df94a8))
+* java local tokenizer ([d774185](https://github.com/googleapis/java-genai/commit/d7741856cafd3b8e05803f7b452335fbc4ce8977))
+* Support Veo 2 Editing on Vertex ([d401d3c](https://github.com/googleapis/java-genai/commit/d401d3cf6a5f9ef3d2a76a548eed9d218169170e))
+
+
+### Bug Fixes
+
+* Enable `id` field in `FunctionCall` for Vertex AI. ([3773fe7](https://github.com/googleapis/java-genai/commit/3773fe75007b9ce83692de0031853f0f607bff3e))
+* update Live API audio example with better interruption handling ([cad8df9](https://github.com/googleapis/java-genai/commit/cad8df9c4edaf0806a641869fef6379ed05f0189))
+
 ## [1.16.0](https://github.com/googleapis/java-genai/compare/v1.15.0...v1.16.0) (2025-09-02)
 
 

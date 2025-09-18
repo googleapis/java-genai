@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public abstract class VideoGenerationMask extends JsonSerializable {
    * video. Outpainting masks can be either 9:16 or 16:9.
    */
   @JsonProperty("maskMode")
-  public abstract Optional<String> maskMode();
+  public abstract Optional<VideoGenerationMaskMode> maskMode();
 
   /** Instantiates a builder for VideoGenerationMask. */
   @ExcludeFromGeneratedCoverageReport
@@ -82,7 +83,29 @@ public abstract class VideoGenerationMask extends JsonSerializable {
      * ratio of the input video. Outpainting masks can be either 9:16 or 16:9.
      */
     @JsonProperty("maskMode")
-    public abstract Builder maskMode(String maskMode);
+    public abstract Builder maskMode(VideoGenerationMaskMode maskMode);
+
+    /**
+     * Setter for maskMode given a known enum.
+     *
+     * <p>maskMode: Describes how the mask will be used. Inpainting masks must match the aspect
+     * ratio of the input video. Outpainting masks can be either 9:16 or 16:9.
+     */
+    @CanIgnoreReturnValue
+    public Builder maskMode(VideoGenerationMaskMode.Known knownType) {
+      return maskMode(new VideoGenerationMaskMode(knownType));
+    }
+
+    /**
+     * Setter for maskMode given a string.
+     *
+     * <p>maskMode: Describes how the mask will be used. Inpainting masks must match the aspect
+     * ratio of the input video. Outpainting masks can be either 9:16 or 16:9.
+     */
+    @CanIgnoreReturnValue
+    public Builder maskMode(String maskMode) {
+      return maskMode(new VideoGenerationMaskMode(maskMode));
+    }
 
     public abstract VideoGenerationMask build();
   }

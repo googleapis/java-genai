@@ -48,6 +48,7 @@ import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.Image;
 import com.google.genai.types.Video;
 import com.google.genai.types.VideoGenerationMask;
+import com.google.genai.types.VideoGenerationMaskMode;
 
 /** An example of using the Unified Gen AI Java SDK to edit a video with outpaint mode. */
 public final class GenerateVideosEditOutpaint {
@@ -83,7 +84,7 @@ public final class GenerateVideosEditOutpaint {
                     .gcsUri("gs://genai-sdk-tests/inputs/videos/video_outpaint_mask.png")
                     .mimeType("image/png")
                     .build())
-            .maskMode("OUTPAINT")
+            .maskMode(VideoGenerationMaskMode.Known.OUTPAINT)
             .build();
 
     GenerateVideosConfig generateVideosConfig =

@@ -31,128 +31,236 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode prebuiltVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode activityEndToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode activityEndToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode activityStartToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode activityStartToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode apiKeyConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"apiKeyString"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
+          new String[] {"apiKeyString"},
+          Common.getValueByPath(fromObject, new String[] {"apiKeyString"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode audioTranscriptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode audioTranscriptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode authConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          prebuiltVoiceConfigToMldev(
+          new String[] {"apiKeyConfig"},
+          apiKeyConfigToVertex(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
+                  Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"})),
               toObject));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"authType"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"speaker"},
-          Common.getValueByPath(fromObject, new String[] {"speaker"}));
+          new String[] {"authType"},
+          Common.getValueByPath(fromObject, new String[] {"authType"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
+          new String[] {"googleServiceAccountConfig"},
+          Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}));
     }
 
-    return toObject;
-  }
+    if (Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"httpBasicAuthConfig"},
+          Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}));
+    }
 
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode multiSpeakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
+    if (Common.getValueByPath(fromObject, new String[] {"oauthConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"oauthConfig"},
+          Common.getValueByPath(fromObject, new String[] {"oauthConfig"}));
+    }
 
-      for (JsonNode item : keyArray) {
-        result.add(speakerVoiceConfigToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
+    if (Common.getValueByPath(fromObject, new String[] {"oidcConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"oidcConfig"},
+          Common.getValueByPath(fromObject, new String[] {"oidcConfig"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode automaticActivityDetectionToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"disabled"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
+          new String[] {"disabled"},
+          Common.getValueByPath(fromObject, new String[] {"disabled"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"multiSpeakerVoiceConfig"},
-          multiSpeakerVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
-              toObject));
+          new String[] {"startOfSpeechSensitivity"},
+          Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+          new String[] {"endOfSpeechSensitivity"},
+          Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"prefixPaddingMs"},
+          Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"silenceDurationMs"},
+          Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode automaticActivityDetectionToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"disabled"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
+          new String[] {"disabled"},
+          Common.getValueByPath(fromObject, new String[] {"disabled"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
+          new String[] {"startOfSpeechSensitivity"},
+          Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endOfSpeechSensitivity"},
+          Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"prefixPaddingMs"},
+          Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"silenceDurationMs"},
+          Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -170,6 +278,276 @@ final class LiveConverters {
           toObject,
           new String[] {"data"},
           Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode blobToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"data"},
+          Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(partFromMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"role"},
+          Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(partFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"role"},
+          Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(partToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"role"},
+          Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(partToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"role"},
+          Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contextWindowCompressionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"triggerTokens"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"triggerTokens"},
+          Common.getValueByPath(fromObject, new String[] {"triggerTokens"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"slidingWindow"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"slidingWindow"},
+          slidingWindowToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"slidingWindow"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contextWindowCompressionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"triggerTokens"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"triggerTokens"},
+          Common.getValueByPath(fromObject, new String[] {"triggerTokens"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"slidingWindow"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"slidingWindow"},
+          slidingWindowToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"slidingWindow"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode dynamicRetrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dynamicThreshold"},
+          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode dynamicRetrievalConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dynamicThreshold"},
+          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode enterpriseWebSearchToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"excludeDomains"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"excludeDomains"},
+          Common.getValueByPath(fromObject, new String[] {"excludeDomains"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode fileDataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileUri"},
+          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode fileDataFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileUri"},
+          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
@@ -207,6 +585,83 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode fileDataToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileUri"},
+          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
@@ -232,112 +687,25 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode functionCallToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          functionCallToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(partToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
     }
 
     return toObject;
@@ -399,20 +767,172 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode intervalToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode functionDeclarationToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startTime"},
-          Common.getValueByPath(fromObject, new String[] {"startTime"}));
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
+      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+          new String[] {"description"},
+          Common.getValueByPath(fromObject, new String[] {"description"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"parameters"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"parameters"},
+          Common.getValueByPath(fromObject, new String[] {"parameters"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"parametersJsonSchema"},
+          Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseJsonSchema"},
+          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
+      throw new IllegalArgumentException("willContinue parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"scheduling"}))) {
+      throw new IllegalArgumentException("scheduling parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleMapsToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"authConfig"},
+          authConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleSearchRetrievalToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dynamicRetrievalConfig"},
+          dynamicRetrievalConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleSearchRetrievalToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dynamicRetrievalConfig"},
+          dynamicRetrievalConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
+              toObject));
     }
 
     return toObject;
@@ -440,264 +960,166 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode dynamicRetrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode googleSearchToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicThreshold"},
-          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchRetrievalToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicRetrievalConfig"},
-          dynamicRetrievalConfigToMldev(
+          new String[] {"timeRangeFilter"},
+          intervalToVertex(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
+                  Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"})),
               toObject));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolComputerUseToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"excludeDomains"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"environment"},
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
+          new String[] {"excludeDomains"},
+          Common.getValueByPath(fromObject, new String[] {"excludeDomains"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode intervalToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
+    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startTime"},
+          Common.getValueByPath(fromObject, new String[] {"startTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endTime"},
+          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode intervalToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startTime"},
+          Common.getValueByPath(fromObject, new String[] {"startTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endTime"},
+          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContentToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"turns"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"turns"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject));
       }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+      Common.setValueByPath(toObject, new String[] {"turns"}, result);
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
-      throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
+          new String[] {"turnComplete"},
+          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientContentToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"turns"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"turns"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"turns"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"turnComplete"},
+          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientMessageToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"setup"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"setup"},
+          liveClientSetupToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+                  Common.getValueByPath(fromObject, new String[] {"setup"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"clientContent"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"googleSearchRetrieval"},
-          googleSearchRetrievalToMldev(
+          new String[] {"clientContent"},
+          liveClientContentToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
+                  Common.getValueByPath(fromObject, new String[] {"clientContent"})),
               toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
-      throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"googleMaps"}))) {
-      throw new IllegalArgumentException("googleMaps parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInput"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"urlContext"},
-          urlContextToMldev(
+          new String[] {"realtimeInput"},
+          liveClientRealtimeInputToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInput"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"computerUse"},
-          toolComputerUseToMldev(
+          new String[] {"realtime_input"},
+          liveSendRealtimeInputParametersToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"codeExecution"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode sessionResumptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"handle"},
-          Common.getValueByPath(fromObject, new String[] {"handle"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"transparent"}))) {
-      throw new IllegalArgumentException("transparent parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode audioTranscriptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode automaticActivityDetectionToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"disabled"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"disabled"},
-          Common.getValueByPath(fromObject, new String[] {"disabled"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOfSpeechSensitivity"},
-          Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOfSpeechSensitivity"},
-          Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prefixPaddingMs"},
-          Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"silenceDurationMs"},
-          Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode realtimeInputConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"automaticActivityDetection"},
-          automaticActivityDetectionToMldev(
+          new String[] {"toolResponse"},
+          liveClientToolResponseToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityHandling"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityHandling"},
-          Common.getValueByPath(fromObject, new String[] {"activityHandling"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"turnCoverage"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"turnCoverage"},
-          Common.getValueByPath(fromObject, new String[] {"turnCoverage"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode slidingWindowToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"targetTokens"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"targetTokens"},
-          Common.getValueByPath(fromObject, new String[] {"targetTokens"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contextWindowCompressionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"triggerTokens"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"triggerTokens"},
-          Common.getValueByPath(fromObject, new String[] {"triggerTokens"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"slidingWindow"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"slidingWindow"},
-          slidingWindowToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"slidingWindow"})),
+                  Common.getValueByPath(fromObject, new String[] {"toolResponse"})),
               toObject));
     }
 
@@ -705,13 +1127,419 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode proactivityConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveClientMessageToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"setup"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"proactiveAudio"},
-          Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}));
+          new String[] {"setup"},
+          liveClientSetupToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"setup"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"clientContent"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"clientContent"},
+          liveClientContentToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"clientContent"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"realtimeInput"},
+          liveClientRealtimeInputToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInput"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"realtime_input"},
+          liveSendRealtimeInputParametersToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          liveClientToolResponseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolResponse"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientRealtimeInputToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mediaChunks"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaChunks"},
+          Common.getValueByPath(fromObject, new String[] {"mediaChunks"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Common.getValueByPath(fromObject, new String[] {"audio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioStreamEnd"},
+          Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video"},
+          Common.getValueByPath(fromObject, new String[] {"video"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityStart"},
+          activityStartToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityEnd"},
+          activityEndToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientRealtimeInputToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mediaChunks"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaChunks"},
+          Common.getValueByPath(fromObject, new String[] {"mediaChunks"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Common.getValueByPath(fromObject, new String[] {"audio"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}))) {
+      throw new IllegalArgumentException("audioStreamEnd parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video"},
+          Common.getValueByPath(fromObject, new String[] {"video"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityStart"},
+          activityStartToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityEnd"},
+          activityEndToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientSetupToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"generationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"generationConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"systemInstruction"},
+          contentToMldev(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(toolToMldev(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tools"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"realtimeInputConfig"},
+          realtimeInputConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"sessionResumption"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sessionResumption"},
+          sessionResumptionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"contextWindowCompression"},
+          contextWindowCompressionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inputAudioTranscription"},
+          audioTranscriptionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"outputAudioTranscription"},
+          audioTranscriptionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"proactivity"},
+          proactivityConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"proactivity"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientSetupToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"generationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"generationConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"systemInstruction"},
+          contentToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(toolToVertex(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"tools"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"realtimeInputConfig"},
+          realtimeInputConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"sessionResumption"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sessionResumption"},
+          sessionResumptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"contextWindowCompression"},
+          contextWindowCompressionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inputAudioTranscription"},
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"outputAudioTranscription"},
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"proactivity"},
+          proactivityConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"proactivity"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientToolResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionResponses"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionResponseToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveClientToolResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionResponses"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionResponseToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
     }
 
     return toObject;
@@ -876,1165 +1704,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveConnectParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"setup", "model"},
-          Transformers.tModel(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          liveConnectConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode activityStartToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode activityEndToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveSendRealtimeInputParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaChunks"},
-          Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audio"},
-          Transformers.tAudioBlob(Common.getValueByPath(fromObject, new String[] {"audio"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audioStreamEnd"},
-          Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"video"},
-          Transformers.tImageBlob(Common.getValueByPath(fromObject, new String[] {"video"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityStart"},
-          activityStartToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityEnd"},
-          activityEndToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientSetupToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"generationConfig"},
-          Common.getValueByPath(fromObject, new String[] {"generationConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"systemInstruction"},
-          contentToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tContent(
-                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode)
-              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(toolToMldev(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"tools"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"realtimeInputConfig"},
-          realtimeInputConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sessionResumption"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sessionResumption"},
-          sessionResumptionConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contextWindowCompression"},
-          contextWindowCompressionConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inputAudioTranscription"},
-          audioTranscriptionConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outputAudioTranscription"},
-          audioTranscriptionConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"proactivity"},
-          proactivityConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"proactivity"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientContentToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"turns"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"turns"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"turns"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"turnComplete"},
-          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientRealtimeInputToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mediaChunks"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaChunks"},
-          Common.getValueByPath(fromObject, new String[] {"mediaChunks"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audio"},
-          Common.getValueByPath(fromObject, new String[] {"audio"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audioStreamEnd"},
-          Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"video"},
-          Common.getValueByPath(fromObject, new String[] {"video"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityStart"},
-          activityStartToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityEnd"},
-          activityEndToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"willContinue"},
-          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"scheduling"},
-          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientToolResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionResponses"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionResponseToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientMessageToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"setup"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"setup"},
-          liveClientSetupToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"setup"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"clientContent"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"clientContent"},
-          liveClientContentToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"clientContent"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInput"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"realtimeInput"},
-          liveClientRealtimeInputToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInput"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"realtime_input"},
-          liveSendRealtimeInputParametersToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolResponse"},
-          liveClientToolResponseToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolResponse"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode prebuiltVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          prebuiltVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
-      throw new IllegalArgumentException(
-          "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"args"},
-          Common.getValueByPath(fromObject, new String[] {"args"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          functionCallToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(partToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionDeclarationToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parameters"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parameters"},
-          Common.getValueByPath(fromObject, new String[] {"parameters"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parametersJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode intervalToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startTime"},
-          Common.getValueByPath(fromObject, new String[] {"startTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"endTime"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"timeRangeFilter"},
-          intervalToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"excludeDomains"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"excludeDomains"},
-          Common.getValueByPath(fromObject, new String[] {"excludeDomains"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode dynamicRetrievalConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicThreshold"},
-          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchRetrievalToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicRetrievalConfig"},
-          dynamicRetrievalConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode enterpriseWebSearchToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"excludeDomains"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"excludeDomains"},
-          Common.getValueByPath(fromObject, new String[] {"excludeDomains"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode apiKeyConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"apiKeyString"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"apiKeyString"},
-          Common.getValueByPath(fromObject, new String[] {"apiKeyString"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode authConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"apiKeyConfig"},
-          apiKeyConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"authType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"authType"},
-          Common.getValueByPath(fromObject, new String[] {"authType"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleServiceAccountConfig"},
-          Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"httpBasicAuthConfig"},
-          Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"oauthConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"oauthConfig"},
-          Common.getValueByPath(fromObject, new String[] {"oauthConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"oidcConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"oidcConfig"},
-          Common.getValueByPath(fromObject, new String[] {"oidcConfig"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleMapsToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"authConfig"},
-          authConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolComputerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"environment"},
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrieval"},
-          Common.getValueByPath(fromObject, new String[] {"retrieval"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          googleSearchRetrievalToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enterpriseWebSearch"},
-          enterpriseWebSearchToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleMaps"},
-          googleMapsToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          urlContextToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"computerUse"},
-          toolComputerUseToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecution"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode sessionResumptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"handle"},
-          Common.getValueByPath(fromObject, new String[] {"handle"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"transparent"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"transparent"},
-          Common.getValueByPath(fromObject, new String[] {"transparent"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode audioTranscriptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode automaticActivityDetectionToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"disabled"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"disabled"},
-          Common.getValueByPath(fromObject, new String[] {"disabled"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOfSpeechSensitivity"},
-          Common.getValueByPath(fromObject, new String[] {"startOfSpeechSensitivity"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOfSpeechSensitivity"},
-          Common.getValueByPath(fromObject, new String[] {"endOfSpeechSensitivity"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prefixPaddingMs"},
-          Common.getValueByPath(fromObject, new String[] {"prefixPaddingMs"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"silenceDurationMs"},
-          Common.getValueByPath(fromObject, new String[] {"silenceDurationMs"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode realtimeInputConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"automaticActivityDetection"},
-          automaticActivityDetectionToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityHandling"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityHandling"},
-          Common.getValueByPath(fromObject, new String[] {"activityHandling"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"turnCoverage"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"turnCoverage"},
-          Common.getValueByPath(fromObject, new String[] {"turnCoverage"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode slidingWindowToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"targetTokens"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"targetTokens"},
-          Common.getValueByPath(fromObject, new String[] {"targetTokens"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contextWindowCompressionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"triggerTokens"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"triggerTokens"},
-          Common.getValueByPath(fromObject, new String[] {"triggerTokens"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"slidingWindow"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"slidingWindow"},
-          slidingWindowToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"slidingWindow"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode proactivityConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"proactiveAudio"},
-          Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode liveConnectConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
@@ -2193,6 +1862,31 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveConnectParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"setup", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"config"},
+          liveConnectConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode liveConnectParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -2218,15 +1912,68 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode activityStartToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveSendRealtimeInputParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
 
-    return toObject;
-  }
+      for (JsonNode item : keyArray) {
+        result.add(item);
+      }
+      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
+    }
 
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode activityEndToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audio"},
+          Transformers.tAudioBlob(Common.getValueByPath(fromObject, new String[] {"audio"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioStreamEnd"},
+          Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video"},
+          Transformers.tImageBlob(Common.getValueByPath(fromObject, new String[] {"video"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityStart"},
+          activityStartToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityEnd"},
+          activityEndToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
+              toObject));
+    }
 
     return toObject;
   }
@@ -2235,10 +1982,16 @@ final class LiveConverters {
   ObjectNode liveSendRealtimeInputParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mediaChunks"},
-          Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(item);
+      }
+      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
@@ -2293,121 +2046,16 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientSetupToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerContentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"modelTurn"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"generationConfig"},
-          Common.getValueByPath(fromObject, new String[] {"generationConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"systemInstruction"},
-          contentToVertex(
+          new String[] {"modelTurn"},
+          contentFromMldev(
               JsonSerializable.toJsonNode(
-                  Transformers.tContent(
-                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+                  Common.getValueByPath(fromObject, new String[] {"modelTurn"})),
               toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode)
-              Transformers.tTools(Common.getValueByPath(fromObject, new String[] {"tools"}));
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(toolToVertex(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"tools"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"realtimeInputConfig"},
-          realtimeInputConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sessionResumption"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sessionResumption"},
-          sessionResumptionConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contextWindowCompression"},
-          contextWindowCompressionConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inputAudioTranscription"},
-          audioTranscriptionConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outputAudioTranscription"},
-          audioTranscriptionConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"proactivity"},
-          proactivityConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"proactivity"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientContentToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"turns"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"turns"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"turns"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
@@ -2417,169 +2065,383 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientRealtimeInputToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mediaChunks"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"interrupted"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mediaChunks"},
-          Common.getValueByPath(fromObject, new String[] {"mediaChunks"}));
+          new String[] {"interrupted"},
+          Common.getValueByPath(fromObject, new String[] {"interrupted"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"audio"},
-          Common.getValueByPath(fromObject, new String[] {"audio"}));
+          new String[] {"groundingMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}))) {
-      throw new IllegalArgumentException("audioStreamEnd parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"generationComplete"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"video"},
-          Common.getValueByPath(fromObject, new String[] {"video"}));
+          new String[] {"generationComplete"},
+          Common.getValueByPath(fromObject, new String[] {"generationComplete"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"inputTranscription"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityStart"},
-          activityStartToVertex(
+          new String[] {"inputTranscription"},
+          transcriptionFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityStart"})),
+                  Common.getValueByPath(fromObject, new String[] {"inputTranscription"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"outputTranscription"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"activityEnd"},
-          activityEndToVertex(
+          new String[] {"outputTranscription"},
+          transcriptionFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"activityEnd"})),
+                  Common.getValueByPath(fromObject, new String[] {"outputTranscription"})),
               toObject));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
-      throw new IllegalArgumentException("willContinue parameter is not supported in Vertex AI.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"scheduling"}))) {
-      throw new IllegalArgumentException("scheduling parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
+          new String[] {"urlContextMetadata"},
+          urlContextMetadataFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"})),
+              toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"turnCompleteReason"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
+          new String[] {"turnCompleteReason"},
+          Common.getValueByPath(fromObject, new String[] {"turnCompleteReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"waitingForInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"waitingForInput"},
+          Common.getValueByPath(fromObject, new String[] {"waitingForInput"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientToolResponseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerContentFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponses"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionResponses"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
+    if (Common.getValueByPath(fromObject, new String[] {"modelTurn"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"modelTurn"},
+          contentFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"modelTurn"})),
+              toObject));
+    }
 
-      for (JsonNode item : keyArray) {
-        result.add(functionResponseToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionResponses"}, result);
+    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"turnComplete"},
+          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"interrupted"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"interrupted"},
+          Common.getValueByPath(fromObject, new String[] {"interrupted"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"groundingMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generationComplete"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"generationComplete"},
+          Common.getValueByPath(fromObject, new String[] {"generationComplete"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inputTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inputTranscription"},
+          transcriptionFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"outputTranscription"},
+          transcriptionFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"outputTranscription"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"turnCompleteReason"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"turnCompleteReason"},
+          Common.getValueByPath(fromObject, new String[] {"turnCompleteReason"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"waitingForInput"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"waitingForInput"},
+          Common.getValueByPath(fromObject, new String[] {"waitingForInput"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientMessageToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerGoAwayFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"setup"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"timeLeft"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"setup"},
-          liveClientSetupToVertex(
+          new String[] {"timeLeft"},
+          Common.getValueByPath(fromObject, new String[] {"timeLeft"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerGoAwayFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"timeLeft"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"timeLeft"},
+          Common.getValueByPath(fromObject, new String[] {"timeLeft"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerMessageFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"setupComplete"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"setupComplete"},
+          liveServerSetupCompleteFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"setup"})),
+                  Common.getValueByPath(fromObject, new String[] {"setupComplete"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"clientContent"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"serverContent"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"clientContent"},
-          liveClientContentToVertex(
+          new String[] {"serverContent"},
+          liveServerContentFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"clientContent"})),
+                  Common.getValueByPath(fromObject, new String[] {"serverContent"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInput"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"realtimeInput"},
-          liveClientRealtimeInputToVertex(
+          new String[] {"toolCall"},
+          liveServerToolCallFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInput"})),
+                  Common.getValueByPath(fromObject, new String[] {"toolCall"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"realtime_input"},
-          liveSendRealtimeInputParametersToVertex(
+          new String[] {"toolCallCancellation"},
+          liveServerToolCallCancellationFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"})),
+                  Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"toolResponse"},
-          liveClientToolResponseToVertex(
+          new String[] {"usageMetadata"},
+          usageMetadataFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolResponse"})),
+                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"goAway"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"goAway"},
+          liveServerGoAwayFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"goAway"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sessionResumptionUpdate"},
+          liveServerSessionResumptionUpdateFromMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerMessageFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"setupComplete"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"setupComplete"},
+          liveServerSetupCompleteFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"setupComplete"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"serverContent"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"serverContent"},
+          liveServerContentFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"serverContent"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          liveServerToolCallFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolCall"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCallCancellation"},
+          liveServerToolCallCancellationFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"usageMetadata"},
+          usageMetadataFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"goAway"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"goAway"},
+          liveServerGoAwayFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"goAway"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sessionResumptionUpdate"},
+          liveServerSessionResumptionUpdateFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerSessionResumptionUpdateFromMldev(
+      JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"newHandle"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"newHandle"},
+          Common.getValueByPath(fromObject, new String[] {"newHandle"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"resumable"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"resumable"},
+          Common.getValueByPath(fromObject, new String[] {"resumable"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"lastConsumedClientMessageIndex"},
+          Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerSessionResumptionUpdateFromVertex(
+      JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"newHandle"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"newHandle"},
+          Common.getValueByPath(fromObject, new String[] {"newHandle"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"resumable"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"resumable"},
+          Common.getValueByPath(fromObject, new String[] {"resumable"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"lastConsumedClientMessageIndex"},
+          Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"}));
     }
 
     return toObject;
@@ -2593,92 +2455,130 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerSetupCompleteFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"sessionId"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
+          new String[] {"sessionId"},
+          Common.getValueByPath(fromObject, new String[] {"sessionId"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerToolCallCancellationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"ids"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+          toObject, new String[] {"ids"}, Common.getValueByPath(fromObject, new String[] {"ids"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerToolCallCancellationFromVertex(
+      JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"ids"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+          toObject, new String[] {"ids"}, Common.getValueByPath(fromObject, new String[] {"ids"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode liveServerToolCallFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    if (Common.getValueByPath(fromObject, new String[] {"functionCalls"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionCalls"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionCallFromMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"args"},
-          Common.getValueByPath(fromObject, new String[] {"args"}));
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode liveServerToolCallFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionCalls"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionCalls"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionCallFromVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode modalityTokenCountFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"modality"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
+          new String[] {"modality"},
+          Common.getValueByPath(fromObject, new String[] {"modality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode modalityTokenCountFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"modality"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"modality"},
+          Common.getValueByPath(fromObject, new String[] {"modality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode multiSpeakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(speakerVoiceConfigToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
     }
 
     return toObject;
@@ -2773,24 +2673,720 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode partFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          videoMetadataFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecutionResult"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          videoMetadataToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecutionResult"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          videoMetadataToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecutionResult"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode prebuiltVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceName"},
+          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode prebuiltVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceName"},
+          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode proactivityConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"proactiveAudio"},
+          Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode proactivityConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"proactiveAudio"},
+          Common.getValueByPath(fromObject, new String[] {"proactiveAudio"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode realtimeInputConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"automaticActivityDetection"},
+          automaticActivityDetectionToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityHandling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityHandling"},
+          Common.getValueByPath(fromObject, new String[] {"activityHandling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"turnCoverage"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"turnCoverage"},
+          Common.getValueByPath(fromObject, new String[] {"turnCoverage"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode realtimeInputConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"automaticActivityDetection"},
+          automaticActivityDetectionToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"activityHandling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"activityHandling"},
+          Common.getValueByPath(fromObject, new String[] {"activityHandling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"turnCoverage"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"turnCoverage"},
+          Common.getValueByPath(fromObject, new String[] {"turnCoverage"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode sessionResumptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"handle"},
+          Common.getValueByPath(fromObject, new String[] {"handle"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"transparent"}))) {
+      throw new IllegalArgumentException("transparent parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode sessionResumptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"handle"},
+          Common.getValueByPath(fromObject, new String[] {"handle"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"transparent"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"transparent"},
+          Common.getValueByPath(fromObject, new String[] {"transparent"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode slidingWindowToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"targetTokens"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"targetTokens"},
+          Common.getValueByPath(fromObject, new String[] {"targetTokens"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode slidingWindowToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"targetTokens"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"targetTokens"},
+          Common.getValueByPath(fromObject, new String[] {"targetTokens"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode speakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speaker"},
+          Common.getValueByPath(fromObject, new String[] {"speaker"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          voiceConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode speechConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          voiceConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"multiSpeakerVoiceConfig"},
+          multiSpeakerVoiceConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          voiceConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              toObject));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
+      throw new IllegalArgumentException(
+          "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolComputerUseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"environment"},
+          Common.getValueByPath(fromObject, new String[] {"environment"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolComputerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"environment"},
+          Common.getValueByPath(fromObject, new String[] {"environment"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(partFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(functionDeclarationToMldev(JsonSerializable.toJsonNode(item), toObject));
       }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
+      throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          googleSearchRetrievalToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
+              toObject));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
+      throw new IllegalArgumentException(
+          "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"googleMaps"}))) {
+      throw new IllegalArgumentException("googleMaps parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          urlContextToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          toolComputerUseToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecution"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrieval"},
+          Common.getValueByPath(fromObject, new String[] {"retrieval"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          googleSearchRetrievalToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          enterpriseWebSearchToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          googleMapsToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          urlContextToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          toolComputerUseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecution"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
     }
 
     return toObject;
@@ -2817,20 +3413,20 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode transcriptionFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"retrievedUrl"},
-          Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}));
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"finished"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"urlRetrievalStatus"},
-          Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}));
+          new String[] {"finished"},
+          Common.getValueByPath(fromObject, new String[] {"finished"}));
     }
 
     return toObject;
@@ -2855,123 +3451,34 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerContentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode urlContextToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"modelTurn"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"modelTurn"},
-          contentFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"modelTurn"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"turnComplete"},
-          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"interrupted"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"interrupted"},
-          Common.getValueByPath(fromObject, new String[] {"interrupted"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"groundingMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"generationComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"generationComplete"},
-          Common.getValueByPath(fromObject, new String[] {"generationComplete"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inputTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inputTranscription"},
-          transcriptionFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outputTranscription"},
-          transcriptionFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"outputTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContextMetadata"},
-          urlContextMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"})),
-              toObject));
-    }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerToolCallFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode urlContextToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionCalls"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionCalls"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionCallFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
-    }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerToolCallCancellationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode urlMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"ids"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"ids"}, Common.getValueByPath(fromObject, new String[] {"ids"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode modalityTokenCountFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"modality"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"modality"},
-          Common.getValueByPath(fromObject, new String[] {"modality"}));
+          new String[] {"retrievedUrl"},
+          Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"tokenCount"},
-          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
+          new String[] {"urlRetrievalStatus"},
+          Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}));
     }
 
     return toObject;
@@ -3069,487 +3576,6 @@ final class LiveConverters {
         result.add(modalityTokenCountFromMldev(JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"toolUsePromptTokensDetails"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerGoAwayFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"timeLeft"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"timeLeft"},
-          Common.getValueByPath(fromObject, new String[] {"timeLeft"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerSessionResumptionUpdateFromMldev(
-      JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"newHandle"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"newHandle"},
-          Common.getValueByPath(fromObject, new String[] {"newHandle"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"resumable"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"resumable"},
-          Common.getValueByPath(fromObject, new String[] {"resumable"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"lastConsumedClientMessageIndex"},
-          Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerMessageFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"setupComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"setupComplete"},
-          liveServerSetupCompleteFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"setupComplete"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"serverContent"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"serverContent"},
-          liveServerContentFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"serverContent"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolCall"},
-          liveServerToolCallFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolCallCancellation"},
-          liveServerToolCallCancellationFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"usageMetadata"},
-          usageMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"goAway"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"goAway"},
-          liveServerGoAwayFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"goAway"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sessionResumptionUpdate"},
-          liveServerSessionResumptionUpdateFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerSetupCompleteFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"sessionId"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sessionId"},
-          Common.getValueByPath(fromObject, new String[] {"sessionId"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"args"},
-          Common.getValueByPath(fromObject, new String[] {"args"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode partFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          functionCallFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(partFromVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode transcriptionFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"finished"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"finished"},
-          Common.getValueByPath(fromObject, new String[] {"finished"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerContentFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"modelTurn"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"modelTurn"},
-          contentFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"modelTurn"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"turnComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"turnComplete"},
-          Common.getValueByPath(fromObject, new String[] {"turnComplete"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"interrupted"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"interrupted"},
-          Common.getValueByPath(fromObject, new String[] {"interrupted"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"groundingMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"generationComplete"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"generationComplete"},
-          Common.getValueByPath(fromObject, new String[] {"generationComplete"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inputTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inputTranscription"},
-          transcriptionFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputTranscription"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputTranscription"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outputTranscription"},
-          transcriptionFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"outputTranscription"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerToolCallFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionCalls"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionCalls"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionCallFromVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionCalls"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerToolCallCancellationFromVertex(
-      JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"ids"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"ids"}, Common.getValueByPath(fromObject, new String[] {"ids"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode modalityTokenCountFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"modality"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"modality"},
-          Common.getValueByPath(fromObject, new String[] {"modality"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tokenCount"},
-          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
     }
 
     return toObject;
@@ -3660,117 +3686,131 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerGoAwayFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode videoMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"timeLeft"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"timeLeft"},
-          Common.getValueByPath(fromObject, new String[] {"timeLeft"}));
+          new String[] {"endOffset"},
+          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startOffset"},
+          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerSessionResumptionUpdateFromVertex(
-      JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode videoMetadataFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"newHandle"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"newHandle"},
-          Common.getValueByPath(fromObject, new String[] {"newHandle"}));
+          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"resumable"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"resumable"},
-          Common.getValueByPath(fromObject, new String[] {"resumable"}));
+          new String[] {"endOffset"},
+          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"})
-        != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"lastConsumedClientMessageIndex"},
-          Common.getValueByPath(fromObject, new String[] {"lastConsumedClientMessageIndex"}));
+          new String[] {"startOffset"},
+          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveServerMessageFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode videoMetadataToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"setupComplete"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"setupComplete"},
-          liveServerSetupCompleteFromVertex(
+          new String[] {"endOffset"},
+          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startOffset"},
+          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoMetadataToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endOffset"},
+          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startOffset"},
+          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode voiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"prebuiltVoiceConfig"},
+          prebuiltVoiceConfigToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"setupComplete"})),
+                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"serverContent"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"serverContent"},
-          liveServerContentFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"serverContent"})),
-              toObject));
-    }
+    return toObject;
+  }
 
-    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode voiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"toolCall"},
-          liveServerToolCallFromVertex(
+          new String[] {"prebuiltVoiceConfig"},
+          prebuiltVoiceConfigToVertex(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolCallCancellation"},
-          liveServerToolCallCancellationFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolCallCancellation"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"usageMetadata"},
-          usageMetadataFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"usageMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"goAway"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"goAway"},
-          liveServerGoAwayFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"goAway"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sessionResumptionUpdate"},
-          liveServerSessionResumptionUpdateFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"})),
+                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
               toObject));
     }
 
