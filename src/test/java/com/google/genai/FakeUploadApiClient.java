@@ -22,14 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import okhttp3.Headers;
 import okhttp3.MediaType;
-import okhttp3.Protocol;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/** */
+/** A fake client for testing File upload requests. */
 public final class FakeUploadApiClient extends ApiClient {
 
   public final Map<String, UploadedFile> files;
@@ -114,6 +112,26 @@ public final class FakeUploadApiClient extends ApiClient {
     return new FakeApiResponse(
         Headers.of("X-Goog-Upload-Status", uploadStatus),
         ResponseBody.create("", MediaType.get("text/plain")));
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request json string, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
+    throw new UnsupportedOperationException("Not implemented yet.");
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request bytes, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+    return CompletableFuture.completedFuture(request(httpMethod, path, requestBytes, httpOptions));
   }
 
   public class UploadedFile {

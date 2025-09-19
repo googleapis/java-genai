@@ -19,6 +19,8 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.HttpOptions;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -26,14 +28,28 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.StringJoiner;
 import org.jspecify.annotations.Nullable;
-import com.google.genai.errors.GenAiIOException;
 
 /** Common utility methods for the GenAI SDK. */
 final class Common {
 
   private Common() {}
+
+  /** A class that holds the path, body, and http options of an API request. */
+  static class BuiltRequest {
+    final String path;
+    final String body;
+    final Optional<HttpOptions> httpOptions;
+
+    /** Constructor for BuiltRequest. */
+    BuiltRequest(String path, String body, Optional<HttpOptions> httpOptions) {
+      this.path = path;
+      this.body = body;
+      this.httpOptions = httpOptions;
+    }
+  }
 
   /**
    * Sets the value of an object by a path.

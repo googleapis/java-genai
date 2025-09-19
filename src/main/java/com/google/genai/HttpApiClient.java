@@ -23,7 +23,11 @@ import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /** Base client for the HTTP APIs. This is for internal use only. */
 @InternalApi
@@ -63,7 +67,7 @@ public class HttpApiClient extends ApiClient {
 
   /** Sends a Http request given the http method, path, request bytes, and http options. */
   @Override
-  public ApiResponse request(
+  public HttpApiResponse request(
       String httpMethod,
       String url,
       byte[] requestBytes,
@@ -78,5 +82,55 @@ public class HttpApiClient extends ApiClient {
     } catch (IOException e) {
       throw new GenAiIOException("Failed to execute HTTP request.", e);
     }
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request json string, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod,
+      String path,
+      String requestJson,
+      Optional<HttpOptions> requestHttpOptions) {
+    return asyncExecuteRequest(buildRequest(httpMethod, path, requestJson, requestHttpOptions));
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request bytes, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod,
+      String url,
+      byte[] requestBytes,
+      Optional<HttpOptions> requestHttpOptions) {
+    return asyncExecuteRequest(buildRequest(httpMethod, url, requestBytes, requestHttpOptions));
+  }
+
+  /** Executes the given HTTP request asynchronously, this method is non-blocking. */
+  private CompletableFuture<ApiResponse> asyncExecuteRequest(Request request) {
+    CompletableFuture<ApiResponse> future = new CompletableFuture<>();
+
+    httpClient
+        .newCall(request)
+        .enqueue(
+            new Callback() {
+
+              @Override
+              public void onFailure(Call call, IOException e) {
+                future.completeExceptionally(
+                    new GenAiIOException("Failed to execute HTTP request.", e));
+              }
+
+              @Override
+              public void onResponse(Call call, Response response) {
+                future.complete(new HttpApiResponse(response));
+              }
+            });
+
+    return future;
   }
 }
