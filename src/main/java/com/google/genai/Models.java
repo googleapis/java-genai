@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ComputeTokensConfig;
 import com.google.genai.types.ComputeTokensParameters;
@@ -6552,7 +6553,8 @@ public final class Models {
     return toObject;
   }
 
-  GenerateContentResponse privateGenerateContent(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGenerateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
 
     GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
@@ -6597,57 +6599,69 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
-        Headers responseHeaders = response.getHeaders();
-        if (responseHeaders == null) {
-          return GenerateContentResponse.builder()
-              .sdkHttpResponse(HttpResponse.builder().body(responseString))
-              .build();
-        }
-        Map<String, String> headers = new HashMap<>();
-        for (String headerName : responseHeaders.names()) {
-          headers.put(headerName, responseHeaders.get(headerName));
-        }
-        return GenerateContentResponse.builder()
-            .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
-            .build();
-      }
+  /** A shared processResponse function for both sync and async methods. */
+  GenerateContentResponse processResponseForPrivateGenerateContent(
+      ApiResponse response, GenerateContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateContentResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = generateContentResponseFromMldev(responseNode, null);
-      }
-
-      GenerateContentResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, GenerateContentResponse.class);
+    if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
       Headers responseHeaders = response.getHeaders();
       if (responseHeaders == null) {
-        return sdkResponse;
+        return GenerateContentResponse.builder()
+            .sdkHttpResponse(HttpResponse.builder().body(responseString))
+            .build();
       }
       Map<String, String> headers = new HashMap<>();
       for (String headerName : responseHeaders.names()) {
         headers.put(headerName, responseHeaders.get(headerName));
       }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
+      return GenerateContentResponse.builder()
+          .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
           .build();
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = generateContentResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = generateContentResponseFromMldev(responseNode, null);
+    }
+
+    GenerateContentResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, GenerateContentResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  GenerateContentResponse privateGenerateContent(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateGenerateContent(model, contents, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateGenerateContent(response, config);
     }
   }
 
-  ResponseStream<GenerateContentResponse> privateGenerateContentStream(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGenerateContentStream(
       String model, List<Content> contents, GenerateContentConfig config) {
 
     GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
@@ -6692,9 +6706,12 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ResponseStream<GenerateContentResponse> processResponseForPrivateGenerateContentStream(
+      ApiResponse response, GenerateContentConfig config) {
     String converterName;
 
     if (this.apiClient.vertexAI()) {
@@ -6706,7 +6723,19 @@ public final class Models {
         GenerateContentResponse.class, response, this, converterName);
   }
 
-  EmbedContentResponse privateEmbedContent(
+  ResponseStream<GenerateContentResponse> privateGenerateContentStream(
+      String model, List<Content> contents, GenerateContentConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateGenerateContentStream(model, contents, config);
+
+    ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions);
+    return processResponseForPrivateGenerateContentStream(response, config);
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateEmbedContent(
       String model, List<Content> contents, EmbedContentConfig config) {
 
     EmbedContentParameters.Builder parameterBuilder = EmbedContentParameters.builder();
@@ -6751,42 +6780,53 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  EmbedContentResponse processResponseForPrivateEmbedContent(
+      ApiResponse response, EmbedContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = embedContentResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = embedContentResponseFromMldev(responseNode, null);
+    }
+
+    EmbedContentResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, EmbedContentResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  EmbedContentResponse privateEmbedContent(
+      String model, List<Content> contents, EmbedContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateEmbedContent(model, contents, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = embedContentResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = embedContentResponseFromMldev(responseNode, null);
-      }
-
-      EmbedContentResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, EmbedContentResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateEmbedContent(response, config);
     }
   }
 
-  /** Private method for generating images. */
-  GenerateImagesResponse privateGenerateImages(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGenerateImages(
       String model, String prompt, GenerateImagesConfig config) {
 
     GenerateImagesParameters.Builder parameterBuilder = GenerateImagesParameters.builder();
@@ -6831,42 +6871,54 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  GenerateImagesResponse processResponseForPrivateGenerateImages(
+      ApiResponse response, GenerateImagesConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = generateImagesResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = generateImagesResponseFromMldev(responseNode, null);
+    }
+
+    GenerateImagesResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, GenerateImagesResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /** Private method for generating images. */
+  GenerateImagesResponse privateGenerateImages(
+      String model, String prompt, GenerateImagesConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateGenerateImages(model, prompt, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateImagesResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = generateImagesResponseFromMldev(responseNode, null);
-      }
-
-      GenerateImagesResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, GenerateImagesResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateGenerateImages(response, config);
     }
   }
 
-  /** Private method for editing an image. */
-  EditImageResponse privateEditImage(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateEditImage(
       String model,
       String prompt,
       List<ReferenceImageAPI> referenceImages,
@@ -6913,43 +6965,59 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  EditImageResponse processResponseForPrivateEditImage(
+      ApiResponse response, EditImageConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = editImageResponseFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    EditImageResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, EditImageResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /** Private method for editing an image. */
+  EditImageResponse privateEditImage(
+      String model,
+      String prompt,
+      List<ReferenceImageAPI> referenceImages,
+      EditImageConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = editImageResponseFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-
-      EditImageResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, EditImageResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateEditImage(response, config);
     }
   }
 
-  /** Private method for upscaling an image. */
-  UpscaleImageResponse privateUpscaleImage(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateUpscaleImage(
       String model, Image image, String upscaleFactor, UpscaleImageAPIConfig config) {
 
     UpscaleImageAPIParameters.Builder parameterBuilder = UpscaleImageAPIParameters.builder();
@@ -6993,62 +7061,56 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  UpscaleImageResponse processResponseForPrivateUpscaleImage(
+      ApiResponse response, UpscaleImageAPIConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = upscaleImageResponseFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    UpscaleImageResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, UpscaleImageResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /** Private method for upscaling an image. */
+  UpscaleImageResponse privateUpscaleImage(
+      String model, Image image, String upscaleFactor, UpscaleImageAPIConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = upscaleImageResponseFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-
-      UpscaleImageResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, UpscaleImageResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateUpscaleImage(response, config);
     }
   }
 
-  /**
-   * Recontextualizes an image.
-   *
-   * <p>There are two types of recontextualization currently supported: 1) Imagen Product Recontext
-   * - Generate images of products in new scenes and contexts. 2) Virtual Try-On: Generate images of
-   * persons modeling fashion products.
-   *
-   * @param model the name of the GenAI model to use for image recontext
-   * @param source a {@link com.google.genai.types.RecontextImageSource} An object containing the
-   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is optional
-   *     for product recontext and disallowed for virtual try-on. personImage is required for
-   *     virtual try-on, disallowed for product recontext. productImages is required for both
-   *     product recontext and virtual try-on. Only one product image is supported for virtual
-   *     try-on, and up to 3 product images (different angles of the same product) are supported for
-   *     product recontext.
-   * @param config a {@link com.google.genai.types.RecontextImageConfig} instance that specifies the
-   *     optional configurations
-   * @return a {@link com.google.genai.types.RecontextImageResponse} instance that contains the
-   *     generated images.
-   */
-  public RecontextImageResponse recontextImage(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForRecontextImage(
       String model, RecontextImageSource source, RecontextImageConfig config) {
 
     RecontextImageParameters.Builder parameterBuilder = RecontextImageParameters.builder();
@@ -7089,42 +7151,64 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = recontextImageResponseFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-      return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
+  /** A shared processResponse function for both sync and async methods. */
+  RecontextImageResponse processResponseForRecontextImage(
+      ApiResponse response, RecontextImageConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = recontextImageResponseFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
   }
 
   /**
-   * Segments an image, creating a mask of a specified area.
+   * Recontextualizes an image.
    *
-   * @param model the name of the GenAI model to use for image segmentation
-   * @param source a {@link com.google.genai.types.SegmentImageSource} An object containing the
-   *     source inputs (prompt, image, scribbleImmage) for image segmentation. The prompt is
-   *     required for prompt mode and semantic mode, disallowed for other modes. scribbleImage is
-   *     required for the interactive mode, disallowed for other modes.
-   * @param config a {@link com.google.genai.types.SegmentImageConfig} instance that specifies the
+   * <p>There are two types of recontextualization currently supported: 1) Imagen Product Recontext
+   * - Generate images of products in new scenes and contexts. 2) Virtual Try-On: Generate images of
+   * persons modeling fashion products.
+   *
+   * @param model the name of the GenAI model to use for image recontext
+   * @param source a {@link com.google.genai.types.RecontextImageSource} An object containing the
+   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is optional
+   *     for product recontext and disallowed for virtual try-on. personImage is required for
+   *     virtual try-on, disallowed for product recontext. productImages is required for both
+   *     product recontext and virtual try-on. Only one product image is supported for virtual
+   *     try-on, and up to 3 product images (different angles of the same product) are supported for
+   *     product recontext.
+   * @param config a {@link com.google.genai.types.RecontextImageConfig} instance that specifies the
    *     optional configurations
-   * @return a {@link com.google.genai.types.SegmentImageResponse} instance that contains the
-   *     generated mask.
+   * @return a {@link com.google.genai.types.RecontextImageResponse} instance that contains the
+   *     generated images.
    */
-  public SegmentImageResponse segmentImage(
+  public RecontextImageResponse recontextImage(
+      String model, RecontextImageSource source, RecontextImageConfig config) {
+    BuiltRequest builtRequest = buildRequestForRecontextImage(model, source, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForRecontextImage(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForSegmentImage(
       String model, SegmentImageSource source, SegmentImageConfig config) {
 
     SegmentImageParameters.Builder parameterBuilder = SegmentImageParameters.builder();
@@ -7165,34 +7249,57 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = segmentImageResponseFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-      return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
+  /** A shared processResponse function for both sync and async methods. */
+  SegmentImageResponse processResponseForSegmentImage(
+      ApiResponse response, SegmentImageConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = segmentImageResponseFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
   }
 
   /**
-   * Fetches information about a model by name.
+   * Segments an image, creating a mask of a specified area.
    *
-   * @example ```java Model model = client.models.get("gemini-2.0-flash"); ```
+   * @param model the name of the GenAI model to use for image segmentation
+   * @param source a {@link com.google.genai.types.SegmentImageSource} An object containing the
+   *     source inputs (prompt, image, scribbleImmage) for image segmentation. The prompt is
+   *     required for prompt mode and semantic mode, disallowed for other modes. scribbleImage is
+   *     required for the interactive mode, disallowed for other modes.
+   * @param config a {@link com.google.genai.types.SegmentImageConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.SegmentImageResponse} instance that contains the
+   *     generated mask.
    */
-  public Model get(String model, GetModelConfig config) {
+  public SegmentImageResponse segmentImage(
+      String model, SegmentImageSource source, SegmentImageConfig config) {
+    BuiltRequest builtRequest = buildRequestForSegmentImage(model, source, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForSegmentImage(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForGet(String model, GetModelConfig config) {
 
     GetModelParameters.Builder parameterBuilder = GetModelParameters.builder();
 
@@ -7233,28 +7340,46 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  Model processResponseForGet(ApiResponse response, GetModelConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = modelFromVertex(responseNode, null);
+    } else {
+      responseNode = modelFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, Model.class);
+  }
+
+  /**
+   * Fetches information about a model by name.
+   *
+   * @example ```java Model model = client.models.get("gemini-2.0-flash"); ```
+   */
+  public Model get(String model, GetModelConfig config) {
+    BuiltRequest builtRequest = buildRequestForGet(model, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = modelFromVertex(responseNode, null);
-      } else {
-        responseNode = modelFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, Model.class);
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForGet(response, config);
     }
   }
 
-  ListModelsResponse privateList(ListModelsConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListModelsConfig config) {
 
     ListModelsParameters.Builder parameterBuilder = ListModelsParameters.builder();
 
@@ -7292,52 +7417,51 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListModelsResponse processResponseForPrivateList(ApiResponse response, ListModelsConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = listModelsResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = listModelsResponseFromMldev(responseNode, null);
+    }
+
+    ListModelsResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListModelsResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  ListModelsResponse privateList(ListModelsConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = listModelsResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = listModelsResponseFromMldev(responseNode, null);
-      }
-
-      ListModelsResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ListModelsResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
-  /**
-   * Updates a tuned model by its name.
-   *
-   * @param model The name of the tuned model to update
-   * @param config A {@link com.google.genai.types.UpdateModelConfig} instance that specifies the
-   *     optional configurations
-   * @return A {@link com.google.genai.types.Model} instance
-   * @example ```java Model model = client.models.update( "tunedModels/12345",
-   *     UpdateModelConfig.builder() .displayName("New display name") .description("New
-   *     description") .build()); ```
-   */
-  public Model update(String model, UpdateModelConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForUpdate(String model, UpdateModelConfig config) {
 
     UpdateModelParameters.Builder parameterBuilder = UpdateModelParameters.builder();
 
@@ -7378,33 +7502,52 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "patch", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = modelFromVertex(responseNode, null);
-      } else {
-        responseNode = modelFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, Model.class);
+  /** A shared processResponse function for both sync and async methods. */
+  Model processResponseForUpdate(ApiResponse response, UpdateModelConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = modelFromVertex(responseNode, null);
+    } else {
+      responseNode = modelFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, Model.class);
   }
 
   /**
-   * Fetches information about a model by name.
+   * Updates a tuned model by its name.
    *
-   * @example ```java Model model = client.models.delete("tunedModels/12345"); ```
+   * @param model The name of the tuned model to update
+   * @param config A {@link com.google.genai.types.UpdateModelConfig} instance that specifies the
+   *     optional configurations
+   * @return A {@link com.google.genai.types.Model} instance
+   * @example ```java Model model = client.models.update( "tunedModels/12345",
+   *     UpdateModelConfig.builder() .displayName("New display name") .description("New
+   *     description") .build()); ```
    */
-  public DeleteModelResponse delete(String model, DeleteModelConfig config) {
+  public Model update(String model, UpdateModelConfig config) {
+    BuiltRequest builtRequest = buildRequestForUpdate(model, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForUpdate(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForDelete(String model, DeleteModelConfig config) {
 
     DeleteModelParameters.Builder parameterBuilder = DeleteModelParameters.builder();
 
@@ -7445,51 +7588,56 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = deleteModelResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = deleteModelResponseFromMldev(responseNode, null);
-      }
-
-      DeleteModelResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, DeleteModelResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+  /** A shared processResponse function for both sync and async methods. */
+  DeleteModelResponse processResponseForDelete(ApiResponse response, DeleteModelConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = deleteModelResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = deleteModelResponseFromMldev(responseNode, null);
+    }
+
+    DeleteModelResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, DeleteModelResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
   }
 
   /**
-   * Counts tokens given a GenAI model and a list of content.
+   * Fetches information about a model by name.
    *
-   * @param model the name of the GenAI model to use.
-   * @param contents a {@link List<com.google.genai.types.Content>} to send to count tokens for.
-   * @param config a {@link com.google.genai.types.CountTokensConfig} instance that specifies the
-   *     optional configurations
-   * @return a {@link com.google.genai.types.CountTokensResponse} instance that contains tokens
-   *     count.
+   * @example ```java Model model = client.models.delete("tunedModels/12345"); ```
    */
-  public CountTokensResponse countTokens(
+  public DeleteModelResponse delete(String model, DeleteModelConfig config) {
+    BuiltRequest builtRequest = buildRequestForDelete(model, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForDelete(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForCountTokens(
       String model, List<Content> contents, CountTokensConfig config) {
 
     CountTokensParameters.Builder parameterBuilder = CountTokensParameters.builder();
@@ -7534,51 +7682,63 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = countTokensResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = countTokensResponseFromMldev(responseNode, null);
-      }
-
-      CountTokensResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, CountTokensResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+  /** A shared processResponse function for both sync and async methods. */
+  CountTokensResponse processResponseForCountTokens(
+      ApiResponse response, CountTokensConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = countTokensResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = countTokensResponseFromMldev(responseNode, null);
+    }
+
+    CountTokensResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, CountTokensResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
   }
 
   /**
-   * Computes tokens given a GenAI model and a list of content.
+   * Counts tokens given a GenAI model and a list of content.
    *
    * @param model the name of the GenAI model to use.
-   * @param contents a {@link List<com.google.genai.types.Content>} to send to compute tokens for.
-   * @param config a {@link com.google.genai.types.ComputeTokensConfig} instance that specifies the
+   * @param contents a {@link List<com.google.genai.types.Content>} to send to count tokens for.
+   * @param config a {@link com.google.genai.types.CountTokensConfig} instance that specifies the
    *     optional configurations
-   * @return a {@link com.google.genai.types.ComputeTokensResponse} instance that contains tokens
-   *     results.
+   * @return a {@link com.google.genai.types.CountTokensResponse} instance that contains tokens
+   *     count.
    */
-  public ComputeTokensResponse computeTokens(
+  public CountTokensResponse countTokens(
+      String model, List<Content> contents, CountTokensConfig config) {
+    BuiltRequest builtRequest = buildRequestForCountTokens(model, contents, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForCountTokens(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForComputeTokens(
       String model, List<Content> contents, ComputeTokensConfig config) {
 
     ComputeTokensParameters.Builder parameterBuilder = ComputeTokensParameters.builder();
@@ -7619,43 +7779,64 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ComputeTokensResponse processResponseForComputeTokens(
+      ApiResponse response, ComputeTokensConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = computeTokensResponseFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    ComputeTokensResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ComputeTokensResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /**
+   * Computes tokens given a GenAI model and a list of content.
+   *
+   * @param model the name of the GenAI model to use.
+   * @param contents a {@link List<com.google.genai.types.Content>} to send to compute tokens for.
+   * @param config a {@link com.google.genai.types.ComputeTokensConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.ComputeTokensResponse} instance that contains tokens
+   *     results.
+   */
+  public ComputeTokensResponse computeTokens(
+      String model, List<Content> contents, ComputeTokensConfig config) {
+    BuiltRequest builtRequest = buildRequestForComputeTokens(model, contents, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = computeTokensResponseFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-
-      ComputeTokensResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ComputeTokensResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForComputeTokens(response, config);
     }
   }
 
-  /** Private method for generating videos. */
-  GenerateVideosOperation privateGenerateVideos(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGenerateVideos(
       String model,
       String prompt,
       Image image,
@@ -7714,24 +7895,45 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  GenerateVideosOperation processResponseForPrivateGenerateVideos(
+      ApiResponse response, GenerateVideosConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = generateVideosOperationFromVertex(responseNode, null);
+    } else {
+      responseNode = generateVideosOperationFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+  }
+
+  /** Private method for generating videos. */
+  GenerateVideosOperation privateGenerateVideos(
+      String model,
+      String prompt,
+      Image image,
+      Video video,
+      GenerateVideosSource source,
+      GenerateVideosConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateVideosOperationFromVertex(responseNode, null);
-      } else {
-        responseNode = generateVideosOperationFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateGenerateVideos(response, config);
     }
   }
 

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.FetchPredictOperationConfig;
 import com.google.genai.types.FetchPredictOperationParameters;
@@ -355,7 +356,8 @@ public final class Operations {
     return toObject;
   }
 
-  GenerateVideosOperation privateGetVideosOperation(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateGetVideosOperation(
       String operationName, GetOperationConfig config) {
 
     GetOperationParameters.Builder parameterBuilder = GetOperationParameters.builder();
@@ -397,28 +399,43 @@ public final class Operations {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  GenerateVideosOperation processResponseForPrivateGetVideosOperation(
+      ApiResponse response, GetOperationConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = generateVideosOperationFromVertex(responseNode, null);
+    } else {
+      responseNode = generateVideosOperationFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+  }
+
+  GenerateVideosOperation privateGetVideosOperation(
+      String operationName, GetOperationConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateGetVideosOperation(operationName, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateVideosOperationFromVertex(responseNode, null);
-      } else {
-        responseNode = generateVideosOperationFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateGetVideosOperation(response, config);
     }
   }
 
-  GenerateVideosOperation privateFetchPredictVideosOperation(
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateFetchPredictVideosOperation(
       String operationName, String resourceName, FetchPredictOperationConfig config) {
 
     FetchPredictOperationParameters.Builder parameterBuilder =
@@ -460,25 +477,40 @@ public final class Operations {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  GenerateVideosOperation processResponseForPrivateFetchPredictVideosOperation(
+      ApiResponse response, FetchPredictOperationConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = generateVideosOperationFromVertex(responseNode, null);
+    } else {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+  }
+
+  GenerateVideosOperation privateFetchPredictVideosOperation(
+      String operationName, String resourceName, FetchPredictOperationConfig config) {
+    BuiltRequest builtRequest =
+        buildRequestForPrivateFetchPredictVideosOperation(operationName, resourceName, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = generateVideosOperationFromVertex(responseNode, null);
-      } else {
-        throw new UnsupportedOperationException(
-            "This method is only supported in the Vertex AI client.");
-      }
-      return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateFetchPredictVideosOperation(response, config);
     }
   }
 

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableSet;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CachedContent;
 import com.google.genai.types.CreateCachedContentConfig;
@@ -1899,14 +1900,8 @@ public final class Caches {
     return toObject;
   }
 
-  /**
-   * Creates a cached content resource.
-   *
-   * @param model The model to use.
-   * @param config A {@link CreateCachedContentConfig} for configuring the create request.
-   * @return A {@link CachedContent} object that contains the info of the created resource.
-   */
-  public CachedContent create(String model, CreateCachedContentConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForCreate(String model, CreateCachedContentConfig config) {
 
     CreateCachedContentParameters.Builder parameterBuilder =
         CreateCachedContentParameters.builder();
@@ -1948,35 +1943,48 @@ public final class Caches {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = cachedContentFromVertex(responseNode, null);
-      } else {
-        responseNode = cachedContentFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
+  /** A shared processResponse function for both sync and async methods. */
+  CachedContent processResponseForCreate(ApiResponse response, CreateCachedContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = cachedContentFromVertex(responseNode, null);
+    } else {
+      responseNode = cachedContentFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
   }
 
   /**
-   * Gets a cached content resource.
+   * Creates a cached content resource.
    *
-   * @param name The name(resource id) of the cached content to get.
-   * @param config A {@link GetCachedContentConfig} for configuring the get request.
-   * @return A {@link CachedContent} object that contains the info of the cached content.
+   * @param model The model to use.
+   * @param config A {@link CreateCachedContentConfig} for configuring the create request.
+   * @return A {@link CachedContent} object that contains the info of the created resource.
    */
-  public CachedContent get(String name, GetCachedContentConfig config) {
+  public CachedContent create(String model, CreateCachedContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForCreate(model, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForCreate(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForGet(String name, GetCachedContentConfig config) {
 
     GetCachedContentParameters.Builder parameterBuilder = GetCachedContentParameters.builder();
 
@@ -2017,34 +2025,48 @@ public final class Caches {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = cachedContentFromVertex(responseNode, null);
-      } else {
-        responseNode = cachedContentFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
+  /** A shared processResponse function for both sync and async methods. */
+  CachedContent processResponseForGet(ApiResponse response, GetCachedContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = cachedContentFromVertex(responseNode, null);
+    } else {
+      responseNode = cachedContentFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
   }
 
   /**
-   * Deletes a cached content resource.
+   * Gets a cached content resource.
    *
-   * @param name The name(resource id) of the cached content to delete.
-   * @param config A {@link DeleteCachedContentConfig} for configuring the delete request.
+   * @param name The name(resource id) of the cached content to get.
+   * @param config A {@link GetCachedContentConfig} for configuring the get request.
+   * @return A {@link CachedContent} object that contains the info of the cached content.
    */
-  public DeleteCachedContentResponse delete(String name, DeleteCachedContentConfig config) {
+  public CachedContent get(String name, GetCachedContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForGet(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForGet(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForDelete(String name, DeleteCachedContentConfig config) {
 
     DeleteCachedContentParameters.Builder parameterBuilder =
         DeleteCachedContentParameters.builder();
@@ -2086,48 +2108,58 @@ public final class Caches {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = deleteCachedContentResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = deleteCachedContentResponseFromMldev(responseNode, null);
-      }
-
-      DeleteCachedContentResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, DeleteCachedContentResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+  /** A shared processResponse function for both sync and async methods. */
+  DeleteCachedContentResponse processResponseForDelete(
+      ApiResponse response, DeleteCachedContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = deleteCachedContentResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = deleteCachedContentResponseFromMldev(responseNode, null);
+    }
+
+    DeleteCachedContentResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, DeleteCachedContentResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
   }
 
   /**
-   * Updates a cached content resource.
+   * Deletes a cached content resource.
    *
-   * @param name The name(resource id) of the cached content to update.
-   * @param config A {@link UpdateCachedContentConfig} for configuring the update request.
-   * @return A {@link CachedContent} object that contains the info of the updated resource.
+   * @param name The name(resource id) of the cached content to delete.
+   * @param config A {@link DeleteCachedContentConfig} for configuring the delete request.
    */
-  public CachedContent update(String name, UpdateCachedContentConfig config) {
+  public DeleteCachedContentResponse delete(String name, DeleteCachedContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForDelete(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForDelete(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForUpdate(String name, UpdateCachedContentConfig config) {
 
     UpdateCachedContentParameters.Builder parameterBuilder =
         UpdateCachedContentParameters.builder();
@@ -2169,28 +2201,48 @@ public final class Caches {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  CachedContent processResponseForUpdate(ApiResponse response, UpdateCachedContentConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = cachedContentFromVertex(responseNode, null);
+    } else {
+      responseNode = cachedContentFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
+  }
+
+  /**
+   * Updates a cached content resource.
+   *
+   * @param name The name(resource id) of the cached content to update.
+   * @param config A {@link UpdateCachedContentConfig} for configuring the update request.
+   * @return A {@link CachedContent} object that contains the info of the updated resource.
+   */
+  public CachedContent update(String name, UpdateCachedContentConfig config) {
+    BuiltRequest builtRequest = buildRequestForUpdate(name, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "patch", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = cachedContentFromVertex(responseNode, null);
-      } else {
-        responseNode = cachedContentFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, CachedContent.class);
+            "patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForUpdate(response, config);
     }
   }
 
-  ListCachedContentsResponse privateList(ListCachedContentsConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListCachedContentsConfig config) {
 
     ListCachedContentsParameters.Builder parameterBuilder = ListCachedContentsParameters.builder();
 
@@ -2228,37 +2280,47 @@ public final class Caches {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListCachedContentsResponse processResponseForPrivateList(
+      ApiResponse response, ListCachedContentsConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    if (this.apiClient.vertexAI()) {
+      responseNode = listCachedContentsResponseFromVertex(responseNode, null);
+    } else {
+      responseNode = listCachedContentsResponseFromMldev(responseNode, null);
+    }
+
+    ListCachedContentsResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListCachedContentsResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  ListCachedContentsResponse privateList(ListCachedContentsConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = listCachedContentsResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = listCachedContentsResponseFromMldev(responseNode, null);
-      }
-
-      ListCachedContentsResponse sdkResponse =
-          JsonSerializable.fromJsonNode(responseNode, ListCachedContentsResponse.class);
-      Headers responseHeaders = response.getHeaders();
-      if (responseHeaders == null) {
-        return sdkResponse;
-      }
-      Map<String, String> headers = new HashMap<>();
-      for (String headerName : responseHeaders.names()) {
-        headers.put(headerName, responseHeaders.get(headerName));
-      }
-      return sdkResponse.toBuilder()
-          .sdkHttpResponse(HttpResponse.builder().headers(headers))
-          .build();
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
