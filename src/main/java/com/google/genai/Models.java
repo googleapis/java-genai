@@ -544,13 +544,6 @@ public final class Models {
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -829,13 +822,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           countTokensConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -867,13 +858,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           countTokensConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -938,13 +927,6 @@ public final class Models {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -958,13 +940,6 @@ public final class Models {
           new String[] {"_url", "name"},
           Transformers.tModel(
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
@@ -1187,13 +1162,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           editImageConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -1343,13 +1316,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           embedContentConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     Common.setValueByPath(
@@ -1381,13 +1352,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           embedContentConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -2749,13 +2718,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateImagesConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -2781,13 +2748,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateImagesConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -3215,23 +3180,19 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateVideosSourceToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"source"})),
-              toObject));
+              toObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateVideosConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -3277,23 +3238,19 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateVideosSourceToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"source"})),
-              toObject));
+              toObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           generateVideosConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -3566,13 +3523,6 @@ public final class Models {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -3586,13 +3536,6 @@ public final class Models {
           new String[] {"_url", "name"},
           Transformers.tModel(
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
@@ -3950,14 +3893,12 @@ public final class Models {
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           listModelsConfigToMldev(
               apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -3968,14 +3909,12 @@ public final class Models {
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           listModelsConfigToVertex(
               apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -4738,23 +4677,19 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           recontextImageSourceToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"source"})),
-              toObject));
+              toObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           recontextImageConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -5429,23 +5364,19 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           segmentImageSourceToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"source"})),
-              toObject));
+              toObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           segmentImageConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -6034,13 +5965,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           updateModelConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -6059,13 +5988,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           updateModelConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -6164,13 +6091,11 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           upscaleImageAPIConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -6590,8 +6515,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -6685,8 +6608,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -6744,8 +6665,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -6824,8 +6743,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -6906,8 +6823,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -6986,8 +6901,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7082,8 +6995,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7158,8 +7069,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7226,8 +7135,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7285,8 +7192,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7371,8 +7276,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7438,8 +7341,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7527,8 +7428,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7612,8 +7511,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -7707,8 +7604,6 @@ public final class Models {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();

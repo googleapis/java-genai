@@ -511,13 +511,11 @@ public final class Caches {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           createCachedContentConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -536,13 +534,11 @@ public final class Caches {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           createCachedContentConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -560,13 +556,6 @@ public final class Caches {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -580,13 +569,6 @@ public final class Caches {
           new String[] {"_url", "name"},
           Transformers.tCachedContentName(
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
@@ -931,13 +913,6 @@ public final class Caches {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
     return toObject;
   }
 
@@ -951,13 +926,6 @@ public final class Caches {
           new String[] {"_url", "name"},
           Transformers.tCachedContentName(
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
     }
 
     return toObject;
@@ -1181,13 +1149,11 @@ public final class Caches {
   ObjectNode listCachedContentsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           listCachedContentsConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -1197,13 +1163,11 @@ public final class Caches {
   ObjectNode listCachedContentsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           listCachedContentsConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -1798,13 +1762,11 @@ public final class Caches {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           updateCachedContentConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -1823,13 +1785,11 @@ public final class Caches {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
+      JsonNode unused =
           updateCachedContentConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
+              toObject);
     }
 
     return toObject;
@@ -1941,8 +1901,6 @@ public final class Caches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -2010,8 +1968,6 @@ public final class Caches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -2079,8 +2035,6 @@ public final class Caches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -2162,8 +2116,6 @@ public final class Caches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
@@ -2221,8 +2173,6 @@ public final class Caches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
