@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/googleapis/java-genai/compare/v1.17.0...v1.18.0) (2025-09-19)
+
+
+### Features
+
+* Support Imagen 4 Ingredients on Vertex ([b5eed8d](https://github.com/googleapis/java-genai/commit/b5eed8d1323a3d37b53c1d8c5c5557392ce7ed44))
+
 ## [1.17.0](https://github.com/googleapis/java-genai/compare/v1.16.0...v1.17.0) (2025-09-16)
 
 
