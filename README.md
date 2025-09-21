@@ -246,6 +246,68 @@ public class GenerateContentWithImageInput {
 }
 ```
 
+##### with text input and files api
+You can use the Files API to upload a media file. Always use the Files API when the total request size (including the files, text prompt, system instructions, etc.) is larger than 20 MB.
+```java
+<your package name>;
+
+import com.google.genai.Client;
+import com.google.genai.Pager;
+import com.google.genai.types.*;
+
+import java.util.List;
+
+
+public class Main {
+    public static void main(String[] args) {
+        Client client = Client
+                .builder()
+                .build();
+
+        // Upload a file to gemini servers. It remains in the cloud for 48 hours
+        File fileToUpload = client.files.upload(
+                "gs://path/to/document.pdf/",
+                UploadFileConfig.builder().displayName("Document.pdf").mimeType("application/pdf").build()
+        );
+
+        String name = fileToUpload.name().orElse("");
+        String uri = fileToUpload.uri().orElse("");
+        String mimeType = fileToUpload.mimeType().orElse("");
+
+        // Fetch file metadata using its name
+        System.out.println("Uploaded File: " + name);
+        File myFile = client.files.get(name, null);
+        System.out.println(myFile.toJson());
+
+        // List all uploaded files:
+        Pager<File> allFiles = client.files.list(ListFilesConfig.builder().build());
+        System.out.println("All uploaded files: ");
+        while (allFiles.iterator().hasNext()) {
+            File file = allFiles.iterator().next();
+            System.out.println(file.toJson());
+        }
+
+        // Generate content with uploaded file
+        String prompt = "Summarize this file please.";
+        Part promptPart = Part.fromText(prompt);
+        Part contentPart = Part.fromUri(uri, mimeType);
+        Content content = Content.builder()
+                .parts(List.of(promptPart, contentPart))
+                .build();
+
+        GenerateContentResponse response =
+                client.models.generateContent(
+                        "gemini-2.5-flash",
+                        content,
+                        null);
+        System.out.println(response.text());
+
+        // Delete file from cloud by name
+        client.files.delete(name, null);
+    }
+}
+```
+
 ##### Generate Content with extra configs
 To set configurations like System Instructions and Safety Settings, you can pass
 a `GenerateContentConfig` to the `GenerateContent` method.
