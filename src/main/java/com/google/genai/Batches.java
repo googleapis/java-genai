@@ -248,10 +248,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"error"},
-          jobErrorFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
@@ -415,27 +412,6 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
@@ -496,10 +472,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"content"},
-          contentFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"content"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"content"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"citationMetadata"}) != null) {
@@ -530,10 +503,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"urlContextMetadata"},
-          urlContextMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
@@ -582,43 +552,6 @@ public final class Batches {
           toObject,
           new String[] {"citations"},
           Common.getValueByPath(fromObject, new String[] {"citationSources"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentEmbeddingFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"values"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"values"},
-          Common.getValueByPath(fromObject, new String[] {"values"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(partFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
     }
 
     return toObject;
@@ -818,10 +751,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"error"},
-          jobErrorFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
@@ -855,51 +785,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"error"},
-          jobErrorFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode dynamicRetrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicThreshold"},
-          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
@@ -924,131 +810,6 @@ public final class Batches {
           toObject,
           new String[] {"mimeType"},
           Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"args"},
-          Common.getValueByPath(fromObject, new String[] {"args"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"args"},
-          Common.getValueByPath(fromObject, new String[] {"args"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"allowedFunctionNames"},
-          Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionDeclarationToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"behavior"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"behavior"},
-          Common.getValueByPath(fromObject, new String[] {"behavior"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parameters"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parameters"},
-          Common.getValueByPath(fromObject, new String[] {"parameters"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parametersJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
     }
 
     return toObject;
@@ -1158,11 +919,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"responseSchema"},
-          schemaToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSchema(
-                      Common.getValueByPath(fromObject, new String[] {"responseSchema"}))),
-              toObject));
+          Transformers.tSchema(Common.getValueByPath(fromObject, new String[] {"responseSchema"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
@@ -1210,10 +967,7 @@ public final class Batches {
       Common.setValueByPath(
           parentObject,
           new String[] {"toolConfig"},
-          toolConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"toolConfig"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
@@ -1246,11 +1000,8 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSpeechConfig(
-                      Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
-              toObject));
+          Transformers.tSpeechConfig(
+              Common.getValueByPath(fromObject, new String[] {"speechConfig"})));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
@@ -1262,10 +1013,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"thinkingConfig"},
-          thinkingConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"thinkingConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}));
     }
 
     return toObject;
@@ -1355,63 +1103,18 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchRetrievalToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicRetrievalConfig"},
-          dynamicRetrievalConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"timeRangeFilter"},
-          intervalToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
       throw new IllegalArgumentException(
           "excludeDomains parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode inlinedEmbedContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          singleEmbedContentResponseFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"response"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          jobErrorFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
     }
 
     return toObject;
@@ -1473,104 +1176,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"error"},
-          jobErrorFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode intervalToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startTime"},
-          Common.getValueByPath(fromObject, new String[] {"startTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"endTime"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode jobErrorFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode jobErrorFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode latLngToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latitude"},
-          Common.getValueByPath(fromObject, new String[] {"latitude"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"longitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"longitude"},
-          Common.getValueByPath(fromObject, new String[] {"longitude"}));
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
@@ -1722,122 +1328,13 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode multiSpeakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(speakerVoiceConfigToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode partFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          functionCallFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"videoMetadata"},
-          videoMetadataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
@@ -1878,10 +1375,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"functionCall"},
-          functionCallToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -1916,42 +1410,6 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode prebuiltVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode retrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latLng"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latLng"},
-          latLngToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"latLng"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
@@ -1976,324 +1434,13 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode schemaToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"anyOf"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"anyOf"},
-          Common.getValueByPath(fromObject, new String[] {"anyOf"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"default"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"default"},
-          Common.getValueByPath(fromObject, new String[] {"default"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enum"},
-          Common.getValueByPath(fromObject, new String[] {"enum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"example"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"example"},
-          Common.getValueByPath(fromObject, new String[] {"example"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"format"},
-          Common.getValueByPath(fromObject, new String[] {"format"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"items"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"items"},
-          Common.getValueByPath(fromObject, new String[] {"items"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxItems"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxItems"},
-          Common.getValueByPath(fromObject, new String[] {"maxItems"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxLength"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxLength"},
-          Common.getValueByPath(fromObject, new String[] {"maxLength"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxProperties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxProperties"},
-          Common.getValueByPath(fromObject, new String[] {"maxProperties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maximum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maximum"},
-          Common.getValueByPath(fromObject, new String[] {"maximum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minItems"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minItems"},
-          Common.getValueByPath(fromObject, new String[] {"minItems"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minLength"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minLength"},
-          Common.getValueByPath(fromObject, new String[] {"minLength"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minProperties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minProperties"},
-          Common.getValueByPath(fromObject, new String[] {"minProperties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minimum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minimum"},
-          Common.getValueByPath(fromObject, new String[] {"minimum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"nullable"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"nullable"},
-          Common.getValueByPath(fromObject, new String[] {"nullable"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pattern"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"pattern"},
-          Common.getValueByPath(fromObject, new String[] {"pattern"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"properties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"properties"},
-          Common.getValueByPath(fromObject, new String[] {"properties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"propertyOrdering"},
-          Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"required"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"required"},
-          Common.getValueByPath(fromObject, new String[] {"required"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"title"},
-          Common.getValueByPath(fromObject, new String[] {"title"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"type"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"type"},
-          Common.getValueByPath(fromObject, new String[] {"type"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode singleEmbedContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"embedding"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"embedding"},
-          contentEmbeddingFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"embedding"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tokenCount"},
-          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"speaker"},
-          Common.getValueByPath(fromObject, new String[] {"speaker"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"multiSpeakerVoiceConfig"},
-          multiSpeakerVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode thinkingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"includeThoughts"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"includeThoughts"},
-          Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thinkingBudget"},
-          Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolComputerUseToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"environment"},
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"excludedPredefinedFunctions"},
-          Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCallingConfig"},
-          functionCallingConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          retrievalConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"retrievalConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
@@ -2314,10 +1461,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"googleSearchRetrieval"},
-          googleSearchRetrievalToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
@@ -2333,20 +1477,14 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"urlContext"},
-          urlContextToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"computerUse"},
-          toolComputerUseToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
@@ -2354,117 +1492,6 @@ public final class Batches {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"urlMetadata"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"urlMetadata"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(urlMetadataFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"urlMetadata"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievedUrl"},
-          Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlRetrievalStatus"},
-          Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          prebuiltVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
-              toObject));
     }
 
     return toObject;
@@ -2528,9 +1555,12 @@ public final class Batches {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = batchJobFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = batchJobFromMldev(responseNode, null);
     }
 
@@ -2601,9 +1631,12 @@ public final class Batches {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = batchJobFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = batchJobFromMldev(responseNode, null);
     }
 
@@ -2742,9 +1775,12 @@ public final class Batches {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = listBatchJobsResponseFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = listBatchJobsResponseFromMldev(responseNode, null);
     }
 
@@ -2825,9 +1861,12 @@ public final class Batches {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = deleteResourceJobFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = deleteResourceJobFromMldev(responseNode, null);
     }
 
