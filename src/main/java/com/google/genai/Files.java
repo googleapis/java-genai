@@ -21,8 +21,6 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Ascii;
 import com.google.genai.Common.BuiltRequest;
@@ -78,9 +76,7 @@ public final class Files {
       Common.setValueByPath(
           toObject,
           new String[] {"file"},
-          fileToMldev(
-              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"file"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"file"}));
     }
 
     return toObject;
@@ -120,270 +116,6 @@ public final class Files {
           toObject,
           new String[] {"sdkHttpResponse"},
           Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sizeBytes"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sizeBytes"},
-          Common.getValueByPath(fromObject, new String[] {"sizeBytes"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"createTime"},
-          Common.getValueByPath(fromObject, new String[] {"createTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"expirationTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"expirationTime"},
-          Common.getValueByPath(fromObject, new String[] {"expirationTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"updateTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"updateTime"},
-          Common.getValueByPath(fromObject, new String[] {"updateTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sha256Hash"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sha256Hash"},
-          Common.getValueByPath(fromObject, new String[] {"sha256Hash"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"downloadUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"downloadUri"},
-          Common.getValueByPath(fromObject, new String[] {"downloadUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"state"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"state"},
-          Common.getValueByPath(fromObject, new String[] {"state"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"source"},
-          Common.getValueByPath(fromObject, new String[] {"source"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          fileStatusFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileStatusFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileStatusToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sizeBytes"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sizeBytes"},
-          Common.getValueByPath(fromObject, new String[] {"sizeBytes"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"createTime"},
-          Common.getValueByPath(fromObject, new String[] {"createTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"expirationTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"expirationTime"},
-          Common.getValueByPath(fromObject, new String[] {"expirationTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"updateTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"updateTime"},
-          Common.getValueByPath(fromObject, new String[] {"updateTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"sha256Hash"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sha256Hash"},
-          Common.getValueByPath(fromObject, new String[] {"sha256Hash"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"downloadUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"downloadUri"},
-          Common.getValueByPath(fromObject, new String[] {"downloadUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"state"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"state"},
-          Common.getValueByPath(fromObject, new String[] {"state"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"source"},
-          Common.getValueByPath(fromObject, new String[] {"source"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          fileStatusToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
     }
 
     return toObject;
@@ -455,14 +187,10 @@ public final class Files {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"files"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"files"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(fileFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"files"}, result);
+      Common.setValueByPath(
+          toObject,
+          new String[] {"files"},
+          Common.getValueByPath(fromObject, new String[] {"files"}));
     }
 
     return toObject;
@@ -519,10 +247,13 @@ public final class Files {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = listFilesResponseFromMldev(responseNode, null);
     }
 
@@ -626,10 +357,13 @@ public final class Files {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = createFileResponseFromMldev(responseNode, null);
     }
 
@@ -700,11 +434,10 @@ public final class Files {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
-    } else {
-      responseNode = fileFromMldev(responseNode, null);
     }
 
     return JsonSerializable.fromJsonNode(responseNode, File.class);
@@ -781,10 +514,13 @@ public final class Files {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = deleteFileResponseFromMldev(responseNode, null);
     }
 
@@ -891,7 +627,6 @@ public final class Files {
     }
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
     responseNode = responseNode.get("file");
-    responseNode = fileFromMldev(responseNode, null);
 
     return JsonSerializable.fromJsonNode(responseNode, File.class);
   }
