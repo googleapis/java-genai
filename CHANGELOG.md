@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.18.0](https://github.com/googleapis/java-genai/compare/v1.17.0...v1.18.0) (2025-09-25)
+
+
+### Features
+
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([1a24bed](https://github.com/googleapis/java-genai/commit/1a24bedc752851236b0a7239a7dba7090e4ac4e8))
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([99b50a6](https://github.com/googleapis/java-genai/commit/99b50a6d3b65cf16cf620d252c5e6401670fce4b))
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([ea954d3](https://github.com/googleapis/java-genai/commit/ea954d37ee23e6886ee686eea04481d069344def))
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([cf8b8b6](https://github.com/googleapis/java-genai/commit/cf8b8b6722a84cbc45b9d2a48c0b7d83a6a4e3f7))
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([f0aebc2](https://github.com/googleapis/java-genai/commit/f0aebc24544279dfb0764200afa8e011f8fc70ee))
+* Support Imagen 4 Ingredients on Vertex ([b5eed8d](https://github.com/googleapis/java-genai/commit/b5eed8d1323a3d37b53c1d8c5c5557392ce7ed44))
+
+
+### Bug Fixes
+
+* Expose `JOB_STATE_RUNNING` and `JOB_STATE_EXPIRED` for Gemini Batches states ([c5b4fdf](https://github.com/googleapis/java-genai/commit/c5b4fdf58b9d0d74efdd2c7e740bed8b6b661c99))
+* initialization of `pre_tuned_model_checkpoint_id` from tuning config. ([c293633](https://github.com/googleapis/java-genai/commit/c293633a8fe298668f030ba3b257347a8fd0eedf))
+* Make async generateContent and generateContentStream truly non-blocking ([5cb18fd](https://github.com/googleapis/java-genai/commit/5cb18fd4f07f9b1f21efb82fe961e473325f6257))
+* only run unit tests in github action ([9b2861b](https://github.com/googleapis/java-genai/commit/9b2861bb79d50c10c152aa010bedf0bc48a04ad8))
+
 ## [1.17.0](https://github.com/googleapis/java-genai/compare/v1.16.0...v1.17.0) (2025-09-16)
 
 
