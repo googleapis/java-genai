@@ -485,40 +485,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tunedModelCheckpointFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"checkpointId"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"checkpointId"},
-          Common.getValueByPath(fromObject, new String[] {"checkpointId"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"epoch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"epoch"},
-          Common.getValueByPath(fromObject, new String[] {"epoch"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"step"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"step"},
-          Common.getValueByPath(fromObject, new String[] {"step"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endpoint"},
-          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode tunedModelFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -539,38 +505,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tunedModelFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endpoint"},
-          Common.getValueByPath(fromObject, new String[] {"endpoint"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"checkpoints"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"checkpoints"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tunedModelCheckpointFromVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"checkpoints"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
@@ -583,14 +517,10 @@ public final class Tunings {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"examples"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"examples"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tuningExampleToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"examples", "examples"}, result);
+      Common.setValueByPath(
+          toObject,
+          new String[] {"examples", "examples"},
+          Common.getValueByPath(fromObject, new String[] {"examples"}));
     }
 
     return toObject;
@@ -615,26 +545,6 @@ public final class Tunings {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
       throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningExampleToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"textInput"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"textInput"},
-          Common.getValueByPath(fromObject, new String[] {"textInput"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"output"},
-          Common.getValueByPath(fromObject, new String[] {"output"}));
     }
 
     return toObject;
@@ -845,10 +755,7 @@ public final class Tunings {
       Common.setValueByPath(
           toObject,
           new String[] {"tunedModel"},
-          tunedModelFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"tunedModel"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"tunedModel"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"preTunedModel"}) != null) {
@@ -1053,9 +960,12 @@ public final class Tunings {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = tuningJobFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = tuningJobFromMldev(responseNode, null);
     }
 
@@ -1133,9 +1043,12 @@ public final class Tunings {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = listTuningJobsResponseFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = listTuningJobsResponseFromMldev(responseNode, null);
     }
 
@@ -1283,9 +1196,12 @@ public final class Tunings {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = tuningJobFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Vertex AI client.");
     }
@@ -1383,10 +1299,13 @@ public final class Tunings {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = tuningOperationFromMldev(responseNode, null);
     }
 
