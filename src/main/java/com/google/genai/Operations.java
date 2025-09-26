@@ -391,9 +391,12 @@ public final class Operations {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = generateVideosOperationFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       responseNode = generateVideosOperationFromMldev(responseNode, null);
     }
 
@@ -467,9 +470,12 @@ public final class Operations {
     }
 
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
     if (this.apiClient.vertexAI()) {
       responseNode = generateVideosOperationFromVertex(responseNode, null);
-    } else {
+    }
+
+    if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
           "This method is only supported in the Vertex AI client.");
     }
