@@ -29,6 +29,9 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
@@ -233,7 +236,9 @@ abstract class ApiClient {
           options.maxConnectionsPerHost().ifPresent(dispatcher::setMaxRequestsPerHost);
           builder.dispatcher(dispatcher);
         });
-
+    if (httpOptions != null) {
+      httpOptions.proxy().ifPresent(builder::proxy);
+    }
     return builder.build();
   }
 
