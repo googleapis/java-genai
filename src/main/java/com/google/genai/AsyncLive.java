@@ -240,7 +240,17 @@ public class AsyncLive {
       if (!sessionFuture.isDone()) {
         // For the first message, we know it's the setup response.
         // We just complete the future and don't handle the message.
-        sessionFuture.complete(new AsyncSession(apiClient, this));
+        try {
+          LiveServerMessage initialResponse = LiveServerMessage.fromJson(message);
+          if (initialResponse.setupComplete().isPresent()) {
+            sessionFuture.complete(
+                new AsyncSession(
+                    apiClient, this, initialResponse.setupComplete().get().sessionId().get()));
+          }
+        } catch (RuntimeException e) {
+          System.err.println("Error deserializing message: " + e.getMessage());
+          e.printStackTrace();
+        }
         return;
       }
 
@@ -257,6 +267,7 @@ public class AsyncLive {
             "Received message from live session but no callback registered! Please call"
                 + " `AsyncSession.receive()` to register a callback.");
       }
+      
     }
   }
 }
