@@ -93,6 +93,8 @@ public final class LiveTextToTextGenerationAsync {
         .thenCompose(
             session -> {
               String inputText = "Write a short poem about a cat.";
+              System.out.println("Connecting to live session...");
+              System.out.println(session.sessionId());
               System.out.println("\n**Input**\n" + inputText);
 
               return session
@@ -132,6 +134,8 @@ public final class LiveTextToTextGenerationAsync {
 
     // Check if the server's turn is complete and signal the allDone future if so.
     if (message.serverContent().flatMap(LiveServerContent::turnComplete).orElse(false)) {
+      System.out.println("\n**End of turn, full message: **\n");
+      System.out.println(message);
       System.out.println();
       allDone.complete(null);
     }
