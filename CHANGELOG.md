@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.19.0](https://github.com/googleapis/java-genai/compare/v1.18.0...v1.19.0) (2025-09-30)
+
+
+### Features
+
+* expose session id in Live API ([b6d5389](https://github.com/googleapis/java-genai/commit/b6d5389899bd1443d5c508776dfe5909eb1d7400))
+* rename ComputerUse tool (early access) ([4bbba2b](https://github.com/googleapis/java-genai/commit/4bbba2b53eedec0b28a5d98d7fc193683c565f50))
+
 ## [1.18.0](https://github.com/googleapis/java-genai/compare/v1.17.0...v1.18.0) (2025-09-25)
 
 
