@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.0](https://github.com/googleapis/java-genai/compare/v1.19.0...v1.20.0) (2025-10-01)
+
+
+### Features
+
+* Add `ImageConfig` to `GenerateContentConfig` ([6fb5eba](https://github.com/googleapis/java-genai/commit/6fb5eba0e916ada8f300dd5ad333f269e9044ea3))
+
 ## [1.19.0](https://github.com/googleapis/java-genai/compare/v1.18.0...v1.19.0) (2025-09-30)
 
 
