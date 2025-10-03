@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** Configuration for recontextualizing an image. */
@@ -76,6 +77,10 @@ public abstract class RecontextImageConfig extends JsonSerializable {
   /** Whether to use the prompt rewriting logic. */
   @JsonProperty("enhancePrompt")
   public abstract Optional<Boolean> enhancePrompt();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for RecontextImageConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -233,6 +238,14 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      */
     @JsonProperty("enhancePrompt")
     public abstract Builder enhancePrompt(boolean enhancePrompt);
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
 
     public abstract RecontextImageConfig build();
   }

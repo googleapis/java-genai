@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** Configuration for segmenting an image. */
@@ -62,6 +63,10 @@ public abstract class SegmentImageConfig extends JsonSerializable {
    */
   @JsonProperty("binaryColorThreshold")
   public abstract Optional<Float> binaryColorThreshold();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for SegmentImageConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -162,6 +167,14 @@ public abstract class SegmentImageConfig extends JsonSerializable {
      */
     @JsonProperty("binaryColorThreshold")
     public abstract Builder binaryColorThreshold(Float binaryColorThreshold);
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
 
     public abstract SegmentImageConfig build();
   }

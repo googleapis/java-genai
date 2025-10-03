@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** The config for generating an images. */
@@ -103,6 +104,10 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   /** Whether to add a watermark to the generated images. */
   @JsonProperty("addWatermark")
   public abstract Optional<Boolean> addWatermark();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /**
    * The size of the largest dimension of the generated image. Supported sizes are 1K and 2K (not
@@ -327,6 +332,14 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("addWatermark")
     public abstract Builder addWatermark(boolean addWatermark);
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
 
     /**
      * Setter for imageSize.

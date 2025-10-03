@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -70,6 +71,10 @@ public abstract class UpscaleImageAPIConfig extends JsonSerializable {
    */
   @JsonProperty("imagePreservationFactor")
   public abstract Optional<Float> imagePreservationFactor();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** */
   @JsonProperty("numberOfImages")
@@ -165,6 +170,14 @@ public abstract class UpscaleImageAPIConfig extends JsonSerializable {
      */
     @JsonProperty("imagePreservationFactor")
     public abstract Builder imagePreservationFactor(Float imagePreservationFactor);
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
 
     /**
      * Setter for numberOfImages.
