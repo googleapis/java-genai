@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.21.0](https://github.com/googleapis/java-genai/compare/v1.20.0...v1.21.0) (2025-10-03)
+
+
+### Features
+
+* Add `NO_IMAGE` enum value to `FinishReason` ([6b00c0b](https://github.com/googleapis/java-genai/commit/6b00c0b7dc8c85fcefc5aac643c3588048317614))
+* Add thinking_config for live ([274c21d](https://github.com/googleapis/java-genai/commit/274c21d34310e630b9b4ad296b4c8314a4249d0c))
+
+
+### Bug Fixes
+
+* Ensure Live server message are properly converted ([206dc88](https://github.com/googleapis/java-genai/commit/206dc88e3b220a875f784a507fc9470bc411de36))
+
 ## [1.20.0](https://github.com/googleapis/java-genai/compare/v1.19.0...v1.20.0) (2025-10-01)
 
 
