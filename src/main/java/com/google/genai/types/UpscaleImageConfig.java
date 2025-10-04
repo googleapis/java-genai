@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -68,6 +69,10 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
    */
   @JsonProperty("imagePreservationFactor")
   public abstract Optional<Float> imagePreservationFactor();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for UpscaleImageConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -155,6 +160,14 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      */
     @JsonProperty("imagePreservationFactor")
     public abstract Builder imagePreservationFactor(Float imagePreservationFactor);
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
 
     public abstract UpscaleImageConfig build();
   }

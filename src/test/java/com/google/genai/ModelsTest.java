@@ -400,6 +400,7 @@ public class ModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act

@@ -435,6 +435,7 @@ public class AsyncModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act
@@ -630,6 +631,7 @@ public class AsyncModelsTest {
             .outputCompressionQuality(80)
             .enhanceInputImage(true)
             .imagePreservationFactor(0.6f)
+            .labels(ImmutableMap.of("imagen_label_key", "upscale_image"))
             .build();
 
     // Act
