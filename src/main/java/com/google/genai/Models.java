@@ -125,6 +125,15 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  void videoGenerationReferenceTypeMldevEnumValidate(Object enumValue) {
+    ImmutableSet<String> invalidEnumValues = ImmutableSet.of("STYLE");
+    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
+      throw new IllegalArgumentException(
+          String.format("%s enum value is not supported in Gemini API.", enumValue));
+    }
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
@@ -2124,13 +2133,27 @@ public final class Models {
       throw new IllegalArgumentException("generateAudio parameter is not supported in Gemini API.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"lastFrame"}))) {
-      throw new IllegalArgumentException("lastFrame parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"lastFrame"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "lastFrame"},
+          imageToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
+              toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"referenceImages"}))) {
-      throw new IllegalArgumentException(
-          "referenceImages parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"referenceImages"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"referenceImages"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(
+            videoGenerationReferenceImageToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(parentObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mask"}))) {
@@ -2394,8 +2417,14 @@ public final class Models {
               toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
-      throw new IllegalArgumentException("video parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"instances[0]", "video"},
+          videoToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
@@ -2558,8 +2587,14 @@ public final class Models {
               toObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"video"}))) {
-      throw new IllegalArgumentException("video parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"instances[0]", "video"},
+          videoToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              toObject));
     }
 
     return toObject;
@@ -4425,6 +4460,31 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoGenerationReferenceImageToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"image"},
+          imageToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"referenceType"}) != null) {
+      videoGenerationReferenceTypeMldevEnumValidate(
+          Common.getValueByPath(fromObject, new String[] {"referenceType"}));
+      Common.setValueByPath(
+          toObject,
+          new String[] {"referenceType"},
+          Common.getValueByPath(fromObject, new String[] {"referenceType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode videoGenerationReferenceImageToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
@@ -4442,6 +4502,33 @@ public final class Models {
           toObject,
           new String[] {"referenceType"},
           Common.getValueByPath(fromObject, new String[] {"referenceType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode videoToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video", "uri"},
+          Common.getValueByPath(fromObject, new String[] {"uri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoBytes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"video", "encodedVideo"},
+          Transformers.tBytes(Common.getValueByPath(fromObject, new String[] {"videoBytes"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"encoding"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
