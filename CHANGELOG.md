@@ -9,7 +9,7 @@
 * Add labels field to Imagen configs ([e69cf68](https://github.com/googleapis/java-genai/commit/e69cf68583ca581f1a7fad89b04292036433cdb4))
 * Add thinking_config for live ([274c21d](https://github.com/googleapis/java-genai/commit/274c21d34310e630b9b4ad296b4c8314a4249d0c))
 * Add utility methods for creating `FunctionResponsePart` and creating FunctionResponse `Part` with `FunctionResponseParts` ([af16a4c](https://github.com/googleapis/java-genai/commit/af16a4c994e0cc4e6fbc2cdbda825246df9aa253))
-* Enable R2V and Advanced Controls for Veo on Gemini Developer API ([4c42e65](https://github.com/googleapis/java-genai/commit/4c42e6527a7fe43c0b534e381d65b5d9650e8709))
+* Enable Ingredients to Video and Advanced Controls for Veo on Gemini Developer API (Early Access Program) ([4c42e65](https://github.com/googleapis/java-genai/commit/4c42e6527a7fe43c0b534e381d65b5d9650e8709))
 
 
 ### Bug Fixes
