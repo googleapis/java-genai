@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
@@ -30,9 +31,12 @@ import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CancelBatchJobParameters;
 import com.google.genai.types.CreateBatchJobConfig;
 import com.google.genai.types.CreateBatchJobParameters;
+import com.google.genai.types.CreateEmbeddingsBatchJobConfig;
+import com.google.genai.types.CreateEmbeddingsBatchJobParameters;
 import com.google.genai.types.DeleteBatchJobConfig;
 import com.google.genai.types.DeleteBatchJobParameters;
 import com.google.genai.types.DeleteResourceJob;
+import com.google.genai.types.EmbeddingsBatchJobSource;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.GetBatchJobParameters;
 import com.google.genai.types.HttpOptions;
@@ -84,6 +88,16 @@ public final class Batches {
         result.add(inlinedResponseFromMldev(JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"inlinedResponses"}, result);
+    }
+
+    if (Common.getValueByPath(
+            fromObject, new String[] {"inlinedEmbedContentResponses", "inlinedResponses"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlinedEmbedContentResponses"},
+          Common.getValueByPath(
+              fromObject, new String[] {"inlinedEmbedContentResponses", "inlinedResponses"}));
     }
 
     return toObject;
@@ -149,6 +163,12 @@ public final class Batches {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedResponses"}))) {
       throw new IllegalArgumentException(
           "inlinedResponses parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"inlinedEmbedContentResponses"}))) {
+      throw new IllegalArgumentException(
+          "inlinedEmbedContentResponses parameter is not supported in Vertex AI.");
     }
 
     return toObject;
@@ -695,6 +715,53 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode createEmbeddingsBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"batch", "displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode createEmbeddingsBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"batch", "inputConfig"},
+          embeddingsBatchJobSourceToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"src"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          createEmbeddingsBatchJobConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -787,6 +854,93 @@ public final class Batches {
           toObject,
           new String[] {"error"},
           Common.getValueByPath(fromObject, new String[] {"error"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embedContentBatchToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"requests[]", "request", "content"},
+          Transformers.tContentsForEmbed(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"contents"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_self"},
+          embedContentConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+      Common.moveValueByPath(toObject, ImmutableMap.of("requests[].*", "requests[].request.*"));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "taskType"},
+          Common.getValueByPath(fromObject, new String[] {"taskType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "title"},
+          Common.getValueByPath(fromObject, new String[] {"title"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "outputDimensionality"},
+          Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mimeType"}))) {
+      throw new IllegalArgumentException("mimeType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"autoTruncate"}))) {
+      throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embeddingsBatchJobSourceToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"file_name"},
+          Common.getValueByPath(fromObject, new String[] {"fileName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"requests"},
+          embedContentBatchToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlinedRequests"})),
+              toObject));
     }
 
     return toObject;
@@ -1620,6 +1774,90 @@ public final class Batches {
   }
 
   /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+
+    CreateEmbeddingsBatchJobParameters.Builder parameterBuilder =
+        CreateEmbeddingsBatchJobParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(src)) {
+      parameterBuilder.src(src);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      body = createEmbeddingsBatchJobParametersToMldev(this.apiClient, parameterNode, null);
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:asyncBatchEmbedContent", body.get("_url"));
+      } else {
+        path = "{model}:asyncBatchEmbedContent";
+      }
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForPrivateCreateEmbeddings(
+      ApiResponse response, CreateEmbeddingsBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  }
+
+  BatchJob privateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateCreateEmbeddings(model, src, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateCreateEmbeddings(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
   BuiltRequest buildRequestForGet(String name, GetBatchJobConfig config) {
 
     GetBatchJobParameters.Builder parameterBuilder = GetBatchJobParameters.builder();
@@ -1974,6 +2212,25 @@ public final class Batches {
       }
     }
     return this.privateCreate(model, src, config);
+  }
+
+  /**
+   * Makes an API request to create the batch embeddings job.
+   *
+   * <p>This method is experimental.
+   *
+   * @param model the name of the GenAI model to use for generation
+   * @param src The {@link EmbeddingsBatchJobSource} of the batch job.
+   * @param config The configuration {@link CreateEmbeddingsBatchJobConfig} for the batch job.
+   * @return A BatchJob.
+   */
+  public BatchJob createEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "Vertex AI does not support batches.createEmbeddings.");
+    }
+    return this.privateCreateEmbeddings(model, src, config);
   }
 
   /**
