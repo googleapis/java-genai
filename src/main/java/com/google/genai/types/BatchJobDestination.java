@@ -61,6 +61,13 @@ public abstract class BatchJobDestination extends JsonSerializable {
   @JsonProperty("inlinedResponses")
   public abstract Optional<List<InlinedResponse>> inlinedResponses();
 
+  /**
+   * The responses to the requests in the batch. Returned when the batch was built using inlined
+   * requests. The responses will be in the same order as the input requests.
+   */
+  @JsonProperty("inlinedEmbedContentResponses")
+  public abstract Optional<List<InlinedEmbedContentResponse>> inlinedEmbedContentResponses();
+
   /** Instantiates a builder for BatchJobDestination. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -143,6 +150,44 @@ public abstract class BatchJobDestination extends JsonSerializable {
       return inlinedResponses(
           Arrays.asList(inlinedResponsesBuilders).stream()
               .map(InlinedResponse.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
+     * Setter for inlinedEmbedContentResponses.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    @JsonProperty("inlinedEmbedContentResponses")
+    public abstract Builder inlinedEmbedContentResponses(
+        List<InlinedEmbedContentResponse> inlinedEmbedContentResponses);
+
+    /**
+     * Setter for inlinedEmbedContentResponses.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    public Builder inlinedEmbedContentResponses(
+        InlinedEmbedContentResponse... inlinedEmbedContentResponses) {
+      return inlinedEmbedContentResponses(Arrays.asList(inlinedEmbedContentResponses));
+    }
+
+    /**
+     * Setter for inlinedEmbedContentResponses builder.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    public Builder inlinedEmbedContentResponses(
+        InlinedEmbedContentResponse.Builder... inlinedEmbedContentResponsesBuilders) {
+      return inlinedEmbedContentResponses(
+          Arrays.asList(inlinedEmbedContentResponsesBuilders).stream()
+              .map(InlinedEmbedContentResponse.Builder::build)
               .collect(toImmutableList()));
     }
 
