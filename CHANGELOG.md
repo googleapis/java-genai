@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.22.0](https://github.com/googleapis/java-genai/compare/v1.21.0...v1.22.0) (2025-10-10)
+
+
+### Features
+
+* Enable Google Maps tool for Genai. ([a4baf3c](https://github.com/googleapis/java-genai/commit/a4baf3c610ddcb1ed36c1501fcb2248b5a6bd610))
+* Support enableWidget feature in GoogleMaps ([aefbd5c](https://github.com/googleapis/java-genai/commit/aefbd5c1519f453cd2fe158a2765c195a9454322))
+* Support Gemini batch inline request's metadata and add test coverage to safety setting ([17033b3](https://github.com/googleapis/java-genai/commit/17033b38a93d6952b29699f5a4c79ed9dd862976))
+
 ## [1.21.0](https://github.com/googleapis/java-genai/compare/v1.20.0...v1.21.0) (2025-10-08)
 
 
