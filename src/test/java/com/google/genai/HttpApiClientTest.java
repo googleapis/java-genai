@@ -1014,6 +1014,99 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testHttpClientMldevWithTimeoutSettings() throws Exception {
+    ClientOptions clientOptions =
+        ClientOptions.builder()
+            .readTimeout(5000)
+            .writeTimeout(10000)
+            .callTimeout(15000)
+            .build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+
+    assertEquals(API_KEY, client.apiKey());
+    assertFalse(client.vertexAI());
+    assertEquals(5000, httpClient.readTimeoutMillis());
+    assertEquals(10000, httpClient.writeTimeoutMillis());
+    assertEquals(15000, httpClient.callTimeoutMillis());
+  }
+
+  @Test
+  public void testHttpClientVertexWithTimeoutSettings() throws Exception {
+    ClientOptions clientOptions =
+        ClientOptions.builder()
+            .readTimeout(3000)
+            .writeTimeout(6000)
+            .callTimeout(9000)
+            .build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+
+    assertEquals(PROJECT, client.project());
+    assertEquals(LOCATION, client.location());
+    assertTrue(client.vertexAI());
+    assertEquals(3000, httpClient.readTimeoutMillis());
+    assertEquals(6000, httpClient.writeTimeoutMillis());
+    assertEquals(9000, httpClient.callTimeoutMillis());
+  }
+
+  @Test
+  public void testHttpClientWithPartialTimeoutSettings() throws Exception {
+    ClientOptions clientOptions =
+        ClientOptions.builder()
+            .readTimeout(5000)
+            .build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+
+    assertEquals(API_KEY, client.apiKey());
+    assertFalse(client.vertexAI());
+    assertEquals(5000, httpClient.readTimeoutMillis());
+    // When not set, timeouts should remain at default 0 (no timeout)
+    assertEquals(0, httpClient.writeTimeoutMillis());
+    assertEquals(0, httpClient.callTimeoutMillis());
+  }
+
+  @Test
+  public void testHttpClientWithAllClientOptionsIncludingTimeouts() throws Exception {
+    ClientOptions clientOptions =
+        ClientOptions.builder()
+            .maxConnections(32)
+            .maxConnectionsPerHost(8)
+            .readTimeout(2000)
+            .writeTimeout(4000)
+            .callTimeout(8000)
+            .build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+    Dispatcher dispatcher = httpClient.dispatcher();
+
+    assertEquals(API_KEY, client.apiKey());
+    assertFalse(client.vertexAI());
+    // Test dispatcher settings
+    assertEquals(32, dispatcher.getMaxRequests());
+    assertEquals(8, dispatcher.getMaxRequestsPerHost());
+    // Test timeout settings
+    assertEquals(2000, httpClient.readTimeoutMillis());
+    assertEquals(4000, httpClient.writeTimeoutMillis());
+    assertEquals(8000, httpClient.callTimeoutMillis());
+  }
+
+  @Test
   public void testHttpClientWithCustomCredentials() throws Exception {
     HttpApiClient client =
         new HttpApiClient(

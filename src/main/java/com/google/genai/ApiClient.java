@@ -223,6 +223,7 @@ abstract class ApiClient {
     builder.connectTimeout(Duration.ofMillis(0));
     builder.readTimeout(Duration.ofMillis(0));
     builder.writeTimeout(Duration.ofMillis(0));
+    builder.callTimeout(Duration.ofMillis(0));
 
     timeout.ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
 
@@ -232,6 +233,11 @@ abstract class ApiClient {
           options.maxConnections().ifPresent(dispatcher::setMaxRequests);
           options.maxConnectionsPerHost().ifPresent(dispatcher::setMaxRequestsPerHost);
           builder.dispatcher(dispatcher);
+
+          // Apply timeout configurations from ClientOptions
+          options.readTimeout().ifPresent(rt -> builder.readTimeout(Duration.ofMillis(rt)));
+          options.writeTimeout().ifPresent(wt -> builder.writeTimeout(Duration.ofMillis(wt)));
+          options.callTimeout().ifPresent(ct -> builder.callTimeout(Duration.ofMillis(ct)));
         });
 
     return builder.build();

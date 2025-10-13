@@ -37,6 +37,18 @@ public abstract class ClientOptions extends JsonSerializable {
   @JsonProperty("maxConnectionsPerHost")
   public abstract Optional<Integer> maxConnectionsPerHost();
 
+  /** Read timeout in milliseconds. */
+  @JsonProperty("readTimeout")
+  public abstract Optional<Integer> readTimeout();
+
+  /** Write timeout in milliseconds. */
+  @JsonProperty("writeTimeout")
+  public abstract Optional<Integer> writeTimeout();
+
+  /** Call timeout in milliseconds. */
+  @JsonProperty("callTimeout")
+  public abstract Optional<Integer> callTimeout();
+
   /** Instantiates a builder for ClientOptions. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -70,6 +82,30 @@ public abstract class ClientOptions extends JsonSerializable {
      */
     @JsonProperty("maxConnectionsPerHost")
     public abstract Builder maxConnectionsPerHost(Integer maxConnectionsPerHost);
+
+    /**
+     * Setter for readTimeout.
+     *
+     * <p>readTimeout: Read timeout in milliseconds.
+     */
+    @JsonProperty("readTimeout")
+    public abstract Builder readTimeout(Integer readTimeout);
+
+    /**
+     * Setter for writeTimeout.
+     *
+     * <p>writeTimeout: Write timeout in milliseconds.
+     */
+    @JsonProperty("writeTimeout")
+    public abstract Builder writeTimeout(Integer writeTimeout);
+
+    /**
+     * Setter for callTimeout.
+     *
+     * <p>callTimeout: Call timeout in milliseconds.
+     */
+    @JsonProperty("callTimeout")
+    public abstract Builder callTimeout(Integer callTimeout);
 
     public abstract ClientOptions build();
   }
