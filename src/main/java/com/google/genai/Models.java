@@ -4325,6 +4325,20 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "safetySetting"},
+          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -6289,6 +6303,12 @@ public final class Models {
       }
       if (config.outputCompressionQuality().isPresent()) {
         builder = builder.outputCompressionQuality(config.outputCompressionQuality().get());
+      }
+      if (config.safetyFilterLevel().isPresent()) {
+        builder = builder.safetyFilterLevel(config.safetyFilterLevel().get());
+      }
+      if (config.personGeneration().isPresent()) {
+        builder = builder.personGeneration(config.personGeneration().get());
       }
       if (config.includeRaiReason().isPresent()) {
         builder = builder.includeRaiReason(config.includeRaiReason().get());
