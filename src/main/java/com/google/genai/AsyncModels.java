@@ -476,11 +476,26 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateContentResponse> generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    ImmutableList<Integer> incompatibleToolsIndexes =
+        AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.shouldDisableAfc(transformedConfig)) {
       return privateGenerateContent(model, contents, transformedConfig);
     }
-
+    if (!incompatibleToolsIndexes.isEmpty()) {
+      int originalToolsSize = 0;
+      if (config.tools().isPresent() && !config.tools().get().isEmpty()) {
+        originalToolsSize = config.tools().get().size();
+      }
+      if (originalToolsSize != incompatibleToolsIndexes.size()) {
+        logger.warning(
+            String.format(
+                "Automatic function calling is enabled, but the following tools are not supported:"
+                    + " %s",
+                incompatibleToolsIndexes));
+      }
+      return privateGenerateContent(model, contents, transformedConfig);
+    }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
     if (functionMap.isEmpty()) {
       return privateGenerateContent(model, contents, transformedConfig);
