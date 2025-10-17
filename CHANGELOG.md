@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-17)
+
+
+### Features
+
+* Add enable_enhanced_civic_answers in GenerationConfig ([684a2c5](https://github.com/googleapis/java-genai/commit/684a2c5b582fa4ca13cb9cfe819ef759778101b0))
+
+
+### Bug Fixes
+
+* Make async methods in Batches module truly non-blocking ([f2ae75a](https://github.com/googleapis/java-genai/commit/f2ae75ac364702f483c376e458a120d1ffa93b17))
+* Make async methods in Caches, Tuning, and Operations modules truly non-blocking ([db56239](https://github.com/googleapis/java-genai/commit/db56239bbebbfe3cb95e00d2d3eac253b76f22fe))
+
 ## [1.23.0](https://github.com/googleapis/java-genai/compare/v1.22.0...v1.23.0) (2025-10-15)
 
 
