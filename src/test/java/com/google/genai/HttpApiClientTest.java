@@ -900,7 +900,7 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(5000, httpClient.connectTimeoutMillis());
+    assertEquals(5000, httpClient.callTimeoutMillis());
     assertEquals(API_KEY, client.apiKey());
     assertFalse(client.vertexAI());
   }
@@ -920,7 +920,7 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(4999, httpClient.connectTimeoutMillis());
+    assertEquals(4999, httpClient.callTimeoutMillis());
     assertEquals(PROJECT, client.project());
     assertEquals(LOCATION, client.location());
     assertTrue(client.vertexAI());
@@ -934,7 +934,7 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(0, httpClient.connectTimeoutMillis());
+    assertEquals(0, httpClient.callTimeoutMillis());
     assertEquals(API_KEY, client.apiKey());
     assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
   }
@@ -953,7 +953,7 @@ public class HttpApiClientTest {
     OkHttpClient httpClient = client.httpClient();
     assertNotNull(httpClient);
 
-    assertEquals(0, httpClient.connectTimeoutMillis());
+    assertEquals(0, httpClient.callTimeoutMillis());
     assertEquals(PROJECT, client.project());
     assertEquals(LOCATION, client.location());
     assertTrue(client.vertexAI());

@@ -224,7 +224,7 @@ abstract class ApiClient {
     builder.readTimeout(Duration.ofMillis(0));
     builder.writeTimeout(Duration.ofMillis(0));
 
-    timeout.ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+    timeout.ifPresent(callTimeout -> builder.callTimeout(Duration.ofMillis(callTimeout)));
 
     clientOptions.ifPresent(
         options -> {
