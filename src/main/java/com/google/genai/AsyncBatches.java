@@ -26,8 +26,10 @@ import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
 import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CreateBatchJobConfig;
+import com.google.genai.types.CreateEmbeddingsBatchJobConfig;
 import com.google.genai.types.DeleteBatchJobConfig;
 import com.google.genai.types.DeleteResourceJob;
+import com.google.genai.types.EmbeddingsBatchJobSource;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.ListBatchJobsConfig;
 import com.google.genai.types.ListBatchJobsResponse;
@@ -54,6 +56,19 @@ public final class AsyncBatches {
             response -> {
               try (ApiResponse res = response) {
                 return batches.processResponseForPrivateCreate(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<BatchJob> privateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    BuiltRequest builtRequest = batches.buildRequestForPrivateCreateEmbeddings(model, src, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForPrivateCreateEmbeddings(res, config);
               }
             });
   }
@@ -161,6 +176,25 @@ public final class AsyncBatches {
       }
     }
     return this.privateCreate(model, src, config);
+  }
+
+  /**
+   * Makes an API request to create the batch embeddings job.
+   *
+   * <p>This method is experimental.
+   *
+   * @param model the name of the GenAI model to use for generation
+   * @param src The {@link EmbeddingsBatchJobSource} of the batch job.
+   * @param config The configuration {@link CreateEmbeddingsBatchJobConfig} for the batch job.
+   * @return A BatchJob.
+   */
+  public CompletableFuture<BatchJob> createEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "Vertex AI does not support batches.createEmbeddings.");
+    }
+    return this.privateCreateEmbeddings(model, src, config);
   }
 
   /**

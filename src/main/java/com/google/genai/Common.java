@@ -298,4 +298,138 @@ final class Common {
     }
     return sb.toString();
   }
+
+  /**
+   * Moves values from source paths to destination paths.
+   *
+   * <p>Example: moveValueByPath( {'requests': [{'content': v1}, {'content': v2}]}, {'requests[].*':
+   * 'requests[].request.*'} ) -> {'requests': [{'request': {'content': v1}}, {'request':
+   * {'content': v2}}]}
+   */
+  static void moveValueByPath(JsonNode data, Map<String, String> paths) {
+    if (data == null || paths == null) {
+      return;
+    }
+
+    for (Map.Entry<String, String> entry : paths.entrySet()) {
+      String sourcePath = entry.getKey();
+      String destPath = entry.getValue();
+
+      String[] sourceKeys = sourcePath.split("\\.");
+      String[] destKeys = destPath.split("\\.");
+
+      // Determine keys to exclude from wildcard to avoid cyclic references
+      java.util.Set<String> excludeKeys = new java.util.HashSet<>();
+      int wildcardIdx = -1;
+
+      for (int i = 0; i < sourceKeys.length; i++) {
+        if (sourceKeys[i].equals("*")) {
+          wildcardIdx = i;
+          break;
+        }
+      }
+
+      if (wildcardIdx != -1 && destKeys.length > wildcardIdx) {
+        // Extract the intermediate key between source and dest paths
+        // Example: source=['requests[]', '*'], dest=['requests[]', 'request', '*']
+        // We want to exclude 'request'
+        for (int i = wildcardIdx; i < destKeys.length; i++) {
+          String key = destKeys[i];
+          if (!key.equals("*") && !key.endsWith("[]") && !key.endsWith("[0]")) {
+            excludeKeys.add(key);
+          }
+        }
+      }
+
+      // Move values recursively
+      moveValueRecursive(data, sourceKeys, destKeys, 0, excludeKeys);
+    }
+  }
+
+  /**
+   * Recursively moves values from source path to destination path.
+   *
+   * @param data The current node being processed
+   * @param sourceKeys The source path keys
+   * @param destKeys The destination path keys
+   * @param keyIdx The current index in the key arrays
+   * @param excludeKeys Keys to exclude when processing wildcards
+   */
+  private static void moveValueRecursive(
+      JsonNode data,
+      String[] sourceKeys,
+      String[] destKeys,
+      int keyIdx,
+      java.util.Set<String> excludeKeys) {
+    if (keyIdx >= sourceKeys.length || data == null) {
+      return;
+    }
+
+    String key = sourceKeys[keyIdx];
+
+    if (key.endsWith("[]")) {
+      // Handle array iteration
+      String keyName = key.substring(0, key.length() - 2);
+      if (data.isObject()
+          && ((ObjectNode) data).has(keyName)
+          && ((ObjectNode) data).get(keyName).isArray()) {
+        ArrayNode arrayNode = (ArrayNode) ((ObjectNode) data).get(keyName);
+        for (JsonNode item : arrayNode) {
+          moveValueRecursive(item, sourceKeys, destKeys, keyIdx + 1, excludeKeys);
+        }
+      }
+    } else if (key.equals("*")) {
+      // Handle wildcard - move all fields
+      if (data.isObject()) {
+        ObjectNode objectNode = (ObjectNode) data;
+
+        // Get all keys to move (excluding specified keys)
+        java.util.List<String> keysToMove = new java.util.ArrayList<>();
+        Iterator<String> fieldNames = objectNode.fieldNames();
+        while (fieldNames.hasNext()) {
+          String fieldName = fieldNames.next();
+          if (!fieldName.startsWith("_") && !excludeKeys.contains(fieldName)) {
+            keysToMove.add(fieldName);
+          }
+        }
+
+        // Collect values to move
+        java.util.Map<String, JsonNode> valuesToMove = new java.util.HashMap<>();
+        for (String k : keysToMove) {
+          valuesToMove.put(k, objectNode.get(k));
+        }
+
+        // Set values at destination
+        for (Map.Entry<String, JsonNode> entry : valuesToMove.entrySet()) {
+          String k = entry.getKey();
+          JsonNode v = entry.getValue();
+
+          // Build destination keys with the field name
+          java.util.List<String> newDestKeysList = new java.util.ArrayList<>();
+          for (int i = keyIdx; i < destKeys.length; i++) {
+            String dk = destKeys[i];
+            if (dk.equals("*")) {
+              newDestKeysList.add(k);
+            } else {
+              newDestKeysList.add(dk);
+            }
+          }
+
+          String[] newDestKeys = newDestKeysList.toArray(new String[0]);
+          setValueByPath(objectNode, newDestKeys, v);
+        }
+
+        // Delete from source
+        for (String k : keysToMove) {
+          objectNode.remove(k);
+        }
+      }
+    } else {
+      // Navigate to next level
+      if (data.isObject() && ((ObjectNode) data).has(key)) {
+        JsonNode nextNode = ((ObjectNode) data).get(key);
+        moveValueRecursive(nextNode, sourceKeys, destKeys, keyIdx + 1, excludeKeys);
+      }
+    }
+  }
 }
