@@ -98,7 +98,7 @@ public final class GenerateVideosAsync {
                 try {
                   Thread.sleep(10000); // Sleep for 10 seconds.
                   try {
-                    operation = client.async.operations.getVideosOperation(operation, null).get();
+                    operation = client.async.operations.get(operation, null).get();
                   } catch (ExecutionException e) {
                     throw new RuntimeException(e);
                   }
@@ -115,7 +115,7 @@ public final class GenerateVideosAsync {
 
               Video generatedVideo =
                   operation.response().get().generatedVideos().get().get(0).video().get();
-              // Do something with the video.
+              System.out.println("Video URL: " + generatedVideo.uri().get());
             })
         .join();
   }
