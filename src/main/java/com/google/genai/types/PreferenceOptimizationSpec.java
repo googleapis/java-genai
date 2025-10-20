@@ -30,6 +30,14 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = PreferenceOptimizationSpec.Builder.class)
 public abstract class PreferenceOptimizationSpec extends JsonSerializable {
+  /**
+   * Optional. If set to true, disable intermediate checkpoints for Preference Optimization and only
+   * the last checkpoint will be exported. Otherwise, enable intermediate checkpoints for Preference
+   * Optimization. Default is false.
+   */
+  @JsonProperty("exportLastCheckpointOnly")
+  public abstract Optional<Boolean> exportLastCheckpointOnly();
+
   /** Optional. Hyperparameters for Preference Optimization. */
   @JsonProperty("hyperParameters")
   public abstract Optional<PreferenceOptimizationHyperParameters> hyperParameters();
@@ -64,6 +72,26 @@ public abstract class PreferenceOptimizationSpec extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_PreferenceOptimizationSpec.Builder();
+    }
+
+    /**
+     * Setter for exportLastCheckpointOnly.
+     *
+     * <p>exportLastCheckpointOnly: Optional. If set to true, disable intermediate checkpoints for
+     * Preference Optimization and only the last checkpoint will be exported. Otherwise, enable
+     * intermediate checkpoints for Preference Optimization. Default is false.
+     */
+    @JsonProperty("exportLastCheckpointOnly")
+    public abstract Builder exportLastCheckpointOnly(boolean exportLastCheckpointOnly);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exportLastCheckpointOnly(Optional<Boolean> exportLastCheckpointOnly);
+
+    /** Clears the value of exportLastCheckpointOnly field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExportLastCheckpointOnly() {
+      return exportLastCheckpointOnly(Optional.empty());
     }
 
     /**

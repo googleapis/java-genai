@@ -45,7 +45,7 @@ public abstract class FunctionCall extends JsonSerializable {
   @JsonProperty("args")
   public abstract Optional<Map<String, Object>> args();
 
-  /** Required. The name of the function to call. Matches [FunctionDeclaration.name]. */
+  /** Optional. The name of the function to call. Matches [FunctionDeclaration.name]. */
   @JsonProperty("name")
   public abstract Optional<String> name();
 
@@ -108,7 +108,7 @@ public abstract class FunctionCall extends JsonSerializable {
     /**
      * Setter for name.
      *
-     * <p>name: Required. The name of the function to call. Matches [FunctionDeclaration.name].
+     * <p>name: Optional. The name of the function to call. Matches [FunctionDeclaration.name].
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
