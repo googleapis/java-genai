@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-22)
+
+
+### Features
+
+* Add enable_enhanced_civic_answers in GenerationConfig ([684a2c5](https://github.com/googleapis/java-genai/commit/684a2c5b582fa4ca13cb9cfe819ef759778101b0))
+* support createEmbeddings in Batches.java ([8947f6f](https://github.com/googleapis/java-genai/commit/8947f6fc20fbdd90a7d17071dee1bd2e5bea0c3e))
+* support jailbreak in HarmCategory and BlockedReason ([3dab40b](https://github.com/googleapis/java-genai/commit/3dab40bc367168ed48d8d1acfb278f5bc6edb83f))
+
+
+### Bug Fixes
+
+* Make async methods in Batches module truly non-blocking ([f2ae75a](https://github.com/googleapis/java-genai/commit/f2ae75ac364702f483c376e458a120d1ffa93b17))
+* Make async methods in Caches, Tuning, and Operations modules truly non-blocking ([db56239](https://github.com/googleapis/java-genai/commit/db56239bbebbfe3cb95e00d2d3eac253b76f22fe))
+* Make async methods in Models module truly non-blocking ([c205d01](https://github.com/googleapis/java-genai/commit/c205d0172ca40e01f7d8de17a3bc9d38eeb5fc21))
+
 ## [1.23.0](https://github.com/googleapis/java-genai/compare/v1.22.0...v1.23.0) (2025-10-15)
 
 
