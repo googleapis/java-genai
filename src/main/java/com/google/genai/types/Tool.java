@@ -48,32 +48,15 @@ public abstract class Tool extends JsonSerializable {
   public abstract Optional<Retrieval> retrieval();
 
   /**
-   * Optional. Google Search tool type. Specialized retrieval tool that is powered by Google Search.
-   */
-  @JsonProperty("googleSearch")
-  public abstract Optional<GoogleSearch> googleSearch();
-
-  /**
    * Optional. GoogleSearchRetrieval tool type. Specialized retrieval tool that is powered by Google
    * search.
    */
   @JsonProperty("googleSearchRetrieval")
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
-  /**
-   * Optional. Enterprise web search tool type. Specialized retrieval tool that is powered by Vertex
-   * AI Search and Sec4 compliance.
-   */
-  @JsonProperty("enterpriseWebSearch")
-  public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
-
   /** Optional. Google Maps tool type. Specialized retrieval tool that is powered by Google Maps. */
   @JsonProperty("googleMaps")
   public abstract Optional<GoogleMaps> googleMaps();
-
-  /** Optional. Tool to support URL context retrieval. */
-  @JsonProperty("urlContext")
-  public abstract Optional<UrlContext> urlContext();
 
   /**
    * The java.lang.reflect.Method instance. If provided, it will to be parsed into a list of
@@ -92,6 +75,23 @@ public abstract class Tool extends JsonSerializable {
   /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
   @JsonProperty("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
+
+  /**
+   * Optional. Tool to support searching public web data, powered by Vertex AI Search and Sec4
+   * compliance. This field is not supported in Gemini API.
+   */
+  @JsonProperty("enterpriseWebSearch")
+  public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
+
+  /**
+   * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
+   */
+  @JsonProperty("googleSearch")
+  public abstract Optional<GoogleSearch> googleSearch();
+
+  /** Optional. Tool to support URL context retrieval. */
+  @JsonProperty("urlContext")
+  public abstract Optional<UrlContext> urlContext();
 
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
@@ -163,25 +163,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for googleSearch.
-     *
-     * <p>googleSearch: Optional. Google Search tool type. Specialized retrieval tool that is
-     * powered by Google Search.
-     */
-    @JsonProperty("googleSearch")
-    public abstract Builder googleSearch(GoogleSearch googleSearch);
-
-    /**
-     * Setter for googleSearch builder.
-     *
-     * <p>googleSearch: Optional. Google Search tool type. Specialized retrieval tool that is
-     * powered by Google Search.
-     */
-    public Builder googleSearch(GoogleSearch.Builder googleSearchBuilder) {
-      return googleSearch(googleSearchBuilder.build());
-    }
-
-    /**
      * Setter for googleSearchRetrieval.
      *
      * <p>googleSearchRetrieval: Optional. GoogleSearchRetrieval tool type. Specialized retrieval
@@ -202,25 +183,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for enterpriseWebSearch.
-     *
-     * <p>enterpriseWebSearch: Optional. Enterprise web search tool type. Specialized retrieval tool
-     * that is powered by Vertex AI Search and Sec4 compliance.
-     */
-    @JsonProperty("enterpriseWebSearch")
-    public abstract Builder enterpriseWebSearch(EnterpriseWebSearch enterpriseWebSearch);
-
-    /**
-     * Setter for enterpriseWebSearch builder.
-     *
-     * <p>enterpriseWebSearch: Optional. Enterprise web search tool type. Specialized retrieval tool
-     * that is powered by Vertex AI Search and Sec4 compliance.
-     */
-    public Builder enterpriseWebSearch(EnterpriseWebSearch.Builder enterpriseWebSearchBuilder) {
-      return enterpriseWebSearch(enterpriseWebSearchBuilder.build());
-    }
-
-    /**
      * Setter for googleMaps.
      *
      * <p>googleMaps: Optional. Google Maps tool type. Specialized retrieval tool that is powered by
@@ -237,23 +199,6 @@ public abstract class Tool extends JsonSerializable {
      */
     public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
       return googleMaps(googleMapsBuilder.build());
-    }
-
-    /**
-     * Setter for urlContext.
-     *
-     * <p>urlContext: Optional. Tool to support URL context retrieval.
-     */
-    @JsonProperty("urlContext")
-    public abstract Builder urlContext(UrlContext urlContext);
-
-    /**
-     * Setter for urlContext builder.
-     *
-     * <p>urlContext: Optional. Tool to support URL context retrieval.
-     */
-    public Builder urlContext(UrlContext.Builder urlContextBuilder) {
-      return urlContext(urlContextBuilder.build());
     }
 
     /**
@@ -311,6 +256,61 @@ public abstract class Tool extends JsonSerializable {
      */
     public Builder codeExecution(ToolCodeExecution.Builder codeExecutionBuilder) {
       return codeExecution(codeExecutionBuilder.build());
+    }
+
+    /**
+     * Setter for enterpriseWebSearch.
+     *
+     * <p>enterpriseWebSearch: Optional. Tool to support searching public web data, powered by
+     * Vertex AI Search and Sec4 compliance. This field is not supported in Gemini API.
+     */
+    @JsonProperty("enterpriseWebSearch")
+    public abstract Builder enterpriseWebSearch(EnterpriseWebSearch enterpriseWebSearch);
+
+    /**
+     * Setter for enterpriseWebSearch builder.
+     *
+     * <p>enterpriseWebSearch: Optional. Tool to support searching public web data, powered by
+     * Vertex AI Search and Sec4 compliance. This field is not supported in Gemini API.
+     */
+    public Builder enterpriseWebSearch(EnterpriseWebSearch.Builder enterpriseWebSearchBuilder) {
+      return enterpriseWebSearch(enterpriseWebSearchBuilder.build());
+    }
+
+    /**
+     * Setter for googleSearch.
+     *
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
+     */
+    @JsonProperty("googleSearch")
+    public abstract Builder googleSearch(GoogleSearch googleSearch);
+
+    /**
+     * Setter for googleSearch builder.
+     *
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
+     */
+    public Builder googleSearch(GoogleSearch.Builder googleSearchBuilder) {
+      return googleSearch(googleSearchBuilder.build());
+    }
+
+    /**
+     * Setter for urlContext.
+     *
+     * <p>urlContext: Optional. Tool to support URL context retrieval.
+     */
+    @JsonProperty("urlContext")
+    public abstract Builder urlContext(UrlContext urlContext);
+
+    /**
+     * Setter for urlContext builder.
+     *
+     * <p>urlContext: Optional. Tool to support URL context retrieval.
+     */
+    public Builder urlContext(UrlContext.Builder urlContextBuilder) {
+      return urlContext(urlContextBuilder.build());
     }
 
     public abstract Tool build();

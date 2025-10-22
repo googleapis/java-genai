@@ -27,7 +27,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. */
+/**
+ * Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. This data type
+ * is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = EnterpriseWebSearch.Builder.class)
 public abstract class EnterpriseWebSearch extends JsonSerializable {

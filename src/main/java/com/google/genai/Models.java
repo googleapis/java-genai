@@ -2999,16 +2999,16 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
-      throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -4015,6 +4015,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4026,13 +4033,6 @@ public final class Models {
         Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
       throw new IllegalArgumentException(
           "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
     }
 
     return toObject;
@@ -4052,26 +4052,11 @@ public final class Models {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"googleSearchRetrieval"},
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
-      throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
@@ -4082,13 +4067,6 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
               toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4103,6 +4081,28 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
+      throw new IllegalArgumentException(
+          "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;
@@ -4130,13 +4130,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4144,25 +4137,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enterpriseWebSearch"},
-          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"googleMaps"},
           Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4177,6 +4156,27 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;

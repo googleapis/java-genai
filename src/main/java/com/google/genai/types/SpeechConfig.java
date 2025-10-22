@@ -25,26 +25,24 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The speech generation configuration. */
+/** The speech generation config. */
 @AutoValue
 @JsonDeserialize(builder = SpeechConfig.Builder.class)
 public abstract class SpeechConfig extends JsonSerializable {
+  /** Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization. */
+  @JsonProperty("languageCode")
+  public abstract Optional<String> languageCode();
+
   /** The configuration for the speaker to use. */
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
   /**
-   * The configuration for the multi-speaker setup. It is mutually exclusive with the voice_config
-   * field.
+   * Optional. The configuration for the multi-speaker setup. It is mutually exclusive with the
+   * voice_config field. This field is not supported in Vertex AI.
    */
   @JsonProperty("multiSpeakerVoiceConfig")
   public abstract Optional<MultiSpeakerVoiceConfig> multiSpeakerVoiceConfig();
-
-  /**
-   * Language code (ISO 639. e.g. en-US) for the speech synthesization. Only available for Live API.
-   */
-  @JsonProperty("languageCode")
-  public abstract Optional<String> languageCode();
 
   /** Instantiates a builder for SpeechConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -63,6 +61,14 @@ public abstract class SpeechConfig extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_SpeechConfig.Builder();
     }
+
+    /**
+     * Setter for languageCode.
+     *
+     * <p>languageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization.
+     */
+    @JsonProperty("languageCode")
+    public abstract Builder languageCode(String languageCode);
 
     /**
      * Setter for voiceConfig.
@@ -84,8 +90,8 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for multiSpeakerVoiceConfig.
      *
-     * <p>multiSpeakerVoiceConfig: The configuration for the multi-speaker setup. It is mutually
-     * exclusive with the voice_config field.
+     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
+     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
      */
     @JsonProperty("multiSpeakerVoiceConfig")
     public abstract Builder multiSpeakerVoiceConfig(
@@ -94,22 +100,13 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for multiSpeakerVoiceConfig builder.
      *
-     * <p>multiSpeakerVoiceConfig: The configuration for the multi-speaker setup. It is mutually
-     * exclusive with the voice_config field.
+     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
+     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
      */
     public Builder multiSpeakerVoiceConfig(
         MultiSpeakerVoiceConfig.Builder multiSpeakerVoiceConfigBuilder) {
       return multiSpeakerVoiceConfig(multiSpeakerVoiceConfigBuilder.build());
     }
-
-    /**
-     * Setter for languageCode.
-     *
-     * <p>languageCode: Language code (ISO 639. e.g. en-US) for the speech synthesization. Only
-     * available for Live API.
-     */
-    @JsonProperty("languageCode")
-    public abstract Builder languageCode(String languageCode);
 
     public abstract SpeechConfig build();
   }
