@@ -54,6 +54,10 @@ public abstract class HttpOptions extends JsonSerializable {
   @JsonProperty("extraBody")
   public abstract Optional<Map<String, Object>> extraBody();
 
+  /** HTTP retry options for the request. */
+  @JsonProperty("retryOptions")
+  public abstract Optional<HttpRetryOptions> retryOptions();
+
   /** Instantiates a builder for HttpOptions. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -114,6 +118,23 @@ public abstract class HttpOptions extends JsonSerializable {
      */
     @JsonProperty("extraBody")
     public abstract Builder extraBody(Map<String, Object> extraBody);
+
+    /**
+     * Setter for retryOptions.
+     *
+     * <p>retryOptions: HTTP retry options for the request.
+     */
+    @JsonProperty("retryOptions")
+    public abstract Builder retryOptions(HttpRetryOptions retryOptions);
+
+    /**
+     * Setter for retryOptions builder.
+     *
+     * <p>retryOptions: HTTP retry options for the request.
+     */
+    public Builder retryOptions(HttpRetryOptions.Builder retryOptionsBuilder) {
+      return retryOptions(retryOptionsBuilder.build());
+    }
 
     public abstract HttpOptions build();
   }

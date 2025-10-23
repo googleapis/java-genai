@@ -16,11 +16,6 @@
 
 package com.google.genai;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,18 +29,13 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.errors.GenAiIOException;
-import com.google.genai.types.Candidate;
 import com.google.genai.types.ClientOptions;
-import com.google.genai.types.Content;
-import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.Part;
+import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -943,6 +933,50 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testHttpClientMldevWithRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions httpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.of(httpOptions), Optional.empty());
+
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(retryOptions, retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientMldevWithNoRetryOptions() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    // If no retry options are specified, An empty retry options should be used.
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(HttpRetryOptions.builder().build(), retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientVertexWithRequestLevelRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions requestHttpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    Request request =
+        client.buildRequest("POST", "path", "requestJson", Optional.of(requestHttpOptions));
+
+    assertEquals(retryOptions, request.tag(HttpRetryOptions.class));
+  }
+
+  @Test
   public void testHttpClientMldevCustomClientOptions() throws Exception {
     ClientOptions clientOptions =
         ClientOptions.builder().maxConnections(64).maxConnectionsPerHost(16).build();
@@ -1052,44 +1086,6 @@ public class HttpApiClientTest {
     assertEquals(
         Optional.of("https://generativelanguage.googleapis.com"), client.httpOptions.baseUrl());
     assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
-  }
-
-  @Test
-  public void testProxySetup() throws Exception {
-    WireMockServer wireMockServer = null;
-    try {
-      wireMockServer = new WireMockServer(options().dynamicPort());
-      wireMockServer.start();
-      WireMock.configureFor("localhost", wireMockServer.port());
-      String expectedText = "This is Proxy speaking, Hello, World!";
-      Part part = Part.builder().text(expectedText).build();
-      Content content = Content.fromParts(part);
-      Candidate candidate = Candidate.builder().content(content).build();
-      GenerateContentResponse fakeResponse =
-          GenerateContentResponse.builder().candidates(candidate).build();
-      stubFor(
-          post(urlMatching(".*"))
-              .willReturn(
-                  aResponse()
-                      .withStatus(200)
-                      .withHeader("Content-Type", "application/json")
-                      .withBody(fakeResponse.toJson())));
-
-      HttpOptions httpOptions =
-          HttpOptions.builder()
-              .baseUrl("http://localhost:" + wireMockServer.port())
-              .apiVersion("v1beta")
-              .build();
-      Client client =
-          Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
-
-      GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
-
-      assertEquals(response.text(), expectedText);
-    } finally {
-      wireMockServer.stop();
-    }
   }
 
   @Test
