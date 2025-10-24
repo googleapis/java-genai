@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-24)
+
+
+### Features
+
+* support default global location when not using api key with vertexai backend ([f9028a7](https://github.com/googleapis/java-genai/commit/f9028a71d4e736a8dc97daa54e6e4275b5016abd))
+
+
+### Documentation
+
+* Add docstring for classes and fields that are not supported in Gemini or Vertex API ([7a03dac](https://github.com/googleapis/java-genai/commit/7a03dac0a4e3388f98be199765794fcf511bfe83))
+* Add docstring for enum classes that are not supported in Gemini or Vertex API ([830a12f](https://github.com/googleapis/java-genai/commit/830a12f3dcbb8beb1dd5ff3ff82f6b19ebb2af93))
+
 ## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-22)
 
 
