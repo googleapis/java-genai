@@ -9,6 +9,7 @@ Java idiomatic SDK for the
 ## Add dependency
 
 If you're using Maven, add the following to your dependencies:
+
 [//]: # ({x-version-update-start:google-genai:released})
 ```xml
 <dependencies>
