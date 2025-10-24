@@ -18,10 +18,12 @@
 
 package com.google.genai;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.types.FetchPredictOperationConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
+import com.google.genai.types.Operation;
 import java.util.concurrent.CompletableFuture;
 
 /** Async module of {@link Operations} */
@@ -35,7 +37,7 @@ public final class AsyncOperations {
     this.operations = new Operations(apiClient);
   }
 
-  CompletableFuture<GenerateVideosOperation> privateGetVideosOperation(
+  CompletableFuture<JsonNode> privateGetVideosOperation(
       String operationName, GetOperationConfig config) {
     BuiltRequest builtRequest =
         operations.buildRequestForPrivateGetVideosOperation(operationName, config);
@@ -49,7 +51,7 @@ public final class AsyncOperations {
             });
   }
 
-  CompletableFuture<GenerateVideosOperation> privateFetchPredictVideosOperation(
+  CompletableFuture<JsonNode> privateFetchPredictVideosOperation(
       String operationName, String resourceName, FetchPredictOperationConfig config) {
     BuiltRequest builtRequest =
         operations.buildRequestForPrivateFetchPredictVideosOperation(
@@ -73,19 +75,29 @@ public final class AsyncOperations {
    */
   public CompletableFuture<GenerateVideosOperation> getVideosOperation(
       GenerateVideosOperation operation, GetOperationConfig config) {
+    return (CompletableFuture<GenerateVideosOperation>) get(operation, config);
+  }
+
+  /**
+   * Gets the status of an Operation.
+   *
+   * @param operation An Operation.
+   * @param config The configuration for getting the operation.
+   * @return An Operation with the updated status of the operation.
+   */
+  public <T, U extends Operation<T, U>> CompletableFuture<U> get(
+      U operation, GetOperationConfig config) {
     if (!operation.name().isPresent()) {
       throw new Error("Operation name is required.");
     }
 
     if (this.apiClient.vertexAI()) {
       String resourceName = operation.name().get().split("/operations/")[0];
-
-      FetchPredictOperationConfig fetchConfig = FetchPredictOperationConfig.builder().build();
-
-      return this.privateFetchPredictVideosOperation(
-          operation.name().get(), resourceName, fetchConfig);
+      return this.privateFetchPredictVideosOperation(operation.name().get(), resourceName, null)
+          .thenApplyAsync(response -> operation.fromApiResponse(response, true));
     } else {
-      return this.privateGetVideosOperation(operation.name().get(), config);
+      return this.privateGetVideosOperation(operation.name().get(), config)
+          .thenApplyAsync(response -> operation.fromApiResponse(response, false));
     }
   }
 }
