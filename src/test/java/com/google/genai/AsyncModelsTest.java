@@ -47,10 +47,12 @@ import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
+import com.google.genai.types.PersonGeneration;
 import com.google.genai.types.RagRetrievalConfig;
 import com.google.genai.types.RagRetrievalConfigFilter;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.Retrieval;
+import com.google.genai.types.SafetyFilterLevel;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolCodeExecution;
 import com.google.genai.types.UpdateModelConfig;
@@ -626,6 +628,8 @@ public class AsyncModelsTest {
     UpscaleImageConfig config =
         UpscaleImageConfig.builder()
             .includeRaiReason(true)
+            .safetyFilterLevel(SafetyFilterLevel.Known.BLOCK_LOW_AND_ABOVE)
+            .personGeneration(PersonGeneration.Known.ALLOW_ADULT)
             .outputMimeType("image/jpeg")
             .outputCompressionQuality(80)
             .enhanceInputImage(true)
