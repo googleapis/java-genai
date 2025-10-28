@@ -31,7 +31,9 @@ import java.util.Optional;
 public abstract class FileData extends JsonSerializable {
   /**
    * Optional. Display name of the file data. Used to provide a label or filename to distinguish
-   * file datas. It is not currently used in the Gemini GenerateContent calls.
+   * file datas. This field is only returned in PromptMessage for prompt management. It is currently
+   * used in the Gemini GenerateContent calls only when server side tools (code_execution,
+   * google_search, and url_context) are enabled. This field is not supported in Gemini API.
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
@@ -66,7 +68,10 @@ public abstract class FileData extends JsonSerializable {
      * Setter for displayName.
      *
      * <p>displayName: Optional. Display name of the file data. Used to provide a label or filename
-     * to distinguish file datas. It is not currently used in the Gemini GenerateContent calls.
+     * to distinguish file datas. This field is only returned in PromptMessage for prompt
+     * management. It is currently used in the Gemini GenerateContent calls only when server side
+     * tools (code_execution, google_search, and url_context) are enabled. This field is not
+     * supported in Gemini API.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
