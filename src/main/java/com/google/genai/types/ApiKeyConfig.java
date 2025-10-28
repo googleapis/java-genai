@@ -26,13 +26,36 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for authentication with API key. */
+/** Config for authentication with API key. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = ApiKeyConfig.Builder.class)
 public abstract class ApiKeyConfig extends JsonSerializable {
-  /** The API key to be used in the request directly. */
+  /**
+   * Optional. The name of the SecretManager secret version resource storing the API key. Format:
+   * `projects/{project}/secrets/{secrete}/versions/{version}` - If both `api_key_secret` and
+   * `api_key_string` are specified, this field takes precedence over `api_key_string`. - If
+   * specified, the `secretmanager.versions.access` permission should be granted to Vertex AI
+   * Extension Service Agent
+   * (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents) on the
+   * specified resource.
+   */
+  @JsonProperty("apiKeySecret")
+  public abstract Optional<String> apiKeySecret();
+
+  /** Optional. The API key to be used in the request directly. */
   @JsonProperty("apiKeyString")
   public abstract Optional<String> apiKeyString();
+
+  /** Optional. The location of the API key. */
+  @JsonProperty("httpElementLocation")
+  public abstract Optional<HttpElementLocation> httpElementLocation();
+
+  /**
+   * Optional. The parameter name of the API key. E.g. If the API request is
+   * "https://example.com/act?api_key=", "api_key" would be the parameter name.
+   */
+  @JsonProperty("name")
+  public abstract Optional<String> name();
 
   /** Instantiates a builder for ApiKeyConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -53,9 +76,33 @@ public abstract class ApiKeyConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for apiKeySecret.
+     *
+     * <p>apiKeySecret: Optional. The name of the SecretManager secret version resource storing the
+     * API key. Format: `projects/{project}/secrets/{secrete}/versions/{version}` - If both
+     * `api_key_secret` and `api_key_string` are specified, this field takes precedence over
+     * `api_key_string`. - If specified, the `secretmanager.versions.access` permission should be
+     * granted to Vertex AI Extension Service Agent
+     * (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents) on the
+     * specified resource.
+     */
+    @JsonProperty("apiKeySecret")
+    public abstract Builder apiKeySecret(String apiKeySecret);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiKeySecret(Optional<String> apiKeySecret);
+
+    /** Clears the value of apiKeySecret field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiKeySecret() {
+      return apiKeySecret(Optional.empty());
+    }
+
+    /**
      * Setter for apiKeyString.
      *
-     * <p>apiKeyString: The API key to be used in the request directly.
+     * <p>apiKeyString: Optional. The API key to be used in the request directly.
      */
     @JsonProperty("apiKeyString")
     public abstract Builder apiKeyString(String apiKeyString);
@@ -68,6 +115,63 @@ public abstract class ApiKeyConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearApiKeyString() {
       return apiKeyString(Optional.empty());
+    }
+
+    /**
+     * Setter for httpElementLocation.
+     *
+     * <p>httpElementLocation: Optional. The location of the API key.
+     */
+    @JsonProperty("httpElementLocation")
+    public abstract Builder httpElementLocation(HttpElementLocation httpElementLocation);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpElementLocation(Optional<HttpElementLocation> httpElementLocation);
+
+    /** Clears the value of httpElementLocation field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpElementLocation() {
+      return httpElementLocation(Optional.empty());
+    }
+
+    /**
+     * Setter for httpElementLocation given a known enum.
+     *
+     * <p>httpElementLocation: Optional. The location of the API key.
+     */
+    @CanIgnoreReturnValue
+    public Builder httpElementLocation(HttpElementLocation.Known knownType) {
+      return httpElementLocation(new HttpElementLocation(knownType));
+    }
+
+    /**
+     * Setter for httpElementLocation given a string.
+     *
+     * <p>httpElementLocation: Optional. The location of the API key.
+     */
+    @CanIgnoreReturnValue
+    public Builder httpElementLocation(String httpElementLocation) {
+      return httpElementLocation(new HttpElementLocation(httpElementLocation));
+    }
+
+    /**
+     * Setter for name.
+     *
+     * <p>name: Optional. The parameter name of the API key. E.g. If the API request is
+     * "https://example.com/act?api_key=", "api_key" would be the parameter name.
+     */
+    @JsonProperty("name")
+    public abstract Builder name(String name);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
     }
 
     public abstract ApiKeyConfig build();
