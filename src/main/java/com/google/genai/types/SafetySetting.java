@@ -30,13 +30,16 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = SafetySetting.Builder.class)
 public abstract class SafetySetting extends JsonSerializable {
-  /** Determines if the harm block method uses probability or probability and severity scores. */
-  @JsonProperty("method")
-  public abstract Optional<HarmBlockMethod> method();
-
   /** Required. Harm category. */
   @JsonProperty("category")
   public abstract Optional<HarmCategory> category();
+
+  /**
+   * Optional. Specify if the threshold is used for probability or severity score. If not specified,
+   * the threshold is used for probability score. This field is not supported in Gemini API.
+   */
+  @JsonProperty("method")
+  public abstract Optional<HarmBlockMethod> method();
 
   /** Required. The harm block threshold. */
   @JsonProperty("threshold")
@@ -58,37 +61,6 @@ public abstract class SafetySetting extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_SafetySetting.Builder();
-    }
-
-    /**
-     * Setter for method.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @JsonProperty("method")
-    public abstract Builder method(HarmBlockMethod method);
-
-    /**
-     * Setter for method given a known enum.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @CanIgnoreReturnValue
-    public Builder method(HarmBlockMethod.Known knownType) {
-      return method(new HarmBlockMethod(knownType));
-    }
-
-    /**
-     * Setter for method given a string.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @CanIgnoreReturnValue
-    public Builder method(String method) {
-      return method(new HarmBlockMethod(method));
     }
 
     /**
@@ -117,6 +89,40 @@ public abstract class SafetySetting extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder category(String category) {
       return category(new HarmCategory(category));
+    }
+
+    /**
+     * Setter for method.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @JsonProperty("method")
+    public abstract Builder method(HarmBlockMethod method);
+
+    /**
+     * Setter for method given a known enum.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(HarmBlockMethod.Known knownType) {
+      return method(new HarmBlockMethod(knownType));
+    }
+
+    /**
+     * Setter for method given a string.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(String method) {
+      return method(new HarmBlockMethod(method));
     }
 
     /**

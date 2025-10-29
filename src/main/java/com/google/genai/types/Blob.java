@@ -29,16 +29,18 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
-  /**
-   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
-   * This field is not currently used in the Gemini GenerateContent calls.
-   */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
   /** Required. Raw bytes. */
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
+
+  /**
+   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
+   * This field is only returned in PromptMessage for prompt management. It is currently used in the
+   * Gemini GenerateContent calls only when server side tools (code_execution, google_search, and
+   * url_context) are enabled. This field is not supported in Gemini API.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
 
   /** Required. The IANA standard MIME type of the source data. */
   @JsonProperty("mimeType")
@@ -63,21 +65,24 @@ public abstract class Blob extends JsonSerializable {
     }
 
     /**
-     * Setter for displayName.
-     *
-     * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
-     * distinguish blobs. This field is not currently used in the Gemini GenerateContent calls.
-     */
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    /**
      * Setter for data.
      *
      * <p>data: Required. Raw bytes.
      */
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
+     * distinguish blobs. This field is only returned in PromptMessage for prompt management. It is
+     * currently used in the Gemini GenerateContent calls only when server side tools
+     * (code_execution, google_search, and url_context) are enabled. This field is not supported in
+     * Gemini API.
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
 
     /**
      * Setter for mimeType.

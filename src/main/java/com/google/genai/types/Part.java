@@ -35,26 +35,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Part.Builder.class)
 public abstract class Part extends JsonSerializable {
-  /** Metadata for a given video. */
-  @JsonProperty("videoMetadata")
-  public abstract Optional<VideoMetadata> videoMetadata();
-
-  /** Indicates if the part is thought from the model. */
-  @JsonProperty("thought")
-  public abstract Optional<Boolean> thought();
-
-  /** Optional. Inlined bytes data. */
-  @JsonProperty("inlineData")
-  public abstract Optional<Blob> inlineData();
-
-  /** Optional. URI based data. */
-  @JsonProperty("fileData")
-  public abstract Optional<FileData> fileData();
-
-  /** An opaque signature for the thought so it can be reused in subsequent requests. */
-  @JsonProperty("thoughtSignature")
-  public abstract Optional<byte[]> thoughtSignature();
-
   /**
    * A predicted [FunctionCall] returned from the model that contains a string representing the
    * [FunctionDeclaration.name] and a structured JSON object containing the parameters and their
@@ -71,6 +51,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("executableCode")
   public abstract Optional<ExecutableCode> executableCode();
 
+  /** Optional. URI based data. */
+  @JsonProperty("fileData")
+  public abstract Optional<FileData> fileData();
+
   /**
    * Optional. The result output of a [FunctionCall] that contains a string representing the
    * [FunctionDeclaration.name] and a structured JSON object containing any output from the function
@@ -79,9 +63,28 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("functionResponse")
   public abstract Optional<FunctionResponse> functionResponse();
 
+  /** Optional. Inlined bytes data. */
+  @JsonProperty("inlineData")
+  public abstract Optional<Blob> inlineData();
+
   /** Optional. Text part (can be code). */
   @JsonProperty("text")
   public abstract Optional<String> text();
+
+  /** Optional. Indicates if the part is thought from the model. */
+  @JsonProperty("thought")
+  public abstract Optional<Boolean> thought();
+
+  /** Optional. An opaque signature for the thought so it can be reused in subsequent requests. */
+  @JsonProperty("thoughtSignature")
+  public abstract Optional<byte[]> thoughtSignature();
+
+  /**
+   * Optional. Video metadata. The metadata should only be specified while the video data is
+   * presented in inline_data or file_data.
+   */
+  @JsonProperty("videoMetadata")
+  public abstract Optional<VideoMetadata> videoMetadata();
 
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
@@ -100,74 +103,6 @@ public abstract class Part extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_Part.Builder();
     }
-
-    /**
-     * Setter for videoMetadata.
-     *
-     * <p>videoMetadata: Metadata for a given video.
-     */
-    @JsonProperty("videoMetadata")
-    public abstract Builder videoMetadata(VideoMetadata videoMetadata);
-
-    /**
-     * Setter for videoMetadata builder.
-     *
-     * <p>videoMetadata: Metadata for a given video.
-     */
-    public Builder videoMetadata(VideoMetadata.Builder videoMetadataBuilder) {
-      return videoMetadata(videoMetadataBuilder.build());
-    }
-
-    /**
-     * Setter for thought.
-     *
-     * <p>thought: Indicates if the part is thought from the model.
-     */
-    @JsonProperty("thought")
-    public abstract Builder thought(boolean thought);
-
-    /**
-     * Setter for inlineData.
-     *
-     * <p>inlineData: Optional. Inlined bytes data.
-     */
-    @JsonProperty("inlineData")
-    public abstract Builder inlineData(Blob inlineData);
-
-    /**
-     * Setter for inlineData builder.
-     *
-     * <p>inlineData: Optional. Inlined bytes data.
-     */
-    public Builder inlineData(Blob.Builder inlineDataBuilder) {
-      return inlineData(inlineDataBuilder.build());
-    }
-
-    /**
-     * Setter for fileData.
-     *
-     * <p>fileData: Optional. URI based data.
-     */
-    @JsonProperty("fileData")
-    public abstract Builder fileData(FileData fileData);
-
-    /**
-     * Setter for fileData builder.
-     *
-     * <p>fileData: Optional. URI based data.
-     */
-    public Builder fileData(FileData.Builder fileDataBuilder) {
-      return fileData(fileDataBuilder.build());
-    }
-
-    /**
-     * Setter for thoughtSignature.
-     *
-     * <p>thoughtSignature: An opaque signature for the thought so it can be reused in subsequent
-     * requests.
-     */
-    @JsonProperty("thoughtSignature")
-    public abstract Builder thoughtSignature(byte[] thoughtSignature);
 
     /**
      * Setter for functionCall.
@@ -225,6 +160,23 @@ public abstract class Part extends JsonSerializable {
     }
 
     /**
+     * Setter for fileData.
+     *
+     * <p>fileData: Optional. URI based data.
+     */
+    @JsonProperty("fileData")
+    public abstract Builder fileData(FileData fileData);
+
+    /**
+     * Setter for fileData builder.
+     *
+     * <p>fileData: Optional. URI based data.
+     */
+    public Builder fileData(FileData.Builder fileDataBuilder) {
+      return fileData(fileDataBuilder.build());
+    }
+
+    /**
      * Setter for functionResponse.
      *
      * <p>functionResponse: Optional. The result output of a [FunctionCall] that contains a string
@@ -246,12 +198,65 @@ public abstract class Part extends JsonSerializable {
     }
 
     /**
+     * Setter for inlineData.
+     *
+     * <p>inlineData: Optional. Inlined bytes data.
+     */
+    @JsonProperty("inlineData")
+    public abstract Builder inlineData(Blob inlineData);
+
+    /**
+     * Setter for inlineData builder.
+     *
+     * <p>inlineData: Optional. Inlined bytes data.
+     */
+    public Builder inlineData(Blob.Builder inlineDataBuilder) {
+      return inlineData(inlineDataBuilder.build());
+    }
+
+    /**
      * Setter for text.
      *
      * <p>text: Optional. Text part (can be code).
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    /**
+     * Setter for thought.
+     *
+     * <p>thought: Optional. Indicates if the part is thought from the model.
+     */
+    @JsonProperty("thought")
+    public abstract Builder thought(boolean thought);
+
+    /**
+     * Setter for thoughtSignature.
+     *
+     * <p>thoughtSignature: Optional. An opaque signature for the thought so it can be reused in
+     * subsequent requests.
+     */
+    @JsonProperty("thoughtSignature")
+    public abstract Builder thoughtSignature(byte[] thoughtSignature);
+
+    /**
+     * Setter for videoMetadata.
+     *
+     * <p>videoMetadata: Optional. Video metadata. The metadata should only be specified while the
+     * video data is presented in inline_data or file_data.
+     */
+    @JsonProperty("videoMetadata")
+    public abstract Builder videoMetadata(VideoMetadata videoMetadata);
+
+    /**
+     * Setter for videoMetadata builder.
+     *
+     * <p>videoMetadata: Optional. Video metadata. The metadata should only be specified while the
+     * video data is presented in inline_data or file_data.
+     */
+    public Builder videoMetadata(VideoMetadata.Builder videoMetadataBuilder) {
+      return videoMetadata(videoMetadataBuilder.build());
+    }
 
     public abstract Part build();
   }
