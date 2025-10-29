@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-29)
+
+
+### Features
+
+* Add safety_filter_level and person_generation for Imagen upscaling ([09a8075](https://github.com/googleapis/java-genai/commit/09a80754b202fdf903039341f5266f62d9b879cb))
+* Add support for preference optimization tuning in the SDK. ([5d4123c](https://github.com/googleapis/java-genai/commit/5d4123c0391d443e94bb1e81524ccae8779462d7))
+* Added Operations.get which is a generic method which will handle all Operation types. ([c1dc32f](https://github.com/googleapis/java-genai/commit/c1dc32f84d0e4d14a16345dcb404c8b2bef05338))
+* Pass file name to the backend when uploading with a file path ([081a9a6](https://github.com/googleapis/java-genai/commit/081a9a6a67d1ba542edb1d1330dfa56579204a43))
+* support default global location when not using api key with vertexai backend ([f9028a7](https://github.com/googleapis/java-genai/commit/f9028a71d4e736a8dc97daa54e6e4275b5016abd))
+* Support retries in API requests ([3d5de00](https://github.com/googleapis/java-genai/commit/3d5de000277eb0da172d6b19795c6f2d4b88c213))
+
+
+### Documentation
+
+* Add docstring for classes and fields that are not supported in Gemini or Vertex API ([7a03dac](https://github.com/googleapis/java-genai/commit/7a03dac0a4e3388f98be199765794fcf511bfe83))
+* Add docstring for enum classes that are not supported in Gemini or Vertex API ([830a12f](https://github.com/googleapis/java-genai/commit/830a12f3dcbb8beb1dd5ff3ff82f6b19ebb2af93))
+* Add documentation for the retry behavior ([4fbcf51](https://github.com/googleapis/java-genai/commit/4fbcf514321fdc2cbee1393fc6babe33fd0e5e74))
+
 ## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-22)
 
 
