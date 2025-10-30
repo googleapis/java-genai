@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Auth configuration to run the extension. */
+/** Auth configuration to run the extension. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfig.Builder.class)
 public abstract class AuthConfig extends JsonSerializable {

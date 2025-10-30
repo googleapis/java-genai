@@ -34,17 +34,15 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Defines a function that the model can generate JSON inputs for.
- *
- * <p>The inputs are based on `OpenAPI 3.0 specifications <https://spec.openapis.org/oas/v3.0.3>`_.
+ * Structured representation of a function declaration as defined by the [OpenAPI 3.0
+ * specification](https://spec.openapis.org/oas/v3.0.3). Included in this declaration are the
+ * function name, description, parameters and response type. This FunctionDeclaration is a
+ * representation of a block of code that can be used as a `Tool` by the model and executed by the
+ * client.
  */
 @AutoValue
 @JsonDeserialize(builder = FunctionDeclaration.Builder.class)
 public abstract class FunctionDeclaration extends JsonSerializable {
-  /** Defines the function behavior. */
-  @JsonProperty("behavior")
-  public abstract Optional<Behavior> behavior();
-
   /**
    * Optional. Description and purpose of the function. Model uses it to decide how and whether to
    * call the function.
@@ -96,6 +94,13 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   @JsonProperty("responseJsonSchema")
   public abstract Optional<Object> responseJsonSchema();
 
+  /**
+   * Optional. Specifies the function Behavior. Currently only supported by the BidiGenerateContent
+   * method. This field is not supported in Vertex AI.
+   */
+  @JsonProperty("behavior")
+  public abstract Optional<Behavior> behavior();
+
   /** Instantiates a builder for FunctionDeclaration. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -112,44 +117,6 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FunctionDeclaration.Builder();
-    }
-
-    /**
-     * Setter for behavior.
-     *
-     * <p>behavior: Defines the function behavior.
-     */
-    @JsonProperty("behavior")
-    public abstract Builder behavior(Behavior behavior);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder behavior(Optional<Behavior> behavior);
-
-    /** Clears the value of behavior field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearBehavior() {
-      return behavior(Optional.empty());
-    }
-
-    /**
-     * Setter for behavior given a known enum.
-     *
-     * <p>behavior: Defines the function behavior.
-     */
-    @CanIgnoreReturnValue
-    public Builder behavior(Behavior.Known knownType) {
-      return behavior(new Behavior(knownType));
-    }
-
-    /**
-     * Setter for behavior given a string.
-     *
-     * <p>behavior: Defines the function behavior.
-     */
-    @CanIgnoreReturnValue
-    public Builder behavior(String behavior) {
-      return behavior(new Behavior(behavior));
     }
 
     /**
@@ -303,6 +270,47 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearResponseJsonSchema() {
       return responseJsonSchema(Optional.empty());
+    }
+
+    /**
+     * Setter for behavior.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
+     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("behavior")
+    public abstract Builder behavior(Behavior behavior);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder behavior(Optional<Behavior> behavior);
+
+    /** Clears the value of behavior field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBehavior() {
+      return behavior(Optional.empty());
+    }
+
+    /**
+     * Setter for behavior given a known enum.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
+     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder behavior(Behavior.Known knownType) {
+      return behavior(new Behavior(knownType));
+    }
+
+    /**
+     * Setter for behavior given a string.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
+     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder behavior(String behavior) {
+      return behavior(new Behavior(behavior));
     }
 
     public abstract FunctionDeclaration build();
