@@ -26,11 +26,14 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tool to support Google Maps in Model. */
+/** Tool to retrieve public maps data for grounding, powered by Google. */
 @AutoValue
 @JsonDeserialize(builder = GoogleMaps.Builder.class)
 public abstract class GoogleMaps extends JsonSerializable {
-  /** Optional. Auth config for the Google Maps tool. */
+  /**
+   * The authentication config to access the API. Only API key is supported. This field is not
+   * supported in Gemini API.
+   */
   @JsonProperty("authConfig")
   public abstract Optional<AuthConfig> authConfig();
 
@@ -59,7 +62,8 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for authConfig.
      *
-     * <p>authConfig: Optional. Auth config for the Google Maps tool.
+     * <p>authConfig: The authentication config to access the API. Only API key is supported. This
+     * field is not supported in Gemini API.
      */
     @JsonProperty("authConfig")
     public abstract Builder authConfig(AuthConfig authConfig);
@@ -67,7 +71,8 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for authConfig builder.
      *
-     * <p>authConfig: Optional. Auth config for the Google Maps tool.
+     * <p>authConfig: The authentication config to access the API. Only API key is supported. This
+     * field is not supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder authConfig(AuthConfig.Builder authConfigBuilder) {

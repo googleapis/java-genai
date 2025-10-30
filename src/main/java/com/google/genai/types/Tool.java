@@ -55,10 +55,6 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("googleSearchRetrieval")
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
-  /** Optional. Google Maps tool type. Specialized retrieval tool that is powered by Google Maps. */
-  @JsonProperty("googleMaps")
-  public abstract Optional<GoogleMaps> googleMaps();
-
   /**
    * The java.lang.reflect.Method instance. If provided, it will to be parsed into a list of
    * FunctionDeclaration instances, and be assigned to the functionDeclarations field.
@@ -83,6 +79,10 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("enterpriseWebSearch")
   public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
+
+  /** Optional. GoogleMaps tool type. Tool to support Google Maps in Model. */
+  @JsonProperty("googleMaps")
+  public abstract Optional<GoogleMaps> googleMaps();
 
   /**
    * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
@@ -218,36 +218,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for googleMaps.
-     *
-     * <p>googleMaps: Optional. Google Maps tool type. Specialized retrieval tool that is powered by
-     * Google Maps.
-     */
-    @JsonProperty("googleMaps")
-    public abstract Builder googleMaps(GoogleMaps googleMaps);
-
-    /**
-     * Setter for googleMaps builder.
-     *
-     * <p>googleMaps: Optional. Google Maps tool type. Specialized retrieval tool that is powered by
-     * Google Maps.
-     */
-    @CanIgnoreReturnValue
-    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
-      return googleMaps(googleMapsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
-
-    /** Clears the value of googleMaps field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearGoogleMaps() {
-      return googleMaps(Optional.empty());
-    }
-
-    /**
      * Setter for functions.
      *
      * <p>functions: The java.lang.reflect.Method instance. If provided, it will to be parsed into a
@@ -365,6 +335,34 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnterpriseWebSearch() {
       return enterpriseWebSearch(Optional.empty());
+    }
+
+    /**
+     * Setter for googleMaps.
+     *
+     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
+     */
+    @JsonProperty("googleMaps")
+    public abstract Builder googleMaps(GoogleMaps googleMaps);
+
+    /**
+     * Setter for googleMaps builder.
+     *
+     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
+     */
+    @CanIgnoreReturnValue
+    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
+      return googleMaps(googleMapsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
+
+    /** Clears the value of googleMaps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleMaps() {
+      return googleMaps(Optional.empty());
     }
 
     /**
