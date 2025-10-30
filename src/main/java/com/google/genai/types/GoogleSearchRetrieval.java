@@ -34,6 +34,7 @@ public abstract class GoogleSearchRetrieval extends JsonSerializable {
   public abstract Optional<DynamicRetrievalConfig> dynamicRetrievalConfig();
 
   /** Instantiates a builder for GoogleSearchRetrieval. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GoogleSearchRetrieval.Builder();
   }
@@ -74,6 +75,7 @@ public abstract class GoogleSearchRetrieval extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GoogleSearchRetrieval object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GoogleSearchRetrieval fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GoogleSearchRetrieval.class);
   }

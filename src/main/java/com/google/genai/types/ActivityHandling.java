@@ -64,12 +64,14 @@ public class ActivityHandling {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -96,6 +98,7 @@ public class ActivityHandling {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.activityHandlingEnum != Known.ACTIVITY_HANDLING_UNSPECIFIED) {
@@ -105,6 +108,7 @@ public class ActivityHandling {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.activityHandlingEnum;
   }

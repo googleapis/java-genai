@@ -25,39 +25,46 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for auth_tokens.create parameters. */
+/** Local tokenizer count tokens result. */
 @AutoValue
-@JsonDeserialize(builder = AuthToken.Builder.class)
-public abstract class AuthToken extends JsonSerializable {
-  /** The name of the auth token. */
-  @JsonProperty("name")
-  public abstract Optional<String> name();
+@JsonDeserialize(builder = CountTokensResult.Builder.class)
+public abstract class CountTokensResult extends JsonSerializable {
+  /** The total number of tokens. */
+  @JsonProperty("totalTokens")
+  public abstract Optional<Integer> totalTokens();
 
-  /** Instantiates a builder for AuthToken. */
+  /** Instantiates a builder for CountTokensResult. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
-    return new AutoValue_AuthToken.Builder();
+    return new AutoValue_CountTokensResult.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for AuthToken. */
+  /** Builder for CountTokensResult. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `AuthToken.builder()` for instantiation. */
+    /** For internal usage. Please use `CountTokensResult.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_AuthToken.Builder();
+      return new AutoValue_CountTokensResult.Builder();
     }
 
-    @JsonProperty("name")
-    public abstract Builder name(String name);
+    /**
+     * Setter for totalTokens.
+     *
+     * <p>totalTokens: The total number of tokens.
+     */
+    @JsonProperty("totalTokens")
+    public abstract Builder totalTokens(Integer totalTokens);
 
-    public abstract AuthToken build();
+    public abstract CountTokensResult build();
   }
 
-  /** Deserializes a JSON string to a AuthToken object. */
-  public static AuthToken fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, AuthToken.class);
+  /** Deserializes a JSON string to a CountTokensResult object. */
+  @ExcludeFromGeneratedCoverageReport
+  public static CountTokensResult fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, CountTokensResult.class);
   }
 }

@@ -27,14 +27,18 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Hyperparameters for Distillation. */
+/** Hyperparameters for Preference Optimization. This data type is not supported in Gemini API. */
 @AutoValue
 @InternalApi
-@JsonDeserialize(builder = DistillationHyperParameters.Builder.class)
-public abstract class DistillationHyperParameters extends JsonSerializable {
-  /** Optional. Adapter size for distillation. */
+@JsonDeserialize(builder = PreferenceOptimizationHyperParameters.Builder.class)
+public abstract class PreferenceOptimizationHyperParameters extends JsonSerializable {
+  /** Optional. Adapter size for preference optimization. */
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
+
+  /** Optional. Weight for KL Divergence regularization. */
+  @JsonProperty("beta")
+  public abstract Optional<Double> beta();
 
   /**
    * Optional. Number of complete passes the model makes over the entire training dataset during
@@ -47,27 +51,31 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Double> learningRateMultiplier();
 
-  /** Instantiates a builder for DistillationHyperParameters. */
+  /** Instantiates a builder for PreferenceOptimizationHyperParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
-    return new AutoValue_DistillationHyperParameters.Builder();
+    return new AutoValue_PreferenceOptimizationHyperParameters.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for DistillationHyperParameters. */
+  /** Builder for PreferenceOptimizationHyperParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `DistillationHyperParameters.builder()` for instantiation. */
+    /**
+     * For internal usage. Please use `PreferenceOptimizationHyperParameters.builder()` for
+     * instantiation.
+     */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_DistillationHyperParameters.Builder();
+      return new AutoValue_PreferenceOptimizationHyperParameters.Builder();
     }
 
     /**
      * Setter for adapterSize.
      *
-     * <p>adapterSize: Optional. Adapter size for distillation.
+     * <p>adapterSize: Optional. Adapter size for preference optimization.
      */
     @JsonProperty("adapterSize")
     public abstract Builder adapterSize(AdapterSize adapterSize);
@@ -75,7 +83,7 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     /**
      * Setter for adapterSize given a known enum.
      *
-     * <p>adapterSize: Optional. Adapter size for distillation.
+     * <p>adapterSize: Optional. Adapter size for preference optimization.
      */
     @CanIgnoreReturnValue
     public Builder adapterSize(AdapterSize.Known knownType) {
@@ -85,12 +93,20 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     /**
      * Setter for adapterSize given a string.
      *
-     * <p>adapterSize: Optional. Adapter size for distillation.
+     * <p>adapterSize: Optional. Adapter size for preference optimization.
      */
     @CanIgnoreReturnValue
     public Builder adapterSize(String adapterSize) {
       return adapterSize(new AdapterSize(adapterSize));
     }
+
+    /**
+     * Setter for beta.
+     *
+     * <p>beta: Optional. Weight for KL Divergence regularization.
+     */
+    @JsonProperty("beta")
+    public abstract Builder beta(Double beta);
 
     /**
      * Setter for epochCount.
@@ -109,11 +125,12 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Double learningRateMultiplier);
 
-    public abstract DistillationHyperParameters build();
+    public abstract PreferenceOptimizationHyperParameters build();
   }
 
-  /** Deserializes a JSON string to a DistillationHyperParameters object. */
-  public static DistillationHyperParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, DistillationHyperParameters.class);
+  /** Deserializes a JSON string to a PreferenceOptimizationHyperParameters object. */
+  @ExcludeFromGeneratedCoverageReport
+  public static PreferenceOptimizationHyperParameters fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, PreferenceOptimizationHyperParameters.class);
   }
 }

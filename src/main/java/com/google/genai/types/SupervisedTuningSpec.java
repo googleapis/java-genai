@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tuning Spec for Supervised Tuning for first party models. */
+/** Supervised tuning spec for tuning. */
 @AutoValue
 @JsonDeserialize(builder = SupervisedTuningSpec.Builder.class)
 public abstract class SupervisedTuningSpec extends JsonSerializable {
@@ -47,6 +48,10 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
   @JsonProperty("trainingDatasetUri")
   public abstract Optional<String> trainingDatasetUri();
 
+  /** Tuning mode. */
+  @JsonProperty("tuningMode")
+  public abstract Optional<TuningMode> tuningMode();
+
   /**
    * Optional. Validation dataset used for tuning. The dataset can be specified as either a Cloud
    * Storage path to a JSONL file or as the resource name of a Vertex Multimodal Dataset.
@@ -55,6 +60,7 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
   public abstract Optional<String> validationDatasetUri();
 
   /** Instantiates a builder for SupervisedTuningSpec. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SupervisedTuningSpec.Builder();
   }
@@ -109,6 +115,34 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
     public abstract Builder trainingDatasetUri(String trainingDatasetUri);
 
     /**
+     * Setter for tuningMode.
+     *
+     * <p>tuningMode: Tuning mode.
+     */
+    @JsonProperty("tuningMode")
+    public abstract Builder tuningMode(TuningMode tuningMode);
+
+    /**
+     * Setter for tuningMode given a known enum.
+     *
+     * <p>tuningMode: Tuning mode.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(TuningMode.Known knownType) {
+      return tuningMode(new TuningMode(knownType));
+    }
+
+    /**
+     * Setter for tuningMode given a string.
+     *
+     * <p>tuningMode: Tuning mode.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(String tuningMode) {
+      return tuningMode(new TuningMode(tuningMode));
+    }
+
+    /**
      * Setter for validationDatasetUri.
      *
      * <p>validationDatasetUri: Optional. Validation dataset used for tuning. The dataset can be
@@ -122,6 +156,7 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SupervisedTuningSpec object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SupervisedTuningSpec fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SupervisedTuningSpec.class);
   }

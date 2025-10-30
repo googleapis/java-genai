@@ -62,6 +62,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
   public abstract Optional<Integer> silenceDurationMs();
 
   /** Instantiates a builder for AutomaticActivityDetection. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AutomaticActivityDetection.Builder();
   }
@@ -168,6 +169,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AutomaticActivityDetection object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AutomaticActivityDetection fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AutomaticActivityDetection.class);
   }

@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for filters. */
+/** Config for filters. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfigFilter.Builder.class)
 public abstract class RagRetrievalConfigFilter extends JsonSerializable {
@@ -42,6 +42,7 @@ public abstract class RagRetrievalConfigFilter extends JsonSerializable {
   public abstract Optional<Double> vectorSimilarityThreshold();
 
   /** Instantiates a builder for RagRetrievalConfigFilter. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RagRetrievalConfigFilter.Builder();
   }
@@ -88,6 +89,7 @@ public abstract class RagRetrievalConfigFilter extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RagRetrievalConfigFilter object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RagRetrievalConfigFilter fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RagRetrievalConfigFilter.class);
   }

@@ -101,6 +101,7 @@ public abstract class File extends JsonSerializable {
   public abstract Optional<FileStatus> error();
 
   /** Instantiates a builder for File. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_File.Builder();
   }
@@ -289,6 +290,7 @@ public abstract class File extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a File object. */
+  @ExcludeFromGeneratedCoverageReport
   public static File fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, File.class);
   }

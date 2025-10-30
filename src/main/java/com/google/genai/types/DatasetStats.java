@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Statistics computed over a tuning dataset. */
+/** Statistics computed over a tuning dataset. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = DatasetStats.Builder.class)
 public abstract class DatasetStats extends JsonSerializable {
@@ -66,6 +66,7 @@ public abstract class DatasetStats extends JsonSerializable {
   public abstract Optional<DatasetDistribution> userOutputTokenDistribution();
 
   /** Instantiates a builder for DatasetStats. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DatasetStats.Builder();
   }
@@ -209,6 +210,7 @@ public abstract class DatasetStats extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DatasetStats object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DatasetStats fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DatasetStats.class);
   }

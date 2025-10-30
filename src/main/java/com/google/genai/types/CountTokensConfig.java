@@ -56,6 +56,7 @@ public abstract class CountTokensConfig extends JsonSerializable {
   public abstract Optional<GenerationConfig> generationConfig();
 
   /** Instantiates a builder for CountTokensConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CountTokensConfig.Builder();
   }
@@ -161,6 +162,7 @@ public abstract class CountTokensConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CountTokensConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CountTokensConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CountTokensConfig.class);
   }

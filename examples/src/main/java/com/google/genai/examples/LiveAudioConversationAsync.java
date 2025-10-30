@@ -50,12 +50,16 @@ package com.google.genai.examples;
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
 import com.google.genai.types.Blob;
+import com.google.genai.types.AutomaticActivityDetection;
+import com.google.genai.types.EndSensitivity;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
 import com.google.genai.types.LiveServerMessage;
 import com.google.genai.types.Modality;
+import com.google.genai.types.RealtimeInputConfig;
 import com.google.genai.types.PrebuiltVoiceConfig;
 import com.google.genai.types.SpeechConfig;
+import com.google.genai.types.StartSensitivity;
 import com.google.genai.types.VoiceConfig;
 import java.util.Collection;
 import java.util.Optional;
@@ -86,7 +90,6 @@ public final class LiveAudioConversationAsync {
   // --------------------------
 
   private static volatile boolean running = true;
-  private static volatile boolean speakerPlaying = false;
   private static TargetDataLine microphoneLine;
   private static SourceDataLine speakerLine;
   private static AsyncSession session;
@@ -113,8 +116,7 @@ public final class LiveAudioConversationAsync {
     while (running && microphoneLine != null && microphoneLine.isOpen()) {
       bytesRead = microphoneLine.read(buffer, 0, buffer.length);
 
-      if (bytesRead > 0 && !speakerPlaying) {
-        // Create a copy of the buffer with the actual bytes read
+      if (bytesRead > 0) {
         byte[] audioChunk = new byte[bytesRead];
         System.arraycopy(buffer, 0, audioChunk, 0, bytesRead);
 
@@ -153,14 +155,13 @@ public final class LiveAudioConversationAsync {
       System.out.println("Using Gemini Developer API");
     }
 
-    String modelId;
-    if (client.vertexAI()) {
-      modelId = "gemini-2.0-flash-live-preview-04-09";
-    } else {
-      modelId = "gemini-live-2.5-flash-preview";
-    }
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else if (client.vertexAI()) {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME;
+    } else {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME_PREVIEW;
     }
 
     // --- Audio Line Setup ---
@@ -180,6 +181,14 @@ public final class LiveAudioConversationAsync {
                             .prebuiltVoiceConfig(
                                 PrebuiltVoiceConfig.builder().voiceName(voiceName)))
                     .languageCode("en-US"))
+            .realtimeInputConfig(
+                RealtimeInputConfig.builder()
+                    .automaticActivityDetection(
+                        AutomaticActivityDetection.builder()
+                            .startOfSpeechSensitivity(StartSensitivity.Known.START_SENSITIVITY_HIGH)
+                            .endOfSpeechSensitivity(EndSensitivity.Known.END_SENSITIVITY_HIGH)
+                            .prefixPaddingMs(5)
+                            .silenceDurationMs(100)))
             .build();
 
     // --- Shutdown Hook for Cleanup ---
@@ -302,25 +311,35 @@ public final class LiveAudioConversationAsync {
         .serverContent()
         .ifPresent(
             content -> {
+              // Handle interruptions from Gemini.
+              if (content.interrupted().orElse(false)) {
+                speakerLine.flush();
+                return; // Skip processing the rest of this message's audio.
+              }
+
+              // Handle Model turn completion.
               if (content.turnComplete().orElse(false)) {
-                // When interrupted, Gemini sends a turn_complete.
-                // Stop the speaker if the turn is complete.
-                if (speakerLine != null && speakerLine.isOpen()) {
-                  speakerLine.flush();
-                }
-              } else {
-                content.modelTurn().stream()
-                    .flatMap(modelTurn -> modelTurn.parts().stream())
-                    .flatMap(Collection::stream)
-                    .map(part -> part.inlineData().flatMap(Blob::data))
-                    .flatMap(Optional::stream)
-                    .forEach(
-                        audioBytes -> {
-                          if (speakerLine != null && speakerLine.isOpen()) {
-                            // Write audio data to the speaker
-                            speakerLine.write(audioBytes, 0, audioBytes.length);
-                          }
-                        });
+                // The turn is over, no more audio will be sent for this turn.
+                return;
+              }
+
+              // Process audio content for playback.
+              content.modelTurn().stream()
+                  .flatMap(modelTurn -> modelTurn.parts().stream())
+                  .flatMap(Collection::stream)
+                  .map(part -> part.inlineData().flatMap(Blob::data))
+                  .flatMap(Optional::stream)
+                  .forEach(
+                      audioBytes -> {
+                        if (speakerLine != null && speakerLine.isOpen()) {
+                          // Write audio data to the speaker
+                          speakerLine.write(audioBytes, 0, audioBytes.length);
+                        }
+                      });
+
+              // If this is the last message of a generation, drain the buffer.
+              if (content.generationComplete().orElse(false)) {
+                speakerLine.drain();
               }
             });
   }

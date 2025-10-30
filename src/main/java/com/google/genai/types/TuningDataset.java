@@ -49,6 +49,7 @@ public abstract class TuningDataset extends JsonSerializable {
   public abstract Optional<List<TuningExample>> examples();
 
   /** Instantiates a builder for TuningDataset. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TuningDataset.Builder();
   }
@@ -116,6 +117,7 @@ public abstract class TuningDataset extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TuningDataset object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TuningDataset fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TuningDataset.class);
   }

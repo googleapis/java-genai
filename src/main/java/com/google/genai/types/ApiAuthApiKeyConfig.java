@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The API secret. */
+/** The API secret. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = ApiAuthApiKeyConfig.Builder.class)
 public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
@@ -41,6 +41,7 @@ public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
   public abstract Optional<String> apiKeyString();
 
   /** Instantiates a builder for ApiAuthApiKeyConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ApiAuthApiKeyConfig.Builder();
   }
@@ -78,6 +79,7 @@ public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ApiAuthApiKeyConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ApiAuthApiKeyConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ApiAuthApiKeyConfig.class);
   }

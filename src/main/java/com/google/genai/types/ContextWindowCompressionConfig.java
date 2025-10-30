@@ -41,6 +41,7 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
   public abstract Optional<SlidingWindow> slidingWindow();
 
   /** Instantiates a builder for ContextWindowCompressionConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ContextWindowCompressionConfig.Builder();
   }
@@ -89,6 +90,7 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ContextWindowCompressionConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ContextWindowCompressionConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ContextWindowCompressionConfig.class);
   }

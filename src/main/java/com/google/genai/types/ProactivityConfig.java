@@ -38,6 +38,7 @@ public abstract class ProactivityConfig extends JsonSerializable {
   public abstract Optional<Boolean> proactiveAudio();
 
   /** Instantiates a builder for ProactivityConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ProactivityConfig.Builder();
   }
@@ -68,6 +69,7 @@ public abstract class ProactivityConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ProactivityConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ProactivityConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ProactivityConfig.class);
   }

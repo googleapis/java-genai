@@ -25,7 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Represents where the chunk starts and ends in the document. */
+/**
+ * Represents where the chunk starts and ends in the document. This data type is not supported in
+ * Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = RagChunkPageSpan.Builder.class)
 public abstract class RagChunkPageSpan extends JsonSerializable {
@@ -38,6 +41,7 @@ public abstract class RagChunkPageSpan extends JsonSerializable {
   public abstract Optional<Integer> lastPage();
 
   /** Instantiates a builder for RagChunkPageSpan. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RagChunkPageSpan.Builder();
   }
@@ -74,6 +78,7 @@ public abstract class RagChunkPageSpan extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RagChunkPageSpan object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RagChunkPageSpan fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RagChunkPageSpan.class);
   }

@@ -54,6 +54,7 @@ public abstract class BatchJobSource extends JsonSerializable {
   public abstract Optional<List<InlinedRequest>> inlinedRequests();
 
   /** Instantiates a builder for BatchJobSource. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_BatchJobSource.Builder();
   }
@@ -145,6 +146,7 @@ public abstract class BatchJobSource extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a BatchJobSource object. */
+  @ExcludeFromGeneratedCoverageReport
   public static BatchJobSource fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, BatchJobSource.class);
   }

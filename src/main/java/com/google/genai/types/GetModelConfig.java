@@ -34,6 +34,7 @@ public abstract class GetModelConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for GetModelConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GetModelConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class GetModelConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GetModelConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GetModelConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GetModelConfig.class);
   }

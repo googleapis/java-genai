@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for Rank Service. */
+/** Config for Rank Service. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfigRankingRankService.Builder.class)
 public abstract class RagRetrievalConfigRankingRankService extends JsonSerializable {
@@ -34,6 +34,7 @@ public abstract class RagRetrievalConfigRankingRankService extends JsonSerializa
   public abstract Optional<String> modelName();
 
   /** Instantiates a builder for RagRetrievalConfigRankingRankService. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RagRetrievalConfigRankingRankService.Builder();
   }
@@ -66,6 +67,7 @@ public abstract class RagRetrievalConfigRankingRankService extends JsonSerializa
   }
 
   /** Deserializes a JSON string to a RagRetrievalConfigRankingRankService object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RagRetrievalConfigRankingRankService fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RagRetrievalConfigRankingRankService.class);
   }

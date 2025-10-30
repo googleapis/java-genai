@@ -39,10 +39,12 @@ public final class AsyncSession {
   private final ApiClient apiClient;
 
   private final AsyncLive.GenAiWebSocketClient websocket;
+  final String sessionId;
 
-  AsyncSession(ApiClient apiClient, AsyncLive.GenAiWebSocketClient websocket) {
+  AsyncSession(ApiClient apiClient, AsyncLive.GenAiWebSocketClient websocket, String sessionId) {
     this.apiClient = apiClient;
     this.websocket = websocket;
+    this.sessionId = sessionId;
   }
 
   /**
@@ -133,5 +135,14 @@ public final class AsyncSession {
         () -> {
           websocket.close();
         });
+  }
+
+  /**
+   * Gets the session ID of the live session.
+   *
+   * @return The session ID of the live session.
+   */
+  public String sessionId() {
+    return sessionId;
   }
 }

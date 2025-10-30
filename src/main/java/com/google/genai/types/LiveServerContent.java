@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -87,7 +88,19 @@ public abstract class LiveServerContent extends JsonSerializable {
   @JsonProperty("urlContextMetadata")
   public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
+  /** Reason for the turn is complete. */
+  @JsonProperty("turnCompleteReason")
+  public abstract Optional<TurnCompleteReason> turnCompleteReason();
+
+  /**
+   * If true, indicates that the model is not generating content because it is waiting for more
+   * input from the user, e.g. because it expects the user to continue talking.
+   */
+  @JsonProperty("waitingForInput")
+  public abstract Optional<Boolean> waitingForInput();
+
   /** Instantiates a builder for LiveServerContent. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerContent.Builder();
   }
@@ -228,10 +241,48 @@ public abstract class LiveServerContent extends JsonSerializable {
       return urlContextMetadata(urlContextMetadataBuilder.build());
     }
 
+    /**
+     * Setter for turnCompleteReason.
+     *
+     * <p>turnCompleteReason: Reason for the turn is complete.
+     */
+    @JsonProperty("turnCompleteReason")
+    public abstract Builder turnCompleteReason(TurnCompleteReason turnCompleteReason);
+
+    /**
+     * Setter for turnCompleteReason given a known enum.
+     *
+     * <p>turnCompleteReason: Reason for the turn is complete.
+     */
+    @CanIgnoreReturnValue
+    public Builder turnCompleteReason(TurnCompleteReason.Known knownType) {
+      return turnCompleteReason(new TurnCompleteReason(knownType));
+    }
+
+    /**
+     * Setter for turnCompleteReason given a string.
+     *
+     * <p>turnCompleteReason: Reason for the turn is complete.
+     */
+    @CanIgnoreReturnValue
+    public Builder turnCompleteReason(String turnCompleteReason) {
+      return turnCompleteReason(new TurnCompleteReason(turnCompleteReason));
+    }
+
+    /**
+     * Setter for waitingForInput.
+     *
+     * <p>waitingForInput: If true, indicates that the model is not generating content because it is
+     * waiting for more input from the user, e.g. because it expects the user to continue talking.
+     */
+    @JsonProperty("waitingForInput")
+    public abstract Builder waitingForInput(boolean waitingForInput);
+
     public abstract LiveServerContent build();
   }
 
   /** Deserializes a JSON string to a LiveServerContent object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerContent fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerContent.class);
   }

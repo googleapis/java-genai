@@ -33,6 +33,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ListModelsResponse.Builder.class)
 public abstract class ListModelsResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** */
   @JsonProperty("nextPageToken")
   public abstract Optional<String> nextPageToken();
@@ -42,6 +46,7 @@ public abstract class ListModelsResponse extends JsonSerializable {
   public abstract Optional<List<Model>> models();
 
   /** Instantiates a builder for ListModelsResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListModelsResponse.Builder();
   }
@@ -56,6 +61,23 @@ public abstract class ListModelsResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_ListModelsResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -99,6 +121,7 @@ public abstract class ListModelsResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListModelsResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListModelsResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListModelsResponse.class);
   }

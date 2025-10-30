@@ -61,7 +61,15 @@ public abstract class BatchJobDestination extends JsonSerializable {
   @JsonProperty("inlinedResponses")
   public abstract Optional<List<InlinedResponse>> inlinedResponses();
 
+  /**
+   * The responses to the requests in the batch. Returned when the batch was built using inlined
+   * requests. The responses will be in the same order as the input requests.
+   */
+  @JsonProperty("inlinedEmbedContentResponses")
+  public abstract Optional<List<InlinedEmbedContentResponse>> inlinedEmbedContentResponses();
+
   /** Instantiates a builder for BatchJobDestination. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_BatchJobDestination.Builder();
   }
@@ -145,10 +153,49 @@ public abstract class BatchJobDestination extends JsonSerializable {
               .collect(toImmutableList()));
     }
 
+    /**
+     * Setter for inlinedEmbedContentResponses.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    @JsonProperty("inlinedEmbedContentResponses")
+    public abstract Builder inlinedEmbedContentResponses(
+        List<InlinedEmbedContentResponse> inlinedEmbedContentResponses);
+
+    /**
+     * Setter for inlinedEmbedContentResponses.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    public Builder inlinedEmbedContentResponses(
+        InlinedEmbedContentResponse... inlinedEmbedContentResponses) {
+      return inlinedEmbedContentResponses(Arrays.asList(inlinedEmbedContentResponses));
+    }
+
+    /**
+     * Setter for inlinedEmbedContentResponses builder.
+     *
+     * <p>inlinedEmbedContentResponses: The responses to the requests in the batch. Returned when
+     * the batch was built using inlined requests. The responses will be in the same order as the
+     * input requests.
+     */
+    public Builder inlinedEmbedContentResponses(
+        InlinedEmbedContentResponse.Builder... inlinedEmbedContentResponsesBuilders) {
+      return inlinedEmbedContentResponses(
+          Arrays.asList(inlinedEmbedContentResponsesBuilders).stream()
+              .map(InlinedEmbedContentResponse.Builder::build)
+              .collect(toImmutableList()));
+    }
+
     public abstract BatchJobDestination build();
   }
 
   /** Deserializes a JSON string to a BatchJobDestination object. */
+  @ExcludeFromGeneratedCoverageReport
   public static BatchJobDestination fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, BatchJobDestination.class);
   }

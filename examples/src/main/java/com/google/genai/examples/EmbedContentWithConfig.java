@@ -50,9 +50,11 @@ import com.google.genai.types.EmbedContentResponse;
 /** An example of using the Unified Gen AI Java SDK to embed content with extra config. */
 public final class EmbedContentWithConfig {
   public static void main(String[] args) {
-    String modelId = "text-embedding-004";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.EMBEDDING_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

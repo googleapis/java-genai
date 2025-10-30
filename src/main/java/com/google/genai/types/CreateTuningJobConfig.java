@@ -24,9 +24,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
-/** Supervised fine-tuning job creation request - optional fields. */
+/** Fine-tuning job creation request - optional fields. */
 @AutoValue
 @JsonDeserialize(builder = CreateTuningJobConfig.Builder.class)
 public abstract class CreateTuningJobConfig extends JsonSerializable {
@@ -35,9 +36,13 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /**
-   * Cloud Storage path to file containing training dataset for tuning. The dataset must be
-   * formatted as a JSONL file.
+   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not set, the
+   * default method (SFT) will be used.
    */
+  @JsonProperty("method")
+  public abstract Optional<TuningMethod> method();
+
+  /** Validation dataset for tuning. The dataset must be formatted as a JSONL file. */
   @JsonProperty("validationDataset")
   public abstract Optional<TuningValidationDataset> validationDataset();
 
@@ -61,11 +66,15 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   public abstract Optional<Float> learningRateMultiplier();
 
   /**
-   * If set to true, disable intermediate checkpoints for SFT and only the last checkpoint will be
-   * exported. Otherwise, enable intermediate checkpoints for SFT.
+   * If set to true, disable intermediate checkpoints and only the last checkpoint will be exported.
+   * Otherwise, enable intermediate checkpoints.
    */
   @JsonProperty("exportLastCheckpointOnly")
   public abstract Optional<Boolean> exportLastCheckpointOnly();
+
+  /** The optional checkpoint id of the pre-tuned model to use for tuning, if applicable. */
+  @JsonProperty("preTunedModelCheckpointId")
+  public abstract Optional<String> preTunedModelCheckpointId();
 
   /** Adapter size for tuning. */
   @JsonProperty("adapterSize")
@@ -85,7 +94,22 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("learningRate")
   public abstract Optional<Float> learningRate();
 
+  /**
+   * Optional. The labels with user-defined metadata to organize TuningJob and generated resources
+   * such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode
+   * codepoints), can only contain lowercase letters, numeric characters, underscores and dashes.
+   * International characters are allowed. See https://goo.gl/xmQnxf for more information and
+   * examples of labels.
+   */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
+
+  /** Weight for KL Divergence regularization, Preference Optimization tuning only. */
+  @JsonProperty("beta")
+  public abstract Optional<Float> beta();
+
   /** Instantiates a builder for CreateTuningJobConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateTuningJobConfig.Builder();
   }
@@ -120,10 +144,41 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for method.
+     *
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
+     * set, the default method (SFT) will be used.
+     */
+    @JsonProperty("method")
+    public abstract Builder method(TuningMethod method);
+
+    /**
+     * Setter for method given a known enum.
+     *
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
+     * set, the default method (SFT) will be used.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(TuningMethod.Known knownType) {
+      return method(new TuningMethod(knownType));
+    }
+
+    /**
+     * Setter for method given a string.
+     *
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
+     * set, the default method (SFT) will be used.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(String method) {
+      return method(new TuningMethod(method));
+    }
+
+    /**
      * Setter for validationDataset.
      *
-     * <p>validationDataset: Cloud Storage path to file containing training dataset for tuning. The
-     * dataset must be formatted as a JSONL file.
+     * <p>validationDataset: Validation dataset for tuning. The dataset must be formatted as a JSONL
+     * file.
      */
     @JsonProperty("validationDataset")
     public abstract Builder validationDataset(TuningValidationDataset validationDataset);
@@ -131,8 +186,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for validationDataset builder.
      *
-     * <p>validationDataset: Cloud Storage path to file containing training dataset for tuning. The
-     * dataset must be formatted as a JSONL file.
+     * <p>validationDataset: Validation dataset for tuning. The dataset must be formatted as a JSONL
+     * file.
      */
     public Builder validationDataset(TuningValidationDataset.Builder validationDatasetBuilder) {
       return validationDataset(validationDatasetBuilder.build());
@@ -175,12 +230,20 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for exportLastCheckpointOnly.
      *
-     * <p>exportLastCheckpointOnly: If set to true, disable intermediate checkpoints for SFT and
-     * only the last checkpoint will be exported. Otherwise, enable intermediate checkpoints for
-     * SFT.
+     * <p>exportLastCheckpointOnly: If set to true, disable intermediate checkpoints and only the
+     * last checkpoint will be exported. Otherwise, enable intermediate checkpoints.
      */
     @JsonProperty("exportLastCheckpointOnly")
     public abstract Builder exportLastCheckpointOnly(boolean exportLastCheckpointOnly);
+
+    /**
+     * Setter for preTunedModelCheckpointId.
+     *
+     * <p>preTunedModelCheckpointId: The optional checkpoint id of the pre-tuned model to use for
+     * tuning, if applicable.
+     */
+    @JsonProperty("preTunedModelCheckpointId")
+    public abstract Builder preTunedModelCheckpointId(String preTunedModelCheckpointId);
 
     /**
      * Setter for adapterSize.
@@ -228,10 +291,31 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @JsonProperty("learningRate")
     public abstract Builder learningRate(Float learningRate);
 
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: Optional. The labels with user-defined metadata to organize TuningJob and
+     * generated resources such as Model and Endpoint. Label keys and values can be no longer than
+     * 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters,
+     * underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for
+     * more information and examples of labels.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    /**
+     * Setter for beta.
+     *
+     * <p>beta: Weight for KL Divergence regularization, Preference Optimization tuning only.
+     */
+    @JsonProperty("beta")
+    public abstract Builder beta(Float beta);
+
     public abstract CreateTuningJobConfig build();
   }
 
   /** Deserializes a JSON string to a CreateTuningJobConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateTuningJobConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateTuningJobConfig.class);
   }

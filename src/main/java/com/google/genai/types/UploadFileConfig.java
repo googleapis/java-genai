@@ -52,6 +52,7 @@ public abstract class UploadFileConfig extends JsonSerializable {
   public abstract Optional<String> displayName();
 
   /** Instantiates a builder for UploadFileConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UploadFileConfig.Builder();
   }
@@ -115,6 +116,7 @@ public abstract class UploadFileConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UploadFileConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UploadFileConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UploadFileConfig.class);
   }

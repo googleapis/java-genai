@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableMap;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
@@ -29,18 +31,25 @@ import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CancelBatchJobParameters;
 import com.google.genai.types.CreateBatchJobConfig;
 import com.google.genai.types.CreateBatchJobParameters;
+import com.google.genai.types.CreateEmbeddingsBatchJobConfig;
+import com.google.genai.types.CreateEmbeddingsBatchJobParameters;
 import com.google.genai.types.DeleteBatchJobConfig;
 import com.google.genai.types.DeleteBatchJobParameters;
 import com.google.genai.types.DeleteResourceJob;
+import com.google.genai.types.EmbeddingsBatchJobSource;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.GetBatchJobParameters;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpResponse;
 import com.google.genai.types.ListBatchJobsConfig;
 import com.google.genai.types.ListBatchJobsParameters;
 import com.google.genai.types.ListBatchJobsResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
 /**
@@ -48,6 +57,7 @@ import okhttp3.ResponseBody;
  * instantiating a {@link Client}, access methods through `client.batches.methodName(...)` directly.
  */
 public final class Batches {
+
   final ApiClient apiClient;
 
   public Batches(ApiClient apiClient) {
@@ -55,25 +65,368 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode batchJobDestinationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
 
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"responsesFile"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
+          new String[] {"fileName"},
+          Common.getValueByPath(fromObject, new String[] {"responsesFile"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedResponses", "inlinedResponses"})
+        != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Common.getValueByPath(
+                  fromObject, new String[] {"inlinedResponses", "inlinedResponses"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(inlinedResponseFromMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"inlinedResponses"}, result);
+    }
+
+    if (Common.getValueByPath(
+            fromObject, new String[] {"inlinedEmbedContentResponses", "inlinedResponses"})
+        != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
+          new String[] {"inlinedEmbedContentResponses"},
+          Common.getValueByPath(
+              fromObject, new String[] {"inlinedEmbedContentResponses", "inlinedResponses"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobDestinationFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"predictionsFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"format"},
+          Common.getValueByPath(fromObject, new String[] {"predictionsFormat"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"gcsDestination", "outputUriPrefix"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsUri"},
+          Common.getValueByPath(fromObject, new String[] {"gcsDestination", "outputUriPrefix"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigqueryUri"},
+          Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobDestinationToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"predictionsFormat"},
+          Common.getValueByPath(fromObject, new String[] {"format"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsDestination", "outputUriPrefix"},
+          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigqueryDestination", "outputUri"},
+          Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
+      throw new IllegalArgumentException("fileName parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedResponses"}))) {
+      throw new IllegalArgumentException(
+          "inlinedResponses parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"inlinedEmbedContentResponses"}))) {
+      throw new IllegalArgumentException(
+          "inlinedEmbedContentResponses parameter is not supported in Vertex AI.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"metadata", "displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "state"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"state"},
+          Transformers.tJobState(
+              Common.getValueByPath(fromObject, new String[] {"metadata", "state"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "createTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"createTime"},
+          Common.getValueByPath(fromObject, new String[] {"metadata", "createTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "endTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endTime"},
+          Common.getValueByPath(fromObject, new String[] {"metadata", "endTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "updateTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"updateTime"},
+          Common.getValueByPath(fromObject, new String[] {"metadata", "updateTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"metadata", "model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata", "output"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dest"},
+          batchJobDestinationFromMldev(
+              JsonSerializable.toJsonNode(
+                  Transformers.tRecvBatchJobDestination(
+                      Common.getValueByPath(fromObject, new String[] {"metadata", "output"}))),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"state"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"state"},
+          Transformers.tJobState(Common.getValueByPath(fromObject, new String[] {"state"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          Common.getValueByPath(fromObject, new String[] {"error"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"createTime"},
+          Common.getValueByPath(fromObject, new String[] {"createTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"startTime"},
+          Common.getValueByPath(fromObject, new String[] {"startTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endTime"},
+          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"updateTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"updateTime"},
+          Common.getValueByPath(fromObject, new String[] {"updateTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inputConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"src"},
+          batchJobSourceFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"dest"},
+          batchJobDestinationFromVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tRecvBatchJobDestination(
+                      Common.getValueByPath(fromObject, new String[] {"outputConfig"}))),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobSourceFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"instancesFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"format"},
+          Common.getValueByPath(fromObject, new String[] {"instancesFormat"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"gcsSource", "uris"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsUri"},
+          Common.getValueByPath(fromObject, new String[] {"gcsSource", "uris"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"bigquerySource", "inputUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigqueryUri"},
+          Common.getValueByPath(fromObject, new String[] {"bigquerySource", "inputUri"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobSourceToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"format"}))) {
+      throw new IllegalArgumentException("format parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
+      throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}))) {
+      throw new IllegalArgumentException("bigqueryUri parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileName"},
+          Common.getValueByPath(fromObject, new String[] {"fileName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"inlinedRequests"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(inlinedRequestToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"requests", "requests"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode batchJobSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"instancesFormat"},
+          Common.getValueByPath(fromObject, new String[] {"format"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"gcsSource", "uris"},
+          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigquerySource", "inputUri"},
+          Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
+      throw new IllegalArgumentException("fileName parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}))) {
+      throw new IllegalArgumentException(
+          "inlinedRequests parameter is not supported in Vertex AI.");
     }
 
     return toObject;
@@ -82,10 +435,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -93,30 +442,10 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"data"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
       throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -128,85 +457,122 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataToMldev(
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode cancelBatchJobParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode candidateFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"content"},
+          Common.getValueByPath(fromObject, new String[] {"content"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"citationMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"citationMetadata"},
+          citationMetadataFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
+                  Common.getValueByPath(fromObject, new String[] {"citationMetadata"})),
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
+          new String[] {"tokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"finishReason"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
+          new String[] {"finishReason"},
+          Common.getValueByPath(fromObject, new String[] {"finishReason"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
+          new String[] {"avgLogprobs"},
+          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+          new String[] {"groundingMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"index"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+          new String[] {"index"},
+          Common.getValueByPath(fromObject, new String[] {"index"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"logprobsResult"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+          new String[] {"logprobsResult"},
+          Common.getValueByPath(fromObject, new String[] {"logprobsResult"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"safetyRatings"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"functionCall"},
-          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
+          new String[] {"safetyRatings"},
+          Common.getValueByPath(fromObject, new String[] {"safetyRatings"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+          new String[] {"urlContextMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode citationMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"citationSources"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
+          new String[] {"citations"},
+          Common.getValueByPath(fromObject, new String[] {"citationSources"}));
     }
 
     return toObject;
@@ -237,205 +603,202 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode schemaToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
-    if (Common.getValueByPath(fromObject, new String[] {"anyOf"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"anyOf"},
-          Common.getValueByPath(fromObject, new String[] {"anyOf"}));
+          parentObject,
+          new String[] {"batch", "displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"default"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"default"},
-          Common.getValueByPath(fromObject, new String[] {"default"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enum"},
-          Common.getValueByPath(fromObject, new String[] {"enum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"example"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"example"},
-          Common.getValueByPath(fromObject, new String[] {"example"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"format"},
-          Common.getValueByPath(fromObject, new String[] {"format"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"items"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"items"},
-          Common.getValueByPath(fromObject, new String[] {"items"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxItems"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxItems"},
-          Common.getValueByPath(fromObject, new String[] {"maxItems"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxLength"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxLength"},
-          Common.getValueByPath(fromObject, new String[] {"maxLength"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maxProperties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maxProperties"},
-          Common.getValueByPath(fromObject, new String[] {"maxProperties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"maximum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"maximum"},
-          Common.getValueByPath(fromObject, new String[] {"maximum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minItems"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minItems"},
-          Common.getValueByPath(fromObject, new String[] {"minItems"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minLength"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minLength"},
-          Common.getValueByPath(fromObject, new String[] {"minLength"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minProperties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minProperties"},
-          Common.getValueByPath(fromObject, new String[] {"minProperties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"minimum"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"minimum"},
-          Common.getValueByPath(fromObject, new String[] {"minimum"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"nullable"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"nullable"},
-          Common.getValueByPath(fromObject, new String[] {"nullable"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pattern"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"pattern"},
-          Common.getValueByPath(fromObject, new String[] {"pattern"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"properties"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"properties"},
-          Common.getValueByPath(fromObject, new String[] {"properties"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"propertyOrdering"},
-          Common.getValueByPath(fromObject, new String[] {"propertyOrdering"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"required"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"required"},
-          Common.getValueByPath(fromObject, new String[] {"required"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"title"},
-          Common.getValueByPath(fromObject, new String[] {"title"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"type"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"type"},
-          Common.getValueByPath(fromObject, new String[] {"type"}));
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"dest"}))) {
+      throw new IllegalArgumentException("dest parameter is not supported in Gemini API.");
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createBatchJobConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
-      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"dest"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"category"},
-          Common.getValueByPath(fromObject, new String[] {"category"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"threshold"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"threshold"},
-          Common.getValueByPath(fromObject, new String[] {"threshold"}));
+          parentObject,
+          new String[] {"outputConfig"},
+          batchJobDestinationToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tBatchJobDestination(
+                      Common.getValueByPath(fromObject, new String[] {"dest"}))),
+              toObject));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionDeclarationToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"behavior"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"behavior"},
-          Common.getValueByPath(fromObject, new String[] {"behavior"}));
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
+          new String[] {"batch", "inputConfig"},
+          batchJobSourceToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Transformers.tBatchJobSource(
+                      Common.getValueByPath(fromObject, new String[] {"src"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          createBatchJobConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode createBatchJobParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inputConfig"},
+          batchJobSourceToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tBatchJobSource(
+                      Common.getValueByPath(fromObject, new String[] {"src"}))),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          createBatchJobConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode createEmbeddingsBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"batch", "displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode createEmbeddingsBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"batch", "inputConfig"},
+          embeddingsBatchJobSourceToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"src"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          createEmbeddingsBatchJobConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteBatchJobParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode deleteResourceJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -445,67 +808,138 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"name"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"parameters"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"parameters"},
-          Common.getValueByPath(fromObject, new String[] {"parameters"}));
+          new String[] {"done"},
+          Common.getValueByPath(fromObject, new String[] {"done"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"parametersJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+          new String[] {"error"},
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode intervalToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode deleteResourceJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"startTime"},
-          Common.getValueByPath(fromObject, new String[] {"startTime"}));
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"done"},
+          Common.getValueByPath(fromObject, new String[] {"done"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode embedContentBatchToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"timeRangeFilter"},
-          intervalToMldev(
+          new String[] {"requests[]", "request", "content"},
+          Transformers.tContentsForEmbed(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"contents"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"_self"},
+          embedContentConfigToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"})),
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject));
+      Common.moveValueByPath(toObject, ImmutableMap.of("requests[].*", "requests[].request.*"));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "taskType"},
+          Common.getValueByPath(fromObject, new String[] {"taskType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "title"},
+          Common.getValueByPath(fromObject, new String[] {"title"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"requests[]", "outputDimensionality"},
+          Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mimeType"}))) {
+      throw new IllegalArgumentException("mimeType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"autoTruncate"}))) {
+      throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embeddingsBatchJobSourceToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"file_name"},
+          Common.getValueByPath(fromObject, new String[] {"fileName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"requests"},
+          embedContentBatchToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlinedRequests"})),
               toObject));
     }
 
@@ -513,330 +947,24 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode dynamicRetrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
+      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
+          new String[] {"fileUri"},
+          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"dynamicThreshold"},
-          Common.getValueByPath(fromObject, new String[] {"dynamicThreshold"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleSearchRetrievalToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dynamicRetrievalConfig"},
-          dynamicRetrievalConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"dynamicRetrievalConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
-      throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          googleSearchRetrievalToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"})),
-              toObject));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
-      throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"googleMaps"}))) {
-      throw new IllegalArgumentException("googleMaps parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          urlContextToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContext"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecution"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"computerUse"},
-          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"allowedFunctionNames"},
-          Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode latLngToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latitude"},
-          Common.getValueByPath(fromObject, new String[] {"latitude"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"longitude"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"longitude"},
-          Common.getValueByPath(fromObject, new String[] {"longitude"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode retrievalConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"latLng"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"latLng"},
-          latLngToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"latLng"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCallingConfig"},
-          functionCallingConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          retrievalConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"retrievalConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode prebuiltVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceName"},
-          Common.getValueByPath(fromObject, new String[] {"voiceName"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          prebuiltVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"speaker"},
-          Common.getValueByPath(fromObject, new String[] {"speaker"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode multiSpeakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(speakerVoiceConfigToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"multiSpeakerVoiceConfig"},
-          multiSpeakerVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode thinkingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"includeThoughts"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"includeThoughts"},
-          Common.getValueByPath(fromObject, new String[] {"includeThoughts"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thinkingBudget"},
-          Common.getValueByPath(fromObject, new String[] {"thinkingBudget"}));
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -946,11 +1074,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"responseSchema"},
-          schemaToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSchema(
-                      Common.getValueByPath(fromObject, new String[] {"responseSchema"}))),
-              toObject));
+          Transformers.tSchema(Common.getValueByPath(fromObject, new String[] {"responseSchema"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
@@ -998,10 +1122,7 @@ public final class Batches {
       Common.setValueByPath(
           parentObject,
           new String[] {"toolConfig"},
-          toolConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"toolConfig"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
@@ -1034,11 +1155,8 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSpeechConfig(
-                      Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
-              toObject));
+          Transformers.tSpeechConfig(
+              Common.getValueByPath(fromObject, new String[] {"speechConfig"})));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
@@ -1050,804 +1168,14 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"thinkingConfig"},
-          thinkingConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"thinkingConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}));
     }
 
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode inlinedRequestToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"imageConfig"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"request", "model"},
-          Transformers.tModel(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode)
-              Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"}));
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"request", "contents"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"request", "generationConfig"},
-          generateContentConfigToMldev(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobSourceToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"format"}))) {
-      throw new IllegalArgumentException("format parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
-      throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}))) {
-      throw new IllegalArgumentException("bigqueryUri parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileName"},
-          Common.getValueByPath(fromObject, new String[] {"fileName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"inlinedRequests"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(inlinedRequestToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"requests", "requests"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode createBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"batch", "displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"dest"}))) {
-      throw new IllegalArgumentException("dest parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode createBatchJobParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "model"},
-          Transformers.tModel(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"batch", "inputConfig"},
-          batchJobSourceToMldev(
-              apiClient,
-              JsonSerializable.toJsonNode(
-                  Transformers.tBatchJobSource(
-                      Common.getValueByPath(fromObject, new String[] {"src"}))),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          createBatchJobConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode getBatchJobParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelBatchJobParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listBatchJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageSize"},
-          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageToken"},
-          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"filter"}))) {
-      throw new IllegalArgumentException("filter parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listBatchJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          listBatchJobsConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode deleteBatchJobParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instancesFormat"},
-          Common.getValueByPath(fromObject, new String[] {"format"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"gcsSource", "uris"},
-          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"bigquerySource", "inputUri"},
-          Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
-      throw new IllegalArgumentException("fileName parameter is not supported in Vertex AI.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}))) {
-      throw new IllegalArgumentException(
-          "inlinedRequests parameter is not supported in Vertex AI.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobDestinationToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"predictionsFormat"},
-          Common.getValueByPath(fromObject, new String[] {"format"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"gcsDestination", "outputUriPrefix"},
-          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"bigqueryDestination", "outputUri"},
-          Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
-      throw new IllegalArgumentException("fileName parameter is not supported in Vertex AI.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedResponses"}))) {
-      throw new IllegalArgumentException(
-          "inlinedResponses parameter is not supported in Vertex AI.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode createBatchJobConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"dest"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"outputConfig"},
-          batchJobDestinationToVertex(
-              JsonSerializable.toJsonNode(
-                  Transformers.tBatchJobDestination(
-                      Common.getValueByPath(fromObject, new String[] {"dest"}))),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode createBatchJobParametersToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Transformers.tModel(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"src"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inputConfig"},
-          batchJobSourceToVertex(
-              JsonSerializable.toJsonNode(
-                  Transformers.tBatchJobSource(
-                      Common.getValueByPath(fromObject, new String[] {"src"}))),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          createBatchJobConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode getBatchJobParametersToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelBatchJobParametersToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listBatchJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageSize"},
-          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageToken"},
-          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "filter"},
-          Common.getValueByPath(fromObject, new String[] {"filter"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listBatchJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          listBatchJobsConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode deleteBatchJobParametersToVertex(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "name"},
-          Transformers.tBatchJobName(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"config"},
-          Common.getValueByPath(fromObject, new String[] {"config"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode videoMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"fps"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"fps"}, Common.getValueByPath(fromObject, new String[] {"fps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endOffset"},
-          Common.getValueByPath(fromObject, new String[] {"endOffset"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startOffset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startOffset"},
-          Common.getValueByPath(fromObject, new String[] {"startOffset"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode partFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          videoMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"videoMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode contentFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
-      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(partFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"parts"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"role"},
-          Common.getValueByPath(fromObject, new String[] {"role"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode citationMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"citationSources"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"citations"},
-          Common.getValueByPath(fromObject, new String[] {"citationSources"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievedUrl"},
-          Common.getValueByPath(fromObject, new String[] {"retrievedUrl"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlRetrievalStatus"},
-          Common.getValueByPath(fromObject, new String[] {"urlRetrievalStatus"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode urlContextMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"urlMetadata"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"urlMetadata"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(urlMetadataFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"urlMetadata"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode candidateFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"content"},
-          contentFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"content"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"citationMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"citationMetadata"},
-          citationMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"citationMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tokenCount"},
-          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"finishReason"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"finishReason"},
-          Common.getValueByPath(fromObject, new String[] {"finishReason"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContextMetadata"},
-          urlContextMetadataFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"avgLogprobs"},
-          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"groundingMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"index"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"index"},
-          Common.getValueByPath(fromObject, new String[] {"index"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"logprobsResult"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"logprobsResult"},
-          Common.getValueByPath(fromObject, new String[] {"logprobsResult"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"safetyRatings"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"safetyRatings"},
-          Common.getValueByPath(fromObject, new String[] {"safetyRatings"}));
+          new String[] {"imageConfig"},
+          Common.getValueByPath(fromObject, new String[] {"imageConfig"}));
     }
 
     return toObject;
@@ -1889,6 +1217,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"promptFeedback"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseId"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseId"},
+          Common.getValueByPath(fromObject, new String[] {"responseId"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"usageMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1900,27 +1235,115 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode jobErrorFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode getBatchJobParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode getBatchJobParametersToVertex(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
+          new String[] {"_url", "name"},
+          Transformers.tBatchJobName(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"name"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
+      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
+          new String[] {"enableWidget"},
+          Common.getValueByPath(fromObject, new String[] {"enableWidget"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"timeRangeFilter"},
+          Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inlinedRequestToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"request", "model"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"request", "contents"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"metadata"},
+          Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"request", "generationConfig"},
+          generateContentConfigToMldev(
+              apiClient,
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              (ObjectNode)
+                  Common.getValueByPath(
+                      toObject,
+                      new String[] {"request"},
+                      (new ObjectMapper()).createObjectNode())));
     }
 
     return toObject;
@@ -1943,105 +1366,88 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"error"},
-          jobErrorFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"error"}));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobDestinationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listBatchJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
-    if (Common.getValueByPath(fromObject, new String[] {"responsesFile"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"fileName"},
-          Common.getValueByPath(fromObject, new String[] {"responsesFile"}));
+          parentObject,
+          new String[] {"_query", "pageSize"},
+          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"inlinedResponses", "inlinedResponses"})
-        != null) {
-      ArrayNode keyArray =
-          (ArrayNode)
-              Common.getValueByPath(
-                  fromObject, new String[] {"inlinedResponses", "inlinedResponses"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
+    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "pageToken"},
+          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
+    }
 
-      for (JsonNode item : keyArray) {
-        result.add(inlinedResponseFromMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"inlinedResponses"}, result);
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"filter"}))) {
+      throw new IllegalArgumentException("filter parameter is not supported in Gemini API.");
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listBatchJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+
+    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
+          parentObject,
+          new String[] {"_query", "pageSize"},
+          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "displayName"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"metadata", "displayName"}));
+          parentObject,
+          new String[] {"_query", "pageToken"},
+          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "state"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"state"},
-          Transformers.tJobState(
-              Common.getValueByPath(fromObject, new String[] {"metadata", "state"})));
+          parentObject,
+          new String[] {"_query", "filter"},
+          Common.getValueByPath(fromObject, new String[] {"filter"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "createTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"createTime"},
-          Common.getValueByPath(fromObject, new String[] {"metadata", "createTime"}));
-    }
+    return toObject;
+  }
 
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "endTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"metadata", "endTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "updateTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"updateTime"},
-          Common.getValueByPath(fromObject, new String[] {"metadata", "updateTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"metadata", "model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"metadata", "output"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dest"},
-          batchJobDestinationFromMldev(
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listBatchJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          listBatchJobsConfigToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"metadata", "output"})),
-              toObject));
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode listBatchJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
+      JsonNode unused =
+          listBatchJobsConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              toObject);
     }
 
     return toObject;
@@ -2050,6 +1456,12 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
 
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
@@ -2074,213 +1486,14 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode deleteResourceJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"done"},
-          Common.getValueByPath(fromObject, new String[] {"done"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          jobErrorFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode jobErrorFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"details"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"details"},
-          Common.getValueByPath(fromObject, new String[] {"details"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"message"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"message"},
-          Common.getValueByPath(fromObject, new String[] {"message"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobSourceFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"instancesFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"format"},
-          Common.getValueByPath(fromObject, new String[] {"instancesFormat"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"gcsSource", "uris"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"gcsUri"},
-          Common.getValueByPath(fromObject, new String[] {"gcsSource", "uris"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"bigquerySource", "inputUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"bigqueryUri"},
-          Common.getValueByPath(fromObject, new String[] {"bigquerySource", "inputUri"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobDestinationFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"predictionsFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"format"},
-          Common.getValueByPath(fromObject, new String[] {"predictionsFormat"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"gcsDestination", "outputUriPrefix"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"gcsUri"},
-          Common.getValueByPath(fromObject, new String[] {"gcsDestination", "outputUriPrefix"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"bigqueryUri"},
-          Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode batchJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"displayName"},
-          Common.getValueByPath(fromObject, new String[] {"displayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"state"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"state"},
-          Transformers.tJobState(Common.getValueByPath(fromObject, new String[] {"state"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"error"},
-          jobErrorFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"createTime"},
-          Common.getValueByPath(fromObject, new String[] {"createTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"startTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"startTime"},
-          Common.getValueByPath(fromObject, new String[] {"startTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"endTime"},
-          Common.getValueByPath(fromObject, new String[] {"endTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"updateTime"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"updateTime"},
-          Common.getValueByPath(fromObject, new String[] {"updateTime"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"model"},
-          Common.getValueByPath(fromObject, new String[] {"model"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inputConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"src"},
-          batchJobSourceFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"dest"},
-          batchJobDestinationFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"outputConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
 
     if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
       Common.setValueByPath(
@@ -2305,36 +1518,184 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode deleteResourceJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
+          new String[] {"functionCall"},
+          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"done"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"done"},
-          Common.getValueByPath(fromObject, new String[] {"done"}));
+          new String[] {"codeExecutionResult"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"error"},
-          jobErrorFromVertex(
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataToMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"error"})),
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
     return toObject;
   }
 
-  BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"category"},
+          Common.getValueByPath(fromObject, new String[] {"category"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
+      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"threshold"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"threshold"},
+          Common.getValueByPath(fromObject, new String[] {"threshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
+      throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecution"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
+      throw new IllegalArgumentException(
+          "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
+    }
+
+    return toObject;
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateCreate(
+      String model, BatchJobSource src, CreateBatchJobConfig config) {
 
     CreateBatchJobParameters.Builder parameterBuilder = CreateBatchJobParameters.builder();
 
@@ -2371,44 +1732,133 @@ public final class Batches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForPrivateCreate(ApiResponse response, CreateBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      responseNode = batchJobFromVertex(responseNode, null);
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  }
+
+  BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateCreate(model, src, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "post", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = batchJobFromVertex(responseNode, null);
-      } else {
-        responseNode = batchJobFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateCreate(response, config);
     }
   }
 
-  /**
-   * Gets a batch job resource.
-   *
-   * @param name A fully-qualified BatchJob resource name or ID. Example:
-   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link GetBatchJobConfig} for configuring the get request.
-   * @return A {@link BatchJob} object that contains the info of the batch job.
-   */
-  public BatchJob get(String name, GetBatchJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+
+    CreateEmbeddingsBatchJobParameters.Builder parameterBuilder =
+        CreateEmbeddingsBatchJobParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(src)) {
+      parameterBuilder.src(src);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      body = createEmbeddingsBatchJobParametersToMldev(this.apiClient, parameterNode, null);
+      if (body.get("_url") != null) {
+        path = Common.formatMap("{model}:asyncBatchEmbedContent", body.get("_url"));
+      } else {
+        path = "{model}:asyncBatchEmbedContent";
+      }
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForPrivateCreateEmbeddings(
+      ApiResponse response, CreateEmbeddingsBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  }
+
+  BatchJob privateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateCreateEmbeddings(model, src, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateCreateEmbeddings(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForGet(String name, GetBatchJobConfig config) {
 
     GetBatchJobParameters.Builder parameterBuilder = GetBatchJobParameters.builder();
 
@@ -2442,43 +1892,58 @@ public final class Batches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
     }
 
-    try (ApiResponse response =
-        this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
 
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = batchJobFromVertex(responseNode, null);
-      } else {
-        responseNode = batchJobFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+  /** A shared processResponse function for both sync and async methods. */
+  BatchJob processResponseForGet(ApiResponse response, GetBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
     }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      responseNode = batchJobFromVertex(responseNode, null);
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = batchJobFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
   }
 
   /**
-   * Cancels a batch job resource.
+   * Gets a batch job resource.
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
    *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
+   * @param config A {@link GetBatchJobConfig} for configuring the get request.
+   * @return A {@link BatchJob} object that contains the info of the batch job.
    */
-  public void cancel(String name, CancelBatchJobConfig config) {
+  public BatchJob get(String name, GetBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForGet(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForGet(response, config);
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForCancel(String name, CancelBatchJobConfig config) {
 
     CancelBatchJobParameters.Builder parameterBuilder = CancelBatchJobParameters.builder();
 
@@ -2512,17 +1977,34 @@ public final class Batches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
     }
 
-    this.apiClient.request("post", path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
   }
 
-  ListBatchJobsResponse privateList(ListBatchJobsConfig config) {
+  /**
+   * Cancels a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
+   */
+  public void cancel(String name, CancelBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForCancel(name, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return;
+    }
+  }
+
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateList(ListBatchJobsConfig config) {
 
     ListBatchJobsParameters.Builder parameterBuilder = ListBatchJobsParameters.builder();
 
@@ -2553,43 +2035,60 @@ public final class Batches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  ListBatchJobsResponse processResponseForPrivateList(
+      ApiResponse response, ListBatchJobsConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      responseNode = listBatchJobsResponseFromVertex(responseNode, null);
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = listBatchJobsResponseFromMldev(responseNode, null);
+    }
+
+    ListBatchJobsResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  ListBatchJobsResponse privateList(ListBatchJobsConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateList(config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "get", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = listBatchJobsResponseFromVertex(responseNode, null);
-      } else {
-        responseNode = listBatchJobsResponseFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
+            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForPrivateList(response, config);
     }
   }
 
-  /**
-   * Deletes a batch job resource.
-   *
-   * @param name A fully-qualified BatchJob resource name or ID. Example:
-   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
-   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
-   */
-  public DeleteResourceJob delete(String name, DeleteBatchJobConfig config) {
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForDelete(String name, DeleteBatchJobConfig config) {
 
     DeleteBatchJobParameters.Builder parameterBuilder = DeleteBatchJobParameters.builder();
 
@@ -2623,31 +2122,62 @@ public final class Batches {
     }
 
     // TODO: Remove the hack that removes config.
-    body.remove("config");
-
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
     }
 
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  DeleteResourceJob processResponseForDelete(ApiResponse response, DeleteBatchJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      responseNode = deleteResourceJobFromVertex(responseNode, null);
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = deleteResourceJobFromMldev(responseNode, null);
+    }
+
+    DeleteResourceJob sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
+  /**
+   * Deletes a batch job resource.
+   *
+   * @param name A fully-qualified BatchJob resource name or ID. Example:
+   *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
+   */
+  public DeleteResourceJob delete(String name, DeleteBatchJobConfig config) {
+    BuiltRequest builtRequest = buildRequestForDelete(name, config);
+
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", path, JsonSerializable.toJsonString(body), requestHttpOptions)) {
-      ResponseBody responseBody = response.getBody();
-      String responseString;
-      try {
-        responseString = responseBody.string();
-      } catch (IOException e) {
-        throw new GenAiIOException("Failed to read HTTP response.", e);
-      }
-
-      JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-      if (this.apiClient.vertexAI()) {
-        responseNode = deleteResourceJobFromVertex(responseNode, null);
-      } else {
-        responseNode = deleteResourceJobFromMldev(responseNode, null);
-      }
-      return JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
+            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+      return processResponseForDelete(response, config);
     }
   }
 
@@ -2678,10 +2208,29 @@ public final class Batches {
         throw new GenAiIOException("Only one of fileName and InlinedRequests can be set.");
       }
       if (!src.fileName().isPresent() && !src.inlinedRequests().isPresent()) {
-        throw new GenAiIOException("One of fileName and InlinedRequests must be set.");
+        throw new GenAiIOException("one of fileName and InlinedRequests must be set.");
       }
     }
     return this.privateCreate(model, src, config);
+  }
+
+  /**
+   * Makes an API request to create the batch embeddings job.
+   *
+   * <p>This method is experimental.
+   *
+   * @param model the name of the GenAI model to use for generation
+   * @param src The {@link EmbeddingsBatchJobSource} of the batch job.
+   * @param config The configuration {@link CreateEmbeddingsBatchJobConfig} for the batch job.
+   * @return A BatchJob.
+   */
+  public BatchJob createEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "Vertex AI does not support batches.createEmbeddings.");
+    }
+    return this.privateCreateEmbeddings(model, src, config);
   }
 
   /**

@@ -25,19 +25,23 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for the speaker to use. */
+/**
+ * The configuration for a single speaker in a multi speaker setup. This data type is not supported
+ * in Vertex AI.
+ */
 @AutoValue
 @JsonDeserialize(builder = SpeakerVoiceConfig.Builder.class)
 public abstract class SpeakerVoiceConfig extends JsonSerializable {
-  /** The name of the speaker to use. Should be the same as in the prompt. */
+  /** Required. The name of the speaker to use. Should be the same as in the prompt. */
   @JsonProperty("speaker")
   public abstract Optional<String> speaker();
 
-  /** The configuration for the voice to use. */
+  /** Required. The configuration for the voice to use. */
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
   /** Instantiates a builder for SpeakerVoiceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SpeakerVoiceConfig.Builder();
   }
@@ -57,7 +61,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speaker.
      *
-     * <p>speaker: The name of the speaker to use. Should be the same as in the prompt.
+     * <p>speaker: Required. The name of the speaker to use. Should be the same as in the prompt.
      */
     @JsonProperty("speaker")
     public abstract Builder speaker(String speaker);
@@ -65,7 +69,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig.
      *
-     * <p>voiceConfig: The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice to use.
      */
     @JsonProperty("voiceConfig")
     public abstract Builder voiceConfig(VoiceConfig voiceConfig);
@@ -73,7 +77,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig builder.
      *
-     * <p>voiceConfig: The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice to use.
      */
     public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
       return voiceConfig(voiceConfigBuilder.build());
@@ -83,6 +87,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SpeakerVoiceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SpeakerVoiceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SpeakerVoiceConfig.class);
   }

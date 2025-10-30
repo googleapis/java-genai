@@ -29,11 +29,12 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
 public abstract class PrebuiltVoiceConfig extends JsonSerializable {
-  /** The name of the prebuilt voice to use. */
+  /** The name of the preset voice to use. */
   @JsonProperty("voiceName")
   public abstract Optional<String> voiceName();
 
   /** Instantiates a builder for PrebuiltVoiceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_PrebuiltVoiceConfig.Builder();
   }
@@ -53,7 +54,7 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceName.
      *
-     * <p>voiceName: The name of the prebuilt voice to use.
+     * <p>voiceName: The name of the preset voice to use.
      */
     @JsonProperty("voiceName")
     public abstract Builder voiceName(String voiceName);
@@ -62,6 +63,7 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a PrebuiltVoiceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static PrebuiltVoiceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, PrebuiltVoiceConfig.class);
   }

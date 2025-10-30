@@ -81,6 +81,7 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
   public abstract Optional<ActivityEnd> activityEnd();
 
   /** Instantiates a builder for LiveClientRealtimeInput. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveClientRealtimeInput.Builder();
   }
@@ -220,6 +221,7 @@ public abstract class LiveClientRealtimeInput extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveClientRealtimeInput object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveClientRealtimeInput fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveClientRealtimeInput.class);
   }

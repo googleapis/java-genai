@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. Outcome of the code execution. */
+/** Outcome of the code execution. */
 public class Outcome {
 
   /** Enum representing the known values for Outcome. */
@@ -66,12 +66,14 @@ public class Outcome {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -98,6 +100,7 @@ public class Outcome {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.outcomeEnum != Known.OUTCOME_UNSPECIFIED) {
@@ -107,6 +110,7 @@ public class Outcome {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.outcomeEnum;
   }

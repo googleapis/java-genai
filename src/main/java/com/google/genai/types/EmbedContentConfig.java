@@ -62,6 +62,7 @@ public abstract class EmbedContentConfig extends JsonSerializable {
   public abstract Optional<Boolean> autoTruncate();
 
   /** Instantiates a builder for EmbedContentConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EmbedContentConfig.Builder();
   }
@@ -143,6 +144,7 @@ public abstract class EmbedContentConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EmbedContentConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EmbedContentConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EmbedContentConfig.class);
   }

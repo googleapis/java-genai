@@ -36,6 +36,7 @@ public abstract class ListFilesParameters extends JsonSerializable {
   public abstract Optional<ListFilesConfig> config();
 
   /** Instantiates a builder for ListFilesParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListFilesParameters.Builder();
   }
@@ -73,6 +74,7 @@ public abstract class ListFilesParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListFilesParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListFilesParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListFilesParameters.class);
   }

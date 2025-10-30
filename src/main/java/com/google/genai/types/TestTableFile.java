@@ -50,6 +50,7 @@ public abstract class TestTableFile extends JsonSerializable {
   public abstract Optional<List<TestTableItem>> testTable();
 
   /** Instantiates a builder for TestTableFile. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TestTableFile.Builder();
   }
@@ -132,6 +133,7 @@ public abstract class TestTableFile extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TestTableFile object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TestTableFile fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TestTableFile.class);
   }

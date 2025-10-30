@@ -77,12 +77,14 @@ public class ImagePromptLanguage {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -109,6 +111,7 @@ public class ImagePromptLanguage {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.imagePromptLanguageEnum != Known.IMAGE_PROMPT_LANGUAGE_UNSPECIFIED) {
@@ -118,6 +121,7 @@ public class ImagePromptLanguage {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.imagePromptLanguageEnum;
   }

@@ -66,12 +66,14 @@ public class HarmProbability {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -98,6 +100,7 @@ public class HarmProbability {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.harmProbabilityEnum != Known.HARM_PROBABILITY_UNSPECIFIED) {
@@ -107,6 +110,7 @@ public class HarmProbability {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.harmProbabilityEnum;
   }

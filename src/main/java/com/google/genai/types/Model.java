@@ -90,6 +90,7 @@ public abstract class Model extends JsonSerializable {
   public abstract Optional<List<Checkpoint>> checkpoints();
 
   /** Instantiates a builder for Model. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Model.Builder();
   }
@@ -271,6 +272,7 @@ public abstract class Model extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Model object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Model fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Model.class);
   }

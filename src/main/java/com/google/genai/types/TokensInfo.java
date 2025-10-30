@@ -31,7 +31,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = TokensInfo.Builder.class)
 public abstract class TokensInfo extends JsonSerializable {
-  /** Optional. Optional fields for the role from the corresponding Content. */
+  /** Optional fields for the role from the corresponding Content. */
   @JsonProperty("role")
   public abstract Optional<String> role();
 
@@ -44,6 +44,7 @@ public abstract class TokensInfo extends JsonSerializable {
   public abstract Optional<List<byte[]>> tokens();
 
   /** Instantiates a builder for TokensInfo. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TokensInfo.Builder();
   }
@@ -63,7 +64,7 @@ public abstract class TokensInfo extends JsonSerializable {
     /**
      * Setter for role.
      *
-     * <p>role: Optional. Optional fields for the role from the corresponding Content.
+     * <p>role: Optional fields for the role from the corresponding Content.
      */
     @JsonProperty("role")
     public abstract Builder role(String role);
@@ -106,6 +107,7 @@ public abstract class TokensInfo extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TokensInfo object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TokensInfo fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TokensInfo.class);
   }

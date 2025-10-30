@@ -38,6 +38,7 @@ public abstract class Endpoint extends JsonSerializable {
   public abstract Optional<String> deployedModelId();
 
   /** Instantiates a builder for Endpoint. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Endpoint.Builder();
   }
@@ -74,6 +75,7 @@ public abstract class Endpoint extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Endpoint object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Endpoint fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Endpoint.class);
   }

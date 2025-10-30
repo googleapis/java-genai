@@ -34,6 +34,7 @@ public abstract class CreateFileResponse extends JsonSerializable {
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
   /** Instantiates a builder for CreateFileResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateFileResponse.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class CreateFileResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateFileResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateFileResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateFileResponse.class);
   }

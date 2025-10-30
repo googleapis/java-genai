@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -142,6 +143,26 @@ final class ReplayApiClient extends ApiClient {
   /** Sends a Http request given the http method, path, request bytes, and http options. */
   @Override
   public ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+    throw new UnsupportedOperationException("Not implemented yet.");
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request json string, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
+    return CompletableFuture.completedFuture(request(httpMethod, path, requestJson, httpOptions));
+  }
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request bytes, and http
+   * options.
+   */
+  @Override
+  public CompletableFuture<ApiResponse> asyncRequest(
       String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
     throw new UnsupportedOperationException("Not implemented yet.");
   }

@@ -53,6 +53,7 @@ public abstract class SubjectReferenceImage extends JsonSerializable implements 
   public abstract Optional<SubjectReferenceConfig> config();
 
   /** Instantiates a builder for SubjectReferenceImage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SubjectReferenceImage.Builder();
   }
@@ -123,6 +124,7 @@ public abstract class SubjectReferenceImage extends JsonSerializable implements 
   }
 
   /** Deserializes a JSON string to a SubjectReferenceImage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SubjectReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SubjectReferenceImage.class);
   }

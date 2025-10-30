@@ -33,7 +33,12 @@ public abstract class GoogleMaps extends JsonSerializable {
   @JsonProperty("authConfig")
   public abstract Optional<AuthConfig> authConfig();
 
+  /** Optional. If true, include the widget context token in the response. */
+  @JsonProperty("enableWidget")
+  public abstract Optional<Boolean> enableWidget();
+
   /** Instantiates a builder for GoogleMaps. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GoogleMaps.Builder();
   }
@@ -67,10 +72,19 @@ public abstract class GoogleMaps extends JsonSerializable {
       return authConfig(authConfigBuilder.build());
     }
 
+    /**
+     * Setter for enableWidget.
+     *
+     * <p>enableWidget: Optional. If true, include the widget context token in the response.
+     */
+    @JsonProperty("enableWidget")
+    public abstract Builder enableWidget(boolean enableWidget);
+
     public abstract GoogleMaps build();
   }
 
   /** Deserializes a JSON string to a GoogleMaps object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GoogleMaps fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GoogleMaps.class);
   }

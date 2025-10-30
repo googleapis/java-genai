@@ -61,12 +61,14 @@ public class SubjectReferenceType {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -93,6 +95,7 @@ public class SubjectReferenceType {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.subjectReferenceTypeEnum != Known.SUBJECT_REFERENCE_TYPE_UNSPECIFIED) {
@@ -102,6 +105,7 @@ public class SubjectReferenceType {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.subjectReferenceTypeEnum;
   }

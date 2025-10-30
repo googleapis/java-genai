@@ -65,6 +65,7 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
   public abstract Optional<ActivityEnd> activityEnd();
 
   /** Instantiates a builder for LiveSendRealtimeInputParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveSendRealtimeInputParameters.Builder();
   }
@@ -194,6 +195,7 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveSendRealtimeInputParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveSendRealtimeInputParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveSendRealtimeInputParameters.class);
   }

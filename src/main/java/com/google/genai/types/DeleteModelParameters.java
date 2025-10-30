@@ -40,6 +40,7 @@ public abstract class DeleteModelParameters extends JsonSerializable {
   public abstract Optional<DeleteModelConfig> config();
 
   /** Instantiates a builder for DeleteModelParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteModelParameters.Builder();
   }
@@ -85,6 +86,7 @@ public abstract class DeleteModelParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteModelParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteModelParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteModelParameters.class);
   }

@@ -28,14 +28,26 @@ public class UrlRetrievalStatus {
 
   /** Enum representing the known values for UrlRetrievalStatus. */
   public enum Known {
-    /** Default value. This value is unused */
+    /** Default value. This value is unused. */
     URL_RETRIEVAL_STATUS_UNSPECIFIED,
 
     /** Url retrieval is successful. */
     URL_RETRIEVAL_STATUS_SUCCESS,
 
     /** Url retrieval is failed due to error. */
-    URL_RETRIEVAL_STATUS_ERROR
+    URL_RETRIEVAL_STATUS_ERROR,
+
+    /**
+     * Url retrieval is failed because the content is behind paywall. This enum value is not
+     * supported in Vertex AI.
+     */
+    URL_RETRIEVAL_STATUS_PAYWALL,
+
+    /**
+     * Url retrieval is failed because the content is unsafe. This enum value is not supported in
+     * Vertex AI.
+     */
+    URL_RETRIEVAL_STATUS_UNSAFE
   }
 
   private Known urlRetrievalStatusEnum;
@@ -60,12 +72,14 @@ public class UrlRetrievalStatus {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -92,6 +106,7 @@ public class UrlRetrievalStatus {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.urlRetrievalStatusEnum != Known.URL_RETRIEVAL_STATUS_UNSPECIFIED) {
@@ -101,6 +116,7 @@ public class UrlRetrievalStatus {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.urlRetrievalStatusEnum;
   }

@@ -34,6 +34,7 @@ public abstract class DownloadFileConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for DownloadFileConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DownloadFileConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class DownloadFileConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DownloadFileConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DownloadFileConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DownloadFileConfig.class);
   }

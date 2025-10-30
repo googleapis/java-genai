@@ -38,6 +38,7 @@ public abstract class ReplayInteraction extends JsonSerializable {
   public abstract Optional<ReplayResponse> response();
 
   /** Instantiates a builder for ReplayInteraction. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ReplayInteraction.Builder();
   }
@@ -92,6 +93,7 @@ public abstract class ReplayInteraction extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ReplayInteraction object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ReplayInteraction fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ReplayInteraction.class);
   }

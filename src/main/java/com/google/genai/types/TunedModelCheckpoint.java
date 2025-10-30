@@ -49,6 +49,7 @@ public abstract class TunedModelCheckpoint extends JsonSerializable {
   public abstract Optional<String> endpoint();
 
   /** Instantiates a builder for TunedModelCheckpoint. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TunedModelCheckpoint.Builder();
   }
@@ -102,6 +103,7 @@ public abstract class TunedModelCheckpoint extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TunedModelCheckpoint object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TunedModelCheckpoint fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TunedModelCheckpoint.class);
   }

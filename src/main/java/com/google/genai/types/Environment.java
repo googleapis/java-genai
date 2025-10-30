@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. The environment being operated. */
+/** The environment being operated. */
 public class Environment {
 
   /** Enum representing the known values for Environment. */
@@ -57,12 +57,14 @@ public class Environment {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -89,6 +91,7 @@ public class Environment {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.environmentEnum != Known.ENVIRONMENT_UNSPECIFIED) {
@@ -98,6 +101,7 @@ public class Environment {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.environmentEnum;
   }

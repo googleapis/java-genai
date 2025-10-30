@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** Configuration for editing an image. */
@@ -104,6 +105,10 @@ public abstract class EditImageConfig extends JsonSerializable {
   @JsonProperty("addWatermark")
   public abstract Optional<Boolean> addWatermark();
 
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
+
   /** Describes the editing mode for the request. */
   @JsonProperty("editMode")
   public abstract Optional<EditMode> editMode();
@@ -116,6 +121,7 @@ public abstract class EditImageConfig extends JsonSerializable {
   public abstract Optional<Integer> baseSteps();
 
   /** Instantiates a builder for EditImageConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EditImageConfig.Builder();
   }
@@ -328,6 +334,14 @@ public abstract class EditImageConfig extends JsonSerializable {
     public abstract Builder addWatermark(boolean addWatermark);
 
     /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    /**
      * Setter for editMode.
      *
      * <p>editMode: Describes the editing mode for the request.
@@ -368,6 +382,7 @@ public abstract class EditImageConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EditImageConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EditImageConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EditImageConfig.class);
   }

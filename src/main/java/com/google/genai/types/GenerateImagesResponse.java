@@ -33,6 +33,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GenerateImagesResponse.Builder.class)
 public abstract class GenerateImagesResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** List of generated images. */
   @JsonProperty("generatedImages")
   public abstract Optional<List<GeneratedImage>> generatedImages();
@@ -45,6 +49,7 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
   public abstract Optional<SafetyAttributes> positivePromptSafetyAttributes();
 
   /** Instantiates a builder for GenerateImagesResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateImagesResponse.Builder();
   }
@@ -59,6 +64,23 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_GenerateImagesResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -115,6 +137,7 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateImagesResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateImagesResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateImagesResponse.class);
   }

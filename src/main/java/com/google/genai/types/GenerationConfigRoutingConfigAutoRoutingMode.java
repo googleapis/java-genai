@@ -28,7 +28,8 @@ import java.util.Optional;
 
 /**
  * When automated routing is specified, the routing will be determined by the pretrained routing
- * model and customer provided model routing preference.
+ * model and customer provided model routing preference. This data type is not supported in Gemini
+ * API.
  */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfigAutoRoutingMode.Builder.class)
@@ -38,6 +39,7 @@ public abstract class GenerationConfigRoutingConfigAutoRoutingMode extends JsonS
   public abstract Optional<ModelRoutingPreference> modelRoutingPreference();
 
   /** Instantiates a builder for GenerationConfigRoutingConfigAutoRoutingMode. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerationConfigRoutingConfigAutoRoutingMode.Builder();
   }
@@ -89,6 +91,7 @@ public abstract class GenerationConfigRoutingConfigAutoRoutingMode extends JsonS
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfigAutoRoutingMode object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerationConfigRoutingConfigAutoRoutingMode fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(
         jsonString, GenerationConfigRoutingConfigAutoRoutingMode.class);

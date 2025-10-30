@@ -38,6 +38,7 @@ public abstract class CreateFileConfig extends JsonSerializable {
   public abstract Optional<Boolean> shouldReturnHttpResponse();
 
   /** Instantiates a builder for CreateFileConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateFileConfig.Builder();
   }
@@ -84,6 +85,7 @@ public abstract class CreateFileConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateFileConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateFileConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateFileConfig.class);
   }

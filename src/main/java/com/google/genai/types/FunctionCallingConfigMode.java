@@ -50,6 +50,14 @@ public class FunctionCallingConfigMode {
      */
     NONE,
 
+    /**
+     * Model decides to predict either a function call or a natural language response, but will
+     * validate function calls with constrained decoding. If "allowed_function_names" are set, the
+     * predicted function call will be limited to any one of "allowed_function_names", else the
+     * predicted function call will be any one of the provided "function_declarations".
+     */
+    VALIDATED,
+
     FUNCTION_CALLING_CONFIG_MODE_UNSPECIFIED
   }
 
@@ -75,12 +83,14 @@ public class FunctionCallingConfigMode {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -107,6 +117,7 @@ public class FunctionCallingConfigMode {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.functionCallingConfigModeEnum != Known.FUNCTION_CALLING_CONFIG_MODE_UNSPECIFIED) {
@@ -116,6 +127,7 @@ public class FunctionCallingConfigMode {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.functionCallingConfigModeEnum;
   }

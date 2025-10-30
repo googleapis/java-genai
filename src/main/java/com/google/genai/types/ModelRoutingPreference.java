@@ -61,12 +61,14 @@ public class ModelRoutingPreference {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -93,6 +95,7 @@ public class ModelRoutingPreference {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.modelRoutingPreferenceEnum != Known.MODEL_ROUTING_PREFERENCE_UNSPECIFIED) {
@@ -102,6 +105,7 @@ public class ModelRoutingPreference {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.modelRoutingPreferenceEnum;
   }

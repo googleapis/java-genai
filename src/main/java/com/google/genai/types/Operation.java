@@ -18,18 +18,14 @@
 
 package com.google.genai.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.auto.value.AutoValue;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
 
 /** A long-running operation. */
-@AutoValue
-@JsonDeserialize(builder = Operation.Builder.class)
-public abstract class Operation extends JsonSerializable {
+public abstract class Operation<T, O extends Operation<T, O>> extends JsonSerializable {
   /**
    * The server-assigned name, which is only unique within the same service that originally returns
    * it. If you use the default HTTP mapping, the `name` should be a resource name ending with
@@ -58,66 +54,16 @@ public abstract class Operation extends JsonSerializable {
   @JsonProperty("error")
   public abstract Optional<Map<String, Object>> error();
 
-  /** Instantiates a builder for Operation. */
-  public static Builder builder() {
-    return new AutoValue_Operation.Builder();
-  }
+  /** The result of the operation. */
+  @JsonProperty("response")
+  public abstract Optional<T> response();
 
-  /** Creates a builder with the same values as this instance. */
-  public abstract Builder toBuilder();
-
-  /** Builder for Operation. */
-  @AutoValue.Builder
-  public abstract static class Builder {
-    /** For internal usage. Please use `Operation.builder()` for instantiation. */
-    @JsonCreator
-    private static Builder create() {
-      return new AutoValue_Operation.Builder();
-    }
-
-    /**
-     * Setter for name.
-     *
-     * <p>name: The server-assigned name, which is only unique within the same service that
-     * originally returns it. If you use the default HTTP mapping, the `name` should be a resource
-     * name ending with `operations/{unique_id}`.
-     */
-    @JsonProperty("name")
-    public abstract Builder name(String name);
-
-    /**
-     * Setter for metadata.
-     *
-     * <p>metadata: Service-specific metadata associated with the operation. It typically contains
-     * progress information and common metadata such as create time. Some services might not provide
-     * such metadata. Any method that returns a long-running operation should document the metadata
-     * type, if any.
-     */
-    @JsonProperty("metadata")
-    public abstract Builder metadata(Map<String, Object> metadata);
-
-    /**
-     * Setter for done.
-     *
-     * <p>done: If the value is `false`, it means the operation is still in progress. If `true`, the
-     * operation is completed, and either `error` or `response` is available.
-     */
-    @JsonProperty("done")
-    public abstract Builder done(boolean done);
-
-    /**
-     * Setter for error.
-     *
-     * <p>error: The error result of the operation in case of failure or cancellation.
-     */
-    @JsonProperty("error")
-    public abstract Builder error(Map<String, Object> error);
-
-    public abstract Operation build();
-  }
-
-  /** Deserializes a JSON string to a Operation object. */
-  public static Operation fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Operation.class);
-  }
+  /**
+   * Creates a new Operation object from an API response.
+   *
+   * @param apiResponse The API response.
+   * @param isVertexAi Whether the API response is from Vertex AI.
+   * @return The new Operation object.
+   */
+  public abstract O fromApiResponse(JsonNode apiResponse, boolean isVertexAi);
 }

@@ -42,6 +42,7 @@ public abstract class Checkpoint extends JsonSerializable {
   public abstract Optional<Long> step();
 
   /** Instantiates a builder for Checkpoint. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Checkpoint.Builder();
   }
@@ -86,6 +87,7 @@ public abstract class Checkpoint extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Checkpoint object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Checkpoint fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Checkpoint.class);
   }

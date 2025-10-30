@@ -113,8 +113,8 @@ public class AsyncChatTest {
   void setUp() {
     mockedClient = Mockito.mock(ApiClient.class);
     mockedResponse = Mockito.mock(ApiResponse.class);
-    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
-        .thenReturn(mockedResponse);
+    when(mockedClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(CompletableFuture.completedFuture(mockedResponse));
 
     String apiKey = Optional.ofNullable(ApiClient.getApiKeyFromEnv()).orElse("api-key");
     client = Client.builder().apiKey(apiKey).vertexAI(false).build();
@@ -154,8 +154,10 @@ public class AsyncChatTest {
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
-    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
-        .thenReturn(mockedResponse1, mockedResponse2);
+    when(mockedClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(mockedResponse1),
+            CompletableFuture.completedFuture(mockedResponse2));
 
     AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
 
@@ -187,8 +189,10 @@ public class AsyncChatTest {
 
     when(mockedResponse1.getBody()).thenReturn(content1);
     when(mockedResponse2.getBody()).thenReturn(content2);
-    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
-        .thenReturn(mockedResponse1, mockedResponse2);
+    when(mockedClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(mockedResponse1),
+            CompletableFuture.completedFuture(mockedResponse2));
 
     AsyncChat chat = client.async.chats.create("gemini-2.0-flash-exp", null);
 
@@ -220,8 +224,11 @@ public class AsyncChatTest {
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
     when(mockedResponse3.getBody()).thenReturn(body3);
-    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
-        .thenReturn(mockedResponse1, mockedResponse2, mockedResponse3);
+    when(mockedClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(mockedResponse1),
+            CompletableFuture.completedFuture(mockedResponse2),
+            CompletableFuture.completedFuture(mockedResponse3));
 
     assert chatSession.getHistory(false).isEmpty();
 
@@ -297,12 +304,14 @@ public class AsyncChatTest {
     ResponseBody body2 = ResponseBody.create(streamData2, MediaType.get("application/json"));
     when(mockedResponse1.getBody()).thenReturn(body1);
     when(mockedResponse2.getBody()).thenReturn(body2);
-    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
-        .thenReturn(mockedResponse1, mockedResponse2);
+    when(mockedClient.asyncRequest(anyString(), anyString(), anyString(), any()))
+        .thenReturn(
+            CompletableFuture.completedFuture(mockedResponse1),
+            CompletableFuture.completedFuture(mockedResponse2));
 
     assert chatSession.getHistory(false).isEmpty();
 
-    ResponseStream<GenerateContentResponse> responseStreamFuture =
+    ResponseStream<GenerateContentResponse> responseStream =
         chatSession.sendMessageStream("Tell me a story.", null).join();
 
     IllegalStateException exception =

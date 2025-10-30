@@ -49,6 +49,7 @@ public abstract class ReplayResponse extends JsonSerializable {
   public abstract Optional<List<Map<String, Object>>> sdkResponseSegments();
 
   /** Instantiates a builder for ReplayResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ReplayResponse.Builder();
   }
@@ -119,6 +120,7 @@ public abstract class ReplayResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ReplayResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ReplayResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ReplayResponse.class);
   }

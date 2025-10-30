@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
 import com.google.genai.types.TuningDataset;
@@ -98,7 +99,8 @@ public class TuningsTest {
             .gcsUri(
                 "gs://cloud-samples-data/ai-platform/generative_ai/gemini-2_0/text/sft_train_data.jsonl")
             .build();
-    TuningJob job = client.tunings.tune("gemini-2.0-flash-001", tuningDataset, null);
+    CreateTuningJobConfig tuningConfig = CreateTuningJobConfig.builder().epochCount(1).build();
+    TuningJob job = client.tunings.tune("gemini-2.0-flash-001", tuningDataset, tuningConfig);
 
     // Act
     TuningJob currentJob = job;
@@ -115,5 +117,70 @@ public class TuningsTest {
     // Assert
     assertNotNull(currentJob);
     assertTrue(currentJob.state().get().knownEnum() == JobState.Known.JOB_STATE_SUCCEEDED);
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  public void testContinuousTuning(boolean vertexAI) {
+    if (!vertexAI) { // MLDev test removed, tune not supported anymore
+      return;
+    }
+
+    // Arrange
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI, "tests/tunings/end_to_end/test_continuous_tuning." + suffix + ".json");
+
+    TuningDataset tuningDataset =
+        TuningDataset.builder()
+            .gcsUri(
+                "gs://cloud-samples-data/ai-platform/generative_ai/gemini-2_0/text/sft_train_data.jsonl")
+            .build();
+    CreateTuningJobConfig tuningConfig = CreateTuningJobConfig.builder().epochCount(1).build();
+    TuningJob job = client.tunings.tune("gemini-2.5-flash", tuningDataset, tuningConfig);
+
+    // Act
+    TuningJob currentJob = job;
+    JobState.Known state = job.state().get().knownEnum();
+
+    // Needed to go through the running + pending tuning job states.
+    while (state != JobState.Known.JOB_STATE_SUCCEEDED
+        && state != JobState.Known.JOB_STATE_FAILED
+        && state != JobState.Known.JOB_STATE_CANCELLED) {
+      currentJob = client.tunings.get(currentJob.name().get(), null);
+      state = currentJob.state().get().knownEnum();
+    }
+
+    // Assert
+    assertNotNull(currentJob);
+    assertTrue(currentJob.state().get().knownEnum() == JobState.Known.JOB_STATE_SUCCEEDED);
+
+    // Arrange
+    CreateTuningJobConfig continuousTuningConfig =
+        CreateTuningJobConfig.builder()
+            .tunedModelDisplayName("continuous tuning job")
+            .epochCount(1)
+            .build();
+    TuningJob continuousJob =
+        client.tunings.tune(
+            currentJob.tunedModel().get().model().get(), tuningDataset, continuousTuningConfig);
+
+    // Act
+    TuningJob currentContinuousJob = continuousJob;
+    JobState.Known continuousState = continuousJob.state().get().knownEnum();
+
+    // Needed to go through the running + pending tuning job states.
+    while (continuousState != JobState.Known.JOB_STATE_SUCCEEDED
+        && continuousState != JobState.Known.JOB_STATE_FAILED
+        && continuousState != JobState.Known.JOB_STATE_CANCELLED) {
+      currentContinuousJob = client.tunings.get(currentContinuousJob.name().get(), null);
+      continuousState = currentContinuousJob.state().get().knownEnum();
+    }
+
+    // Assert
+    assertNotNull(currentContinuousJob);
+    assertTrue(
+        currentContinuousJob.state().get().knownEnum() == JobState.Known.JOB_STATE_SUCCEEDED);
   }
 }

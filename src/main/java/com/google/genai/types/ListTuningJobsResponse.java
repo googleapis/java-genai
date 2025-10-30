@@ -33,6 +33,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ListTuningJobsResponse.Builder.class)
 public abstract class ListTuningJobsResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /**
    * A token to retrieve the next page of results. Pass to ListTuningJobsRequest.page_token to
    * obtain that page.
@@ -45,6 +49,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
   public abstract Optional<List<TuningJob>> tuningJobs();
 
   /** Instantiates a builder for ListTuningJobsResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListTuningJobsResponse.Builder();
   }
@@ -59,6 +64,23 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_ListTuningJobsResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -103,6 +125,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListTuningJobsResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListTuningJobsResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListTuningJobsResponse.class);
   }

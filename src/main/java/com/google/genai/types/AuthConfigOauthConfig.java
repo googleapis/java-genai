@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for user oauth. */
+/** Config for user oauth. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfigOauthConfig.Builder.class)
 public abstract class AuthConfigOauthConfig extends JsonSerializable {
@@ -47,6 +47,7 @@ public abstract class AuthConfigOauthConfig extends JsonSerializable {
   public abstract Optional<String> serviceAccount();
 
   /** Instantiates a builder for AuthConfigOauthConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AuthConfigOauthConfig.Builder();
   }
@@ -88,6 +89,7 @@ public abstract class AuthConfigOauthConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AuthConfigOauthConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AuthConfigOauthConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AuthConfigOauthConfig.class);
   }

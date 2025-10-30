@@ -90,6 +90,13 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   @JsonProperty("speechConfig")
   public abstract Optional<SpeechConfig> speechConfig();
 
+  /**
+   * Config for thinking features. An error will be returned if this field is set for models that
+   * don't support thinking.
+   */
+  @JsonProperty("thinkingConfig")
+  public abstract Optional<ThinkingConfig> thinkingConfig();
+
   /** If enabled, the model will detect emotions and adapt its responses accordingly. */
   @JsonProperty("enableAffectiveDialog")
   public abstract Optional<Boolean> enableAffectiveDialog();
@@ -148,6 +155,7 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   public abstract Optional<ProactivityConfig> proactivity();
 
   /** Instantiates a builder for LiveConnectConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveConnectConfig.Builder();
   }
@@ -342,6 +350,25 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for thinkingConfig.
+     *
+     * <p>thinkingConfig: Config for thinking features. An error will be returned if this field is
+     * set for models that don't support thinking.
+     */
+    @JsonProperty("thinkingConfig")
+    public abstract Builder thinkingConfig(ThinkingConfig thinkingConfig);
+
+    /**
+     * Setter for thinkingConfig builder.
+     *
+     * <p>thinkingConfig: Config for thinking features. An error will be returned if this field is
+     * set for models that don't support thinking.
+     */
+    public Builder thinkingConfig(ThinkingConfig.Builder thinkingConfigBuilder) {
+      return thinkingConfig(thinkingConfigBuilder.build());
+    }
+
+    /**
      * Setter for enableAffectiveDialog.
      *
      * <p>enableAffectiveDialog: If enabled, the model will detect emotions and adapt its responses
@@ -533,6 +560,7 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveConnectConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveConnectConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveConnectConfig.class);
   }

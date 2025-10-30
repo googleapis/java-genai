@@ -18,12 +18,16 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,6 +54,13 @@ public abstract class FunctionResponse extends JsonSerializable {
   public abstract Optional<FunctionResponseScheduling> scheduling();
 
   /**
+   * List of parts that constitute a function response. Each part may have a different IANA MIME
+   * type.
+   */
+  @JsonProperty("parts")
+  public abstract Optional<List<FunctionResponsePart>> parts();
+
+  /**
    * Optional. The id of the function call this response is for. Populated by the client to match
    * the corresponding function call `id`.
    */
@@ -72,6 +83,7 @@ public abstract class FunctionResponse extends JsonSerializable {
   public abstract Optional<Map<String, Object>> response();
 
   /** Instantiates a builder for FunctionResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FunctionResponse.Builder();
   }
@@ -134,6 +146,38 @@ public abstract class FunctionResponse extends JsonSerializable {
     }
 
     /**
+     * Setter for parts.
+     *
+     * <p>parts: List of parts that constitute a function response. Each part may have a different
+     * IANA MIME type.
+     */
+    @JsonProperty("parts")
+    public abstract Builder parts(List<FunctionResponsePart> parts);
+
+    /**
+     * Setter for parts.
+     *
+     * <p>parts: List of parts that constitute a function response. Each part may have a different
+     * IANA MIME type.
+     */
+    public Builder parts(FunctionResponsePart... parts) {
+      return parts(Arrays.asList(parts));
+    }
+
+    /**
+     * Setter for parts builder.
+     *
+     * <p>parts: List of parts that constitute a function response. Each part may have a different
+     * IANA MIME type.
+     */
+    public Builder parts(FunctionResponsePart.Builder... partsBuilders) {
+      return parts(
+          Arrays.asList(partsBuilders).stream()
+              .map(FunctionResponsePart.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for id.
      *
      * <p>id: Optional. The id of the function call this response is for. Populated by the client to
@@ -165,6 +209,7 @@ public abstract class FunctionResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FunctionResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FunctionResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FunctionResponse.class);
   }

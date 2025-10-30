@@ -50,6 +50,7 @@ public abstract class UpdateCachedContentConfig extends JsonSerializable {
   public abstract Optional<Instant> expireTime();
 
   /** Instantiates a builder for UpdateCachedContentConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UpdateCachedContentConfig.Builder();
   }
@@ -105,6 +106,7 @@ public abstract class UpdateCachedContentConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UpdateCachedContentConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UpdateCachedContentConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UpdateCachedContentConfig.class);
   }

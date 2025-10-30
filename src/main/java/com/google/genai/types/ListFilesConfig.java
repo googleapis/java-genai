@@ -42,6 +42,7 @@ public abstract class ListFilesConfig extends JsonSerializable {
   public abstract Optional<String> pageToken();
 
   /** Instantiates a builder for ListFilesConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListFilesConfig.Builder();
   }
@@ -95,6 +96,7 @@ public abstract class ListFilesConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListFilesConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListFilesConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListFilesConfig.class);
   }

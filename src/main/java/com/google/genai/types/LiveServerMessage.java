@@ -64,6 +64,7 @@ public abstract class LiveServerMessage extends JsonSerializable {
   public abstract Optional<LiveServerSessionResumptionUpdate> sessionResumptionUpdate();
 
   /** Instantiates a builder for LiveServerMessage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerMessage.Builder();
   }
@@ -213,6 +214,7 @@ public abstract class LiveServerMessage extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveServerMessage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerMessage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerMessage.class);
   }

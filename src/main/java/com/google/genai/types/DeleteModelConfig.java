@@ -34,6 +34,7 @@ public abstract class DeleteModelConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for DeleteModelConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteModelConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class DeleteModelConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteModelConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteModelConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteModelConfig.class);
   }

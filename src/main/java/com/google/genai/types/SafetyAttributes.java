@@ -44,6 +44,7 @@ public abstract class SafetyAttributes extends JsonSerializable {
   public abstract Optional<String> contentType();
 
   /** Instantiates a builder for SafetyAttributes. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SafetyAttributes.Builder();
   }
@@ -106,6 +107,7 @@ public abstract class SafetyAttributes extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SafetyAttributes object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SafetyAttributes fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SafetyAttributes.class);
   }

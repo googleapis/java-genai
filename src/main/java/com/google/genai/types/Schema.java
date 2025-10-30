@@ -146,6 +146,7 @@ public abstract class Schema extends JsonSerializable {
   public abstract Optional<Type> type();
 
   /** Instantiates a builder for Schema. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Schema.Builder();
   }
@@ -433,6 +434,7 @@ public abstract class Schema extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Schema object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Schema fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Schema.class);
   }

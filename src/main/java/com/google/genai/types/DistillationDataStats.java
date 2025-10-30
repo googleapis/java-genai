@@ -25,7 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Statistics computed for datasets used for distillation. */
+/**
+ * Statistics computed for datasets used for distillation. This data type is not supported in Gemini
+ * API.
+ */
 @AutoValue
 @JsonDeserialize(builder = DistillationDataStats.Builder.class)
 public abstract class DistillationDataStats extends JsonSerializable {
@@ -34,6 +37,7 @@ public abstract class DistillationDataStats extends JsonSerializable {
   public abstract Optional<DatasetStats> trainingDatasetStats();
 
   /** Instantiates a builder for DistillationDataStats. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DistillationDataStats.Builder();
   }
@@ -71,6 +75,7 @@ public abstract class DistillationDataStats extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DistillationDataStats object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DistillationDataStats fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DistillationDataStats.class);
   }

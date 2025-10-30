@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Specifies the context retrieval config. */
+/** Specifies the context retrieval config. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfig.Builder.class)
 public abstract class RagRetrievalConfig extends JsonSerializable {
@@ -46,6 +46,7 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
   public abstract Optional<Integer> topK();
 
   /** Instantiates a builder for RagRetrievalConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RagRetrievalConfig.Builder();
   }
@@ -125,6 +126,7 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RagRetrievalConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RagRetrievalConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RagRetrievalConfig.class);
   }

@@ -14,7 +14,8 @@ jobs:
     strategy:
       matrix:
         java: [8, 11, 17, 21]
-        testgroup: ['**/*']
+        # Only run unit tests.
+        testgroup: ["**/*Test"]
       fail-fast: false
     name: unit-test (${{matrix.java}})
     steps:
@@ -25,4 +26,4 @@ jobs:
         java-version: ${{matrix.java}}
         cache: 'maven'
     - name: Java Unit Tests
-      run: mvn clean test -Dtest=${{matrix.testgroup}}
+      run: mvn clean test -Dtest=${{matrix.testgroup}} -Djacoco.skip=true

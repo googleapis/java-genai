@@ -38,6 +38,7 @@ public abstract class SearchEntryPoint extends JsonSerializable {
   public abstract Optional<byte[]> sdkBlob();
 
   /** Instantiates a builder for SearchEntryPoint. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SearchEntryPoint.Builder();
   }
@@ -75,6 +76,7 @@ public abstract class SearchEntryPoint extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SearchEntryPoint object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SearchEntryPoint fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SearchEntryPoint.class);
   }

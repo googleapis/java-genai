@@ -27,6 +27,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Config for inlined request. */
@@ -44,11 +45,16 @@ public abstract class InlinedRequest extends JsonSerializable {
   @JsonProperty("contents")
   public abstract Optional<List<Content>> contents();
 
+  /** The metadata to be associated with the request. */
+  @JsonProperty("metadata")
+  public abstract Optional<Map<String, String>> metadata();
+
   /** Configuration that contains optional model parameters. */
   @JsonProperty("config")
   public abstract Optional<GenerateContentConfig> config();
 
   /** Instantiates a builder for InlinedRequest. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_InlinedRequest.Builder();
   }
@@ -104,6 +110,14 @@ public abstract class InlinedRequest extends JsonSerializable {
     }
 
     /**
+     * Setter for metadata.
+     *
+     * <p>metadata: The metadata to be associated with the request.
+     */
+    @JsonProperty("metadata")
+    public abstract Builder metadata(Map<String, String> metadata);
+
+    /**
      * Setter for config.
      *
      * <p>config: Configuration that contains optional model parameters.
@@ -124,6 +138,7 @@ public abstract class InlinedRequest extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a InlinedRequest object. */
+  @ExcludeFromGeneratedCoverageReport
   public static InlinedRequest fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, InlinedRequest.class);
   }

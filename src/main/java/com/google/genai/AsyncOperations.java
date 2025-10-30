@@ -18,16 +18,52 @@
 
 package com.google.genai;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.genai.Common.BuiltRequest;
+import com.google.genai.types.FetchPredictOperationConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
+import com.google.genai.types.Operation;
 import java.util.concurrent.CompletableFuture;
 
 /** Async module of {@link Operations} */
 public final class AsyncOperations {
+
   Operations operations;
+  ApiClient apiClient;
 
   public AsyncOperations(ApiClient apiClient) {
+    this.apiClient = apiClient;
     this.operations = new Operations(apiClient);
+  }
+
+  CompletableFuture<JsonNode> privateGetVideosOperation(
+      String operationName, GetOperationConfig config) {
+    BuiltRequest builtRequest =
+        operations.buildRequestForPrivateGetVideosOperation(operationName, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return operations.processResponseForPrivateGetVideosOperation(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<JsonNode> privateFetchPredictVideosOperation(
+      String operationName, String resourceName, FetchPredictOperationConfig config) {
+    BuiltRequest builtRequest =
+        operations.buildRequestForPrivateFetchPredictVideosOperation(
+            operationName, resourceName, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return operations.processResponseForPrivateFetchPredictVideosOperation(res, config);
+              }
+            });
   }
 
   /**
@@ -39,6 +75,29 @@ public final class AsyncOperations {
    */
   public CompletableFuture<GenerateVideosOperation> getVideosOperation(
       GenerateVideosOperation operation, GetOperationConfig config) {
-    return CompletableFuture.supplyAsync(() -> operations.getVideosOperation(operation, config));
+    return get(operation, config);
+  }
+
+  /**
+   * Gets the status of an Operation.
+   *
+   * @param operation An Operation.
+   * @param config The configuration for getting the operation.
+   * @return An Operation with the updated status of the operation.
+   */
+  public <T, U extends Operation<T, U>> CompletableFuture<U> get(
+      U operation, GetOperationConfig config) {
+    if (!operation.name().isPresent()) {
+      throw new IllegalArgumentException("Operation name is required.");
+    }
+
+    if (this.apiClient.vertexAI()) {
+      String resourceName = operation.name().get().split("/operations/")[0];
+      return this.privateFetchPredictVideosOperation(operation.name().get(), resourceName, null)
+          .thenApplyAsync(response -> operation.fromApiResponse(response, true));
+    } else {
+      return this.privateGetVideosOperation(operation.name().get(), config)
+          .thenApplyAsync(response -> operation.fromApiResponse(response, false));
+    }
   }
 }

@@ -84,6 +84,7 @@ public abstract class CreateCachedContentConfig extends JsonSerializable {
   public abstract Optional<String> kmsKeyName();
 
   /** Instantiates a builder for CreateCachedContentConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateCachedContentConfig.Builder();
   }
@@ -252,6 +253,7 @@ public abstract class CreateCachedContentConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateCachedContentConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateCachedContentConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateCachedContentConfig.class);
   }

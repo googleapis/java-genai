@@ -36,6 +36,7 @@ public abstract class ListModelsParameters extends JsonSerializable {
   public abstract Optional<ListModelsConfig> config();
 
   /** Instantiates a builder for ListModelsParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListModelsParameters.Builder();
   }
@@ -73,6 +74,7 @@ public abstract class ListModelsParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListModelsParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListModelsParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListModelsParameters.class);
   }

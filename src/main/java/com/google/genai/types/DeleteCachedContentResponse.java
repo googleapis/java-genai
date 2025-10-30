@@ -19,15 +19,22 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Optional;
 
 /** Empty response for caches.delete method. */
 @AutoValue
 @JsonDeserialize(builder = DeleteCachedContentResponse.Builder.class)
 public abstract class DeleteCachedContentResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** Instantiates a builder for DeleteCachedContentResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteCachedContentResponse.Builder();
   }
@@ -44,10 +51,28 @@ public abstract class DeleteCachedContentResponse extends JsonSerializable {
       return new AutoValue_DeleteCachedContentResponse.Builder();
     }
 
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
     public abstract DeleteCachedContentResponse build();
   }
 
   /** Deserializes a JSON string to a DeleteCachedContentResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteCachedContentResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteCachedContentResponse.class);
   }

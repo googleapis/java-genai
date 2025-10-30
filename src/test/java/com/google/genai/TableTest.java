@@ -56,8 +56,15 @@ public final class TableTest {
     // Gets module name and method name.
     String testMethod = testTableFile.testMethod().get();
     String[] segments = testMethod.split("\\.");
-    if (segments.length != 2) {
-      throw new RuntimeException("Invalid test method: " + testMethod);
+    if (segments.length == 1) {
+      String msg = " => Test skipped: multistep test " + testMethod + " not supported in Java";
+      List<DynamicTest> dynamicTests = new ArrayList<>();
+      for (TestTableItem testTableItem : testTableFile.testTable().get()) {
+        String testName =
+            String.format("%s.%s.%s", testMethod, testTableItem.name().get(), suffix);
+        dynamicTests.add(DynamicTest.dynamicTest(testName + msg, () -> {}));
+      }
+      return dynamicTests;
     }
     String originalModuleName = segments[0];
     String moduleName = Common.snakeToCamel(originalModuleName);
@@ -89,6 +96,10 @@ public final class TableTest {
         }
         if (methodName.equals("embedContent")
             && candidate.getName().equals("privateEmbedContent")) {
+          candidate.setAccessible(true);
+          methods.add(candidate);
+        } else if (methodName.equals("generateVideos")
+            && candidate.getName().equals("privateGenerateVideos")) {
           candidate.setAccessible(true);
           methods.add(candidate);
         }
@@ -155,6 +166,13 @@ public final class TableTest {
     Map<String, Object> fromParameters = (Map<String, Object>) normalizeKeys((Map<String, Object>) testTableItem.parameters().get());
     ReplaySanitizer.sanitizeMapByPath(
         fromParameters, "image.imageBytes", new ReplayBase64Sanitizer(), false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters, "source.image.imageBytes", new ReplayBase64Sanitizer(), false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "source.scribbleImage.image.imageBytes",
+        new ReplayBase64Sanitizer(),
+        false);
     // TODO(b/403368643): Support interface param types in Java replay tests.
     // ReplaySanitizer.sanitizeMapByPath(
     // fromParameters,
@@ -288,6 +306,10 @@ public final class TableTest {
   Collection<DynamicTest> createTests() throws IOException {
     String replaysPath = System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY");
     String testsReplaysPath = replaysPath + "/tests";
+    String testsSubDir = System.getenv("GOOGLE_GENAI_TESTS_SUBDIR");
+    if (testsSubDir != null) {
+      testsReplaysPath += "/" + testsSubDir;
+    }
     Collection<DynamicTest> dynamicTests = new ArrayList<>();
     Files.walk(Paths.get(testsReplaysPath))
         .filter(Files::isRegularFile)

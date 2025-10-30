@@ -52,6 +52,7 @@ public abstract class GroundingSupport extends JsonSerializable {
   public abstract Optional<Segment> segment();
 
   /** Instantiates a builder for GroundingSupport. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GroundingSupport.Builder();
   }
@@ -133,6 +134,7 @@ public abstract class GroundingSupport extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GroundingSupport object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GroundingSupport fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GroundingSupport.class);
   }

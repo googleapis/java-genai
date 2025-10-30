@@ -43,6 +43,7 @@ package com.google.genai.examples;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.Video;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -50,9 +51,11 @@ import java.util.concurrent.ExecutionException;
 /** An example of using the Unified Gen AI Java SDK to generate images asynchronously. */
 public final class GenerateVideosAsync {
   public static void main(String[] args) {
-    String modelId = "veo-2.0-generate-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.VEO_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -78,10 +81,13 @@ public final class GenerateVideosAsync {
       generateVideosConfigBuilder.outputGcsUri("gs://genai-sdk-tests/tmp/videos");
     }
     GenerateVideosConfig generateVideosConfig = generateVideosConfigBuilder.build();
+    GenerateVideosSource generateVideosSource =
+        GenerateVideosSource.builder()
+            .prompt("A neon hologram of a cat driving at top speed")
+            .build();
 
     CompletableFuture<GenerateVideosOperation> generateVideosOperationFuture =
-        client.async.models.generateVideos(
-            modelId, "A neon hologram of a cat driving at top speed", null, generateVideosConfig);
+        client.async.models.generateVideos(modelId, generateVideosSource, generateVideosConfig);
 
     generateVideosOperationFuture
         .thenAccept(
@@ -92,7 +98,7 @@ public final class GenerateVideosAsync {
                 try {
                   Thread.sleep(10000); // Sleep for 10 seconds.
                   try {
-                    operation = client.async.operations.getVideosOperation(operation, null).get();
+                    operation = client.async.operations.get(operation, null).get();
                   } catch (ExecutionException e) {
                     throw new RuntimeException(e);
                   }
@@ -109,7 +115,7 @@ public final class GenerateVideosAsync {
 
               Video generatedVideo =
                   operation.response().get().generatedVideos().get().get(0).video().get();
-              // Do something with the video.
+              System.out.println("Video URL: " + generatedVideo.uri().get());
             })
         .join();
   }

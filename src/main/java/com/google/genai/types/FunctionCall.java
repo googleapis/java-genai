@@ -49,6 +49,7 @@ public abstract class FunctionCall extends JsonSerializable {
   public abstract Optional<String> name();
 
   /** Instantiates a builder for FunctionCall. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FunctionCall.Builder();
   }
@@ -95,6 +96,7 @@ public abstract class FunctionCall extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FunctionCall object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FunctionCall fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FunctionCall.class);
   }

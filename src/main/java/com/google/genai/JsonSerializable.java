@@ -38,7 +38,7 @@ import com.google.genai.errors.GenAiIOException;
 /** A class that can be serialized to JSON and deserialized from JSON. */
 public abstract class JsonSerializable {
 
-  static final ObjectMapper objectMapper = new ObjectMapper();
+  @InternalApi protected static final ObjectMapper objectMapper = new ObjectMapper();
 
   /** Custom Jackson serializer for {@link java.time.Duration} to output "Xs" format. */
   static class CustomDurationSerializer extends JsonSerializer<java.time.Duration> {
@@ -71,11 +71,15 @@ public abstract class JsonSerializable {
           long seconds = Long.parseLong(secondsPart);
           return java.time.Duration.ofSeconds(seconds);
         } catch (NumberFormatException e) {
-          throw ctxt.weirdStringException(value, java.time.Duration.class, "Cannot parse duration from string: " + value + ". Expected format 'Xs'.");
+          throw ctxt.weirdStringException(
+              value,
+              java.time.Duration.class,
+              "Cannot parse duration from string: " + value + ". Expected format 'Xs'.");
         }
       } else {
         // If it doesn't end with 's', delegate to the default deserializer.
-        throw ctxt.weirdStringException(value, java.time.Duration.class, "Expected duration in format 'Xs', but got: " + value);
+        throw ctxt.weirdStringException(
+            value, java.time.Duration.class, "Expected duration in format 'Xs', but got: " + value);
       }
     }
   }
@@ -83,7 +87,6 @@ public abstract class JsonSerializable {
   static {
     objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
     objectMapper.registerModule(new Jdk8Module());
-    objectMapper.registerModule(new JavaTimeModule());
     // Disable writing dates as timestamps to use ISO-8601 string format for Instant
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -98,7 +101,6 @@ public abstract class JsonSerializable {
     // provided by JavaTimeModule.
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.registerModule(customModule);
-
   }
 
   /** Serializes the instance to a Json string. */
@@ -132,7 +134,8 @@ public abstract class JsonSerializable {
   }
 
   /** Deserializes a JsonNode to an object of the given type. */
-  static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
+  @InternalApi
+  protected static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
     try {
       return objectMapper.treeToValue(jsonNode, clazz);
     } catch (JsonProcessingException e) {
@@ -141,7 +144,7 @@ public abstract class JsonSerializable {
   }
 
   /** Converts a Json string to a JsonNode. */
-  static JsonNode stringToJsonNode(String string) {
+  public static JsonNode stringToJsonNode(String string) {
     try {
       return objectMapper.readTree(string);
     } catch (JsonProcessingException e) {

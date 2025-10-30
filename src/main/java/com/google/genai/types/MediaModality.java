@@ -71,12 +71,14 @@ public class MediaModality {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -103,6 +105,7 @@ public class MediaModality {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.mediaModalityEnum != Known.MEDIA_MODALITY_UNSPECIFIED) {
@@ -112,6 +115,7 @@ public class MediaModality {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.mediaModalityEnum;
   }

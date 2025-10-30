@@ -46,9 +46,11 @@ import com.google.genai.types.ComputeTokensResponse;
 /** An example of using the Unified Gen AI Java SDK to compute tokens for simple text input. */
 public final class ComputeTokens {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -64,7 +66,8 @@ public final class ComputeTokens {
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println("Gemini Developer API is not supported for this example.");
+      System.exit(0);
     }
 
     ComputeTokensResponse response =

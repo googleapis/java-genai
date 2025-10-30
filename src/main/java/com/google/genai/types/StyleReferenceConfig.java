@@ -34,6 +34,7 @@ public abstract class StyleReferenceConfig extends JsonSerializable {
   public abstract Optional<String> styleDescription();
 
   /** Instantiates a builder for StyleReferenceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_StyleReferenceConfig.Builder();
   }
@@ -62,6 +63,7 @@ public abstract class StyleReferenceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a StyleReferenceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static StyleReferenceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, StyleReferenceConfig.class);
   }

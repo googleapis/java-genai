@@ -20,6 +20,7 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CachedContent;
 import com.google.genai.types.CreateCachedContentConfig;
@@ -27,15 +28,19 @@ import com.google.genai.types.DeleteCachedContentConfig;
 import com.google.genai.types.DeleteCachedContentResponse;
 import com.google.genai.types.GetCachedContentConfig;
 import com.google.genai.types.ListCachedContentsConfig;
+import com.google.genai.types.ListCachedContentsResponse;
 import com.google.genai.types.UpdateCachedContentConfig;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 /** Async module of {@link Caches} */
 public final class AsyncCaches {
+
   Caches caches;
+  ApiClient apiClient;
 
   public AsyncCaches(ApiClient apiClient) {
+    this.apiClient = apiClient;
     this.caches = new Caches(apiClient);
   }
 
@@ -47,7 +52,15 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the created resource.
    */
   public CompletableFuture<CachedContent> create(String model, CreateCachedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> caches.create(model, config));
+    BuiltRequest builtRequest = caches.buildRequestForCreate(model, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return caches.processResponseForCreate(res, config);
+              }
+            });
   }
 
   /**
@@ -58,7 +71,15 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the cached content.
    */
   public CompletableFuture<CachedContent> get(String name, GetCachedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> caches.get(name, config));
+    BuiltRequest builtRequest = caches.buildRequestForGet(name, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return caches.processResponseForGet(res, config);
+              }
+            });
   }
 
   /**
@@ -69,7 +90,15 @@ public final class AsyncCaches {
    */
   public CompletableFuture<DeleteCachedContentResponse> delete(
       String name, DeleteCachedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> caches.delete(name, config));
+    BuiltRequest builtRequest = caches.buildRequestForDelete(name, config);
+    return this.apiClient
+        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return caches.processResponseForDelete(res, config);
+              }
+            });
   }
 
   /**
@@ -80,7 +109,27 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the updated resource.
    */
   public CompletableFuture<CachedContent> update(String name, UpdateCachedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> caches.update(name, config));
+    BuiltRequest builtRequest = caches.buildRequestForUpdate(name, config);
+    return this.apiClient
+        .asyncRequest("patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return caches.processResponseForUpdate(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<ListCachedContentsResponse> privateList(ListCachedContentsConfig config) {
+    BuiltRequest builtRequest = caches.buildRequestForPrivateList(config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return caches.processResponseForPrivateList(res, config);
+              }
+            });
   }
 
   /**
@@ -100,10 +149,8 @@ public final class AsyncCaches {
                 "Internal error: Pager expected ListCachedContentsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      caches.privateList((ListCachedContentsConfig) requestConfig)));
+          return this.privateList((ListCachedContentsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

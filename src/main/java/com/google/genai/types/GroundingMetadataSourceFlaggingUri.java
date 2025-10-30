@@ -1,0 +1,88 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Auto-generated code. Do not edit.
+
+package com.google.genai.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.auto.value.AutoValue;
+import com.google.genai.JsonSerializable;
+import java.util.Optional;
+
+/**
+ * Source content flagging uri for a place or review. This is currently populated only for Google
+ * Maps grounding. This data type is not supported in Gemini API.
+ */
+@AutoValue
+@JsonDeserialize(builder = GroundingMetadataSourceFlaggingUri.Builder.class)
+public abstract class GroundingMetadataSourceFlaggingUri extends JsonSerializable {
+  /** A link where users can flag a problem with the source (place or review). */
+  @JsonProperty("flagContentUri")
+  public abstract Optional<String> flagContentUri();
+
+  /** Id of the place or review. */
+  @JsonProperty("sourceId")
+  public abstract Optional<String> sourceId();
+
+  /** Instantiates a builder for GroundingMetadataSourceFlaggingUri. */
+  @ExcludeFromGeneratedCoverageReport
+  public static Builder builder() {
+    return new AutoValue_GroundingMetadataSourceFlaggingUri.Builder();
+  }
+
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
+  /** Builder for GroundingMetadataSourceFlaggingUri. */
+  @AutoValue.Builder
+  public abstract static class Builder {
+    /**
+     * For internal usage. Please use `GroundingMetadataSourceFlaggingUri.builder()` for
+     * instantiation.
+     */
+    @JsonCreator
+    private static Builder create() {
+      return new AutoValue_GroundingMetadataSourceFlaggingUri.Builder();
+    }
+
+    /**
+     * Setter for flagContentUri.
+     *
+     * <p>flagContentUri: A link where users can flag a problem with the source (place or review).
+     */
+    @JsonProperty("flagContentUri")
+    public abstract Builder flagContentUri(String flagContentUri);
+
+    /**
+     * Setter for sourceId.
+     *
+     * <p>sourceId: Id of the place or review.
+     */
+    @JsonProperty("sourceId")
+    public abstract Builder sourceId(String sourceId);
+
+    public abstract GroundingMetadataSourceFlaggingUri build();
+  }
+
+  /** Deserializes a JSON string to a GroundingMetadataSourceFlaggingUri object. */
+  @ExcludeFromGeneratedCoverageReport
+  public static GroundingMetadataSourceFlaggingUri fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, GroundingMetadataSourceFlaggingUri.class);
+  }
+}

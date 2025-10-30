@@ -73,14 +73,13 @@ public final class LiveTextToTextGenerationAsync {
       System.out.println("Using Gemini Developer API");
     }
 
-    String modelId;
-    if (client.vertexAI()) {
-      modelId = "gemini-2.0-flash-live-preview-04-09";
-    } else {
-      modelId = "gemini-live-2.5-flash-preview";
-    }
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else if (client.vertexAI()) {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME;
+    } else {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME_PREVIEW;
     }
 
     LiveConnectConfig config =
@@ -94,6 +93,8 @@ public final class LiveTextToTextGenerationAsync {
         .thenCompose(
             session -> {
               String inputText = "Write a short poem about a cat.";
+              System.out.println("Connecting to live session...");
+              System.out.println(session.sessionId());
               System.out.println("\n**Input**\n" + inputText);
 
               return session
@@ -133,6 +134,8 @@ public final class LiveTextToTextGenerationAsync {
 
     // Check if the server's turn is complete and signal the allDone future if so.
     if (message.serverContent().flatMap(LiveServerContent::turnComplete).orElse(false)) {
+      System.out.println("\n**End of turn, full message: **\n");
+      System.out.println(message);
       System.out.println();
       allDone.complete(null);
     }

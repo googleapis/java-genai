@@ -53,6 +53,7 @@ public abstract class AutomaticFunctionCallingConfig extends JsonSerializable {
   public abstract Optional<Boolean> ignoreCallHistory();
 
   /** Instantiates a builder for AutomaticFunctionCallingConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AutomaticFunctionCallingConfig.Builder();
   }
@@ -104,6 +105,7 @@ public abstract class AutomaticFunctionCallingConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AutomaticFunctionCallingConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AutomaticFunctionCallingConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AutomaticFunctionCallingConfig.class);
   }

@@ -38,6 +38,7 @@ public abstract class LiveServerGoAway extends JsonSerializable {
   public abstract Optional<Duration> timeLeft();
 
   /** Instantiates a builder for LiveServerGoAway. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerGoAway.Builder();
   }
@@ -68,6 +69,7 @@ public abstract class LiveServerGoAway extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveServerGoAway object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerGoAway fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerGoAway.class);
   }

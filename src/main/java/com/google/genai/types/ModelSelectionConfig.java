@@ -35,6 +35,7 @@ public abstract class ModelSelectionConfig extends JsonSerializable {
   public abstract Optional<FeatureSelectionPreference> featureSelectionPreference();
 
   /** Instantiates a builder for ModelSelectionConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ModelSelectionConfig.Builder();
   }
@@ -84,6 +85,7 @@ public abstract class ModelSelectionConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ModelSelectionConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ModelSelectionConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ModelSelectionConfig.class);
   }

@@ -40,6 +40,7 @@ public abstract class GetOperationParameters extends JsonSerializable {
   public abstract Optional<GetOperationConfig> config();
 
   /** Instantiates a builder for GetOperationParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GetOperationParameters.Builder();
   }
@@ -85,6 +86,7 @@ public abstract class GetOperationParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GetOperationParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GetOperationParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GetOperationParameters.class);
   }

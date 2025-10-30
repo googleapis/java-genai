@@ -45,6 +45,7 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
   public abstract Optional<BatchJobDestination> dest();
 
   /** Instantiates a builder for CreateBatchJobConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateBatchJobConfig.Builder();
   }
@@ -109,6 +110,7 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateBatchJobConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateBatchJobConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateBatchJobConfig.class);
   }

@@ -50,6 +50,7 @@ public abstract class JobError extends JsonSerializable {
   public abstract Optional<String> message();
 
   /** Instantiates a builder for JobError. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_JobError.Builder();
   }
@@ -106,6 +107,7 @@ public abstract class JobError extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a JobError object. */
+  @ExcludeFromGeneratedCoverageReport
   public static JobError fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, JobError.class);
   }

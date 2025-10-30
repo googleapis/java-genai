@@ -51,6 +51,7 @@ public abstract class CountTokensParameters extends JsonSerializable {
   public abstract Optional<CountTokensConfig> config();
 
   /** Instantiates a builder for CountTokensParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CountTokensParameters.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class CountTokensParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CountTokensParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CountTokensParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CountTokensParameters.class);
   }

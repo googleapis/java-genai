@@ -44,14 +44,17 @@ import com.google.genai.Client;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.Video;
 
 /** An example of using the Unified Gen AI Java SDK to generate videos. */
 public final class GenerateVideos {
   public static void main(String[] args) {
-    String modelId = "veo-2.0-generate-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.VEO_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -77,17 +80,19 @@ public final class GenerateVideos {
       generateVideosConfigBuilder.outputGcsUri("gs://genai-sdk-tests/tmp/videos");
     }
     GenerateVideosConfig generateVideosConfig = generateVideosConfigBuilder.build();
+    GenerateVideosSource generateVideosSource =
+        GenerateVideosSource.builder()
+            .prompt("A neon hologram of a cat driving at top speed")
+            .build();
 
     GenerateVideosOperation generateVideosOperation =
-        client.models.generateVideos(
-            modelId, "A neon hologram of a cat driving at top speed", null, generateVideosConfig);
+        client.models.generateVideos(modelId, generateVideosSource, generateVideosConfig);
 
     // GenerateVideosOperation.done() is empty if the operation is not done.
     while (!generateVideosOperation.done().filter(Boolean::booleanValue).isPresent()) {
       try {
         Thread.sleep(10000); // Sleep for 10 seconds.
-        generateVideosOperation =
-            client.operations.getVideosOperation(generateVideosOperation, null);
+        generateVideosOperation = client.operations.get(generateVideosOperation, null);
         System.out.println("Waiting for operation to complete...");
       } catch (InterruptedException e) {
         System.out.println("Thread was interrupted while sleeping.");

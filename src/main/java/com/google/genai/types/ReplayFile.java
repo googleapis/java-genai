@@ -42,6 +42,7 @@ public abstract class ReplayFile extends JsonSerializable {
   public abstract Optional<List<ReplayInteraction>> interactions();
 
   /** Instantiates a builder for ReplayFile. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ReplayFile.Builder();
   }
@@ -99,6 +100,7 @@ public abstract class ReplayFile extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ReplayFile object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ReplayFile fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ReplayFile.class);
   }

@@ -54,6 +54,7 @@ public abstract class MaskReferenceImage extends JsonSerializable implements Ref
   public abstract Optional<MaskReferenceConfig> config();
 
   /** Instantiates a builder for MaskReferenceImage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_MaskReferenceImage.Builder();
   }
@@ -124,6 +125,7 @@ public abstract class MaskReferenceImage extends JsonSerializable implements Ref
   }
 
   /** Deserializes a JSON string to a MaskReferenceImage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static MaskReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, MaskReferenceImage.class);
   }

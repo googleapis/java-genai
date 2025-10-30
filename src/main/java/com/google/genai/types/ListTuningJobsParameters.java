@@ -36,6 +36,7 @@ public abstract class ListTuningJobsParameters extends JsonSerializable {
   public abstract Optional<ListTuningJobsConfig> config();
 
   /** Instantiates a builder for ListTuningJobsParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListTuningJobsParameters.Builder();
   }
@@ -73,6 +74,7 @@ public abstract class ListTuningJobsParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListTuningJobsParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListTuningJobsParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListTuningJobsParameters.class);
   }

@@ -66,12 +66,14 @@ public class TurnCoverage {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -98,6 +100,7 @@ public class TurnCoverage {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.turnCoverageEnum != Known.TURN_COVERAGE_UNSPECIFIED) {
@@ -107,6 +110,7 @@ public class TurnCoverage {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.turnCoverageEnum;
   }

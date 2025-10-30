@@ -27,6 +27,8 @@ import java.util.List;
  *
  * <p>This class provides a way to interact with a generative model in a multi-turn chat session. It
  * keeps track of the chat history and uses it to provide context for subsequent messages.
+ *
+ * <p>Note: this class is NOT thread-safe.
  */
 public class Chat extends ChatBase {
   private final ApiClient apiClient;

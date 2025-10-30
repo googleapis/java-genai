@@ -38,6 +38,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   public abstract Optional<List<LogprobsResultCandidate>> candidates();
 
   /** Instantiates a builder for LogprobsResultTopCandidates. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LogprobsResultTopCandidates.Builder();
   }
@@ -87,6 +88,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LogprobsResultTopCandidates object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LogprobsResultTopCandidates fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LogprobsResultTopCandidates.class);
   }

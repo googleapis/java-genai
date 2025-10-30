@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Output only. Harm severity levels in the content. */
+/** Output only. Harm severity levels in the content. This enum is not supported in Gemini API. */
 public class HarmSeverity {
 
   /** Enum representing the known values for HarmSeverity. */
@@ -66,12 +66,14 @@ public class HarmSeverity {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -98,6 +100,7 @@ public class HarmSeverity {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.harmSeverityEnum != Known.HARM_SEVERITY_UNSPECIFIED) {
@@ -107,6 +110,7 @@ public class HarmSeverity {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.harmSeverityEnum;
   }

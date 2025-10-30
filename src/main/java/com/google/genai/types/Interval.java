@@ -27,24 +27,30 @@ import java.time.Instant;
 import java.util.Optional;
 
 /**
- * Represents a time interval, encoded as a start time (inclusive) and an end time (exclusive).
- *
- * <p>The start time must be less than or equal to the end time. When the start equals the end time,
- * the interval is an empty interval. (matches no time) When both start and end are unspecified, the
- * interval matches any time.
+ * Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end
+ * (exclusive). The start must be less than or equal to the end. When the start equals the end, the
+ * interval is empty (matches no time). When both start and end are unspecified, the interval
+ * matches any time.
  */
 @AutoValue
 @JsonDeserialize(builder = Interval.Builder.class)
 public abstract class Interval extends JsonSerializable {
-  /** The start time of the interval. */
-  @JsonProperty("startTime")
-  public abstract Optional<Instant> startTime();
-
-  /** The end time of the interval. */
+  /**
+   * Optional. Exclusive end of the interval. If specified, a Timestamp matching this interval will
+   * have to be before the end.
+   */
   @JsonProperty("endTime")
   public abstract Optional<Instant> endTime();
 
+  /**
+   * Optional. Inclusive start of the interval. If specified, a Timestamp matching this interval
+   * will have to be the same or after the start.
+   */
+  @JsonProperty("startTime")
+  public abstract Optional<Instant> startTime();
+
   /** Instantiates a builder for Interval. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Interval.Builder();
   }
@@ -62,25 +68,28 @@ public abstract class Interval extends JsonSerializable {
     }
 
     /**
-     * Setter for startTime.
-     *
-     * <p>startTime: The start time of the interval.
-     */
-    @JsonProperty("startTime")
-    public abstract Builder startTime(Instant startTime);
-
-    /**
      * Setter for endTime.
      *
-     * <p>endTime: The end time of the interval.
+     * <p>endTime: Optional. Exclusive end of the interval. If specified, a Timestamp matching this
+     * interval will have to be before the end.
      */
     @JsonProperty("endTime")
     public abstract Builder endTime(Instant endTime);
+
+    /**
+     * Setter for startTime.
+     *
+     * <p>startTime: Optional. Inclusive start of the interval. If specified, a Timestamp matching
+     * this interval will have to be the same or after the start.
+     */
+    @JsonProperty("startTime")
+    public abstract Builder startTime(Instant startTime);
 
     public abstract Interval build();
   }
 
   /** Deserializes a JSON string to a Interval object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Interval fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Interval.class);
   }

@@ -16,11 +16,6 @@
 
 package com.google.genai;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,23 +23,27 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
-import com.google.genai.types.Candidate;
+import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
-import com.google.genai.types.Content;
-import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.Part;
+import com.google.genai.types.HttpRetryOptions;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
@@ -215,6 +214,233 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testRequestWithHttpOptions_extraBody_addNewKey() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("newKey", "newValue")).build();
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of("test", "request-json", "newKey", "newValue");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteKey() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("test", "overwritten")).build();
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap = ImmutableMap.of("test", "overwritten");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_recursiveMerge() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"nested\": {\"key1\": \"value1\"}, \"key_to_keep\": \"v_keep\"}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(ImmutableMap.of("nested", ImmutableMap.of("key2", "value2")))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of(
+            "nested", ImmutableMap.of("key1", "value1", "key2", "value2"),
+            "key_to_keep",
+            "v_keep");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteList() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"list\": [1, 2]}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(ImmutableMap.of("list", com.google.common.collect.ImmutableList.of(3, 4)))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of("list", com.google.common.collect.ImmutableList.of(3, 4));
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_overwriteWithDifferentType() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson = "{\"key\": \"string_value\"}";
+    HttpOptions httpOptions = HttpOptions.builder().extraBody(ImmutableMap.of("key", 123)).build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap = ImmutableMap.of("key", 123);
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_complexMerge() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    String initialJson =
+        "{\"a\": 1, \"b\": {\"c\": 2, \"d\": [\"x\", \"y\"]}, \"e\": \"original\"}";
+    HttpOptions httpOptions =
+        HttpOptions.builder()
+            .extraBody(
+                ImmutableMap.of(
+                    "b",
+                    ImmutableMap.of(
+                        "d", com.google.common.collect.ImmutableList.of("z"), "f", "new_f"),
+                    "e",
+                    "overwritten"))
+            .build();
+
+    // Act
+    client.request("POST", TEST_PATH, initialJson, Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
+    String requestBody = buffer.readUtf8();
+
+    Map<String, Object> expectedMap =
+        ImmutableMap.of(
+            "a",
+            1,
+            "b",
+            ImmutableMap.of(
+                "c", 2, "d", com.google.common.collect.ImmutableList.of("z"), "f", "new_f"),
+            "e",
+            "overwritten");
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> actualMap = mapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  public void testRequestWithHttpOptions_extraBody_getNoBody() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+    HttpOptions httpOptions =
+        HttpOptions.builder().extraBody(ImmutableMap.of("newKey", "newValue")).build();
+
+    // Act
+    client.request("GET", TEST_PATH, "", Optional.of(httpOptions));
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    assertNull(capturedRequest.body());
+  }
+
+  @Test
   public void testRequestWithInvalidHttpMethod() throws Exception {
     // Arrange
     HttpApiClient client =
@@ -224,6 +450,95 @@ public class HttpApiClientTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> client.request("INVALID_METHOD", TEST_PATH, TEST_REQUEST_JSON, Optional.empty()));
+  }
+
+  @Test
+  public void testAsyncRequest_Success() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+    setMockClient(client);
+
+    String responseJson = "{\"fake\":\"response\"}";
+    Response mockResponse =
+        new Response.Builder()
+            .request(new Request.Builder().url("https://example.com").build())
+            .protocol(Protocol.HTTP_1_1)
+            .code(200)
+            .message("OK")
+            .body(ResponseBody.create(responseJson, null))
+            .build();
+
+    // Capture the Callback passed to enqueue
+    ArgumentCaptor<Callback> callbackCaptor = ArgumentCaptor.forClass(Callback.class);
+    doNothing().when(mockCall).enqueue(callbackCaptor.capture());
+
+    // Act
+    CompletableFuture<ApiResponse> future =
+        client.asyncRequest("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
+
+    // Assert (Request was built correctly)
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+    assertEquals("POST", capturedRequest.method());
+    assertTrue(capturedRequest.url().toString().endsWith(TEST_PATH));
+
+    // Act (Simulate the async response)
+    Callback callback = callbackCaptor.getValue();
+    callback.onResponse(mockCall, mockResponse);
+
+    // Assert (Future completed successfully)
+    assertFalse(future.isCompletedExceptionally());
+    assertNotNull(future.get());
+    assertEquals(responseJson, future.get().getBody().string());
+  }
+
+  @Test
+  public void testAsyncRequest_Failure() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+
+    IOException networkError = new IOException("Fake network error");
+
+    // Capture the Callback passed to enqueue
+    ArgumentCaptor<Callback> callbackCaptor = ArgumentCaptor.forClass(Callback.class);
+    doNothing().when(mockCall).enqueue(callbackCaptor.capture());
+
+    // Act
+    CompletableFuture<ApiResponse> future =
+        client.asyncRequest("GET", TEST_PATH, "", Optional.empty());
+
+    // Assert (Request was built)
+    verify(mockHttpClient).newCall(any(Request.class));
+
+    // Act (Simulate the async failure)
+    Callback callback = callbackCaptor.getValue();
+    callback.onFailure(mockCall, networkError);
+
+    // Assert (Future completed exceptionally)
+    assertTrue(future.isCompletedExceptionally());
+
+    // Check that the exception was wrapped in GenAiIOException
+    Exception ex =
+        assertThrows(
+            ExecutionException.class,
+            () -> future.get(),
+            "Expected CompletableFuture.get() to throw ExecutionException");
+
+    Throwable cause = ex.getCause();
+    assertNotNull(cause);
+    assertEquals(GenAiIOException.class, cause.getClass());
+    assertEquals("Failed to execute HTTP request.", cause.getMessage());
+    assertEquals(networkError, cause.getCause());
   }
 
   @Test
@@ -318,24 +633,6 @@ public class HttpApiClientTest {
     assertNull(client.location());
     // GCP Express mode uses global endpoint.
     assertEquals(Optional.of("https://aiplatform.googleapis.com"), client.httpOptions.baseUrl());
-  }
-
-  @Test
-  public void testInitHttpClientVertexWithNoApiKeyAndNoProject_throwsException() throws Exception {
-    IllegalArgumentException exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () ->
-                new HttpApiClient(
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.of(LOCATION),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty()));
-    assertEquals(
-        "For Vertex AI APIs, either project/location or API key must be set.",
-        exception.getMessage());
   }
 
   @Test
@@ -513,20 +810,20 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testHttpClientVertexWithNoApiKeyAndNoLocation_throwsException() throws Exception {
+  public void testHttpClientVertexWithNoApiKeyProject_throwsException() throws Exception {
     IllegalArgumentException exception =
         assertThrows(
             IllegalArgumentException.class,
             () ->
                 new HttpApiClient(
                     Optional.empty(),
-                    Optional.of(PROJECT),
+                    Optional.empty(),
                     Optional.empty(),
                     Optional.empty(),
                     Optional.empty(),
                     Optional.empty()));
     assertEquals(
-        "For Vertex AI APIs, either project/location or API key must be set.",
+        "For Vertex AI APIs, either project or API key must be set.",
         exception.getMessage());
   }
 
@@ -633,6 +930,50 @@ public class HttpApiClientTest {
     assertEquals(LOCATION, client.location());
     assertTrue(client.vertexAI());
     assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
+  }
+
+  @Test
+  public void testHttpClientMldevWithRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions httpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.of(httpOptions), Optional.empty());
+
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(retryOptions, retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientMldevWithNoRetryOptions() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    // If no retry options are specified, An empty retry options should be used.
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(HttpRetryOptions.builder().build(), retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientVertexWithRequestLevelRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions requestHttpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    Request request =
+        client.buildRequest("POST", "path", "requestJson", Optional.of(requestHttpOptions));
+
+    assertEquals(retryOptions, request.tag(HttpRetryOptions.class));
   }
 
   @Test
@@ -748,44 +1089,6 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testProxySetup() throws Exception {
-    WireMockServer wireMockServer = null;
-    try {
-      wireMockServer = new WireMockServer(options().dynamicPort());
-      wireMockServer.start();
-      WireMock.configureFor("localhost", wireMockServer.port());
-      String expectedText = "This is Proxy speaking, Hello, World!";
-      Part part = Part.builder().text(expectedText).build();
-      Content content = Content.fromParts(part);
-      Candidate candidate = Candidate.builder().content(content).build();
-      GenerateContentResponse fakeResponse =
-          GenerateContentResponse.builder().candidates(candidate).build();
-      stubFor(
-          post(urlMatching(".*"))
-              .willReturn(
-                  aResponse()
-                      .withStatus(200)
-                      .withHeader("Content-Type", "application/json")
-                      .withBody(fakeResponse.toJson())));
-
-      HttpOptions httpOptions =
-          HttpOptions.builder()
-              .baseUrl("http://localhost:" + wireMockServer.port())
-              .apiVersion("v1beta")
-              .build();
-      Client client =
-          Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
-
-      GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
-
-      assertEquals(response.text(), expectedText);
-    } finally {
-      wireMockServer.stop();
-    }
-  }
-
-  @Test
   public void testClientInitializationWithBaseUrlFromHttpOptions() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder().baseUrl("https://custom-base-url.googleapis.com/").build();
@@ -888,5 +1191,152 @@ public class HttpApiClientTest {
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenOnlyProjectIsProvided(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenCredentialsProvidedWithProjectButNoLocation(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenExplicitProjectTakesPrecedenceOverEnvApiKey(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("explicit-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("explicit-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenEnvProjectTakesPrecedenceOverEnvApiKey(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(
+            ImmutableMap.of("googleApiKey", "env-api-key", "project", "env-project-id"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("env-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationToGlobalWhenExplicitLocationIsSet(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of());
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.of("us-central1"),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("us-central1", client.location());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationToGlobalWhenEnvLocationIsSet(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(
+            ImmutableMap.of("project", "fake-project-id", "location", "us-west1"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("us-west1", client.location());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationWhenUsingApiKeyOnlyMode(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of());
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of("vertexai-api-key"),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("vertexai-api-key", client.apiKey());
+    assertNull(client.project());
+    assertNull(client.location());
+    assertTrue(client.vertexAI());
   }
 }

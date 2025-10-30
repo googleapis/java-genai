@@ -28,6 +28,7 @@ import com.google.genai.JsonSerializable;
 @JsonDeserialize(builder = AudioTranscriptionConfig.Builder.class)
 public abstract class AudioTranscriptionConfig extends JsonSerializable {
   /** Instantiates a builder for AudioTranscriptionConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AudioTranscriptionConfig.Builder();
   }
@@ -48,6 +49,7 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AudioTranscriptionConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AudioTranscriptionConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AudioTranscriptionConfig.class);
   }

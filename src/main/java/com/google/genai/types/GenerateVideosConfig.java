@@ -18,12 +18,16 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /** Configuration for generating videos. */
@@ -79,10 +83,7 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("pubsubTopic")
   public abstract Optional<String> pubsubTopic();
 
-  /**
-   * Optional field in addition to the text content. Negative prompts can be explicitly stated here
-   * to help generate the video.
-   */
+  /** Explicitly state what should not be included in the generated videos. */
   @JsonProperty("negativePrompt")
   public abstract Optional<String> negativePrompt();
 
@@ -101,11 +102,25 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("lastFrame")
   public abstract Optional<Image> lastFrame();
 
+  /**
+   * The images to use as the references to generate the videos. If this field is provided, the text
+   * prompt field must also be provided. The image, video, or last_frame field are not supported.
+   * Each image must be associated with a type. Veo 2 supports up to 3 asset images *or* 1 style
+   * image.
+   */
+  @JsonProperty("referenceImages")
+  public abstract Optional<List<VideoGenerationReferenceImage>> referenceImages();
+
+  /** The mask to use for generating videos. */
+  @JsonProperty("mask")
+  public abstract Optional<VideoGenerationMask> mask();
+
   /** Compression quality of the generated videos. */
   @JsonProperty("compressionQuality")
   public abstract Optional<VideoCompressionQuality> compressionQuality();
 
   /** Instantiates a builder for GenerateVideosConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateVideosConfig.Builder();
   }
@@ -218,8 +233,7 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     /**
      * Setter for negativePrompt.
      *
-     * <p>negativePrompt: Optional field in addition to the text content. Negative prompts can be
-     * explicitly stated here to help generate the video.
+     * <p>negativePrompt: Explicitly state what should not be included in the generated videos.
      */
     @JsonProperty("negativePrompt")
     public abstract Builder negativePrompt(String negativePrompt);
@@ -260,6 +274,62 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for referenceImages.
+     *
+     * <p>referenceImages: The images to use as the references to generate the videos. If this field
+     * is provided, the text prompt field must also be provided. The image, video, or last_frame
+     * field are not supported. Each image must be associated with a type. Veo 2 supports up to 3
+     * asset images *or* 1 style image.
+     */
+    @JsonProperty("referenceImages")
+    public abstract Builder referenceImages(List<VideoGenerationReferenceImage> referenceImages);
+
+    /**
+     * Setter for referenceImages.
+     *
+     * <p>referenceImages: The images to use as the references to generate the videos. If this field
+     * is provided, the text prompt field must also be provided. The image, video, or last_frame
+     * field are not supported. Each image must be associated with a type. Veo 2 supports up to 3
+     * asset images *or* 1 style image.
+     */
+    public Builder referenceImages(VideoGenerationReferenceImage... referenceImages) {
+      return referenceImages(Arrays.asList(referenceImages));
+    }
+
+    /**
+     * Setter for referenceImages builder.
+     *
+     * <p>referenceImages: The images to use as the references to generate the videos. If this field
+     * is provided, the text prompt field must also be provided. The image, video, or last_frame
+     * field are not supported. Each image must be associated with a type. Veo 2 supports up to 3
+     * asset images *or* 1 style image.
+     */
+    public Builder referenceImages(
+        VideoGenerationReferenceImage.Builder... referenceImagesBuilders) {
+      return referenceImages(
+          Arrays.asList(referenceImagesBuilders).stream()
+              .map(VideoGenerationReferenceImage.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
+     * Setter for mask.
+     *
+     * <p>mask: The mask to use for generating videos.
+     */
+    @JsonProperty("mask")
+    public abstract Builder mask(VideoGenerationMask mask);
+
+    /**
+     * Setter for mask builder.
+     *
+     * <p>mask: The mask to use for generating videos.
+     */
+    public Builder mask(VideoGenerationMask.Builder maskBuilder) {
+      return mask(maskBuilder.build());
+    }
+
+    /**
      * Setter for compressionQuality.
      *
      * <p>compressionQuality: Compression quality of the generated videos.
@@ -291,6 +361,7 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateVideosConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateVideosConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateVideosConfig.class);
   }

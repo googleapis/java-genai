@@ -42,6 +42,7 @@ public abstract class ToolConfig extends JsonSerializable {
   public abstract Optional<RetrievalConfig> retrievalConfig();
 
   /** Instantiates a builder for ToolConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ToolConfig.Builder();
   }
@@ -97,6 +98,7 @@ public abstract class ToolConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ToolConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ToolConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ToolConfig.class);
   }

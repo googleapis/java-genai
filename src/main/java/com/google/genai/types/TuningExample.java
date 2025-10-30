@@ -25,19 +25,20 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** A single example for tuning. This data type is not supported in Vertex AI. */
 @AutoValue
 @JsonDeserialize(builder = TuningExample.Builder.class)
 public abstract class TuningExample extends JsonSerializable {
-  /** Text model input. */
-  @JsonProperty("textInput")
-  public abstract Optional<String> textInput();
-
-  /** The expected model output. */
+  /** Required. The expected model output. */
   @JsonProperty("output")
   public abstract Optional<String> output();
 
+  /** Optional. Text model input. */
+  @JsonProperty("textInput")
+  public abstract Optional<String> textInput();
+
   /** Instantiates a builder for TuningExample. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TuningExample.Builder();
   }
@@ -55,25 +56,26 @@ public abstract class TuningExample extends JsonSerializable {
     }
 
     /**
-     * Setter for textInput.
-     *
-     * <p>textInput: Text model input.
-     */
-    @JsonProperty("textInput")
-    public abstract Builder textInput(String textInput);
-
-    /**
      * Setter for output.
      *
-     * <p>output: The expected model output.
+     * <p>output: Required. The expected model output.
      */
     @JsonProperty("output")
     public abstract Builder output(String output);
+
+    /**
+     * Setter for textInput.
+     *
+     * <p>textInput: Optional. Text model input.
+     */
+    @JsonProperty("textInput")
+    public abstract Builder textInput(String textInput);
 
     public abstract TuningExample build();
   }
 
   /** Deserializes a JSON string to a TuningExample object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TuningExample fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TuningExample.class);
   }

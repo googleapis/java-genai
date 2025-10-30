@@ -29,11 +29,12 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = VoiceConfig.Builder.class)
 public abstract class VoiceConfig extends JsonSerializable {
-  /** The configuration for the speaker to use. */
+  /** The configuration for the prebuilt voice to use. */
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
 
   /** Instantiates a builder for VoiceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_VoiceConfig.Builder();
   }
@@ -53,7 +54,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the speaker to use.
+     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
      */
     @JsonProperty("prebuiltVoiceConfig")
     public abstract Builder prebuiltVoiceConfig(PrebuiltVoiceConfig prebuiltVoiceConfig);
@@ -61,7 +62,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig builder.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the speaker to use.
+     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
      */
     public Builder prebuiltVoiceConfig(PrebuiltVoiceConfig.Builder prebuiltVoiceConfigBuilder) {
       return prebuiltVoiceConfig(prebuiltVoiceConfigBuilder.build());
@@ -71,6 +72,7 @@ public abstract class VoiceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a VoiceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static VoiceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, VoiceConfig.class);
   }

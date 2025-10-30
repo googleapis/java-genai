@@ -51,6 +51,7 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
   public abstract Optional<Float> maskDilation();
 
   /** Instantiates a builder for MaskReferenceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_MaskReferenceConfig.Builder();
   }
@@ -129,6 +130,7 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a MaskReferenceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static MaskReferenceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, MaskReferenceConfig.class);
   }

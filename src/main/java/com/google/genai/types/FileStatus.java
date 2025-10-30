@@ -51,6 +51,7 @@ public abstract class FileStatus extends JsonSerializable {
   public abstract Optional<Integer> code();
 
   /** Instantiates a builder for FileStatus. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FileStatus.Builder();
   }
@@ -107,6 +108,7 @@ public abstract class FileStatus extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FileStatus object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FileStatus fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FileStatus.class);
   }

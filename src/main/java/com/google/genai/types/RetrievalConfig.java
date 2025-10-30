@@ -38,6 +38,7 @@ public abstract class RetrievalConfig extends JsonSerializable {
   public abstract Optional<String> languageCode();
 
   /** Instantiates a builder for RetrievalConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RetrievalConfig.Builder();
   }
@@ -83,6 +84,7 @@ public abstract class RetrievalConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RetrievalConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RetrievalConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RetrievalConfig.class);
   }

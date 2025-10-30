@@ -61,12 +61,14 @@ public class ControlReferenceType {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -93,6 +95,7 @@ public class ControlReferenceType {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.controlReferenceTypeEnum != Known.CONTROL_REFERENCE_TYPE_UNSPECIFIED) {
@@ -102,6 +105,7 @@ public class ControlReferenceType {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.controlReferenceTypeEnum;
   }

@@ -47,6 +47,7 @@ public abstract class RawReferenceImage extends JsonSerializable implements Refe
   public abstract Optional<String> referenceType();
 
   /** Instantiates a builder for RawReferenceImage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RawReferenceImage.Builder();
   }
@@ -100,6 +101,7 @@ public abstract class RawReferenceImage extends JsonSerializable implements Refe
   }
 
   /** Deserializes a JSON string to a RawReferenceImage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RawReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RawReferenceImage.class);
   }

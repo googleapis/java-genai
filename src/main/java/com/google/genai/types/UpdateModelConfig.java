@@ -46,6 +46,7 @@ public abstract class UpdateModelConfig extends JsonSerializable {
   public abstract Optional<String> defaultCheckpointId();
 
   /** Instantiates a builder for UpdateModelConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UpdateModelConfig.Builder();
   }
@@ -107,6 +108,7 @@ public abstract class UpdateModelConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UpdateModelConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UpdateModelConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UpdateModelConfig.class);
   }

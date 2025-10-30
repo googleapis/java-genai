@@ -40,6 +40,7 @@ public abstract class DeleteCachedContentParameters extends JsonSerializable {
   public abstract Optional<DeleteCachedContentConfig> config();
 
   /** Instantiates a builder for DeleteCachedContentParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteCachedContentParameters.Builder();
   }
@@ -87,6 +88,7 @@ public abstract class DeleteCachedContentParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteCachedContentParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteCachedContentParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteCachedContentParameters.class);
   }

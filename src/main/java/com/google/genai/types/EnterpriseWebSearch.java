@@ -19,15 +19,30 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
-/** Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. */
+/**
+ * Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. This data type
+ * is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = EnterpriseWebSearch.Builder.class)
 public abstract class EnterpriseWebSearch extends JsonSerializable {
+  /**
+   * Optional. List of domains to be excluded from the search results. The default limit is 2000
+   * domains.
+   */
+  @JsonProperty("excludeDomains")
+  public abstract Optional<List<String>> excludeDomains();
+
   /** Instantiates a builder for EnterpriseWebSearch. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EnterpriseWebSearch.Builder();
   }
@@ -44,10 +59,30 @@ public abstract class EnterpriseWebSearch extends JsonSerializable {
       return new AutoValue_EnterpriseWebSearch.Builder();
     }
 
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains.
+     */
+    @JsonProperty("excludeDomains")
+    public abstract Builder excludeDomains(List<String> excludeDomains);
+
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains.
+     */
+    public Builder excludeDomains(String... excludeDomains) {
+      return excludeDomains(Arrays.asList(excludeDomains));
+    }
+
     public abstract EnterpriseWebSearch build();
   }
 
   /** Deserializes a JSON string to a EnterpriseWebSearch object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EnterpriseWebSearch fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EnterpriseWebSearch.class);
   }

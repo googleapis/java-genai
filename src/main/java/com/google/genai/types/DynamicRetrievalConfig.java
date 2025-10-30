@@ -42,6 +42,7 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
   public abstract Optional<Float> dynamicThreshold();
 
   /** Instantiates a builder for DynamicRetrievalConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DynamicRetrievalConfig.Builder();
   }
@@ -99,6 +100,7 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DynamicRetrievalConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DynamicRetrievalConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DynamicRetrievalConfig.class);
   }

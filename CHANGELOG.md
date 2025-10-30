@@ -1,5 +1,213 @@
 # Changelog
 
+## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-29)
+
+
+### Features
+
+* Add safety_filter_level and person_generation for Imagen upscaling ([09a8075](https://github.com/googleapis/java-genai/commit/09a80754b202fdf903039341f5266f62d9b879cb))
+* Add support for preference optimization tuning in the SDK. ([5d4123c](https://github.com/googleapis/java-genai/commit/5d4123c0391d443e94bb1e81524ccae8779462d7))
+* Added Operations.get which is a generic method which will handle all Operation types. ([c1dc32f](https://github.com/googleapis/java-genai/commit/c1dc32f84d0e4d14a16345dcb404c8b2bef05338))
+* Pass file name to the backend when uploading with a file path ([081a9a6](https://github.com/googleapis/java-genai/commit/081a9a6a67d1ba542edb1d1330dfa56579204a43))
+* support default global location when not using api key with vertexai backend ([f9028a7](https://github.com/googleapis/java-genai/commit/f9028a71d4e736a8dc97daa54e6e4275b5016abd))
+* Support retries in API requests ([3d5de00](https://github.com/googleapis/java-genai/commit/3d5de000277eb0da172d6b19795c6f2d4b88c213))
+
+
+### Documentation
+
+* Add docstring for classes and fields that are not supported in Gemini or Vertex API ([7a03dac](https://github.com/googleapis/java-genai/commit/7a03dac0a4e3388f98be199765794fcf511bfe83))
+* Add docstring for enum classes that are not supported in Gemini or Vertex API ([830a12f](https://github.com/googleapis/java-genai/commit/830a12f3dcbb8beb1dd5ff3ff82f6b19ebb2af93))
+* Add documentation for the retry behavior ([4fbcf51](https://github.com/googleapis/java-genai/commit/4fbcf514321fdc2cbee1393fc6babe33fd0e5e74))
+
+## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-22)
+
+
+### Features
+
+* Add enable_enhanced_civic_answers in GenerationConfig ([684a2c5](https://github.com/googleapis/java-genai/commit/684a2c5b582fa4ca13cb9cfe819ef759778101b0))
+* support createEmbeddings in Batches.java ([8947f6f](https://github.com/googleapis/java-genai/commit/8947f6fc20fbdd90a7d17071dee1bd2e5bea0c3e))
+* support jailbreak in HarmCategory and BlockedReason ([3dab40b](https://github.com/googleapis/java-genai/commit/3dab40bc367168ed48d8d1acfb278f5bc6edb83f))
+
+
+### Bug Fixes
+
+* Make async methods in Batches module truly non-blocking ([f2ae75a](https://github.com/googleapis/java-genai/commit/f2ae75ac364702f483c376e458a120d1ffa93b17))
+* Make async methods in Caches, Tuning, and Operations modules truly non-blocking ([db56239](https://github.com/googleapis/java-genai/commit/db56239bbebbfe3cb95e00d2d3eac253b76f22fe))
+* Make async methods in Models module truly non-blocking ([c205d01](https://github.com/googleapis/java-genai/commit/c205d0172ca40e01f7d8de17a3bc9d38eeb5fc21))
+
+## [1.23.0](https://github.com/googleapis/java-genai/compare/v1.22.0...v1.23.0) (2025-10-15)
+
+
+### Features
+
+* Support video extension for Veo on Gemini Developer API ([b398509](https://github.com/googleapis/java-genai/commit/b398509697a3e9aa27bad5e804382c5a4db333ab))
+
+## [1.22.0](https://github.com/googleapis/java-genai/compare/v1.21.0...v1.22.0) (2025-10-10)
+
+
+### Features
+
+* Enable Google Maps tool for Genai. ([a4baf3c](https://github.com/googleapis/java-genai/commit/a4baf3c610ddcb1ed36c1501fcb2248b5a6bd610))
+* Support enableWidget feature in GoogleMaps ([aefbd5c](https://github.com/googleapis/java-genai/commit/aefbd5c1519f453cd2fe158a2765c195a9454322))
+* Support Gemini batch inline request's metadata and add test coverage to safety setting ([17033b3](https://github.com/googleapis/java-genai/commit/17033b38a93d6952b29699f5a4c79ed9dd862976))
+
+## [1.21.0](https://github.com/googleapis/java-genai/compare/v1.20.0...v1.21.0) (2025-10-08)
+
+
+### Features
+
+* Add `NO_IMAGE` enum value to `FinishReason` ([6b00c0b](https://github.com/googleapis/java-genai/commit/6b00c0b7dc8c85fcefc5aac643c3588048317614))
+* Add labels field to Imagen configs ([e69cf68](https://github.com/googleapis/java-genai/commit/e69cf68583ca581f1a7fad89b04292036433cdb4))
+* Add thinking_config for live ([274c21d](https://github.com/googleapis/java-genai/commit/274c21d34310e630b9b4ad296b4c8314a4249d0c))
+* Add utility methods for creating `FunctionResponsePart` and creating FunctionResponse `Part` with `FunctionResponseParts` ([af16a4c](https://github.com/googleapis/java-genai/commit/af16a4c994e0cc4e6fbc2cdbda825246df9aa253))
+* Enable Ingredients to Video and Advanced Controls for Veo on Gemini Developer API (Early Access Program) ([4c42e65](https://github.com/googleapis/java-genai/commit/4c42e6527a7fe43c0b534e381d65b5d9650e8709))
+
+
+### Bug Fixes
+
+* Ensure Live server message are properly converted ([206dc88](https://github.com/googleapis/java-genai/commit/206dc88e3b220a875f784a507fc9470bc411de36))
+
+## [1.20.0](https://github.com/googleapis/java-genai/compare/v1.19.0...v1.20.0) (2025-10-01)
+
+
+### Features
+
+* Add `ImageConfig` to `GenerateContentConfig` ([6fb5eba](https://github.com/googleapis/java-genai/commit/6fb5eba0e916ada8f300dd5ad333f269e9044ea3))
+
+## [1.19.0](https://github.com/googleapis/java-genai/compare/v1.18.0...v1.19.0) (2025-09-30)
+
+
+### Features
+
+* expose session id in Live API ([b6d5389](https://github.com/googleapis/java-genai/commit/b6d5389899bd1443d5c508776dfe5909eb1d7400))
+* rename ComputerUse tool (early access) ([4bbba2b](https://github.com/googleapis/java-genai/commit/4bbba2b53eedec0b28a5d98d7fc193683c565f50))
+
+## [1.18.0](https://github.com/googleapis/java-genai/compare/v1.17.0...v1.18.0) (2025-09-25)
+
+
+### Features
+
+* Add FunctionResponsePart & ToolComputerUse.excludedPredefinedFunctions ([1a24bed](https://github.com/googleapis/java-genai/commit/1a24bedc752851236b0a7239a7dba7090e4ac4e8))
+* Support Imagen 4 Ingredients on Vertex ([b5eed8d](https://github.com/googleapis/java-genai/commit/b5eed8d1323a3d37b53c1d8c5c5557392ce7ed44))
+
+
+### Bug Fixes
+
+* Expose `JOB_STATE_RUNNING` and `JOB_STATE_EXPIRED` for Gemini Batches states ([c5b4fdf](https://github.com/googleapis/java-genai/commit/c5b4fdf58b9d0d74efdd2c7e740bed8b6b661c99))
+* initialization of `pre_tuned_model_checkpoint_id` from tuning config. ([c293633](https://github.com/googleapis/java-genai/commit/c293633a8fe298668f030ba3b257347a8fd0eedf))
+* Make async generateContent and generateContentStream truly non-blocking ([5cb18fd](https://github.com/googleapis/java-genai/commit/5cb18fd4f07f9b1f21efb82fe961e473325f6257))
+* only run unit tests in github action ([9b2861b](https://github.com/googleapis/java-genai/commit/9b2861bb79d50c10c152aa010bedf0bc48a04ad8))
+
+## [1.17.0](https://github.com/googleapis/java-genai/compare/v1.16.0...v1.17.0) (2025-09-16)
+
+
+### Features
+
+* Add 'turn_complete_reason' and 'waiting_for_input' fields. ([5bc4873](https://github.com/googleapis/java-genai/commit/5bc48732fd9281162942b158de34173343d7b179))
+* Add `VideoGenerationMaskMode` enum for Veo 2 Editing ([e5c8277](https://github.com/googleapis/java-genai/commit/e5c82778586dfee4ed7d04a9eabb2a4d8eac6185))
+* Add labels to create tuning job config ([695e17a](https://github.com/googleapis/java-genai/commit/695e17a7b1adebbccb1651d30b768d27f81c3977))
+* generate the function_call class's converters ([38703c7](https://github.com/googleapis/java-genai/commit/38703c726606cbe1b6f5f5f4eb809310b0df94a8))
+* java local tokenizer ([d774185](https://github.com/googleapis/java-genai/commit/d7741856cafd3b8e05803f7b452335fbc4ce8977))
+* Support Veo 2 Editing on Vertex ([d401d3c](https://github.com/googleapis/java-genai/commit/d401d3cf6a5f9ef3d2a76a548eed9d218169170e))
+
+
+### Bug Fixes
+
+* Enable `id` field in `FunctionCall` for Vertex AI. ([3773fe7](https://github.com/googleapis/java-genai/commit/3773fe75007b9ce83692de0031853f0f607bff3e))
+* update Live API audio example with better interruption handling ([cad8df9](https://github.com/googleapis/java-genai/commit/cad8df9c4edaf0806a641869fef6379ed05f0189))
+
+## [1.16.0](https://github.com/googleapis/java-genai/compare/v1.15.0...v1.16.0) (2025-09-02)
+
+
+### Features
+
+* Add resolution field for Gemini Developer API Veo 3 generation ([eec410c](https://github.com/googleapis/java-genai/commit/eec410c5b68de471e9a824e61f0efb819841dfe6))
+* add the response body for generateContent ([a011580](https://github.com/googleapis/java-genai/commit/a0115804e438bac120d5155c91ece53c79ada677))
+
+
+### Documentation
+
+* Refactor/update docstrings for Imagen and Veo ([2470101](https://github.com/googleapis/java-genai/commit/24701018feb91d147bf1817b04752e2595bf40ab))
+
+## [1.15.0](https://github.com/googleapis/java-genai/compare/v1.14.0...v1.15.0) (2025-08-27)
+
+
+### Features
+
+* add `sdkHttpResponse.headers` to *Delete responses. ([4be038d](https://github.com/googleapis/java-genai/commit/4be038de86c782d103d21258db51055f35e5af21))
+* Add output_gcs_uri to Imagen upscale_image ([7649467](https://github.com/googleapis/java-genai/commit/76494678d3937229778c5063b4f4ff340f977bba))
+* add the response body for generateContent ([6e28ab4](https://github.com/googleapis/java-genai/commit/6e28ab4236565be61fb11e79ca9f2f31a2013598))
+* add the response body for generateContent ([b2a5b3f](https://github.com/googleapis/java-genai/commit/b2a5b3f5a6ef7a8bb4d011980d90ffdc3c745603))
+* Add VALIDATED mode into FunctionCallingConfigMode ([4bb8680](https://github.com/googleapis/java-genai/commit/4bb868046199d3249f75ede213ef7d77e0b7783f))
+* Add VideoGenerationReferenceType enum for generate_videos ([df9d910](https://github.com/googleapis/java-genai/commit/df9d910537ec7de6188f777801b4d50e84cd91e7))
+* Support GenerateVideosSource for Veo GenerateVideos ([c26af63](https://github.com/googleapis/java-genai/commit/c26af6396002cf21c0ed272290d44b09b6a41840))
+* support tunings.cancel in the genai SDK for Python, Java, JS, and Go ([9982251](https://github.com/googleapis/java-genai/commit/9982251d2dd80d3151aefb4462d9e4864d8e064e))
+
+
+### Documentation
+
+* Refactor model IDs into a Constants class ([dacd787](https://github.com/googleapis/java-genai/commit/dacd7875d41f810e50f2655e5d0e62f031197e61))
+
+## [1.14.0](https://github.com/googleapis/java-genai/compare/v1.13.0...v1.14.0) (2025-08-22)
+
+
+### Features
+
+* Add add_watermark field for recontext_image (Virtual Try-On, Product Recontext) ([5aacbc0](https://github.com/googleapis/java-genai/commit/5aacbc06435fb36fffde0c3641b3077493f13577))
+
+
+### Bug Fixes
+
+* Fix the bug that files.create doesn't return the upload URL correctly ([eb40c5f](https://github.com/googleapis/java-genai/commit/eb40c5f7f255b46a7a820da044e210127c7aac18))
+
+
+### Documentation
+
+* update TokensInfo docstring ([48eba7f](https://github.com/googleapis/java-genai/commit/48eba7fcb369537ca4266ec61107e016f7c242ed))
+
+## [1.13.0](https://github.com/googleapis/java-genai/compare/v1.12.0...v1.13.0) (2025-08-18)
+
+
+### Features
+
+* expose JsonSerializable.stringToJsonNode to help user better use *JsonSchema fields. ([35d783b](https://github.com/googleapis/java-genai/commit/35d783b5d1655b6f0d52afefa633c608f39d4e01))
+* Return response headers for all methods (except streaming methods) ([7e8b71b](https://github.com/googleapis/java-genai/commit/7e8b71b0769362a728e2bf9b93738563113a4edc))
+* Support Imagen image segmentation on Vertex ([e2a561b](https://github.com/googleapis/java-genai/commit/e2a561b11b53f3a7cc30aacb4a0dcf6a26e01645))
+* Support Veo 2 Reference Images to Video Generation on Vertex ([2f5580f](https://github.com/googleapis/java-genai/commit/2f5580fd1e78d6e8e4f371f291dacf98c7c617ef))
+
+## [1.12.0](https://github.com/googleapis/java-genai/compare/v1.11.0...v1.12.0) (2025-08-13)
+
+
+### Features
+
+* enable continuous fine-tuning on a pre-tuned model in the SDK. ([e49d350](https://github.com/googleapis/java-genai/commit/e49d3509355f717d391a88b6ff1a6f4f6d83fddc))
+* support document name in grounding metadata ([8273922](https://github.com/googleapis/java-genai/commit/8273922ebfbce4ffafa8993bcc6928b47b5ff821))
+* Support exclude_domains in Google Search and Enterprise Web Search ([e975d28](https://github.com/googleapis/java-genai/commit/e975d284f78e0c9a3cd2199d304b4739bad36fe1))
+
+## [1.11.0](https://github.com/googleapis/java-genai/compare/v1.10.0...v1.11.0) (2025-08-06)
+
+
+### Features
+
+* Add image_size field for Gemini Developer API Imagen 4 generation ([c50c755](https://github.com/googleapis/java-genai/commit/c50c755c08efbed5a62e1006890b1d0bd9956702))
+* enable responseId for Gemini Developer API ([4912ff4](https://github.com/googleapis/java-genai/commit/4912ff421d6d3bc40edd70a939f71f5f33f58597))
+* support extraBody in HttpOptions class ([036bac8](https://github.com/googleapis/java-genai/commit/036bac89fda15022ec4d9c5c73ba81ad0a6cc9be))
+* Support image recontext on Vertex ([e7de8c8](https://github.com/googleapis/java-genai/commit/e7de8c83bbd2e7e37c2198c3501e2d5bee58c0a2))
+* Support new enum types for UrlRetrievalStatus ([cb27222](https://github.com/googleapis/java-genai/commit/cb27222a7f7cdf442a7d6b61496709f7cf084a91))
+* support response headers in Go for all methods. ([222b41e](https://github.com/googleapis/java-genai/commit/222b41e196afc13775cc22292a58567d7b4859fa))
+
+
+### Bug Fixes
+
+* Remove duplicate JavaTimeModule in JsonSerializable ([a7dbd4c](https://github.com/googleapis/java-genai/commit/a7dbd4c527456f20aa5d154bde14f74f6e66d174))
+
+
+### Documentation
+
+* Add Imagen and Veo to README ([cc0a0aa](https://github.com/googleapis/java-genai/commit/cc0a0aa28cae618acf617ab92819df78d80afea5))
+* Add latest models features in README ([a2eccaf](https://github.com/googleapis/java-genai/commit/a2eccafae5c6c9b82341a148b572bf9bc80f241b))
+* mark Client as thread safe and Chat as not thread safe ([be3e50e](https://github.com/googleapis/java-genai/commit/be3e50e4217780329c0636fd7f8a1b743e7f9597))
+
 ## [1.10.0](https://github.com/googleapis/java-genai/compare/v1.9.0...v1.10.0) (2025-07-23)
 
 

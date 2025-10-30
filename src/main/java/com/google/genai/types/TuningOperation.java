@@ -30,6 +30,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = TuningOperation.Builder.class)
 public abstract class TuningOperation extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /**
    * The server-assigned name, which is only unique within the same service that originally returns
    * it. If you use the default HTTP mapping, the `name` should be a resource name ending with
@@ -59,6 +63,7 @@ public abstract class TuningOperation extends JsonSerializable {
   public abstract Optional<Map<String, Object>> error();
 
   /** Instantiates a builder for TuningOperation. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TuningOperation.Builder();
   }
@@ -73,6 +78,23 @@ public abstract class TuningOperation extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_TuningOperation.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -117,6 +139,7 @@ public abstract class TuningOperation extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TuningOperation object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TuningOperation fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TuningOperation.class);
   }

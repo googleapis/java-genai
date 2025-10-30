@@ -59,12 +59,14 @@ public class FeatureSelectionPreference {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -91,6 +93,7 @@ public class FeatureSelectionPreference {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.featureSelectionPreferenceEnum != Known.FEATURE_SELECTION_PREFERENCE_UNSPECIFIED) {
@@ -100,6 +103,7 @@ public class FeatureSelectionPreference {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.featureSelectionPreferenceEnum;
   }

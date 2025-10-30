@@ -34,6 +34,7 @@ public abstract class DeleteFileConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for DeleteFileConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteFileConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class DeleteFileConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteFileConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteFileConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteFileConfig.class);
   }

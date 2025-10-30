@@ -53,6 +53,7 @@ public abstract class StyleReferenceImage extends JsonSerializable implements Re
   public abstract Optional<StyleReferenceConfig> config();
 
   /** Instantiates a builder for StyleReferenceImage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_StyleReferenceImage.Builder();
   }
@@ -123,6 +124,7 @@ public abstract class StyleReferenceImage extends JsonSerializable implements Re
   }
 
   /** Deserializes a JSON string to a StyleReferenceImage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static StyleReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, StyleReferenceImage.class);
   }

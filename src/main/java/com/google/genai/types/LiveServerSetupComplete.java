@@ -34,6 +34,7 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
   public abstract Optional<String> sessionId();
 
   /** Instantiates a builder for LiveServerSetupComplete. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerSetupComplete.Builder();
   }
@@ -62,6 +63,7 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveServerSetupComplete object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerSetupComplete fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerSetupComplete.class);
   }

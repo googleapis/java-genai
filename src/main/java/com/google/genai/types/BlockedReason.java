@@ -23,28 +23,40 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Output only. Blocked reason. */
+/** Output only. The reason why the prompt was blocked. */
 public class BlockedReason {
 
   /** Enum representing the known values for BlockedReason. */
   public enum Known {
-    /** Unspecified blocked reason. */
+    /** The blocked reason is unspecified. */
     BLOCKED_REASON_UNSPECIFIED,
 
-    /** Candidates blocked due to safety. */
+    /** The prompt was blocked for safety reasons. */
     SAFETY,
 
-    /** Candidates blocked due to other reason. */
+    /**
+     * The prompt was blocked for other reasons. For example, it may be due to the prompt's
+     * language, or because it contains other harmful content.
+     */
     OTHER,
 
-    /** Candidates blocked due to the terms which are included from the terminology blocklist. */
+    /** The prompt was blocked because it contains a term from the terminology blocklist. */
     BLOCKLIST,
 
-    /** Candidates blocked due to prohibited content. */
+    /** The prompt was blocked because it contains prohibited content. */
     PROHIBITED_CONTENT,
 
-    /** Candidates blocked due to unsafe image generation content. */
-    IMAGE_SAFETY
+    /** The prompt was blocked because it contains content that is unsafe for image generation. */
+    IMAGE_SAFETY,
+
+    /** The prompt was blocked by Model Armor. This enum value is not supported in Gemini API. */
+    MODEL_ARMOR,
+
+    /**
+     * The prompt was blocked as a jailbreak attempt. This enum value is not supported in Gemini
+     * API.
+     */
+    JAILBREAK
   }
 
   private Known blockedReasonEnum;
@@ -69,12 +81,14 @@ public class BlockedReason {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -101,6 +115,7 @@ public class BlockedReason {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.blockedReasonEnum != Known.BLOCKED_REASON_UNSPECIFIED) {
@@ -110,6 +125,7 @@ public class BlockedReason {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.blockedReasonEnum;
   }

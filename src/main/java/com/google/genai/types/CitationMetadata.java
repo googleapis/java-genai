@@ -41,6 +41,7 @@ public abstract class CitationMetadata extends JsonSerializable {
   public abstract Optional<List<Citation>> citations();
 
   /** Instantiates a builder for CitationMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CitationMetadata.Builder();
   }
@@ -93,6 +94,7 @@ public abstract class CitationMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CitationMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CitationMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CitationMetadata.class);
   }

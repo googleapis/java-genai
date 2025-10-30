@@ -44,6 +44,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
   public abstract Optional<Integer> thinkingBudget();
 
   /** Instantiates a builder for ThinkingConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ThinkingConfig.Builder();
   }
@@ -82,6 +83,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ThinkingConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ThinkingConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ThinkingConfig.class);
   }

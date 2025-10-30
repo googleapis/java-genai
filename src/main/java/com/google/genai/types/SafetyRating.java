@@ -41,7 +41,7 @@ public abstract class SafetyRating extends JsonSerializable {
   /**
    * Output only. The overwritten threshold for the safety category of Gemini 2.0 image out. If
    * minors are detected in the output image, the threshold of each safety category will be
-   * overwritten if user sets a lower threshold.
+   * overwritten if user sets a lower threshold. This field is not supported in Gemini API.
    */
   @JsonProperty("overwrittenThreshold")
   public abstract Optional<HarmBlockThreshold> overwrittenThreshold();
@@ -50,19 +50,22 @@ public abstract class SafetyRating extends JsonSerializable {
   @JsonProperty("probability")
   public abstract Optional<HarmProbability> probability();
 
-  /** Output only. Harm probability score. */
+  /** Output only. Harm probability score. This field is not supported in Gemini API. */
   @JsonProperty("probabilityScore")
   public abstract Optional<Float> probabilityScore();
 
-  /** Output only. Harm severity levels in the content. */
+  /**
+   * Output only. Harm severity levels in the content. This field is not supported in Gemini API.
+   */
   @JsonProperty("severity")
   public abstract Optional<HarmSeverity> severity();
 
-  /** Output only. Harm severity score. */
+  /** Output only. Harm severity score. This field is not supported in Gemini API. */
   @JsonProperty("severityScore")
   public abstract Optional<Float> severityScore();
 
   /** Instantiates a builder for SafetyRating. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SafetyRating.Builder();
   }
@@ -121,7 +124,8 @@ public abstract class SafetyRating extends JsonSerializable {
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @JsonProperty("overwrittenThreshold")
     public abstract Builder overwrittenThreshold(HarmBlockThreshold overwrittenThreshold);
@@ -131,7 +135,8 @@ public abstract class SafetyRating extends JsonSerializable {
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder overwrittenThreshold(HarmBlockThreshold.Known knownType) {
@@ -143,7 +148,8 @@ public abstract class SafetyRating extends JsonSerializable {
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder overwrittenThreshold(String overwrittenThreshold) {
@@ -181,7 +187,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probabilityScore.
      *
-     * <p>probabilityScore: Output only. Harm probability score.
+     * <p>probabilityScore: Output only. Harm probability score. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("probabilityScore")
     public abstract Builder probabilityScore(Float probabilityScore);
@@ -189,7 +196,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("severity")
     public abstract Builder severity(HarmSeverity severity);
@@ -197,7 +205,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity given a known enum.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(HarmSeverity.Known knownType) {
@@ -207,7 +216,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity given a string.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(String severity) {
@@ -217,7 +227,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severityScore.
      *
-     * <p>severityScore: Output only. Harm severity score.
+     * <p>severityScore: Output only. Harm severity score. This field is not supported in Gemini
+     * API.
      */
     @JsonProperty("severityScore")
     public abstract Builder severityScore(Float severityScore);
@@ -226,6 +237,7 @@ public abstract class SafetyRating extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SafetyRating object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SafetyRating fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SafetyRating.class);
   }

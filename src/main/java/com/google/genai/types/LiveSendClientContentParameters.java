@@ -46,6 +46,7 @@ public abstract class LiveSendClientContentParameters extends JsonSerializable {
   public abstract Optional<Boolean> turnComplete();
 
   /** Instantiates a builder for LiveSendClientContentParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveSendClientContentParameters.Builder();
   }
@@ -107,6 +108,7 @@ public abstract class LiveSendClientContentParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveSendClientContentParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveSendClientContentParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveSendClientContentParameters.class);
   }

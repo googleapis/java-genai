@@ -262,6 +262,7 @@ public class ModelsTest {
     // Assert
     assertTrue(response.embeddings().isPresent());
     assertEquals(1, response.embeddings().get().size());
+    assertNotNull(response.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
@@ -289,6 +290,7 @@ public class ModelsTest {
     // Assert
     assertTrue(response.embeddings().isPresent());
     assertEquals(2, response.embeddings().get().size());
+    assertNotNull(response.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
@@ -306,6 +308,7 @@ public class ModelsTest {
 
     // Assert
     assertTrue(response.totalTokens().isPresent());
+    assertNotNull(response.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
@@ -327,6 +330,7 @@ public class ModelsTest {
 
     // Assert
     assertTrue(response.tokensInfo().isPresent());
+    assertNotNull(response.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
@@ -351,6 +355,7 @@ public class ModelsTest {
     IndexOutOfBoundsException exception =
         assertThrows(IndexOutOfBoundsException.class, () -> pager.nextPage());
     assertEquals("No more page in the pager.", exception.getMessage());
+    assertNotNull(pager.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
@@ -395,6 +400,7 @@ public class ModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act
@@ -408,6 +414,7 @@ public class ModelsTest {
 
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      assertNotNull(response.sdkHttpResponse().get().headers().get());
     } else {
       UnsupportedOperationException exception =
           assertThrows(
@@ -452,6 +459,7 @@ public class ModelsTest {
 
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      assertNotNull(response.sdkHttpResponse().get().headers().get());
     } else {
       UnsupportedOperationException exception =
           assertThrows(
@@ -497,6 +505,7 @@ public class ModelsTest {
 
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      assertNotNull(response.sdkHttpResponse().get().headers().get());
     } else {
       UnsupportedOperationException exception =
           assertThrows(
@@ -545,6 +554,7 @@ public class ModelsTest {
 
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
+      assertNotNull(response.sdkHttpResponse().get().headers().get());
     } else {
       UnsupportedOperationException exception =
           assertThrows(

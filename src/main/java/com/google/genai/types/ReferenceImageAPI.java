@@ -60,6 +60,7 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
   public abstract Optional<SubjectReferenceConfig> subjectImageConfig();
 
   /** Instantiates a builder for ReferenceImageAPI. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ReferenceImageAPI.Builder();
   }
@@ -181,6 +182,7 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ReferenceImageAPI object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ReferenceImageAPI fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ReferenceImageAPI.class);
   }

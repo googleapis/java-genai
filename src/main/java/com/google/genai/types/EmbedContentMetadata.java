@@ -34,6 +34,7 @@ public abstract class EmbedContentMetadata extends JsonSerializable {
   public abstract Optional<Integer> billableCharacterCount();
 
   /** Instantiates a builder for EmbedContentMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EmbedContentMetadata.Builder();
   }
@@ -63,6 +64,7 @@ public abstract class EmbedContentMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EmbedContentMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EmbedContentMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EmbedContentMetadata.class);
   }

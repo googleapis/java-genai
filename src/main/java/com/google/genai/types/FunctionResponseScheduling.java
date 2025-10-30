@@ -71,12 +71,14 @@ public class FunctionResponseScheduling {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -103,6 +105,7 @@ public class FunctionResponseScheduling {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.functionResponseSchedulingEnum != Known.FUNCTION_RESPONSE_SCHEDULING_UNSPECIFIED) {
@@ -112,6 +115,7 @@ public class FunctionResponseScheduling {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.functionResponseSchedulingEnum;
   }

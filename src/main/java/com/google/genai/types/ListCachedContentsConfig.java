@@ -42,6 +42,7 @@ public abstract class ListCachedContentsConfig extends JsonSerializable {
   public abstract Optional<String> pageToken();
 
   /** Instantiates a builder for ListCachedContentsConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListCachedContentsConfig.Builder();
   }
@@ -95,6 +96,7 @@ public abstract class ListCachedContentsConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListCachedContentsConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListCachedContentsConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListCachedContentsConfig.class);
   }

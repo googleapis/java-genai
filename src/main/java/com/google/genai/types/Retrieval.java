@@ -25,7 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Defines a retrieval tool that model can call to access external knowledge. */
+/**
+ * Defines a retrieval tool that model can call to access external knowledge. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = Retrieval.Builder.class)
 public abstract class Retrieval extends JsonSerializable {
@@ -49,6 +52,7 @@ public abstract class Retrieval extends JsonSerializable {
   public abstract Optional<VertexRagStore> vertexRagStore();
 
   /** Instantiates a builder for Retrieval. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Retrieval.Builder();
   }
@@ -130,6 +134,7 @@ public abstract class Retrieval extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Retrieval object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Retrieval fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Retrieval.class);
   }

@@ -85,6 +85,7 @@ public abstract class UsageMetadata extends JsonSerializable {
   public abstract Optional<TrafficType> trafficType();
 
   /** Instantiates a builder for UsageMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UsageMetadata.Builder();
   }
@@ -307,6 +308,7 @@ public abstract class UsageMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UsageMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UsageMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UsageMetadata.class);
   }

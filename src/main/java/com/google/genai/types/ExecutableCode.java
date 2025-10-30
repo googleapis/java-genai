@@ -43,6 +43,7 @@ public abstract class ExecutableCode extends JsonSerializable {
   public abstract Optional<Language> language();
 
   /** Instantiates a builder for ExecutableCode. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ExecutableCode.Builder();
   }
@@ -99,6 +100,7 @@ public abstract class ExecutableCode extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ExecutableCode object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ExecutableCode fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ExecutableCode.class);
   }

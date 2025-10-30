@@ -51,6 +51,7 @@ public abstract class ComputeTokensParameters extends JsonSerializable {
   public abstract Optional<ComputeTokensConfig> config();
 
   /** Instantiates a builder for ComputeTokensParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ComputeTokensParameters.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class ComputeTokensParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ComputeTokensParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ComputeTokensParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ComputeTokensParameters.class);
   }

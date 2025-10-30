@@ -29,15 +29,15 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = CachedContentUsageMetadata.Builder.class)
 public abstract class CachedContentUsageMetadata extends JsonSerializable {
-  /** Duration of audio in seconds. */
+  /** Duration of audio in seconds. This field is not supported in Gemini API. */
   @JsonProperty("audioDurationSeconds")
   public abstract Optional<Integer> audioDurationSeconds();
 
-  /** Number of images. */
+  /** Number of images. This field is not supported in Gemini API. */
   @JsonProperty("imageCount")
   public abstract Optional<Integer> imageCount();
 
-  /** Number of text characters. */
+  /** Number of text characters. This field is not supported in Gemini API. */
   @JsonProperty("textCount")
   public abstract Optional<Integer> textCount();
 
@@ -45,11 +45,12 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
   @JsonProperty("totalTokenCount")
   public abstract Optional<Integer> totalTokenCount();
 
-  /** Duration of video in seconds. */
+  /** Duration of video in seconds. This field is not supported in Gemini API. */
   @JsonProperty("videoDurationSeconds")
   public abstract Optional<Integer> videoDurationSeconds();
 
   /** Instantiates a builder for CachedContentUsageMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CachedContentUsageMetadata.Builder();
   }
@@ -69,7 +70,8 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
     /**
      * Setter for audioDurationSeconds.
      *
-     * <p>audioDurationSeconds: Duration of audio in seconds.
+     * <p>audioDurationSeconds: Duration of audio in seconds. This field is not supported in Gemini
+     * API.
      */
     @JsonProperty("audioDurationSeconds")
     public abstract Builder audioDurationSeconds(Integer audioDurationSeconds);
@@ -77,7 +79,7 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
     /**
      * Setter for imageCount.
      *
-     * <p>imageCount: Number of images.
+     * <p>imageCount: Number of images. This field is not supported in Gemini API.
      */
     @JsonProperty("imageCount")
     public abstract Builder imageCount(Integer imageCount);
@@ -85,7 +87,7 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
     /**
      * Setter for textCount.
      *
-     * <p>textCount: Number of text characters.
+     * <p>textCount: Number of text characters. This field is not supported in Gemini API.
      */
     @JsonProperty("textCount")
     public abstract Builder textCount(Integer textCount);
@@ -101,7 +103,8 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
     /**
      * Setter for videoDurationSeconds.
      *
-     * <p>videoDurationSeconds: Duration of video in seconds.
+     * <p>videoDurationSeconds: Duration of video in seconds. This field is not supported in Gemini
+     * API.
      */
     @JsonProperty("videoDurationSeconds")
     public abstract Builder videoDurationSeconds(Integer videoDurationSeconds);
@@ -110,6 +113,7 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CachedContentUsageMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CachedContentUsageMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CachedContentUsageMetadata.class);
   }

@@ -44,6 +44,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("httpOptions")
   public abstract Optional<HttpOptions> httpOptions();
 
+  /** If true, the raw HTTP response will be returned in the 'sdk_http_response' field. */
+  @JsonProperty("shouldReturnHttpResponse")
+  public abstract Optional<Boolean> shouldReturnHttpResponse();
+
   /**
    * Instructions for the model to steer it toward better performance. For example, "Answer as
    * concisely as possible" or "Don't use technical terms in your response".
@@ -215,7 +219,12 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("thinkingConfig")
   public abstract Optional<ThinkingConfig> thinkingConfig();
 
+  /** The image generation configuration. */
+  @JsonProperty("imageConfig")
+  public abstract Optional<ImageConfig> imageConfig();
+
   /** Instantiates a builder for GenerateContentConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateContentConfig.Builder();
   }
@@ -248,6 +257,15 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
     }
+
+    /**
+     * Setter for shouldReturnHttpResponse.
+     *
+     * <p>shouldReturnHttpResponse: If true, the raw HTTP response will be returned in the
+     * 'sdk_http_response' field.
+     */
+    @JsonProperty("shouldReturnHttpResponse")
+    public abstract Builder shouldReturnHttpResponse(boolean shouldReturnHttpResponse);
 
     /**
      * Setter for systemInstruction.
@@ -670,10 +688,28 @@ public abstract class GenerateContentConfig extends JsonSerializable {
       return thinkingConfig(thinkingConfigBuilder.build());
     }
 
+    /**
+     * Setter for imageConfig.
+     *
+     * <p>imageConfig: The image generation configuration.
+     */
+    @JsonProperty("imageConfig")
+    public abstract Builder imageConfig(ImageConfig imageConfig);
+
+    /**
+     * Setter for imageConfig builder.
+     *
+     * <p>imageConfig: The image generation configuration.
+     */
+    public Builder imageConfig(ImageConfig.Builder imageConfigBuilder) {
+      return imageConfig(imageConfigBuilder.build());
+    }
+
     public abstract GenerateContentConfig build();
   }
 
   /** Deserializes a JSON string to a GenerateContentConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateContentConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateContentConfig.class);
   }

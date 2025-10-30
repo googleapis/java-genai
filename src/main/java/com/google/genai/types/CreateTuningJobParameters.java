@@ -26,12 +26,12 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Supervised fine-tuning job creation parameters - optional fields. */
+/** Fine-tuning job creation parameters - optional fields. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = CreateTuningJobParameters.Builder.class)
 public abstract class CreateTuningJobParameters extends JsonSerializable {
-  /** The base model that is being tuned, e.g., "gemini-1.0-pro-002". */
+  /** The base model that is being tuned, e.g., "gemini-2.5-flash". */
   @JsonProperty("baseModel")
   public abstract Optional<String> baseModel();
 
@@ -47,6 +47,7 @@ public abstract class CreateTuningJobParameters extends JsonSerializable {
   public abstract Optional<CreateTuningJobConfig> config();
 
   /** Instantiates a builder for CreateTuningJobParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateTuningJobParameters.Builder();
   }
@@ -66,7 +67,7 @@ public abstract class CreateTuningJobParameters extends JsonSerializable {
     /**
      * Setter for baseModel.
      *
-     * <p>baseModel: The base model that is being tuned, e.g., "gemini-1.0-pro-002".
+     * <p>baseModel: The base model that is being tuned, e.g., "gemini-2.5-flash".
      */
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);
@@ -111,6 +112,7 @@ public abstract class CreateTuningJobParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateTuningJobParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateTuningJobParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateTuningJobParameters.class);
   }

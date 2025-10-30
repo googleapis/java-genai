@@ -138,6 +138,7 @@ public class AsyncCachesTest {
     assertEquals(pager.pageSize().get(), 2);
     assertTrue(pager.size().get() <= 2);
     pager.forEach(item -> assertNotNull(item)).get();
+    assertNotNull(pager.sdkHttpResponse().get().get().headers().get());
   }
 
   @ParameterizedTest

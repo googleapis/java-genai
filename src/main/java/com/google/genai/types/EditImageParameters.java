@@ -41,7 +41,7 @@ public abstract class EditImageParameters extends JsonSerializable {
   @JsonProperty("prompt")
   public abstract Optional<String> prompt();
 
-  /** The reference images for Imagen 3 editing. */
+  /** The reference images for editing. */
   @JsonProperty("referenceImages")
   public abstract Optional<List<ReferenceImageAPI>> referenceImages();
 
@@ -50,6 +50,7 @@ public abstract class EditImageParameters extends JsonSerializable {
   public abstract Optional<EditImageConfig> config();
 
   /** Instantiates a builder for EditImageParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EditImageParameters.Builder();
   }
@@ -85,7 +86,7 @@ public abstract class EditImageParameters extends JsonSerializable {
     /**
      * Setter for referenceImages.
      *
-     * <p>referenceImages: The reference images for Imagen 3 editing.
+     * <p>referenceImages: The reference images for editing.
      */
     @JsonProperty("referenceImages")
     public abstract Builder referenceImages(List<ReferenceImageAPI> referenceImages);
@@ -93,7 +94,7 @@ public abstract class EditImageParameters extends JsonSerializable {
     /**
      * Setter for referenceImages.
      *
-     * <p>referenceImages: The reference images for Imagen 3 editing.
+     * <p>referenceImages: The reference images for editing.
      */
     public Builder referenceImages(ReferenceImageAPI... referenceImages) {
       return referenceImages(Arrays.asList(referenceImages));
@@ -120,6 +121,7 @@ public abstract class EditImageParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EditImageParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EditImageParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EditImageParameters.class);
   }

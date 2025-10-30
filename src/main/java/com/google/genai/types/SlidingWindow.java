@@ -44,6 +44,7 @@ public abstract class SlidingWindow extends JsonSerializable {
   public abstract Optional<Long> targetTokens();
 
   /** Instantiates a builder for SlidingWindow. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SlidingWindow.Builder();
   }
@@ -74,6 +75,7 @@ public abstract class SlidingWindow extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SlidingWindow object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SlidingWindow fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SlidingWindow.class);
   }

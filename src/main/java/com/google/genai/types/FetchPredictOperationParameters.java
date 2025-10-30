@@ -44,6 +44,7 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
   public abstract Optional<FetchPredictOperationConfig> config();
 
   /** Instantiates a builder for FetchPredictOperationParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FetchPredictOperationParameters.Builder();
   }
@@ -99,6 +100,7 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FetchPredictOperationParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FetchPredictOperationParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationParameters.class);
   }

@@ -32,6 +32,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = TuningJob.Builder.class)
 public abstract class TuningJob extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /**
    * Output only. Identifier. Resource name of a TuningJob. Format:
    * `projects/{project}/locations/{location}/tuningJobs/{tuning_job}`
@@ -85,9 +89,17 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("tunedModel")
   public abstract Optional<TunedModel> tunedModel();
 
+  /** The pre-tuned model for continuous tuning. */
+  @JsonProperty("preTunedModel")
+  public abstract Optional<PreTunedModel> preTunedModel();
+
   /** Tuning Spec for Supervised Fine Tuning. */
   @JsonProperty("supervisedTuningSpec")
   public abstract Optional<SupervisedTuningSpec> supervisedTuningSpec();
+
+  /** Tuning Spec for Preference Optimization. */
+  @JsonProperty("preferenceOptimizationSpec")
+  public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
 
   /** Output only. The tuning data statistics associated with this TuningJob. */
   @JsonProperty("tuningDataStats")
@@ -104,9 +116,15 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("partnerModelTuningSpec")
   public abstract Optional<PartnerModelTuningSpec> partnerModelTuningSpec();
 
-  /** Tuning Spec for Distillation. */
-  @JsonProperty("distillationSpec")
-  public abstract Optional<DistillationSpec> distillationSpec();
+  /**
+   * Optional. The user-provided path to custom model weights. Set this field to tune a custom
+   * model. The path must be a Cloud Storage directory that contains the model weights in
+   * .safetensors format along with associated model metadata files. If this field is set, the
+   * base_model field must still be set to indicate which base model the custom model is derived
+   * from. This feature is only available for open source models.
+   */
+  @JsonProperty("customBaseModel")
+  public abstract Optional<String> customBaseModel();
 
   /** Output only. The Experiment associated with this TuningJob. */
   @JsonProperty("experiment")
@@ -123,19 +141,18 @@ public abstract class TuningJob extends JsonSerializable {
   public abstract Optional<Map<String, String>> labels();
 
   /**
+   * Optional. Cloud Storage path to the directory where tuning job outputs are written to. This
+   * field is only available and required for open source models.
+   */
+  @JsonProperty("outputUri")
+  public abstract Optional<String> outputUri();
+
+  /**
    * Output only. The resource name of the PipelineJob associated with the TuningJob. Format:
    * `projects/{project}/locations/{location}/pipelineJobs/{pipeline_job}`.
    */
   @JsonProperty("pipelineJob")
   public abstract Optional<String> pipelineJob();
-
-  /** Output only. Reserved for future use. */
-  @JsonProperty("satisfiesPzi")
-  public abstract Optional<Boolean> satisfiesPzi();
-
-  /** Output only. Reserved for future use. */
-  @JsonProperty("satisfiesPzs")
-  public abstract Optional<Boolean> satisfiesPzs();
 
   /**
    * The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure
@@ -154,7 +171,12 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("tunedModelDisplayName")
   public abstract Optional<String> tunedModelDisplayName();
 
+  /** Tuning Spec for Veo Tuning. */
+  @JsonProperty("veoTuningSpec")
+  public abstract Optional<VeoTuningSpec> veoTuningSpec();
+
   /** Instantiates a builder for TuningJob. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TuningJob.Builder();
   }
@@ -169,6 +191,23 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_TuningJob.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -296,6 +335,23 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
+     * Setter for preTunedModel.
+     *
+     * <p>preTunedModel: The pre-tuned model for continuous tuning.
+     */
+    @JsonProperty("preTunedModel")
+    public abstract Builder preTunedModel(PreTunedModel preTunedModel);
+
+    /**
+     * Setter for preTunedModel builder.
+     *
+     * <p>preTunedModel: The pre-tuned model for continuous tuning.
+     */
+    public Builder preTunedModel(PreTunedModel.Builder preTunedModelBuilder) {
+      return preTunedModel(preTunedModelBuilder.build());
+    }
+
+    /**
      * Setter for supervisedTuningSpec.
      *
      * <p>supervisedTuningSpec: Tuning Spec for Supervised Fine Tuning.
@@ -310,6 +366,25 @@ public abstract class TuningJob extends JsonSerializable {
      */
     public Builder supervisedTuningSpec(SupervisedTuningSpec.Builder supervisedTuningSpecBuilder) {
       return supervisedTuningSpec(supervisedTuningSpecBuilder.build());
+    }
+
+    /**
+     * Setter for preferenceOptimizationSpec.
+     *
+     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
+     */
+    @JsonProperty("preferenceOptimizationSpec")
+    public abstract Builder preferenceOptimizationSpec(
+        PreferenceOptimizationSpec preferenceOptimizationSpec);
+
+    /**
+     * Setter for preferenceOptimizationSpec builder.
+     *
+     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
+     */
+    public Builder preferenceOptimizationSpec(
+        PreferenceOptimizationSpec.Builder preferenceOptimizationSpecBuilder) {
+      return preferenceOptimizationSpec(preferenceOptimizationSpecBuilder.build());
     }
 
     /**
@@ -369,21 +444,16 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
-     * Setter for distillationSpec.
+     * Setter for customBaseModel.
      *
-     * <p>distillationSpec: Tuning Spec for Distillation.
+     * <p>customBaseModel: Optional. The user-provided path to custom model weights. Set this field
+     * to tune a custom model. The path must be a Cloud Storage directory that contains the model
+     * weights in .safetensors format along with associated model metadata files. If this field is
+     * set, the base_model field must still be set to indicate which base model the custom model is
+     * derived from. This feature is only available for open source models.
      */
-    @JsonProperty("distillationSpec")
-    public abstract Builder distillationSpec(DistillationSpec distillationSpec);
-
-    /**
-     * Setter for distillationSpec builder.
-     *
-     * <p>distillationSpec: Tuning Spec for Distillation.
-     */
-    public Builder distillationSpec(DistillationSpec.Builder distillationSpecBuilder) {
-      return distillationSpec(distillationSpecBuilder.build());
-    }
+    @JsonProperty("customBaseModel")
+    public abstract Builder customBaseModel(String customBaseModel);
 
     /**
      * Setter for experiment.
@@ -406,6 +476,15 @@ public abstract class TuningJob extends JsonSerializable {
     public abstract Builder labels(Map<String, String> labels);
 
     /**
+     * Setter for outputUri.
+     *
+     * <p>outputUri: Optional. Cloud Storage path to the directory where tuning job outputs are
+     * written to. This field is only available and required for open source models.
+     */
+    @JsonProperty("outputUri")
+    public abstract Builder outputUri(String outputUri);
+
+    /**
      * Setter for pipelineJob.
      *
      * <p>pipelineJob: Output only. The resource name of the PipelineJob associated with the
@@ -413,22 +492,6 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("pipelineJob")
     public abstract Builder pipelineJob(String pipelineJob);
-
-    /**
-     * Setter for satisfiesPzi.
-     *
-     * <p>satisfiesPzi: Output only. Reserved for future use.
-     */
-    @JsonProperty("satisfiesPzi")
-    public abstract Builder satisfiesPzi(boolean satisfiesPzi);
-
-    /**
-     * Setter for satisfiesPzs.
-     *
-     * <p>satisfiesPzs: Output only. Reserved for future use.
-     */
-    @JsonProperty("satisfiesPzs")
-    public abstract Builder satisfiesPzs(boolean satisfiesPzs);
 
     /**
      * Setter for serviceAccount.
@@ -451,10 +514,28 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("tunedModelDisplayName")
     public abstract Builder tunedModelDisplayName(String tunedModelDisplayName);
 
+    /**
+     * Setter for veoTuningSpec.
+     *
+     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
+     */
+    @JsonProperty("veoTuningSpec")
+    public abstract Builder veoTuningSpec(VeoTuningSpec veoTuningSpec);
+
+    /**
+     * Setter for veoTuningSpec builder.
+     *
+     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
+     */
+    public Builder veoTuningSpec(VeoTuningSpec.Builder veoTuningSpecBuilder) {
+      return veoTuningSpec(veoTuningSpecBuilder.build());
+    }
+
     public abstract TuningJob build();
   }
 
   /** Deserializes a JSON string to a TuningJob object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TuningJob fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TuningJob.class);
   }

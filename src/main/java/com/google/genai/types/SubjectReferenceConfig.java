@@ -39,6 +39,7 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
   public abstract Optional<String> subjectDescription();
 
   /** Instantiates a builder for SubjectReferenceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SubjectReferenceConfig.Builder();
   }
@@ -95,6 +96,7 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SubjectReferenceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SubjectReferenceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SubjectReferenceConfig.class);
   }

@@ -70,11 +70,9 @@ import java.util.concurrent.ExecutionException;
 public final class LiveTextConversationResumptionAsync {
 
   public static void main(String[] args) {
-    boolean containsModelId = false;
     // Get the session handle from the command line, if provided
     String sessionHandle = null;
     if (args.length > 1) {
-      containsModelId = true;
       if (args[1].startsWith("--session_handle")) {
         String[] parts = args[1].split("=", 2);
         if (parts.length == 2) {
@@ -95,8 +93,6 @@ public final class LiveTextConversationResumptionAsync {
           System.err.println("Usage: mvn ... --session_handle=<your_handle_value>");
           System.exit(1);
         }
-      } else {
-        containsModelId = true;
       }
     }
 
@@ -116,14 +112,13 @@ public final class LiveTextConversationResumptionAsync {
       System.out.println("Using Gemini Developer API");
     }
 
-    String modelId;
-    if (client.vertexAI()) {
-      modelId = "gemini-2.0-flash-live-preview-04-09";
-    } else {
-      modelId = "gemini-live-2.5-flash-preview";
-    }
-    if (containsModelId) {
+    final String modelId;
+    if (args.length != 0) {
       modelId = args[0];
+    } else if (client.vertexAI()) {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME;
+    } else {
+      modelId = Constants.GEMINI_LIVE_MODEL_NAME_PREVIEW;
     }
 
     SessionResumptionConfig.Builder sessionResumptionConfigBuilder =

@@ -97,6 +97,7 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   public abstract Optional<Object> responseJsonSchema();
 
   /** Instantiates a builder for FunctionDeclaration. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FunctionDeclaration.Builder();
   }
@@ -236,6 +237,7 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FunctionDeclaration object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FunctionDeclaration fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FunctionDeclaration.class);
   }

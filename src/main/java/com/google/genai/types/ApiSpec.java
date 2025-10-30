@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The API spec that the external API implements. */
+/** The API spec that the external API implements. This enum is not supported in Gemini API. */
 public class ApiSpec {
 
   /** Enum representing the known values for ApiSpec. */
@@ -60,12 +60,14 @@ public class ApiSpec {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -92,6 +94,7 @@ public class ApiSpec {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.apiSpecEnum != Known.API_SPEC_UNSPECIFIED) {
@@ -101,6 +104,7 @@ public class ApiSpec {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.apiSpecEnum;
   }

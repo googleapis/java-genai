@@ -25,7 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for routing the request to a specific model. */
+/**
+ * The configuration for routing the request to a specific model. This data type is not supported in
+ * Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfig.Builder.class)
 public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
@@ -38,6 +41,7 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   public abstract Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode();
 
   /** Instantiates a builder for GenerationConfigRoutingConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerationConfigRoutingConfig.Builder();
   }
@@ -95,6 +99,7 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerationConfigRoutingConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerationConfigRoutingConfig.class);
   }

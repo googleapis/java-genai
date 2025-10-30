@@ -40,6 +40,7 @@ public abstract class ContentEmbedding extends JsonSerializable {
   public abstract Optional<ContentEmbeddingStatistics> statistics();
 
   /** Instantiates a builder for ContentEmbedding. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ContentEmbedding.Builder();
   }
@@ -94,6 +95,7 @@ public abstract class ContentEmbedding extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ContentEmbedding object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ContentEmbedding fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ContentEmbedding.class);
   }

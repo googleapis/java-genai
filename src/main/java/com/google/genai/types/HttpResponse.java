@@ -39,6 +39,7 @@ public abstract class HttpResponse extends JsonSerializable {
   public abstract Optional<String> body();
 
   /** Instantiates a builder for HttpResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_HttpResponse.Builder();
   }
@@ -75,6 +76,7 @@ public abstract class HttpResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a HttpResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static HttpResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, HttpResponse.class);
   }

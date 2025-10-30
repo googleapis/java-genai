@@ -45,19 +45,20 @@ package com.google.genai.examples;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.Client;
+import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Tool;
-import com.google.genai.types.FunctionDeclaration;
-
 
 /** An example of using the Unified Gen AI Java SDK to generate content with function calling. */
 public final class GenerateContentWithFunctionCallJson {
   /** A callable function to get the weather. */
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -76,28 +77,34 @@ public final class GenerateContentWithFunctionCallJson {
       System.out.println("Using Gemini Developer API");
     }
 
-    ImmutableMap<String, Object> schema =
+    // Define the schema for the function declaration, in Json format.
+    ImmutableMap<String, Object> parametersSchema =
         ImmutableMap.of(
             "type", "object",
             "properties", ImmutableMap.of("location", ImmutableMap.of("type", "string")),
             "required", ImmutableList.of("location"));
 
+    ImmutableMap<String, Object> responseSchema =
+        ImmutableMap.of(
+            "type", "object",
+            "properties", ImmutableMap.of("weather", ImmutableMap.of("type", "string")),
+            "required", ImmutableList.of("weather"));
+
+    // Define the tool with the function declaration.
     Tool toolWithFunctionDeclarations =
         Tool.builder()
             .functionDeclarations(
-                ImmutableList.of(
-                    FunctionDeclaration.builder()
-                        .name("get_weather")
-                        .description("Returns the weather in a given location.")
-                        .parametersJsonSchema(schema)
-                        .build()))
+                FunctionDeclaration.builder()
+                    .name("get_weather")
+                    .description("Returns the weather in a given location.")
+                    .parametersJsonSchema(parametersSchema)
+                    .responseJsonSchema(responseSchema)
+                    .build())
             .build();
 
-    // Add the two methods as callable functions to the list of tools.
+    // Add the tool to the GenerateContentConfig.
     GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .tools(ImmutableList.of(toolWithFunctionDeclarations))
-            .build();
+        GenerateContentConfig.builder().tools(toolWithFunctionDeclarations).build();
 
     GenerateContentResponse response =
         client.models.generateContent(modelId, "What is the weather in Vancouver?", config);

@@ -52,6 +52,7 @@ public abstract class Segment extends JsonSerializable {
   public abstract Optional<String> text();
 
   /** Instantiates a builder for Segment. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Segment.Builder();
   }
@@ -106,6 +107,7 @@ public abstract class Segment extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Segment object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Segment fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Segment.class);
   }

@@ -45,6 +45,7 @@ public abstract class LatLng extends JsonSerializable {
   public abstract Optional<Double> longitude();
 
   /** Instantiates a builder for LatLng. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LatLng.Builder();
   }
@@ -81,6 +82,7 @@ public abstract class LatLng extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LatLng object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LatLng fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LatLng.class);
   }

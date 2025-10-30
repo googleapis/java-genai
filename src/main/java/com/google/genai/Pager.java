@@ -20,7 +20,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.HttpResponse;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.function.Function;
 
 /** Pager class for iterating through paginated results. */
@@ -69,6 +71,14 @@ public class Pager<T extends JsonSerializable> extends BasePager<T> implements I
   /** Returns the current page of items as a list. */
   public ImmutableList<T> page() {
     return page;
+  }
+
+  /**
+   * Returns an Optional of the {@link HttpResponse} for the current page, which can be used to get
+   * the http headers.
+   */
+  public Optional<HttpResponse> sdkHttpResponse() {
+    return Optional.ofNullable(sdkHttpResponse);
   }
 
   /** Iterator for the Pager. */

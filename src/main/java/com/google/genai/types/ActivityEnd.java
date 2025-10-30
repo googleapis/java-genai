@@ -32,6 +32,7 @@ import com.google.genai.JsonSerializable;
 @JsonDeserialize(builder = ActivityEnd.Builder.class)
 public abstract class ActivityEnd extends JsonSerializable {
   /** Instantiates a builder for ActivityEnd. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ActivityEnd.Builder();
   }
@@ -52,6 +53,7 @@ public abstract class ActivityEnd extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ActivityEnd object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ActivityEnd fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ActivityEnd.class);
   }

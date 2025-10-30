@@ -27,6 +27,7 @@ import java.util.Optional;
 
 /**
  * Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+ * This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = EncryptionSpec.Builder.class)
@@ -41,6 +42,7 @@ public abstract class EncryptionSpec extends JsonSerializable {
   public abstract Optional<String> kmsKeyName();
 
   /** Instantiates a builder for EncryptionSpec. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EncryptionSpec.Builder();
   }
@@ -72,6 +74,7 @@ public abstract class EncryptionSpec extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EncryptionSpec object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EncryptionSpec fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EncryptionSpec.class);
   }

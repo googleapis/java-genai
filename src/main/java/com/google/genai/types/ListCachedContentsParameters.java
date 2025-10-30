@@ -36,6 +36,7 @@ public abstract class ListCachedContentsParameters extends JsonSerializable {
   public abstract Optional<ListCachedContentsConfig> config();
 
   /** Instantiates a builder for ListCachedContentsParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListCachedContentsParameters.Builder();
   }
@@ -75,6 +76,7 @@ public abstract class ListCachedContentsParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListCachedContentsParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListCachedContentsParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListCachedContentsParameters.class);
   }

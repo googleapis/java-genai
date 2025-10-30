@@ -19,9 +19,11 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
+import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
 import com.google.genai.types.CachedContent;
 import com.google.genai.types.File;
+import com.google.genai.types.HttpResponse;
 import com.google.genai.types.ListBatchJobsConfig;
 import com.google.genai.types.ListCachedContentsConfig;
 import com.google.genai.types.ListFilesConfig;
@@ -78,6 +80,7 @@ abstract class BasePager<T extends JsonSerializable> {
   protected ImmutableList<T> page;
   protected int pageSize;
   protected String nextPageToken;
+  protected HttpResponse sdkHttpResponse;
 
   /** Constructs a BasePager. */
   protected BasePager(PagedItem pagedItem, ObjectNode requestConfig) {
@@ -107,6 +110,12 @@ abstract class BasePager<T extends JsonSerializable> {
         page.add((T) JsonSerializable.fromJsonNode(responseItem, pagedItem.itemClass()));
       }
       this.page = ImmutableList.copyOf(page);
+    }
+    try {
+      this.sdkHttpResponse =
+          JsonSerializable.fromJsonNode(response.get("sdkHttpResponse"), HttpResponse.class);
+    } catch (GenAiIOException e) {
+      this.sdkHttpResponse = null;
     }
 
     // Sets the page size.

@@ -38,6 +38,7 @@ public abstract class ClientOptions extends JsonSerializable {
   public abstract Optional<Integer> maxConnectionsPerHost();
 
   /** Instantiates a builder for ClientOptions. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ClientOptions.Builder();
   }
@@ -74,6 +75,7 @@ public abstract class ClientOptions extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ClientOptions object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ClientOptions fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ClientOptions.class);
   }

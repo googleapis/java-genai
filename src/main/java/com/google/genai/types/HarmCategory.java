@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. Harm category. */
+/** Harm category. */
 public class HarmCategory {
 
   /** Enum representing the known values for HarmCategory. */
@@ -31,34 +31,44 @@ public class HarmCategory {
     /** The harm category is unspecified. */
     HARM_CATEGORY_UNSPECIFIED,
 
-    /** The harm category is hate speech. */
-    HARM_CATEGORY_HATE_SPEECH,
-
-    /** The harm category is dangerous content. */
-    HARM_CATEGORY_DANGEROUS_CONTENT,
-
     /** The harm category is harassment. */
     HARM_CATEGORY_HARASSMENT,
 
+    /** The harm category is hate speech. */
+    HARM_CATEGORY_HATE_SPEECH,
+
     /** The harm category is sexually explicit content. */
     HARM_CATEGORY_SEXUALLY_EXPLICIT,
+
+    /** The harm category is dangerous content. */
+    HARM_CATEGORY_DANGEROUS_CONTENT,
 
     /**
      * Deprecated: Election filter is not longer supported. The harm category is civic integrity.
      */
     HARM_CATEGORY_CIVIC_INTEGRITY,
 
-    /** The harm category is image hate. */
+    /** The harm category is image hate. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_HATE,
 
-    /** The harm category is image dangerous content. */
+    /**
+     * The harm category is image dangerous content. This enum value is not supported in Gemini API.
+     */
     HARM_CATEGORY_IMAGE_DANGEROUS_CONTENT,
 
-    /** The harm category is image harassment. */
+    /** The harm category is image harassment. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_HARASSMENT,
 
-    /** The harm category is image sexually explicit content. */
-    HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT
+    /**
+     * The harm category is image sexually explicit content. This enum value is not supported in
+     * Gemini API.
+     */
+    HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT,
+
+    /**
+     * The harm category is for jailbreak prompts. This enum value is not supported in Gemini API.
+     */
+    HARM_CATEGORY_JAILBREAK
   }
 
   private Known harmCategoryEnum;
@@ -83,12 +93,14 @@ public class HarmCategory {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -115,6 +127,7 @@ public class HarmCategory {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.harmCategoryEnum != Known.HARM_CATEGORY_UNSPECIFIED) {
@@ -124,6 +137,7 @@ public class HarmCategory {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.harmCategoryEnum;
   }

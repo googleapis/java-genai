@@ -43,6 +43,7 @@ public abstract class TunedModelInfo extends JsonSerializable {
   public abstract Optional<Instant> updateTime();
 
   /** Instantiates a builder for TunedModelInfo. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TunedModelInfo.Builder();
   }
@@ -87,6 +88,7 @@ public abstract class TunedModelInfo extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TunedModelInfo object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TunedModelInfo fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TunedModelInfo.class);
   }

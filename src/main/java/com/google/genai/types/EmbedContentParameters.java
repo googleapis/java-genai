@@ -51,6 +51,7 @@ public abstract class EmbedContentParameters extends JsonSerializable {
   public abstract Optional<EmbedContentConfig> config();
 
   /** Instantiates a builder for EmbedContentParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EmbedContentParameters.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class EmbedContentParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EmbedContentParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EmbedContentParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EmbedContentParameters.class);
   }

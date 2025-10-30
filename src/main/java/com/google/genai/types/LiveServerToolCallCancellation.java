@@ -42,6 +42,7 @@ public abstract class LiveServerToolCallCancellation extends JsonSerializable {
   public abstract Optional<List<String>> ids();
 
   /** Instantiates a builder for LiveServerToolCallCancellation. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerToolCallCancellation.Builder();
   }
@@ -81,6 +82,7 @@ public abstract class LiveServerToolCallCancellation extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveServerToolCallCancellation object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerToolCallCancellation fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerToolCallCancellation.class);
   }

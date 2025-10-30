@@ -45,6 +45,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   public abstract Optional<List<String>> allowedFunctionNames();
 
   /** Instantiates a builder for FunctionCallingConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FunctionCallingConfig.Builder();
   }
@@ -114,6 +115,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FunctionCallingConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FunctionCallingConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FunctionCallingConfig.class);
   }

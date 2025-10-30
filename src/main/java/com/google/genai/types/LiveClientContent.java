@@ -58,6 +58,7 @@ public abstract class LiveClientContent extends JsonSerializable {
   public abstract Optional<Boolean> turnComplete();
 
   /** Instantiates a builder for LiveClientContent. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveClientContent.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class LiveClientContent extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveClientContent object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveClientContent fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveClientContent.class);
   }

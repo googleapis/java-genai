@@ -62,12 +62,14 @@ public class PersonGeneration {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -94,6 +96,7 @@ public class PersonGeneration {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.personGenerationEnum != Known.PERSON_GENERATION_UNSPECIFIED) {
@@ -103,6 +106,7 @@ public class PersonGeneration {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.personGenerationEnum;
   }

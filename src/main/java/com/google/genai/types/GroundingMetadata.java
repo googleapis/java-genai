@@ -33,6 +33,14 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingMetadata.Builder.class)
 public abstract class GroundingMetadata extends JsonSerializable {
+  /**
+   * Optional. Output only. Resource name of the Google Maps widget context token to be used with
+   * the PlacesContextElement widget to render contextual data. This is populated only for Google
+   * Maps grounding. This field is not supported in Gemini API.
+   */
+  @JsonProperty("googleMapsWidgetContextToken")
+  public abstract Optional<String> googleMapsWidgetContextToken();
+
   /** List of supporting references retrieved from specified grounding source. */
   @JsonProperty("groundingChunks")
   public abstract Optional<List<GroundingChunk>> groundingChunks();
@@ -45,7 +53,9 @@ public abstract class GroundingMetadata extends JsonSerializable {
   @JsonProperty("retrievalMetadata")
   public abstract Optional<RetrievalMetadata> retrievalMetadata();
 
-  /** Optional. Queries executed by the retrieval tools. */
+  /**
+   * Optional. Queries executed by the retrieval tools. This field is not supported in Gemini API.
+   */
   @JsonProperty("retrievalQueries")
   public abstract Optional<List<String>> retrievalQueries();
 
@@ -53,11 +63,19 @@ public abstract class GroundingMetadata extends JsonSerializable {
   @JsonProperty("searchEntryPoint")
   public abstract Optional<SearchEntryPoint> searchEntryPoint();
 
+  /**
+   * Optional. Output only. List of source flagging uris. This is currently populated only for
+   * Google Maps grounding. This field is not supported in Gemini API.
+   */
+  @JsonProperty("sourceFlaggingUris")
+  public abstract Optional<List<GroundingMetadataSourceFlaggingUri>> sourceFlaggingUris();
+
   /** Optional. Web search queries for the following-up web search. */
   @JsonProperty("webSearchQueries")
   public abstract Optional<List<String>> webSearchQueries();
 
   /** Instantiates a builder for GroundingMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GroundingMetadata.Builder();
   }
@@ -73,6 +91,17 @@ public abstract class GroundingMetadata extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_GroundingMetadata.Builder();
     }
+
+    /**
+     * Setter for googleMapsWidgetContextToken.
+     *
+     * <p>googleMapsWidgetContextToken: Optional. Output only. Resource name of the Google Maps
+     * widget context token to be used with the PlacesContextElement widget to render contextual
+     * data. This is populated only for Google Maps grounding. This field is not supported in Gemini
+     * API.
+     */
+    @JsonProperty("googleMapsWidgetContextToken")
+    public abstract Builder googleMapsWidgetContextToken(String googleMapsWidgetContextToken);
 
     /**
      * Setter for groundingChunks.
@@ -152,7 +181,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for retrievalQueries.
      *
-     * <p>retrievalQueries: Optional. Queries executed by the retrieval tools.
+     * <p>retrievalQueries: Optional. Queries executed by the retrieval tools. This field is not
+     * supported in Gemini API.
      */
     @JsonProperty("retrievalQueries")
     public abstract Builder retrievalQueries(List<String> retrievalQueries);
@@ -160,7 +190,8 @@ public abstract class GroundingMetadata extends JsonSerializable {
     /**
      * Setter for retrievalQueries.
      *
-     * <p>retrievalQueries: Optional. Queries executed by the retrieval tools.
+     * <p>retrievalQueries: Optional. Queries executed by the retrieval tools. This field is not
+     * supported in Gemini API.
      */
     public Builder retrievalQueries(String... retrievalQueries) {
       return retrievalQueries(Arrays.asList(retrievalQueries));
@@ -184,6 +215,40 @@ public abstract class GroundingMetadata extends JsonSerializable {
     }
 
     /**
+     * Setter for sourceFlaggingUris.
+     *
+     * <p>sourceFlaggingUris: Optional. Output only. List of source flagging uris. This is currently
+     * populated only for Google Maps grounding. This field is not supported in Gemini API.
+     */
+    @JsonProperty("sourceFlaggingUris")
+    public abstract Builder sourceFlaggingUris(
+        List<GroundingMetadataSourceFlaggingUri> sourceFlaggingUris);
+
+    /**
+     * Setter for sourceFlaggingUris.
+     *
+     * <p>sourceFlaggingUris: Optional. Output only. List of source flagging uris. This is currently
+     * populated only for Google Maps grounding. This field is not supported in Gemini API.
+     */
+    public Builder sourceFlaggingUris(GroundingMetadataSourceFlaggingUri... sourceFlaggingUris) {
+      return sourceFlaggingUris(Arrays.asList(sourceFlaggingUris));
+    }
+
+    /**
+     * Setter for sourceFlaggingUris builder.
+     *
+     * <p>sourceFlaggingUris: Optional. Output only. List of source flagging uris. This is currently
+     * populated only for Google Maps grounding. This field is not supported in Gemini API.
+     */
+    public Builder sourceFlaggingUris(
+        GroundingMetadataSourceFlaggingUri.Builder... sourceFlaggingUrisBuilders) {
+      return sourceFlaggingUris(
+          Arrays.asList(sourceFlaggingUrisBuilders).stream()
+              .map(GroundingMetadataSourceFlaggingUri.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    /**
      * Setter for webSearchQueries.
      *
      * <p>webSearchQueries: Optional. Web search queries for the following-up web search.
@@ -204,6 +269,7 @@ public abstract class GroundingMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GroundingMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GroundingMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GroundingMetadata.class);
   }

@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Source attributions for content. */
+/** Source attributions for content. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = Citation.Builder.class)
 public abstract class Citation extends JsonSerializable {
@@ -54,6 +54,7 @@ public abstract class Citation extends JsonSerializable {
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for Citation. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Citation.Builder();
   }
@@ -131,6 +132,7 @@ public abstract class Citation extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Citation object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Citation fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Citation.class);
   }

@@ -38,23 +38,34 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
   @JsonProperty("model")
   public abstract Optional<String> model();
 
-  /** The text prompt for generating the videos. Optional for image to video use cases. */
+  /** The text prompt for generating the videos. Optional if image or video is provided. */
   @JsonProperty("prompt")
   public abstract Optional<String> prompt();
 
-  /** The input image for generating the videos. Optional if prompt or video is provided. */
+  /**
+   * The input image for generating the videos. Optional if prompt is provided. Not allowed if video
+   * is provided.
+   */
   @JsonProperty("image")
   public abstract Optional<Image> image();
 
-  /** The input video for video extension use cases. Optional if prompt or image is provided. */
+  /**
+   * The input video for video extension use cases. Optional if prompt is provided. Not allowed if
+   * image is provided.
+   */
   @JsonProperty("video")
   public abstract Optional<Video> video();
+
+  /** A set of source input(s) for video generation. */
+  @JsonProperty("source")
+  public abstract Optional<GenerateVideosSource> source();
 
   /** Configuration for generating videos. */
   @JsonProperty("config")
   public abstract Optional<GenerateVideosConfig> config();
 
   /** Instantiates a builder for GenerateVideosParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateVideosParameters.Builder();
   }
@@ -83,7 +94,7 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for prompt.
      *
-     * <p>prompt: The text prompt for generating the videos. Optional for image to video use cases.
+     * <p>prompt: The text prompt for generating the videos. Optional if image or video is provided.
      */
     @JsonProperty("prompt")
     public abstract Builder prompt(String prompt);
@@ -91,7 +102,8 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for image.
      *
-     * <p>image: The input image for generating the videos. Optional if prompt or video is provided.
+     * <p>image: The input image for generating the videos. Optional if prompt is provided. Not
+     * allowed if video is provided.
      */
     @JsonProperty("image")
     public abstract Builder image(Image image);
@@ -99,7 +111,8 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for image builder.
      *
-     * <p>image: The input image for generating the videos. Optional if prompt or video is provided.
+     * <p>image: The input image for generating the videos. Optional if prompt is provided. Not
+     * allowed if video is provided.
      */
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
@@ -108,8 +121,8 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for video.
      *
-     * <p>video: The input video for video extension use cases. Optional if prompt or image is
-     * provided.
+     * <p>video: The input video for video extension use cases. Optional if prompt is provided. Not
+     * allowed if image is provided.
      */
     @JsonProperty("video")
     public abstract Builder video(Video video);
@@ -117,11 +130,28 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     /**
      * Setter for video builder.
      *
-     * <p>video: The input video for video extension use cases. Optional if prompt or image is
-     * provided.
+     * <p>video: The input video for video extension use cases. Optional if prompt is provided. Not
+     * allowed if image is provided.
      */
     public Builder video(Video.Builder videoBuilder) {
       return video(videoBuilder.build());
+    }
+
+    /**
+     * Setter for source.
+     *
+     * <p>source: A set of source input(s) for video generation.
+     */
+    @JsonProperty("source")
+    public abstract Builder source(GenerateVideosSource source);
+
+    /**
+     * Setter for source builder.
+     *
+     * <p>source: A set of source input(s) for video generation.
+     */
+    public Builder source(GenerateVideosSource.Builder sourceBuilder) {
+      return source(sourceBuilder.build());
     }
 
     /**
@@ -145,6 +175,7 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateVideosParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateVideosParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateVideosParameters.class);
   }

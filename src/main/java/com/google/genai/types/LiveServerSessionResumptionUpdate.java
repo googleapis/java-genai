@@ -63,6 +63,7 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
   public abstract Optional<Long> lastConsumedClientMessageIndex();
 
   /** Instantiates a builder for LiveServerSessionResumptionUpdate. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerSessionResumptionUpdate.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
   }
 
   /** Deserializes a JSON string to a LiveServerSessionResumptionUpdate object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerSessionResumptionUpdate fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerSessionResumptionUpdate.class);
   }

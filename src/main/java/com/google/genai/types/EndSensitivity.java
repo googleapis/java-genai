@@ -60,12 +60,14 @@ public class EndSensitivity {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -92,6 +94,7 @@ public class EndSensitivity {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.endSensitivityEnum != Known.END_SENSITIVITY_UNSPECIFIED) {
@@ -101,6 +104,7 @@ public class EndSensitivity {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.endSensitivityEnum;
   }

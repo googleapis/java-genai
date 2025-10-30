@@ -36,6 +36,7 @@ public abstract class ListBatchJobsParameters extends JsonSerializable {
   public abstract Optional<ListBatchJobsConfig> config();
 
   /** Instantiates a builder for ListBatchJobsParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListBatchJobsParameters.Builder();
   }
@@ -73,6 +74,7 @@ public abstract class ListBatchJobsParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListBatchJobsParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListBatchJobsParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListBatchJobsParameters.class);
   }

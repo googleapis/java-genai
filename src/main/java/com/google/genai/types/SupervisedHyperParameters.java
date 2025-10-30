@@ -27,7 +27,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Hyperparameters for SFT. */
+/** Hyperparameters for SFT. This data type is not supported in Gemini API. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = SupervisedHyperParameters.Builder.class)
@@ -35,6 +35,10 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
   /** Optional. Adapter size for tuning. */
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
+
+  /** Optional. Batch size for tuning. This feature is only available for open source models. */
+  @JsonProperty("batchSize")
+  public abstract Optional<Long> batchSize();
 
   /**
    * Optional. Number of complete passes the model makes over the entire training dataset during
@@ -44,13 +48,21 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
   public abstract Optional<Long> epochCount();
 
   /**
+   * Optional. Learning rate for tuning. Mutually exclusive with `learning_rate_multiplier`. This
+   * feature is only available for open source models.
+   */
+  @JsonProperty("learningRate")
+  public abstract Optional<Double> learningRate();
+
+  /**
    * Optional. Multiplier for adjusting the default learning rate. Mutually exclusive with
-   * `learning_rate`.
+   * `learning_rate`. This feature is only available for 1P models.
    */
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Double> learningRateMultiplier();
 
   /** Instantiates a builder for SupervisedHyperParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SupervisedHyperParameters.Builder();
   }
@@ -96,6 +108,15 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
     }
 
     /**
+     * Setter for batchSize.
+     *
+     * <p>batchSize: Optional. Batch size for tuning. This feature is only available for open source
+     * models.
+     */
+    @JsonProperty("batchSize")
+    public abstract Builder batchSize(Long batchSize);
+
+    /**
      * Setter for epochCount.
      *
      * <p>epochCount: Optional. Number of complete passes the model makes over the entire training
@@ -105,10 +126,19 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
     public abstract Builder epochCount(Long epochCount);
 
     /**
+     * Setter for learningRate.
+     *
+     * <p>learningRate: Optional. Learning rate for tuning. Mutually exclusive with
+     * `learning_rate_multiplier`. This feature is only available for open source models.
+     */
+    @JsonProperty("learningRate")
+    public abstract Builder learningRate(Double learningRate);
+
+    /**
      * Setter for learningRateMultiplier.
      *
      * <p>learningRateMultiplier: Optional. Multiplier for adjusting the default learning rate.
-     * Mutually exclusive with `learning_rate`.
+     * Mutually exclusive with `learning_rate`. This feature is only available for 1P models.
      */
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Double learningRateMultiplier);
@@ -117,6 +147,7 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SupervisedHyperParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SupervisedHyperParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SupervisedHyperParameters.class);
   }

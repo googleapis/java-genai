@@ -34,6 +34,7 @@ public abstract class FetchPredictOperationConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for FetchPredictOperationConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_FetchPredictOperationConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class FetchPredictOperationConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a FetchPredictOperationConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static FetchPredictOperationConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationConfig.class);
   }

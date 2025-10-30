@@ -26,11 +26,11 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Context for a single url retrieval. */
+/** Context of the a single url retrieval. */
 @AutoValue
 @JsonDeserialize(builder = UrlMetadata.Builder.class)
 public abstract class UrlMetadata extends JsonSerializable {
-  /** The URL retrieved by the tool. */
+  /** Retrieved url by the tool. */
   @JsonProperty("retrievedUrl")
   public abstract Optional<String> retrievedUrl();
 
@@ -39,6 +39,7 @@ public abstract class UrlMetadata extends JsonSerializable {
   public abstract Optional<UrlRetrievalStatus> urlRetrievalStatus();
 
   /** Instantiates a builder for UrlMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UrlMetadata.Builder();
   }
@@ -58,7 +59,7 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for retrievedUrl.
      *
-     * <p>retrievedUrl: The URL retrieved by the tool.
+     * <p>retrievedUrl: Retrieved url by the tool.
      */
     @JsonProperty("retrievedUrl")
     public abstract Builder retrievedUrl(String retrievedUrl);
@@ -95,6 +96,7 @@ public abstract class UrlMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UrlMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UrlMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UrlMetadata.class);
   }

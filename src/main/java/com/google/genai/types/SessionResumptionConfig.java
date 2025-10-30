@@ -50,6 +50,7 @@ public abstract class SessionResumptionConfig extends JsonSerializable {
   public abstract Optional<Boolean> transparent();
 
   /** Instantiates a builder for SessionResumptionConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_SessionResumptionConfig.Builder();
   }
@@ -89,6 +90,7 @@ public abstract class SessionResumptionConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a SessionResumptionConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static SessionResumptionConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, SessionResumptionConfig.class);
   }

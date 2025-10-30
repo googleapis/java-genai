@@ -42,6 +42,7 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
   public abstract Optional<Boolean> enableControlImageComputation();
 
   /** Instantiates a builder for ControlReferenceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ControlReferenceConfig.Builder();
   }
@@ -100,6 +101,7 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ControlReferenceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ControlReferenceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ControlReferenceConfig.class);
   }

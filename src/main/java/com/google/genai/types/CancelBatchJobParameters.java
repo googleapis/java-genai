@@ -44,6 +44,7 @@ public abstract class CancelBatchJobParameters extends JsonSerializable {
   public abstract Optional<CancelBatchJobConfig> config();
 
   /** Instantiates a builder for CancelBatchJobParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CancelBatchJobParameters.Builder();
   }
@@ -91,6 +92,7 @@ public abstract class CancelBatchJobParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CancelBatchJobParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CancelBatchJobParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CancelBatchJobParameters.class);
   }

@@ -25,7 +25,7 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for user OIDC auth. */
+/** Config for user OIDC auth. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfigOidcConfig.Builder.class)
 public abstract class AuthConfigOidcConfig extends JsonSerializable {
@@ -49,6 +49,7 @@ public abstract class AuthConfigOidcConfig extends JsonSerializable {
   public abstract Optional<String> serviceAccount();
 
   /** Instantiates a builder for AuthConfigOidcConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AuthConfigOidcConfig.Builder();
   }
@@ -92,6 +93,7 @@ public abstract class AuthConfigOidcConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AuthConfigOidcConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AuthConfigOidcConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AuthConfigOidcConfig.class);
   }

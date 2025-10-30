@@ -40,6 +40,7 @@ public abstract class GetFileParameters extends JsonSerializable {
   public abstract Optional<GetFileConfig> config();
 
   /** Instantiates a builder for GetFileParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GetFileParameters.Builder();
   }
@@ -85,6 +86,7 @@ public abstract class GetFileParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GetFileParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GetFileParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GetFileParameters.class);
   }

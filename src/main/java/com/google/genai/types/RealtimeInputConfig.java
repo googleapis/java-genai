@@ -50,6 +50,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
   public abstract Optional<TurnCoverage> turnCoverage();
 
   /** Instantiates a builder for RealtimeInputConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RealtimeInputConfig.Builder();
   }
@@ -147,6 +148,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RealtimeInputConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RealtimeInputConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RealtimeInputConfig.class);
   }

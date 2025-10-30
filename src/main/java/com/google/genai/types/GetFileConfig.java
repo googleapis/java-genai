@@ -34,6 +34,7 @@ public abstract class GetFileConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for GetFileConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GetFileConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class GetFileConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GetFileConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GetFileConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GetFileConfig.class);
   }

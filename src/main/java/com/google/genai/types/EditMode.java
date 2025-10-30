@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Enum representing the Imagen 3 Edit mode. */
+/** Enum representing the editing mode. */
 public class EditMode {
 
   /** Enum representing the known values for EditMode. */
@@ -69,12 +69,14 @@ public class EditMode {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -101,6 +103,7 @@ public class EditMode {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.editModeEnum != Known.EDIT_MODE_UNSPECIFIED) {
@@ -110,6 +113,7 @@ public class EditMode {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.editModeEnum;
   }

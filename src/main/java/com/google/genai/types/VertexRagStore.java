@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Retrieve from Vertex RAG Store for grounding. */
+/** Retrieve from Vertex RAG Store for grounding. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = VertexRagStore.Builder.class)
 public abstract class VertexRagStore extends JsonSerializable {
@@ -67,6 +67,7 @@ public abstract class VertexRagStore extends JsonSerializable {
   public abstract Optional<Double> vectorDistanceThreshold();
 
   /** Instantiates a builder for VertexRagStore. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_VertexRagStore.Builder();
   }
@@ -184,6 +185,7 @@ public abstract class VertexRagStore extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a VertexRagStore object. */
+  @ExcludeFromGeneratedCoverageReport
   public static VertexRagStore fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, VertexRagStore.class);
   }

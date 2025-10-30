@@ -45,6 +45,7 @@ public abstract class CodeExecutionResult extends JsonSerializable {
   public abstract Optional<String> output();
 
   /** Instantiates a builder for CodeExecutionResult. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CodeExecutionResult.Builder();
   }
@@ -102,6 +103,7 @@ public abstract class CodeExecutionResult extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CodeExecutionResult object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CodeExecutionResult fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CodeExecutionResult.class);
   }

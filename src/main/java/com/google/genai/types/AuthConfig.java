@@ -55,6 +55,7 @@ public abstract class AuthConfig extends JsonSerializable {
   public abstract Optional<AuthConfigOidcConfig> oidcConfig();
 
   /** Instantiates a builder for AuthConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_AuthConfig.Builder();
   }
@@ -191,6 +192,7 @@ public abstract class AuthConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a AuthConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static AuthConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, AuthConfig.class);
   }

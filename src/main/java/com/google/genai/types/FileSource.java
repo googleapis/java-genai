@@ -59,12 +59,14 @@ public class FileSource {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -91,6 +93,7 @@ public class FileSource {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.fileSourceEnum != Known.FILE_SOURCE_UNSPECIFIED) {
@@ -100,6 +103,7 @@ public class FileSource {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.fileSourceEnum;
   }

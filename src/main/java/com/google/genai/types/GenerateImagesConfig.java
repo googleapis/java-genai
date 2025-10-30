@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** The config for generating an images. */
@@ -104,6 +105,10 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   @JsonProperty("addWatermark")
   public abstract Optional<Boolean> addWatermark();
 
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
+
   /**
    * The size of the largest dimension of the generated image. Supported sizes are 1K and 2K (not
    * supported for Imagen 3 models).
@@ -116,6 +121,7 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   public abstract Optional<Boolean> enhancePrompt();
 
   /** Instantiates a builder for GenerateImagesConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateImagesConfig.Builder();
   }
@@ -328,6 +334,14 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     public abstract Builder addWatermark(boolean addWatermark);
 
     /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    /**
      * Setter for imageSize.
      *
      * <p>imageSize: The size of the largest dimension of the generated image. Supported sizes are
@@ -348,6 +362,7 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateImagesConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateImagesConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateImagesConfig.class);
   }

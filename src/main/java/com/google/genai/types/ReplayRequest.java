@@ -49,6 +49,7 @@ public abstract class ReplayRequest extends JsonSerializable {
   public abstract Optional<List<Map<String, Object>>> bodySegments();
 
   /** Instantiates a builder for ReplayRequest. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ReplayRequest.Builder();
   }
@@ -110,6 +111,7 @@ public abstract class ReplayRequest extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ReplayRequest object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ReplayRequest fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ReplayRequest.class);
   }

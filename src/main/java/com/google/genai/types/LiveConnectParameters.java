@@ -41,6 +41,7 @@ public abstract class LiveConnectParameters extends JsonSerializable {
   public abstract Optional<LiveConnectConfig> config();
 
   /** Instantiates a builder for LiveConnectParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveConnectParameters.Builder();
   }
@@ -87,6 +88,7 @@ public abstract class LiveConnectParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveConnectParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveConnectParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveConnectParameters.class);
   }

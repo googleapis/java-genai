@@ -29,15 +29,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** The configuration for the multi-speaker setup. */
+/** The configuration for the multi-speaker setup. This data type is not supported in Vertex AI. */
 @AutoValue
 @JsonDeserialize(builder = MultiSpeakerVoiceConfig.Builder.class)
 public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
-  /** The configuration for the speaker to use. */
+  /** Required. All the enabled speaker voices. */
   @JsonProperty("speakerVoiceConfigs")
   public abstract Optional<List<SpeakerVoiceConfig>> speakerVoiceConfigs();
 
   /** Instantiates a builder for MultiSpeakerVoiceConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_MultiSpeakerVoiceConfig.Builder();
   }
@@ -57,7 +58,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs.
      *
-     * <p>speakerVoiceConfigs: The configuration for the speaker to use.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     @JsonProperty("speakerVoiceConfigs")
     public abstract Builder speakerVoiceConfigs(List<SpeakerVoiceConfig> speakerVoiceConfigs);
@@ -65,7 +66,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs.
      *
-     * <p>speakerVoiceConfigs: The configuration for the speaker to use.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     public Builder speakerVoiceConfigs(SpeakerVoiceConfig... speakerVoiceConfigs) {
       return speakerVoiceConfigs(Arrays.asList(speakerVoiceConfigs));
@@ -74,7 +75,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs builder.
      *
-     * <p>speakerVoiceConfigs: The configuration for the speaker to use.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     public Builder speakerVoiceConfigs(SpeakerVoiceConfig.Builder... speakerVoiceConfigsBuilders) {
       return speakerVoiceConfigs(
@@ -87,6 +88,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a MultiSpeakerVoiceConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static MultiSpeakerVoiceConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, MultiSpeakerVoiceConfig.class);
   }

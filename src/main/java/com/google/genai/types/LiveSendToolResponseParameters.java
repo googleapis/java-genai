@@ -38,6 +38,7 @@ public abstract class LiveSendToolResponseParameters extends JsonSerializable {
   public abstract Optional<List<FunctionResponse>> functionResponses();
 
   /** Instantiates a builder for LiveSendToolResponseParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveSendToolResponseParameters.Builder();
   }
@@ -89,6 +90,7 @@ public abstract class LiveSendToolResponseParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveSendToolResponseParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveSendToolResponseParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveSendToolResponseParameters.class);
   }

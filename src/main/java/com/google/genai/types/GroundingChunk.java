@@ -29,7 +29,14 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingChunk.Builder.class)
 public abstract class GroundingChunk extends JsonSerializable {
-  /** Grounding chunk from context retrieved by the retrieval tools. */
+  /** Grounding chunk from Google Maps. This field is not supported in Gemini API. */
+  @JsonProperty("maps")
+  public abstract Optional<GroundingChunkMaps> maps();
+
+  /**
+   * Grounding chunk from context retrieved by the retrieval tools. This field is not supported in
+   * Gemini API.
+   */
   @JsonProperty("retrievedContext")
   public abstract Optional<GroundingChunkRetrievedContext> retrievedContext();
 
@@ -38,6 +45,7 @@ public abstract class GroundingChunk extends JsonSerializable {
   public abstract Optional<GroundingChunkWeb> web();
 
   /** Instantiates a builder for GroundingChunk. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GroundingChunk.Builder();
   }
@@ -55,9 +63,27 @@ public abstract class GroundingChunk extends JsonSerializable {
     }
 
     /**
+     * Setter for maps.
+     *
+     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
+     */
+    @JsonProperty("maps")
+    public abstract Builder maps(GroundingChunkMaps maps);
+
+    /**
+     * Setter for maps builder.
+     *
+     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
+     */
+    public Builder maps(GroundingChunkMaps.Builder mapsBuilder) {
+      return maps(mapsBuilder.build());
+    }
+
+    /**
      * Setter for retrievedContext.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools.
+     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
+     * field is not supported in Gemini API.
      */
     @JsonProperty("retrievedContext")
     public abstract Builder retrievedContext(GroundingChunkRetrievedContext retrievedContext);
@@ -65,7 +91,8 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for retrievedContext builder.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools.
+     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
+     * field is not supported in Gemini API.
      */
     public Builder retrievedContext(
         GroundingChunkRetrievedContext.Builder retrievedContextBuilder) {
@@ -93,6 +120,7 @@ public abstract class GroundingChunk extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GroundingChunk object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GroundingChunk fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GroundingChunk.class);
   }

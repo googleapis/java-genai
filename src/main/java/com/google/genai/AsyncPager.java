@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.HttpResponse;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -148,5 +150,13 @@ public class AsyncPager<T extends JsonSerializable> extends BasePager<T> {
   /** Asynchronously returns the size of the current page. */
   public CompletableFuture<Integer> size() {
     return initializationFuture.thenApply(v -> page.size());
+  }
+
+  /**
+   * Asynchronously returns an Optional of the {@link HttpResponse} for the current page, which can
+   * be used to get the http headers.
+   */
+  public CompletableFuture<Optional<HttpResponse>> sdkHttpResponse() {
+    return initializationFuture.thenApply(v -> Optional.ofNullable(sdkHttpResponse));
   }
 }

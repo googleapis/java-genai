@@ -56,14 +56,16 @@ public final class GenerateContentWithFunctionCall {
   }
 
   /** A callable function to divide two integers. */
-  public static Integer divideTwoIntegers(Integer numerator, Integer denominator) {
+  public static Integer divideTwoIntegers(int numerator, int denominator) {
     return numerator / denominator;
   }
 
   public static void main(String[] args) throws NoSuchMethodException {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -82,12 +84,13 @@ public final class GenerateContentWithFunctionCall {
       System.out.println("Using Gemini Developer API");
     }
 
+    // Load the two methods as reflected Method objects so that they can be automatically executed
+    // on the client side.
     Method method1 =
         GenerateContentWithFunctionCall.class.getMethod(
             "getCurrentWeather", String.class, String.class);
     Method method2 =
-        GenerateContentWithFunctionCall.class.getMethod(
-            "divideTwoIntegers", Integer.class, Integer.class);
+        GenerateContentWithFunctionCall.class.getMethod("divideTwoIntegers", int.class, int.class);
 
     // Add the two methods as callable functions to the list of tools.
     GenerateContentConfig config =

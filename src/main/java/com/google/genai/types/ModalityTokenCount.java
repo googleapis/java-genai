@@ -39,6 +39,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
   public abstract Optional<Integer> tokenCount();
 
   /** Instantiates a builder for ModalityTokenCount. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ModalityTokenCount.Builder();
   }
@@ -95,6 +96,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ModalityTokenCount object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ModalityTokenCount fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ModalityTokenCount.class);
   }

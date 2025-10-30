@@ -56,6 +56,12 @@ import com.google.genai.types.Part;
 public final class BatchManagement {
 
   public static void main(String[] args) {
+    final String modelId;
+    if (args.length != 0) {
+      modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
+    }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
@@ -68,10 +74,6 @@ public final class BatchManagement {
     Client client = new Client();
 
     if (client.vertexAI()) {
-      String modelId = "gemini-1.5-flash-002";
-      if (args.length != 0) {
-        modelId = args[0];
-      }
       System.out.println("Using Vertex AI");
       // Create a batch job.
       BatchJobSource batchJobSource =
@@ -97,10 +99,6 @@ public final class BatchManagement {
       System.out.println("Cancelled batch job: " + batchJob1.name().get());
     } else {
       System.out.println("Using Gemini Developer API");
-      String modelId = "gemini-2.0-flash";
-      if (args.length != 0) {
-        modelId = args[0];
-      }
       // Create a batch job.
       BatchJobSource batchJobSource =
           BatchJobSource.builder()

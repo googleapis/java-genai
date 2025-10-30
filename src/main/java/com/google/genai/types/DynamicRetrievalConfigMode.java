@@ -59,12 +59,14 @@ public class DynamicRetrievalConfigMode {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -94,6 +96,7 @@ public class DynamicRetrievalConfigMode {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.dynamicRetrievalConfigModeEnum != Known.DYNAMIC_RETRIEVAL_CONFIG_MODE_UNSPECIFIED) {
@@ -103,6 +106,7 @@ public class DynamicRetrievalConfigMode {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.dynamicRetrievalConfigModeEnum;
   }

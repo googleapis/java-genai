@@ -95,6 +95,7 @@ public abstract class LiveClientSetup extends JsonSerializable {
   public abstract Optional<ProactivityConfig> proactivity();
 
   /** Instantiates a builder for LiveClientSetup. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveClientSetup.Builder();
   }
@@ -321,6 +322,7 @@ public abstract class LiveClientSetup extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveClientSetup object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveClientSetup fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveClientSetup.class);
   }

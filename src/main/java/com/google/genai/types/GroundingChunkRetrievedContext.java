@@ -25,10 +25,17 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Chunk from context retrieved by the retrieval tools. */
+/**
+ * Chunk from context retrieved by the retrieval tools. This data type is not supported in Gemini
+ * API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkRetrievedContext.Builder.class)
 public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
+  /** Output only. The full document name for the referenced Vertex AI Search document. */
+  @JsonProperty("documentName")
+  public abstract Optional<String> documentName();
+
   /**
    * Additional context for the RAG retrieval result. This is only populated when using the RAG
    * retrieval tool.
@@ -49,6 +56,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GroundingChunkRetrievedContext.Builder();
   }
@@ -66,6 +74,15 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     private static Builder create() {
       return new AutoValue_GroundingChunkRetrievedContext.Builder();
     }
+
+    /**
+     * Setter for documentName.
+     *
+     * <p>documentName: Output only. The full document name for the referenced Vertex AI Search
+     * document.
+     */
+    @JsonProperty("documentName")
+    public abstract Builder documentName(String documentName);
 
     /**
      * Setter for ragChunk.
@@ -114,6 +131,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GroundingChunkRetrievedContext object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GroundingChunkRetrievedContext fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GroundingChunkRetrievedContext.class);
   }

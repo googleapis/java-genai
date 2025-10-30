@@ -33,11 +33,16 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = UpscaleImageResponse.Builder.class)
 public abstract class UpscaleImageResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** Generated images. */
   @JsonProperty("generatedImages")
   public abstract Optional<List<GeneratedImage>> generatedImages();
 
   /** Instantiates a builder for UpscaleImageResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UpscaleImageResponse.Builder();
   }
@@ -52,6 +57,23 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_UpscaleImageResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -87,6 +109,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UpscaleImageResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UpscaleImageResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UpscaleImageResponse.class);
   }

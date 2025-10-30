@@ -57,6 +57,7 @@ public abstract class LiveClientMessage extends JsonSerializable {
   public abstract Optional<LiveClientToolResponse> toolResponse();
 
   /** Instantiates a builder for LiveClientMessage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveClientMessage.Builder();
   }
@@ -170,6 +171,7 @@ public abstract class LiveClientMessage extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveClientMessage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveClientMessage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveClientMessage.class);
   }

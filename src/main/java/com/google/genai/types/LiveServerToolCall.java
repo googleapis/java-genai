@@ -41,6 +41,7 @@ public abstract class LiveServerToolCall extends JsonSerializable {
   public abstract Optional<List<FunctionCall>> functionCalls();
 
   /** Instantiates a builder for LiveServerToolCall. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveServerToolCall.Builder();
   }
@@ -90,6 +91,7 @@ public abstract class LiveServerToolCall extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveServerToolCall object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveServerToolCall fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveServerToolCall.class);
   }

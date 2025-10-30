@@ -55,6 +55,7 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
   public abstract Optional<ControlReferenceConfig> config();
 
   /** Instantiates a builder for ControlReferenceImage. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ControlReferenceImage.Builder();
   }
@@ -125,6 +126,7 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
   }
 
   /** Deserializes a JSON string to a ControlReferenceImage object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ControlReferenceImage fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ControlReferenceImage.class);
   }

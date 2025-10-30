@@ -51,6 +51,7 @@ public abstract class GenerateContentParameters extends JsonSerializable {
   public abstract Optional<GenerateContentConfig> config();
 
   /** Instantiates a builder for GenerateContentParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateContentParameters.Builder();
   }
@@ -126,6 +127,7 @@ public abstract class GenerateContentParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateContentParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateContentParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateContentParameters.class);
   }

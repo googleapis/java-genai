@@ -46,6 +46,7 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
   public abstract Optional<List<String>> raiMediaFilteredReasons();
 
   /** Instantiates a builder for GenerateVideosResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateVideosResponse.Builder();
   }
@@ -120,6 +121,7 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateVideosResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateVideosResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateVideosResponse.class);
   }

@@ -74,6 +74,7 @@ public abstract class TestTableItem extends JsonSerializable {
   public abstract Optional<List<String>> ignoreKeys();
 
   /** Instantiates a builder for TestTableItem. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TestTableItem.Builder();
   }
@@ -173,6 +174,7 @@ public abstract class TestTableItem extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TestTableItem object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TestTableItem fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TestTableItem.class);
   }

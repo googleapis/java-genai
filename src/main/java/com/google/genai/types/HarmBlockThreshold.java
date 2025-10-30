@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. The harm block threshold. */
+/** The harm block threshold. */
 public class HarmBlockThreshold {
 
   /** Enum representing the known values for HarmBlockThreshold. */
@@ -69,12 +69,14 @@ public class HarmBlockThreshold {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -101,6 +103,7 @@ public class HarmBlockThreshold {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.harmBlockThresholdEnum != Known.HARM_BLOCK_THRESHOLD_UNSPECIFIED) {
@@ -110,6 +113,7 @@ public class HarmBlockThreshold {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.harmBlockThresholdEnum;
   }

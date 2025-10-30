@@ -34,6 +34,7 @@ public abstract class DeleteBatchJobConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for DeleteBatchJobConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteBatchJobConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class DeleteBatchJobConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteBatchJobConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteBatchJobConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteBatchJobConfig.class);
   }

@@ -50,6 +50,7 @@ public abstract class ListModelsConfig extends JsonSerializable {
   public abstract Optional<Boolean> queryBase();
 
   /** Instantiates a builder for ListModelsConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ListModelsConfig.Builder();
   }
@@ -119,6 +120,7 @@ public abstract class ListModelsConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ListModelsConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ListModelsConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ListModelsConfig.class);
   }

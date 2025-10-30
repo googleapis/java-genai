@@ -34,13 +34,14 @@ public abstract class TuningValidationDataset extends JsonSerializable {
   public abstract Optional<String> gcsUri();
 
   /**
-   * The resource name of the Vertex Multimodal Dataset that is used as training dataset. Example:
+   * The resource name of the Vertex Multimodal Dataset that is used as validation dataset. Example:
    * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
    */
   @JsonProperty("vertexDatasetResource")
   public abstract Optional<String> vertexDatasetResource();
 
   /** Instantiates a builder for TuningValidationDataset. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TuningValidationDataset.Builder();
   }
@@ -69,7 +70,7 @@ public abstract class TuningValidationDataset extends JsonSerializable {
      * Setter for vertexDatasetResource.
      *
      * <p>vertexDatasetResource: The resource name of the Vertex Multimodal Dataset that is used as
-     * training dataset. Example:
+     * validation dataset. Example:
      * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
      */
     @JsonProperty("vertexDatasetResource")
@@ -79,6 +80,7 @@ public abstract class TuningValidationDataset extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TuningValidationDataset object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TuningValidationDataset fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TuningValidationDataset.class);
   }

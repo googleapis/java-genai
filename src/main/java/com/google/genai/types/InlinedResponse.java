@@ -38,6 +38,7 @@ public abstract class InlinedResponse extends JsonSerializable {
   public abstract Optional<JobError> error();
 
   /** Instantiates a builder for InlinedResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_InlinedResponse.Builder();
   }
@@ -92,6 +93,7 @@ public abstract class InlinedResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a InlinedResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static InlinedResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, InlinedResponse.class);
   }

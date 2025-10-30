@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Optional. Adapter size for tuning. */
+/** Adapter size for tuning. This enum is not supported in Gemini API. */
 public class AdapterSize {
 
   /** Enum representing the known values for AdapterSize. */
@@ -72,12 +72,14 @@ public class AdapterSize {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -104,6 +106,7 @@ public class AdapterSize {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.adapterSizeEnum != Known.ADAPTER_SIZE_UNSPECIFIED) {
@@ -113,6 +116,7 @@ public class AdapterSize {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.adapterSizeEnum;
   }

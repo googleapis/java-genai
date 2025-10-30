@@ -44,6 +44,7 @@ public abstract class CreateFileParameters extends JsonSerializable {
   public abstract Optional<CreateFileConfig> config();
 
   /** Instantiates a builder for CreateFileParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CreateFileParameters.Builder();
   }
@@ -102,6 +103,7 @@ public abstract class CreateFileParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CreateFileParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CreateFileParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CreateFileParameters.class);
   }

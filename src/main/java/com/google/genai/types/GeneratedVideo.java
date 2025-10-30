@@ -34,6 +34,7 @@ public abstract class GeneratedVideo extends JsonSerializable {
   public abstract Optional<Video> video();
 
   /** Instantiates a builder for GeneratedVideo. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GeneratedVideo.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class GeneratedVideo extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GeneratedVideo object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GeneratedVideo fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GeneratedVideo.class);
   }

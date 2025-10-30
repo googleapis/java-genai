@@ -33,6 +33,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = EmbedContentResponse.Builder.class)
 public abstract class EmbedContentResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /** The embeddings for each request, in the same order as provided in the batch request. */
   @JsonProperty("embeddings")
   public abstract Optional<List<ContentEmbedding>> embeddings();
@@ -42,6 +46,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
   public abstract Optional<EmbedContentMetadata> metadata();
 
   /** Instantiates a builder for EmbedContentResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_EmbedContentResponse.Builder();
   }
@@ -56,6 +61,23 @@ public abstract class EmbedContentResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_EmbedContentResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -111,6 +133,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a EmbedContentResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static EmbedContentResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, EmbedContentResponse.class);
   }

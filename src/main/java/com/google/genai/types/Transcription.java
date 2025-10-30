@@ -38,6 +38,7 @@ public abstract class Transcription extends JsonSerializable {
   public abstract Optional<Boolean> finished();
 
   /** Instantiates a builder for Transcription. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Transcription.Builder();
   }
@@ -74,6 +75,7 @@ public abstract class Transcription extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Transcription object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Transcription fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Transcription.class);
   }

@@ -39,6 +39,7 @@ public abstract class RetrievalMetadata extends JsonSerializable {
   public abstract Optional<Float> googleSearchDynamicRetrievalScore();
 
   /** Instantiates a builder for RetrievalMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_RetrievalMetadata.Builder();
   }
@@ -72,6 +73,7 @@ public abstract class RetrievalMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a RetrievalMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static RetrievalMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, RetrievalMetadata.class);
   }

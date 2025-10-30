@@ -53,6 +53,7 @@ public abstract class Image extends JsonSerializable {
   public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for Image. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Image.Builder();
   }
@@ -99,6 +100,7 @@ public abstract class Image extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a Image object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Image fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Image.class);
   }

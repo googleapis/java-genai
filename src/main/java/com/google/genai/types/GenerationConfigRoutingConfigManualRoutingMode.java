@@ -25,7 +25,10 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** When manual routing is set, the specified model will be used directly. */
+/**
+ * When manual routing is set, the specified model will be used directly. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfigManualRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigManualRoutingMode extends JsonSerializable {
@@ -37,6 +40,7 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
   public abstract Optional<String> modelName();
 
   /** Instantiates a builder for GenerationConfigRoutingConfigManualRoutingMode. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerationConfigRoutingConfigManualRoutingMode.Builder();
   }
@@ -69,6 +73,7 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
   }
 
   /** Deserializes a JSON string to a GenerationConfigRoutingConfigManualRoutingMode object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerationConfigRoutingConfigManualRoutingMode fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(
         jsonString, GenerationConfigRoutingConfigManualRoutingMode.class);

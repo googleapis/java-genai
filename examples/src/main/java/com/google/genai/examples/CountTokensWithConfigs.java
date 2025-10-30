@@ -54,9 +54,11 @@ import com.google.genai.types.Part;
  */
 public final class CountTokensWithConfigs {
   public static void main(String[] args) {
-    String modelId = "gemini-2.0-flash-001";
+    final String modelId;
     if (args.length != 0) {
       modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -72,7 +74,10 @@ public final class CountTokensWithConfigs {
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println(
+          "Gemini Developer API is not supported for this example since system instruction is not"
+              + " supported.");
+      System.exit(0);
     }
 
     // Sets the system instruction in the config.

@@ -28,7 +28,8 @@ import java.util.Optional;
 
 /**
  * Retrieve from data source powered by external API for grounding. The external API is not owned by
- * Google, but need to follow the pre-defined API spec.
+ * Google, but need to follow the pre-defined API spec. This data type is not supported in Gemini
+ * API.
  */
 @AutoValue
 @JsonDeserialize(builder = ExternalApi.Builder.class)
@@ -61,6 +62,7 @@ public abstract class ExternalApi extends JsonSerializable {
   public abstract Optional<ExternalApiSimpleSearchParams> simpleSearchParams();
 
   /** Instantiates a builder for ExternalApi. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ExternalApi.Builder();
   }
@@ -190,6 +192,7 @@ public abstract class ExternalApi extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ExternalApi object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ExternalApi fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ExternalApi.class);
   }

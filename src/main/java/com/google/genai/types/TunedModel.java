@@ -29,13 +29,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** None */
+/** TunedModel for the Tuned Model of a Tuning Job. */
 @AutoValue
 @JsonDeserialize(builder = TunedModel.Builder.class)
 public abstract class TunedModel extends JsonSerializable {
   /**
    * Output only. The resource name of the TunedModel. Format:
-   * `projects/{project}/locations/{location}/models/{model}`.
+   * `projects/{project}/locations/{location}/models/{model}@{version_id}` When tuning from a base
+   * model, the version_id will be 1. For continuous tuning, the version id will be incremented by 1
+   * from the last version id in the parent model. E.g.,
+   * `projects/{project}/locations/{location}/models/{model}@{last_version_id + 1}`
    */
   @JsonProperty("model")
   public abstract Optional<String> model();
@@ -55,6 +58,7 @@ public abstract class TunedModel extends JsonSerializable {
   public abstract Optional<List<TunedModelCheckpoint>> checkpoints();
 
   /** Instantiates a builder for TunedModel. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_TunedModel.Builder();
   }
@@ -75,7 +79,10 @@ public abstract class TunedModel extends JsonSerializable {
      * Setter for model.
      *
      * <p>model: Output only. The resource name of the TunedModel. Format:
-     * `projects/{project}/locations/{location}/models/{model}`.
+     * `projects/{project}/locations/{location}/models/{model}@{version_id}` When tuning from a base
+     * model, the version_id will be 1. For continuous tuning, the version id will be incremented by
+     * 1 from the last version id in the parent model. E.g.,
+     * `projects/{project}/locations/{location}/models/{model}@{last_version_id + 1}`
      */
     @JsonProperty("model")
     public abstract Builder model(String model);
@@ -125,6 +132,7 @@ public abstract class TunedModel extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a TunedModel object. */
+  @ExcludeFromGeneratedCoverageReport
   public static TunedModel fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, TunedModel.class);
   }

@@ -63,12 +63,14 @@ public class MaskReferenceMode {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -95,6 +97,7 @@ public class MaskReferenceMode {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.maskReferenceModeEnum != Known.MASK_REFERENCE_MODE_UNSPECIFIED) {
@@ -104,6 +107,7 @@ public class MaskReferenceMode {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.maskReferenceModeEnum;
   }

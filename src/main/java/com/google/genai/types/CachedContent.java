@@ -59,6 +59,7 @@ public abstract class CachedContent extends JsonSerializable {
   public abstract Optional<CachedContentUsageMetadata> usageMetadata();
 
   /** Instantiates a builder for CachedContent. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_CachedContent.Builder();
   }
@@ -144,6 +145,7 @@ public abstract class CachedContent extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a CachedContent object. */
+  @ExcludeFromGeneratedCoverageReport
   public static CachedContent fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, CachedContent.class);
   }

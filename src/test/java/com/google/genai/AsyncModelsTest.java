@@ -47,10 +47,12 @@ import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
+import com.google.genai.types.PersonGeneration;
 import com.google.genai.types.RagRetrievalConfig;
 import com.google.genai.types.RagRetrievalConfigFilter;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.Retrieval;
+import com.google.genai.types.SafetyFilterLevel;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolCodeExecution;
 import com.google.genai.types.UpdateModelConfig;
@@ -138,6 +140,7 @@ public class AsyncModelsTest {
     assertEquals(pager.pageSize().get(), 10);
     assertTrue(pager.size().get() <= 10);
     pager.forEach(item -> assertNotNull(item)).get();
+    assertNotNull(pager.sdkHttpResponse().get().get().headers().get());
   }
 
   @ParameterizedTest
@@ -160,6 +163,7 @@ public class AsyncModelsTest {
     // Assert
     assertEquals(10, pager.size().get());
     pager.forEach(item -> assertNotNull(item)).get();
+    assertNotNull(pager.sdkHttpResponse().get().get().headers().get());
   }
 
   @ParameterizedTest
@@ -433,6 +437,7 @@ public class AsyncModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act
@@ -448,9 +453,9 @@ public class AsyncModelsTest {
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
     } else {
-      CompletionException exception =
+      UnsupportedOperationException exception =
           assertThrows(
-              CompletionException.class,
+              UnsupportedOperationException.class,
               () ->
                   client
                       .async
@@ -463,8 +468,7 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.",
-          exception.getCause().getMessage());
+          "This method is only supported in the Vertex AI client.", exception.getMessage());
     }
   }
 
@@ -624,24 +628,27 @@ public class AsyncModelsTest {
     UpscaleImageConfig config =
         UpscaleImageConfig.builder()
             .includeRaiReason(true)
+            .safetyFilterLevel(SafetyFilterLevel.Known.BLOCK_LOW_AND_ABOVE)
+            .personGeneration(PersonGeneration.Known.ALLOW_ADULT)
             .outputMimeType("image/jpeg")
             .outputCompressionQuality(80)
             .enhanceInputImage(true)
             .imagePreservationFactor(0.6f)
+            .labels(ImmutableMap.of("imagen_label_key", "upscale_image"))
             .build();
 
     // Act
     if (vertexAI) {
       CompletableFuture<UpscaleImageResponse> responseFuture =
-          client.async.models.upscaleImage("imagen-3.0-generate-001", image, "x2", config);
+          client.async.models.upscaleImage("imagen-3.0-generate-002", image, "x2", config);
       UpscaleImageResponse response = responseFuture.join();
 
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
     } else {
-      CompletionException exception =
+      UnsupportedOperationException exception =
           assertThrows(
-              CompletionException.class,
+              UnsupportedOperationException.class,
               () ->
                   client
                       .async
@@ -650,8 +657,7 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.",
-          exception.getCause().getMessage());
+          "This method is only supported in the Vertex AI client.", exception.getMessage());
     }
   }
 
@@ -666,14 +672,17 @@ public class AsyncModelsTest {
 
     GenerateVideosConfig.Builder configBuilder = GenerateVideosConfig.builder();
     if (vertexAI) {
-      configBuilder.outputGcsUri("gs://unified-genai-tests/tmp/genai/video/outputs");
+      configBuilder.outputGcsUri("gs://genai-sdk-tests/temp/videos/");
     }
     GenerateVideosConfig config = configBuilder.build();
 
     // Act
     CompletableFuture<GenerateVideosOperation> responseFuture =
         client.async.models.generateVideos(
-            "veo-2.0-generate-001", "A neon hologram of a cat driving at top speed", null, config);
+            "veo-3.1-generate-preview",
+            "A neon hologram of a cat driving at top speed",
+            null,
+            config);
     GenerateVideosOperation operation = responseFuture.join();
 
     // Assert

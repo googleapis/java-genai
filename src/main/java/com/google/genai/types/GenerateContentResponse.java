@@ -53,10 +53,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @JsonProperty("createTime")
   public abstract Optional<Instant> createTime();
 
-  /** Identifier for each response. */
-  @JsonProperty("responseId")
-  public abstract Optional<String> responseId();
-
   /** The history of automatic function calling. */
   @JsonProperty("automaticFunctionCallingHistory")
   public abstract Optional<List<Content>> automaticFunctionCallingHistory();
@@ -72,11 +68,18 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @JsonProperty("promptFeedback")
   public abstract Optional<GenerateContentResponsePromptFeedback> promptFeedback();
 
+  /**
+   * Output only. response_id is used to identify each response. It is the encoding of the event_id.
+   */
+  @JsonProperty("responseId")
+  public abstract Optional<String> responseId();
+
   /** Usage metadata about the response(s). */
   @JsonProperty("usageMetadata")
   public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
 
   /** Instantiates a builder for GenerateContentResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerateContentResponse.Builder();
   }
@@ -148,14 +151,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     public abstract Builder createTime(Instant createTime);
 
     /**
-     * Setter for responseId.
-     *
-     * <p>responseId: Identifier for each response.
-     */
-    @JsonProperty("responseId")
-    public abstract Builder responseId(String responseId);
-
-    /**
      * Setter for automaticFunctionCallingHistory.
      *
      * <p>automaticFunctionCallingHistory: The history of automatic function calling.
@@ -217,6 +212,15 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     }
 
     /**
+     * Setter for responseId.
+     *
+     * <p>responseId: Output only. response_id is used to identify each response. It is the encoding
+     * of the event_id.
+     */
+    @JsonProperty("responseId")
+    public abstract Builder responseId(String responseId);
+
+    /**
      * Setter for usageMetadata.
      *
      * <p>usageMetadata: Usage metadata about the response(s).
@@ -238,6 +242,7 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GenerateContentResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerateContentResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerateContentResponse.class);
   }

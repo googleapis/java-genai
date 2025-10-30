@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. Programming language of the `code`. */
+/** Programming language of the `code`. */
 public class Language {
 
   /** Enum representing the known values for Language. */
@@ -57,12 +57,14 @@ public class Language {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -89,6 +91,7 @@ public class Language {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.languageEnum != Known.LANGUAGE_UNSPECIFIED) {
@@ -98,6 +101,7 @@ public class Language {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.languageEnum;
   }

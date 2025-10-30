@@ -40,6 +40,7 @@ public abstract class UpdateModelParameters extends JsonSerializable {
   public abstract Optional<UpdateModelConfig> config();
 
   /** Instantiates a builder for UpdateModelParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UpdateModelParameters.Builder();
   }
@@ -85,6 +86,7 @@ public abstract class UpdateModelParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UpdateModelParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UpdateModelParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UpdateModelParameters.class);
   }

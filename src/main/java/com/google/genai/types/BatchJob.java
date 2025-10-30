@@ -78,6 +78,7 @@ public abstract class BatchJob extends JsonSerializable {
   public abstract Optional<BatchJobDestination> dest();
 
   /** Instantiates a builder for BatchJob. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_BatchJob.Builder();
   }
@@ -236,6 +237,7 @@ public abstract class BatchJob extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a BatchJob object. */
+  @ExcludeFromGeneratedCoverageReport
   public static BatchJob fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, BatchJob.class);
   }

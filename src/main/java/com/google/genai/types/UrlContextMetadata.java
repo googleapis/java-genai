@@ -33,11 +33,12 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = UrlContextMetadata.Builder.class)
 public abstract class UrlContextMetadata extends JsonSerializable {
-  /** List of url context. */
+  /** Output only. List of url context. */
   @JsonProperty("urlMetadata")
   public abstract Optional<List<UrlMetadata>> urlMetadata();
 
   /** Instantiates a builder for UrlContextMetadata. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_UrlContextMetadata.Builder();
   }
@@ -57,7 +58,7 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata.
      *
-     * <p>urlMetadata: List of url context.
+     * <p>urlMetadata: Output only. List of url context.
      */
     @JsonProperty("urlMetadata")
     public abstract Builder urlMetadata(List<UrlMetadata> urlMetadata);
@@ -65,7 +66,7 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata.
      *
-     * <p>urlMetadata: List of url context.
+     * <p>urlMetadata: Output only. List of url context.
      */
     public Builder urlMetadata(UrlMetadata... urlMetadata) {
       return urlMetadata(Arrays.asList(urlMetadata));
@@ -74,7 +75,7 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata builder.
      *
-     * <p>urlMetadata: List of url context.
+     * <p>urlMetadata: Output only. List of url context.
      */
     public Builder urlMetadata(UrlMetadata.Builder... urlMetadataBuilders) {
       return urlMetadata(
@@ -87,6 +88,7 @@ public abstract class UrlContextMetadata extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a UrlContextMetadata object. */
+  @ExcludeFromGeneratedCoverageReport
   public static UrlContextMetadata fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, UrlContextMetadata.class);
   }

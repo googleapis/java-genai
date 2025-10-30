@@ -20,7 +20,10 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
+import com.google.genai.types.CreateFileConfig;
+import com.google.genai.types.CreateFileResponse;
 import com.google.genai.types.DeleteFileConfig;
 import com.google.genai.types.DeleteFileResponse;
 import com.google.genai.types.DownloadFileConfig;
@@ -28,6 +31,7 @@ import com.google.genai.types.File;
 import com.google.genai.types.GeneratedVideo;
 import com.google.genai.types.GetFileConfig;
 import com.google.genai.types.ListFilesConfig;
+import com.google.genai.types.ListFilesResponse;
 import com.google.genai.types.UploadFileConfig;
 import com.google.genai.types.Video;
 import java.io.InputStream;
@@ -36,10 +40,43 @@ import java.util.function.Function;
 
 /** Async module of {@link Files} */
 public final class AsyncFiles {
+
   Files files;
+  ApiClient apiClient;
 
   public AsyncFiles(ApiClient apiClient) {
+    this.apiClient = apiClient;
     this.files = new Files(apiClient);
+  }
+
+  /**
+   * Asynchronously lists all files from the service.
+   *
+   * @param config - Optional, configuration for the list method.
+   * @return The ListFilesResponse, the response for the list method.
+   */
+  CompletableFuture<ListFilesResponse> privateList(ListFilesConfig config) {
+    BuiltRequest builtRequest = files.buildRequestForPrivateList(config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return files.processResponseForPrivateList(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<CreateFileResponse> privateCreate(File file, CreateFileConfig config) {
+    BuiltRequest builtRequest = files.buildRequestForPrivateCreate(file, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return files.processResponseForPrivateCreate(res, config);
+              }
+            });
   }
 
   /**
@@ -50,7 +87,15 @@ public final class AsyncFiles {
    * @return A File object representing the file.
    */
   public CompletableFuture<File> get(String name, GetFileConfig config) {
-    return CompletableFuture.supplyAsync(() -> files.get(name, config));
+    BuiltRequest builtRequest = files.buildRequestForGet(name, config);
+    return this.apiClient
+        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return files.processResponseForGet(res, config);
+              }
+            });
   }
 
   /**
@@ -61,7 +106,15 @@ public final class AsyncFiles {
    * @return The DeleteFileResponse, the response for the delete method.
    */
   public CompletableFuture<DeleteFileResponse> delete(String name, DeleteFileConfig config) {
-    return CompletableFuture.supplyAsync(() -> files.delete(name, config));
+    BuiltRequest builtRequest = files.buildRequestForDelete(name, config);
+    return this.apiClient
+        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return files.processResponseForDelete(res, config);
+              }
+            });
   }
 
   /**
@@ -178,9 +231,8 @@ public final class AsyncFiles {
                 "Internal error: Pager expected ListFilesConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(files.privateList((ListFilesConfig) requestConfig)));
+          return this.privateList((ListFilesConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

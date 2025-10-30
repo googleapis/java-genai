@@ -47,6 +47,7 @@ public abstract class LiveClientToolResponse extends JsonSerializable {
   public abstract Optional<List<FunctionResponse>> functionResponses();
 
   /** Instantiates a builder for LiveClientToolResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_LiveClientToolResponse.Builder();
   }
@@ -96,6 +97,7 @@ public abstract class LiveClientToolResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a LiveClientToolResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static LiveClientToolResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, LiveClientToolResponse.class);
   }

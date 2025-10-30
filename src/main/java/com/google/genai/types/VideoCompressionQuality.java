@@ -62,12 +62,14 @@ public class VideoCompressionQuality {
     this.value = knownValue.toString();
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   @JsonValue
   public String toString() {
     return this.value;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @SuppressWarnings("PatternMatchingInstanceof")
   @Override
   public boolean equals(Object o) {
@@ -94,6 +96,7 @@ public class VideoCompressionQuality {
     return false;
   }
 
+  @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
     if (this.videoCompressionQualityEnum != Known.VIDEO_COMPRESSION_QUALITY_UNSPECIFIED) {
@@ -103,6 +106,7 @@ public class VideoCompressionQuality {
     }
   }
 
+  @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
     return this.videoCompressionQualityEnum;
   }

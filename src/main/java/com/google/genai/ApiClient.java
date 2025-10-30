@@ -19,18 +19,22 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import okhttp3.Dispatcher;
@@ -40,12 +44,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jspecify.annotations.Nullable;
 
-
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
 abstract class ApiClient {
 
   // {x-version-update-start:google-genai:released}
-  private static final String SDK_VERSION = "1.10.0";
+  private static final String SDK_VERSION = "1.25.0";
   // {x-version-update-end:google-genai:released}
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
@@ -99,7 +102,7 @@ abstract class ApiClient {
       this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
 
-    this.httpClient = createHttpClient(httpOptions.timeout(), clientOptions);
+    this.httpClient = createHttpClient(httpOptions, clientOptions);
   }
 
   ApiClient(
@@ -187,14 +190,18 @@ abstract class ApiClient {
       apiKeyValue = null;
     }
 
+    if (locationValue == null && apiKeyValue == null) {
+      locationValue = "global";
+    }
+
     this.apiKey = Optional.ofNullable(apiKeyValue);
     this.project = Optional.ofNullable(projectValue);
     this.location = Optional.ofNullable(locationValue);
 
     // Validate that either project and location or API key is set.
-    if (!((this.project.isPresent() && this.location.isPresent()) || this.apiKey.isPresent())) {
+    if (!(this.project.isPresent() || this.apiKey.isPresent())) {
       throw new IllegalArgumentException(
-          "For Vertex AI APIs, either project/location or API key must be set.");
+          "For Vertex AI APIs, either project or API key must be set.");
     }
 
     // Only set credentials if using project/location.
@@ -211,18 +218,24 @@ abstract class ApiClient {
       this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
     this.vertexAI = true;
-    this.httpClient = createHttpClient(httpOptions.timeout(), clientOptions);
+    this.httpClient = createHttpClient(httpOptions, clientOptions);
   }
 
   private OkHttpClient createHttpClient(
-      Optional<Integer> timeout, Optional<ClientOptions> clientOptions) {
+      HttpOptions httpOptions, Optional<ClientOptions> clientOptions) {
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     // Remove timeouts by default (OkHttp has a default of 10 seconds)
     builder.connectTimeout(Duration.ofMillis(0));
     builder.readTimeout(Duration.ofMillis(0));
     builder.writeTimeout(Duration.ofMillis(0));
 
-    timeout.ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+    httpOptions
+        .timeout()
+        .ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+
+    HttpRetryOptions retryOptions =
+        httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
+    builder.addInterceptor(new RetryInterceptor(retryOptions));
 
     clientOptions.ifPresent(
         options -> {
@@ -236,6 +249,7 @@ abstract class ApiClient {
   }
 
   /** Builds a HTTP request given the http method, path, and request json string. */
+  @SuppressWarnings("unchecked")
   protected Request buildRequest(
       String httpMethod,
       String path,
@@ -280,14 +294,40 @@ abstract class ApiClient {
       throw new IllegalArgumentException("Unsupported HTTP method: " + capitalizedHttpMethod);
     }
 
+    ObjectMapper objectMapper = new ObjectMapper();
     RequestBody body;
     if (METHODS_WITH_BODY.contains(capitalizedHttpMethod)) {
       body = RequestBody.create(requestJson, MediaType.parse("application/json"));
     } else {
       body = null;
     }
+
+    if (mergedHttpOptions.extraBody().isPresent() && body != null) {
+      try {
+        Map<String, Object> requestBodyMap = objectMapper.readValue(requestJson, Map.class);
+        mergeMaps(requestBodyMap, mergedHttpOptions.extraBody().get());
+        requestJson = objectMapper.writeValueAsString(requestBodyMap);
+        body = RequestBody.create(requestJson, MediaType.parse("application/json"));
+      } catch (JsonProcessingException e) {
+        logger.warning("Failed to merge extraBody into request body: " + e.getMessage());
+        // If merging fails, proceed with the original request body
+        body = RequestBody.create(requestJson, MediaType.parse("application/json"));
+      }
+    } else if (mergedHttpOptions.extraBody().isPresent()) {
+      logger.warning(
+          "HttpOptions.extraBody is set, but the HTTP method does not support a request body. "
+              + "The extraBody will be ignored.");
+    }
+
     Request.Builder requestBuilder =
         new Request.Builder().url(requestUrl).method(capitalizedHttpMethod, body);
+
+    requestHttpOptions.ifPresent(
+        httpOptions -> {
+          if (httpOptions.retryOptions().isPresent()) {
+            requestBuilder.tag(HttpRetryOptions.class, mergedHttpOptions.retryOptions().get());
+          }
+        });
 
     setHeaders(requestBuilder, mergedHttpOptions);
     return requestBuilder.build();
@@ -304,6 +344,12 @@ abstract class ApiClient {
       RequestBody body =
           RequestBody.create(requestBytes, MediaType.get("application/octet-stream"));
       Request.Builder requestBuilder = new Request.Builder().url(url).post(body);
+      requestHttpOptions.ifPresent(
+          httpOptions -> {
+            if (httpOptions.retryOptions().isPresent()) {
+              requestBuilder.tag(HttpRetryOptions.class, mergedHttpOptions.retryOptions().get());
+            }
+          });
       setHeaders(requestBuilder, mergedHttpOptions);
       return requestBuilder.build();
     } else {
@@ -341,12 +387,25 @@ abstract class ApiClient {
   }
 
   /** Sends a Http request given the http method, path, and request json string. */
-  @CanIgnoreReturnValue
   public abstract ApiResponse request(
       String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
 
   /** Sends a Http request given the http method, path, and request bytes. */
   public abstract ApiResponse request(
+      String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request json string, and http
+   * options.
+   */
+  public abstract CompletableFuture<ApiResponse> asyncRequest(
+      String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
+
+  /**
+   * Sends an asynchronous Http request given the http method, path, request bytes, and http
+   * options.
+   */
+  public abstract CompletableFuture<ApiResponse> asyncRequest(
       String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
 
   /** Returns the library version. */
@@ -380,6 +439,47 @@ abstract class ApiClient {
   /** Returns the HttpClient for API calls. */
   OkHttpClient httpClient() {
     return httpClient;
+  }
+
+  /**
+   * Merges two maps recursively. If a key exists in both maps, the value from `source` overwrites
+   * the value in `target`. If the value is a list, then update the whole list. A warning is logged
+   * if the types of the values for the same key are different.
+   *
+   * @param target The target map to merge into.
+   * @param source The source map to merge from.
+   */
+  @SuppressWarnings("unchecked")
+  private void mergeMaps(Map<String, Object> target, Map<String, Object> source) {
+    for (Map.Entry<String, Object> entry : source.entrySet()) {
+      String key = entry.getKey();
+      Object sourceValue = entry.getValue();
+
+      if (target.containsKey(key)) {
+        Object targetValue = target.get(key);
+
+        if (targetValue instanceof Map && sourceValue instanceof Map) {
+          // Both values are maps, recursively merge them
+          mergeMaps((Map<String, Object>) targetValue, (Map<String, Object>) sourceValue);
+        } else if (targetValue instanceof List && sourceValue instanceof List) {
+          // Both values are lists, replace the target list with the source list
+          target.put(key, sourceValue);
+        } else {
+          // Values are not both maps or both lists, check if they have the same type
+          if (targetValue.getClass() != sourceValue.getClass()) {
+            logger.warning(
+                String.format(
+                    "Type mismatch for key '%s'. Original type: %s, new type: %s.  Overwriting"
+                        + " with the new value.",
+                    key, targetValue.getClass().getName(), sourceValue.getClass().getName()));
+          }
+          target.put(key, sourceValue);
+        }
+      } else {
+        // Key does not exist in target, add it
+        target.put(key, sourceValue);
+      }
+    }
   }
 
   private Optional<Map<String, String>> getTimeoutHeader(HttpOptions httpOptionsToApply) {
@@ -429,6 +529,7 @@ abstract class ApiClient {
               toImmutableMap(Map.Entry::getKey, Map.Entry::getValue, (val1, val2) -> val2));
       mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
+
     return mergedHttpOptionsBuilder.build();
   }
 

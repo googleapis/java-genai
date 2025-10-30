@@ -34,6 +34,7 @@ public abstract class ApiKeyConfig extends JsonSerializable {
   public abstract Optional<String> apiKeyString();
 
   /** Instantiates a builder for ApiKeyConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ApiKeyConfig.Builder();
   }
@@ -62,6 +63,7 @@ public abstract class ApiKeyConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ApiKeyConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ApiKeyConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ApiKeyConfig.class);
   }

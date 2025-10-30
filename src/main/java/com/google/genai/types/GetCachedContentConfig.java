@@ -34,6 +34,7 @@ public abstract class GetCachedContentConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Instantiates a builder for GetCachedContentConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GetCachedContentConfig.Builder();
   }
@@ -71,6 +72,7 @@ public abstract class GetCachedContentConfig extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GetCachedContentConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GetCachedContentConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GetCachedContentConfig.class);
   }

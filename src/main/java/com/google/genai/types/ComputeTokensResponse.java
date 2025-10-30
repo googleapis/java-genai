@@ -33,6 +33,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ComputeTokensResponse.Builder.class)
 public abstract class ComputeTokensResponse extends JsonSerializable {
+  /** Used to retain the full HTTP response. */
+  @JsonProperty("sdkHttpResponse")
+  public abstract Optional<HttpResponse> sdkHttpResponse();
+
   /**
    * Lists of tokens info from the input. A ComputeTokensRequest could have multiple instances with
    * a prompt in each instance. We also need to return lists of tokens info for the request with
@@ -42,6 +46,7 @@ public abstract class ComputeTokensResponse extends JsonSerializable {
   public abstract Optional<List<TokensInfo>> tokensInfo();
 
   /** Instantiates a builder for ComputeTokensResponse. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_ComputeTokensResponse.Builder();
   }
@@ -56,6 +61,23 @@ public abstract class ComputeTokensResponse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_ComputeTokensResponse.Builder();
+    }
+
+    /**
+     * Setter for sdkHttpResponse.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    @JsonProperty("sdkHttpResponse")
+    public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
+
+    /**
+     * Setter for sdkHttpResponse builder.
+     *
+     * <p>sdkHttpResponse: Used to retain the full HTTP response.
+     */
+    public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
+      return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
 
     /**
@@ -97,6 +119,7 @@ public abstract class ComputeTokensResponse extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a ComputeTokensResponse object. */
+  @ExcludeFromGeneratedCoverageReport
   public static ComputeTokensResponse fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, ComputeTokensResponse.class);
   }

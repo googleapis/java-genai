@@ -29,7 +29,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkWeb.Builder.class)
 public abstract class GroundingChunkWeb extends JsonSerializable {
-  /** Domain of the (original) URI. */
+  /** Domain of the (original) URI. This field is not supported in Gemini API. */
   @JsonProperty("domain")
   public abstract Optional<String> domain();
 
@@ -42,6 +42,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
   public abstract Optional<String> uri();
 
   /** Instantiates a builder for GroundingChunkWeb. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GroundingChunkWeb.Builder();
   }
@@ -61,7 +62,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
     /**
      * Setter for domain.
      *
-     * <p>domain: Domain of the (original) URI.
+     * <p>domain: Domain of the (original) URI. This field is not supported in Gemini API.
      */
     @JsonProperty("domain")
     public abstract Builder domain(String domain);
@@ -86,6 +87,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a GroundingChunkWeb object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GroundingChunkWeb fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GroundingChunkWeb.class);
   }

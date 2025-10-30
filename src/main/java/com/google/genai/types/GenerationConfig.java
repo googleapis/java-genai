@@ -39,7 +39,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("modelSelectionConfig")
   public abstract Optional<ModelSelectionConfig> modelSelectionConfig();
 
-  /** Optional. If enabled, audio timestamp will be included in the request to the model. */
+  /**
+   * Optional. If enabled, audio timestamp will be included in the request to the model. This field
+   * is not supported in Gemini API.
+   */
   @JsonProperty("audioTimestamp")
   public abstract Optional<Boolean> audioTimestamp();
 
@@ -47,7 +50,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("candidateCount")
   public abstract Optional<Integer> candidateCount();
 
-  /** Optional. If enabled, the model will detect emotions and adapt its responses accordingly. */
+  /**
+   * Optional. If enabled, the model will detect emotions and adapt its responses accordingly. This
+   * field is not supported in Gemini API.
+   */
   @JsonProperty("enableAffectiveDialog")
   public abstract Optional<Boolean> enableAffectiveDialog();
 
@@ -114,7 +120,7 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("responseSchema")
   public abstract Optional<Schema> responseSchema();
 
-  /** Optional. Routing configuration. */
+  /** Optional. Routing configuration. This field is not supported in Gemini API. */
   @JsonProperty("routingConfig")
   public abstract Optional<GenerationConfigRoutingConfig> routingConfig();
 
@@ -139,7 +145,7 @@ public abstract class GenerationConfig extends JsonSerializable {
    * models that don't support thinking.
    */
   @JsonProperty("thinkingConfig")
-  public abstract Optional<GenerationConfigThinkingConfig> thinkingConfig();
+  public abstract Optional<ThinkingConfig> thinkingConfig();
 
   /** Optional. If specified, top-k sampling will be used. */
   @JsonProperty("topK")
@@ -149,7 +155,15 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("topP")
   public abstract Optional<Float> topP();
 
+  /**
+   * Optional. Enables enhanced civic answers. It may not be available for all models. This field is
+   * not supported in Vertex AI.
+   */
+  @JsonProperty("enableEnhancedCivicAnswers")
+  public abstract Optional<Boolean> enableEnhancedCivicAnswers();
+
   /** Instantiates a builder for GenerationConfig. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_GenerationConfig.Builder();
   }
@@ -187,7 +201,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * Setter for audioTimestamp.
      *
      * <p>audioTimestamp: Optional. If enabled, audio timestamp will be included in the request to
-     * the model.
+     * the model. This field is not supported in Gemini API.
      */
     @JsonProperty("audioTimestamp")
     public abstract Builder audioTimestamp(boolean audioTimestamp);
@@ -204,7 +218,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * Setter for enableAffectiveDialog.
      *
      * <p>enableAffectiveDialog: Optional. If enabled, the model will detect emotions and adapt its
-     * responses accordingly.
+     * responses accordingly. This field is not supported in Gemini API.
      */
     @JsonProperty("enableAffectiveDialog")
     public abstract Builder enableAffectiveDialog(boolean enableAffectiveDialog);
@@ -396,7 +410,7 @@ public abstract class GenerationConfig extends JsonSerializable {
     /**
      * Setter for routingConfig.
      *
-     * <p>routingConfig: Optional. Routing configuration.
+     * <p>routingConfig: Optional. Routing configuration. This field is not supported in Gemini API.
      */
     @JsonProperty("routingConfig")
     public abstract Builder routingConfig(GenerationConfigRoutingConfig routingConfig);
@@ -404,7 +418,7 @@ public abstract class GenerationConfig extends JsonSerializable {
     /**
      * Setter for routingConfig builder.
      *
-     * <p>routingConfig: Optional. Routing configuration.
+     * <p>routingConfig: Optional. Routing configuration. This field is not supported in Gemini API.
      */
     public Builder routingConfig(GenerationConfigRoutingConfig.Builder routingConfigBuilder) {
       return routingConfig(routingConfigBuilder.build());
@@ -467,7 +481,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * field is set for models that don't support thinking.
      */
     @JsonProperty("thinkingConfig")
-    public abstract Builder thinkingConfig(GenerationConfigThinkingConfig thinkingConfig);
+    public abstract Builder thinkingConfig(ThinkingConfig thinkingConfig);
 
     /**
      * Setter for thinkingConfig builder.
@@ -475,7 +489,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * <p>thinkingConfig: Optional. Config for thinking features. An error will be returned if this
      * field is set for models that don't support thinking.
      */
-    public Builder thinkingConfig(GenerationConfigThinkingConfig.Builder thinkingConfigBuilder) {
+    public Builder thinkingConfig(ThinkingConfig.Builder thinkingConfigBuilder) {
       return thinkingConfig(thinkingConfigBuilder.build());
     }
 
@@ -495,10 +509,20 @@ public abstract class GenerationConfig extends JsonSerializable {
     @JsonProperty("topP")
     public abstract Builder topP(Float topP);
 
+    /**
+     * Setter for enableEnhancedCivicAnswers.
+     *
+     * <p>enableEnhancedCivicAnswers: Optional. Enables enhanced civic answers. It may not be
+     * available for all models. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("enableEnhancedCivicAnswers")
+    public abstract Builder enableEnhancedCivicAnswers(boolean enableEnhancedCivicAnswers);
+
     public abstract GenerationConfig build();
   }
 
   /** Deserializes a JSON string to a GenerationConfig object. */
+  @ExcludeFromGeneratedCoverageReport
   public static GenerationConfig fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, GenerationConfig.class);
   }

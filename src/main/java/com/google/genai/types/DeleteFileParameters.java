@@ -40,6 +40,7 @@ public abstract class DeleteFileParameters extends JsonSerializable {
   public abstract Optional<DeleteFileConfig> config();
 
   /** Instantiates a builder for DeleteFileParameters. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_DeleteFileParameters.Builder();
   }
@@ -85,6 +86,7 @@ public abstract class DeleteFileParameters extends JsonSerializable {
   }
 
   /** Deserializes a JSON string to a DeleteFileParameters object. */
+  @ExcludeFromGeneratedCoverageReport
   public static DeleteFileParameters fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, DeleteFileParameters.class);
   }

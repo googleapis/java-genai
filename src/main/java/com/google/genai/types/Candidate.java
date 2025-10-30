@@ -57,10 +57,6 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("finishReason")
   public abstract Optional<FinishReason> finishReason();
 
-  /** Metadata related to url context retrieval tool. */
-  @JsonProperty("urlContextMetadata")
-  public abstract Optional<UrlContextMetadata> urlContextMetadata();
-
   /** Output only. Average log probability score of the candidate. */
   @JsonProperty("avgLogprobs")
   public abstract Optional<Double> avgLogprobs();
@@ -84,7 +80,12 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
 
+  /** Output only. Metadata related to url context retrieval tool. */
+  @JsonProperty("urlContextMetadata")
+  public abstract Optional<UrlContextMetadata> urlContextMetadata();
+
   /** Instantiates a builder for Candidate. */
+  @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
     return new AutoValue_Candidate.Builder();
   }
@@ -183,23 +184,6 @@ public abstract class Candidate extends JsonSerializable {
     }
 
     /**
-     * Setter for urlContextMetadata.
-     *
-     * <p>urlContextMetadata: Metadata related to url context retrieval tool.
-     */
-    @JsonProperty("urlContextMetadata")
-    public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
-
-    /**
-     * Setter for urlContextMetadata builder.
-     *
-     * <p>urlContextMetadata: Metadata related to url context retrieval tool.
-     */
-    public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
-      return urlContextMetadata(urlContextMetadataBuilder.build());
-    }
-
-    /**
      * Setter for avgLogprobs.
      *
      * <p>avgLogprobs: Output only. Average log probability score of the candidate.
@@ -283,10 +267,28 @@ public abstract class Candidate extends JsonSerializable {
               .collect(toImmutableList()));
     }
 
+    /**
+     * Setter for urlContextMetadata.
+     *
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
+     */
+    @JsonProperty("urlContextMetadata")
+    public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
+
+    /**
+     * Setter for urlContextMetadata builder.
+     *
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
+     */
+    public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
+      return urlContextMetadata(urlContextMetadataBuilder.build());
+    }
+
     public abstract Candidate build();
   }
 
   /** Deserializes a JSON string to a Candidate object. */
+  @ExcludeFromGeneratedCoverageReport
   public static Candidate fromJson(String jsonString) {
     return JsonSerializable.fromJsonString(jsonString, Candidate.class);
   }
