@@ -36,10 +36,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Tool.Builder.class)
 public abstract class Tool extends JsonSerializable {
-  /** List of function declarations that the tool supports. */
-  @JsonProperty("functionDeclarations")
-  public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
-
   /**
    * Optional. Retrieval tool type. System will always execute the provided retrieval tool(s) to get
    * external knowledge to answer the prompt. Retrieval results are presented to the model for
@@ -47,10 +43,6 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("retrieval")
   public abstract Optional<Retrieval> retrieval();
-
-  /** Optional. Specialized retrieval tool that is powered by Google Search. */
-  @JsonProperty("googleSearchRetrieval")
-  public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
   /**
    * The java.lang.reflect.Method instance. If provided, it will to be parsed into a list of
@@ -81,6 +73,16 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("enterpriseWebSearch")
   public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
 
+  /**
+   * Optional. Function tool type. One or more function declarations to be passed to the model along
+   * with the current user query. Model may decide to call a subset of these functions by populating
+   * FunctionCall in the response. User should provide a FunctionResponse for each function call in
+   * the next turn. Based on the function responses, Model will generate the final response back to
+   * the user. Maximum 512 function declarations can be provided.
+   */
+  @JsonProperty("functionDeclarations")
+  public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
+
   /** Optional. GoogleMaps tool type. Tool to support Google Maps in Model. */
   @JsonProperty("googleMaps")
   public abstract Optional<GoogleMaps> googleMaps();
@@ -90,6 +92,10 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("googleSearch")
   public abstract Optional<GoogleSearch> googleSearch();
+
+  /** Optional. Specialized retrieval tool that is powered by Google Search. */
+  @JsonProperty("googleSearchRetrieval")
+  public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
   /** Optional. Tool to support URL context retrieval. */
   @JsonProperty("urlContext")
@@ -111,48 +117,6 @@ public abstract class Tool extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_Tool.Builder();
-    }
-
-    /**
-     * Setter for functionDeclarations.
-     *
-     * <p>functionDeclarations: List of function declarations that the tool supports.
-     */
-    @JsonProperty("functionDeclarations")
-    public abstract Builder functionDeclarations(List<FunctionDeclaration> functionDeclarations);
-
-    /**
-     * Setter for functionDeclarations.
-     *
-     * <p>functionDeclarations: List of function declarations that the tool supports.
-     */
-    @CanIgnoreReturnValue
-    public Builder functionDeclarations(FunctionDeclaration... functionDeclarations) {
-      return functionDeclarations(Arrays.asList(functionDeclarations));
-    }
-
-    /**
-     * Setter for functionDeclarations builder.
-     *
-     * <p>functionDeclarations: List of function declarations that the tool supports.
-     */
-    @CanIgnoreReturnValue
-    public Builder functionDeclarations(
-        FunctionDeclaration.Builder... functionDeclarationsBuilders) {
-      return functionDeclarations(
-          Arrays.asList(functionDeclarationsBuilders).stream()
-              .map(FunctionDeclaration.Builder::build)
-              .collect(toImmutableList()));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder functionDeclarations(Optional<List<FunctionDeclaration>> functionDeclarations);
-
-    /** Clears the value of functionDeclarations field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearFunctionDeclarations() {
-      return functionDeclarations(Optional.empty());
     }
 
     /**
@@ -185,37 +149,6 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearRetrieval() {
       return retrieval(Optional.empty());
-    }
-
-    /**
-     * Setter for googleSearchRetrieval.
-     *
-     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
-     * Search.
-     */
-    @JsonProperty("googleSearchRetrieval")
-    public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
-
-    /**
-     * Setter for googleSearchRetrieval builder.
-     *
-     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
-     * Search.
-     */
-    @CanIgnoreReturnValue
-    public Builder googleSearchRetrieval(
-        GoogleSearchRetrieval.Builder googleSearchRetrievalBuilder) {
-      return googleSearchRetrieval(googleSearchRetrievalBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder googleSearchRetrieval(Optional<GoogleSearchRetrieval> googleSearchRetrieval);
-
-    /** Clears the value of googleSearchRetrieval field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearGoogleSearchRetrieval() {
-      return googleSearchRetrieval(Optional.empty());
     }
 
     /**
@@ -367,6 +300,63 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
+     * Setter for functionDeclarations.
+     *
+     * <p>functionDeclarations: Optional. Function tool type. One or more function declarations to
+     * be passed to the model along with the current user query. Model may decide to call a subset
+     * of these functions by populating FunctionCall in the response. User should provide a
+     * FunctionResponse for each function call in the next turn. Based on the function responses,
+     * Model will generate the final response back to the user. Maximum 512 function declarations
+     * can be provided.
+     */
+    @JsonProperty("functionDeclarations")
+    public abstract Builder functionDeclarations(List<FunctionDeclaration> functionDeclarations);
+
+    /**
+     * Setter for functionDeclarations.
+     *
+     * <p>functionDeclarations: Optional. Function tool type. One or more function declarations to
+     * be passed to the model along with the current user query. Model may decide to call a subset
+     * of these functions by populating FunctionCall in the response. User should provide a
+     * FunctionResponse for each function call in the next turn. Based on the function responses,
+     * Model will generate the final response back to the user. Maximum 512 function declarations
+     * can be provided.
+     */
+    @CanIgnoreReturnValue
+    public Builder functionDeclarations(FunctionDeclaration... functionDeclarations) {
+      return functionDeclarations(Arrays.asList(functionDeclarations));
+    }
+
+    /**
+     * Setter for functionDeclarations builder.
+     *
+     * <p>functionDeclarations: Optional. Function tool type. One or more function declarations to
+     * be passed to the model along with the current user query. Model may decide to call a subset
+     * of these functions by populating FunctionCall in the response. User should provide a
+     * FunctionResponse for each function call in the next turn. Based on the function responses,
+     * Model will generate the final response back to the user. Maximum 512 function declarations
+     * can be provided.
+     */
+    @CanIgnoreReturnValue
+    public Builder functionDeclarations(
+        FunctionDeclaration.Builder... functionDeclarationsBuilders) {
+      return functionDeclarations(
+          Arrays.asList(functionDeclarationsBuilders).stream()
+              .map(FunctionDeclaration.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionDeclarations(Optional<List<FunctionDeclaration>> functionDeclarations);
+
+    /** Clears the value of functionDeclarations field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionDeclarations() {
+      return functionDeclarations(Optional.empty());
+    }
+
+    /**
      * Setter for googleMaps.
      *
      * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
@@ -422,6 +412,37 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGoogleSearch() {
       return googleSearch(Optional.empty());
+    }
+
+    /**
+     * Setter for googleSearchRetrieval.
+     *
+     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
+     * Search.
+     */
+    @JsonProperty("googleSearchRetrieval")
+    public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
+
+    /**
+     * Setter for googleSearchRetrieval builder.
+     *
+     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
+     * Search.
+     */
+    @CanIgnoreReturnValue
+    public Builder googleSearchRetrieval(
+        GoogleSearchRetrieval.Builder googleSearchRetrievalBuilder) {
+      return googleSearchRetrieval(googleSearchRetrievalBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleSearchRetrieval(Optional<GoogleSearchRetrieval> googleSearchRetrieval);
+
+    /** Clears the value of googleSearchRetrieval field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleSearchRetrieval() {
+      return googleSearchRetrieval(Optional.empty());
     }
 
     /**
