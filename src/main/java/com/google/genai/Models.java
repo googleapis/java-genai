@@ -1083,18 +1083,18 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"allowedFunctionNames"},
           Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
     }
 
     if (!Common.isZero(
@@ -1109,10 +1109,6 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionDeclarationToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1153,6 +1149,10 @@ public final class Models {
           toObject,
           new String[] {"responseJsonSchema"},
           Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
+      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
     }
 
     return toObject;
@@ -4237,6 +4237,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4247,35 +4254,14 @@ public final class Models {
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
-    }
-
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionDeclarations"},
-          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4304,6 +4290,13 @@ public final class Models {
           "enterpriseWebSearch parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4324,6 +4317,13 @@ public final class Models {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4337,30 +4337,11 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"retrieval"},
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4388,6 +4369,18 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4400,6 +4393,13 @@ public final class Models {
           toObject,
           new String[] {"googleSearch"},
           Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {

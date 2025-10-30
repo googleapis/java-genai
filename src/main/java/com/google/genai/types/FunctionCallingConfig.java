@@ -32,10 +32,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = FunctionCallingConfig.Builder.class)
 public abstract class FunctionCallingConfig extends JsonSerializable {
-  /** Optional. Function calling mode. */
-  @JsonProperty("mode")
-  public abstract Optional<FunctionCallingConfigMode> mode();
-
   /**
    * Optional. Function names to call. Only set when the Mode is ANY. Function names should match
    * [FunctionDeclaration.name]. With mode set to ANY, model will predict a function call from the
@@ -43,6 +39,10 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
    */
   @JsonProperty("allowedFunctionNames")
   public abstract Optional<List<String>> allowedFunctionNames();
+
+  /** Optional. Function calling mode. */
+  @JsonProperty("mode")
+  public abstract Optional<FunctionCallingConfigMode> mode();
 
   /**
    * Optional. When set to true, arguments of a single function call will be streamed out in
@@ -68,6 +68,38 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FunctionCallingConfig.Builder();
+    }
+
+    /**
+     * Setter for allowedFunctionNames.
+     *
+     * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
+     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
+     * predict a function call from the set of function names provided.
+     */
+    @JsonProperty("allowedFunctionNames")
+    public abstract Builder allowedFunctionNames(List<String> allowedFunctionNames);
+
+    /**
+     * Setter for allowedFunctionNames.
+     *
+     * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
+     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
+     * predict a function call from the set of function names provided.
+     */
+    @CanIgnoreReturnValue
+    public Builder allowedFunctionNames(String... allowedFunctionNames) {
+      return allowedFunctionNames(Arrays.asList(allowedFunctionNames));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder allowedFunctionNames(Optional<List<String>> allowedFunctionNames);
+
+    /** Clears the value of allowedFunctionNames field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAllowedFunctionNames() {
+      return allowedFunctionNames(Optional.empty());
     }
 
     /**
@@ -106,38 +138,6 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder mode(String mode) {
       return mode(new FunctionCallingConfigMode(mode));
-    }
-
-    /**
-     * Setter for allowedFunctionNames.
-     *
-     * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
-     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
-     * predict a function call from the set of function names provided.
-     */
-    @JsonProperty("allowedFunctionNames")
-    public abstract Builder allowedFunctionNames(List<String> allowedFunctionNames);
-
-    /**
-     * Setter for allowedFunctionNames.
-     *
-     * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
-     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
-     * predict a function call from the set of function names provided.
-     */
-    @CanIgnoreReturnValue
-    public Builder allowedFunctionNames(String... allowedFunctionNames) {
-      return allowedFunctionNames(Arrays.asList(allowedFunctionNames));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder allowedFunctionNames(Optional<List<String>> allowedFunctionNames);
-
-    /** Clears the value of allowedFunctionNames field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearAllowedFunctionNames() {
-      return allowedFunctionNames(Optional.empty());
     }
 
     /**
