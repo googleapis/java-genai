@@ -502,13 +502,18 @@ abstract class ApiClient {
       return this.httpOptions;
     }
     HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
-
-    httpOptionsToApply.baseUrl().ifPresent(mergedHttpOptionsBuilder::baseUrl);
-    httpOptionsToApply.apiVersion().ifPresent(mergedHttpOptionsBuilder::apiVersion);
-    httpOptionsToApply.timeout().ifPresent(mergedHttpOptionsBuilder::timeout);
-    httpOptionsToApply.extraBody().ifPresent(mergedHttpOptionsBuilder::extraBody);
-    httpOptionsToApply.retryOptions().ifPresent(mergedHttpOptionsBuilder::retryOptions);
-
+    if (httpOptionsToApply.baseUrl().isPresent()) {
+      mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
+    }
+    if (httpOptionsToApply.apiVersion().isPresent()) {
+      mergedHttpOptionsBuilder.apiVersion(httpOptionsToApply.apiVersion().get());
+    }
+    if (httpOptionsToApply.timeout().isPresent()) {
+      mergedHttpOptionsBuilder.timeout(httpOptionsToApply.timeout().get());
+    }
+    if (httpOptionsToApply.proxy().isPresent()) {
+      mergedHttpOptionsBuilder.proxy(httpOptionsToApply.proxy().get());
+    }
     if (httpOptionsToApply.headers().isPresent()) {
       Stream<Map.Entry<String, String>> headersStream =
           Stream.concat(
