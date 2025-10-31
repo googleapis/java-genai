@@ -30,57 +30,76 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Usage metadata about response(s). This data type is not supported in Gemini API. */
+/**
+ * Usage metadata about the content generation request and response. This message provides a
+ * detailed breakdown of token usage and other relevant metrics. This data type is not supported in
+ * Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerateContentResponseUsageMetadata.Builder.class)
 public abstract class GenerateContentResponseUsageMetadata extends JsonSerializable {
-  /** Output only. List of modalities of the cached content in the request input. */
+  /**
+   * Output only. A detailed breakdown of the token count for each modality in the cached content.
+   */
   @JsonProperty("cacheTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> cacheTokensDetails();
 
-  /** Output only. Number of tokens in the cached part in the input (the cached content). */
+  /** Output only. The number of tokens in the cached content that was used for this request. */
   @JsonProperty("cachedContentTokenCount")
   public abstract Optional<Integer> cachedContentTokenCount();
 
-  /** Number of tokens in the response(s). */
+  /** The total number of tokens in the generated candidates. */
   @JsonProperty("candidatesTokenCount")
   public abstract Optional<Integer> candidatesTokenCount();
 
-  /** Output only. List of modalities that were returned in the response. */
+  /**
+   * Output only. A detailed breakdown of the token count for each modality in the generated
+   * candidates.
+   */
   @JsonProperty("candidatesTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> candidatesTokensDetails();
 
   /**
-   * Number of tokens in the request. When `cached_content` is set, this is still the total
-   * effective prompt size meaning this includes the number of tokens in the cached content.
+   * The total number of tokens in the prompt. This includes any text, images, or other media
+   * provided in the request. When `cached_content` is set, this also includes the number of tokens
+   * in the cached content.
    */
   @JsonProperty("promptTokenCount")
   public abstract Optional<Integer> promptTokenCount();
 
-  /** Output only. List of modalities that were processed in the request input. */
+  /** Output only. A detailed breakdown of the token count for each modality in the prompt. */
   @JsonProperty("promptTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> promptTokensDetails();
 
-  /** Output only. Number of tokens present in thoughts output. */
+  /**
+   * Output only. The number of tokens that were part of the model's generated "thoughts" output, if
+   * applicable.
+   */
   @JsonProperty("thoughtsTokenCount")
   public abstract Optional<Integer> thoughtsTokenCount();
 
-  /** Output only. Number of tokens present in tool-use prompt(s). */
+  /**
+   * Output only. The number of tokens in the results from tool executions, which are provided back
+   * to the model as input, if applicable.
+   */
   @JsonProperty("toolUsePromptTokenCount")
   public abstract Optional<Integer> toolUsePromptTokenCount();
 
-  /** Output only. List of modalities that were processed for tool-use request inputs. */
+  /**
+   * Output only. A detailed breakdown by modality of the token counts from the results of tool
+   * executions, which are provided back to the model as input.
+   */
   @JsonProperty("toolUsePromptTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> toolUsePromptTokensDetails();
 
-  /** Total token count for prompt, response candidates, and tool-use prompts (if present). */
+  /**
+   * The total number of tokens for the entire request. This is the sum of `prompt_token_count`,
+   * `candidates_token_count`, `tool_use_prompt_token_count`, and `thoughts_token_count`.
+   */
   @JsonProperty("totalTokenCount")
   public abstract Optional<Integer> totalTokenCount();
 
-  /**
-   * Output only. Traffic type. This shows whether a request consumes Pay-As-You-Go or Provisioned
-   * Throughput quota.
-   */
+  /** Output only. The traffic type for this request. */
   @JsonProperty("trafficType")
   public abstract Optional<TrafficType> trafficType();
 
@@ -108,8 +127,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for cacheTokensDetails.
      *
-     * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
-     * input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @JsonProperty("cacheTokensDetails")
     public abstract Builder cacheTokensDetails(List<ModalityTokenCount> cacheTokensDetails);
@@ -117,8 +136,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for cacheTokensDetails.
      *
-     * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
-     * input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount... cacheTokensDetails) {
@@ -128,8 +147,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for cacheTokensDetails builder.
      *
-     * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
-     * input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount.Builder... cacheTokensDetailsBuilders) {
@@ -152,8 +171,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for cachedContentTokenCount.
      *
-     * <p>cachedContentTokenCount: Output only. Number of tokens in the cached part in the input
-     * (the cached content).
+     * <p>cachedContentTokenCount: Output only. The number of tokens in the cached content that was
+     * used for this request.
      */
     @JsonProperty("cachedContentTokenCount")
     public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
@@ -171,7 +190,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for candidatesTokenCount.
      *
-     * <p>candidatesTokenCount: Number of tokens in the response(s).
+     * <p>candidatesTokenCount: The total number of tokens in the generated candidates.
      */
     @JsonProperty("candidatesTokenCount")
     public abstract Builder candidatesTokenCount(Integer candidatesTokenCount);
@@ -189,8 +208,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for candidatesTokensDetails.
      *
-     * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
-     * response.
+     * <p>candidatesTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the generated candidates.
      */
     @JsonProperty("candidatesTokensDetails")
     public abstract Builder candidatesTokensDetails(
@@ -199,8 +218,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for candidatesTokensDetails.
      *
-     * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
-     * response.
+     * <p>candidatesTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the generated candidates.
      */
     @CanIgnoreReturnValue
     public Builder candidatesTokensDetails(ModalityTokenCount... candidatesTokensDetails) {
@@ -210,8 +229,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for candidatesTokensDetails builder.
      *
-     * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
-     * response.
+     * <p>candidatesTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the generated candidates.
      */
     @CanIgnoreReturnValue
     public Builder candidatesTokensDetails(
@@ -236,9 +255,9 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for promptTokenCount.
      *
-     * <p>promptTokenCount: Number of tokens in the request. When `cached_content` is set, this is
-     * still the total effective prompt size meaning this includes the number of tokens in the
-     * cached content.
+     * <p>promptTokenCount: The total number of tokens in the prompt. This includes any text,
+     * images, or other media provided in the request. When `cached_content` is set, this also
+     * includes the number of tokens in the cached content.
      */
     @JsonProperty("promptTokenCount")
     public abstract Builder promptTokenCount(Integer promptTokenCount);
@@ -256,8 +275,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for promptTokensDetails.
      *
-     * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
-     * input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @JsonProperty("promptTokensDetails")
     public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
@@ -265,8 +284,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for promptTokensDetails.
      *
-     * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
-     * input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
@@ -276,8 +295,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for promptTokensDetails builder.
      *
-     * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
-     * input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
@@ -300,7 +319,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for thoughtsTokenCount.
      *
-     * <p>thoughtsTokenCount: Output only. Number of tokens present in thoughts output.
+     * <p>thoughtsTokenCount: Output only. The number of tokens that were part of the model's
+     * generated "thoughts" output, if applicable.
      */
     @JsonProperty("thoughtsTokenCount")
     public abstract Builder thoughtsTokenCount(Integer thoughtsTokenCount);
@@ -318,7 +338,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for toolUsePromptTokenCount.
      *
-     * <p>toolUsePromptTokenCount: Output only. Number of tokens present in tool-use prompt(s).
+     * <p>toolUsePromptTokenCount: Output only. The number of tokens in the results from tool
+     * executions, which are provided back to the model as input, if applicable.
      */
     @JsonProperty("toolUsePromptTokenCount")
     public abstract Builder toolUsePromptTokenCount(Integer toolUsePromptTokenCount);
@@ -336,8 +357,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for toolUsePromptTokensDetails.
      *
-     * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
-     * tool-use request inputs.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @JsonProperty("toolUsePromptTokensDetails")
     public abstract Builder toolUsePromptTokensDetails(
@@ -346,8 +367,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for toolUsePromptTokensDetails.
      *
-     * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
-     * tool-use request inputs.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(ModalityTokenCount... toolUsePromptTokensDetails) {
@@ -357,8 +378,8 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for toolUsePromptTokensDetails builder.
      *
-     * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
-     * tool-use request inputs.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(
@@ -383,8 +404,9 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for totalTokenCount.
      *
-     * <p>totalTokenCount: Total token count for prompt, response candidates, and tool-use prompts
-     * (if present).
+     * <p>totalTokenCount: The total number of tokens for the entire request. This is the sum of
+     * `prompt_token_count`, `candidates_token_count`, `tool_use_prompt_token_count`, and
+     * `thoughts_token_count`.
      */
     @JsonProperty("totalTokenCount")
     public abstract Builder totalTokenCount(Integer totalTokenCount);
@@ -402,8 +424,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for trafficType.
      *
-     * <p>trafficType: Output only. Traffic type. This shows whether a request consumes
-     * Pay-As-You-Go or Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request.
      */
     @JsonProperty("trafficType")
     public abstract Builder trafficType(TrafficType trafficType);
@@ -421,8 +442,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for trafficType given a known enum.
      *
-     * <p>trafficType: Output only. Traffic type. This shows whether a request consumes
-     * Pay-As-You-Go or Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request.
      */
     @CanIgnoreReturnValue
     public Builder trafficType(TrafficType.Known knownType) {
@@ -432,8 +452,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     /**
      * Setter for trafficType given a string.
      *
-     * <p>trafficType: Output only. Traffic type. This shows whether a request consumes
-     * Pay-As-You-Go or Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request.
      */
     @CanIgnoreReturnValue
     public Builder trafficType(String trafficType) {

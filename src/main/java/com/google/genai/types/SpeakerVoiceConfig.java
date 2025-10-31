@@ -26,18 +26,18 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * The configuration for a single speaker in a multi speaker setup. This data type is not supported
- * in Vertex AI.
- */
+/** Configuration for a single speaker in a multi speaker setup. */
 @AutoValue
 @JsonDeserialize(builder = SpeakerVoiceConfig.Builder.class)
 public abstract class SpeakerVoiceConfig extends JsonSerializable {
-  /** Required. The name of the speaker to use. Should be the same as in the prompt. */
+  /**
+   * Required. The name of the speaker. This should be the same as the speaker name used in the
+   * prompt.
+   */
   @JsonProperty("speaker")
   public abstract Optional<String> speaker();
 
-  /** Required. The configuration for the voice to use. */
+  /** Required. The configuration for the voice of this speaker. */
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
@@ -62,7 +62,8 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speaker.
      *
-     * <p>speaker: Required. The name of the speaker to use. Should be the same as in the prompt.
+     * <p>speaker: Required. The name of the speaker. This should be the same as the speaker name
+     * used in the prompt.
      */
     @JsonProperty("speaker")
     public abstract Builder speaker(String speaker);
@@ -80,7 +81,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig.
      *
-     * <p>voiceConfig: Required. The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice of this speaker.
      */
     @JsonProperty("voiceConfig")
     public abstract Builder voiceConfig(VoiceConfig voiceConfig);
@@ -88,7 +89,7 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig builder.
      *
-     * <p>voiceConfig: Required. The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice of this speaker.
      */
     @CanIgnoreReturnValue
     public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {

@@ -43,15 +43,15 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
   @JsonProperty("placeId")
   public abstract Optional<String> placeId();
 
-  /** Text of the chunk. */
+  /** Text of the place answer. */
   @JsonProperty("text")
   public abstract Optional<String> text();
 
-  /** Title of the chunk. */
+  /** Title of the place. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** URI reference of the chunk. */
+  /** URI reference of the place. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
@@ -128,7 +128,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for text.
      *
-     * <p>text: Text of the chunk.
+     * <p>text: Text of the place answer.
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
@@ -146,7 +146,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: Title of the chunk.
+     * <p>title: Title of the place.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -164,7 +164,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for uri.
      *
-     * <p>uri: URI reference of the chunk.
+     * <p>uri: URI reference of the place.
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);

@@ -35,7 +35,10 @@ public class TuningTask {
     TUNING_TASK_I2V,
 
     /** Tuning task for text to video. */
-    TUNING_TASK_T2V
+    TUNING_TASK_T2V,
+
+    /** Tuning task for reference to video. */
+    TUNING_TASK_R2V
   }
 
   private Known tuningTaskEnum;

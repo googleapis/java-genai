@@ -23,10 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/**
- * Output only. Traffic type. This shows whether a request consumes Pay-As-You-Go or Provisioned
- * Throughput quota. This enum is not supported in Gemini API.
- */
+/** Output only. The traffic type for this request. This enum is not supported in Gemini API. */
 public class TrafficType {
 
   /** Enum representing the known values for TrafficType. */
@@ -34,7 +31,7 @@ public class TrafficType {
     /** Unspecified request traffic type. */
     TRAFFIC_TYPE_UNSPECIFIED,
 
-    /** Type for Pay-As-You-Go traffic. */
+    /** The request was processed using Pay-As-You-Go quota. */
     ON_DEMAND,
 
     /** Type for Provisioned Throughput traffic. */

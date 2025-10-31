@@ -48,10 +48,7 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("retrieval")
   public abstract Optional<Retrieval> retrieval();
 
-  /**
-   * Optional. GoogleSearchRetrieval tool type. Specialized retrieval tool that is powered by Google
-   * search.
-   */
+  /** Optional. Specialized retrieval tool that is powered by Google Search. */
   @JsonProperty("googleSearchRetrieval")
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
@@ -189,8 +186,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for googleSearchRetrieval.
      *
-     * <p>googleSearchRetrieval: Optional. GoogleSearchRetrieval tool type. Specialized retrieval
-     * tool that is powered by Google search.
+     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
+     * Search.
      */
     @JsonProperty("googleSearchRetrieval")
     public abstract Builder googleSearchRetrieval(GoogleSearchRetrieval googleSearchRetrieval);
@@ -198,8 +195,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for googleSearchRetrieval builder.
      *
-     * <p>googleSearchRetrieval: Optional. GoogleSearchRetrieval tool type. Specialized retrieval
-     * tool that is powered by Google search.
+     * <p>googleSearchRetrieval: Optional. Specialized retrieval tool that is powered by Google
+     * Search.
      */
     @CanIgnoreReturnValue
     public Builder googleSearchRetrieval(

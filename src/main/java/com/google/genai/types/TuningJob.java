@@ -166,7 +166,9 @@ public abstract class TuningJob extends JsonSerializable {
 
   /**
    * Optional. The display name of the TunedModel. The name can be up to 128 characters long and can
-   * consist of any UTF-8 characters.
+   * consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by
+   * default use the same display name as the pre-tuned model. If a new display name is provided,
+   * the tuning job will create a new model instead of a new version.
    */
   @JsonProperty("tunedModelDisplayName")
   public abstract Optional<String> tunedModelDisplayName();
@@ -750,7 +752,10 @@ public abstract class TuningJob extends JsonSerializable {
      * Setter for tunedModelDisplayName.
      *
      * <p>tunedModelDisplayName: Optional. The display name of the TunedModel. The name can be up to
-     * 128 characters long and can consist of any UTF-8 characters.
+     * 128 characters long and can consist of any UTF-8 characters. For continuous tuning,
+     * tuned_model_display_name will by default use the same display name as the pre-tuned model. If
+     * a new display name is provided, the tuning job will create a new model instead of a new
+     * version.
      */
     @JsonProperty("tunedModelDisplayName")
     public abstract Builder tunedModelDisplayName(String tunedModelDisplayName);
