@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.26.0](https://github.com/googleapis/java-genai/compare/v1.25.0...v1.26.0) (2025-10-31)
+
+
+### Features
+
+* Add clearXxx methods to data type builders ([a4900c9](https://github.com/googleapis/java-genai/commit/a4900c97ec7c256b45b729ae68404aea4fbf5830))
+* Added phish filtering feature. ([ed4e12c](https://github.com/googleapis/java-genai/commit/ed4e12c44e9fec3c2131a52d995cb0602dc246a0))
+* Return response headers for generateContentStream ([82a8118](https://github.com/googleapis/java-genai/commit/82a8118968bb5da37ec81dce83580bd86767bf62))
+
+
+### Bug Fixes
+
+* disable AFC when there are AFC incompatible tool presented. ([6099d87](https://github.com/googleapis/java-genai/commit/6099d871ff703606dffbf533a231869725f32bc6))
+
 ## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-29)
 
 
