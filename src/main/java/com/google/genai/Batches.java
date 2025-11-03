@@ -1631,13 +1631,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionDeclarations"},
-          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
     }
@@ -1647,16 +1640,6 @@ public final class Batches {
           toObject,
           new String[] {"googleSearchRetrieval"},
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleMaps"},
-          googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
-              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1676,6 +1659,23 @@ public final class Batches {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
       throw new IllegalArgumentException(
           "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {

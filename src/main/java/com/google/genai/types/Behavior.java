@@ -23,7 +23,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Defines the function behavior. Defaults to `BLOCKING`. */
+/**
+ * Specifies the function Behavior. Currently only supported by the BidiGenerateContent method. This
+ * enum is not supported in Vertex AI.
+ */
 public class Behavior {
 
   /** Enum representing the known values for Behavior. */
