@@ -454,6 +454,9 @@
 
     <profile>
       <id>native-tests</id>
+      <activation>
+        <jdk>[17,)</jdk>
+      </activation>
       <build>
         <plugins>
           <plugin>
