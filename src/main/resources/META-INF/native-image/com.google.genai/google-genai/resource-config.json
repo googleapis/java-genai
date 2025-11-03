@@ -5,19 +5,9 @@
   }, {
     "pattern":"\\QMETA-INF/services/java.net.spi.URLStreamHandlerProvider\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/java.nio.channels.spi.SelectorProvider\\E"
-  }, {
     "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/java.util.spi.ResourceBundleControlProvider\\E"
-  }, {
-    "pattern":"\\QMETA-INF/services/javax.xml.transform.TransformerFactory\\E"
-  }, {
-    "pattern":"\\QMETA-INF/services/javax.xml.xpath.XPathFactory\\E"
-  }, {
     "pattern":"\\QMETA-INF/services/org.apache.maven.surefire.spi.MasterProcessChannelProcessorFactory\\E"
-  }, {
-    "pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"
   }, {
     "pattern":"\\QMETA-INF/services/org.junit.platform.engine.TestEngine\\E"
   }, {
@@ -29,21 +19,9 @@
   }, {
     "pattern":"\\QMETA-INF/services/org.junit.platform.launcher.TestExecutionListener\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
-  }, {
-    "pattern":"\\Qassets/swagger-ui/index.html\\E"
-  }, {
-    "pattern":"\\Qassets\\E"
-  }, {
     "pattern":"\\Qjava/lang/reflect/AccessibleObject.class\\E"
   }, {
-    "pattern":"\\Qjetty-logging-mac-os-x.properties\\E"
-  }, {
-    "pattern":"\\Qjetty-logging.properties\\E"
-  }, {
     "pattern":"\\Qjunit-platform.properties\\E"
-  }, {
-    "pattern":"\\Qkeystore\\E"
   }, {
     "pattern":"\\Qmockito-extensions/org.mockito.plugins.AnnotationEngine\\E"
   }, {
@@ -65,16 +43,6 @@
   }, {
     "pattern":"\\Qmockito-extensions/org.mockito.plugins.StackTraceCleanerProvider\\E"
   }, {
-    "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
-  }, {
-    "pattern":"\\Qorg/apache/hc/client5/version.properties\\E"
-  }, {
-    "pattern":"\\Qorg/eclipse/jetty/http/encoding.properties\\E"
-  }, {
-    "pattern":"\\Qorg/eclipse/jetty/http/mime.properties\\E"
-  }, {
-    "pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"
-  }, {
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/MockMethodAdvice$ForEquals.class\\E"
   }, {
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/MockMethodAdvice$ForHashCode.class\\E"
@@ -84,8 +52,6 @@
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/MockMethodAdvice.class\\E"
   }, {
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.raw\\E"
-  }, {
-    "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/reflect/AccessibleObject.class\\E"
   }, {
@@ -97,11 +63,5 @@
   }, {
     "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
   }]},
-  "bundles":[{
-    "name":"javax.servlet.LocalStrings",
-    "locales":[""]
-  }, {
-    "name":"javax.servlet.http.LocalStrings",
-    "locales":[""]
-  }]
+  "bundles":[]
 }
