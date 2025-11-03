@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -68,6 +69,17 @@ public abstract class RetrievalMetadata extends JsonSerializable {
     @JsonProperty("googleSearchDynamicRetrievalScore")
     public abstract Builder googleSearchDynamicRetrievalScore(
         Float googleSearchDynamicRetrievalScore);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleSearchDynamicRetrievalScore(
+        Optional<Float> googleSearchDynamicRetrievalScore);
+
+    /** Clears the value of googleSearchDynamicRetrievalScore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleSearchDynamicRetrievalScore() {
+      return googleSearchDynamicRetrievalScore(Optional.empty());
+    }
 
     public abstract RetrievalMetadata build();
   }

@@ -60,6 +60,7 @@ import okhttp3.ResponseBody;
  * `client.files.methodName(...)` directly.
  */
 public final class Files {
+
   final ApiClient apiClient;
 
   private final UploadClient uploadClient;
@@ -564,6 +565,7 @@ public final class Files {
   public File upload(java.io.File file, UploadFileConfig config) {
     try (InputStream inputStream = new FileInputStream(file)) {
       long size = file.length();
+      String fileName = file.getName();
       String probedMimeType = java.nio.file.Files.probeContentType(file.toPath());
       Optional<String> mimeType;
       if (probedMimeType != null) {
@@ -571,7 +573,7 @@ public final class Files {
       } else {
         mimeType = Optional.empty();
       }
-      String uploadUrl = createFileInApi(config, mimeType, size);
+      String uploadUrl = createFileInApi(config, mimeType, Optional.of(fileName), size);
       ResponseBody responseBody = uploadClient.upload(uploadUrl, inputStream, size);
       return fileFromUploadResponseBody(responseBody);
     } catch (IOException e) {
@@ -587,7 +589,8 @@ public final class Files {
    * @return The uploaded file.
    */
   public File upload(byte[] bytes, UploadFileConfig config) {
-    String uploadUrl = createFileInApi(config, Optional.<String>empty(), bytes.length);
+    String uploadUrl =
+        createFileInApi(config, Optional.<String>empty(), Optional.<String>empty(), bytes.length);
     ResponseBody responseBody = uploadClient.upload(uploadUrl, bytes);
     return fileFromUploadResponseBody(responseBody);
   }
@@ -601,7 +604,8 @@ public final class Files {
    * @return The uploaded file.
    */
   public File upload(InputStream inputStream, long size, UploadFileConfig config) {
-    String uploadUrl = createFileInApi(config, Optional.<String>empty(), size);
+    String uploadUrl =
+        createFileInApi(config, Optional.<String>empty(), Optional.<String>empty(), size);
     ResponseBody responseBody = uploadClient.upload(uploadUrl, inputStream, size);
     return fileFromUploadResponseBody(responseBody);
   }
@@ -631,7 +635,8 @@ public final class Files {
     return JsonSerializable.fromJsonNode(responseNode, File.class);
   }
 
-  private String createFileInApi(UploadFileConfig config, Optional<String> mimeType, long size) {
+  private String createFileInApi(
+      UploadFileConfig config, Optional<String> mimeType, Optional<String> fileName, long size) {
     File.Builder apiFileBuilder = File.builder();
     if (config != null) {
       if (config.name().isPresent()) {
@@ -667,6 +672,9 @@ public final class Files {
     createFileHeaders.put("X-Goog-Upload-Command", "start");
     createFileHeaders.put("X-Goog-Upload-Header-Content-Length", "" + size);
     createFileHeaders.put("X-Goog-Upload-Header-Content-Type", actualMimeType);
+    if (fileName.isPresent()) {
+      createFileHeaders.put("X-Goog-Upload-File-Name", fileName.get());
+    }
 
     HttpOptions createFileHttpOptions =
         HttpOptions.builder().apiVersion("").headers(createFileHeaders).build();

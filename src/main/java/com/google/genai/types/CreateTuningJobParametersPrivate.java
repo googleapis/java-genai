@@ -23,10 +23,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Supervised fine-tuning job creation parameters - optional fields. */
+/** Fine-tuning job creation parameters - optional fields. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = CreateTuningJobParametersPrivate.Builder.class)
@@ -79,6 +80,16 @@ public abstract class CreateTuningJobParametersPrivate extends JsonSerializable 
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseModel(Optional<String> baseModel);
+
+    /** Clears the value of baseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseModel() {
+      return baseModel(Optional.empty());
+    }
+
     /**
      * Setter for preTunedModel.
      *
@@ -92,8 +103,19 @@ public abstract class CreateTuningJobParametersPrivate extends JsonSerializable 
      *
      * <p>preTunedModel: The PreTunedModel that is being tuned.
      */
+    @CanIgnoreReturnValue
     public Builder preTunedModel(PreTunedModel.Builder preTunedModelBuilder) {
       return preTunedModel(preTunedModelBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder preTunedModel(Optional<PreTunedModel> preTunedModel);
+
+    /** Clears the value of preTunedModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPreTunedModel() {
+      return preTunedModel(Optional.empty());
     }
 
     /**
@@ -111,8 +133,19 @@ public abstract class CreateTuningJobParametersPrivate extends JsonSerializable 
      * <p>trainingDataset: Cloud Storage path to file containing training dataset for tuning. The
      * dataset must be formatted as a JSONL file.
      */
+    @CanIgnoreReturnValue
     public Builder trainingDataset(TuningDataset.Builder trainingDatasetBuilder) {
       return trainingDataset(trainingDatasetBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trainingDataset(Optional<TuningDataset> trainingDataset);
+
+    /** Clears the value of trainingDataset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrainingDataset() {
+      return trainingDataset(Optional.empty());
     }
 
     /**
@@ -128,8 +161,19 @@ public abstract class CreateTuningJobParametersPrivate extends JsonSerializable 
      *
      * <p>config: Configuration for the tuning job.
      */
+    @CanIgnoreReturnValue
     public Builder config(CreateTuningJobConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<CreateTuningJobConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract CreateTuningJobParametersPrivate build();

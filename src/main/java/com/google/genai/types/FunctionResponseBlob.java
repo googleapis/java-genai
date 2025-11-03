@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
+
     /**
      * Setter for data.
      *
@@ -74,6 +85,16 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
      */
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder data(Optional<byte[]> data);
+
+    /** Clears the value of data field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearData() {
+      return data(Optional.empty());
+    }
 
     public abstract FunctionResponseBlob build();
   }

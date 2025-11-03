@@ -22,18 +22,22 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for the speaker to use. */
+/**
+ * The configuration for a single speaker in a multi speaker setup. This data type is not supported
+ * in Vertex AI.
+ */
 @AutoValue
 @JsonDeserialize(builder = SpeakerVoiceConfig.Builder.class)
 public abstract class SpeakerVoiceConfig extends JsonSerializable {
-  /** The name of the speaker to use. Should be the same as in the prompt. */
+  /** Required. The name of the speaker to use. Should be the same as in the prompt. */
   @JsonProperty("speaker")
   public abstract Optional<String> speaker();
 
-  /** The configuration for the voice to use. */
+  /** Required. The configuration for the voice to use. */
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
@@ -58,15 +62,25 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speaker.
      *
-     * <p>speaker: The name of the speaker to use. Should be the same as in the prompt.
+     * <p>speaker: Required. The name of the speaker to use. Should be the same as in the prompt.
      */
     @JsonProperty("speaker")
     public abstract Builder speaker(String speaker);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder speaker(Optional<String> speaker);
+
+    /** Clears the value of speaker field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSpeaker() {
+      return speaker(Optional.empty());
+    }
+
     /**
      * Setter for voiceConfig.
      *
-     * <p>voiceConfig: The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice to use.
      */
     @JsonProperty("voiceConfig")
     public abstract Builder voiceConfig(VoiceConfig voiceConfig);
@@ -74,10 +88,21 @@ public abstract class SpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig builder.
      *
-     * <p>voiceConfig: The configuration for the voice to use.
+     * <p>voiceConfig: Required. The configuration for the voice to use.
      */
+    @CanIgnoreReturnValue
     public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
       return voiceConfig(voiceConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceConfig(Optional<VoiceConfig> voiceConfig);
+
+    /** Clears the value of voiceConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceConfig() {
+      return voiceConfig(Optional.empty());
     }
 
     public abstract SpeakerVoiceConfig build();

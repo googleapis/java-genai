@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Specifies the context retrieval config. */
+/** Specifies the context retrieval config. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfig.Builder.class)
 public abstract class RagRetrievalConfig extends JsonSerializable {
@@ -76,8 +77,19 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
      *
      * <p>filter: Optional. Config for filters.
      */
+    @CanIgnoreReturnValue
     public Builder filter(RagRetrievalConfigFilter.Builder filterBuilder) {
       return filter(filterBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder filter(Optional<RagRetrievalConfigFilter> filter);
+
+    /** Clears the value of filter field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFilter() {
+      return filter(Optional.empty());
     }
 
     /**
@@ -93,8 +105,19 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
      *
      * <p>hybridSearch: Optional. Config for Hybrid Search.
      */
+    @CanIgnoreReturnValue
     public Builder hybridSearch(RagRetrievalConfigHybridSearch.Builder hybridSearchBuilder) {
       return hybridSearch(hybridSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hybridSearch(Optional<RagRetrievalConfigHybridSearch> hybridSearch);
+
+    /** Clears the value of hybridSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHybridSearch() {
+      return hybridSearch(Optional.empty());
     }
 
     /**
@@ -110,8 +133,19 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
      *
      * <p>ranking: Optional. Config for ranking and reranking.
      */
+    @CanIgnoreReturnValue
     public Builder ranking(RagRetrievalConfigRanking.Builder rankingBuilder) {
       return ranking(rankingBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ranking(Optional<RagRetrievalConfigRanking> ranking);
+
+    /** Clears the value of ranking field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRanking() {
+      return ranking(Optional.empty());
     }
 
     /**
@@ -121,6 +155,16 @@ public abstract class RagRetrievalConfig extends JsonSerializable {
      */
     @JsonProperty("topK")
     public abstract Builder topK(Integer topK);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder topK(Optional<Integer> topK);
+
+    /** Clears the value of topK field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTopK() {
+      return topK(Optional.empty());
+    }
 
     public abstract RagRetrievalConfig build();
   }

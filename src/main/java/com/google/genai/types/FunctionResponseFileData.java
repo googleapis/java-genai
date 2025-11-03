@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -63,6 +64,16 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
     @JsonProperty("fileUri")
     public abstract Builder fileUri(String fileUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fileUri(Optional<String> fileUri);
+
+    /** Clears the value of fileUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFileUri() {
+      return fileUri(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -70,6 +81,16 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     public abstract FunctionResponseFileData build();
   }

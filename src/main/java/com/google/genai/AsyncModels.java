@@ -75,8 +75,8 @@ public final class AsyncModels {
   ApiClient apiClient;
 
   public AsyncModels(ApiClient apiClient) {
-    this.models = new Models(apiClient);
     this.apiClient = apiClient;
+    this.models = new Models(apiClient);
   }
 
   CompletableFuture<GenerateContentResponse> privateGenerateContent(
@@ -373,7 +373,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<CountTokensResponse> countTokens(
       String model, String text, CountTokensConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.countTokens(model, text, config));
+    return countTokens(model, Transformers.tContents(text), config);
   }
 
   /**
@@ -388,7 +388,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<ComputeTokensResponse> computeTokens(
       String model, String text, ComputeTokensConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.computeTokens(model, text, config));
+    return computeTokens(model, Transformers.tContents(text), config);
   }
 
   /** A private helper class to pass the result of the AFC loop up the async chain. */
@@ -476,11 +476,26 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateContentResponse> generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    ImmutableList<Integer> incompatibleToolsIndexes =
+        AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.shouldDisableAfc(transformedConfig)) {
       return privateGenerateContent(model, contents, transformedConfig);
     }
-
+    if (!incompatibleToolsIndexes.isEmpty()) {
+      int originalToolsSize = 0;
+      if (config.tools().isPresent() && !config.tools().get().isEmpty()) {
+        originalToolsSize = config.tools().get().size();
+      }
+      if (originalToolsSize != incompatibleToolsIndexes.size()) {
+        logger.warning(
+            String.format(
+                "Automatic function calling is enabled, but the following tools are not supported:"
+                    + " %s. AFC will be disabled.",
+                incompatibleToolsIndexes));
+      }
+      return privateGenerateContent(model, contents, transformedConfig);
+    }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
     if (functionMap.isEmpty()) {
       return privateGenerateContent(model, contents, transformedConfig);
@@ -612,7 +627,8 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateImagesResponse> generateImages(
       String model, String prompt, GenerateImagesConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.generateImages(model, prompt, config));
+    return privateGenerateImages(model, prompt, config)
+        .thenApply(models::postProcessGenerateImagesResponse);
   }
 
   /**
@@ -634,9 +650,12 @@ public final class AsyncModels {
    */
   public CompletableFuture<EditImageResponse> editImage(
       String model, String prompt, List<ReferenceImage> referenceImages, EditImageConfig config) {
+    List<ReferenceImageAPI> referenceImagesAPI = new ArrayList<>();
+    for (ReferenceImage referenceImage : referenceImages) {
+      referenceImagesAPI.add(referenceImage.toReferenceImageAPI());
+    }
 
-    return CompletableFuture.supplyAsync(
-        () -> models.editImage(model, prompt, referenceImages, config));
+    return privateEditImage(model, prompt, referenceImagesAPI, config);
   }
 
   /**
@@ -652,8 +671,8 @@ public final class AsyncModels {
    */
   public CompletableFuture<UpscaleImageResponse> upscaleImage(
       String model, Image image, String upscaleFactor, UpscaleImageConfig config) {
-    return CompletableFuture.supplyAsync(
-        () -> models.upscaleImage(model, image, upscaleFactor, config));
+    return privateUpscaleImage(
+        model, image, upscaleFactor, models.preProcessUpscaleImageConfig(config));
   }
 
   /**
@@ -671,7 +690,8 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, GenerateVideosSource source, GenerateVideosConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.generateVideos(model, source, config));
+    return privateGenerateVideos(
+        model, null, null, null, models.preProcessGenerateVideosSource(source), config);
   }
 
   /**
@@ -692,8 +712,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
-    return CompletableFuture.supplyAsync(
-        () -> models.generateVideos(model, prompt, image, video, config));
+    return privateGenerateVideos(model, prompt, image, models.preProcessVideo(video), null, config);
   }
 
   /**
@@ -711,7 +730,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, String prompt, Image image, GenerateVideosConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.generateVideos(model, prompt, image, config));
+    return generateVideos(model, prompt, image, null, config);
   }
 
   /**
@@ -724,7 +743,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<EmbedContentResponse> embedContent(
       String model, String text, EmbedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.embedContent(model, text, config));
+    return embedContent(model, ImmutableList.of(text), config);
   }
 
   /**
@@ -737,7 +756,11 @@ public final class AsyncModels {
    */
   public CompletableFuture<EmbedContentResponse> embedContent(
       String model, List<String> texts, EmbedContentConfig config) {
-    return CompletableFuture.supplyAsync(() -> models.embedContent(model, texts, config));
+    List<Content> contents = new ArrayList<>();
+    for (String text : texts) {
+      contents.add(Content.fromParts(Part.fromText(text)));
+    }
+    return privateEmbedContent(model, contents, config);
   }
 
   /**
@@ -771,10 +794,8 @@ public final class AsyncModels {
                 "Internal error: Pager expected ListModelsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      models.privateList((ListModelsConfig) requestConfig)));
+          return this.privateList((ListModelsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

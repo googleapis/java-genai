@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -92,8 +93,19 @@ public abstract class EmbedContentConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -104,6 +116,16 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     @JsonProperty("taskType")
     public abstract Builder taskType(String taskType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder taskType(Optional<String> taskType);
+
+    /** Clears the value of taskType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTaskType() {
+      return taskType(Optional.empty());
+    }
+
     /**
      * Setter for title.
      *
@@ -111,6 +133,16 @@ public abstract class EmbedContentConfig extends JsonSerializable {
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder title(Optional<String> title);
+
+    /** Clears the value of title field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTitle() {
+      return title(Optional.empty());
+    }
 
     /**
      * Setter for outputDimensionality.
@@ -122,6 +154,16 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     @JsonProperty("outputDimensionality")
     public abstract Builder outputDimensionality(Integer outputDimensionality);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputDimensionality(Optional<Integer> outputDimensionality);
+
+    /** Clears the value of outputDimensionality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputDimensionality() {
+      return outputDimensionality(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -129,6 +171,16 @@ public abstract class EmbedContentConfig extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     /**
      * Setter for autoTruncate.
@@ -139,6 +191,16 @@ public abstract class EmbedContentConfig extends JsonSerializable {
      */
     @JsonProperty("autoTruncate")
     public abstract Builder autoTruncate(boolean autoTruncate);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder autoTruncate(Optional<Boolean> autoTruncate);
+
+    /** Clears the value of autoTruncate field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutoTruncate() {
+      return autoTruncate(Optional.empty());
+    }
 
     public abstract EmbedContentConfig build();
   }

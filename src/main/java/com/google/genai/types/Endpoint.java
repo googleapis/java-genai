@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -63,6 +64,16 @@ public abstract class Endpoint extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for deployedModelId.
      *
@@ -70,6 +81,16 @@ public abstract class Endpoint extends JsonSerializable {
      */
     @JsonProperty("deployedModelId")
     public abstract Builder deployedModelId(String deployedModelId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder deployedModelId(Optional<String> deployedModelId);
+
+    /** Clears the value of deployedModelId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDeployedModelId() {
+      return deployedModelId(Optional.empty());
+    }
 
     public abstract Endpoint build();
   }

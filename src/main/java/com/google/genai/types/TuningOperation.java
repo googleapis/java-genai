@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
@@ -93,8 +94,19 @@ public abstract class TuningOperation extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -107,6 +119,16 @@ public abstract class TuningOperation extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for metadata.
      *
@@ -118,6 +140,16 @@ public abstract class TuningOperation extends JsonSerializable {
     @JsonProperty("metadata")
     public abstract Builder metadata(Map<String, Object> metadata);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder metadata(Optional<Map<String, Object>> metadata);
+
+    /** Clears the value of metadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMetadata() {
+      return metadata(Optional.empty());
+    }
+
     /**
      * Setter for done.
      *
@@ -127,6 +159,16 @@ public abstract class TuningOperation extends JsonSerializable {
     @JsonProperty("done")
     public abstract Builder done(boolean done);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder done(Optional<Boolean> done);
+
+    /** Clears the value of done field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDone() {
+      return done(Optional.empty());
+    }
+
     /**
      * Setter for error.
      *
@@ -134,6 +176,16 @@ public abstract class TuningOperation extends JsonSerializable {
      */
     @JsonProperty("error")
     public abstract Builder error(Map<String, Object> error);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<Map<String, Object>> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
+    }
 
     public abstract TuningOperation build();
   }

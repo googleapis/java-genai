@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
     @JsonProperty("truncated")
     public abstract Builder truncated(boolean truncated);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder truncated(Optional<Boolean> truncated);
+
+    /** Clears the value of truncated field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTruncated() {
+      return truncated(Optional.empty());
+    }
+
     /**
      * Setter for tokenCount.
      *
@@ -74,6 +85,16 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Float tokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenCount(Optional<Float> tokenCount);
+
+    /** Clears the value of tokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenCount() {
+      return tokenCount(Optional.empty());
+    }
 
     public abstract ContentEmbeddingStatistics build();
   }

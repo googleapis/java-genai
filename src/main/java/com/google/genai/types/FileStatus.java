@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -83,8 +84,19 @@ public abstract class FileStatus extends JsonSerializable {
      * <p>details: A list of messages that carry the error details. There is a common set of message
      * types for APIs to use.
      */
+    @CanIgnoreReturnValue
     public Builder details(Map<String, Object>... details) {
       return details(Arrays.asList(details));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder details(Optional<List<Map<String, Object>>> details);
+
+    /** Clears the value of details field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDetails() {
+      return details(Optional.empty());
     }
 
     /**
@@ -96,6 +108,16 @@ public abstract class FileStatus extends JsonSerializable {
     @JsonProperty("message")
     public abstract Builder message(String message);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder message(Optional<String> message);
+
+    /** Clears the value of message field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMessage() {
+      return message(Optional.empty());
+    }
+
     /**
      * Setter for code.
      *
@@ -103,6 +125,16 @@ public abstract class FileStatus extends JsonSerializable {
      */
     @JsonProperty("code")
     public abstract Builder code(Integer code);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder code(Optional<Integer> code);
+
+    /** Clears the value of code field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCode() {
+      return code(Optional.empty());
+    }
 
     public abstract FileStatus build();
   }

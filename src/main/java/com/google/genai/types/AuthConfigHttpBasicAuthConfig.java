@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for HTTP Basic Authentication. */
+/** Config for HTTP Basic Authentication. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfigHttpBasicAuthConfig.Builder.class)
 public abstract class AuthConfigHttpBasicAuthConfig extends JsonSerializable {
@@ -71,6 +72,16 @@ public abstract class AuthConfigHttpBasicAuthConfig extends JsonSerializable {
      */
     @JsonProperty("credentialSecret")
     public abstract Builder credentialSecret(String credentialSecret);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder credentialSecret(Optional<String> credentialSecret);
+
+    /** Clears the value of credentialSecret field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCredentialSecret() {
+      return credentialSecret(Optional.empty());
+    }
 
     public abstract AuthConfigHttpBasicAuthConfig build();
   }

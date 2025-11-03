@@ -23,7 +23,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
-/** The search parameters to use for SIMPLE_SEARCH spec. */
+/**
+ * The search parameters to use for SIMPLE_SEARCH spec. This data type is not supported in Gemini
+ * API.
+ */
 @AutoValue
 @JsonDeserialize(builder = ExternalApiSimpleSearchParams.Builder.class)
 public abstract class ExternalApiSimpleSearchParams extends JsonSerializable {

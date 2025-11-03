@@ -17,6 +17,7 @@
 package com.google.genai.types;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.collect.ImmutableList;
@@ -179,5 +180,19 @@ public class FunctionDeclarationTest {
         "The number of parameter names passed to the orderedParameterNames"
             + " argument does not match the number of parameters in the method.",
         thrown.getMessage());
+  }
+
+  @Test
+  public void testClearMethods() {
+    FunctionDeclaration functionDeclaration =
+        FunctionDeclaration.builder().name(FUNCTION_NAME).description(FUNCTION_DESCRIPTION).build();
+
+    assertEquals(FUNCTION_NAME, functionDeclaration.name().get());
+    assertEquals(FUNCTION_DESCRIPTION, functionDeclaration.description().get());
+
+    functionDeclaration = functionDeclaration.toBuilder().clearName().clearDescription().build();
+
+    assertFalse(functionDeclaration.name().isPresent());
+    assertFalse(functionDeclaration.description().isPresent());
   }
 }

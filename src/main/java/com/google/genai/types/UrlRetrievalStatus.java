@@ -28,7 +28,7 @@ public class UrlRetrievalStatus {
 
   /** Enum representing the known values for UrlRetrievalStatus. */
   public enum Known {
-    /** Default value. This value is unused */
+    /** Default value. This value is unused. */
     URL_RETRIEVAL_STATUS_UNSPECIFIED,
 
     /** Url retrieval is successful. */
@@ -37,10 +37,16 @@ public class UrlRetrievalStatus {
     /** Url retrieval is failed due to error. */
     URL_RETRIEVAL_STATUS_ERROR,
 
-    /** Url retrieval is failed because the content is behind paywall. */
+    /**
+     * Url retrieval is failed because the content is behind paywall. This enum value is not
+     * supported in Vertex AI.
+     */
     URL_RETRIEVAL_STATUS_PAYWALL,
 
-    /** Url retrieval is failed because the content is unsafe. */
+    /**
+     * Url retrieval is failed because the content is unsafe. This enum value is not supported in
+     * Vertex AI.
+     */
     URL_RETRIEVAL_STATUS_UNSAFE
   }
 

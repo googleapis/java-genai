@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -72,9 +73,20 @@ public abstract class ToolConfig extends JsonSerializable {
      *
      * <p>functionCallingConfig: Optional. Function calling config.
      */
+    @CanIgnoreReturnValue
     public Builder functionCallingConfig(
         FunctionCallingConfig.Builder functionCallingConfigBuilder) {
       return functionCallingConfig(functionCallingConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionCallingConfig(Optional<FunctionCallingConfig> functionCallingConfig);
+
+    /** Clears the value of functionCallingConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionCallingConfig() {
+      return functionCallingConfig(Optional.empty());
     }
 
     /**
@@ -90,8 +102,19 @@ public abstract class ToolConfig extends JsonSerializable {
      *
      * <p>retrievalConfig: Optional. Retrieval config.
      */
+    @CanIgnoreReturnValue
     public Builder retrievalConfig(RetrievalConfig.Builder retrievalConfigBuilder) {
       return retrievalConfig(retrievalConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder retrievalConfig(Optional<RetrievalConfig> retrievalConfig);
+
+    /** Clears the value of retrievalConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRetrievalConfig() {
+      return retrievalConfig(Optional.empty());
     }
 
     public abstract ToolConfig build();

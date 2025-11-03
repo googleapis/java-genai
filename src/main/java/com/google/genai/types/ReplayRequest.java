@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +75,16 @@ public abstract class ReplayRequest extends JsonSerializable {
     @JsonProperty("method")
     public abstract Builder method(String method);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder method(Optional<String> method);
+
+    /** Clears the value of method field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMethod() {
+      return method(Optional.empty());
+    }
+
     /**
      * Setter for url.
      *
@@ -82,6 +93,16 @@ public abstract class ReplayRequest extends JsonSerializable {
     @JsonProperty("url")
     public abstract Builder url(String url);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder url(Optional<String> url);
+
+    /** Clears the value of url field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUrl() {
+      return url(Optional.empty());
+    }
+
     /**
      * Setter for headers.
      *
@@ -89,6 +110,16 @@ public abstract class ReplayRequest extends JsonSerializable {
      */
     @JsonProperty("headers")
     public abstract Builder headers(Map<String, String> headers);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder headers(Optional<Map<String, String>> headers);
+
+    /** Clears the value of headers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHeaders() {
+      return headers(Optional.empty());
+    }
 
     /**
      * Setter for bodySegments.
@@ -103,8 +134,19 @@ public abstract class ReplayRequest extends JsonSerializable {
      *
      * <p>bodySegments:
      */
+    @CanIgnoreReturnValue
     public Builder bodySegments(Map<String, Object>... bodySegments) {
       return bodySegments(Arrays.asList(bodySegments));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder bodySegments(Optional<List<Map<String, Object>>> bodySegments);
+
+    /** Clears the value of bodySegments field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBodySegments() {
+      return bodySegments(Optional.empty());
     }
 
     public abstract ReplayRequest build();

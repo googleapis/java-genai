@@ -103,6 +103,16 @@ public abstract class BatchJob extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for displayName.
      *
@@ -111,6 +121,16 @@ public abstract class BatchJob extends JsonSerializable {
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
     /**
      * Setter for state.
      *
@@ -118,6 +138,16 @@ public abstract class BatchJob extends JsonSerializable {
      */
     @JsonProperty("state")
     public abstract Builder state(JobState state);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder state(Optional<JobState> state);
+
+    /** Clears the value of state field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearState() {
+      return state(Optional.empty());
+    }
 
     /**
      * Setter for state given a known enum.
@@ -154,8 +184,19 @@ public abstract class BatchJob extends JsonSerializable {
      * <p>error: Output only. Only populated when the job's state is JOB_STATE_FAILED or
      * JOB_STATE_CANCELLED.
      */
+    @CanIgnoreReturnValue
     public Builder error(JobError.Builder errorBuilder) {
       return error(errorBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<JobError> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
     }
 
     /**
@@ -166,6 +207,16 @@ public abstract class BatchJob extends JsonSerializable {
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
+
     /**
      * Setter for startTime.
      *
@@ -175,6 +226,16 @@ public abstract class BatchJob extends JsonSerializable {
     @JsonProperty("startTime")
     public abstract Builder startTime(Instant startTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startTime(Optional<Instant> startTime);
+
+    /** Clears the value of startTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartTime() {
+      return startTime(Optional.empty());
+    }
+
     /**
      * Setter for endTime.
      *
@@ -182,6 +243,16 @@ public abstract class BatchJob extends JsonSerializable {
      */
     @JsonProperty("endTime")
     public abstract Builder endTime(Instant endTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endTime(Optional<Instant> endTime);
+
+    /** Clears the value of endTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndTime() {
+      return endTime(Optional.empty());
+    }
 
     /**
      * Setter for updateTime.
@@ -191,6 +262,16 @@ public abstract class BatchJob extends JsonSerializable {
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateTime(Optional<Instant> updateTime);
+
+    /** Clears the value of updateTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
+    }
+
     /**
      * Setter for model.
      *
@@ -198,6 +279,16 @@ public abstract class BatchJob extends JsonSerializable {
      */
     @JsonProperty("model")
     public abstract Builder model(String model);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
 
     /**
      * Setter for src.
@@ -212,8 +303,19 @@ public abstract class BatchJob extends JsonSerializable {
      *
      * <p>src: Configuration for the input data.
      */
+    @CanIgnoreReturnValue
     public Builder src(BatchJobSource.Builder srcBuilder) {
       return src(srcBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder src(Optional<BatchJobSource> src);
+
+    /** Clears the value of src field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSrc() {
+      return src(Optional.empty());
     }
 
     /**
@@ -229,8 +331,19 @@ public abstract class BatchJob extends JsonSerializable {
      *
      * <p>dest: Configuration for the output data.
      */
+    @CanIgnoreReturnValue
     public Builder dest(BatchJobDestination.Builder destBuilder) {
       return dest(destBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dest(Optional<BatchJobDestination> dest);
+
+    /** Clears the value of dest field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDest() {
+      return dest(Optional.empty());
     }
 
     public abstract BatchJob build();

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -71,6 +72,16 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
     @JsonProperty("operationName")
     public abstract Builder operationName(String operationName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder operationName(Optional<String> operationName);
+
+    /** Clears the value of operationName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOperationName() {
+      return operationName(Optional.empty());
+    }
+
     /**
      * Setter for resourceName.
      *
@@ -78,6 +89,16 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
      */
     @JsonProperty("resourceName")
     public abstract Builder resourceName(String resourceName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resourceName(Optional<String> resourceName);
+
+    /** Clears the value of resourceName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResourceName() {
+      return resourceName(Optional.empty());
+    }
 
     /**
      * Setter for config.
@@ -92,8 +113,19 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
      *
      * <p>config: Used to override the default configuration.
      */
+    @CanIgnoreReturnValue
     public Builder config(FetchPredictOperationConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<FetchPredictOperationConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract FetchPredictOperationParameters build();

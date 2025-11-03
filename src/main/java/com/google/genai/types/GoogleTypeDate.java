@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ import java.util.Optional;
  * day values. * A month and day, with a zero year (for example, an anniversary). * A year on its
  * own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit
  * card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime *
- * google.protobuf.Timestamp
+ * google.protobuf.Timestamp. This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = GoogleTypeDate.Builder.class)
@@ -79,6 +80,16 @@ public abstract class GoogleTypeDate extends JsonSerializable {
     @JsonProperty("day")
     public abstract Builder day(Integer day);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder day(Optional<Integer> day);
+
+    /** Clears the value of day field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDay() {
+      return day(Optional.empty());
+    }
+
     /**
      * Setter for month.
      *
@@ -88,6 +99,16 @@ public abstract class GoogleTypeDate extends JsonSerializable {
     @JsonProperty("month")
     public abstract Builder month(Integer month);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder month(Optional<Integer> month);
+
+    /** Clears the value of month field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMonth() {
+      return month(Optional.empty());
+    }
+
     /**
      * Setter for year.
      *
@@ -95,6 +116,16 @@ public abstract class GoogleTypeDate extends JsonSerializable {
      */
     @JsonProperty("year")
     public abstract Builder year(Integer year);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder year(Optional<Integer> year);
+
+    /** Clears the value of year field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearYear() {
+      return year(Optional.empty());
+    }
 
     public abstract GoogleTypeDate build();
   }

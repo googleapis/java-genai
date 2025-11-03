@@ -28,7 +28,8 @@ import java.util.Optional;
 
 /**
  * Retrieve from data source powered by external API for grounding. The external API is not owned by
- * Google, but need to follow the pre-defined API spec.
+ * Google, but need to follow the pre-defined API spec. This data type is not supported in Gemini
+ * API.
  */
 @AutoValue
 @JsonDeserialize(builder = ExternalApi.Builder.class)
@@ -93,8 +94,19 @@ public abstract class ExternalApi extends JsonSerializable {
      * <p>apiAuth: The authentication config to access the API. Deprecated. Please use auth_config
      * instead.
      */
+    @CanIgnoreReturnValue
     public Builder apiAuth(ApiAuth.Builder apiAuthBuilder) {
       return apiAuth(apiAuthBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiAuth(Optional<ApiAuth> apiAuth);
+
+    /** Clears the value of apiAuth field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiAuth() {
+      return apiAuth(Optional.empty());
     }
 
     /**
@@ -104,6 +116,16 @@ public abstract class ExternalApi extends JsonSerializable {
      */
     @JsonProperty("apiSpec")
     public abstract Builder apiSpec(ApiSpec apiSpec);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiSpec(Optional<ApiSpec> apiSpec);
+
+    /** Clears the value of apiSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiSpec() {
+      return apiSpec(Optional.empty());
+    }
 
     /**
      * Setter for apiSpec given a known enum.
@@ -138,8 +160,19 @@ public abstract class ExternalApi extends JsonSerializable {
      *
      * <p>authConfig: The authentication config to access the API.
      */
+    @CanIgnoreReturnValue
     public Builder authConfig(AuthConfig.Builder authConfigBuilder) {
       return authConfig(authConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder authConfig(Optional<AuthConfig> authConfig);
+
+    /** Clears the value of authConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAuthConfig() {
+      return authConfig(Optional.empty());
     }
 
     /**
@@ -155,9 +188,21 @@ public abstract class ExternalApi extends JsonSerializable {
      *
      * <p>elasticSearchParams: Parameters for the elastic search API.
      */
+    @CanIgnoreReturnValue
     public Builder elasticSearchParams(
         ExternalApiElasticSearchParams.Builder elasticSearchParamsBuilder) {
       return elasticSearchParams(elasticSearchParamsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder elasticSearchParams(
+        Optional<ExternalApiElasticSearchParams> elasticSearchParams);
+
+    /** Clears the value of elasticSearchParams field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearElasticSearchParams() {
+      return elasticSearchParams(Optional.empty());
     }
 
     /**
@@ -168,6 +213,16 @@ public abstract class ExternalApi extends JsonSerializable {
      */
     @JsonProperty("endpoint")
     public abstract Builder endpoint(String endpoint);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endpoint(Optional<String> endpoint);
+
+    /** Clears the value of endpoint field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndpoint() {
+      return endpoint(Optional.empty());
+    }
 
     /**
      * Setter for simpleSearchParams.
@@ -182,9 +237,20 @@ public abstract class ExternalApi extends JsonSerializable {
      *
      * <p>simpleSearchParams: Parameters for the simple search API.
      */
+    @CanIgnoreReturnValue
     public Builder simpleSearchParams(
         ExternalApiSimpleSearchParams.Builder simpleSearchParamsBuilder) {
       return simpleSearchParams(simpleSearchParamsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder simpleSearchParams(Optional<ExternalApiSimpleSearchParams> simpleSearchParams);
+
+    /** Clears the value of simpleSearchParams field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSimpleSearchParams() {
+      return simpleSearchParams(Optional.empty());
     }
 
     public abstract ExternalApi build();

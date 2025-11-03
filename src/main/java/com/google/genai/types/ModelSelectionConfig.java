@@ -61,6 +61,17 @@ public abstract class ModelSelectionConfig extends JsonSerializable {
     public abstract Builder featureSelectionPreference(
         FeatureSelectionPreference featureSelectionPreference);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder featureSelectionPreference(
+        Optional<FeatureSelectionPreference> featureSelectionPreference);
+
+    /** Clears the value of featureSelectionPreference field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFeatureSelectionPreference() {
+      return featureSelectionPreference(Optional.empty());
+    }
+
     /**
      * Setter for featureSelectionPreference given a known enum.
      *

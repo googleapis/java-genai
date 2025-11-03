@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
-/** Tool to support URL context retrieval. */
+/** Tool to support URL context. */
 @AutoValue
 @JsonDeserialize(builder = UrlContext.Builder.class)
 public abstract class UrlContext extends JsonSerializable {

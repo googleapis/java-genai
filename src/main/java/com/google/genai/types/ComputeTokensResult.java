@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +69,7 @@ public abstract class ComputeTokensResult extends JsonSerializable {
      *
      * <p>tokensInfo: Lists of tokens info from the input.
      */
+    @CanIgnoreReturnValue
     public Builder tokensInfo(TokensInfo... tokensInfo) {
       return tokensInfo(Arrays.asList(tokensInfo));
     }
@@ -77,11 +79,22 @@ public abstract class ComputeTokensResult extends JsonSerializable {
      *
      * <p>tokensInfo: Lists of tokens info from the input.
      */
+    @CanIgnoreReturnValue
     public Builder tokensInfo(TokensInfo.Builder... tokensInfoBuilders) {
       return tokensInfo(
           Arrays.asList(tokensInfoBuilders).stream()
               .map(TokensInfo.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokensInfo(Optional<List<TokensInfo>> tokensInfo);
+
+    /** Clears the value of tokensInfo field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokensInfo() {
+      return tokensInfo(Optional.empty());
     }
 
     public abstract ComputeTokensResult build();

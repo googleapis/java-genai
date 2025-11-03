@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -76,8 +77,19 @@ public abstract class ListCachedContentsResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -87,6 +99,16 @@ public abstract class ListCachedContentsResponse extends JsonSerializable {
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nextPageToken(Optional<String> nextPageToken);
+
+    /** Clears the value of nextPageToken field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNextPageToken() {
+      return nextPageToken(Optional.empty());
+    }
 
     /**
      * Setter for cachedContents.
@@ -101,6 +123,7 @@ public abstract class ListCachedContentsResponse extends JsonSerializable {
      *
      * <p>cachedContents: List of cached contents.
      */
+    @CanIgnoreReturnValue
     public Builder cachedContents(CachedContent... cachedContents) {
       return cachedContents(Arrays.asList(cachedContents));
     }
@@ -110,11 +133,22 @@ public abstract class ListCachedContentsResponse extends JsonSerializable {
      *
      * <p>cachedContents: List of cached contents.
      */
+    @CanIgnoreReturnValue
     public Builder cachedContents(CachedContent.Builder... cachedContentsBuilders) {
       return cachedContents(
           Arrays.asList(cachedContentsBuilders).stream()
               .map(CachedContent.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cachedContents(Optional<List<CachedContent>> cachedContents);
+
+    /** Clears the value of cachedContents field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCachedContents() {
+      return cachedContents(Optional.empty());
     }
 
     public abstract ListCachedContentsResponse build();

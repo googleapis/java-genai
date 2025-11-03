@@ -27,6 +27,7 @@ import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -109,8 +110,19 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -126,6 +138,7 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>candidates: Response variations returned by the model.
      */
+    @CanIgnoreReturnValue
     public Builder candidates(Candidate... candidates) {
       return candidates(Arrays.asList(candidates));
     }
@@ -135,11 +148,22 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>candidates: Response variations returned by the model.
      */
+    @CanIgnoreReturnValue
     public Builder candidates(Candidate.Builder... candidatesBuilders) {
       return candidates(
           Arrays.asList(candidatesBuilders).stream()
               .map(Candidate.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder candidates(Optional<List<Candidate>> candidates);
+
+    /** Clears the value of candidates field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCandidates() {
+      return candidates(Optional.empty());
     }
 
     /**
@@ -149,6 +173,16 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      */
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
 
     /**
      * Setter for automaticFunctionCallingHistory.
@@ -164,6 +198,7 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>automaticFunctionCallingHistory: The history of automatic function calling.
      */
+    @CanIgnoreReturnValue
     public Builder automaticFunctionCallingHistory(Content... automaticFunctionCallingHistory) {
       return automaticFunctionCallingHistory(Arrays.asList(automaticFunctionCallingHistory));
     }
@@ -173,12 +208,24 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>automaticFunctionCallingHistory: The history of automatic function calling.
      */
+    @CanIgnoreReturnValue
     public Builder automaticFunctionCallingHistory(
         Content.Builder... automaticFunctionCallingHistoryBuilders) {
       return automaticFunctionCallingHistory(
           Arrays.asList(automaticFunctionCallingHistoryBuilders).stream()
               .map(Content.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder automaticFunctionCallingHistory(
+        Optional<List<Content>> automaticFunctionCallingHistory);
+
+    /** Clears the value of automaticFunctionCallingHistory field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutomaticFunctionCallingHistory() {
+      return automaticFunctionCallingHistory(Optional.empty());
     }
 
     /**
@@ -188,6 +235,16 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      */
     @JsonProperty("modelVersion")
     public abstract Builder modelVersion(String modelVersion);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modelVersion(Optional<String> modelVersion);
+
+    /** Clears the value of modelVersion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModelVersion() {
+      return modelVersion(Optional.empty());
+    }
 
     /**
      * Setter for promptFeedback.
@@ -206,9 +263,20 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      * Note: Sent only in the first stream chunk. Only happens when no candidates were generated due
      * to content violations.
      */
+    @CanIgnoreReturnValue
     public Builder promptFeedback(
         GenerateContentResponsePromptFeedback.Builder promptFeedbackBuilder) {
       return promptFeedback(promptFeedbackBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptFeedback(Optional<GenerateContentResponsePromptFeedback> promptFeedback);
+
+    /** Clears the value of promptFeedback field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptFeedback() {
+      return promptFeedback(Optional.empty());
     }
 
     /**
@@ -219,6 +287,16 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      */
     @JsonProperty("responseId")
     public abstract Builder responseId(String responseId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder responseId(Optional<String> responseId);
+
+    /** Clears the value of responseId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponseId() {
+      return responseId(Optional.empty());
+    }
 
     /**
      * Setter for usageMetadata.
@@ -233,9 +311,20 @@ public abstract class GenerateContentResponse extends JsonSerializable {
      *
      * <p>usageMetadata: Usage metadata about the response(s).
      */
+    @CanIgnoreReturnValue
     public Builder usageMetadata(
         GenerateContentResponseUsageMetadata.Builder usageMetadataBuilder) {
       return usageMetadata(usageMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder usageMetadata(Optional<GenerateContentResponseUsageMetadata> usageMetadata);
+
+    /** Clears the value of usageMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUsageMetadata() {
+      return usageMetadata(Optional.empty());
     }
 
     public abstract GenerateContentResponse build();

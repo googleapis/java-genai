@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -115,6 +116,16 @@ public abstract class Model extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for displayName.
      *
@@ -123,6 +134,16 @@ public abstract class Model extends JsonSerializable {
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
     /**
      * Setter for description.
      *
@@ -130,6 +151,16 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("description")
     public abstract Builder description(String description);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder description(Optional<String> description);
+
+    /** Clears the value of description field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDescription() {
+      return description(Optional.empty());
+    }
 
     /**
      * Setter for version.
@@ -140,6 +171,16 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("version")
     public abstract Builder version(String version);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder version(Optional<String> version);
+
+    /** Clears the value of version field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVersion() {
+      return version(Optional.empty());
+    }
 
     /**
      * Setter for endpoints.
@@ -156,6 +197,7 @@ public abstract class Model extends JsonSerializable {
      * <p>endpoints: List of deployed models created from this base model. Note that a model could
      * have been deployed to endpoints in different locations.
      */
+    @CanIgnoreReturnValue
     public Builder endpoints(Endpoint... endpoints) {
       return endpoints(Arrays.asList(endpoints));
     }
@@ -166,11 +208,22 @@ public abstract class Model extends JsonSerializable {
      * <p>endpoints: List of deployed models created from this base model. Note that a model could
      * have been deployed to endpoints in different locations.
      */
+    @CanIgnoreReturnValue
     public Builder endpoints(Endpoint.Builder... endpointsBuilders) {
       return endpoints(
           Arrays.asList(endpointsBuilders).stream()
               .map(Endpoint.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endpoints(Optional<List<Endpoint>> endpoints);
+
+    /** Clears the value of endpoints field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndpoints() {
+      return endpoints(Optional.empty());
     }
 
     /**
@@ -180,6 +233,16 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("labels")
     public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
+    }
 
     /**
      * Setter for tunedModelInfo.
@@ -194,8 +257,19 @@ public abstract class Model extends JsonSerializable {
      *
      * <p>tunedModelInfo: Information about the tuned model from the base model.
      */
+    @CanIgnoreReturnValue
     public Builder tunedModelInfo(TunedModelInfo.Builder tunedModelInfoBuilder) {
       return tunedModelInfo(tunedModelInfoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedModelInfo(Optional<TunedModelInfo> tunedModelInfo);
+
+    /** Clears the value of tunedModelInfo field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedModelInfo() {
+      return tunedModelInfo(Optional.empty());
     }
 
     /**
@@ -206,6 +280,16 @@ public abstract class Model extends JsonSerializable {
     @JsonProperty("inputTokenLimit")
     public abstract Builder inputTokenLimit(Integer inputTokenLimit);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inputTokenLimit(Optional<Integer> inputTokenLimit);
+
+    /** Clears the value of inputTokenLimit field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInputTokenLimit() {
+      return inputTokenLimit(Optional.empty());
+    }
+
     /**
      * Setter for outputTokenLimit.
      *
@@ -213,6 +297,16 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("outputTokenLimit")
     public abstract Builder outputTokenLimit(Integer outputTokenLimit);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputTokenLimit(Optional<Integer> outputTokenLimit);
+
+    /** Clears the value of outputTokenLimit field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputTokenLimit() {
+      return outputTokenLimit(Optional.empty());
+    }
 
     /**
      * Setter for supportedActions.
@@ -227,8 +321,19 @@ public abstract class Model extends JsonSerializable {
      *
      * <p>supportedActions: List of actions that are supported by the model.
      */
+    @CanIgnoreReturnValue
     public Builder supportedActions(String... supportedActions) {
       return supportedActions(Arrays.asList(supportedActions));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder supportedActions(Optional<List<String>> supportedActions);
+
+    /** Clears the value of supportedActions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSupportedActions() {
+      return supportedActions(Optional.empty());
     }
 
     /**
@@ -238,6 +343,16 @@ public abstract class Model extends JsonSerializable {
      */
     @JsonProperty("defaultCheckpointId")
     public abstract Builder defaultCheckpointId(String defaultCheckpointId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder defaultCheckpointId(Optional<String> defaultCheckpointId);
+
+    /** Clears the value of defaultCheckpointId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDefaultCheckpointId() {
+      return defaultCheckpointId(Optional.empty());
+    }
 
     /**
      * Setter for checkpoints.
@@ -252,6 +367,7 @@ public abstract class Model extends JsonSerializable {
      *
      * <p>checkpoints: The checkpoints of the model.
      */
+    @CanIgnoreReturnValue
     public Builder checkpoints(Checkpoint... checkpoints) {
       return checkpoints(Arrays.asList(checkpoints));
     }
@@ -261,11 +377,22 @@ public abstract class Model extends JsonSerializable {
      *
      * <p>checkpoints: The checkpoints of the model.
      */
+    @CanIgnoreReturnValue
     public Builder checkpoints(Checkpoint.Builder... checkpointsBuilders) {
       return checkpoints(
           Arrays.asList(checkpointsBuilders).stream()
               .map(Checkpoint.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder checkpoints(Optional<List<Checkpoint>> checkpoints);
+
+    /** Clears the value of checkpoints field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCheckpoints() {
+      return checkpoints(Optional.empty());
     }
 
     public abstract Model build();

@@ -41,7 +41,7 @@ public abstract class SafetyRating extends JsonSerializable {
   /**
    * Output only. The overwritten threshold for the safety category of Gemini 2.0 image out. If
    * minors are detected in the output image, the threshold of each safety category will be
-   * overwritten if user sets a lower threshold.
+   * overwritten if user sets a lower threshold. This field is not supported in Gemini API.
    */
   @JsonProperty("overwrittenThreshold")
   public abstract Optional<HarmBlockThreshold> overwrittenThreshold();
@@ -50,15 +50,17 @@ public abstract class SafetyRating extends JsonSerializable {
   @JsonProperty("probability")
   public abstract Optional<HarmProbability> probability();
 
-  /** Output only. Harm probability score. */
+  /** Output only. Harm probability score. This field is not supported in Gemini API. */
   @JsonProperty("probabilityScore")
   public abstract Optional<Float> probabilityScore();
 
-  /** Output only. Harm severity levels in the content. */
+  /**
+   * Output only. Harm severity levels in the content. This field is not supported in Gemini API.
+   */
   @JsonProperty("severity")
   public abstract Optional<HarmSeverity> severity();
 
-  /** Output only. Harm severity score. */
+  /** Output only. Harm severity score. This field is not supported in Gemini API. */
   @JsonProperty("severityScore")
   public abstract Optional<Float> severityScore();
 
@@ -89,6 +91,16 @@ public abstract class SafetyRating extends JsonSerializable {
     @JsonProperty("blocked")
     public abstract Builder blocked(boolean blocked);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder blocked(Optional<Boolean> blocked);
+
+    /** Clears the value of blocked field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBlocked() {
+      return blocked(Optional.empty());
+    }
+
     /**
      * Setter for category.
      *
@@ -96,6 +108,16 @@ public abstract class SafetyRating extends JsonSerializable {
      */
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder category(Optional<HarmCategory> category);
+
+    /** Clears the value of category field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCategory() {
+      return category(Optional.empty());
+    }
 
     /**
      * Setter for category given a known enum.
@@ -122,17 +144,29 @@ public abstract class SafetyRating extends JsonSerializable {
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @JsonProperty("overwrittenThreshold")
     public abstract Builder overwrittenThreshold(HarmBlockThreshold overwrittenThreshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder overwrittenThreshold(Optional<HarmBlockThreshold> overwrittenThreshold);
+
+    /** Clears the value of overwrittenThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOverwrittenThreshold() {
+      return overwrittenThreshold(Optional.empty());
+    }
 
     /**
      * Setter for overwrittenThreshold given a known enum.
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder overwrittenThreshold(HarmBlockThreshold.Known knownType) {
@@ -144,7 +178,8 @@ public abstract class SafetyRating extends JsonSerializable {
      *
      * <p>overwrittenThreshold: Output only. The overwritten threshold for the safety category of
      * Gemini 2.0 image out. If minors are detected in the output image, the threshold of each
-     * safety category will be overwritten if user sets a lower threshold.
+     * safety category will be overwritten if user sets a lower threshold. This field is not
+     * supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder overwrittenThreshold(String overwrittenThreshold) {
@@ -158,6 +193,16 @@ public abstract class SafetyRating extends JsonSerializable {
      */
     @JsonProperty("probability")
     public abstract Builder probability(HarmProbability probability);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder probability(Optional<HarmProbability> probability);
+
+    /** Clears the value of probability field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProbability() {
+      return probability(Optional.empty());
+    }
 
     /**
      * Setter for probability given a known enum.
@@ -182,23 +227,46 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probabilityScore.
      *
-     * <p>probabilityScore: Output only. Harm probability score.
+     * <p>probabilityScore: Output only. Harm probability score. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("probabilityScore")
     public abstract Builder probabilityScore(Float probabilityScore);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder probabilityScore(Optional<Float> probabilityScore);
+
+    /** Clears the value of probabilityScore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProbabilityScore() {
+      return probabilityScore(Optional.empty());
+    }
+
     /**
      * Setter for severity.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("severity")
     public abstract Builder severity(HarmSeverity severity);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder severity(Optional<HarmSeverity> severity);
+
+    /** Clears the value of severity field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSeverity() {
+      return severity(Optional.empty());
+    }
+
     /**
      * Setter for severity given a known enum.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(HarmSeverity.Known knownType) {
@@ -208,7 +276,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity given a string.
      *
-     * <p>severity: Output only. Harm severity levels in the content.
+     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(String severity) {
@@ -218,10 +287,21 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severityScore.
      *
-     * <p>severityScore: Output only. Harm severity score.
+     * <p>severityScore: Output only. Harm severity score. This field is not supported in Gemini
+     * API.
      */
     @JsonProperty("severityScore")
     public abstract Builder severityScore(Float severityScore);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder severityScore(Optional<Float> severityScore);
+
+    /** Clears the value of severityScore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSeverityScore() {
+      return severityScore(Optional.empty());
+    }
 
     public abstract SafetyRating build();
   }

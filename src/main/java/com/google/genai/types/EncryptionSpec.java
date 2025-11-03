@@ -22,11 +22,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
  * Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+ * This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = EncryptionSpec.Builder.class)
@@ -68,6 +70,16 @@ public abstract class EncryptionSpec extends JsonSerializable {
      */
     @JsonProperty("kmsKeyName")
     public abstract Builder kmsKeyName(String kmsKeyName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder kmsKeyName(Optional<String> kmsKeyName);
+
+    /** Clears the value of kmsKeyName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearKmsKeyName() {
+      return kmsKeyName(Optional.empty());
+    }
 
     public abstract EncryptionSpec build();
   }

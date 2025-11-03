@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Tuning mode. */
+/** Tuning mode. This enum is not supported in Gemini API. */
 public class TuningMode {
 
   /** Enum representing the known values for TuningMode. */

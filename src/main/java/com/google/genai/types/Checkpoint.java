@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class Checkpoint extends JsonSerializable {
     @JsonProperty("checkpointId")
     public abstract Builder checkpointId(String checkpointId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder checkpointId(Optional<String> checkpointId);
+
+    /** Clears the value of checkpointId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCheckpointId() {
+      return checkpointId(Optional.empty());
+    }
+
     /**
      * Setter for epoch.
      *
@@ -75,6 +86,16 @@ public abstract class Checkpoint extends JsonSerializable {
     @JsonProperty("epoch")
     public abstract Builder epoch(Long epoch);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder epoch(Optional<Long> epoch);
+
+    /** Clears the value of epoch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEpoch() {
+      return epoch(Optional.empty());
+    }
+
     /**
      * Setter for step.
      *
@@ -82,6 +103,16 @@ public abstract class Checkpoint extends JsonSerializable {
      */
     @JsonProperty("step")
     public abstract Builder step(Long step);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder step(Optional<Long> step);
+
+    /** Clears the value of step field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStep() {
+      return step(Optional.empty());
+    }
 
     public abstract Checkpoint build();
   }

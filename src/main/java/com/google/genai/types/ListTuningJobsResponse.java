@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -79,8 +80,19 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -91,6 +103,16 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nextPageToken(Optional<String> nextPageToken);
+
+    /** Clears the value of nextPageToken field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNextPageToken() {
+      return nextPageToken(Optional.empty());
+    }
 
     /**
      * Setter for tuningJobs.
@@ -105,6 +127,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
      *
      * <p>tuningJobs: List of TuningJobs in the requested page.
      */
+    @CanIgnoreReturnValue
     public Builder tuningJobs(TuningJob... tuningJobs) {
       return tuningJobs(Arrays.asList(tuningJobs));
     }
@@ -114,11 +137,22 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
      *
      * <p>tuningJobs: List of TuningJobs in the requested page.
      */
+    @CanIgnoreReturnValue
     public Builder tuningJobs(TuningJob.Builder... tuningJobsBuilders) {
       return tuningJobs(
           Arrays.asList(tuningJobsBuilders).stream()
               .map(TuningJob.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningJobs(Optional<List<TuningJob>> tuningJobs);
+
+    /** Clears the value of tuningJobs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningJobs() {
+      return tuningJobs(Optional.empty());
     }
 
     public abstract ListTuningJobsResponse build();

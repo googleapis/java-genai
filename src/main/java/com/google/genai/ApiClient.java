@@ -28,6 +28,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -47,7 +48,7 @@ import org.jspecify.annotations.Nullable;
 abstract class ApiClient {
 
   // {x-version-update-start:google-genai:released}
-  private static final String SDK_VERSION = "1.20.0";
+  private static final String SDK_VERSION = "1.25.0";
   // {x-version-update-end:google-genai:released}
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
@@ -101,7 +102,7 @@ abstract class ApiClient {
       this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
 
-    this.httpClient = createHttpClient(httpOptions.timeout(), clientOptions);
+    this.httpClient = createHttpClient(httpOptions, clientOptions);
   }
 
   ApiClient(
@@ -189,14 +190,18 @@ abstract class ApiClient {
       apiKeyValue = null;
     }
 
+    if (locationValue == null && apiKeyValue == null) {
+      locationValue = "global";
+    }
+
     this.apiKey = Optional.ofNullable(apiKeyValue);
     this.project = Optional.ofNullable(projectValue);
     this.location = Optional.ofNullable(locationValue);
 
     // Validate that either project and location or API key is set.
-    if (!((this.project.isPresent() && this.location.isPresent()) || this.apiKey.isPresent())) {
+    if (!(this.project.isPresent() || this.apiKey.isPresent())) {
       throw new IllegalArgumentException(
-          "For Vertex AI APIs, either project/location or API key must be set.");
+          "For Vertex AI APIs, either project or API key must be set.");
     }
 
     // Only set credentials if using project/location.
@@ -213,18 +218,24 @@ abstract class ApiClient {
       this.httpOptions = mergeHttpOptions(customHttpOptions.get());
     }
     this.vertexAI = true;
-    this.httpClient = createHttpClient(httpOptions.timeout(), clientOptions);
+    this.httpClient = createHttpClient(httpOptions, clientOptions);
   }
 
   private OkHttpClient createHttpClient(
-      Optional<Integer> timeout, Optional<ClientOptions> clientOptions) {
+      HttpOptions httpOptions, Optional<ClientOptions> clientOptions) {
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     // Remove timeouts by default (OkHttp has a default of 10 seconds)
     builder.connectTimeout(Duration.ofMillis(0));
     builder.readTimeout(Duration.ofMillis(0));
     builder.writeTimeout(Duration.ofMillis(0));
 
-    timeout.ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+    httpOptions
+        .timeout()
+        .ifPresent(connectTimeout -> builder.connectTimeout(Duration.ofMillis(connectTimeout)));
+
+    HttpRetryOptions retryOptions =
+        httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
+    builder.addInterceptor(new RetryInterceptor(retryOptions));
 
     clientOptions.ifPresent(
         options -> {
@@ -311,6 +322,13 @@ abstract class ApiClient {
     Request.Builder requestBuilder =
         new Request.Builder().url(requestUrl).method(capitalizedHttpMethod, body);
 
+    requestHttpOptions.ifPresent(
+        httpOptions -> {
+          if (httpOptions.retryOptions().isPresent()) {
+            requestBuilder.tag(HttpRetryOptions.class, mergedHttpOptions.retryOptions().get());
+          }
+        });
+
     setHeaders(requestBuilder, mergedHttpOptions);
     return requestBuilder.build();
   }
@@ -326,6 +344,12 @@ abstract class ApiClient {
       RequestBody body =
           RequestBody.create(requestBytes, MediaType.get("application/octet-stream"));
       Request.Builder requestBuilder = new Request.Builder().url(url).post(body);
+      requestHttpOptions.ifPresent(
+          httpOptions -> {
+            if (httpOptions.retryOptions().isPresent()) {
+              requestBuilder.tag(HttpRetryOptions.class, mergedHttpOptions.retryOptions().get());
+            }
+          });
       setHeaders(requestBuilder, mergedHttpOptions);
       return requestBuilder.build();
     } else {
@@ -478,15 +502,13 @@ abstract class ApiClient {
       return this.httpOptions;
     }
     HttpOptions.Builder mergedHttpOptionsBuilder = this.httpOptions.toBuilder();
-    if (httpOptionsToApply.baseUrl().isPresent()) {
-      mergedHttpOptionsBuilder.baseUrl(httpOptionsToApply.baseUrl().get());
-    }
-    if (httpOptionsToApply.apiVersion().isPresent()) {
-      mergedHttpOptionsBuilder.apiVersion(httpOptionsToApply.apiVersion().get());
-    }
-    if (httpOptionsToApply.timeout().isPresent()) {
-      mergedHttpOptionsBuilder.timeout(httpOptionsToApply.timeout().get());
-    }
+
+    httpOptionsToApply.baseUrl().ifPresent(mergedHttpOptionsBuilder::baseUrl);
+    httpOptionsToApply.apiVersion().ifPresent(mergedHttpOptionsBuilder::apiVersion);
+    httpOptionsToApply.timeout().ifPresent(mergedHttpOptionsBuilder::timeout);
+    httpOptionsToApply.extraBody().ifPresent(mergedHttpOptionsBuilder::extraBody);
+    httpOptionsToApply.retryOptions().ifPresent(mergedHttpOptionsBuilder::retryOptions);
+
     if (httpOptionsToApply.headers().isPresent()) {
       Stream<Map.Entry<String, String>> headersStream =
           Stream.concat(
@@ -502,9 +524,7 @@ abstract class ApiClient {
               toImmutableMap(Map.Entry::getKey, Map.Entry::getValue, (val1, val2) -> val2));
       mergedHttpOptionsBuilder.headers(mergedHeaders);
     }
-    if (httpOptionsToApply.extraBody().isPresent()) {
-      mergedHttpOptionsBuilder.extraBody(httpOptionsToApply.extraBody().get());
-    }
+
     return mergedHttpOptionsBuilder.build();
   }
 

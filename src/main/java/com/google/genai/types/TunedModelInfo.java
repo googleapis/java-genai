@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
 import java.util.Optional;
@@ -68,6 +69,16 @@ public abstract class TunedModelInfo extends JsonSerializable {
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseModel(Optional<String> baseModel);
+
+    /** Clears the value of baseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseModel() {
+      return baseModel(Optional.empty());
+    }
+
     /**
      * Setter for createTime.
      *
@@ -76,6 +87,16 @@ public abstract class TunedModelInfo extends JsonSerializable {
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
+
     /**
      * Setter for updateTime.
      *
@@ -83,6 +104,16 @@ public abstract class TunedModelInfo extends JsonSerializable {
      */
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateTime(Optional<Instant> updateTime);
+
+    /** Clears the value of updateTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
+    }
 
     public abstract TunedModelInfo build();
   }

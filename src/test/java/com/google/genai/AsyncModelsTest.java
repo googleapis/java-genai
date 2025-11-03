@@ -47,10 +47,12 @@ import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
+import com.google.genai.types.PersonGeneration;
 import com.google.genai.types.RagRetrievalConfig;
 import com.google.genai.types.RagRetrievalConfigFilter;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.Retrieval;
+import com.google.genai.types.SafetyFilterLevel;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolCodeExecution;
 import com.google.genai.types.UpdateModelConfig;
@@ -209,6 +211,7 @@ public class AsyncModelsTest {
     for (GenerateContentResponse response : responseStream) {
       chunks++;
       assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -240,6 +243,7 @@ public class AsyncModelsTest {
     for (GenerateContentResponse response : responseStream) {
       chunks++;
       assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -271,6 +275,7 @@ public class AsyncModelsTest {
     int chunks = 0;
     for (GenerateContentResponse response : responseStream) {
       chunks++;
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -345,6 +350,7 @@ public class AsyncModelsTest {
     for (GenerateContentResponse response : responseStream) {
       chunks++;
       assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -435,6 +441,7 @@ public class AsyncModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act
@@ -450,9 +457,9 @@ public class AsyncModelsTest {
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
     } else {
-      CompletionException exception =
+      UnsupportedOperationException exception =
           assertThrows(
-              CompletionException.class,
+              UnsupportedOperationException.class,
               () ->
                   client
                       .async
@@ -465,8 +472,7 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.",
-          exception.getCause().getMessage());
+          "This method is only supported in the Vertex AI client.", exception.getMessage());
     }
   }
 
@@ -626,10 +632,13 @@ public class AsyncModelsTest {
     UpscaleImageConfig config =
         UpscaleImageConfig.builder()
             .includeRaiReason(true)
+            .safetyFilterLevel(SafetyFilterLevel.Known.BLOCK_LOW_AND_ABOVE)
+            .personGeneration(PersonGeneration.Known.ALLOW_ADULT)
             .outputMimeType("image/jpeg")
             .outputCompressionQuality(80)
             .enhanceInputImage(true)
             .imagePreservationFactor(0.6f)
+            .labels(ImmutableMap.of("imagen_label_key", "upscale_image"))
             .build();
 
     // Act
@@ -641,9 +650,9 @@ public class AsyncModelsTest {
       // Assert
       assertTrue(response.generatedImages().get().get(0).image().isPresent());
     } else {
-      CompletionException exception =
+      UnsupportedOperationException exception =
           assertThrows(
-              CompletionException.class,
+              UnsupportedOperationException.class,
               () ->
                   client
                       .async
@@ -652,8 +661,7 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.",
-          exception.getCause().getMessage());
+          "This method is only supported in the Vertex AI client.", exception.getMessage());
     }
   }
 
@@ -675,7 +683,10 @@ public class AsyncModelsTest {
     // Act
     CompletableFuture<GenerateVideosOperation> responseFuture =
         client.async.models.generateVideos(
-            "veo-2.0-generate-001", "A neon hologram of a cat driving at top speed", null, config);
+            "veo-3.1-generate-preview",
+            "A neon hologram of a cat driving at top speed",
+            null,
+            config);
     GenerateVideosOperation operation = responseFuture.join();
 
     // Assert

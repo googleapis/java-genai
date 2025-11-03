@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -72,8 +73,19 @@ public abstract class GeneratedImageMask extends JsonSerializable {
      *
      * <p>mask: The generated image mask.
      */
+    @CanIgnoreReturnValue
     public Builder mask(Image.Builder maskBuilder) {
       return mask(maskBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mask(Optional<Image> mask);
+
+    /** Clears the value of mask field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMask() {
+      return mask(Optional.empty());
     }
 
     /**
@@ -89,6 +101,7 @@ public abstract class GeneratedImageMask extends JsonSerializable {
      *
      * <p>labels: The detected entities on the segmented area.
      */
+    @CanIgnoreReturnValue
     public Builder labels(EntityLabel... labels) {
       return labels(Arrays.asList(labels));
     }
@@ -98,11 +111,22 @@ public abstract class GeneratedImageMask extends JsonSerializable {
      *
      * <p>labels: The detected entities on the segmented area.
      */
+    @CanIgnoreReturnValue
     public Builder labels(EntityLabel.Builder... labelsBuilders) {
       return labels(
           Arrays.asList(labelsBuilders).stream()
               .map(EntityLabel.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<List<EntityLabel>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
     }
 
     public abstract GeneratedImageMask build();

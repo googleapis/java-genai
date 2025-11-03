@@ -16,11 +16,6 @@
 
 package com.google.genai;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,18 +29,13 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.errors.GenAiIOException;
-import com.google.genai.types.Candidate;
 import com.google.genai.types.ClientOptions;
-import com.google.genai.types.Content;
-import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
-import com.google.genai.types.Part;
+import com.google.genai.types.HttpRetryOptions;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -646,24 +636,6 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testInitHttpClientVertexWithNoApiKeyAndNoProject_throwsException() throws Exception {
-    IllegalArgumentException exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () ->
-                new HttpApiClient(
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.of(LOCATION),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty()));
-    assertEquals(
-        "For Vertex AI APIs, either project/location or API key must be set.",
-        exception.getMessage());
-  }
-
-  @Test
   public void testInitHttpClientWithCustomCredentialsAndApiKey_throwsException() throws Exception {
     GoogleCredentials credentials = Mockito.mock(GoogleCredentials.class);
     IllegalArgumentException exception =
@@ -838,20 +810,20 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testHttpClientVertexWithNoApiKeyAndNoLocation_throwsException() throws Exception {
+  public void testHttpClientVertexWithNoApiKeyProject_throwsException() throws Exception {
     IllegalArgumentException exception =
         assertThrows(
             IllegalArgumentException.class,
             () ->
                 new HttpApiClient(
                     Optional.empty(),
-                    Optional.of(PROJECT),
+                    Optional.empty(),
                     Optional.empty(),
                     Optional.empty(),
                     Optional.empty(),
                     Optional.empty()));
     assertEquals(
-        "For Vertex AI APIs, either project/location or API key must be set.",
+        "For Vertex AI APIs, either project or API key must be set.",
         exception.getMessage());
   }
 
@@ -958,6 +930,50 @@ public class HttpApiClientTest {
     assertEquals(LOCATION, client.location());
     assertTrue(client.vertexAI());
     assertFalse(client.httpOptions.headers().get().containsKey("X-Server-Timeout"));
+  }
+
+  @Test
+  public void testHttpClientMldevWithRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions httpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.of(httpOptions), Optional.empty());
+
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(retryOptions, retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientMldevWithNoRetryOptions() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    // If no retry options are specified, An empty retry options should be used.
+    RetryInterceptor retryInterceptor =
+        (RetryInterceptor) client.httpClient().interceptors().get(0);
+    assertEquals(HttpRetryOptions.builder().build(), retryInterceptor.retryOptions());
+  }
+
+  @Test
+  public void testHttpClientVertexWithRequestLevelRetryOptions() throws Exception {
+    HttpRetryOptions retryOptions =
+        HttpRetryOptions.builder().attempts(3).httpStatusCodes(400, 404).build();
+    HttpOptions requestHttpOptions = HttpOptions.builder().retryOptions(retryOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    Request request =
+        client.buildRequest("POST", "path", "requestJson", Optional.of(requestHttpOptions));
+
+    assertEquals(retryOptions, request.tag(HttpRetryOptions.class));
   }
 
   @Test
@@ -1073,44 +1089,6 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testProxySetup() throws Exception {
-    WireMockServer wireMockServer = null;
-    try {
-      wireMockServer = new WireMockServer(options().dynamicPort());
-      wireMockServer.start();
-      WireMock.configureFor("localhost", wireMockServer.port());
-      String expectedText = "This is Proxy speaking, Hello, World!";
-      Part part = Part.builder().text(expectedText).build();
-      Content content = Content.fromParts(part);
-      Candidate candidate = Candidate.builder().content(content).build();
-      GenerateContentResponse fakeResponse =
-          GenerateContentResponse.builder().candidates(candidate).build();
-      stubFor(
-          post(urlMatching(".*"))
-              .willReturn(
-                  aResponse()
-                      .withStatus(200)
-                      .withHeader("Content-Type", "application/json")
-                      .withBody(fakeResponse.toJson())));
-
-      HttpOptions httpOptions =
-          HttpOptions.builder()
-              .baseUrl("http://localhost:" + wireMockServer.port())
-              .apiVersion("v1beta")
-              .build();
-      Client client =
-          Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
-
-      GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash", "What is your name?", null);
-
-      assertEquals(response.text(), expectedText);
-    } finally {
-      wireMockServer.stop();
-    }
-  }
-
-  @Test
   public void testClientInitializationWithBaseUrlFromHttpOptions() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder().baseUrl("https://custom-base-url.googleapis.com/").build();
@@ -1213,5 +1191,152 @@ public class HttpApiClientTest {
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenOnlyProjectIsProvided(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenCredentialsProvidedWithProjectButNoLocation(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenExplicitProjectTakesPrecedenceOverEnvApiKey(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of("googleApiKey", "env-api-key"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("explicit-project-id"),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("explicit-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testDefaultLocationToGlobalWhenEnvProjectTakesPrecedenceOverEnvApiKey(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(
+            ImmutableMap.of("googleApiKey", "env-api-key", "project", "env-project-id"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("env-project-id", client.project());
+    assertEquals("global", client.location());
+    assertNull(client.apiKey());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationToGlobalWhenExplicitLocationIsSet(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of());
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of("fake-project-id"),
+            Optional.of("us-central1"),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("us-central1", client.location());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationToGlobalWhenEnvLocationIsSet(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(
+            ImmutableMap.of("project", "fake-project-id", "location", "us-west1"));
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("fake-project-id", client.project());
+    assertEquals("us-west1", client.location());
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  public void testNoDefaultLocationWhenUsingApiKeyOnlyMode(
+      MockedStatic<ApiClient> mockedStaticApiClient) throws Exception {
+    mockedStaticApiClient
+        .when(ApiClient::defaultEnvironmentVariables)
+        .thenReturn(ImmutableMap.of());
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of("vertexai-api-key"),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("vertexai-api-key", client.apiKey());
+    assertNull(client.project());
+    assertNull(client.location());
+    assertTrue(client.vertexAI());
   }
 }

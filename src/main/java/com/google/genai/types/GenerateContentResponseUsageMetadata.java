@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Usage metadata about response(s). */
+/** Usage metadata about response(s). This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GenerateContentResponseUsageMetadata.Builder.class)
 public abstract class GenerateContentResponseUsageMetadata extends JsonSerializable {
@@ -120,6 +120,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
      * input.
      */
+    @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount... cacheTokensDetails) {
       return cacheTokensDetails(Arrays.asList(cacheTokensDetails));
     }
@@ -130,11 +131,22 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>cacheTokensDetails: Output only. List of modalities of the cached content in the request
      * input.
      */
+    @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount.Builder... cacheTokensDetailsBuilders) {
       return cacheTokensDetails(
           Arrays.asList(cacheTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cacheTokensDetails(Optional<List<ModalityTokenCount>> cacheTokensDetails);
+
+    /** Clears the value of cacheTokensDetails field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCacheTokensDetails() {
+      return cacheTokensDetails(Optional.empty());
     }
 
     /**
@@ -146,6 +158,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     @JsonProperty("cachedContentTokenCount")
     public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cachedContentTokenCount(Optional<Integer> cachedContentTokenCount);
+
+    /** Clears the value of cachedContentTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCachedContentTokenCount() {
+      return cachedContentTokenCount(Optional.empty());
+    }
+
     /**
      * Setter for candidatesTokenCount.
      *
@@ -153,6 +175,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      */
     @JsonProperty("candidatesTokenCount")
     public abstract Builder candidatesTokenCount(Integer candidatesTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder candidatesTokenCount(Optional<Integer> candidatesTokenCount);
+
+    /** Clears the value of candidatesTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCandidatesTokenCount() {
+      return candidatesTokenCount(Optional.empty());
+    }
 
     /**
      * Setter for candidatesTokensDetails.
@@ -170,6 +202,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
      * response.
      */
+    @CanIgnoreReturnValue
     public Builder candidatesTokensDetails(ModalityTokenCount... candidatesTokensDetails) {
       return candidatesTokensDetails(Arrays.asList(candidatesTokensDetails));
     }
@@ -180,12 +213,24 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>candidatesTokensDetails: Output only. List of modalities that were returned in the
      * response.
      */
+    @CanIgnoreReturnValue
     public Builder candidatesTokensDetails(
         ModalityTokenCount.Builder... candidatesTokensDetailsBuilders) {
       return candidatesTokensDetails(
           Arrays.asList(candidatesTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder candidatesTokensDetails(
+        Optional<List<ModalityTokenCount>> candidatesTokensDetails);
+
+    /** Clears the value of candidatesTokensDetails field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCandidatesTokensDetails() {
+      return candidatesTokensDetails(Optional.empty());
     }
 
     /**
@@ -197,6 +242,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      */
     @JsonProperty("promptTokenCount")
     public abstract Builder promptTokenCount(Integer promptTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptTokenCount(Optional<Integer> promptTokenCount);
+
+    /** Clears the value of promptTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptTokenCount() {
+      return promptTokenCount(Optional.empty());
+    }
 
     /**
      * Setter for promptTokensDetails.
@@ -213,6 +268,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
      * input.
      */
+    @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
       return promptTokensDetails(Arrays.asList(promptTokensDetails));
     }
@@ -223,11 +279,22 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>promptTokensDetails: Output only. List of modalities that were processed in the request
      * input.
      */
+    @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
       return promptTokensDetails(
           Arrays.asList(promptTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptTokensDetails(Optional<List<ModalityTokenCount>> promptTokensDetails);
+
+    /** Clears the value of promptTokensDetails field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptTokensDetails() {
+      return promptTokensDetails(Optional.empty());
     }
 
     /**
@@ -238,6 +305,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     @JsonProperty("thoughtsTokenCount")
     public abstract Builder thoughtsTokenCount(Integer thoughtsTokenCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thoughtsTokenCount(Optional<Integer> thoughtsTokenCount);
+
+    /** Clears the value of thoughtsTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThoughtsTokenCount() {
+      return thoughtsTokenCount(Optional.empty());
+    }
+
     /**
      * Setter for toolUsePromptTokenCount.
      *
@@ -245,6 +322,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      */
     @JsonProperty("toolUsePromptTokenCount")
     public abstract Builder toolUsePromptTokenCount(Integer toolUsePromptTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolUsePromptTokenCount(Optional<Integer> toolUsePromptTokenCount);
+
+    /** Clears the value of toolUsePromptTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolUsePromptTokenCount() {
+      return toolUsePromptTokenCount(Optional.empty());
+    }
 
     /**
      * Setter for toolUsePromptTokensDetails.
@@ -262,6 +349,7 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
      * tool-use request inputs.
      */
+    @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(ModalityTokenCount... toolUsePromptTokensDetails) {
       return toolUsePromptTokensDetails(Arrays.asList(toolUsePromptTokensDetails));
     }
@@ -272,12 +360,24 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      * <p>toolUsePromptTokensDetails: Output only. List of modalities that were processed for
      * tool-use request inputs.
      */
+    @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(
         ModalityTokenCount.Builder... toolUsePromptTokensDetailsBuilders) {
       return toolUsePromptTokensDetails(
           Arrays.asList(toolUsePromptTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolUsePromptTokensDetails(
+        Optional<List<ModalityTokenCount>> toolUsePromptTokensDetails);
+
+    /** Clears the value of toolUsePromptTokensDetails field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolUsePromptTokensDetails() {
+      return toolUsePromptTokensDetails(Optional.empty());
     }
 
     /**
@@ -289,6 +389,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
     @JsonProperty("totalTokenCount")
     public abstract Builder totalTokenCount(Integer totalTokenCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalTokenCount(Optional<Integer> totalTokenCount);
+
+    /** Clears the value of totalTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalTokenCount() {
+      return totalTokenCount(Optional.empty());
+    }
+
     /**
      * Setter for trafficType.
      *
@@ -297,6 +407,16 @@ public abstract class GenerateContentResponseUsageMetadata extends JsonSerializa
      */
     @JsonProperty("trafficType")
     public abstract Builder trafficType(TrafficType trafficType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trafficType(Optional<TrafficType> trafficType);
+
+    /** Clears the value of trafficType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrafficType() {
+      return trafficType(Optional.empty());
+    }
 
     /**
      * Setter for trafficType given a known enum.

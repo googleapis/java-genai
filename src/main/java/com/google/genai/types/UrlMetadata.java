@@ -26,11 +26,11 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Context for a single url retrieval. */
+/** Context of the a single url retrieval. */
 @AutoValue
 @JsonDeserialize(builder = UrlMetadata.Builder.class)
 public abstract class UrlMetadata extends JsonSerializable {
-  /** The URL retrieved by the tool. */
+  /** Retrieved url by the tool. */
   @JsonProperty("retrievedUrl")
   public abstract Optional<String> retrievedUrl();
 
@@ -59,10 +59,20 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for retrievedUrl.
      *
-     * <p>retrievedUrl: The URL retrieved by the tool.
+     * <p>retrievedUrl: Retrieved url by the tool.
      */
     @JsonProperty("retrievedUrl")
     public abstract Builder retrievedUrl(String retrievedUrl);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder retrievedUrl(Optional<String> retrievedUrl);
+
+    /** Clears the value of retrievedUrl field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRetrievedUrl() {
+      return retrievedUrl(Optional.empty());
+    }
 
     /**
      * Setter for urlRetrievalStatus.
@@ -71,6 +81,16 @@ public abstract class UrlMetadata extends JsonSerializable {
      */
     @JsonProperty("urlRetrievalStatus")
     public abstract Builder urlRetrievalStatus(UrlRetrievalStatus urlRetrievalStatus);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder urlRetrievalStatus(Optional<UrlRetrievalStatus> urlRetrievalStatus);
+
+    /** Clears the value of urlRetrievalStatus field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUrlRetrievalStatus() {
+      return urlRetrievalStatus(Optional.empty());
+    }
 
     /**
      * Setter for urlRetrievalStatus given a known enum.

@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for user OIDC auth. */
+/** Config for user OIDC auth. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfigOidcConfig.Builder.class)
 public abstract class AuthConfigOidcConfig extends JsonSerializable {
@@ -75,6 +76,16 @@ public abstract class AuthConfigOidcConfig extends JsonSerializable {
     @JsonProperty("idToken")
     public abstract Builder idToken(String idToken);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder idToken(Optional<String> idToken);
+
+    /** Clears the value of idToken field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIdToken() {
+      return idToken(Optional.empty());
+    }
+
     /**
      * Setter for serviceAccount.
      *
@@ -88,6 +99,16 @@ public abstract class AuthConfigOidcConfig extends JsonSerializable {
      */
     @JsonProperty("serviceAccount")
     public abstract Builder serviceAccount(String serviceAccount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder serviceAccount(Optional<String> serviceAccount);
+
+    /** Clears the value of serviceAccount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearServiceAccount() {
+      return serviceAccount(Optional.empty());
+    }
 
     public abstract AuthConfigOidcConfig build();
   }

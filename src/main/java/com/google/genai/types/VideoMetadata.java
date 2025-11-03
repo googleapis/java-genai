@@ -22,24 +22,25 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.util.Optional;
 
-/** Describes how the video in the Part should be used by the model. */
+/** Metadata describes the input video content. */
 @AutoValue
 @JsonDeserialize(builder = VideoMetadata.Builder.class)
 public abstract class VideoMetadata extends JsonSerializable {
-  /**
-   * The frame rate of the video sent to the model. If not specified, the default value will be 1.0.
-   * The fps range is (0.0, 24.0].
-   */
-  @JsonProperty("fps")
-  public abstract Optional<Double> fps();
-
   /** Optional. The end offset of the video. */
   @JsonProperty("endOffset")
   public abstract Optional<Duration> endOffset();
+
+  /**
+   * Optional. The frame rate of the video sent to the model. If not specified, the default value
+   * will be 1.0. The fps range is (0.0, 24.0].
+   */
+  @JsonProperty("fps")
+  public abstract Optional<Double> fps();
 
   /** Optional. The start offset of the video. */
   @JsonProperty("startOffset")
@@ -64,21 +65,41 @@ public abstract class VideoMetadata extends JsonSerializable {
     }
 
     /**
-     * Setter for fps.
-     *
-     * <p>fps: The frame rate of the video sent to the model. If not specified, the default value
-     * will be 1.0. The fps range is (0.0, 24.0].
-     */
-    @JsonProperty("fps")
-    public abstract Builder fps(Double fps);
-
-    /**
      * Setter for endOffset.
      *
      * <p>endOffset: Optional. The end offset of the video.
      */
     @JsonProperty("endOffset")
     public abstract Builder endOffset(Duration endOffset);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endOffset(Optional<Duration> endOffset);
+
+    /** Clears the value of endOffset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndOffset() {
+      return endOffset(Optional.empty());
+    }
+
+    /**
+     * Setter for fps.
+     *
+     * <p>fps: Optional. The frame rate of the video sent to the model. If not specified, the
+     * default value will be 1.0. The fps range is (0.0, 24.0].
+     */
+    @JsonProperty("fps")
+    public abstract Builder fps(Double fps);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fps(Optional<Double> fps);
+
+    /** Clears the value of fps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFps() {
+      return fps(Optional.empty());
+    }
 
     /**
      * Setter for startOffset.
@@ -87,6 +108,16 @@ public abstract class VideoMetadata extends JsonSerializable {
      */
     @JsonProperty("startOffset")
     public abstract Builder startOffset(Duration startOffset);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startOffset(Optional<Duration> startOffset);
+
+    /** Clears the value of startOffset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartOffset() {
+      return startOffset(Optional.empty());
+    }
 
     public abstract VideoMetadata build();
   }

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -74,8 +75,19 @@ public abstract class SafetyAttributes extends JsonSerializable {
      *
      * <p>categories: List of RAI categories.
      */
+    @CanIgnoreReturnValue
     public Builder categories(String... categories) {
       return categories(Arrays.asList(categories));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder categories(Optional<List<String>> categories);
+
+    /** Clears the value of categories field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCategories() {
+      return categories(Optional.empty());
     }
 
     /**
@@ -91,8 +103,19 @@ public abstract class SafetyAttributes extends JsonSerializable {
      *
      * <p>scores: List of scores of each categories.
      */
+    @CanIgnoreReturnValue
     public Builder scores(Float... scores) {
       return scores(Arrays.asList(scores));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scores(Optional<List<Float>> scores);
+
+    /** Clears the value of scores field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScores() {
+      return scores(Optional.empty());
     }
 
     /**
@@ -102,6 +125,16 @@ public abstract class SafetyAttributes extends JsonSerializable {
      */
     @JsonProperty("contentType")
     public abstract Builder contentType(String contentType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contentType(Optional<String> contentType);
+
+    /** Clears the value of contentType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContentType() {
+      return contentType(Optional.empty());
+    }
 
     public abstract SafetyAttributes build();
   }

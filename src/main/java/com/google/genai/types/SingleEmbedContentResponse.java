@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -68,8 +69,19 @@ public abstract class SingleEmbedContentResponse extends JsonSerializable {
      *
      * <p>embedding: The response to the request.
      */
+    @CanIgnoreReturnValue
     public Builder embedding(ContentEmbedding.Builder embeddingBuilder) {
       return embedding(embeddingBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder embedding(Optional<ContentEmbedding> embedding);
+
+    /** Clears the value of embedding field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEmbedding() {
+      return embedding(Optional.empty());
     }
 
     /**
@@ -79,6 +91,16 @@ public abstract class SingleEmbedContentResponse extends JsonSerializable {
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Long tokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenCount(Optional<Long> tokenCount);
+
+    /** Clears the value of tokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenCount() {
+      return tokenCount(Optional.empty());
+    }
 
     public abstract SingleEmbedContentResponse build();
   }

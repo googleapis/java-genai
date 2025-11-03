@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +78,7 @@ public abstract class LogprobsResult extends JsonSerializable {
      * <p>chosenCandidates: Length = total number of decoding steps. The chosen candidates may or
      * may not be in top_candidates.
      */
+    @CanIgnoreReturnValue
     public Builder chosenCandidates(LogprobsResultCandidate... chosenCandidates) {
       return chosenCandidates(Arrays.asList(chosenCandidates));
     }
@@ -87,11 +89,22 @@ public abstract class LogprobsResult extends JsonSerializable {
      * <p>chosenCandidates: Length = total number of decoding steps. The chosen candidates may or
      * may not be in top_candidates.
      */
+    @CanIgnoreReturnValue
     public Builder chosenCandidates(LogprobsResultCandidate.Builder... chosenCandidatesBuilders) {
       return chosenCandidates(
           Arrays.asList(chosenCandidatesBuilders).stream()
               .map(LogprobsResultCandidate.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder chosenCandidates(Optional<List<LogprobsResultCandidate>> chosenCandidates);
+
+    /** Clears the value of chosenCandidates field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearChosenCandidates() {
+      return chosenCandidates(Optional.empty());
     }
 
     /**
@@ -107,6 +120,7 @@ public abstract class LogprobsResult extends JsonSerializable {
      *
      * <p>topCandidates: Length = total number of decoding steps.
      */
+    @CanIgnoreReturnValue
     public Builder topCandidates(LogprobsResultTopCandidates... topCandidates) {
       return topCandidates(Arrays.asList(topCandidates));
     }
@@ -116,11 +130,22 @@ public abstract class LogprobsResult extends JsonSerializable {
      *
      * <p>topCandidates: Length = total number of decoding steps.
      */
+    @CanIgnoreReturnValue
     public Builder topCandidates(LogprobsResultTopCandidates.Builder... topCandidatesBuilders) {
       return topCandidates(
           Arrays.asList(topCandidatesBuilders).stream()
               .map(LogprobsResultTopCandidates.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder topCandidates(Optional<List<LogprobsResultTopCandidates>> topCandidates);
+
+    /** Clears the value of topCandidates field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTopCandidates() {
+      return topCandidates(Optional.empty());
     }
 
     public abstract LogprobsResult build();

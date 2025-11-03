@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** None */
+/** TunedModel for the Tuned Model of a Tuning Job. */
 @AutoValue
 @JsonDeserialize(builder = TunedModel.Builder.class)
 public abstract class TunedModel extends JsonSerializable {
@@ -87,6 +88,16 @@ public abstract class TunedModel extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for endpoint.
      *
@@ -95,6 +106,16 @@ public abstract class TunedModel extends JsonSerializable {
      */
     @JsonProperty("endpoint")
     public abstract Builder endpoint(String endpoint);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endpoint(Optional<String> endpoint);
+
+    /** Clears the value of endpoint field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndpoint() {
+      return endpoint(Optional.empty());
+    }
 
     /**
      * Setter for checkpoints.
@@ -111,6 +132,7 @@ public abstract class TunedModel extends JsonSerializable {
      * <p>checkpoints: The checkpoints associated with this TunedModel. This field is only populated
      * for tuning jobs that enable intermediate checkpoints.
      */
+    @CanIgnoreReturnValue
     public Builder checkpoints(TunedModelCheckpoint... checkpoints) {
       return checkpoints(Arrays.asList(checkpoints));
     }
@@ -121,11 +143,22 @@ public abstract class TunedModel extends JsonSerializable {
      * <p>checkpoints: The checkpoints associated with this TunedModel. This field is only populated
      * for tuning jobs that enable intermediate checkpoints.
      */
+    @CanIgnoreReturnValue
     public Builder checkpoints(TunedModelCheckpoint.Builder... checkpointsBuilders) {
       return checkpoints(
           Arrays.asList(checkpointsBuilders).stream()
               .map(TunedModelCheckpoint.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder checkpoints(Optional<List<TunedModelCheckpoint>> checkpoints);
+
+    /** Clears the value of checkpoints field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCheckpoints() {
+      return checkpoints(Optional.empty());
     }
 
     public abstract TunedModel build();

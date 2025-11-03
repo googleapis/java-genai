@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. Programming language of the `code`. */
+/** Programming language of the `code`. */
 public class Language {
 
   /** Enum representing the known values for Language. */

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -82,8 +83,19 @@ public abstract class UploadFileConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -95,6 +107,16 @@ public abstract class UploadFileConfig extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -104,6 +126,16 @@ public abstract class UploadFileConfig extends JsonSerializable {
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
+
     /**
      * Setter for displayName.
      *
@@ -111,6 +143,16 @@ public abstract class UploadFileConfig extends JsonSerializable {
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
 
     public abstract UploadFileConfig build();
   }

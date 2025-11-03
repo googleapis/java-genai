@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -74,8 +75,19 @@ public abstract class LiveServerToolCallCancellation extends JsonSerializable {
      *
      * <p>ids: The ids of the tool calls to be cancelled.
      */
+    @CanIgnoreReturnValue
     public Builder ids(String... ids) {
       return ids(Arrays.asList(ids));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ids(Optional<List<String>> ids);
+
+    /** Clears the value of ids field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIds() {
+      return ids(Optional.empty());
     }
 
     public abstract LiveServerToolCallCancellation build();

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -29,16 +30,18 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
-  /**
-   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
-   * This field is not currently used in the Gemini GenerateContent calls.
-   */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
   /** Required. Raw bytes. */
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
+
+  /**
+   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
+   * This field is only returned in PromptMessage for prompt management. It is currently used in the
+   * Gemini GenerateContent calls only when server side tools (code_execution, google_search, and
+   * url_context) are enabled. This field is not supported in Gemini API.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
 
   /** Required. The IANA standard MIME type of the source data. */
   @JsonProperty("mimeType")
@@ -63,21 +66,44 @@ public abstract class Blob extends JsonSerializable {
     }
 
     /**
-     * Setter for displayName.
-     *
-     * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
-     * distinguish blobs. This field is not currently used in the Gemini GenerateContent calls.
-     */
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    /**
      * Setter for data.
      *
      * <p>data: Required. Raw bytes.
      */
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder data(Optional<byte[]> data);
+
+    /** Clears the value of data field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearData() {
+      return data(Optional.empty());
+    }
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
+     * distinguish blobs. This field is only returned in PromptMessage for prompt management. It is
+     * currently used in the Gemini GenerateContent calls only when server side tools
+     * (code_execution, google_search, and url_context) are enabled. This field is not supported in
+     * Gemini API.
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
 
     /**
      * Setter for mimeType.
@@ -86,6 +112,16 @@ public abstract class Blob extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     public abstract Blob build();
   }

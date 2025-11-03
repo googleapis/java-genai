@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +75,16 @@ public abstract class TuningDataset extends JsonSerializable {
     @JsonProperty("gcsUri")
     public abstract Builder gcsUri(String gcsUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder gcsUri(Optional<String> gcsUri);
+
+    /** Clears the value of gcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGcsUri() {
+      return gcsUri(Optional.empty());
+    }
+
     /**
      * Setter for vertexDatasetResource.
      *
@@ -83,6 +94,16 @@ public abstract class TuningDataset extends JsonSerializable {
      */
     @JsonProperty("vertexDatasetResource")
     public abstract Builder vertexDatasetResource(String vertexDatasetResource);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDatasetResource(Optional<String> vertexDatasetResource);
+
+    /** Clears the value of vertexDatasetResource field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDatasetResource() {
+      return vertexDatasetResource(Optional.empty());
+    }
 
     /**
      * Setter for examples.
@@ -97,6 +118,7 @@ public abstract class TuningDataset extends JsonSerializable {
      *
      * <p>examples: Inline examples with simple input/output text.
      */
+    @CanIgnoreReturnValue
     public Builder examples(TuningExample... examples) {
       return examples(Arrays.asList(examples));
     }
@@ -106,11 +128,22 @@ public abstract class TuningDataset extends JsonSerializable {
      *
      * <p>examples: Inline examples with simple input/output text.
      */
+    @CanIgnoreReturnValue
     public Builder examples(TuningExample.Builder... examplesBuilders) {
       return examples(
           Arrays.asList(examplesBuilders).stream()
               .map(TuningExample.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder examples(Optional<List<TuningExample>> examples);
+
+    /** Clears the value of examples field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExamples() {
+      return examples(Optional.empty());
     }
 
     public abstract TuningDataset build();

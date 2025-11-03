@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -75,8 +76,19 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -86,6 +98,16 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
 
     /**
      * Setter for dest.
@@ -102,8 +124,19 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
      * <p>dest: GCS or BigQuery URI prefix for the output predictions. Example:
      * "gs://path/to/output/data" or "bq://projectId.bqDatasetId.bqTableId".
      */
+    @CanIgnoreReturnValue
     public Builder dest(BatchJobDestination.Builder destBuilder) {
       return dest(destBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dest(Optional<BatchJobDestination> dest);
+
+    /** Clears the value of dest field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDest() {
+      return dest(Optional.empty());
     }
 
     public abstract CreateBatchJobConfig build();

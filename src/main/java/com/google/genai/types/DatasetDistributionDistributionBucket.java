@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Dataset bucket used to create a histogram for the distribution given a population of values. */
+/**
+ * Dataset bucket used to create a histogram for the distribution given a population of values. This
+ * data type is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = DatasetDistributionDistributionBucket.Builder.class)
 public abstract class DatasetDistributionDistributionBucket extends JsonSerializable {
@@ -70,6 +74,16 @@ public abstract class DatasetDistributionDistributionBucket extends JsonSerializ
     @JsonProperty("count")
     public abstract Builder count(Long count);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder count(Optional<Long> count);
+
+    /** Clears the value of count field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCount() {
+      return count(Optional.empty());
+    }
+
     /**
      * Setter for left.
      *
@@ -78,6 +92,16 @@ public abstract class DatasetDistributionDistributionBucket extends JsonSerializ
     @JsonProperty("left")
     public abstract Builder left(Double left);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder left(Optional<Double> left);
+
+    /** Clears the value of left field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLeft() {
+      return left(Optional.empty());
+    }
+
     /**
      * Setter for right.
      *
@@ -85,6 +109,16 @@ public abstract class DatasetDistributionDistributionBucket extends JsonSerializ
      */
     @JsonProperty("right")
     public abstract Builder right(Double right);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder right(Optional<Double> right);
+
+    /** Clears the value of right field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRight() {
+      return right(Optional.empty());
+    }
 
     public abstract DatasetDistributionDistributionBucket build();
   }

@@ -27,7 +27,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Hyperparameters for SFT. */
+/** Hyperparameters for SFT. This data type is not supported in Gemini API. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = SupervisedHyperParameters.Builder.class)
@@ -87,6 +87,16 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
     @JsonProperty("adapterSize")
     public abstract Builder adapterSize(AdapterSize adapterSize);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder adapterSize(Optional<AdapterSize> adapterSize);
+
+    /** Clears the value of adapterSize field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAdapterSize() {
+      return adapterSize(Optional.empty());
+    }
+
     /**
      * Setter for adapterSize given a known enum.
      *
@@ -116,6 +126,16 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Long batchSize);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder batchSize(Optional<Long> batchSize);
+
+    /** Clears the value of batchSize field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBatchSize() {
+      return batchSize(Optional.empty());
+    }
+
     /**
      * Setter for epochCount.
      *
@@ -124,6 +144,16 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
      */
     @JsonProperty("epochCount")
     public abstract Builder epochCount(Long epochCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder epochCount(Optional<Long> epochCount);
+
+    /** Clears the value of epochCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEpochCount() {
+      return epochCount(Optional.empty());
+    }
 
     /**
      * Setter for learningRate.
@@ -134,6 +164,16 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
     @JsonProperty("learningRate")
     public abstract Builder learningRate(Double learningRate);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder learningRate(Optional<Double> learningRate);
+
+    /** Clears the value of learningRate field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLearningRate() {
+      return learningRate(Optional.empty());
+    }
+
     /**
      * Setter for learningRateMultiplier.
      *
@@ -142,6 +182,16 @@ public abstract class SupervisedHyperParameters extends JsonSerializable {
      */
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Double learningRateMultiplier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder learningRateMultiplier(Optional<Double> learningRateMultiplier);
+
+    /** Clears the value of learningRateMultiplier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLearningRateMultiplier() {
+      return learningRateMultiplier(Optional.empty());
+    }
 
     public abstract SupervisedHyperParameters build();
   }

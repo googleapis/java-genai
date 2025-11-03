@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. Outcome of the code execution. */
+/** Outcome of the code execution. */
 public class Outcome {
 
   /** Enum representing the known values for Outcome. */

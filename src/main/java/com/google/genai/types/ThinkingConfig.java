@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -70,6 +71,16 @@ public abstract class ThinkingConfig extends JsonSerializable {
     @JsonProperty("includeThoughts")
     public abstract Builder includeThoughts(boolean includeThoughts);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder includeThoughts(Optional<Boolean> includeThoughts);
+
+    /** Clears the value of includeThoughts field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIncludeThoughts() {
+      return includeThoughts(Optional.empty());
+    }
+
     /**
      * Setter for thinkingBudget.
      *
@@ -78,6 +89,16 @@ public abstract class ThinkingConfig extends JsonSerializable {
      */
     @JsonProperty("thinkingBudget")
     public abstract Builder thinkingBudget(Integer thinkingBudget);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thinkingBudget(Optional<Integer> thinkingBudget);
+
+    /** Clears the value of thinkingBudget field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThinkingBudget() {
+      return thinkingBudget(Optional.empty());
+    }
 
     public abstract ThinkingConfig build();
   }

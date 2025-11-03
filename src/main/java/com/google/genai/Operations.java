@@ -30,6 +30,7 @@ import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GetOperationConfig;
 import com.google.genai.types.GetOperationParameters;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.Operation;
 import java.io.IOException;
 import java.util.Optional;
 import okhttp3.ResponseBody;
@@ -42,6 +43,7 @@ import okhttp3.ResponseBody;
  * <p>This module is experimental.
  */
 public final class Operations {
+
   final ApiClient apiClient;
 
   public Operations(ApiClient apiClient) {
@@ -224,13 +226,13 @@ public final class Operations {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+                  Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject));
     }
 
@@ -282,19 +284,16 @@ public final class Operations {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"video", "uri"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"uri"},
-          Common.getValueByPath(fromObject, new String[] {"video", "uri"}));
+          toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"video", "encodedVideo"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"encodedVideo"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"videoBytes"},
-          Transformers.tBytes(
-              Common.getValueByPath(fromObject, new String[] {"video", "encodedVideo"})));
+          Transformers.tBytes(Common.getValueByPath(fromObject, new String[] {"encodedVideo"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"encoding"}) != null) {
@@ -380,7 +379,7 @@ public final class Operations {
   }
 
   /** A shared processResponse function for both sync and async methods. */
-  GenerateVideosOperation processResponseForPrivateGetVideosOperation(
+  JsonNode processResponseForPrivateGetVideosOperation(
       ApiResponse response, GetOperationConfig config) {
     ResponseBody responseBody = response.getBody();
     String responseString;
@@ -390,21 +389,10 @@ public final class Operations {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-
-    if (this.apiClient.vertexAI()) {
-      responseNode = generateVideosOperationFromVertex(responseNode, null);
-    }
-
-    if (!this.apiClient.vertexAI()) {
-      responseNode = generateVideosOperationFromMldev(responseNode, null);
-    }
-
-    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+    return JsonSerializable.stringToJsonNode(responseString);
   }
 
-  GenerateVideosOperation privateGetVideosOperation(
-      String operationName, GetOperationConfig config) {
+  JsonNode privateGetVideosOperation(String operationName, GetOperationConfig config) {
     BuiltRequest builtRequest = buildRequestForPrivateGetVideosOperation(operationName, config);
 
     try (ApiResponse response =
@@ -459,7 +447,7 @@ public final class Operations {
   }
 
   /** A shared processResponse function for both sync and async methods. */
-  GenerateVideosOperation processResponseForPrivateFetchPredictVideosOperation(
+  JsonNode processResponseForPrivateFetchPredictVideosOperation(
       ApiResponse response, FetchPredictOperationConfig config) {
     ResponseBody responseBody = response.getBody();
     String responseString;
@@ -469,21 +457,10 @@ public final class Operations {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
-
-    if (this.apiClient.vertexAI()) {
-      responseNode = generateVideosOperationFromVertex(responseNode, null);
-    }
-
-    if (!this.apiClient.vertexAI()) {
-      throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
-    }
-
-    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+    return JsonSerializable.stringToJsonNode(responseString);
   }
 
-  GenerateVideosOperation privateFetchPredictVideosOperation(
+  JsonNode privateFetchPredictVideosOperation(
       String operationName, String resourceName, FetchPredictOperationConfig config) {
     BuiltRequest builtRequest =
         buildRequestForPrivateFetchPredictVideosOperation(operationName, resourceName, config);
@@ -504,20 +481,29 @@ public final class Operations {
    */
   public GenerateVideosOperation getVideosOperation(
       GenerateVideosOperation operation, GetOperationConfig config) {
+    return get(operation, config);
+  }
 
+  /**
+   * Gets the status of an Operation.
+   *
+   * @param operation An Operation.
+   * @param config The configuration for getting the operation.
+   * @return An Operation with the updated status of the operation.
+   */
+  public <T, U extends Operation<T, U>> U get(U operation, GetOperationConfig config) {
     if (!operation.name().isPresent()) {
-      throw new Error("Operation name is required.");
+      throw new IllegalArgumentException("Operation name is required.");
     }
 
     if (this.apiClient.vertexAI()) {
       String resourceName = operation.name().get().split("/operations/")[0];
-
-      FetchPredictOperationConfig fetchConfig = FetchPredictOperationConfig.builder().build();
-
-      return this.privateFetchPredictVideosOperation(
-          operation.name().get(), resourceName, fetchConfig);
+      JsonNode response =
+          this.privateFetchPredictVideosOperation(operation.name().get(), resourceName, null);
+      return operation.fromApiResponse(response, true);
     } else {
-      return this.privateGetVideosOperation(operation.name().get(), config);
+      JsonNode response = this.privateGetVideosOperation(operation.name().get(), config);
+      return operation.fromApiResponse(response, false);
     }
   }
 }

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +76,16 @@ public abstract class TestTableFile extends JsonSerializable {
     @JsonProperty("comment")
     public abstract Builder comment(String comment);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder comment(Optional<String> comment);
+
+    /** Clears the value of comment field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearComment() {
+      return comment(Optional.empty());
+    }
+
     /**
      * Setter for testMethod.
      *
@@ -82,6 +93,16 @@ public abstract class TestTableFile extends JsonSerializable {
      */
     @JsonProperty("testMethod")
     public abstract Builder testMethod(String testMethod);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder testMethod(Optional<String> testMethod);
+
+    /** Clears the value of testMethod field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTestMethod() {
+      return testMethod(Optional.empty());
+    }
 
     /**
      * Setter for parameterNames.
@@ -96,8 +117,19 @@ public abstract class TestTableFile extends JsonSerializable {
      *
      * <p>parameterNames:
      */
+    @CanIgnoreReturnValue
     public Builder parameterNames(String... parameterNames) {
       return parameterNames(Arrays.asList(parameterNames));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parameterNames(Optional<List<String>> parameterNames);
+
+    /** Clears the value of parameterNames field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParameterNames() {
+      return parameterNames(Optional.empty());
     }
 
     /**
@@ -113,6 +145,7 @@ public abstract class TestTableFile extends JsonSerializable {
      *
      * <p>testTable:
      */
+    @CanIgnoreReturnValue
     public Builder testTable(TestTableItem... testTable) {
       return testTable(Arrays.asList(testTable));
     }
@@ -122,11 +155,22 @@ public abstract class TestTableFile extends JsonSerializable {
      *
      * <p>testTable:
      */
+    @CanIgnoreReturnValue
     public Builder testTable(TestTableItem.Builder... testTableBuilders) {
       return testTable(
           Arrays.asList(testTableBuilders).stream()
               .map(TestTableItem.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder testTable(Optional<List<TestTableItem>> testTable);
+
+    /** Clears the value of testTable field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTestTable() {
+      return testTable(Optional.empty());
     }
 
     public abstract TestTableFile build();

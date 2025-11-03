@@ -45,8 +45,8 @@ public final class AsyncFiles {
   ApiClient apiClient;
 
   public AsyncFiles(ApiClient apiClient) {
-    this.files = new Files(apiClient);
     this.apiClient = apiClient;
+    this.files = new Files(apiClient);
   }
 
   /**
@@ -231,9 +231,8 @@ public final class AsyncFiles {
                 "Internal error: Pager expected ListFilesConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(files.privateList((ListFilesConfig) requestConfig)));
+          return this.privateList((ListFilesConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

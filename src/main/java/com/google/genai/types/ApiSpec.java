@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The API spec that the external API implements. */
+/** The API spec that the external API implements. This enum is not supported in Gemini API. */
 public class ApiSpec {
 
   /** Enum representing the known values for ApiSpec. */

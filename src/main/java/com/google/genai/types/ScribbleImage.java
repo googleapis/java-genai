@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,8 +65,19 @@ public abstract class ScribbleImage extends JsonSerializable {
      *
      * <p>image: The brush scribble to guide segmentation. Valid for the interactive mode.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     public abstract ScribbleImage build();

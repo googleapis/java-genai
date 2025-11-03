@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -78,8 +79,19 @@ public abstract class CreateFileParameters extends JsonSerializable {
      * provided. name: (Optional) The name of the file in the destination (e.g.
      * 'files/sample-image'). display_name: (Optional) The display name of the file.
      */
+    @CanIgnoreReturnValue
     public Builder file(File.Builder fileBuilder) {
       return file(fileBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder file(Optional<File> file);
+
+    /** Clears the value of file field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFile() {
+      return file(Optional.empty());
     }
 
     /**
@@ -95,8 +107,19 @@ public abstract class CreateFileParameters extends JsonSerializable {
      *
      * <p>config: Used to override the default configuration.
      */
+    @CanIgnoreReturnValue
     public Builder config(CreateFileConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<CreateFileConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract CreateFileParameters build();

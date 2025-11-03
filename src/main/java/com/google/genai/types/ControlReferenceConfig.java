@@ -67,6 +67,16 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
     @JsonProperty("controlType")
     public abstract Builder controlType(ControlReferenceType controlType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder controlType(Optional<ControlReferenceType> controlType);
+
+    /** Clears the value of controlType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearControlType() {
+      return controlType(Optional.empty());
+    }
+
     /**
      * Setter for controlType given a known enum.
      *
@@ -96,6 +106,16 @@ public abstract class ControlReferenceConfig extends JsonSerializable {
      */
     @JsonProperty("enableControlImageComputation")
     public abstract Builder enableControlImageComputation(boolean enableControlImageComputation);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enableControlImageComputation(Optional<Boolean> enableControlImageComputation);
+
+    /** Clears the value of enableControlImageComputation field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnableControlImageComputation() {
+      return enableControlImageComputation(Optional.empty());
+    }
 
     public abstract ControlReferenceConfig build();
   }

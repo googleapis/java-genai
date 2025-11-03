@@ -43,8 +43,8 @@ public class OperationsTest {
 
     String operationName =
         vertexAI
-            ? "projects/<project>/locations/<location>/publishers/google/models/veo-2.0-generate-001/operations/ddb46542-07ed-4000-958d-655fbffb05a4"
-            : "models/veo-2.0-generate-001/operations/ren0ubieaocs";
+            ? "projects/<project>/locations/<location>/publishers/google/models/veo-3.1-generate-preview/operations/6a55ba83-558a-4b29-9999-325b1eb218cf"
+            : "models/veo-3.1-generate-preview/operations/9jwcbmi5tkvw";
 
     // Act
     GenerateVideosOperation generateVideosOperation =

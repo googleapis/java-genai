@@ -77,6 +77,16 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
     @JsonProperty("maskMode")
     public abstract Builder maskMode(MaskReferenceMode maskMode);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maskMode(Optional<MaskReferenceMode> maskMode);
+
+    /** Clears the value of maskMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaskMode() {
+      return maskMode(Optional.empty());
+    }
+
     /**
      * Setter for maskMode given a known enum.
      *
@@ -114,8 +124,19 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
      * <p>segmentationClasses: A list of up to 5 class ids to use for semantic segmentation.
      * Automatically creates an image mask based on specific objects.
      */
+    @CanIgnoreReturnValue
     public Builder segmentationClasses(Integer... segmentationClasses) {
       return segmentationClasses(Arrays.asList(segmentationClasses));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder segmentationClasses(Optional<List<Integer>> segmentationClasses);
+
+    /** Clears the value of segmentationClasses field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSegmentationClasses() {
+      return segmentationClasses(Optional.empty());
     }
 
     /**
@@ -125,6 +146,16 @@ public abstract class MaskReferenceConfig extends JsonSerializable {
      */
     @JsonProperty("maskDilation")
     public abstract Builder maskDilation(Float maskDilation);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maskDilation(Optional<Float> maskDilation);
+
+    /** Clears the value of maskDilation field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaskDilation() {
+      return maskDilation(Optional.empty());
+    }
 
     public abstract MaskReferenceConfig build();
   }

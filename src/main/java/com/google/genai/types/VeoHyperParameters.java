@@ -27,7 +27,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Hyperparameters for Veo. */
+/** Hyperparameters for Veo. This data type is not supported in Gemini API. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = VeoHyperParameters.Builder.class)
@@ -74,6 +74,16 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     @JsonProperty("epochCount")
     public abstract Builder epochCount(Long epochCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder epochCount(Optional<Long> epochCount);
+
+    /** Clears the value of epochCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEpochCount() {
+      return epochCount(Optional.empty());
+    }
+
     /**
      * Setter for learningRateMultiplier.
      *
@@ -82,6 +92,16 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Double learningRateMultiplier);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder learningRateMultiplier(Optional<Double> learningRateMultiplier);
+
+    /** Clears the value of learningRateMultiplier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLearningRateMultiplier() {
+      return learningRateMultiplier(Optional.empty());
+    }
+
     /**
      * Setter for tuningTask.
      *
@@ -89,6 +109,16 @@ public abstract class VeoHyperParameters extends JsonSerializable {
      */
     @JsonProperty("tuningTask")
     public abstract Builder tuningTask(TuningTask tuningTask);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningTask(Optional<TuningTask> tuningTask);
+
+    /** Clears the value of tuningTask field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningTask() {
+      return tuningTask(Optional.empty());
+    }
 
     /**
      * Setter for tuningTask given a known enum.

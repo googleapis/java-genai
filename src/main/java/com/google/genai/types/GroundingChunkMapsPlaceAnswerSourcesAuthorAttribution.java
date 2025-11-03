@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Author attribution for a photo or review. */
+/** Author attribution for a photo or review. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
@@ -71,6 +72,16 @@ public abstract class GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
     /**
      * Setter for photoUri.
      *
@@ -79,6 +90,16 @@ public abstract class GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
     @JsonProperty("photoUri")
     public abstract Builder photoUri(String photoUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder photoUri(Optional<String> photoUri);
+
+    /** Clears the value of photoUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPhotoUri() {
+      return photoUri(Optional.empty());
+    }
+
     /**
      * Setter for uri.
      *
@@ -86,6 +107,16 @@ public abstract class GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uri(Optional<String> uri);
+
+    /** Clears the value of uri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUri() {
+      return uri(Optional.empty());
+    }
 
     public abstract GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution build();
   }

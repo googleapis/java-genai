@@ -56,7 +56,7 @@ public final class TableTest {
     // Gets module name and method name.
     String testMethod = testTableFile.testMethod().get();
     String[] segments = testMethod.split("\\.");
-    if (segments.length != 2) {
+    if (segments.length == 1) {
       String msg = " => Test skipped: multistep test " + testMethod + " not supported in Java";
       List<DynamicTest> dynamicTests = new ArrayList<>();
       for (TestTableItem testTableItem : testTableFile.testTable().get()) {

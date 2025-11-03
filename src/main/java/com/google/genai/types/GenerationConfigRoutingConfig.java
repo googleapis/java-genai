@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for routing the request to a specific model. */
+/**
+ * The configuration for routing the request to a specific model. This data type is not supported in
+ * Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfig.Builder.class)
 public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
@@ -70,8 +74,19 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
      *
      * <p>autoMode: Automated routing.
      */
+    @CanIgnoreReturnValue
     public Builder autoMode(GenerationConfigRoutingConfigAutoRoutingMode.Builder autoModeBuilder) {
       return autoMode(autoModeBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder autoMode(Optional<GenerationConfigRoutingConfigAutoRoutingMode> autoMode);
+
+    /** Clears the value of autoMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutoMode() {
+      return autoMode(Optional.empty());
     }
 
     /**
@@ -87,9 +102,21 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
      *
      * <p>manualMode: Manual routing.
      */
+    @CanIgnoreReturnValue
     public Builder manualMode(
         GenerationConfigRoutingConfigManualRoutingMode.Builder manualModeBuilder) {
       return manualMode(manualModeBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder manualMode(
+        Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode);
+
+    /** Clears the value of manualMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearManualMode() {
+      return manualMode(Optional.empty());
     }
 
     public abstract GenerationConfigRoutingConfig build();

@@ -30,19 +30,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Content filter results for a prompt sent in the request. */
+/**
+ * Content filter results for a prompt sent in the request. Note: This is sent only in the first
+ * stream chunk and only if no candidates were generated due to content violations.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerateContentResponsePromptFeedback.Builder.class)
 public abstract class GenerateContentResponsePromptFeedback extends JsonSerializable {
-  /** Output only. Blocked reason. */
+  /** Output only. The reason why the prompt was blocked. */
   @JsonProperty("blockReason")
   public abstract Optional<BlockedReason> blockReason();
 
-  /** Output only. A readable block reason message. */
+  /**
+   * Output only. A readable message that explains the reason why the prompt was blocked. This field
+   * is not supported in Gemini API.
+   */
   @JsonProperty("blockReasonMessage")
   public abstract Optional<String> blockReasonMessage();
 
-  /** Output only. Safety ratings. */
+  /** Output only. A list of safety ratings for the prompt. There is one rating per category. */
   @JsonProperty("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
 
@@ -70,15 +76,25 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     /**
      * Setter for blockReason.
      *
-     * <p>blockReason: Output only. Blocked reason.
+     * <p>blockReason: Output only. The reason why the prompt was blocked.
      */
     @JsonProperty("blockReason")
     public abstract Builder blockReason(BlockedReason blockReason);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder blockReason(Optional<BlockedReason> blockReason);
+
+    /** Clears the value of blockReason field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBlockReason() {
+      return blockReason(Optional.empty());
+    }
+
     /**
      * Setter for blockReason given a known enum.
      *
-     * <p>blockReason: Output only. Blocked reason.
+     * <p>blockReason: Output only. The reason why the prompt was blocked.
      */
     @CanIgnoreReturnValue
     public Builder blockReason(BlockedReason.Known knownType) {
@@ -88,7 +104,7 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     /**
      * Setter for blockReason given a string.
      *
-     * <p>blockReason: Output only. Blocked reason.
+     * <p>blockReason: Output only. The reason why the prompt was blocked.
      */
     @CanIgnoreReturnValue
     public Builder blockReason(String blockReason) {
@@ -98,15 +114,27 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     /**
      * Setter for blockReasonMessage.
      *
-     * <p>blockReasonMessage: Output only. A readable block reason message.
+     * <p>blockReasonMessage: Output only. A readable message that explains the reason why the
+     * prompt was blocked. This field is not supported in Gemini API.
      */
     @JsonProperty("blockReasonMessage")
     public abstract Builder blockReasonMessage(String blockReasonMessage);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder blockReasonMessage(Optional<String> blockReasonMessage);
+
+    /** Clears the value of blockReasonMessage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBlockReasonMessage() {
+      return blockReasonMessage(Optional.empty());
+    }
+
     /**
      * Setter for safetyRatings.
      *
-     * <p>safetyRatings: Output only. Safety ratings.
+     * <p>safetyRatings: Output only. A list of safety ratings for the prompt. There is one rating
+     * per category.
      */
     @JsonProperty("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
@@ -114,8 +142,10 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     /**
      * Setter for safetyRatings.
      *
-     * <p>safetyRatings: Output only. Safety ratings.
+     * <p>safetyRatings: Output only. A list of safety ratings for the prompt. There is one rating
+     * per category.
      */
+    @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating... safetyRatings) {
       return safetyRatings(Arrays.asList(safetyRatings));
     }
@@ -123,13 +153,25 @@ public abstract class GenerateContentResponsePromptFeedback extends JsonSerializ
     /**
      * Setter for safetyRatings builder.
      *
-     * <p>safetyRatings: Output only. Safety ratings.
+     * <p>safetyRatings: Output only. A list of safety ratings for the prompt. There is one rating
+     * per category.
      */
+    @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating.Builder... safetyRatingsBuilders) {
       return safetyRatings(
           Arrays.asList(safetyRatingsBuilders).stream()
               .map(SafetyRating.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder safetyRatings(Optional<List<SafetyRating>> safetyRatings);
+
+    /** Clears the value of safetyRatings field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSafetyRatings() {
+      return safetyRatings(Optional.empty());
     }
 
     public abstract GenerateContentResponsePromptFeedback build();

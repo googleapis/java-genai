@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Dataset distribution for Supervised Tuning. */
+/** Dataset distribution for Supervised Tuning. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = SupervisedTuningDatasetDistribution.Builder.class)
 public abstract class SupervisedTuningDatasetDistribution extends JsonSerializable {
@@ -98,6 +99,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
     @JsonProperty("billableSum")
     public abstract Builder billableSum(Long billableSum);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder billableSum(Optional<Long> billableSum);
+
+    /** Clears the value of billableSum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBillableSum() {
+      return billableSum(Optional.empty());
+    }
+
     /**
      * Setter for buckets.
      *
@@ -111,6 +122,7 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
      *
      * <p>buckets: Output only. Defines the histogram bucket.
      */
+    @CanIgnoreReturnValue
     public Builder buckets(SupervisedTuningDatasetDistributionDatasetBucket... buckets) {
       return buckets(Arrays.asList(buckets));
     }
@@ -120,12 +132,24 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
      *
      * <p>buckets: Output only. Defines the histogram bucket.
      */
+    @CanIgnoreReturnValue
     public Builder buckets(
         SupervisedTuningDatasetDistributionDatasetBucket.Builder... bucketsBuilders) {
       return buckets(
           Arrays.asList(bucketsBuilders).stream()
               .map(SupervisedTuningDatasetDistributionDatasetBucket.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder buckets(
+        Optional<List<SupervisedTuningDatasetDistributionDatasetBucket>> buckets);
+
+    /** Clears the value of buckets field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBuckets() {
+      return buckets(Optional.empty());
     }
 
     /**
@@ -136,6 +160,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
     @JsonProperty("max")
     public abstract Builder max(Double max);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder max(Optional<Double> max);
+
+    /** Clears the value of max field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMax() {
+      return max(Optional.empty());
+    }
+
     /**
      * Setter for mean.
      *
@@ -143,6 +177,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
      */
     @JsonProperty("mean")
     public abstract Builder mean(Double mean);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mean(Optional<Double> mean);
+
+    /** Clears the value of mean field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMean() {
+      return mean(Optional.empty());
+    }
 
     /**
      * Setter for median.
@@ -152,6 +196,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
     @JsonProperty("median")
     public abstract Builder median(Double median);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder median(Optional<Double> median);
+
+    /** Clears the value of median field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMedian() {
+      return median(Optional.empty());
+    }
+
     /**
      * Setter for min.
      *
@@ -159,6 +213,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
      */
     @JsonProperty("min")
     public abstract Builder min(Double min);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder min(Optional<Double> min);
+
+    /** Clears the value of min field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMin() {
+      return min(Optional.empty());
+    }
 
     /**
      * Setter for p5.
@@ -168,6 +232,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
     @JsonProperty("p5")
     public abstract Builder p5(Double p5);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder p5(Optional<Double> p5);
+
+    /** Clears the value of p5 field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearP5() {
+      return p5(Optional.empty());
+    }
+
     /**
      * Setter for p95.
      *
@@ -176,6 +250,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
     @JsonProperty("p95")
     public abstract Builder p95(Double p95);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder p95(Optional<Double> p95);
+
+    /** Clears the value of p95 field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearP95() {
+      return p95(Optional.empty());
+    }
+
     /**
      * Setter for sum.
      *
@@ -183,6 +267,16 @@ public abstract class SupervisedTuningDatasetDistribution extends JsonSerializab
      */
     @JsonProperty("sum")
     public abstract Builder sum(Long sum);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sum(Optional<Long> sum);
+
+    /** Clears the value of sum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSum() {
+      return sum(Optional.empty());
+    }
 
     public abstract SupervisedTuningDatasetDistribution build();
   }

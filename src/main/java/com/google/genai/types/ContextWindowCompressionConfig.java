@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -69,6 +70,16 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
     @JsonProperty("triggerTokens")
     public abstract Builder triggerTokens(Long triggerTokens);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder triggerTokens(Optional<Long> triggerTokens);
+
+    /** Clears the value of triggerTokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTriggerTokens() {
+      return triggerTokens(Optional.empty());
+    }
+
     /**
      * Setter for slidingWindow.
      *
@@ -82,8 +93,19 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
      *
      * <p>slidingWindow: Sliding window compression mechanism.
      */
+    @CanIgnoreReturnValue
     public Builder slidingWindow(SlidingWindow.Builder slidingWindowBuilder) {
       return slidingWindow(slidingWindowBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder slidingWindow(Optional<SlidingWindow> slidingWindow);
+
+    /** Clears the value of slidingWindow field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSlidingWindow() {
+      return slidingWindow(Optional.empty());
     }
 
     public abstract ContextWindowCompressionConfig build();

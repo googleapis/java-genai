@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
 public abstract class PrebuiltVoiceConfig extends JsonSerializable {
-  /** The name of the prebuilt voice to use. */
+  /** The name of the preset voice to use. */
   @JsonProperty("voiceName")
   public abstract Optional<String> voiceName();
 
@@ -54,10 +55,20 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceName.
      *
-     * <p>voiceName: The name of the prebuilt voice to use.
+     * <p>voiceName: The name of the preset voice to use.
      */
     @JsonProperty("voiceName")
     public abstract Builder voiceName(String voiceName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceName(Optional<String> voiceName);
+
+    /** Clears the value of voiceName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceName() {
+      return voiceName(Optional.empty());
+    }
 
     public abstract PrebuiltVoiceConfig build();
   }

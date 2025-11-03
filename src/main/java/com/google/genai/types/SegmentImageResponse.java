@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +69,7 @@ public abstract class SegmentImageResponse extends JsonSerializable {
      *
      * <p>generatedMasks: List of generated image masks.
      */
+    @CanIgnoreReturnValue
     public Builder generatedMasks(GeneratedImageMask... generatedMasks) {
       return generatedMasks(Arrays.asList(generatedMasks));
     }
@@ -77,11 +79,22 @@ public abstract class SegmentImageResponse extends JsonSerializable {
      *
      * <p>generatedMasks: List of generated image masks.
      */
+    @CanIgnoreReturnValue
     public Builder generatedMasks(GeneratedImageMask.Builder... generatedMasksBuilders) {
       return generatedMasks(
           Arrays.asList(generatedMasksBuilders).stream()
               .map(GeneratedImageMask.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generatedMasks(Optional<List<GeneratedImageMask>> generatedMasks);
+
+    /** Clears the value of generatedMasks field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGeneratedMasks() {
+      return generatedMasks(Optional.empty());
     }
 
     public abstract SegmentImageResponse build();

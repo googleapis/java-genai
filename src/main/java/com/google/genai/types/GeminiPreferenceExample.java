@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Input example for preference optimization. */
+/** Input example for preference optimization. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GeminiPreferenceExample.Builder.class)
 public abstract class GeminiPreferenceExample extends JsonSerializable {
@@ -72,6 +73,7 @@ public abstract class GeminiPreferenceExample extends JsonSerializable {
      *
      * <p>completions: List of completions for a given prompt.
      */
+    @CanIgnoreReturnValue
     public Builder completions(GeminiPreferenceExampleCompletion... completions) {
       return completions(Arrays.asList(completions));
     }
@@ -81,11 +83,22 @@ public abstract class GeminiPreferenceExample extends JsonSerializable {
      *
      * <p>completions: List of completions for a given prompt.
      */
+    @CanIgnoreReturnValue
     public Builder completions(GeminiPreferenceExampleCompletion.Builder... completionsBuilders) {
       return completions(
           Arrays.asList(completionsBuilders).stream()
               .map(GeminiPreferenceExampleCompletion.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder completions(Optional<List<GeminiPreferenceExampleCompletion>> completions);
+
+    /** Clears the value of completions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCompletions() {
+      return completions(Optional.empty());
     }
 
     /**
@@ -101,6 +114,7 @@ public abstract class GeminiPreferenceExample extends JsonSerializable {
      *
      * <p>contents: Multi-turn contents that represents the Prompt.
      */
+    @CanIgnoreReturnValue
     public Builder contents(Content... contents) {
       return contents(Arrays.asList(contents));
     }
@@ -110,11 +124,22 @@ public abstract class GeminiPreferenceExample extends JsonSerializable {
      *
      * <p>contents: Multi-turn contents that represents the Prompt.
      */
+    @CanIgnoreReturnValue
     public Builder contents(Content.Builder... contentsBuilders) {
       return contents(
           Arrays.asList(contentsBuilders).stream()
               .map(Content.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contents(Optional<List<Content>> contents);
+
+    /** Clears the value of contents field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContents() {
+      return contents(Optional.empty());
     }
 
     public abstract GeminiPreferenceExample build();

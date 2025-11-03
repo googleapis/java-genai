@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for Hybrid Search. */
+/** Config for Hybrid Search. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfigHybridSearch.Builder.class)
 public abstract class RagRetrievalConfigHybridSearch extends JsonSerializable {
@@ -67,6 +68,16 @@ public abstract class RagRetrievalConfigHybridSearch extends JsonSerializable {
      */
     @JsonProperty("alpha")
     public abstract Builder alpha(Float alpha);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder alpha(Optional<Float> alpha);
+
+    /** Clears the value of alpha field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAlpha() {
+      return alpha(Optional.empty());
+    }
 
     public abstract RagRetrievalConfigHybridSearch build();
   }

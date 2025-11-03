@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -79,6 +80,16 @@ public abstract class BatchJobSource extends JsonSerializable {
     @JsonProperty("format")
     public abstract Builder format(String format);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder format(Optional<String> format);
+
+    /** Clears the value of format field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFormat() {
+      return format(Optional.empty());
+    }
+
     /**
      * Setter for gcsUri.
      *
@@ -92,8 +103,19 @@ public abstract class BatchJobSource extends JsonSerializable {
      *
      * <p>gcsUri: The Google Cloud Storage URIs to input files.
      */
+    @CanIgnoreReturnValue
     public Builder gcsUri(String... gcsUri) {
       return gcsUri(Arrays.asList(gcsUri));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder gcsUri(Optional<List<String>> gcsUri);
+
+    /** Clears the value of gcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGcsUri() {
+      return gcsUri(Optional.empty());
     }
 
     /**
@@ -104,6 +126,16 @@ public abstract class BatchJobSource extends JsonSerializable {
     @JsonProperty("bigqueryUri")
     public abstract Builder bigqueryUri(String bigqueryUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder bigqueryUri(Optional<String> bigqueryUri);
+
+    /** Clears the value of bigqueryUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBigqueryUri() {
+      return bigqueryUri(Optional.empty());
+    }
+
     /**
      * Setter for fileName.
      *
@@ -112,6 +144,16 @@ public abstract class BatchJobSource extends JsonSerializable {
      */
     @JsonProperty("fileName")
     public abstract Builder fileName(String fileName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fileName(Optional<String> fileName);
+
+    /** Clears the value of fileName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFileName() {
+      return fileName(Optional.empty());
+    }
 
     /**
      * Setter for inlinedRequests.
@@ -126,6 +168,7 @@ public abstract class BatchJobSource extends JsonSerializable {
      *
      * <p>inlinedRequests: The Gemini Developer API's inlined input data to run batch job.
      */
+    @CanIgnoreReturnValue
     public Builder inlinedRequests(InlinedRequest... inlinedRequests) {
       return inlinedRequests(Arrays.asList(inlinedRequests));
     }
@@ -135,11 +178,22 @@ public abstract class BatchJobSource extends JsonSerializable {
      *
      * <p>inlinedRequests: The Gemini Developer API's inlined input data to run batch job.
      */
+    @CanIgnoreReturnValue
     public Builder inlinedRequests(InlinedRequest.Builder... inlinedRequestsBuilders) {
       return inlinedRequests(
           Arrays.asList(inlinedRequestsBuilders).stream()
               .map(InlinedRequest.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inlinedRequests(Optional<List<InlinedRequest>> inlinedRequests);
+
+    /** Clears the value of inlinedRequests field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInlinedRequests() {
+      return inlinedRequests(Optional.empty());
     }
 
     public abstract BatchJobSource build();

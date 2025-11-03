@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
@@ -64,6 +65,16 @@ public abstract class HttpResponse extends JsonSerializable {
     @JsonProperty("headers")
     public abstract Builder headers(Map<String, String> headers);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder headers(Optional<Map<String, String>> headers);
+
+    /** Clears the value of headers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHeaders() {
+      return headers(Optional.empty());
+    }
+
     /**
      * Setter for body.
      *
@@ -71,6 +82,16 @@ public abstract class HttpResponse extends JsonSerializable {
      */
     @JsonProperty("body")
     public abstract Builder body(String body);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder body(Optional<String> body);
+
+    /** Clears the value of body field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBody() {
+      return body(Optional.empty());
+    }
 
     public abstract HttpResponse build();
   }

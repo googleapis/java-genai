@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -66,8 +67,19 @@ public abstract class ListModelsParameters extends JsonSerializable {
      *
      * <p>config:
      */
+    @CanIgnoreReturnValue
     public Builder config(ListModelsConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<ListModelsConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract ListModelsParameters build();

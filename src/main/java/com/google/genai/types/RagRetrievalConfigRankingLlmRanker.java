@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for LlmRanker. */
+/** Config for LlmRanker. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfigRankingLlmRanker.Builder.class)
 public abstract class RagRetrievalConfigRankingLlmRanker extends JsonSerializable {
@@ -65,6 +66,16 @@ public abstract class RagRetrievalConfigRankingLlmRanker extends JsonSerializabl
      */
     @JsonProperty("modelName")
     public abstract Builder modelName(String modelName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modelName(Optional<String> modelName);
+
+    /** Clears the value of modelName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModelName() {
+      return modelName(Optional.empty());
+    }
 
     public abstract RagRetrievalConfigRankingLlmRanker build();
   }

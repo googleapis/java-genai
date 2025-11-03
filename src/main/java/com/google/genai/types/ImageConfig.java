@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -62,6 +63,16 @@ public abstract class ImageConfig extends JsonSerializable {
      */
     @JsonProperty("aspectRatio")
     public abstract Builder aspectRatio(String aspectRatio);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder aspectRatio(Optional<String> aspectRatio);
+
+    /** Clears the value of aspectRatio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAspectRatio() {
+      return aspectRatio(Optional.empty());
+    }
 
     public abstract ImageConfig build();
   }

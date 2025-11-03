@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,6 +65,16 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     @JsonProperty("renderedContent")
     public abstract Builder renderedContent(String renderedContent);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder renderedContent(Optional<String> renderedContent);
+
+    /** Clears the value of renderedContent field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRenderedContent() {
+      return renderedContent(Optional.empty());
+    }
+
     /**
      * Setter for sdkBlob.
      *
@@ -71,6 +82,16 @@ public abstract class SearchEntryPoint extends JsonSerializable {
      */
     @JsonProperty("sdkBlob")
     public abstract Builder sdkBlob(byte[] sdkBlob);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkBlob(Optional<byte[]> sdkBlob);
+
+    /** Clears the value of sdkBlob field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkBlob() {
+      return sdkBlob(Optional.empty());
+    }
 
     public abstract SearchEntryPoint build();
   }

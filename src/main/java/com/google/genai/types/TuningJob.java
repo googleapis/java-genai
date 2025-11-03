@@ -97,6 +97,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("supervisedTuningSpec")
   public abstract Optional<SupervisedTuningSpec> supervisedTuningSpec();
 
+  /** Tuning Spec for Preference Optimization. */
+  @JsonProperty("preferenceOptimizationSpec")
+  public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
+
   /** Output only. The tuning data statistics associated with this TuningJob. */
   @JsonProperty("tuningDataStats")
   public abstract Optional<TuningDataStats> tuningDataStats();
@@ -202,8 +206,19 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -215,6 +230,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for state.
      *
@@ -222,6 +247,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("state")
     public abstract Builder state(JobState state);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder state(Optional<JobState> state);
+
+    /** Clears the value of state field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearState() {
+      return state(Optional.empty());
+    }
 
     /**
      * Setter for state given a known enum.
@@ -251,6 +286,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
+
     /**
      * Setter for startTime.
      *
@@ -259,6 +304,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("startTime")
     public abstract Builder startTime(Instant startTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startTime(Optional<Instant> startTime);
+
+    /** Clears the value of startTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartTime() {
+      return startTime(Optional.empty());
+    }
 
     /**
      * Setter for endTime.
@@ -269,6 +324,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("endTime")
     public abstract Builder endTime(Instant endTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endTime(Optional<Instant> endTime);
+
+    /** Clears the value of endTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndTime() {
+      return endTime(Optional.empty());
+    }
+
     /**
      * Setter for updateTime.
      *
@@ -276,6 +341,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateTime(Optional<Instant> updateTime);
+
+    /** Clears the value of updateTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
+    }
 
     /**
      * Setter for error.
@@ -292,8 +367,19 @@ public abstract class TuningJob extends JsonSerializable {
      * <p>error: Output only. Only populated when job's state is `JOB_STATE_FAILED` or
      * `JOB_STATE_CANCELLED`.
      */
+    @CanIgnoreReturnValue
     public Builder error(GoogleRpcStatus.Builder errorBuilder) {
       return error(errorBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<GoogleRpcStatus> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
     }
 
     /**
@@ -304,6 +390,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("description")
     public abstract Builder description(String description);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder description(Optional<String> description);
+
+    /** Clears the value of description field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDescription() {
+      return description(Optional.empty());
+    }
+
     /**
      * Setter for baseModel.
      *
@@ -312,6 +408,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseModel(Optional<String> baseModel);
+
+    /** Clears the value of baseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseModel() {
+      return baseModel(Optional.empty());
+    }
 
     /**
      * Setter for tunedModel.
@@ -326,8 +432,19 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>tunedModel: Output only. The tuned model resources associated with this TuningJob.
      */
+    @CanIgnoreReturnValue
     public Builder tunedModel(TunedModel.Builder tunedModelBuilder) {
       return tunedModel(tunedModelBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedModel(Optional<TunedModel> tunedModel);
+
+    /** Clears the value of tunedModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedModel() {
+      return tunedModel(Optional.empty());
     }
 
     /**
@@ -343,8 +460,19 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>preTunedModel: The pre-tuned model for continuous tuning.
      */
+    @CanIgnoreReturnValue
     public Builder preTunedModel(PreTunedModel.Builder preTunedModelBuilder) {
       return preTunedModel(preTunedModelBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder preTunedModel(Optional<PreTunedModel> preTunedModel);
+
+    /** Clears the value of preTunedModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPreTunedModel() {
+      return preTunedModel(Optional.empty());
     }
 
     /**
@@ -360,8 +488,50 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>supervisedTuningSpec: Tuning Spec for Supervised Fine Tuning.
      */
+    @CanIgnoreReturnValue
     public Builder supervisedTuningSpec(SupervisedTuningSpec.Builder supervisedTuningSpecBuilder) {
       return supervisedTuningSpec(supervisedTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder supervisedTuningSpec(Optional<SupervisedTuningSpec> supervisedTuningSpec);
+
+    /** Clears the value of supervisedTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSupervisedTuningSpec() {
+      return supervisedTuningSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for preferenceOptimizationSpec.
+     *
+     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
+     */
+    @JsonProperty("preferenceOptimizationSpec")
+    public abstract Builder preferenceOptimizationSpec(
+        PreferenceOptimizationSpec preferenceOptimizationSpec);
+
+    /**
+     * Setter for preferenceOptimizationSpec builder.
+     *
+     * <p>preferenceOptimizationSpec: Tuning Spec for Preference Optimization.
+     */
+    @CanIgnoreReturnValue
+    public Builder preferenceOptimizationSpec(
+        PreferenceOptimizationSpec.Builder preferenceOptimizationSpecBuilder) {
+      return preferenceOptimizationSpec(preferenceOptimizationSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder preferenceOptimizationSpec(
+        Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec);
+
+    /** Clears the value of preferenceOptimizationSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPreferenceOptimizationSpec() {
+      return preferenceOptimizationSpec(Optional.empty());
     }
 
     /**
@@ -377,8 +547,19 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>tuningDataStats: Output only. The tuning data statistics associated with this TuningJob.
      */
+    @CanIgnoreReturnValue
     public Builder tuningDataStats(TuningDataStats.Builder tuningDataStatsBuilder) {
       return tuningDataStats(tuningDataStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningDataStats(Optional<TuningDataStats> tuningDataStats);
+
+    /** Clears the value of tuningDataStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningDataStats() {
+      return tuningDataStats(Optional.empty());
     }
 
     /**
@@ -398,8 +579,19 @@ public abstract class TuningJob extends JsonSerializable {
      * then all resources created by the TuningJob will be encrypted with the provided encryption
      * key.
      */
+    @CanIgnoreReturnValue
     public Builder encryptionSpec(EncryptionSpec.Builder encryptionSpecBuilder) {
       return encryptionSpec(encryptionSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder encryptionSpec(Optional<EncryptionSpec> encryptionSpec);
+
+    /** Clears the value of encryptionSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEncryptionSpec() {
+      return encryptionSpec(Optional.empty());
     }
 
     /**
@@ -415,9 +607,21 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>partnerModelTuningSpec: Tuning Spec for open sourced and third party Partner models.
      */
+    @CanIgnoreReturnValue
     public Builder partnerModelTuningSpec(
         PartnerModelTuningSpec.Builder partnerModelTuningSpecBuilder) {
       return partnerModelTuningSpec(partnerModelTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder partnerModelTuningSpec(
+        Optional<PartnerModelTuningSpec> partnerModelTuningSpec);
+
+    /** Clears the value of partnerModelTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPartnerModelTuningSpec() {
+      return partnerModelTuningSpec(Optional.empty());
     }
 
     /**
@@ -432,6 +636,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("customBaseModel")
     public abstract Builder customBaseModel(String customBaseModel);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customBaseModel(Optional<String> customBaseModel);
+
+    /** Clears the value of customBaseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomBaseModel() {
+      return customBaseModel(Optional.empty());
+    }
+
     /**
      * Setter for experiment.
      *
@@ -439,6 +653,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("experiment")
     public abstract Builder experiment(String experiment);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder experiment(Optional<String> experiment);
+
+    /** Clears the value of experiment field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExperiment() {
+      return experiment(Optional.empty());
+    }
 
     /**
      * Setter for labels.
@@ -452,6 +676,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("labels")
     public abstract Builder labels(Map<String, String> labels);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
+    }
+
     /**
      * Setter for outputUri.
      *
@@ -461,6 +695,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("outputUri")
     public abstract Builder outputUri(String outputUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputUri(Optional<String> outputUri);
+
+    /** Clears the value of outputUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputUri() {
+      return outputUri(Optional.empty());
+    }
+
     /**
      * Setter for pipelineJob.
      *
@@ -469,6 +713,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("pipelineJob")
     public abstract Builder pipelineJob(String pipelineJob);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pipelineJob(Optional<String> pipelineJob);
+
+    /** Clears the value of pipelineJob field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPipelineJob() {
+      return pipelineJob(Optional.empty());
+    }
 
     /**
      * Setter for serviceAccount.
@@ -482,6 +736,16 @@ public abstract class TuningJob extends JsonSerializable {
     @JsonProperty("serviceAccount")
     public abstract Builder serviceAccount(String serviceAccount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder serviceAccount(Optional<String> serviceAccount);
+
+    /** Clears the value of serviceAccount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearServiceAccount() {
+      return serviceAccount(Optional.empty());
+    }
+
     /**
      * Setter for tunedModelDisplayName.
      *
@@ -490,6 +754,16 @@ public abstract class TuningJob extends JsonSerializable {
      */
     @JsonProperty("tunedModelDisplayName")
     public abstract Builder tunedModelDisplayName(String tunedModelDisplayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedModelDisplayName(Optional<String> tunedModelDisplayName);
+
+    /** Clears the value of tunedModelDisplayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedModelDisplayName() {
+      return tunedModelDisplayName(Optional.empty());
+    }
 
     /**
      * Setter for veoTuningSpec.
@@ -504,8 +778,19 @@ public abstract class TuningJob extends JsonSerializable {
      *
      * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
      */
+    @CanIgnoreReturnValue
     public Builder veoTuningSpec(VeoTuningSpec.Builder veoTuningSpecBuilder) {
       return veoTuningSpec(veoTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder veoTuningSpec(Optional<VeoTuningSpec> veoTuningSpec);
+
+    /** Clears the value of veoTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVeoTuningSpec() {
+      return veoTuningSpec(Optional.empty());
     }
 
     public abstract TuningJob build();

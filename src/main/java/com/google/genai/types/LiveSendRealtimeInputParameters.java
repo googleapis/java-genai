@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -97,8 +98,19 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      *
      * <p>media: Realtime input to send to the session.
      */
+    @CanIgnoreReturnValue
     public Builder media(Blob.Builder mediaBuilder) {
       return media(mediaBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder media(Optional<Blob> media);
+
+    /** Clears the value of media field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMedia() {
+      return media(Optional.empty());
     }
 
     /**
@@ -114,8 +126,19 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      *
      * <p>audio: The realtime audio input stream.
      */
+    @CanIgnoreReturnValue
     public Builder audio(Blob.Builder audioBuilder) {
       return audio(audioBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audio(Optional<Blob> audio);
+
+    /** Clears the value of audio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudio() {
+      return audio(Optional.empty());
     }
 
     /**
@@ -132,6 +155,16 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
     @JsonProperty("audioStreamEnd")
     public abstract Builder audioStreamEnd(boolean audioStreamEnd);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioStreamEnd(Optional<Boolean> audioStreamEnd);
+
+    /** Clears the value of audioStreamEnd field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioStreamEnd() {
+      return audioStreamEnd(Optional.empty());
+    }
+
     /**
      * Setter for video.
      *
@@ -145,8 +178,19 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      *
      * <p>video: The realtime video input stream.
      */
+    @CanIgnoreReturnValue
     public Builder video(Blob.Builder videoBuilder) {
       return video(videoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder video(Optional<Blob> video);
+
+    /** Clears the value of video field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideo() {
+      return video(Optional.empty());
     }
 
     /**
@@ -156,6 +200,16 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
 
     /**
      * Setter for activityStart.
@@ -170,8 +224,19 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      *
      * <p>activityStart: Marks the start of user activity.
      */
+    @CanIgnoreReturnValue
     public Builder activityStart(ActivityStart.Builder activityStartBuilder) {
       return activityStart(activityStartBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder activityStart(Optional<ActivityStart> activityStart);
+
+    /** Clears the value of activityStart field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearActivityStart() {
+      return activityStart(Optional.empty());
     }
 
     /**
@@ -187,8 +252,19 @@ public abstract class LiveSendRealtimeInputParameters extends JsonSerializable {
      *
      * <p>activityEnd: Marks the end of user activity.
      */
+    @CanIgnoreReturnValue
     public Builder activityEnd(ActivityEnd.Builder activityEndBuilder) {
       return activityEnd(activityEndBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder activityEnd(Optional<ActivityEnd> activityEnd);
+
+    /** Clears the value of activityEnd field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearActivityEnd() {
+      return activityEnd(Optional.empty());
     }
 
     public abstract LiveSendRealtimeInputParameters build();

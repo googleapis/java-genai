@@ -69,6 +69,23 @@ final class AfcUtil {
     return transformedConfig;
   }
 
+  static ImmutableList<Integer> findAfcIncompatibleToolIndexes(GenerateContentConfig config) {
+    if (config == null || !config.tools().isPresent() || config.tools().get().isEmpty()) {
+      return ImmutableList.of();
+    }
+    List<Tool> tools = config.tools().get();
+    ImmutableList.Builder<Integer> incompatibleToolsIndexesBuilder = ImmutableList.builder();
+
+    for (int i = 0; i < tools.size(); i++) {
+      Tool tool = tools.get(i);
+      if (tool.functionDeclarations().isPresent() && !tool.functionDeclarations().get().isEmpty()) {
+        incompatibleToolsIndexesBuilder.add(i);
+      }
+    }
+
+    return incompatibleToolsIndexesBuilder.build();
+  }
+
   static ImmutableMap<String, Method> getFunctionMap(GenerateContentConfig config) {
     ImmutableMap.Builder<String, Method> functionMapBuilder = ImmutableMap.builder();
     if (config != null && config.tools().isPresent() && !config.tools().get().isEmpty()) {

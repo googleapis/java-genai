@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,8 +65,19 @@ public abstract class GetBatchJobConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     public abstract GetBatchJobConfig build();

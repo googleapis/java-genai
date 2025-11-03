@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -29,11 +30,14 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingChunk.Builder.class)
 public abstract class GroundingChunk extends JsonSerializable {
-  /** Grounding chunk from Google Maps. */
+  /** Grounding chunk from Google Maps. This field is not supported in Gemini API. */
   @JsonProperty("maps")
   public abstract Optional<GroundingChunkMaps> maps();
 
-  /** Grounding chunk from context retrieved by the retrieval tools. */
+  /**
+   * Grounding chunk from context retrieved by the retrieval tools. This field is not supported in
+   * Gemini API.
+   */
   @JsonProperty("retrievedContext")
   public abstract Optional<GroundingChunkRetrievedContext> retrievedContext();
 
@@ -62,7 +66,7 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for maps.
      *
-     * <p>maps: Grounding chunk from Google Maps.
+     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
      */
     @JsonProperty("maps")
     public abstract Builder maps(GroundingChunkMaps maps);
@@ -70,16 +74,28 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for maps builder.
      *
-     * <p>maps: Grounding chunk from Google Maps.
+     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
      */
+    @CanIgnoreReturnValue
     public Builder maps(GroundingChunkMaps.Builder mapsBuilder) {
       return maps(mapsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maps(Optional<GroundingChunkMaps> maps);
+
+    /** Clears the value of maps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaps() {
+      return maps(Optional.empty());
     }
 
     /**
      * Setter for retrievedContext.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools.
+     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
+     * field is not supported in Gemini API.
      */
     @JsonProperty("retrievedContext")
     public abstract Builder retrievedContext(GroundingChunkRetrievedContext retrievedContext);
@@ -87,11 +103,23 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for retrievedContext builder.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools.
+     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
+     * field is not supported in Gemini API.
      */
+    @CanIgnoreReturnValue
     public Builder retrievedContext(
         GroundingChunkRetrievedContext.Builder retrievedContextBuilder) {
       return retrievedContext(retrievedContextBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder retrievedContext(Optional<GroundingChunkRetrievedContext> retrievedContext);
+
+    /** Clears the value of retrievedContext field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRetrievedContext() {
+      return retrievedContext(Optional.empty());
     }
 
     /**
@@ -107,8 +135,19 @@ public abstract class GroundingChunk extends JsonSerializable {
      *
      * <p>web: Grounding chunk from the web.
      */
+    @CanIgnoreReturnValue
     public Builder web(GroundingChunkWeb.Builder webBuilder) {
       return web(webBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder web(Optional<GroundingChunkWeb> web);
+
+    /** Clears the value of web field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWeb() {
+      return web(Optional.empty());
     }
 
     public abstract GroundingChunk build();

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -79,8 +80,19 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -96,6 +108,7 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
      *
      * <p>generatedImages: List of generated images.
      */
+    @CanIgnoreReturnValue
     public Builder generatedImages(GeneratedImage... generatedImages) {
       return generatedImages(Arrays.asList(generatedImages));
     }
@@ -105,11 +118,22 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
      *
      * <p>generatedImages: List of generated images.
      */
+    @CanIgnoreReturnValue
     public Builder generatedImages(GeneratedImage.Builder... generatedImagesBuilders) {
       return generatedImages(
           Arrays.asList(generatedImagesBuilders).stream()
               .map(GeneratedImage.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generatedImages(Optional<List<GeneratedImage>> generatedImages);
+
+    /** Clears the value of generatedImages field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGeneratedImages() {
+      return generatedImages(Optional.empty());
     }
 
     /**
@@ -128,9 +152,21 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
      * <p>positivePromptSafetyAttributes: Safety attributes of the positive prompt. Only populated
      * if ``include_safety_attributes`` is set to True.
      */
+    @CanIgnoreReturnValue
     public Builder positivePromptSafetyAttributes(
         SafetyAttributes.Builder positivePromptSafetyAttributesBuilder) {
       return positivePromptSafetyAttributes(positivePromptSafetyAttributesBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder positivePromptSafetyAttributes(
+        Optional<SafetyAttributes> positivePromptSafetyAttributes);
+
+    /** Clears the value of positivePromptSafetyAttributes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPositivePromptSafetyAttributes() {
+      return positivePromptSafetyAttributes(Optional.empty());
     }
 
     public abstract GenerateImagesResponse build();

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -78,6 +79,7 @@ public abstract class LiveSendClientContentParameters extends JsonSerializable {
      *
      * <p>turns: Client content to send to the session.
      */
+    @CanIgnoreReturnValue
     public Builder turns(Content... turns) {
       return turns(Arrays.asList(turns));
     }
@@ -87,11 +89,22 @@ public abstract class LiveSendClientContentParameters extends JsonSerializable {
      *
      * <p>turns: Client content to send to the session.
      */
+    @CanIgnoreReturnValue
     public Builder turns(Content.Builder... turnsBuilders) {
       return turns(
           Arrays.asList(turnsBuilders).stream()
               .map(Content.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder turns(Optional<List<Content>> turns);
+
+    /** Clears the value of turns field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTurns() {
+      return turns(Optional.empty());
     }
 
     /**
@@ -103,6 +116,16 @@ public abstract class LiveSendClientContentParameters extends JsonSerializable {
      */
     @JsonProperty("turnComplete")
     public abstract Builder turnComplete(boolean turnComplete);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder turnComplete(Optional<Boolean> turnComplete);
+
+    /** Clears the value of turnComplete field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTurnComplete() {
+      return turnComplete(Optional.empty());
+    }
 
     public abstract LiveSendClientContentParameters build();
   }

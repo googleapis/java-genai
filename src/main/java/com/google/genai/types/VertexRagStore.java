@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Retrieve from Vertex RAG Store for grounding. */
+/** Retrieve from Vertex RAG Store for grounding. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = VertexRagStore.Builder.class)
 public abstract class VertexRagStore extends JsonSerializable {
@@ -97,8 +98,19 @@ public abstract class VertexRagStore extends JsonSerializable {
      *
      * <p>ragCorpora: Optional. Deprecated. Please use rag_resources instead.
      */
+    @CanIgnoreReturnValue
     public Builder ragCorpora(String... ragCorpora) {
       return ragCorpora(Arrays.asList(ragCorpora));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ragCorpora(Optional<List<String>> ragCorpora);
+
+    /** Clears the value of ragCorpora field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRagCorpora() {
+      return ragCorpora(Optional.empty());
     }
 
     /**
@@ -118,6 +130,7 @@ public abstract class VertexRagStore extends JsonSerializable {
      * corpus only or ragfiles. Currently only support one corpus or multiple files from one corpus.
      * In the future we may open up multiple corpora support.
      */
+    @CanIgnoreReturnValue
     public Builder ragResources(VertexRagStoreRagResource... ragResources) {
       return ragResources(Arrays.asList(ragResources));
     }
@@ -129,11 +142,22 @@ public abstract class VertexRagStore extends JsonSerializable {
      * corpus only or ragfiles. Currently only support one corpus or multiple files from one corpus.
      * In the future we may open up multiple corpora support.
      */
+    @CanIgnoreReturnValue
     public Builder ragResources(VertexRagStoreRagResource.Builder... ragResourcesBuilders) {
       return ragResources(
           Arrays.asList(ragResourcesBuilders).stream()
               .map(VertexRagStoreRagResource.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ragResources(Optional<List<VertexRagStoreRagResource>> ragResources);
+
+    /** Clears the value of ragResources field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRagResources() {
+      return ragResources(Optional.empty());
     }
 
     /**
@@ -149,8 +173,19 @@ public abstract class VertexRagStore extends JsonSerializable {
      *
      * <p>ragRetrievalConfig: Optional. The retrieval config for the Rag query.
      */
+    @CanIgnoreReturnValue
     public Builder ragRetrievalConfig(RagRetrievalConfig.Builder ragRetrievalConfigBuilder) {
       return ragRetrievalConfig(ragRetrievalConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ragRetrievalConfig(Optional<RagRetrievalConfig> ragRetrievalConfig);
+
+    /** Clears the value of ragRetrievalConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRagRetrievalConfig() {
+      return ragRetrievalConfig(Optional.empty());
     }
 
     /**
@@ -160,6 +195,16 @@ public abstract class VertexRagStore extends JsonSerializable {
      */
     @JsonProperty("similarityTopK")
     public abstract Builder similarityTopK(Integer similarityTopK);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder similarityTopK(Optional<Integer> similarityTopK);
+
+    /** Clears the value of similarityTopK field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSimilarityTopK() {
+      return similarityTopK(Optional.empty());
+    }
 
     /**
      * Setter for storeContext.
@@ -172,6 +217,16 @@ public abstract class VertexRagStore extends JsonSerializable {
     @JsonProperty("storeContext")
     public abstract Builder storeContext(boolean storeContext);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder storeContext(Optional<Boolean> storeContext);
+
+    /** Clears the value of storeContext field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStoreContext() {
+      return storeContext(Optional.empty());
+    }
+
     /**
      * Setter for vectorDistanceThreshold.
      *
@@ -180,6 +235,16 @@ public abstract class VertexRagStore extends JsonSerializable {
      */
     @JsonProperty("vectorDistanceThreshold")
     public abstract Builder vectorDistanceThreshold(Double vectorDistanceThreshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vectorDistanceThreshold(Optional<Double> vectorDistanceThreshold);
+
+    /** Clears the value of vectorDistanceThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVectorDistanceThreshold() {
+      return vectorDistanceThreshold(Optional.empty());
+    }
 
     public abstract VertexRagStore build();
   }

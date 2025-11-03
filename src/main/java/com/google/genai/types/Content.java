@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +45,7 @@ public abstract class Content extends JsonSerializable {
 
   /**
    * Optional. The producer of the content. Must be either 'user' or 'model'. Useful to set for
-   * multi-turn conversations, otherwise can be empty. If role is not specified, SDK will determine
-   * the role.
+   * multi-turn conversations, otherwise can be left blank or unset.
    */
   @JsonProperty("role")
   public abstract Optional<String> role();
@@ -83,6 +83,7 @@ public abstract class Content extends JsonSerializable {
      * <p>parts: List of parts that constitute a single message. Each part may have a different IANA
      * MIME type.
      */
+    @CanIgnoreReturnValue
     public Builder parts(Part... parts) {
       return parts(Arrays.asList(parts));
     }
@@ -93,6 +94,7 @@ public abstract class Content extends JsonSerializable {
      * <p>parts: List of parts that constitute a single message. Each part may have a different IANA
      * MIME type.
      */
+    @CanIgnoreReturnValue
     public Builder parts(Part.Builder... partsBuilders) {
       return parts(
           Arrays.asList(partsBuilders).stream()
@@ -100,15 +102,34 @@ public abstract class Content extends JsonSerializable {
               .collect(toImmutableList()));
     }
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parts(Optional<List<Part>> parts);
+
+    /** Clears the value of parts field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParts() {
+      return parts(Optional.empty());
+    }
+
     /**
      * Setter for role.
      *
      * <p>role: Optional. The producer of the content. Must be either 'user' or 'model'. Useful to
-     * set for multi-turn conversations, otherwise can be empty. If role is not specified, SDK will
-     * determine the role.
+     * set for multi-turn conversations, otherwise can be left blank or unset.
      */
     @JsonProperty("role")
     public abstract Builder role(String role);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder role(Optional<String> role);
+
+    /** Clears the value of role field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRole() {
+      return role(Optional.empty());
+    }
 
     public abstract Content build();
   }

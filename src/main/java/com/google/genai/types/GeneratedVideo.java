@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,8 +65,19 @@ public abstract class GeneratedVideo extends JsonSerializable {
      *
      * <p>video: The output video
      */
+    @CanIgnoreReturnValue
     public Builder video(Video.Builder videoBuilder) {
       return video(videoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder video(Optional<Video> video);
+
+    /** Clears the value of video field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideo() {
+      return video(Optional.empty());
     }
 
     public abstract GeneratedVideo build();

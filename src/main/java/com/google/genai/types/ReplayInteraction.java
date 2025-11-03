@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -68,8 +69,19 @@ public abstract class ReplayInteraction extends JsonSerializable {
      *
      * <p>request:
      */
+    @CanIgnoreReturnValue
     public Builder request(ReplayRequest.Builder requestBuilder) {
       return request(requestBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder request(Optional<ReplayRequest> request);
+
+    /** Clears the value of request field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRequest() {
+      return request(Optional.empty());
     }
 
     /**
@@ -85,8 +97,19 @@ public abstract class ReplayInteraction extends JsonSerializable {
      *
      * <p>response:
      */
+    @CanIgnoreReturnValue
     public Builder response(ReplayResponse.Builder responseBuilder) {
       return response(responseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder response(Optional<ReplayResponse> response);
+
+    /** Clears the value of response field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponse() {
+      return response(Optional.empty());
     }
 
     public abstract ReplayInteraction build();

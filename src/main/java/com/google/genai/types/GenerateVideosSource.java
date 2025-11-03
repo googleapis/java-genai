@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -73,6 +74,16 @@ public abstract class GenerateVideosSource extends JsonSerializable {
     @JsonProperty("prompt")
     public abstract Builder prompt(String prompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prompt(Optional<String> prompt);
+
+    /** Clears the value of prompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPrompt() {
+      return prompt(Optional.empty());
+    }
+
     /**
      * Setter for image.
      *
@@ -88,8 +99,19 @@ public abstract class GenerateVideosSource extends JsonSerializable {
      * <p>image: The input image for generating the videos. Optional if prompt is provided. Not
      * allowed if video is provided.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**
@@ -107,8 +129,19 @@ public abstract class GenerateVideosSource extends JsonSerializable {
      * <p>video: The input video for video extension use cases. Optional if prompt is provided. Not
      * allowed if image is provided.
      */
+    @CanIgnoreReturnValue
     public Builder video(Video.Builder videoBuilder) {
       return video(videoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder video(Optional<Video> video);
+
+    /** Clears the value of video field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideo() {
+      return video(Optional.empty());
     }
 
     public abstract GenerateVideosSource build();

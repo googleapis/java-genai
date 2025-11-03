@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -76,8 +77,19 @@ public abstract class EmbedContentResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -95,6 +107,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
      * <p>embeddings: The embeddings for each request, in the same order as provided in the batch
      * request.
      */
+    @CanIgnoreReturnValue
     public Builder embeddings(ContentEmbedding... embeddings) {
       return embeddings(Arrays.asList(embeddings));
     }
@@ -105,11 +118,22 @@ public abstract class EmbedContentResponse extends JsonSerializable {
      * <p>embeddings: The embeddings for each request, in the same order as provided in the batch
      * request.
      */
+    @CanIgnoreReturnValue
     public Builder embeddings(ContentEmbedding.Builder... embeddingsBuilders) {
       return embeddings(
           Arrays.asList(embeddingsBuilders).stream()
               .map(ContentEmbedding.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder embeddings(Optional<List<ContentEmbedding>> embeddings);
+
+    /** Clears the value of embeddings field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEmbeddings() {
+      return embeddings(Optional.empty());
     }
 
     /**
@@ -125,8 +149,19 @@ public abstract class EmbedContentResponse extends JsonSerializable {
      *
      * <p>metadata: Vertex API only. Metadata about the request.
      */
+    @CanIgnoreReturnValue
     public Builder metadata(EmbedContentMetadata.Builder metadataBuilder) {
       return metadata(metadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder metadata(Optional<EmbedContentMetadata> metadata);
+
+    /** Clears the value of metadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMetadata() {
+      return metadata(Optional.empty());
     }
 
     public abstract EmbedContentResponse build();

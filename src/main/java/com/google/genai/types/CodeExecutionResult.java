@@ -70,6 +70,16 @@ public abstract class CodeExecutionResult extends JsonSerializable {
     @JsonProperty("outcome")
     public abstract Builder outcome(Outcome outcome);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outcome(Optional<Outcome> outcome);
+
+    /** Clears the value of outcome field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutcome() {
+      return outcome(Optional.empty());
+    }
+
     /**
      * Setter for outcome given a known enum.
      *
@@ -98,6 +108,16 @@ public abstract class CodeExecutionResult extends JsonSerializable {
      */
     @JsonProperty("output")
     public abstract Builder output(String output);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder output(Optional<String> output);
+
+    /** Clears the value of output field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutput() {
+      return output(Optional.empty());
+    }
 
     public abstract CodeExecutionResult build();
   }

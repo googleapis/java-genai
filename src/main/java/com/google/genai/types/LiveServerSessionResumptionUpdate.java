@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -92,6 +93,16 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
     @JsonProperty("newHandle")
     public abstract Builder newHandle(String newHandle);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder newHandle(Optional<String> newHandle);
+
+    /** Clears the value of newHandle field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNewHandle() {
+      return newHandle(Optional.empty());
+    }
+
     /**
      * Setter for resumable.
      *
@@ -103,6 +114,16 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
      */
     @JsonProperty("resumable")
     public abstract Builder resumable(boolean resumable);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resumable(Optional<Boolean> resumable);
+
+    /** Clears the value of resumable field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResumable() {
+      return resumable(Optional.empty());
+    }
 
     /**
      * Setter for lastConsumedClientMessageIndex.
@@ -122,6 +143,16 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
      */
     @JsonProperty("lastConsumedClientMessageIndex")
     public abstract Builder lastConsumedClientMessageIndex(Long lastConsumedClientMessageIndex);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder lastConsumedClientMessageIndex(Optional<Long> lastConsumedClientMessageIndex);
+
+    /** Clears the value of lastConsumedClientMessageIndex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLastConsumedClientMessageIndex() {
+      return lastConsumedClientMessageIndex(Optional.empty());
+    }
 
     public abstract LiveServerSessionResumptionUpdate build();
   }

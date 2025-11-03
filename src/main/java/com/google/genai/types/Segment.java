@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -78,6 +79,16 @@ public abstract class Segment extends JsonSerializable {
     @JsonProperty("endIndex")
     public abstract Builder endIndex(Integer endIndex);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endIndex(Optional<Integer> endIndex);
+
+    /** Clears the value of endIndex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndIndex() {
+      return endIndex(Optional.empty());
+    }
+
     /**
      * Setter for partIndex.
      *
@@ -85,6 +96,16 @@ public abstract class Segment extends JsonSerializable {
      */
     @JsonProperty("partIndex")
     public abstract Builder partIndex(Integer partIndex);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder partIndex(Optional<Integer> partIndex);
+
+    /** Clears the value of partIndex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPartIndex() {
+      return partIndex(Optional.empty());
+    }
 
     /**
      * Setter for startIndex.
@@ -95,6 +116,16 @@ public abstract class Segment extends JsonSerializable {
     @JsonProperty("startIndex")
     public abstract Builder startIndex(Integer startIndex);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startIndex(Optional<Integer> startIndex);
+
+    /** Clears the value of startIndex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartIndex() {
+      return startIndex(Optional.empty());
+    }
+
     /**
      * Setter for text.
      *
@@ -102,6 +133,16 @@ public abstract class Segment extends JsonSerializable {
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
 
     public abstract Segment build();
   }

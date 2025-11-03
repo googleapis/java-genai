@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Config for filters. */
+/** Config for filters. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = RagRetrievalConfigFilter.Builder.class)
 public abstract class RagRetrievalConfigFilter extends JsonSerializable {
@@ -67,6 +68,16 @@ public abstract class RagRetrievalConfigFilter extends JsonSerializable {
     @JsonProperty("metadataFilter")
     public abstract Builder metadataFilter(String metadataFilter);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder metadataFilter(Optional<String> metadataFilter);
+
+    /** Clears the value of metadataFilter field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMetadataFilter() {
+      return metadataFilter(Optional.empty());
+    }
+
     /**
      * Setter for vectorDistanceThreshold.
      *
@@ -76,6 +87,16 @@ public abstract class RagRetrievalConfigFilter extends JsonSerializable {
     @JsonProperty("vectorDistanceThreshold")
     public abstract Builder vectorDistanceThreshold(Double vectorDistanceThreshold);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vectorDistanceThreshold(Optional<Double> vectorDistanceThreshold);
+
+    /** Clears the value of vectorDistanceThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVectorDistanceThreshold() {
+      return vectorDistanceThreshold(Optional.empty());
+    }
+
     /**
      * Setter for vectorSimilarityThreshold.
      *
@@ -84,6 +105,16 @@ public abstract class RagRetrievalConfigFilter extends JsonSerializable {
      */
     @JsonProperty("vectorSimilarityThreshold")
     public abstract Builder vectorSimilarityThreshold(Double vectorSimilarityThreshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vectorSimilarityThreshold(Optional<Double> vectorSimilarityThreshold);
+
+    /** Clears the value of vectorSimilarityThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVectorSimilarityThreshold() {
+      return vectorSimilarityThreshold(Optional.empty());
+    }
 
     public abstract RagRetrievalConfigFilter build();
   }

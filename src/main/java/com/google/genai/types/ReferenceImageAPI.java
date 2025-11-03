@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -90,8 +91,19 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      *
      * <p>referenceImage: The reference image for the editing operation.
      */
+    @CanIgnoreReturnValue
     public Builder referenceImage(Image.Builder referenceImageBuilder) {
       return referenceImage(referenceImageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceImage(Optional<Image> referenceImage);
+
+    /** Clears the value of referenceImage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceImage() {
+      return referenceImage(Optional.empty());
     }
 
     /**
@@ -102,6 +114,16 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
     @JsonProperty("referenceId")
     public abstract Builder referenceId(Integer referenceId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceId(Optional<Integer> referenceId);
+
+    /** Clears the value of referenceId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceId() {
+      return referenceId(Optional.empty());
+    }
+
     /**
      * Setter for referenceType.
      *
@@ -109,6 +131,16 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      */
     @JsonProperty("referenceType")
     public abstract Builder referenceType(String referenceType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceType(Optional<String> referenceType);
+
+    /** Clears the value of referenceType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceType() {
+      return referenceType(Optional.empty());
+    }
 
     /**
      * Setter for maskImageConfig.
@@ -123,8 +155,19 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      *
      * <p>maskImageConfig: Configuration for the mask reference image.
      */
+    @CanIgnoreReturnValue
     public Builder maskImageConfig(MaskReferenceConfig.Builder maskImageConfigBuilder) {
       return maskImageConfig(maskImageConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maskImageConfig(Optional<MaskReferenceConfig> maskImageConfig);
+
+    /** Clears the value of maskImageConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaskImageConfig() {
+      return maskImageConfig(Optional.empty());
     }
 
     /**
@@ -140,8 +183,19 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      *
      * <p>controlImageConfig: Configuration for the control reference image.
      */
+    @CanIgnoreReturnValue
     public Builder controlImageConfig(ControlReferenceConfig.Builder controlImageConfigBuilder) {
       return controlImageConfig(controlImageConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder controlImageConfig(Optional<ControlReferenceConfig> controlImageConfig);
+
+    /** Clears the value of controlImageConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearControlImageConfig() {
+      return controlImageConfig(Optional.empty());
     }
 
     /**
@@ -157,8 +211,19 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      *
      * <p>styleImageConfig: Configuration for the style reference image.
      */
+    @CanIgnoreReturnValue
     public Builder styleImageConfig(StyleReferenceConfig.Builder styleImageConfigBuilder) {
       return styleImageConfig(styleImageConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder styleImageConfig(Optional<StyleReferenceConfig> styleImageConfig);
+
+    /** Clears the value of styleImageConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStyleImageConfig() {
+      return styleImageConfig(Optional.empty());
     }
 
     /**
@@ -174,8 +239,19 @@ public abstract class ReferenceImageAPI extends JsonSerializable {
      *
      * <p>subjectImageConfig: Configuration for the subject reference image.
      */
+    @CanIgnoreReturnValue
     public Builder subjectImageConfig(SubjectReferenceConfig.Builder subjectImageConfigBuilder) {
       return subjectImageConfig(subjectImageConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder subjectImageConfig(Optional<SubjectReferenceConfig> subjectImageConfig);
+
+    /** Clears the value of subjectImageConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSubjectImageConfig() {
+      return subjectImageConfig(Optional.empty());
     }
 
     public abstract ReferenceImageAPI build();

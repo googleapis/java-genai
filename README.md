@@ -15,7 +15,7 @@ If you're using Maven, add the following to your dependencies:
   <dependency>
     <groupId>com.google.genai</groupId>
     <artifactId>google-genai</artifactId>
-    <version>1.20.0</version>
+    <version>1.25.0</version>
   </dependency>
 </dependencies>
 ```
@@ -160,6 +160,30 @@ Beyond client-level configuration, `HttpOptions` can also be set on a
 per-request basis, providing maximum flexibility for diverse API call settings.
 See [this example](https://github.com/googleapis/java-genai/blob/main/examples/src/main/java/com/google/genai/examples/RequestLevelHttpOptions.java)
 for more details.
+
+### HttpRetryOptions
+
+[HttpRetryOptions](https://github.com/googleapis/java-genai/blob/main/src/main/java/com/google/genai/types/HttpRetryOptions.java)
+allows you to configure the automatic retry behavior for failed API calls. You
+can customize key settings like:
+
+  * Total number of attempts.
+  * Which HTTP status codes should trigger a retry (e.g., 429 for rate limits).
+  * Backoff strategy, including the initial delay and maximum delay between retries.
+
+```java
+HttpOptions httpOptions = HttpOptions.builder()
+  .retryOptions(
+      HttpRetryOptions.builder()
+          .attempts(3)
+          .httpStatusCodes(408, 429))
+  .build();
+```
+
+Since HttpRetryOptions is part of HttpOptions, it supports being set at the
+client level (as shown) or on a per-request basis. Note that Providing
+`HttpRetryOptions` for a specific request will completely override any default
+retry settings configured on the client.
 
 ### ClientOptions
 [ClientOptions](https://github.com/googleapis/java-genai/blob/main/src/main/java/com/google/genai/types/ClientOptions.java)

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -86,8 +87,19 @@ public abstract class CountTokensConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -103,8 +115,19 @@ public abstract class CountTokensConfig extends JsonSerializable {
      *
      * <p>systemInstruction: Instructions for the model to steer it toward better performance.
      */
+    @CanIgnoreReturnValue
     public Builder systemInstruction(Content.Builder systemInstructionBuilder) {
       return systemInstruction(systemInstructionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder systemInstruction(Optional<Content> systemInstruction);
+
+    /** Clears the value of systemInstruction field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSystemInstruction() {
+      return systemInstruction(Optional.empty());
     }
 
     /**
@@ -122,6 +145,7 @@ public abstract class CountTokensConfig extends JsonSerializable {
      * <p>tools: Code that enables the system to interact with external systems to perform an action
      * outside of the knowledge and scope of the model.
      */
+    @CanIgnoreReturnValue
     public Builder tools(Tool... tools) {
       return tools(Arrays.asList(tools));
     }
@@ -132,11 +156,22 @@ public abstract class CountTokensConfig extends JsonSerializable {
      * <p>tools: Code that enables the system to interact with external systems to perform an action
      * outside of the knowledge and scope of the model.
      */
+    @CanIgnoreReturnValue
     public Builder tools(Tool.Builder... toolsBuilders) {
       return tools(
           Arrays.asList(toolsBuilders).stream()
               .map(Tool.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tools(Optional<List<Tool>> tools);
+
+    /** Clears the value of tools field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTools() {
+      return tools(Optional.empty());
     }
 
     /**
@@ -154,8 +189,19 @@ public abstract class CountTokensConfig extends JsonSerializable {
      * <p>generationConfig: Configuration that the model uses to generate the response. Not
      * supported by the Gemini Developer API.
      */
+    @CanIgnoreReturnValue
     public Builder generationConfig(GenerationConfig.Builder generationConfigBuilder) {
       return generationConfig(generationConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generationConfig(Optional<GenerationConfig> generationConfig);
+
+    /** Clears the value of generationConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGenerationConfig() {
+      return generationConfig(Optional.empty());
     }
 
     public abstract CountTokensConfig build();

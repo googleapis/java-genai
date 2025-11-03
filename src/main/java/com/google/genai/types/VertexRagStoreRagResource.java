@@ -22,12 +22,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** The definition of the Rag resource. */
+/** The definition of the Rag resource. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = VertexRagStoreRagResource.Builder.class)
 public abstract class VertexRagStoreRagResource extends JsonSerializable {
@@ -69,6 +70,16 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
     @JsonProperty("ragCorpus")
     public abstract Builder ragCorpus(String ragCorpus);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ragCorpus(Optional<String> ragCorpus);
+
+    /** Clears the value of ragCorpus field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRagCorpus() {
+      return ragCorpus(Optional.empty());
+    }
+
     /**
      * Setter for ragFileIds.
      *
@@ -84,8 +95,19 @@ public abstract class VertexRagStoreRagResource extends JsonSerializable {
      * <p>ragFileIds: Optional. rag_file_id. The files should be in the same rag_corpus set in
      * rag_corpus field.
      */
+    @CanIgnoreReturnValue
     public Builder ragFileIds(String... ragFileIds) {
       return ragFileIds(Arrays.asList(ragFileIds));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ragFileIds(Optional<List<String>> ragFileIds);
+
+    /** Clears the value of ragFileIds field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRagFileIds() {
+      return ragFileIds(Optional.empty());
     }
 
     public abstract VertexRagStoreRagResource build();

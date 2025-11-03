@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Completion and its preference score. */
+/** Completion and its preference score. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GeminiPreferenceExampleCompletion.Builder.class)
 public abstract class GeminiPreferenceExampleCompletion extends JsonSerializable {
@@ -71,8 +72,19 @@ public abstract class GeminiPreferenceExampleCompletion extends JsonSerializable
      *
      * <p>completion: Single turn completion for the given prompt.
      */
+    @CanIgnoreReturnValue
     public Builder completion(Content.Builder completionBuilder) {
       return completion(completionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder completion(Optional<Content> completion);
+
+    /** Clears the value of completion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCompletion() {
+      return completion(Optional.empty());
     }
 
     /**
@@ -82,6 +94,16 @@ public abstract class GeminiPreferenceExampleCompletion extends JsonSerializable
      */
     @JsonProperty("score")
     public abstract Builder score(Float score);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder score(Optional<Float> score);
+
+    /** Clears the value of score field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScore() {
+      return score(Optional.empty());
+    }
 
     public abstract GeminiPreferenceExampleCompletion build();
   }

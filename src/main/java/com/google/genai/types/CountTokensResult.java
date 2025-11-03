@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -58,6 +59,16 @@ public abstract class CountTokensResult extends JsonSerializable {
      */
     @JsonProperty("totalTokens")
     public abstract Builder totalTokens(Integer totalTokens);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalTokens(Optional<Integer> totalTokens);
+
+    /** Clears the value of totalTokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalTokens() {
+      return totalTokens(Optional.empty());
+    }
 
     public abstract CountTokensResult build();
   }

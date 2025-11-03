@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -70,8 +71,19 @@ public abstract class ContentEmbedding extends JsonSerializable {
      *
      * <p>values: A list of floats representing an embedding.
      */
+    @CanIgnoreReturnValue
     public Builder values(Float... values) {
       return values(Arrays.asList(values));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder values(Optional<List<Float>> values);
+
+    /** Clears the value of values field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValues() {
+      return values(Optional.empty());
     }
 
     /**
@@ -87,8 +99,19 @@ public abstract class ContentEmbedding extends JsonSerializable {
      *
      * <p>statistics: Vertex API only. Statistics of the input text associated with this embedding.
      */
+    @CanIgnoreReturnValue
     public Builder statistics(ContentEmbeddingStatistics.Builder statisticsBuilder) {
       return statistics(statisticsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder statistics(Optional<ContentEmbeddingStatistics> statistics);
+
+    /** Clears the value of statistics field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStatistics() {
+      return statistics(Optional.empty());
     }
 
     public abstract ContentEmbedding build();

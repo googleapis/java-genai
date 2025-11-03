@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -81,6 +82,16 @@ public abstract class AutomaticFunctionCallingConfig extends JsonSerializable {
     @JsonProperty("disable")
     public abstract Builder disable(boolean disable);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder disable(Optional<Boolean> disable);
+
+    /** Clears the value of disable field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisable() {
+      return disable(Optional.empty());
+    }
+
     /**
      * Setter for maximumRemoteCalls.
      *
@@ -91,6 +102,16 @@ public abstract class AutomaticFunctionCallingConfig extends JsonSerializable {
     @JsonProperty("maximumRemoteCalls")
     public abstract Builder maximumRemoteCalls(Integer maximumRemoteCalls);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maximumRemoteCalls(Optional<Integer> maximumRemoteCalls);
+
+    /** Clears the value of maximumRemoteCalls field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaximumRemoteCalls() {
+      return maximumRemoteCalls(Optional.empty());
+    }
+
     /**
      * Setter for ignoreCallHistory.
      *
@@ -100,6 +121,16 @@ public abstract class AutomaticFunctionCallingConfig extends JsonSerializable {
      */
     @JsonProperty("ignoreCallHistory")
     public abstract Builder ignoreCallHistory(boolean ignoreCallHistory);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ignoreCallHistory(Optional<Boolean> ignoreCallHistory);
+
+    /** Clears the value of ignoreCallHistory field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIgnoreCallHistory() {
+      return ignoreCallHistory(Optional.empty());
+    }
 
     public abstract AutomaticFunctionCallingConfig build();
   }

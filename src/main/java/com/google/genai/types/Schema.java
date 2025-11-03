@@ -178,6 +178,7 @@ public abstract class Schema extends JsonSerializable {
      * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
      * in the list.
      */
+    @CanIgnoreReturnValue
     public Builder anyOf(Schema... anyOf) {
       return anyOf(Arrays.asList(anyOf));
     }
@@ -188,11 +189,22 @@ public abstract class Schema extends JsonSerializable {
      * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
      * in the list.
      */
+    @CanIgnoreReturnValue
     public Builder anyOf(Schema.Builder... anyOfBuilders) {
       return anyOf(
           Arrays.asList(anyOfBuilders).stream()
               .map(Schema.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder anyOf(Optional<List<Schema>> anyOf);
+
+    /** Clears the value of anyOf field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAnyOf() {
+      return anyOf(Optional.empty());
     }
 
     /**
@@ -203,6 +215,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("default")
     public abstract Builder default_(Object default_);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder default_(Optional<Object> default_);
+
+    /** Clears the value of default_ field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDefault_() {
+      return default_(Optional.empty());
+    }
+
     /**
      * Setter for description.
      *
@@ -210,6 +232,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("description")
     public abstract Builder description(String description);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder description(Optional<String> description);
+
+    /** Clears the value of description field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDescription() {
+      return description(Optional.empty());
+    }
 
     /**
      * Setter for enum_.
@@ -230,8 +262,19 @@ public abstract class Schema extends JsonSerializable {
      * "SOUTH", "WEST"]} 2. We can define apartment number as : {type:INTEGER, format:enum,
      * enum:["101", "201", "301"]}
      */
+    @CanIgnoreReturnValue
     public Builder enum_(String... enum_) {
       return enum_(Arrays.asList(enum_));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enum_(Optional<List<String>> enum_);
+
+    /** Clears the value of enum_ field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnum_() {
+      return enum_(Optional.empty());
     }
 
     /**
@@ -242,6 +285,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("example")
     public abstract Builder example(Object example);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder example(Optional<Object> example);
+
+    /** Clears the value of example field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExample() {
+      return example(Optional.empty());
+    }
+
     /**
      * Setter for format.
      *
@@ -250,6 +303,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("format")
     public abstract Builder format(String format);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder format(Optional<String> format);
+
+    /** Clears the value of format field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFormat() {
+      return format(Optional.empty());
+    }
 
     /**
      * Setter for items.
@@ -264,8 +327,19 @@ public abstract class Schema extends JsonSerializable {
      *
      * <p>items: Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY.
      */
+    @CanIgnoreReturnValue
     public Builder items(Schema.Builder itemsBuilder) {
       return items(itemsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder items(Optional<Schema> items);
+
+    /** Clears the value of items field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearItems() {
+      return items(Optional.empty());
     }
 
     /**
@@ -276,6 +350,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("maxItems")
     public abstract Builder maxItems(Long maxItems);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxItems(Optional<Long> maxItems);
+
+    /** Clears the value of maxItems field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxItems() {
+      return maxItems(Optional.empty());
+    }
+
     /**
      * Setter for maxLength.
      *
@@ -283,6 +367,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("maxLength")
     public abstract Builder maxLength(Long maxLength);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxLength(Optional<Long> maxLength);
+
+    /** Clears the value of maxLength field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxLength() {
+      return maxLength(Optional.empty());
+    }
 
     /**
      * Setter for maxProperties.
@@ -292,6 +386,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("maxProperties")
     public abstract Builder maxProperties(Long maxProperties);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxProperties(Optional<Long> maxProperties);
+
+    /** Clears the value of maxProperties field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxProperties() {
+      return maxProperties(Optional.empty());
+    }
+
     /**
      * Setter for maximum.
      *
@@ -299,6 +403,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("maximum")
     public abstract Builder maximum(Double maximum);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maximum(Optional<Double> maximum);
+
+    /** Clears the value of maximum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaximum() {
+      return maximum(Optional.empty());
+    }
 
     /**
      * Setter for minItems.
@@ -308,6 +422,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("minItems")
     public abstract Builder minItems(Long minItems);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder minItems(Optional<Long> minItems);
+
+    /** Clears the value of minItems field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMinItems() {
+      return minItems(Optional.empty());
+    }
+
     /**
      * Setter for minLength.
      *
@@ -316,6 +440,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("minLength")
     public abstract Builder minLength(Long minLength);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder minLength(Optional<Long> minLength);
+
+    /** Clears the value of minLength field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMinLength() {
+      return minLength(Optional.empty());
+    }
+
     /**
      * Setter for minProperties.
      *
@@ -323,6 +457,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("minProperties")
     public abstract Builder minProperties(Long minProperties);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder minProperties(Optional<Long> minProperties);
+
+    /** Clears the value of minProperties field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMinProperties() {
+      return minProperties(Optional.empty());
+    }
 
     /**
      * Setter for minimum.
@@ -333,6 +477,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("minimum")
     public abstract Builder minimum(Double minimum);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder minimum(Optional<Double> minimum);
+
+    /** Clears the value of minimum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMinimum() {
+      return minimum(Optional.empty());
+    }
+
     /**
      * Setter for nullable.
      *
@@ -340,6 +494,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("nullable")
     public abstract Builder nullable(boolean nullable);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nullable(Optional<Boolean> nullable);
+
+    /** Clears the value of nullable field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNullable() {
+      return nullable(Optional.empty());
+    }
 
     /**
      * Setter for pattern.
@@ -350,6 +514,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("pattern")
     public abstract Builder pattern(String pattern);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pattern(Optional<String> pattern);
+
+    /** Clears the value of pattern field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPattern() {
+      return pattern(Optional.empty());
+    }
+
     /**
      * Setter for properties.
      *
@@ -357,6 +531,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("properties")
     public abstract Builder properties(Map<String, Schema> properties);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder properties(Optional<Map<String, Schema>> properties);
+
+    /** Clears the value of properties field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProperties() {
+      return properties(Optional.empty());
+    }
 
     /**
      * Setter for propertyOrdering.
@@ -373,8 +557,19 @@ public abstract class Schema extends JsonSerializable {
      * <p>propertyOrdering: Optional. The order of the properties. Not a standard field in open api
      * spec. Only used to support the order of the properties.
      */
+    @CanIgnoreReturnValue
     public Builder propertyOrdering(String... propertyOrdering) {
       return propertyOrdering(Arrays.asList(propertyOrdering));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder propertyOrdering(Optional<List<String>> propertyOrdering);
+
+    /** Clears the value of propertyOrdering field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPropertyOrdering() {
+      return propertyOrdering(Optional.empty());
     }
 
     /**
@@ -390,8 +585,19 @@ public abstract class Schema extends JsonSerializable {
      *
      * <p>required: Optional. Required properties of Type.OBJECT.
      */
+    @CanIgnoreReturnValue
     public Builder required(String... required) {
       return required(Arrays.asList(required));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder required(Optional<List<String>> required);
+
+    /** Clears the value of required field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRequired() {
+      return required(Optional.empty());
     }
 
     /**
@@ -402,6 +608,16 @@ public abstract class Schema extends JsonSerializable {
     @JsonProperty("title")
     public abstract Builder title(String title);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder title(Optional<String> title);
+
+    /** Clears the value of title field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTitle() {
+      return title(Optional.empty());
+    }
+
     /**
      * Setter for type.
      *
@@ -409,6 +625,16 @@ public abstract class Schema extends JsonSerializable {
      */
     @JsonProperty("type")
     public abstract Builder type(Type type);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder type(Optional<Type> type);
+
+    /** Clears the value of type field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearType() {
+      return type(Optional.empty());
+    }
 
     /**
      * Setter for type given a known enum.

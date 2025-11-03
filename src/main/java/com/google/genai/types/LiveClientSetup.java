@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -120,6 +121,16 @@ public abstract class LiveClientSetup extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for generationConfig.
      *
@@ -135,8 +146,19 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>generationConfig: The generation configuration for the session. Note: only a subset of
      * fields are supported.
      */
+    @CanIgnoreReturnValue
     public Builder generationConfig(GenerationConfig.Builder generationConfigBuilder) {
       return generationConfig(generationConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generationConfig(Optional<GenerationConfig> generationConfig);
+
+    /** Clears the value of generationConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGenerationConfig() {
+      return generationConfig(Optional.empty());
     }
 
     /**
@@ -154,8 +176,19 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>systemInstruction: The user provided system instructions for the model. Note: only text
      * should be used in parts and content in each part will be in a separate paragraph.
      */
+    @CanIgnoreReturnValue
     public Builder systemInstruction(Content.Builder systemInstructionBuilder) {
       return systemInstruction(systemInstructionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder systemInstruction(Optional<Content> systemInstruction);
+
+    /** Clears the value of systemInstruction field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSystemInstruction() {
+      return systemInstruction(Optional.empty());
     }
 
     /**
@@ -177,6 +210,7 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
      * perform an action, or set of actions, outside of knowledge and scope of the model.
      */
+    @CanIgnoreReturnValue
     public Builder tools(Tool... tools) {
       return tools(Arrays.asList(tools));
     }
@@ -189,11 +223,22 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>A `Tool` is a piece of code that enables the system to interact with external systems to
      * perform an action, or set of actions, outside of knowledge and scope of the model.
      */
+    @CanIgnoreReturnValue
     public Builder tools(Tool.Builder... toolsBuilders) {
       return tools(
           Arrays.asList(toolsBuilders).stream()
               .map(Tool.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tools(Optional<List<Tool>> tools);
+
+    /** Clears the value of tools field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTools() {
+      return tools(Optional.empty());
     }
 
     /**
@@ -209,8 +254,19 @@ public abstract class LiveClientSetup extends JsonSerializable {
      *
      * <p>realtimeInputConfig: Configures the realtime input behavior in BidiGenerateContent.
      */
+    @CanIgnoreReturnValue
     public Builder realtimeInputConfig(RealtimeInputConfig.Builder realtimeInputConfigBuilder) {
       return realtimeInputConfig(realtimeInputConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder realtimeInputConfig(Optional<RealtimeInputConfig> realtimeInputConfig);
+
+    /** Clears the value of realtimeInputConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRealtimeInputConfig() {
+      return realtimeInputConfig(Optional.empty());
     }
 
     /**
@@ -230,8 +286,19 @@ public abstract class LiveClientSetup extends JsonSerializable {
      *
      * <p>If included server will send SessionResumptionUpdate messages.
      */
+    @CanIgnoreReturnValue
     public Builder sessionResumption(SessionResumptionConfig.Builder sessionResumptionBuilder) {
       return sessionResumption(sessionResumptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sessionResumption(Optional<SessionResumptionConfig> sessionResumption);
+
+    /** Clears the value of sessionResumption field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSessionResumption() {
+      return sessionResumption(Optional.empty());
     }
 
     /**
@@ -252,9 +319,21 @@ public abstract class LiveClientSetup extends JsonSerializable {
      *
      * <p>If included, server will compress context window to fit into given length.
      */
+    @CanIgnoreReturnValue
     public Builder contextWindowCompression(
         ContextWindowCompressionConfig.Builder contextWindowCompressionBuilder) {
       return contextWindowCompression(contextWindowCompressionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contextWindowCompression(
+        Optional<ContextWindowCompressionConfig> contextWindowCompression);
+
+    /** Clears the value of contextWindowCompression field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContextWindowCompression() {
+      return contextWindowCompression(Optional.empty());
     }
 
     /**
@@ -273,9 +352,21 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>inputAudioTranscription: The transcription of the input aligns with the input audio
      * language.
      */
+    @CanIgnoreReturnValue
     public Builder inputAudioTranscription(
         AudioTranscriptionConfig.Builder inputAudioTranscriptionBuilder) {
       return inputAudioTranscription(inputAudioTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inputAudioTranscription(
+        Optional<AudioTranscriptionConfig> inputAudioTranscription);
+
+    /** Clears the value of inputAudioTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInputAudioTranscription() {
+      return inputAudioTranscription(Optional.empty());
     }
 
     /**
@@ -294,9 +385,21 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>outputAudioTranscription: The transcription of the output aligns with the language code
      * specified for the output audio.
      */
+    @CanIgnoreReturnValue
     public Builder outputAudioTranscription(
         AudioTranscriptionConfig.Builder outputAudioTranscriptionBuilder) {
       return outputAudioTranscription(outputAudioTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputAudioTranscription(
+        Optional<AudioTranscriptionConfig> outputAudioTranscription);
+
+    /** Clears the value of outputAudioTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputAudioTranscription() {
+      return outputAudioTranscription(Optional.empty());
     }
 
     /**
@@ -314,8 +417,19 @@ public abstract class LiveClientSetup extends JsonSerializable {
      * <p>proactivity: Configures the proactivity of the model. This allows the model to respond
      * proactively to the input and to ignore irrelevant input.
      */
+    @CanIgnoreReturnValue
     public Builder proactivity(ProactivityConfig.Builder proactivityBuilder) {
       return proactivity(proactivityBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder proactivity(Optional<ProactivityConfig> proactivity);
+
+    /** Clears the value of proactivity field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProactivity() {
+      return proactivity(Optional.empty());
     }
 
     public abstract LiveClientSetup build();

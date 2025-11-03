@@ -150,8 +150,19 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -162,6 +173,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("numberOfVideos")
     public abstract Builder numberOfVideos(Integer numberOfVideos);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder numberOfVideos(Optional<Integer> numberOfVideos);
+
+    /** Clears the value of numberOfVideos field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNumberOfVideos() {
+      return numberOfVideos(Optional.empty());
+    }
+
     /**
      * Setter for outputGcsUri.
      *
@@ -169,6 +190,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("outputGcsUri")
     public abstract Builder outputGcsUri(String outputGcsUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputGcsUri(Optional<String> outputGcsUri);
+
+    /** Clears the value of outputGcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputGcsUri() {
+      return outputGcsUri(Optional.empty());
+    }
 
     /**
      * Setter for fps.
@@ -178,6 +209,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("fps")
     public abstract Builder fps(Integer fps);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fps(Optional<Integer> fps);
+
+    /** Clears the value of fps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFps() {
+      return fps(Optional.empty());
+    }
+
     /**
      * Setter for durationSeconds.
      *
@@ -185,6 +226,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("durationSeconds")
     public abstract Builder durationSeconds(Integer durationSeconds);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder durationSeconds(Optional<Integer> durationSeconds);
+
+    /** Clears the value of durationSeconds field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDurationSeconds() {
+      return durationSeconds(Optional.empty());
+    }
 
     /**
      * Setter for seed.
@@ -196,6 +247,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("seed")
     public abstract Builder seed(Integer seed);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder seed(Optional<Integer> seed);
+
+    /** Clears the value of seed field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSeed() {
+      return seed(Optional.empty());
+    }
+
     /**
      * Setter for aspectRatio.
      *
@@ -205,6 +266,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("aspectRatio")
     public abstract Builder aspectRatio(String aspectRatio);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder aspectRatio(Optional<String> aspectRatio);
+
+    /** Clears the value of aspectRatio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAspectRatio() {
+      return aspectRatio(Optional.empty());
+    }
+
     /**
      * Setter for resolution.
      *
@@ -212,6 +283,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("resolution")
     public abstract Builder resolution(String resolution);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resolution(Optional<String> resolution);
+
+    /** Clears the value of resolution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResolution() {
+      return resolution(Optional.empty());
+    }
 
     /**
      * Setter for personGeneration.
@@ -222,6 +303,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("personGeneration")
     public abstract Builder personGeneration(String personGeneration);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personGeneration(Optional<String> personGeneration);
+
+    /** Clears the value of personGeneration field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonGeneration() {
+      return personGeneration(Optional.empty());
+    }
+
     /**
      * Setter for pubsubTopic.
      *
@@ -229,6 +320,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("pubsubTopic")
     public abstract Builder pubsubTopic(String pubsubTopic);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pubsubTopic(Optional<String> pubsubTopic);
+
+    /** Clears the value of pubsubTopic field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPubsubTopic() {
+      return pubsubTopic(Optional.empty());
+    }
 
     /**
      * Setter for negativePrompt.
@@ -238,6 +339,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("negativePrompt")
     public abstract Builder negativePrompt(String negativePrompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder negativePrompt(Optional<String> negativePrompt);
+
+    /** Clears the value of negativePrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNegativePrompt() {
+      return negativePrompt(Optional.empty());
+    }
+
     /**
      * Setter for enhancePrompt.
      *
@@ -246,6 +357,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @JsonProperty("enhancePrompt")
     public abstract Builder enhancePrompt(boolean enhancePrompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enhancePrompt(Optional<Boolean> enhancePrompt);
+
+    /** Clears the value of enhancePrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnhancePrompt() {
+      return enhancePrompt(Optional.empty());
+    }
+
     /**
      * Setter for generateAudio.
      *
@@ -253,6 +374,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("generateAudio")
     public abstract Builder generateAudio(boolean generateAudio);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generateAudio(Optional<Boolean> generateAudio);
+
+    /** Clears the value of generateAudio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGenerateAudio() {
+      return generateAudio(Optional.empty());
+    }
 
     /**
      * Setter for lastFrame.
@@ -269,8 +400,19 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      * <p>lastFrame: Image to use as the last frame of generated videos. Only supported for image to
      * video use cases.
      */
+    @CanIgnoreReturnValue
     public Builder lastFrame(Image.Builder lastFrameBuilder) {
       return lastFrame(lastFrameBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder lastFrame(Optional<Image> lastFrame);
+
+    /** Clears the value of lastFrame field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLastFrame() {
+      return lastFrame(Optional.empty());
     }
 
     /**
@@ -292,6 +434,7 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      * field are not supported. Each image must be associated with a type. Veo 2 supports up to 3
      * asset images *or* 1 style image.
      */
+    @CanIgnoreReturnValue
     public Builder referenceImages(VideoGenerationReferenceImage... referenceImages) {
       return referenceImages(Arrays.asList(referenceImages));
     }
@@ -304,12 +447,23 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      * field are not supported. Each image must be associated with a type. Veo 2 supports up to 3
      * asset images *or* 1 style image.
      */
+    @CanIgnoreReturnValue
     public Builder referenceImages(
         VideoGenerationReferenceImage.Builder... referenceImagesBuilders) {
       return referenceImages(
           Arrays.asList(referenceImagesBuilders).stream()
               .map(VideoGenerationReferenceImage.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceImages(Optional<List<VideoGenerationReferenceImage>> referenceImages);
+
+    /** Clears the value of referenceImages field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceImages() {
+      return referenceImages(Optional.empty());
     }
 
     /**
@@ -325,8 +479,19 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      *
      * <p>mask: The mask to use for generating videos.
      */
+    @CanIgnoreReturnValue
     public Builder mask(VideoGenerationMask.Builder maskBuilder) {
       return mask(maskBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mask(Optional<VideoGenerationMask> mask);
+
+    /** Clears the value of mask field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMask() {
+      return mask(Optional.empty());
     }
 
     /**
@@ -336,6 +501,16 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
      */
     @JsonProperty("compressionQuality")
     public abstract Builder compressionQuality(VideoCompressionQuality compressionQuality);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder compressionQuality(Optional<VideoCompressionQuality> compressionQuality);
+
+    /** Clears the value of compressionQuality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCompressionQuality() {
+      return compressionQuality(Optional.empty());
+    }
 
     /**
      * Setter for compressionQuality given a known enum.

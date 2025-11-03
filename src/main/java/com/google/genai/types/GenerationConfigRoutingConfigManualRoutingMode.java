@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** When manual routing is set, the specified model will be used directly. */
+/**
+ * When manual routing is set, the specified model will be used directly. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfigManualRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigManualRoutingMode extends JsonSerializable {
@@ -65,6 +69,16 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
      */
     @JsonProperty("modelName")
     public abstract Builder modelName(String modelName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modelName(Optional<String> modelName);
+
+    /** Clears the value of modelName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModelName() {
+      return modelName(Optional.empty());
+    }
 
     public abstract GenerationConfigRoutingConfigManualRoutingMode build();
   }

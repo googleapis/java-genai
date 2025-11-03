@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -71,6 +72,7 @@ public abstract class LiveServerToolCall extends JsonSerializable {
      *
      * <p>functionCalls: The function call to be executed.
      */
+    @CanIgnoreReturnValue
     public Builder functionCalls(FunctionCall... functionCalls) {
       return functionCalls(Arrays.asList(functionCalls));
     }
@@ -80,11 +82,22 @@ public abstract class LiveServerToolCall extends JsonSerializable {
      *
      * <p>functionCalls: The function call to be executed.
      */
+    @CanIgnoreReturnValue
     public Builder functionCalls(FunctionCall.Builder... functionCallsBuilders) {
       return functionCalls(
           Arrays.asList(functionCallsBuilders).stream()
               .map(FunctionCall.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionCalls(Optional<List<FunctionCall>> functionCalls);
+
+    /** Clears the value of functionCalls field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionCalls() {
+      return functionCalls(Optional.empty());
     }
 
     public abstract LiveServerToolCall build();

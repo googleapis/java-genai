@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -76,8 +77,19 @@ public abstract class ListBatchJobsResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -87,6 +99,16 @@ public abstract class ListBatchJobsResponse extends JsonSerializable {
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nextPageToken(Optional<String> nextPageToken);
+
+    /** Clears the value of nextPageToken field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNextPageToken() {
+      return nextPageToken(Optional.empty());
+    }
 
     /**
      * Setter for batchJobs.
@@ -101,6 +123,7 @@ public abstract class ListBatchJobsResponse extends JsonSerializable {
      *
      * <p>batchJobs:
      */
+    @CanIgnoreReturnValue
     public Builder batchJobs(BatchJob... batchJobs) {
       return batchJobs(Arrays.asList(batchJobs));
     }
@@ -110,11 +133,22 @@ public abstract class ListBatchJobsResponse extends JsonSerializable {
      *
      * <p>batchJobs:
      */
+    @CanIgnoreReturnValue
     public Builder batchJobs(BatchJob.Builder... batchJobsBuilders) {
       return batchJobs(
           Arrays.asList(batchJobsBuilders).stream()
               .map(BatchJob.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder batchJobs(Optional<List<BatchJob>> batchJobs);
+
+    /** Clears the value of batchJobs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBatchJobs() {
+      return batchJobs(Optional.empty());
     }
 
     public abstract ListBatchJobsResponse build();

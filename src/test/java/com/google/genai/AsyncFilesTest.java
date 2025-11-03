@@ -74,13 +74,10 @@ public class AsyncFilesTest {
 
     // Act
     if (vertexAI) {
-      AsyncPager<File> pager = client.async.files.list(config).get();
-
       // Assert
       ExecutionException exception =
-          assertThrows(
-              ExecutionException.class, () -> pager.forEach(file -> assertNotNull(file)).get());
-      assertTrue(exception.getCause() instanceof GenAiIOException);
+          assertThrows(ExecutionException.class, () -> client.async.files.list(config).get());
+      assertTrue(exception.getCause() instanceof UnsupportedOperationException);
       assertTrue(
           exception
               .getCause()

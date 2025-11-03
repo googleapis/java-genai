@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tuning Spec for Supervised Tuning for first party models. */
+/** Supervised tuning spec for tuning. */
 @AutoValue
 @JsonDeserialize(builder = SupervisedTuningSpec.Builder.class)
 public abstract class SupervisedTuningSpec extends JsonSerializable {
@@ -87,6 +87,16 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
     @JsonProperty("exportLastCheckpointOnly")
     public abstract Builder exportLastCheckpointOnly(boolean exportLastCheckpointOnly);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exportLastCheckpointOnly(Optional<Boolean> exportLastCheckpointOnly);
+
+    /** Clears the value of exportLastCheckpointOnly field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExportLastCheckpointOnly() {
+      return exportLastCheckpointOnly(Optional.empty());
+    }
+
     /**
      * Setter for hyperParameters.
      *
@@ -100,8 +110,19 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
      *
      * <p>hyperParameters: Optional. Hyperparameters for SFT.
      */
+    @CanIgnoreReturnValue
     public Builder hyperParameters(SupervisedHyperParameters.Builder hyperParametersBuilder) {
       return hyperParameters(hyperParametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hyperParameters(Optional<SupervisedHyperParameters> hyperParameters);
+
+    /** Clears the value of hyperParameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHyperParameters() {
+      return hyperParameters(Optional.empty());
     }
 
     /**
@@ -114,6 +135,16 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
     @JsonProperty("trainingDatasetUri")
     public abstract Builder trainingDatasetUri(String trainingDatasetUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trainingDatasetUri(Optional<String> trainingDatasetUri);
+
+    /** Clears the value of trainingDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrainingDatasetUri() {
+      return trainingDatasetUri(Optional.empty());
+    }
+
     /**
      * Setter for tuningMode.
      *
@@ -121,6 +152,16 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
      */
     @JsonProperty("tuningMode")
     public abstract Builder tuningMode(TuningMode tuningMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningMode(Optional<TuningMode> tuningMode);
+
+    /** Clears the value of tuningMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningMode() {
+      return tuningMode(Optional.empty());
+    }
 
     /**
      * Setter for tuningMode given a known enum.
@@ -151,6 +192,16 @@ public abstract class SupervisedTuningSpec extends JsonSerializable {
      */
     @JsonProperty("validationDatasetUri")
     public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
+    }
 
     public abstract SupervisedTuningSpec build();
   }

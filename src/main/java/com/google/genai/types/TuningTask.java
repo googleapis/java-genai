@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Optional. The tuning task. Either I2V or T2V. */
+/** The tuning task. Either I2V or T2V. This enum is not supported in Gemini API. */
 public class TuningTask {
 
   /** Enum representing the known values for TuningTask. */

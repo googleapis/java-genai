@@ -67,6 +67,16 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     @JsonProperty("mode")
     public abstract Builder mode(DynamicRetrievalConfigMode mode);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mode(Optional<DynamicRetrievalConfigMode> mode);
+
+    /** Clears the value of mode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMode() {
+      return mode(Optional.empty());
+    }
+
     /**
      * Setter for mode given a known enum.
      *
@@ -95,6 +105,16 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
      */
     @JsonProperty("dynamicThreshold")
     public abstract Builder dynamicThreshold(Float dynamicThreshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dynamicThreshold(Optional<Float> dynamicThreshold);
+
+    /** Clears the value of dynamicThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDynamicThreshold() {
+      return dynamicThreshold(Optional.empty());
+    }
 
     public abstract DynamicRetrievalConfig build();
   }

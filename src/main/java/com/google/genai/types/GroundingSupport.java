@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -88,8 +89,19 @@ public abstract class GroundingSupport extends JsonSerializable {
      * grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be
      * ignored.
      */
+    @CanIgnoreReturnValue
     public Builder confidenceScores(Float... confidenceScores) {
       return confidenceScores(Arrays.asList(confidenceScores));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder confidenceScores(Optional<List<Float>> confidenceScores);
+
+    /** Clears the value of confidenceScores field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfidenceScores() {
+      return confidenceScores(Optional.empty());
     }
 
     /**
@@ -109,8 +121,19 @@ public abstract class GroundingSupport extends JsonSerializable {
      * associated with the claim. For instance [1,3,4] means that grounding_chunk[1],
      * grounding_chunk[3], grounding_chunk[4] are the retrieved content attributed to the claim.
      */
+    @CanIgnoreReturnValue
     public Builder groundingChunkIndices(Integer... groundingChunkIndices) {
       return groundingChunkIndices(Arrays.asList(groundingChunkIndices));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder groundingChunkIndices(Optional<List<Integer>> groundingChunkIndices);
+
+    /** Clears the value of groundingChunkIndices field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGroundingChunkIndices() {
+      return groundingChunkIndices(Optional.empty());
     }
 
     /**
@@ -126,8 +149,19 @@ public abstract class GroundingSupport extends JsonSerializable {
      *
      * <p>segment: Segment of the content this support belongs to.
      */
+    @CanIgnoreReturnValue
     public Builder segment(Segment.Builder segmentBuilder) {
       return segment(segmentBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder segment(Optional<Segment> segment);
+
+    /** Clears the value of segment field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSegment() {
+      return segment(Optional.empty());
     }
 
     public abstract GroundingSupport build();

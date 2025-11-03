@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** A RagChunk includes the content of a chunk of a RagFile, and associated metadata. */
+/**
+ * A RagChunk includes the content of a chunk of a RagFile, and associated metadata. This data type
+ * is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = RagChunk.Builder.class)
 public abstract class RagChunk extends JsonSerializable {
@@ -68,8 +72,19 @@ public abstract class RagChunk extends JsonSerializable {
      *
      * <p>pageSpan: If populated, represents where the chunk starts and ends in the document.
      */
+    @CanIgnoreReturnValue
     public Builder pageSpan(RagChunkPageSpan.Builder pageSpanBuilder) {
       return pageSpan(pageSpanBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pageSpan(Optional<RagChunkPageSpan> pageSpan);
+
+    /** Clears the value of pageSpan field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPageSpan() {
+      return pageSpan(Optional.empty());
     }
 
     /**
@@ -79,6 +94,16 @@ public abstract class RagChunk extends JsonSerializable {
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
 
     public abstract RagChunk build();
   }

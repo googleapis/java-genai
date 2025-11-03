@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Distribution computed over a tuning dataset. */
+/** Distribution computed over a tuning dataset. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = DatasetDistribution.Builder.class)
 public abstract class DatasetDistribution extends JsonSerializable {
@@ -96,6 +97,7 @@ public abstract class DatasetDistribution extends JsonSerializable {
      *
      * <p>buckets: Output only. Defines the histogram bucket.
      */
+    @CanIgnoreReturnValue
     public Builder buckets(DatasetDistributionDistributionBucket... buckets) {
       return buckets(Arrays.asList(buckets));
     }
@@ -105,11 +107,22 @@ public abstract class DatasetDistribution extends JsonSerializable {
      *
      * <p>buckets: Output only. Defines the histogram bucket.
      */
+    @CanIgnoreReturnValue
     public Builder buckets(DatasetDistributionDistributionBucket.Builder... bucketsBuilders) {
       return buckets(
           Arrays.asList(bucketsBuilders).stream()
               .map(DatasetDistributionDistributionBucket.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder buckets(Optional<List<DatasetDistributionDistributionBucket>> buckets);
+
+    /** Clears the value of buckets field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBuckets() {
+      return buckets(Optional.empty());
     }
 
     /**
@@ -120,6 +133,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
     @JsonProperty("max")
     public abstract Builder max(Double max);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder max(Optional<Double> max);
+
+    /** Clears the value of max field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMax() {
+      return max(Optional.empty());
+    }
+
     /**
      * Setter for mean.
      *
@@ -127,6 +150,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
      */
     @JsonProperty("mean")
     public abstract Builder mean(Double mean);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mean(Optional<Double> mean);
+
+    /** Clears the value of mean field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMean() {
+      return mean(Optional.empty());
+    }
 
     /**
      * Setter for median.
@@ -136,6 +169,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
     @JsonProperty("median")
     public abstract Builder median(Double median);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder median(Optional<Double> median);
+
+    /** Clears the value of median field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMedian() {
+      return median(Optional.empty());
+    }
+
     /**
      * Setter for min.
      *
@@ -143,6 +186,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
      */
     @JsonProperty("min")
     public abstract Builder min(Double min);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder min(Optional<Double> min);
+
+    /** Clears the value of min field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMin() {
+      return min(Optional.empty());
+    }
 
     /**
      * Setter for p5.
@@ -152,6 +205,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
     @JsonProperty("p5")
     public abstract Builder p5(Double p5);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder p5(Optional<Double> p5);
+
+    /** Clears the value of p5 field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearP5() {
+      return p5(Optional.empty());
+    }
+
     /**
      * Setter for p95.
      *
@@ -160,6 +223,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
     @JsonProperty("p95")
     public abstract Builder p95(Double p95);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder p95(Optional<Double> p95);
+
+    /** Clears the value of p95 field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearP95() {
+      return p95(Optional.empty());
+    }
+
     /**
      * Setter for sum.
      *
@@ -167,6 +240,16 @@ public abstract class DatasetDistribution extends JsonSerializable {
      */
     @JsonProperty("sum")
     public abstract Builder sum(Double sum);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sum(Optional<Double> sum);
+
+    /** Clears the value of sum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSum() {
+      return sum(Optional.empty());
+    }
 
     public abstract DatasetDistribution build();
   }

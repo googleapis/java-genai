@@ -49,6 +49,7 @@ import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
 public final class Tunings {
+
   final ApiClient apiClient;
 
   public Tunings(ApiClient apiClient) {
@@ -56,7 +57,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelTuningJobParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelTuningJobParametersToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
@@ -69,7 +71,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelTuningJobParametersToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
@@ -82,7 +85,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode createTuningJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createTuningJobConfigToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"validationDataset"}))) {
@@ -149,23 +153,47 @@ public final class Tunings {
       throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"beta"}))) {
+      throw new IllegalArgumentException("beta parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode createTuningJobConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createTuningJobConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
-    if (Common.getValueByPath(fromObject, new String[] {"validationDataset"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec"},
-          tuningValidationDatasetToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
-              toObject));
+    JsonNode discriminatorValidationDataset =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueValidationDataset =
+        discriminatorValidationDataset == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorValidationDataset.asText();
+    if (discriminatorValueValidationDataset.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"validationDataset"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec"},
+            tuningValidationDatasetToVertex(
+                JsonSerializable.toJsonNode(
+                    Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
+                toObject,
+                rootObject));
+      }
+    } else if (discriminatorValueValidationDataset.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"validationDataset"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec"},
+            tuningValidationDatasetToVertex(
+                JsonSerializable.toJsonNode(
+                    Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
+                toObject,
+                rootObject));
+      }
     }
-
     if (Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -180,34 +208,95 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"description"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "hyperParameters", "epochCount"},
-          Common.getValueByPath(fromObject, new String[] {"epochCount"}));
+    JsonNode discriminatorEpochCount =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueEpochCount =
+        discriminatorEpochCount == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorEpochCount.asText();
+    if (discriminatorValueEpochCount.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "hyperParameters", "epochCount"},
+            Common.getValueByPath(fromObject, new String[] {"epochCount"}));
+      }
+    } else if (discriminatorValueEpochCount.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec", "hyperParameters", "epochCount"},
+            Common.getValueByPath(fromObject, new String[] {"epochCount"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "hyperParameters", "learningRateMultiplier"},
-          Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
+    JsonNode discriminatorLearningRateMultiplier =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueLearningRateMultiplier =
+        discriminatorLearningRateMultiplier == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorLearningRateMultiplier.asText();
+    if (discriminatorValueLearningRateMultiplier.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "hyperParameters", "learningRateMultiplier"},
+            Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
+      }
+    } else if (discriminatorValueLearningRateMultiplier.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {
+              "preferenceOptimizationSpec", "hyperParameters", "learningRateMultiplier"
+            },
+            Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "exportLastCheckpointOnly"},
-          Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}));
+    JsonNode discriminatorExportLastCheckpointOnly =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueExportLastCheckpointOnly =
+        discriminatorExportLastCheckpointOnly == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorExportLastCheckpointOnly.asText();
+    if (discriminatorValueExportLastCheckpointOnly.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "exportLastCheckpointOnly"},
+            Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}));
+      }
+    } else if (discriminatorValueExportLastCheckpointOnly.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec", "exportLastCheckpointOnly"},
+            Common.getValueByPath(fromObject, new String[] {"exportLastCheckpointOnly"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "hyperParameters", "adapterSize"},
-          Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+    JsonNode discriminatorAdapterSize =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueAdapterSize =
+        discriminatorAdapterSize == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorAdapterSize.asText();
+    if (discriminatorValueAdapterSize.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "hyperParameters", "adapterSize"},
+            Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+      }
+    } else if (discriminatorValueAdapterSize.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec", "hyperParameters", "adapterSize"},
+            Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+      }
     }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"batchSize"}))) {
       throw new IllegalArgumentException("batchSize parameter is not supported in Vertex AI.");
     }
@@ -223,11 +312,19 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"beta"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"preferenceOptimizationSpec", "hyperParameters", "beta"},
+          Common.getValueByPath(fromObject, new String[] {"beta"}));
+    }
+
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode createTuningJobParametersPrivateToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createTuningJobParametersPrivateToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
@@ -244,13 +341,12 @@ public final class Tunings {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tuningTask", "trainingData"},
+      JsonNode unused =
           tuningDatasetToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
-              toObject));
+              toObject,
+              rootObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -258,7 +354,8 @@ public final class Tunings {
           createTuningJobConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject);
+              toObject,
+              rootObject);
     }
 
     return toObject;
@@ -266,7 +363,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToVertex(
-      JsonNode fromObject, ObjectNode parentObject) {
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
@@ -283,13 +380,12 @@ public final class Tunings {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+      JsonNode unused =
           tuningDatasetToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
-              toObject));
+              toObject,
+              rootObject);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -297,14 +393,16 @@ public final class Tunings {
           createTuningJobConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject);
+              toObject,
+              rootObject);
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode getTuningJobParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode getTuningJobParametersToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
@@ -317,7 +415,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode getTuningJobParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode getTuningJobParametersToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
@@ -330,7 +429,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsConfigToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
@@ -358,7 +458,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
@@ -386,28 +487,32 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsParametersToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listTuningJobsConfigToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject);
+              toObject,
+              rootObject);
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsParametersToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listTuningJobsConfigToVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject);
+              toObject,
+              rootObject);
     }
 
     return toObject;
@@ -498,7 +603,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningDatasetToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningDatasetToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
       throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
@@ -520,22 +626,51 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningDatasetToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+
+    JsonNode discriminatorGcsUri =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueGcsUri =
+        discriminatorGcsUri == null ? "SUPERVISED_FINE_TUNING" : discriminatorGcsUri.asText();
+    if (discriminatorValueGcsUri.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+      }
+    } else if (discriminatorValueGcsUri.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec", "trainingDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+    JsonNode discriminatorVertexDatasetResource =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueVertexDatasetResource =
+        discriminatorVertexDatasetResource == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorVertexDatasetResource.asText();
+    if (discriminatorValueVertexDatasetResource.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+      }
+    } else if (discriminatorValueVertexDatasetResource.equals("PREFERENCE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"preferenceOptimizationSpec", "trainingDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+      }
     }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
       throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
     }
@@ -617,62 +752,6 @@ public final class Tunings {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"customBaseModel"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"customBaseModel"},
-          Common.getValueByPath(fromObject, new String[] {"customBaseModel"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"experiment"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"experiment"},
-          Common.getValueByPath(fromObject, new String[] {"experiment"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"labels"},
-          Common.getValueByPath(fromObject, new String[] {"labels"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outputUri"},
-          Common.getValueByPath(fromObject, new String[] {"outputUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pipelineJob"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"pipelineJob"},
-          Common.getValueByPath(fromObject, new String[] {"pipelineJob"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"serviceAccount"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"serviceAccount"},
-          Common.getValueByPath(fromObject, new String[] {"serviceAccount"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tunedModelDisplayName"},
-          Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"veoTuningSpec"},
-          Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}));
     }
 
     return toObject;
@@ -770,6 +849,13 @@ public final class Tunings {
           toObject,
           new String[] {"supervisedTuningSpec"},
           Common.getValueByPath(fromObject, new String[] {"supervisedTuningSpec"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"preferenceOptimizationSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"preferenceOptimizationSpec"},
+          Common.getValueByPath(fromObject, new String[] {"preferenceOptimizationSpec"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"tuningDataStats"}) != null) {
@@ -894,7 +980,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningValidationDatasetToVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningValidationDatasetToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
@@ -905,8 +992,8 @@ public final class Tunings {
 
     if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
       Common.setValueByPath(
-          parentObject,
-          new String[] {"supervisedTuningSpec", "trainingDatasetUri"},
+          toObject,
+          new String[] {"validationDatasetUri"},
           Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
     }
 
@@ -929,10 +1016,10 @@ public final class Tunings {
     ObjectNode body;
     String path;
     if (this.apiClient.vertexAI()) {
-      body = getTuningJobParametersToVertex(parameterNode, null);
+      body = getTuningJobParametersToVertex(parameterNode, null, parameterNode);
       path = Common.formatMap("{name}", body.get("_url"));
     } else {
-      body = getTuningJobParametersToMldev(parameterNode, null);
+      body = getTuningJobParametersToMldev(parameterNode, null, parameterNode);
       if (body.get("_url") != null) {
         path = Common.formatMap("{name}", body.get("_url"));
       } else {
@@ -1011,10 +1098,10 @@ public final class Tunings {
     ObjectNode body;
     String path;
     if (this.apiClient.vertexAI()) {
-      body = listTuningJobsParametersToVertex(parameterNode, null);
+      body = listTuningJobsParametersToVertex(parameterNode, null, parameterNode);
       path = Common.formatMap("tuningJobs", body.get("_url"));
     } else {
-      body = listTuningJobsParametersToMldev(parameterNode, null);
+      body = listTuningJobsParametersToMldev(parameterNode, null, parameterNode);
       if (body.get("_url") != null) {
         path = Common.formatMap("tunedModels", body.get("_url"));
       } else {
@@ -1098,10 +1185,10 @@ public final class Tunings {
     ObjectNode body;
     String path;
     if (this.apiClient.vertexAI()) {
-      body = cancelTuningJobParametersToVertex(parameterNode, null);
+      body = cancelTuningJobParametersToVertex(parameterNode, null, parameterNode);
       path = Common.formatMap("{name}:cancel", body.get("_url"));
     } else {
-      body = cancelTuningJobParametersToMldev(parameterNode, null);
+      body = cancelTuningJobParametersToMldev(parameterNode, null, parameterNode);
       if (body.get("_url") != null) {
         path = Common.formatMap("{name}:cancel", body.get("_url"));
       } else {
@@ -1169,7 +1256,7 @@ public final class Tunings {
     ObjectNode body;
     String path;
     if (this.apiClient.vertexAI()) {
-      body = createTuningJobParametersPrivateToVertex(parameterNode, null);
+      body = createTuningJobParametersPrivateToVertex(parameterNode, null, parameterNode);
       path = Common.formatMap("tuningJobs", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
@@ -1270,7 +1357,7 @@ public final class Tunings {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
     } else {
-      body = createTuningJobParametersPrivateToMldev(parameterNode, null);
+      body = createTuningJobParametersPrivateToMldev(parameterNode, null, parameterNode);
       if (body.get("_url") != null) {
         path = Common.formatMap("tunedModels", body.get("_url"));
       } else {

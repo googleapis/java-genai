@@ -132,8 +132,19 @@ public abstract class LiveServerContent extends JsonSerializable {
      * <p>modelTurn: The content that the model has generated as part of the current conversation
      * with the user.
      */
+    @CanIgnoreReturnValue
     public Builder modelTurn(Content.Builder modelTurnBuilder) {
       return modelTurn(modelTurnBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modelTurn(Optional<Content> modelTurn);
+
+    /** Clears the value of modelTurn field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModelTurn() {
+      return modelTurn(Optional.empty());
     }
 
     /**
@@ -146,6 +157,16 @@ public abstract class LiveServerContent extends JsonSerializable {
     @JsonProperty("turnComplete")
     public abstract Builder turnComplete(boolean turnComplete);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder turnComplete(Optional<Boolean> turnComplete);
+
+    /** Clears the value of turnComplete field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTurnComplete() {
+      return turnComplete(Optional.empty());
+    }
+
     /**
      * Setter for interrupted.
      *
@@ -155,6 +176,16 @@ public abstract class LiveServerContent extends JsonSerializable {
      */
     @JsonProperty("interrupted")
     public abstract Builder interrupted(boolean interrupted);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder interrupted(Optional<Boolean> interrupted);
+
+    /** Clears the value of interrupted field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInterrupted() {
+      return interrupted(Optional.empty());
+    }
 
     /**
      * Setter for groundingMetadata.
@@ -169,8 +200,19 @@ public abstract class LiveServerContent extends JsonSerializable {
      *
      * <p>groundingMetadata: Metadata returned to client when grounding is enabled.
      */
+    @CanIgnoreReturnValue
     public Builder groundingMetadata(GroundingMetadata.Builder groundingMetadataBuilder) {
       return groundingMetadata(groundingMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder groundingMetadata(Optional<GroundingMetadata> groundingMetadata);
+
+    /** Clears the value of groundingMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGroundingMetadata() {
+      return groundingMetadata(Optional.empty());
     }
 
     /**
@@ -185,6 +227,16 @@ public abstract class LiveServerContent extends JsonSerializable {
      */
     @JsonProperty("generationComplete")
     public abstract Builder generationComplete(boolean generationComplete);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generationComplete(Optional<Boolean> generationComplete);
+
+    /** Clears the value of generationComplete field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGenerationComplete() {
+      return generationComplete(Optional.empty());
+    }
 
     /**
      * Setter for inputTranscription.
@@ -201,8 +253,19 @@ public abstract class LiveServerContent extends JsonSerializable {
      * <p>inputTranscription: Input transcription. The transcription is independent to the model
      * turn which means it doesn’t imply any ordering between transcription and model turn.
      */
+    @CanIgnoreReturnValue
     public Builder inputTranscription(Transcription.Builder inputTranscriptionBuilder) {
       return inputTranscription(inputTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inputTranscription(Optional<Transcription> inputTranscription);
+
+    /** Clears the value of inputTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInputTranscription() {
+      return inputTranscription(Optional.empty());
     }
 
     /**
@@ -220,8 +283,19 @@ public abstract class LiveServerContent extends JsonSerializable {
      * <p>outputTranscription: Output transcription. The transcription is independent to the model
      * turn which means it doesn’t imply any ordering between transcription and model turn.
      */
+    @CanIgnoreReturnValue
     public Builder outputTranscription(Transcription.Builder outputTranscriptionBuilder) {
       return outputTranscription(outputTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputTranscription(Optional<Transcription> outputTranscription);
+
+    /** Clears the value of outputTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputTranscription() {
+      return outputTranscription(Optional.empty());
     }
 
     /**
@@ -237,8 +311,19 @@ public abstract class LiveServerContent extends JsonSerializable {
      *
      * <p>urlContextMetadata: Metadata related to url context retrieval tool.
      */
+    @CanIgnoreReturnValue
     public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
       return urlContextMetadata(urlContextMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder urlContextMetadata(Optional<UrlContextMetadata> urlContextMetadata);
+
+    /** Clears the value of urlContextMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUrlContextMetadata() {
+      return urlContextMetadata(Optional.empty());
     }
 
     /**
@@ -248,6 +333,16 @@ public abstract class LiveServerContent extends JsonSerializable {
      */
     @JsonProperty("turnCompleteReason")
     public abstract Builder turnCompleteReason(TurnCompleteReason turnCompleteReason);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder turnCompleteReason(Optional<TurnCompleteReason> turnCompleteReason);
+
+    /** Clears the value of turnCompleteReason field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTurnCompleteReason() {
+      return turnCompleteReason(Optional.empty());
+    }
 
     /**
      * Setter for turnCompleteReason given a known enum.
@@ -277,6 +372,16 @@ public abstract class LiveServerContent extends JsonSerializable {
      */
     @JsonProperty("waitingForInput")
     public abstract Builder waitingForInput(boolean waitingForInput);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder waitingForInput(Optional<Boolean> waitingForInput);
+
+    /** Clears the value of waitingForInput field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWaitingForInput() {
+      return waitingForInput(Optional.empty());
+    }
 
     public abstract LiveServerContent build();
   }

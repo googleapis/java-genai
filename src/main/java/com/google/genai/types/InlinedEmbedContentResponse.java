@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -68,8 +69,19 @@ public abstract class InlinedEmbedContentResponse extends JsonSerializable {
      *
      * <p>response: The response to the request.
      */
+    @CanIgnoreReturnValue
     public Builder response(SingleEmbedContentResponse.Builder responseBuilder) {
       return response(responseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder response(Optional<SingleEmbedContentResponse> response);
+
+    /** Clears the value of response field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponse() {
+      return response(Optional.empty());
     }
 
     /**
@@ -85,8 +97,19 @@ public abstract class InlinedEmbedContentResponse extends JsonSerializable {
      *
      * <p>error: The error encountered while processing the request.
      */
+    @CanIgnoreReturnValue
     public Builder error(JobError.Builder errorBuilder) {
       return error(errorBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<JobError> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
     }
 
     public abstract InlinedEmbedContentResponse build();

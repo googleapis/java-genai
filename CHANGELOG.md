@@ -1,5 +1,72 @@
 # Changelog
 
+## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-29)
+
+
+### Features
+
+* Add safety_filter_level and person_generation for Imagen upscaling ([09a8075](https://github.com/googleapis/java-genai/commit/09a80754b202fdf903039341f5266f62d9b879cb))
+* Add support for preference optimization tuning in the SDK. ([5d4123c](https://github.com/googleapis/java-genai/commit/5d4123c0391d443e94bb1e81524ccae8779462d7))
+* Added Operations.get which is a generic method which will handle all Operation types. ([c1dc32f](https://github.com/googleapis/java-genai/commit/c1dc32f84d0e4d14a16345dcb404c8b2bef05338))
+* Pass file name to the backend when uploading with a file path ([081a9a6](https://github.com/googleapis/java-genai/commit/081a9a6a67d1ba542edb1d1330dfa56579204a43))
+* support default global location when not using api key with vertexai backend ([f9028a7](https://github.com/googleapis/java-genai/commit/f9028a71d4e736a8dc97daa54e6e4275b5016abd))
+* Support retries in API requests ([3d5de00](https://github.com/googleapis/java-genai/commit/3d5de000277eb0da172d6b19795c6f2d4b88c213))
+
+
+### Documentation
+
+* Add docstring for classes and fields that are not supported in Gemini or Vertex API ([7a03dac](https://github.com/googleapis/java-genai/commit/7a03dac0a4e3388f98be199765794fcf511bfe83))
+* Add docstring for enum classes that are not supported in Gemini or Vertex API ([830a12f](https://github.com/googleapis/java-genai/commit/830a12f3dcbb8beb1dd5ff3ff82f6b19ebb2af93))
+* Add documentation for the retry behavior ([4fbcf51](https://github.com/googleapis/java-genai/commit/4fbcf514321fdc2cbee1393fc6babe33fd0e5e74))
+
+## [1.24.0](https://github.com/googleapis/java-genai/compare/v1.23.0...v1.24.0) (2025-10-22)
+
+
+### Features
+
+* Add enable_enhanced_civic_answers in GenerationConfig ([684a2c5](https://github.com/googleapis/java-genai/commit/684a2c5b582fa4ca13cb9cfe819ef759778101b0))
+* support createEmbeddings in Batches.java ([8947f6f](https://github.com/googleapis/java-genai/commit/8947f6fc20fbdd90a7d17071dee1bd2e5bea0c3e))
+* support jailbreak in HarmCategory and BlockedReason ([3dab40b](https://github.com/googleapis/java-genai/commit/3dab40bc367168ed48d8d1acfb278f5bc6edb83f))
+
+
+### Bug Fixes
+
+* Make async methods in Batches module truly non-blocking ([f2ae75a](https://github.com/googleapis/java-genai/commit/f2ae75ac364702f483c376e458a120d1ffa93b17))
+* Make async methods in Caches, Tuning, and Operations modules truly non-blocking ([db56239](https://github.com/googleapis/java-genai/commit/db56239bbebbfe3cb95e00d2d3eac253b76f22fe))
+* Make async methods in Models module truly non-blocking ([c205d01](https://github.com/googleapis/java-genai/commit/c205d0172ca40e01f7d8de17a3bc9d38eeb5fc21))
+
+## [1.23.0](https://github.com/googleapis/java-genai/compare/v1.22.0...v1.23.0) (2025-10-15)
+
+
+### Features
+
+* Support video extension for Veo on Gemini Developer API ([b398509](https://github.com/googleapis/java-genai/commit/b398509697a3e9aa27bad5e804382c5a4db333ab))
+
+## [1.22.0](https://github.com/googleapis/java-genai/compare/v1.21.0...v1.22.0) (2025-10-10)
+
+
+### Features
+
+* Enable Google Maps tool for Genai. ([a4baf3c](https://github.com/googleapis/java-genai/commit/a4baf3c610ddcb1ed36c1501fcb2248b5a6bd610))
+* Support enableWidget feature in GoogleMaps ([aefbd5c](https://github.com/googleapis/java-genai/commit/aefbd5c1519f453cd2fe158a2765c195a9454322))
+* Support Gemini batch inline request's metadata and add test coverage to safety setting ([17033b3](https://github.com/googleapis/java-genai/commit/17033b38a93d6952b29699f5a4c79ed9dd862976))
+
+## [1.21.0](https://github.com/googleapis/java-genai/compare/v1.20.0...v1.21.0) (2025-10-08)
+
+
+### Features
+
+* Add `NO_IMAGE` enum value to `FinishReason` ([6b00c0b](https://github.com/googleapis/java-genai/commit/6b00c0b7dc8c85fcefc5aac643c3588048317614))
+* Add labels field to Imagen configs ([e69cf68](https://github.com/googleapis/java-genai/commit/e69cf68583ca581f1a7fad89b04292036433cdb4))
+* Add thinking_config for live ([274c21d](https://github.com/googleapis/java-genai/commit/274c21d34310e630b9b4ad296b4c8314a4249d0c))
+* Add utility methods for creating `FunctionResponsePart` and creating FunctionResponse `Part` with `FunctionResponseParts` ([af16a4c](https://github.com/googleapis/java-genai/commit/af16a4c994e0cc4e6fbc2cdbda825246df9aa253))
+* Enable Ingredients to Video and Advanced Controls for Veo on Gemini Developer API (Early Access Program) ([4c42e65](https://github.com/googleapis/java-genai/commit/4c42e6527a7fe43c0b534e381d65b5d9650e8709))
+
+
+### Bug Fixes
+
+* Ensure Live server message are properly converted ([206dc88](https://github.com/googleapis/java-genai/commit/206dc88e3b220a875f784a507fc9470bc411de36))
+
 ## [1.20.0](https://github.com/googleapis/java-genai/compare/v1.19.0...v1.20.0) (2025-10-01)
 
 

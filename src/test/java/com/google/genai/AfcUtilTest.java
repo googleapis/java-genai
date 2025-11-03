@@ -23,14 +23,22 @@ import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.AutomaticFunctionCallingConfig;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
+import com.google.genai.types.EnterpriseWebSearch;
 import com.google.genai.types.FunctionCall;
 import com.google.genai.types.FunctionDeclaration;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.GoogleMaps;
+import com.google.genai.types.GoogleSearch;
+import com.google.genai.types.GoogleSearchRetrieval;
 import com.google.genai.types.Part;
+import com.google.genai.types.Retrieval;
 import com.google.genai.types.Schema;
 import com.google.genai.types.Tool;
+import com.google.genai.types.ToolCodeExecution;
+import com.google.genai.types.ComputerUse;
 import com.google.genai.types.Type;
+import com.google.genai.types.UrlContext;
 import java.lang.reflect.Method;
 import org.junit.jupiter.api.Test;
 
@@ -348,5 +356,124 @@ public final class AfcUtilTest {
             .build();
     boolean hasCallableTool = AfcUtil.hasCallableTool(config);
     assertEquals(true, hasCallableTool);
+  }
+
+  @Test
+  public void findAfcIncompatibleToolIndexes_withNullConfig_returnsEmptyList() {
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(null);
+
+    // Assert
+    assertEquals(0, result.size());
+  }
+
+  @Test
+  public void findAfcIncompatibleToolIndexes_withNoToolsPresent_returnsEmptyList() {
+    // Arrange
+    GenerateContentConfig config = GenerateContentConfig.builder().build();
+
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(0, result.size());
+  }
+
+  @Test
+  public void findAfcIncompatibleToolIndexes_withEmptyToolsList_returnsEmptyList() {
+    // Arrange
+    GenerateContentConfig config = GenerateContentConfig.builder().tools(Tool.builder()).build();
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(0, result.size());
+  }
+
+  @Test
+  public void findAfcIncompatibleToolIndexes_withOnlyCompatibleTools_returnsEmptyList()
+      throws NoSuchMethodException {
+    // Arrange
+    Method testMethod1 = AfcUtilTest.class.getMethod("testFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(Tool.builder().functions(testMethod1))
+            .tools(Tool.builder().googleSearch(GoogleSearch.builder()))
+            .tools(Tool.builder().googleSearchRetrieval(GoogleSearchRetrieval.builder()))
+            .tools(Tool.builder().retrieval(Retrieval.builder()))
+            .tools(Tool.builder().googleMaps(GoogleMaps.builder()))
+            .tools(Tool.builder().urlContext(UrlContext.builder()))
+            .tools(Tool.builder().codeExecution(ToolCodeExecution.builder()))
+            .tools(Tool.builder().computerUse(ComputerUse.builder()))
+            .tools(Tool.builder().enterpriseWebSearch(EnterpriseWebSearch.builder()))
+            .build();
+
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(0, result.size());
+  }
+
+  @Test
+  public void findAfcIncompatibleToolIndexes_withOnlyOneIncompatibleTools_returnsAllIndexes()
+      throws NoSuchMethodException {
+    // Arrange
+    Method testMethod1 = AfcUtilTest.class.getMethod("testFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder().functions(testMethod1).build(),
+                Tool.builder().googleSearch(GoogleSearch.builder()).build(),
+                Tool.builder().googleSearchRetrieval(GoogleSearchRetrieval.builder()).build(),
+                Tool.builder().retrieval(Retrieval.builder()).build(),
+                Tool.builder().googleMaps(GoogleMaps.builder()).build(),
+                Tool.builder().urlContext(UrlContext.builder()).build(),
+                Tool.builder().codeExecution(ToolCodeExecution.builder()).build(),
+                Tool.builder().computerUse(ComputerUse.builder()).build(),
+                Tool.builder().enterpriseWebSearch(EnterpriseWebSearch.builder()).build(),
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration1, testFunctionDeclaration2)
+                    .build())
+            .build();
+
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(1, result.size());
+    assertEquals(9, result.get(0).intValue());
+  }
+
+  @Test
+  void findAfcIncompatibleToolIndexes_withMixedTools_returnsOnlyIncompatibleIndexes()
+      throws NoSuchMethodException {
+    // Arrange
+    Method testMethod1 = AfcUtilTest.class.getMethod("testFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder().functions(testMethod1).build(),
+                Tool.builder().googleSearch(GoogleSearch.builder()).build(),
+                Tool.builder().functionDeclarations(testFunctionDeclaration1).build(),
+                Tool.builder().googleSearchRetrieval(GoogleSearchRetrieval.builder()).build(),
+                Tool.builder().retrieval(Retrieval.builder()).build(),
+                Tool.builder().googleMaps(GoogleMaps.builder()).build(),
+                Tool.builder().urlContext(UrlContext.builder()).build(),
+                Tool.builder().codeExecution(ToolCodeExecution.builder()).build(),
+                Tool.builder().computerUse(ComputerUse.builder()).build(),
+                Tool.builder().enterpriseWebSearch(EnterpriseWebSearch.builder()).build(),
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration1, testFunctionDeclaration2)
+                    .build())
+            .build();
+
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(2, result.size());
+    assertEquals(2, result.get(0).intValue());
+    assertEquals(10, result.get(1).intValue());
   }
 }

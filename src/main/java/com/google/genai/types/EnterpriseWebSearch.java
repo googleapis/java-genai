@@ -22,12 +22,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. */
+/**
+ * Tool to search public web data, powered by Vertex AI Search and Sec4 compliance. This data type
+ * is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = EnterpriseWebSearch.Builder.class)
 public abstract class EnterpriseWebSearch extends JsonSerializable {
@@ -37,6 +41,13 @@ public abstract class EnterpriseWebSearch extends JsonSerializable {
    */
   @JsonProperty("excludeDomains")
   public abstract Optional<List<String>> excludeDomains();
+
+  /**
+   * Optional. Sites with confidence level chosen & above this value will be blocked from the search
+   * results.
+   */
+  @JsonProperty("blockingConfidence")
+  public abstract Optional<PhishBlockThreshold> blockingConfidence();
 
   /** Instantiates a builder for EnterpriseWebSearch. */
   @ExcludeFromGeneratedCoverageReport
@@ -71,8 +82,60 @@ public abstract class EnterpriseWebSearch extends JsonSerializable {
      * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
      * default limit is 2000 domains.
      */
+    @CanIgnoreReturnValue
     public Builder excludeDomains(String... excludeDomains) {
       return excludeDomains(Arrays.asList(excludeDomains));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder excludeDomains(Optional<List<String>> excludeDomains);
+
+    /** Clears the value of excludeDomains field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExcludeDomains() {
+      return excludeDomains(Optional.empty());
+    }
+
+    /**
+     * Setter for blockingConfidence.
+     *
+     * <p>blockingConfidence: Optional. Sites with confidence level chosen & above this value will
+     * be blocked from the search results.
+     */
+    @JsonProperty("blockingConfidence")
+    public abstract Builder blockingConfidence(PhishBlockThreshold blockingConfidence);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder blockingConfidence(Optional<PhishBlockThreshold> blockingConfidence);
+
+    /** Clears the value of blockingConfidence field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBlockingConfidence() {
+      return blockingConfidence(Optional.empty());
+    }
+
+    /**
+     * Setter for blockingConfidence given a known enum.
+     *
+     * <p>blockingConfidence: Optional. Sites with confidence level chosen & above this value will
+     * be blocked from the search results.
+     */
+    @CanIgnoreReturnValue
+    public Builder blockingConfidence(PhishBlockThreshold.Known knownType) {
+      return blockingConfidence(new PhishBlockThreshold(knownType));
+    }
+
+    /**
+     * Setter for blockingConfidence given a string.
+     *
+     * <p>blockingConfidence: Optional. Sites with confidence level chosen & above this value will
+     * be blocked from the search results.
+     */
+    @CanIgnoreReturnValue
+    public Builder blockingConfidence(String blockingConfidence) {
+      return blockingConfidence(new PhishBlockThreshold(blockingConfidence));
     }
 
     public abstract EnterpriseWebSearch build();

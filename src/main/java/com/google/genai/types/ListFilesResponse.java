@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -37,11 +38,11 @@ public abstract class ListFilesResponse extends JsonSerializable {
   @JsonProperty("sdkHttpResponse")
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
-  /** A token to retrieve next page of results. */
+  /** A token that can be sent as a `page_token` into a subsequent `ListFiles` call. */
   @JsonProperty("nextPageToken")
   public abstract Optional<String> nextPageToken();
 
-  /** The list of files. */
+  /** The list of `File`s. */
   @JsonProperty("files")
   public abstract Optional<List<File>> files();
 
@@ -76,22 +77,44 @@ public abstract class ListFilesResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
      * Setter for nextPageToken.
      *
-     * <p>nextPageToken: A token to retrieve next page of results.
+     * <p>nextPageToken: A token that can be sent as a `page_token` into a subsequent `ListFiles`
+     * call.
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder nextPageToken(Optional<String> nextPageToken);
+
+    /** Clears the value of nextPageToken field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNextPageToken() {
+      return nextPageToken(Optional.empty());
+    }
+
     /**
      * Setter for files.
      *
-     * <p>files: The list of files.
+     * <p>files: The list of `File`s.
      */
     @JsonProperty("files")
     public abstract Builder files(List<File> files);
@@ -99,8 +122,9 @@ public abstract class ListFilesResponse extends JsonSerializable {
     /**
      * Setter for files.
      *
-     * <p>files: The list of files.
+     * <p>files: The list of `File`s.
      */
+    @CanIgnoreReturnValue
     public Builder files(File... files) {
       return files(Arrays.asList(files));
     }
@@ -108,13 +132,24 @@ public abstract class ListFilesResponse extends JsonSerializable {
     /**
      * Setter for files builder.
      *
-     * <p>files: The list of files.
+     * <p>files: The list of `File`s.
      */
+    @CanIgnoreReturnValue
     public Builder files(File.Builder... filesBuilders) {
       return files(
           Arrays.asList(filesBuilders).stream()
               .map(File.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder files(Optional<List<File>> files);
+
+    /** Clears the value of files field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFiles() {
+      return files(Optional.empty());
     }
 
     public abstract ListFilesResponse build();

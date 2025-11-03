@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
     @JsonProperty("logProbability")
     public abstract Builder logProbability(Float logProbability);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder logProbability(Optional<Float> logProbability);
+
+    /** Clears the value of logProbability field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLogProbability() {
+      return logProbability(Optional.empty());
+    }
+
     /**
      * Setter for token.
      *
@@ -75,6 +86,16 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
     @JsonProperty("token")
     public abstract Builder token(String token);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder token(Optional<String> token);
+
+    /** Clears the value of token field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToken() {
+      return token(Optional.empty());
+    }
+
     /**
      * Setter for tokenId.
      *
@@ -82,6 +103,16 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
      */
     @JsonProperty("tokenId")
     public abstract Builder tokenId(Integer tokenId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenId(Optional<Integer> tokenId);
+
+    /** Clears the value of tokenId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenId() {
+      return tokenId(Optional.empty());
+    }
 
     public abstract LogprobsResultCandidate build();
   }

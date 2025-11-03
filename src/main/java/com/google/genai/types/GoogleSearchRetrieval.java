@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -66,9 +67,21 @@ public abstract class GoogleSearchRetrieval extends JsonSerializable {
      * <p>dynamicRetrievalConfig: Specifies the dynamic retrieval configuration for the given
      * source.
      */
+    @CanIgnoreReturnValue
     public Builder dynamicRetrievalConfig(
         DynamicRetrievalConfig.Builder dynamicRetrievalConfigBuilder) {
       return dynamicRetrievalConfig(dynamicRetrievalConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dynamicRetrievalConfig(
+        Optional<DynamicRetrievalConfig> dynamicRetrievalConfig);
+
+    /** Clears the value of dynamicRetrievalConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDynamicRetrievalConfig() {
+      return dynamicRetrievalConfig(Optional.empty());
     }
 
     public abstract GoogleSearchRetrieval build();

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,6 +65,16 @@ public abstract class ProactivityConfig extends JsonSerializable {
      */
     @JsonProperty("proactiveAudio")
     public abstract Builder proactiveAudio(boolean proactiveAudio);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder proactiveAudio(Optional<Boolean> proactiveAudio);
+
+    /** Clears the value of proactiveAudio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProactiveAudio() {
+      return proactiveAudio(Optional.empty());
+    }
 
     public abstract ProactivityConfig build();
   }

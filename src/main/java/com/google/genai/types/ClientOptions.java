@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -63,6 +64,16 @@ public abstract class ClientOptions extends JsonSerializable {
     @JsonProperty("maxConnections")
     public abstract Builder maxConnections(Integer maxConnections);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxConnections(Optional<Integer> maxConnections);
+
+    /** Clears the value of maxConnections field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxConnections() {
+      return maxConnections(Optional.empty());
+    }
+
     /**
      * Setter for maxConnectionsPerHost.
      *
@@ -70,6 +81,16 @@ public abstract class ClientOptions extends JsonSerializable {
      */
     @JsonProperty("maxConnectionsPerHost")
     public abstract Builder maxConnectionsPerHost(Integer maxConnectionsPerHost);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxConnectionsPerHost(Optional<Integer> maxConnectionsPerHost);
+
+    /** Clears the value of maxConnectionsPerHost field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxConnectionsPerHost() {
+      return maxConnectionsPerHost(Optional.empty());
+    }
 
     public abstract ClientOptions build();
   }

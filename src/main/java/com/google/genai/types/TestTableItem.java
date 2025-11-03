@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -99,6 +100,16 @@ public abstract class TestTableItem extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for parameters.
      *
@@ -106,6 +117,16 @@ public abstract class TestTableItem extends JsonSerializable {
      */
     @JsonProperty("parameters")
     public abstract Builder parameters(Map<String, Object> parameters);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parameters(Optional<Map<String, Object>> parameters);
+
+    /** Clears the value of parameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParameters() {
+      return parameters(Optional.empty());
+    }
 
     /**
      * Setter for exceptionIfMldev.
@@ -115,6 +136,16 @@ public abstract class TestTableItem extends JsonSerializable {
     @JsonProperty("exceptionIfMldev")
     public abstract Builder exceptionIfMldev(String exceptionIfMldev);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exceptionIfMldev(Optional<String> exceptionIfMldev);
+
+    /** Clears the value of exceptionIfMldev field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExceptionIfMldev() {
+      return exceptionIfMldev(Optional.empty());
+    }
+
     /**
      * Setter for exceptionIfVertex.
      *
@@ -122,6 +153,16 @@ public abstract class TestTableItem extends JsonSerializable {
      */
     @JsonProperty("exceptionIfVertex")
     public abstract Builder exceptionIfVertex(String exceptionIfVertex);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exceptionIfVertex(Optional<String> exceptionIfVertex);
+
+    /** Clears the value of exceptionIfVertex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExceptionIfVertex() {
+      return exceptionIfVertex(Optional.empty());
+    }
 
     /**
      * Setter for overrideReplayId.
@@ -132,6 +173,16 @@ public abstract class TestTableItem extends JsonSerializable {
     @JsonProperty("overrideReplayId")
     public abstract Builder overrideReplayId(String overrideReplayId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder overrideReplayId(Optional<String> overrideReplayId);
+
+    /** Clears the value of overrideReplayId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOverrideReplayId() {
+      return overrideReplayId(Optional.empty());
+    }
+
     /**
      * Setter for hasUnion.
      *
@@ -140,6 +191,16 @@ public abstract class TestTableItem extends JsonSerializable {
      */
     @JsonProperty("hasUnion")
     public abstract Builder hasUnion(boolean hasUnion);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hasUnion(Optional<Boolean> hasUnion);
+
+    /** Clears the value of hasUnion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHasUnion() {
+      return hasUnion(Optional.empty());
+    }
 
     /**
      * Setter for skipInApiMode.
@@ -150,6 +211,16 @@ public abstract class TestTableItem extends JsonSerializable {
      */
     @JsonProperty("skipInApiMode")
     public abstract Builder skipInApiMode(String skipInApiMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder skipInApiMode(Optional<String> skipInApiMode);
+
+    /** Clears the value of skipInApiMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSkipInApiMode() {
+      return skipInApiMode(Optional.empty());
+    }
 
     /**
      * Setter for ignoreKeys.
@@ -166,8 +237,19 @@ public abstract class TestTableItem extends JsonSerializable {
      * <p>ignoreKeys: Keys to ignore when comparing the request and response. This is useful for
      * tests that are not deterministic.
      */
+    @CanIgnoreReturnValue
     public Builder ignoreKeys(String... ignoreKeys) {
       return ignoreKeys(Arrays.asList(ignoreKeys));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ignoreKeys(Optional<List<String>> ignoreKeys);
+
+    /** Clears the value of ignoreKeys field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIgnoreKeys() {
+      return ignoreKeys(Optional.empty());
     }
 
     public abstract TestTableItem build();

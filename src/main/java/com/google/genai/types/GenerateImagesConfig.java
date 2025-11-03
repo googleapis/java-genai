@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** The config for generating an images. */
@@ -104,6 +105,10 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
   @JsonProperty("addWatermark")
   public abstract Optional<Boolean> addWatermark();
 
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
+
   /**
    * The size of the largest dimension of the generated image. Supported sizes are 1K and 2K (not
    * supported for Imagen 3 models).
@@ -146,8 +151,19 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -158,6 +174,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("outputGcsUri")
     public abstract Builder outputGcsUri(String outputGcsUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputGcsUri(Optional<String> outputGcsUri);
+
+    /** Clears the value of outputGcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputGcsUri() {
+      return outputGcsUri(Optional.empty());
+    }
+
     /**
      * Setter for negativePrompt.
      *
@@ -166,6 +192,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("negativePrompt")
     public abstract Builder negativePrompt(String negativePrompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder negativePrompt(Optional<String> negativePrompt);
+
+    /** Clears the value of negativePrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNegativePrompt() {
+      return negativePrompt(Optional.empty());
+    }
+
     /**
      * Setter for numberOfImages.
      *
@@ -173,6 +209,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("numberOfImages")
     public abstract Builder numberOfImages(Integer numberOfImages);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder numberOfImages(Optional<Integer> numberOfImages);
+
+    /** Clears the value of numberOfImages field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNumberOfImages() {
+      return numberOfImages(Optional.empty());
+    }
 
     /**
      * Setter for aspectRatio.
@@ -183,6 +229,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("aspectRatio")
     public abstract Builder aspectRatio(String aspectRatio);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder aspectRatio(Optional<String> aspectRatio);
+
+    /** Clears the value of aspectRatio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAspectRatio() {
+      return aspectRatio(Optional.empty());
+    }
+
     /**
      * Setter for guidanceScale.
      *
@@ -191,6 +247,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("guidanceScale")
     public abstract Builder guidanceScale(Float guidanceScale);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder guidanceScale(Optional<Float> guidanceScale);
+
+    /** Clears the value of guidanceScale field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGuidanceScale() {
+      return guidanceScale(Optional.empty());
+    }
 
     /**
      * Setter for seed.
@@ -201,6 +267,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("seed")
     public abstract Builder seed(Integer seed);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder seed(Optional<Integer> seed);
+
+    /** Clears the value of seed field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSeed() {
+      return seed(Optional.empty());
+    }
+
     /**
      * Setter for safetyFilterLevel.
      *
@@ -208,6 +284,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("safetyFilterLevel")
     public abstract Builder safetyFilterLevel(SafetyFilterLevel safetyFilterLevel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder safetyFilterLevel(Optional<SafetyFilterLevel> safetyFilterLevel);
+
+    /** Clears the value of safetyFilterLevel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSafetyFilterLevel() {
+      return safetyFilterLevel(Optional.empty());
+    }
 
     /**
      * Setter for safetyFilterLevel given a known enum.
@@ -236,6 +322,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("personGeneration")
     public abstract Builder personGeneration(PersonGeneration personGeneration);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personGeneration(Optional<PersonGeneration> personGeneration);
+
+    /** Clears the value of personGeneration field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonGeneration() {
+      return personGeneration(Optional.empty());
+    }
 
     /**
      * Setter for personGeneration given a known enum.
@@ -266,6 +362,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("includeSafetyAttributes")
     public abstract Builder includeSafetyAttributes(boolean includeSafetyAttributes);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder includeSafetyAttributes(Optional<Boolean> includeSafetyAttributes);
+
+    /** Clears the value of includeSafetyAttributes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIncludeSafetyAttributes() {
+      return includeSafetyAttributes(Optional.empty());
+    }
+
     /**
      * Setter for includeRaiReason.
      *
@@ -275,6 +381,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("includeRaiReason")
     public abstract Builder includeRaiReason(boolean includeRaiReason);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder includeRaiReason(Optional<Boolean> includeRaiReason);
+
+    /** Clears the value of includeRaiReason field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIncludeRaiReason() {
+      return includeRaiReason(Optional.empty());
+    }
+
     /**
      * Setter for language.
      *
@@ -282,6 +398,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("language")
     public abstract Builder language(ImagePromptLanguage language);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder language(Optional<ImagePromptLanguage> language);
+
+    /** Clears the value of language field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguage() {
+      return language(Optional.empty());
+    }
 
     /**
      * Setter for language given a known enum.
@@ -311,6 +437,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("outputMimeType")
     public abstract Builder outputMimeType(String outputMimeType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputMimeType(Optional<String> outputMimeType);
+
+    /** Clears the value of outputMimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputMimeType() {
+      return outputMimeType(Optional.empty());
+    }
+
     /**
      * Setter for outputCompressionQuality.
      *
@@ -320,6 +456,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputCompressionQuality(Optional<Integer> outputCompressionQuality);
+
+    /** Clears the value of outputCompressionQuality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputCompressionQuality() {
+      return outputCompressionQuality(Optional.empty());
+    }
+
     /**
      * Setter for addWatermark.
      *
@@ -327,6 +473,34 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("addWatermark")
     public abstract Builder addWatermark(boolean addWatermark);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder addWatermark(Optional<Boolean> addWatermark);
+
+    /** Clears the value of addWatermark field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAddWatermark() {
+      return addWatermark(Optional.empty());
+    }
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
+    }
 
     /**
      * Setter for imageSize.
@@ -337,6 +511,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
     @JsonProperty("imageSize")
     public abstract Builder imageSize(String imageSize);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageSize(Optional<String> imageSize);
+
+    /** Clears the value of imageSize field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageSize() {
+      return imageSize(Optional.empty());
+    }
+
     /**
      * Setter for enhancePrompt.
      *
@@ -344,6 +528,16 @@ public abstract class GenerateImagesConfig extends JsonSerializable {
      */
     @JsonProperty("enhancePrompt")
     public abstract Builder enhancePrompt(boolean enhancePrompt);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enhancePrompt(Optional<Boolean> enhancePrompt);
+
+    /** Clears the value of enhancePrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnhancePrompt() {
+      return enhancePrompt(Optional.empty());
+    }
 
     public abstract GenerateImagesConfig build();
   }

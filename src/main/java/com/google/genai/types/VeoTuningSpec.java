@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tuning Spec for Veo Model Tuning. */
+/** Tuning Spec for Veo Model Tuning. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = VeoTuningSpec.Builder.class)
 public abstract class VeoTuningSpec extends JsonSerializable {
@@ -78,8 +79,19 @@ public abstract class VeoTuningSpec extends JsonSerializable {
      *
      * <p>hyperParameters: Optional. Hyperparameters for Veo.
      */
+    @CanIgnoreReturnValue
     public Builder hyperParameters(VeoHyperParameters.Builder hyperParametersBuilder) {
       return hyperParameters(hyperParametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hyperParameters(Optional<VeoHyperParameters> hyperParameters);
+
+    /** Clears the value of hyperParameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHyperParameters() {
+      return hyperParameters(Optional.empty());
     }
 
     /**
@@ -92,6 +104,16 @@ public abstract class VeoTuningSpec extends JsonSerializable {
     @JsonProperty("trainingDatasetUri")
     public abstract Builder trainingDatasetUri(String trainingDatasetUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trainingDatasetUri(Optional<String> trainingDatasetUri);
+
+    /** Clears the value of trainingDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrainingDatasetUri() {
+      return trainingDatasetUri(Optional.empty());
+    }
+
     /**
      * Setter for validationDatasetUri.
      *
@@ -101,6 +123,16 @@ public abstract class VeoTuningSpec extends JsonSerializable {
      */
     @JsonProperty("validationDatasetUri")
     public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
+    }
 
     public abstract VeoTuningSpec build();
   }

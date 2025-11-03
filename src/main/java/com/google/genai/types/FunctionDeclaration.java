@@ -122,6 +122,16 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @JsonProperty("behavior")
     public abstract Builder behavior(Behavior behavior);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder behavior(Optional<Behavior> behavior);
+
+    /** Clears the value of behavior field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBehavior() {
+      return behavior(Optional.empty());
+    }
+
     /**
      * Setter for behavior given a known enum.
      *
@@ -151,6 +161,16 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @JsonProperty("description")
     public abstract Builder description(String description);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder description(Optional<String> description);
+
+    /** Clears the value of description field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDescription() {
+      return description(Optional.empty());
+    }
+
     /**
      * Setter for name.
      *
@@ -160,6 +180,16 @@ public abstract class FunctionDeclaration extends JsonSerializable {
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
 
     /**
      * Setter for parameters.
@@ -186,8 +216,19 @@ public abstract class FunctionDeclaration extends JsonSerializable {
      * underscores with a maximum length of 64. Example with 1 required and 1 optional parameter:
      * type: OBJECT properties: param1: type: STRING param2: type: INTEGER required: - param1
      */
+    @CanIgnoreReturnValue
     public Builder parameters(Schema.Builder parametersBuilder) {
       return parameters(parametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parameters(Optional<Schema> parameters);
+
+    /** Clears the value of parameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParameters() {
+      return parameters(Optional.empty());
     }
 
     /**
@@ -201,6 +242,16 @@ public abstract class FunctionDeclaration extends JsonSerializable {
      */
     @JsonProperty("parametersJsonSchema")
     public abstract Builder parametersJsonSchema(Object parametersJsonSchema);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parametersJsonSchema(Optional<Object> parametersJsonSchema);
+
+    /** Clears the value of parametersJsonSchema field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParametersJsonSchema() {
+      return parametersJsonSchema(Optional.empty());
+    }
 
     /**
      * Setter for response.
@@ -219,8 +270,19 @@ public abstract class FunctionDeclaration extends JsonSerializable {
      * Reflects the Open API 3.03 Response Object. The Schema defines the type used for the response
      * value of the function.
      */
+    @CanIgnoreReturnValue
     public Builder response(Schema.Builder responseBuilder) {
       return response(responseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder response(Optional<Schema> response);
+
+    /** Clears the value of response field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponse() {
+      return response(Optional.empty());
     }
 
     /**
@@ -232,6 +294,16 @@ public abstract class FunctionDeclaration extends JsonSerializable {
      */
     @JsonProperty("responseJsonSchema")
     public abstract Builder responseJsonSchema(Object responseJsonSchema);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder responseJsonSchema(Optional<Object> responseJsonSchema);
+
+    /** Clears the value of responseJsonSchema field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponseJsonSchema() {
+      return responseJsonSchema(Optional.empty());
+    }
 
     public abstract FunctionDeclaration build();
   }

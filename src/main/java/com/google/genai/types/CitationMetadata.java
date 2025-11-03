@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -73,6 +74,7 @@ public abstract class CitationMetadata extends JsonSerializable {
      * <p>citations: Contains citation information when the model directly quotes, at length, from
      * another source. Can include traditional websites and code repositories.
      */
+    @CanIgnoreReturnValue
     public Builder citations(Citation... citations) {
       return citations(Arrays.asList(citations));
     }
@@ -83,11 +85,22 @@ public abstract class CitationMetadata extends JsonSerializable {
      * <p>citations: Contains citation information when the model directly quotes, at length, from
      * another source. Can include traditional websites and code repositories.
      */
+    @CanIgnoreReturnValue
     public Builder citations(Citation.Builder... citationsBuilders) {
       return citations(
           Arrays.asList(citationsBuilders).stream()
               .map(Citation.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder citations(Optional<List<Citation>> citations);
+
+    /** Clears the value of citations field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCitations() {
+      return citations(Optional.empty());
     }
 
     public abstract CitationMetadata build();

@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Statistics computed for datasets used for distillation. */
+/**
+ * Statistics computed for datasets used for distillation. This data type is not supported in Gemini
+ * API.
+ */
 @AutoValue
 @JsonDeserialize(builder = DistillationDataStats.Builder.class)
 public abstract class DistillationDataStats extends JsonSerializable {
@@ -64,8 +68,19 @@ public abstract class DistillationDataStats extends JsonSerializable {
      *
      * <p>trainingDatasetStats: Output only. Statistics computed for the training dataset.
      */
+    @CanIgnoreReturnValue
     public Builder trainingDatasetStats(DatasetStats.Builder trainingDatasetStatsBuilder) {
       return trainingDatasetStats(trainingDatasetStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trainingDatasetStats(Optional<DatasetStats> trainingDatasetStats);
+
+    /** Clears the value of trainingDatasetStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrainingDatasetStats() {
+      return trainingDatasetStats(Optional.empty());
     }
 
     public abstract DistillationDataStats build();

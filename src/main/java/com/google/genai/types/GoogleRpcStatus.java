@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,8 @@ import java.util.Optional;
  * environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
  * Each `Status` message contains three pieces of data: error code, error message, and error
  * details. You can find out more about this error model and how to work with it in the [API Design
- * Guide](https://cloud.google.com/apis/design/errors).
+ * Guide](https://cloud.google.com/apis/design/errors). This data type is not supported in Gemini
+ * API.
  */
 @AutoValue
 @JsonDeserialize(builder = GoogleRpcStatus.Builder.class)
@@ -83,6 +85,16 @@ public abstract class GoogleRpcStatus extends JsonSerializable {
     @JsonProperty("code")
     public abstract Builder code(Integer code);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder code(Optional<Integer> code);
+
+    /** Clears the value of code field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCode() {
+      return code(Optional.empty());
+    }
+
     /**
      * Setter for details.
      *
@@ -98,8 +110,19 @@ public abstract class GoogleRpcStatus extends JsonSerializable {
      * <p>details: A list of messages that carry the error details. There is a common set of message
      * types for APIs to use.
      */
+    @CanIgnoreReturnValue
     public Builder details(Map<String, Object>... details) {
       return details(Arrays.asList(details));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder details(Optional<List<Map<String, Object>>> details);
+
+    /** Clears the value of details field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDetails() {
+      return details(Optional.empty());
     }
 
     /**
@@ -111,6 +134,16 @@ public abstract class GoogleRpcStatus extends JsonSerializable {
      */
     @JsonProperty("message")
     public abstract Builder message(String message);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder message(Optional<String> message);
+
+    /** Clears the value of message field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMessage() {
+      return message(Optional.empty());
+    }
 
     public abstract GoogleRpcStatus build();
   }

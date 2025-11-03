@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
@@ -75,6 +76,16 @@ public abstract class FunctionCall extends JsonSerializable {
     @JsonProperty("id")
     public abstract Builder id(String id);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder id(Optional<String> id);
+
+    /** Clears the value of id field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearId() {
+      return id(Optional.empty());
+    }
+
     /**
      * Setter for args.
      *
@@ -84,6 +95,16 @@ public abstract class FunctionCall extends JsonSerializable {
     @JsonProperty("args")
     public abstract Builder args(Map<String, Object> args);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder args(Optional<Map<String, Object>> args);
+
+    /** Clears the value of args field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearArgs() {
+      return args(Optional.empty());
+    }
+
     /**
      * Setter for name.
      *
@@ -91,6 +112,16 @@ public abstract class FunctionCall extends JsonSerializable {
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
 
     public abstract FunctionCall build();
   }

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +76,16 @@ public abstract class RecontextImageSource extends JsonSerializable {
     @JsonProperty("prompt")
     public abstract Builder prompt(String prompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prompt(Optional<String> prompt);
+
+    /** Clears the value of prompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPrompt() {
+      return prompt(Optional.empty());
+    }
+
     /**
      * Setter for personImage.
      *
@@ -88,8 +99,19 @@ public abstract class RecontextImageSource extends JsonSerializable {
      *
      * <p>personImage: Image of the person or subject who will be wearing the product(s).
      */
+    @CanIgnoreReturnValue
     public Builder personImage(Image.Builder personImageBuilder) {
       return personImage(personImageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personImage(Optional<Image> personImage);
+
+    /** Clears the value of personImage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonImage() {
+      return personImage(Optional.empty());
     }
 
     /**
@@ -105,6 +127,7 @@ public abstract class RecontextImageSource extends JsonSerializable {
      *
      * <p>productImages: A list of product images.
      */
+    @CanIgnoreReturnValue
     public Builder productImages(ProductImage... productImages) {
       return productImages(Arrays.asList(productImages));
     }
@@ -114,11 +137,22 @@ public abstract class RecontextImageSource extends JsonSerializable {
      *
      * <p>productImages: A list of product images.
      */
+    @CanIgnoreReturnValue
     public Builder productImages(ProductImage.Builder... productImagesBuilders) {
       return productImages(
           Arrays.asList(productImagesBuilders).stream()
               .map(ProductImage.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder productImages(Optional<List<ProductImage>> productImages);
+
+    /** Clears the value of productImages field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProductImages() {
+      return productImages(Optional.empty());
     }
 
     public abstract RecontextImageSource build();

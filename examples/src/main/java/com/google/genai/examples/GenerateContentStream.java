@@ -75,7 +75,14 @@ public final class GenerateContentStream {
 
     System.out.println("Streaming response: ");
     for (GenerateContentResponse res : responseStream) {
+      // Gets the text string from the response by the quick accessor method `text()`.
       System.out.print(res.text());
+
+      // Gets the http headers from the response.
+      res.sdkHttpResponse()
+          .ifPresent(
+              httpResponse ->
+                  System.out.println("Response headers: " + httpResponse.headers().orElse(null)));
     }
 
     // To save resources and avoid connection leaks, it is recommended to close the response

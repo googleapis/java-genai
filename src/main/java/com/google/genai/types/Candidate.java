@@ -57,10 +57,6 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("finishReason")
   public abstract Optional<FinishReason> finishReason();
 
-  /** Metadata related to url context retrieval tool. */
-  @JsonProperty("urlContextMetadata")
-  public abstract Optional<UrlContextMetadata> urlContextMetadata();
-
   /** Output only. Average log probability score of the candidate. */
   @JsonProperty("avgLogprobs")
   public abstract Optional<Double> avgLogprobs();
@@ -83,6 +79,10 @@ public abstract class Candidate extends JsonSerializable {
    */
   @JsonProperty("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
+
+  /** Output only. Metadata related to url context retrieval tool. */
+  @JsonProperty("urlContextMetadata")
+  public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
   /** Instantiates a builder for Candidate. */
   @ExcludeFromGeneratedCoverageReport
@@ -115,8 +115,19 @@ public abstract class Candidate extends JsonSerializable {
      *
      * <p>content: Contains the multi-part content of the response.
      */
+    @CanIgnoreReturnValue
     public Builder content(Content.Builder contentBuilder) {
       return content(contentBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder content(Optional<Content> content);
+
+    /** Clears the value of content field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContent() {
+      return content(Optional.empty());
     }
 
     /**
@@ -132,8 +143,19 @@ public abstract class Candidate extends JsonSerializable {
      *
      * <p>citationMetadata: Source attribution of the generated content.
      */
+    @CanIgnoreReturnValue
     public Builder citationMetadata(CitationMetadata.Builder citationMetadataBuilder) {
       return citationMetadata(citationMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder citationMetadata(Optional<CitationMetadata> citationMetadata);
+
+    /** Clears the value of citationMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCitationMetadata() {
+      return citationMetadata(Optional.empty());
     }
 
     /**
@@ -144,6 +166,16 @@ public abstract class Candidate extends JsonSerializable {
     @JsonProperty("finishMessage")
     public abstract Builder finishMessage(String finishMessage);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder finishMessage(Optional<String> finishMessage);
+
+    /** Clears the value of finishMessage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFinishMessage() {
+      return finishMessage(Optional.empty());
+    }
+
     /**
      * Setter for tokenCount.
      *
@@ -151,6 +183,16 @@ public abstract class Candidate extends JsonSerializable {
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Integer tokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenCount(Optional<Integer> tokenCount);
+
+    /** Clears the value of tokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenCount() {
+      return tokenCount(Optional.empty());
+    }
 
     /**
      * Setter for finishReason.
@@ -160,6 +202,16 @@ public abstract class Candidate extends JsonSerializable {
      */
     @JsonProperty("finishReason")
     public abstract Builder finishReason(FinishReason finishReason);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder finishReason(Optional<FinishReason> finishReason);
+
+    /** Clears the value of finishReason field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFinishReason() {
+      return finishReason(Optional.empty());
+    }
 
     /**
      * Setter for finishReason given a known enum.
@@ -184,29 +236,22 @@ public abstract class Candidate extends JsonSerializable {
     }
 
     /**
-     * Setter for urlContextMetadata.
-     *
-     * <p>urlContextMetadata: Metadata related to url context retrieval tool.
-     */
-    @JsonProperty("urlContextMetadata")
-    public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
-
-    /**
-     * Setter for urlContextMetadata builder.
-     *
-     * <p>urlContextMetadata: Metadata related to url context retrieval tool.
-     */
-    public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
-      return urlContextMetadata(urlContextMetadataBuilder.build());
-    }
-
-    /**
      * Setter for avgLogprobs.
      *
      * <p>avgLogprobs: Output only. Average log probability score of the candidate.
      */
     @JsonProperty("avgLogprobs")
     public abstract Builder avgLogprobs(Double avgLogprobs);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder avgLogprobs(Optional<Double> avgLogprobs);
+
+    /** Clears the value of avgLogprobs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAvgLogprobs() {
+      return avgLogprobs(Optional.empty());
+    }
 
     /**
      * Setter for groundingMetadata.
@@ -223,8 +268,19 @@ public abstract class Candidate extends JsonSerializable {
      * <p>groundingMetadata: Output only. Metadata specifies sources used to ground generated
      * content.
      */
+    @CanIgnoreReturnValue
     public Builder groundingMetadata(GroundingMetadata.Builder groundingMetadataBuilder) {
       return groundingMetadata(groundingMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder groundingMetadata(Optional<GroundingMetadata> groundingMetadata);
+
+    /** Clears the value of groundingMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGroundingMetadata() {
+      return groundingMetadata(Optional.empty());
     }
 
     /**
@@ -234,6 +290,16 @@ public abstract class Candidate extends JsonSerializable {
      */
     @JsonProperty("index")
     public abstract Builder index(Integer index);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder index(Optional<Integer> index);
+
+    /** Clears the value of index field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIndex() {
+      return index(Optional.empty());
+    }
 
     /**
      * Setter for logprobsResult.
@@ -248,8 +314,19 @@ public abstract class Candidate extends JsonSerializable {
      *
      * <p>logprobsResult: Output only. Log-likelihood scores for the response tokens and top tokens
      */
+    @CanIgnoreReturnValue
     public Builder logprobsResult(LogprobsResult.Builder logprobsResultBuilder) {
       return logprobsResult(logprobsResultBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder logprobsResult(Optional<LogprobsResult> logprobsResult);
+
+    /** Clears the value of logprobsResult field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLogprobsResult() {
+      return logprobsResult(Optional.empty());
     }
 
     /**
@@ -267,6 +344,7 @@ public abstract class Candidate extends JsonSerializable {
      * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
      * is at most one rating per category.
      */
+    @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating... safetyRatings) {
       return safetyRatings(Arrays.asList(safetyRatings));
     }
@@ -277,11 +355,50 @@ public abstract class Candidate extends JsonSerializable {
      * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
      * is at most one rating per category.
      */
+    @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating.Builder... safetyRatingsBuilders) {
       return safetyRatings(
           Arrays.asList(safetyRatingsBuilders).stream()
               .map(SafetyRating.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder safetyRatings(Optional<List<SafetyRating>> safetyRatings);
+
+    /** Clears the value of safetyRatings field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSafetyRatings() {
+      return safetyRatings(Optional.empty());
+    }
+
+    /**
+     * Setter for urlContextMetadata.
+     *
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
+     */
+    @JsonProperty("urlContextMetadata")
+    public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
+
+    /**
+     * Setter for urlContextMetadata builder.
+     *
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
+     */
+    @CanIgnoreReturnValue
+    public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {
+      return urlContextMetadata(urlContextMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder urlContextMetadata(Optional<UrlContextMetadata> urlContextMetadata);
+
+    /** Clears the value of urlContextMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUrlContextMetadata() {
+      return urlContextMetadata(Optional.empty());
     }
 
     public abstract Candidate build();

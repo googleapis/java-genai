@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -74,6 +75,16 @@ public abstract class SegmentImageSource extends JsonSerializable {
     @JsonProperty("prompt")
     public abstract Builder prompt(String prompt);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prompt(Optional<String> prompt);
+
+    /** Clears the value of prompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPrompt() {
+      return prompt(Optional.empty());
+    }
+
     /**
      * Setter for image.
      *
@@ -87,8 +98,19 @@ public abstract class SegmentImageSource extends JsonSerializable {
      *
      * <p>image: The image to be segmented.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**
@@ -106,8 +128,19 @@ public abstract class SegmentImageSource extends JsonSerializable {
      * <p>scribbleImage: The brush scribble to guide segmentation. Required for the interactive
      * mode, disallowed for other modes.
      */
+    @CanIgnoreReturnValue
     public Builder scribbleImage(ScribbleImage.Builder scribbleImageBuilder) {
       return scribbleImage(scribbleImageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scribbleImage(Optional<ScribbleImage> scribbleImage);
+
+    /** Clears the value of scribbleImage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScribbleImage() {
+      return scribbleImage(Optional.empty());
     }
 
     public abstract SegmentImageSource build();

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +78,16 @@ public abstract class EmbedContentParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for contents.
      *
@@ -90,6 +101,7 @@ public abstract class EmbedContentParameters extends JsonSerializable {
      *
      * <p>contents: The content to embed. Only the `parts.text` fields will be counted.
      */
+    @CanIgnoreReturnValue
     public Builder contents(Content... contents) {
       return contents(Arrays.asList(contents));
     }
@@ -99,11 +111,22 @@ public abstract class EmbedContentParameters extends JsonSerializable {
      *
      * <p>contents: The content to embed. Only the `parts.text` fields will be counted.
      */
+    @CanIgnoreReturnValue
     public Builder contents(Content.Builder... contentsBuilders) {
       return contents(
           Arrays.asList(contentsBuilders).stream()
               .map(Content.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contents(Optional<List<Content>> contents);
+
+    /** Clears the value of contents field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContents() {
+      return contents(Optional.empty());
     }
 
     /**
@@ -119,8 +142,19 @@ public abstract class EmbedContentParameters extends JsonSerializable {
      *
      * <p>config: Configuration that contains optional parameters.
      */
+    @CanIgnoreReturnValue
     public Builder config(EmbedContentConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<EmbedContentConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract EmbedContentParameters build();

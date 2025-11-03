@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Type of auth scheme. */
+/** Type of auth scheme. This enum is not supported in Gemini API. */
 public class AuthType {
 
   /** Enum representing the known values for AuthType. */

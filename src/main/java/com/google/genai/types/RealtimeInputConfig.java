@@ -83,9 +83,21 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
      * <p>automaticActivityDetection: If not set, automatic activity detection is enabled by
      * default. If automatic voice detection is disabled, the client must send activity signals.
      */
+    @CanIgnoreReturnValue
     public Builder automaticActivityDetection(
         AutomaticActivityDetection.Builder automaticActivityDetectionBuilder) {
       return automaticActivityDetection(automaticActivityDetectionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder automaticActivityDetection(
+        Optional<AutomaticActivityDetection> automaticActivityDetection);
+
+    /** Clears the value of automaticActivityDetection field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutomaticActivityDetection() {
+      return automaticActivityDetection(Optional.empty());
     }
 
     /**
@@ -95,6 +107,16 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
      */
     @JsonProperty("activityHandling")
     public abstract Builder activityHandling(ActivityHandling activityHandling);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder activityHandling(Optional<ActivityHandling> activityHandling);
+
+    /** Clears the value of activityHandling field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearActivityHandling() {
+      return activityHandling(Optional.empty());
+    }
 
     /**
      * Setter for activityHandling given a known enum.
@@ -123,6 +145,16 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
      */
     @JsonProperty("turnCoverage")
     public abstract Builder turnCoverage(TurnCoverage turnCoverage);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder turnCoverage(Optional<TurnCoverage> turnCoverage);
+
+    /** Clears the value of turnCoverage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTurnCoverage() {
+      return turnCoverage(Optional.empty());
+    }
 
     /**
      * Setter for turnCoverage given a known enum.

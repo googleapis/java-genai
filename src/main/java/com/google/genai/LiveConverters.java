@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/** Internal SDK converter functions. */
 final class LiveConverters {
   private final ApiClient apiClient;
 
@@ -33,15 +34,15 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"data"},
           Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
+      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
@@ -314,22 +315,50 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"topP"}));
     }
 
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
+      throw new IllegalArgumentException(
+          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
+      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enableWidget"},
+          Common.getValueByPath(fromObject, new String[] {"enableWidget"}));
+    }
+
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
+      throw new IllegalArgumentException(
+          "blockingConfidence parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
-      throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -1281,47 +1310,6 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1343,6 +1331,16 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1350,11 +1348,42 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
     return toObject;
@@ -1380,6 +1409,13 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1391,13 +1427,6 @@ final class LiveConverters {
         Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
       throw new IllegalArgumentException(
           "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
     }
 
     return toObject;
@@ -1417,16 +1446,6 @@ final class LiveConverters {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1434,20 +1453,14 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
-      throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"googleMaps"}))) {
-      throw new IllegalArgumentException("googleMaps parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1462,6 +1475,28 @@ final class LiveConverters {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
+      throw new IllegalArgumentException(
+          "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;
@@ -1489,13 +1524,6 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1503,25 +1531,11 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enterpriseWebSearch"},
-          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"googleMaps"},
           Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1536,6 +1550,27 @@ final class LiveConverters {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;

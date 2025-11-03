@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class CreateCachedContentParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for config.
      *
@@ -80,8 +91,19 @@ public abstract class CreateCachedContentParameters extends JsonSerializable {
      *
      * <p>config: Configuration that contains optional parameters.
      */
+    @CanIgnoreReturnValue
     public Builder config(CreateCachedContentConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<CreateCachedContentConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract CreateCachedContentParameters build();

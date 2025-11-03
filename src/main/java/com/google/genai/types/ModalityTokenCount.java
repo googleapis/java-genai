@@ -64,6 +64,16 @@ public abstract class ModalityTokenCount extends JsonSerializable {
     @JsonProperty("modality")
     public abstract Builder modality(MediaModality modality);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modality(Optional<MediaModality> modality);
+
+    /** Clears the value of modality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModality() {
+      return modality(Optional.empty());
+    }
+
     /**
      * Setter for modality given a known enum.
      *
@@ -91,6 +101,16 @@ public abstract class ModalityTokenCount extends JsonSerializable {
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Integer tokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenCount(Optional<Integer> tokenCount);
+
+    /** Clears the value of tokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenCount() {
+      return tokenCount(Optional.empty());
+    }
 
     public abstract ModalityTokenCount build();
   }

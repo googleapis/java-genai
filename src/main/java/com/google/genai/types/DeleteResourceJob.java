@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -76,8 +77,19 @@ public abstract class DeleteResourceJob extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -88,6 +100,16 @@ public abstract class DeleteResourceJob extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for done.
      *
@@ -95,6 +117,16 @@ public abstract class DeleteResourceJob extends JsonSerializable {
      */
     @JsonProperty("done")
     public abstract Builder done(boolean done);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder done(Optional<Boolean> done);
+
+    /** Clears the value of done field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDone() {
+      return done(Optional.empty());
+    }
 
     /**
      * Setter for error.
@@ -109,8 +141,19 @@ public abstract class DeleteResourceJob extends JsonSerializable {
      *
      * <p>error:
      */
+    @CanIgnoreReturnValue
     public Builder error(JobError.Builder errorBuilder) {
       return error(errorBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<JobError> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
     }
 
     public abstract DeleteResourceJob build();

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import com.google.genai.errors.GenAiIOException;
 import java.io.File;
@@ -79,6 +80,16 @@ public abstract class Image extends JsonSerializable {
     @JsonProperty("gcsUri")
     public abstract Builder gcsUri(String gcsUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder gcsUri(Optional<String> gcsUri);
+
+    /** Clears the value of gcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGcsUri() {
+      return gcsUri(Optional.empty());
+    }
+
     /**
      * Setter for imageBytes.
      *
@@ -88,6 +99,16 @@ public abstract class Image extends JsonSerializable {
     @JsonProperty("imageBytes")
     public abstract Builder imageBytes(byte[] imageBytes);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageBytes(Optional<byte[]> imageBytes);
+
+    /** Clears the value of imageBytes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageBytes() {
+      return imageBytes(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -95,6 +116,16 @@ public abstract class Image extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     public abstract Image build();
   }

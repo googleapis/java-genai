@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -73,6 +74,16 @@ public abstract class SegmentImageParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for source.
      *
@@ -86,8 +97,19 @@ public abstract class SegmentImageParameters extends JsonSerializable {
      *
      * <p>source: A set of source input(s) for image segmentation.
      */
+    @CanIgnoreReturnValue
     public Builder source(SegmentImageSource.Builder sourceBuilder) {
       return source(sourceBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder source(Optional<SegmentImageSource> source);
+
+    /** Clears the value of source field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSource() {
+      return source(Optional.empty());
     }
 
     /**
@@ -103,8 +125,19 @@ public abstract class SegmentImageParameters extends JsonSerializable {
      *
      * <p>config: Configuration for image segmentation.
      */
+    @CanIgnoreReturnValue
     public Builder config(SegmentImageConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<SegmentImageConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract SegmentImageParameters build();

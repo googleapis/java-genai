@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.util.Optional;
@@ -64,6 +65,16 @@ public abstract class LiveServerGoAway extends JsonSerializable {
      */
     @JsonProperty("timeLeft")
     public abstract Builder timeLeft(Duration timeLeft);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder timeLeft(Optional<Duration> timeLeft);
+
+    /** Clears the value of timeLeft field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTimeLeft() {
+      return timeLeft(Optional.empty());
+    }
 
     public abstract LiveServerGoAway build();
   }

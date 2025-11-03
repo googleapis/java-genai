@@ -100,6 +100,7 @@ import okhttp3.ResponseBody;
  * `client.models.methodName(...)` directly.
  */
 public final class Models {
+
   final ApiClient apiClient;
 
   public Models(ApiClient apiClient) {
@@ -136,15 +137,15 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"data"},
           Common.getValueByPath(fromObject, new String[] {"data"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
+      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
@@ -191,13 +192,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"finishReason"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContextMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -231,6 +225,13 @@ public final class Models {
           toObject,
           new String[] {"safetyRatings"},
           Common.getValueByPath(fromObject, new String[] {"safetyRatings"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContextMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"urlContextMetadata"}));
     }
 
     return toObject;
@@ -704,6 +705,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "addWatermark"},
           Common.getValueByPath(fromObject, new String[] {"addWatermark"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"editMode"}) != null) {
@@ -1793,6 +1801,10 @@ public final class Models {
       throw new IllegalArgumentException("addWatermark parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
+      throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1907,6 +1919,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "addWatermark"},
           Common.getValueByPath(fromObject, new String[] {"addWatermark"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
@@ -2732,13 +2751,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromMldev(
               JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+                  Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject));
     }
 
@@ -2921,6 +2940,12 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"topP"}));
     }
 
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
+      throw new IllegalArgumentException(
+          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+    }
+
     return toObject;
   }
 
@@ -2955,18 +2980,40 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
+      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enableWidget"},
+          Common.getValueByPath(fromObject, new String[] {"enableWidget"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
+      throw new IllegalArgumentException(
+          "blockingConfidence parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
-      throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -3416,47 +3463,6 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"videoMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thought"},
-          Common.getValueByPath(fromObject, new String[] {"thought"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"thoughtSignature"},
-          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3478,6 +3484,16 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"executableCode"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          fileDataToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3485,11 +3501,42 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          blobToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"text"},
           Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
     return toObject;
@@ -3583,6 +3630,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "enhancePrompt"},
           Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     return toObject;
@@ -3795,15 +3849,15 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
-      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"category"},
           Common.getValueByPath(fromObject, new String[] {"category"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
+      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"threshold"}) != null) {
@@ -3869,6 +3923,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "binaryColorThreshold"},
           Common.getValueByPath(fromObject, new String[] {"binaryColorThreshold"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     return toObject;
@@ -3959,6 +4020,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3970,13 +4038,6 @@ public final class Models {
         Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
       throw new IllegalArgumentException(
           "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
     }
 
     return toObject;
@@ -3996,16 +4057,6 @@ public final class Models {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4013,20 +4064,14 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
-      throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"googleMaps"}))) {
-      throw new IllegalArgumentException("googleMaps parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4041,6 +4086,28 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
+      throw new IllegalArgumentException(
+          "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;
@@ -4068,13 +4135,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4082,25 +4142,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enterpriseWebSearch"},
-          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"googleMaps"},
           Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"urlContext"},
-          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4115,6 +4161,27 @@ public final class Models {
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enterpriseWebSearch"},
+          Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"urlContext"},
+          Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
     return toObject;
@@ -4263,6 +4330,20 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "safetySetting"},
+          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -4296,6 +4377,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "upscaleConfig", "imagePreservationFactor"},
           Common.getValueByPath(fromObject, new String[] {"imagePreservationFactor"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
@@ -4383,19 +4471,16 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"video", "uri"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"uri"},
-          Common.getValueByPath(fromObject, new String[] {"video", "uri"}));
+          toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"video", "encodedVideo"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"encodedVideo"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"videoBytes"},
-          Transformers.tBytes(
-              Common.getValueByPath(fromObject, new String[] {"video", "encodedVideo"})));
+          Transformers.tBytes(Common.getValueByPath(fromObject, new String[] {"encodedVideo"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"encoding"}) != null) {
@@ -4512,15 +4597,13 @@ public final class Models {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
-          toObject,
-          new String[] {"video", "uri"},
-          Common.getValueByPath(fromObject, new String[] {"uri"}));
+          toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"videoBytes"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"video", "encodedVideo"},
+          new String[] {"encodedVideo"},
           Transformers.tBytes(Common.getValueByPath(fromObject, new String[] {"videoBytes"})));
     }
 
@@ -4727,7 +4810,7 @@ public final class Models {
       converterName = "generateContentResponseFromMldev";
     }
     return new ResponseStream<GenerateContentResponse>(
-        GenerateContentResponse.class, response, this, converterName);
+        GenerateContentResponse.class, response, this, converterName, false, true);
   }
 
   ResponseStream<GenerateContentResponse> privateGenerateContentStream(
@@ -5971,8 +6054,24 @@ public final class Models {
    */
   public GenerateContentResponse generateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    ImmutableList<Integer> incompatibleToolsIndexes =
+        AfcUtil.findAfcIncompatibleToolIndexes(config);
     GenerateContentConfig transformedConfig = AfcUtil.transformGenerateContentConfig(config);
     if (AfcUtil.shouldDisableAfc(transformedConfig)) {
+      return privateGenerateContent(model, contents, transformedConfig);
+    }
+    if (!incompatibleToolsIndexes.isEmpty()) {
+      int originalToolsSize = 0;
+      if (config.tools().isPresent() && !config.tools().get().isEmpty()) {
+        originalToolsSize = config.tools().get().size();
+      }
+      if (originalToolsSize != incompatibleToolsIndexes.size()) {
+        logger.warning(
+            String.format(
+                "Automatic function calling (AFC) is enabled, but the following tools are not"
+                    + " supported: %s. AFC will be disabled.",
+                incompatibleToolsIndexes));
+      }
       return privateGenerateContent(model, contents, transformedConfig);
     }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
@@ -6137,21 +6236,8 @@ public final class Models {
     return computeTokens(model, Transformers.tContents(text), config);
   }
 
-  /**
-   * Generates images given a GenAI model and a prompt.
-   *
-   * @param model the name of the GenAI model to use for generating images
-   * @param prompt the prompt to generate images
-   * @param config a {@link com.google.genai.types.GenerateImagesConfig} instance that specifies the
-   *     optional configurations
-   * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
-   *     generated images.
-   */
-  public GenerateImagesResponse generateImages(
-      String model, String prompt, GenerateImagesConfig config) {
-
-    GenerateImagesResponse apiResponse = privateGenerateImages(model, prompt, config);
-
+  /** Post processes the GenerateImagesResponse from the API. */
+  GenerateImagesResponse postProcessGenerateImagesResponse(GenerateImagesResponse apiResponse) {
     SafetyAttributes positivePromptSafetyAttributes = null;
     List<GeneratedImage> generatedImages = new ArrayList<>();
 
@@ -6179,8 +6265,22 @@ public final class Models {
       builder = builder.positivePromptSafetyAttributes(positivePromptSafetyAttributes);
     }
 
-    GenerateImagesResponse response = builder.build();
-    return response;
+    return builder.build();
+  }
+
+  /**
+   * Generates images given a GenAI model and a prompt.
+   *
+   * @param model the name of the GenAI model to use for generating images
+   * @param prompt the prompt to generate images
+   * @param config a {@link com.google.genai.types.GenerateImagesConfig} instance that specifies the
+   *     optional configurations
+   * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
+   *     generated images.
+   */
+  public GenerateImagesResponse generateImages(
+      String model, String prompt, GenerateImagesConfig config) {
+    return postProcessGenerateImagesResponse(privateGenerateImages(model, prompt, config));
   }
 
   /**
@@ -6212,6 +6312,45 @@ public final class Models {
     return privateEditImage(model, prompt, referenceImagesAPI, config);
   }
 
+  /** Preprocesses the UpscaleImageConfig for the API. */
+  UpscaleImageAPIConfig preProcessUpscaleImageConfig(UpscaleImageConfig config) {
+    UpscaleImageAPIConfig.Builder builder = UpscaleImageAPIConfig.builder();
+    if (config != null) {
+      if (config.outputGcsUri().isPresent()) {
+        builder = builder.outputGcsUri(config.outputGcsUri().get());
+      }
+      if (config.outputMimeType().isPresent()) {
+        builder = builder.outputMimeType(config.outputMimeType().get());
+      }
+      if (config.outputCompressionQuality().isPresent()) {
+        builder = builder.outputCompressionQuality(config.outputCompressionQuality().get());
+      }
+      if (config.safetyFilterLevel().isPresent()) {
+        builder = builder.safetyFilterLevel(config.safetyFilterLevel().get());
+      }
+      if (config.personGeneration().isPresent()) {
+        builder = builder.personGeneration(config.personGeneration().get());
+      }
+      if (config.includeRaiReason().isPresent()) {
+        builder = builder.includeRaiReason(config.includeRaiReason().get());
+      }
+      if (config.enhanceInputImage().isPresent()) {
+        builder = builder.enhanceInputImage(config.enhanceInputImage().get());
+      }
+      if (config.imagePreservationFactor().isPresent()) {
+        builder = builder.imagePreservationFactor(config.imagePreservationFactor().get());
+      }
+      if (config.labels().isPresent()) {
+        builder = builder.labels(config.labels().get());
+      }
+    }
+
+    builder = builder.mode("upscale");
+    builder = builder.numberOfImages(1);
+
+    return builder.build();
+  }
+
   /**
    * Upscales an image given a GenAI model and an image and an upscale factor.
    *
@@ -6225,35 +6364,34 @@ public final class Models {
    */
   public UpscaleImageResponse upscaleImage(
       String model, Image image, String upscaleFactor, UpscaleImageConfig config) {
+    return privateUpscaleImage(model, image, upscaleFactor, preProcessUpscaleImageConfig(config));
+  }
 
-    UpscaleImageAPIConfig.Builder builder = UpscaleImageAPIConfig.builder();
-    if (config != null) {
-      if (config.outputGcsUri().isPresent()) {
-        builder = builder.outputGcsUri(config.outputGcsUri().get());
-      }
-      if (config.outputMimeType().isPresent()) {
-        builder = builder.outputMimeType(config.outputMimeType().get());
-      }
-      if (config.outputCompressionQuality().isPresent()) {
-        builder = builder.outputCompressionQuality(config.outputCompressionQuality().get());
-      }
-      if (config.includeRaiReason().isPresent()) {
-        builder = builder.includeRaiReason(config.includeRaiReason().get());
-      }
-      if (config.enhanceInputImage().isPresent()) {
-        builder = builder.enhanceInputImage(config.enhanceInputImage().get());
-      }
-      if (config.imagePreservationFactor().isPresent()) {
-        builder = builder.imagePreservationFactor(config.imagePreservationFactor().get());
+  /** Preprocesses the GenerateVideosSource for the API. */
+  GenerateVideosSource preProcessGenerateVideosSource(GenerateVideosSource source) {
+    if (!this.apiClient.vertexAI()) {
+      if (source != null
+          && source.video().isPresent()
+          && source.video().get().uri().isPresent()
+          && source.video().get().videoBytes().isPresent()) {
+
+        Video.Builder videoBuilder = Video.builder().uri(source.video().get().uri().get());
+        if (source.video().get().mimeType().isPresent()) {
+          videoBuilder = videoBuilder.mimeType(source.video().get().mimeType().get());
+        }
+
+        GenerateVideosSource.Builder sourceBuilder =
+            GenerateVideosSource.builder().video(videoBuilder.build());
+        if (source.prompt().isPresent()) {
+          sourceBuilder = sourceBuilder.prompt(source.prompt().get());
+        }
+        if (source.image().isPresent()) {
+          sourceBuilder = sourceBuilder.image(source.image().get());
+        }
+        source = sourceBuilder.build();
       }
     }
-
-    builder = builder.mode("upscale");
-    builder = builder.numberOfImages(1);
-
-    UpscaleImageAPIConfig apiConfig = builder.build();
-
-    return privateUpscaleImage(model, image, upscaleFactor, apiConfig);
+    return source;
   }
 
   /**
@@ -6271,7 +6409,23 @@ public final class Models {
    */
   public GenerateVideosOperation generateVideos(
       String model, GenerateVideosSource source, GenerateVideosConfig config) {
-    return privateGenerateVideos(model, null, null, null, source, config);
+    return privateGenerateVideos(
+        model, null, null, null, preProcessGenerateVideosSource(source), config);
+  }
+
+  /** Preprocesses the Video for the API. */
+  Video preProcessVideo(Video video) {
+    if (!this.apiClient.vertexAI()) {
+      if (video != null && video.uri().isPresent() && video.videoBytes().isPresent()) {
+
+        Video.Builder videoBuilder = Video.builder().uri(video.uri().get());
+        if (video.mimeType().isPresent()) {
+          videoBuilder = videoBuilder.mimeType(video.mimeType().get());
+        }
+        video = videoBuilder.build();
+      }
+    }
+    return video;
   }
 
   /**
@@ -6292,7 +6446,7 @@ public final class Models {
    */
   public GenerateVideosOperation generateVideos(
       String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
-    return privateGenerateVideos(model, prompt, image, video, null, config);
+    return privateGenerateVideos(model, prompt, image, preProcessVideo(video), null, config);
   }
 
   /**

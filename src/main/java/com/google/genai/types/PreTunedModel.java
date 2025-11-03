@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** A pre-tuned model for continuous tuning. */
+/** A pre-tuned model for continuous tuning. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = PreTunedModel.Builder.class)
 public abstract class PreTunedModel extends JsonSerializable {
@@ -72,6 +73,16 @@ public abstract class PreTunedModel extends JsonSerializable {
     @JsonProperty("baseModel")
     public abstract Builder baseModel(String baseModel);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseModel(Optional<String> baseModel);
+
+    /** Clears the value of baseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseModel() {
+      return baseModel(Optional.empty());
+    }
+
     /**
      * Setter for checkpointId.
      *
@@ -80,6 +91,16 @@ public abstract class PreTunedModel extends JsonSerializable {
      */
     @JsonProperty("checkpointId")
     public abstract Builder checkpointId(String checkpointId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder checkpointId(Optional<String> checkpointId);
+
+    /** Clears the value of checkpointId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCheckpointId() {
+      return checkpointId(Optional.empty());
+    }
 
     /**
      * Setter for tunedModelName.
@@ -92,6 +113,16 @@ public abstract class PreTunedModel extends JsonSerializable {
      */
     @JsonProperty("tunedModelName")
     public abstract Builder tunedModelName(String tunedModelName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedModelName(Optional<String> tunedModelName);
+
+    /** Clears the value of tunedModelName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedModelName() {
+      return tunedModelName(Optional.empty());
+    }
 
     public abstract PreTunedModel build();
   }

@@ -71,6 +71,16 @@ public abstract class ComputerUse extends JsonSerializable {
     @JsonProperty("environment")
     public abstract Builder environment(Environment environment);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder environment(Optional<Environment> environment);
+
+    /** Clears the value of environment field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnvironment() {
+      return environment(Optional.empty());
+    }
+
     /**
      * Setter for environment given a known enum.
      *
@@ -110,8 +120,20 @@ public abstract class ComputerUse extends JsonSerializable {
      * can serve two purposes: 1. Using a more restricted / different action space. 2. Improving the
      * definitions / instructions of predefined functions.
      */
+    @CanIgnoreReturnValue
     public Builder excludedPredefinedFunctions(String... excludedPredefinedFunctions) {
       return excludedPredefinedFunctions(Arrays.asList(excludedPredefinedFunctions));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder excludedPredefinedFunctions(
+        Optional<List<String>> excludedPredefinedFunctions);
+
+    /** Clears the value of excludedPredefinedFunctions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExcludedPredefinedFunctions() {
+      return excludedPredefinedFunctions(Optional.empty());
     }
 
     public abstract ComputerUse build();

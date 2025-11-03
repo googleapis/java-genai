@@ -129,6 +129,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for displayName.
      *
@@ -138,6 +148,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -145,6 +165,16 @@ public abstract class File extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     /**
      * Setter for sizeBytes.
@@ -154,6 +184,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("sizeBytes")
     public abstract Builder sizeBytes(Long sizeBytes);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sizeBytes(Optional<Long> sizeBytes);
+
+    /** Clears the value of sizeBytes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSizeBytes() {
+      return sizeBytes(Optional.empty());
+    }
+
     /**
      * Setter for createTime.
      *
@@ -161,6 +201,16 @@ public abstract class File extends JsonSerializable {
      */
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
 
     /**
      * Setter for expirationTime.
@@ -171,6 +221,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("expirationTime")
     public abstract Builder expirationTime(Instant expirationTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder expirationTime(Optional<Instant> expirationTime);
+
+    /** Clears the value of expirationTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExpirationTime() {
+      return expirationTime(Optional.empty());
+    }
+
     /**
      * Setter for updateTime.
      *
@@ -178,6 +238,16 @@ public abstract class File extends JsonSerializable {
      */
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateTime(Optional<Instant> updateTime);
+
+    /** Clears the value of updateTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
+    }
 
     /**
      * Setter for sha256Hash.
@@ -188,6 +258,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("sha256Hash")
     public abstract Builder sha256Hash(String sha256Hash);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sha256Hash(Optional<String> sha256Hash);
+
+    /** Clears the value of sha256Hash field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSha256Hash() {
+      return sha256Hash(Optional.empty());
+    }
+
     /**
      * Setter for uri.
      *
@@ -195,6 +275,16 @@ public abstract class File extends JsonSerializable {
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uri(Optional<String> uri);
+
+    /** Clears the value of uri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUri() {
+      return uri(Optional.empty());
+    }
 
     /**
      * Setter for downloadUri.
@@ -205,6 +295,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("downloadUri")
     public abstract Builder downloadUri(String downloadUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder downloadUri(Optional<String> downloadUri);
+
+    /** Clears the value of downloadUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDownloadUri() {
+      return downloadUri(Optional.empty());
+    }
+
     /**
      * Setter for state.
      *
@@ -212,6 +312,16 @@ public abstract class File extends JsonSerializable {
      */
     @JsonProperty("state")
     public abstract Builder state(FileState state);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder state(Optional<FileState> state);
+
+    /** Clears the value of state field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearState() {
+      return state(Optional.empty());
+    }
 
     /**
      * Setter for state given a known enum.
@@ -241,6 +351,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("source")
     public abstract Builder source(FileSource source);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder source(Optional<FileSource> source);
+
+    /** Clears the value of source field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSource() {
+      return source(Optional.empty());
+    }
+
     /**
      * Setter for source given a known enum.
      *
@@ -269,6 +389,16 @@ public abstract class File extends JsonSerializable {
     @JsonProperty("videoMetadata")
     public abstract Builder videoMetadata(Map<String, Object> videoMetadata);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder videoMetadata(Optional<Map<String, Object>> videoMetadata);
+
+    /** Clears the value of videoMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideoMetadata() {
+      return videoMetadata(Optional.empty());
+    }
+
     /**
      * Setter for error.
      *
@@ -282,8 +412,19 @@ public abstract class File extends JsonSerializable {
      *
      * <p>error: Output only. Error status if File processing failed.
      */
+    @CanIgnoreReturnValue
     public Builder error(FileStatus.Builder errorBuilder) {
       return error(errorBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder error(Optional<FileStatus> error);
+
+    /** Clears the value of error field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearError() {
+      return error(Optional.empty());
     }
 
     public abstract File build();

@@ -95,4 +95,25 @@ public class PartTest {
     assertFalse(part.inlineData().isPresent());
     assertFalse(part.videoMetadata().isPresent());
   }
+
+  @Test
+  public void testPartFromFunctionResponseWithFunctionResponseParts() {
+    FunctionResponsePart functionResponsePart =
+        FunctionResponsePart.fromBytes(new byte[] {1, 2, 3}, "image/png");
+    FunctionResponsePart[] functionResponseParts =
+        new FunctionResponsePart[] {functionResponsePart};
+    Part part =
+        Part.fromFunctionResponse(
+            "test-function-name", ImmutableMap.of("test-key", "test-value"), functionResponseParts);
+
+    assertEquals("test-function-name", part.functionResponse().get().name().get());
+    assertEquals("test-value", part.functionResponse().get().response().get().get("test-key"));
+    assertEquals(functionResponsePart, part.functionResponse().get().parts().get().get(0));
+
+    assertFalse(part.text().isPresent());
+    assertFalse(part.fileData().isPresent());
+    assertFalse(part.functionCall().isPresent());
+    assertFalse(part.inlineData().isPresent());
+    assertFalse(part.videoMetadata().isPresent());
+  }
 }

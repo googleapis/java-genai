@@ -24,12 +24,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Statistics computed for datasets used for preference optimization. */
+/**
+ * Statistics computed for datasets used for preference optimization. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = PreferenceOptimizationDataStats.Builder.class)
 public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
@@ -101,10 +105,22 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      * <p>scoreVariancePerExampleDistribution: Output only. Dataset distributions for scores
      * variance per example.
      */
+    @CanIgnoreReturnValue
     public Builder scoreVariancePerExampleDistribution(
         DatasetDistribution.Builder scoreVariancePerExampleDistributionBuilder) {
       return scoreVariancePerExampleDistribution(
           scoreVariancePerExampleDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scoreVariancePerExampleDistribution(
+        Optional<DatasetDistribution> scoreVariancePerExampleDistribution);
+
+    /** Clears the value of scoreVariancePerExampleDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScoreVariancePerExampleDistribution() {
+      return scoreVariancePerExampleDistribution(Optional.empty());
     }
 
     /**
@@ -120,8 +136,19 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      *
      * <p>scoresDistribution: Output only. Dataset distributions for scores.
      */
+    @CanIgnoreReturnValue
     public Builder scoresDistribution(DatasetDistribution.Builder scoresDistributionBuilder) {
       return scoresDistribution(scoresDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scoresDistribution(Optional<DatasetDistribution> scoresDistribution);
+
+    /** Clears the value of scoresDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScoresDistribution() {
+      return scoresDistribution(Optional.empty());
     }
 
     /**
@@ -132,6 +159,16 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
     @JsonProperty("totalBillableTokenCount")
     public abstract Builder totalBillableTokenCount(Long totalBillableTokenCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalBillableTokenCount(Optional<Long> totalBillableTokenCount);
+
+    /** Clears the value of totalBillableTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalBillableTokenCount() {
+      return totalBillableTokenCount(Optional.empty());
+    }
+
     /**
      * Setter for tuningDatasetExampleCount.
      *
@@ -140,6 +177,16 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
     @JsonProperty("tuningDatasetExampleCount")
     public abstract Builder tuningDatasetExampleCount(Long tuningDatasetExampleCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningDatasetExampleCount(Optional<Long> tuningDatasetExampleCount);
+
+    /** Clears the value of tuningDatasetExampleCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningDatasetExampleCount() {
+      return tuningDatasetExampleCount(Optional.empty());
+    }
+
     /**
      * Setter for tuningStepCount.
      *
@@ -147,6 +194,16 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      */
     @JsonProperty("tuningStepCount")
     public abstract Builder tuningStepCount(Long tuningStepCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningStepCount(Optional<Long> tuningStepCount);
+
+    /** Clears the value of tuningStepCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningStepCount() {
+      return tuningStepCount(Optional.empty());
+    }
 
     /**
      * Setter for userDatasetExamples.
@@ -161,6 +218,7 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      *
      * <p>userDatasetExamples: Output only. Sample user examples in the training dataset.
      */
+    @CanIgnoreReturnValue
     public Builder userDatasetExamples(GeminiPreferenceExample... userDatasetExamples) {
       return userDatasetExamples(Arrays.asList(userDatasetExamples));
     }
@@ -170,12 +228,24 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      *
      * <p>userDatasetExamples: Output only. Sample user examples in the training dataset.
      */
+    @CanIgnoreReturnValue
     public Builder userDatasetExamples(
         GeminiPreferenceExample.Builder... userDatasetExamplesBuilders) {
       return userDatasetExamples(
           Arrays.asList(userDatasetExamplesBuilders).stream()
               .map(GeminiPreferenceExample.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userDatasetExamples(
+        Optional<List<GeminiPreferenceExample>> userDatasetExamples);
+
+    /** Clears the value of userDatasetExamples field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserDatasetExamples() {
+      return userDatasetExamples(Optional.empty());
     }
 
     /**
@@ -192,9 +262,21 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      *
      * <p>userInputTokenDistribution: Output only. Dataset distributions for the user input tokens.
      */
+    @CanIgnoreReturnValue
     public Builder userInputTokenDistribution(
         DatasetDistribution.Builder userInputTokenDistributionBuilder) {
       return userInputTokenDistribution(userInputTokenDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userInputTokenDistribution(
+        Optional<DatasetDistribution> userInputTokenDistribution);
+
+    /** Clears the value of userInputTokenDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserInputTokenDistribution() {
+      return userInputTokenDistribution(Optional.empty());
     }
 
     /**
@@ -213,9 +295,21 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
      * <p>userOutputTokenDistribution: Output only. Dataset distributions for the user output
      * tokens.
      */
+    @CanIgnoreReturnValue
     public Builder userOutputTokenDistribution(
         DatasetDistribution.Builder userOutputTokenDistributionBuilder) {
       return userOutputTokenDistribution(userOutputTokenDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userOutputTokenDistribution(
+        Optional<DatasetDistribution> userOutputTokenDistribution);
+
+    /** Clears the value of userOutputTokenDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserOutputTokenDistribution() {
+      return userOutputTokenDistribution(Optional.empty());
     }
 
     public abstract PreferenceOptimizationDataStats build();

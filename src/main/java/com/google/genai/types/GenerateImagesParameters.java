@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -73,6 +74,16 @@ public abstract class GenerateImagesParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for prompt.
      *
@@ -80,6 +91,16 @@ public abstract class GenerateImagesParameters extends JsonSerializable {
      */
     @JsonProperty("prompt")
     public abstract Builder prompt(String prompt);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prompt(Optional<String> prompt);
+
+    /** Clears the value of prompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPrompt() {
+      return prompt(Optional.empty());
+    }
 
     /**
      * Setter for config.
@@ -94,8 +115,19 @@ public abstract class GenerateImagesParameters extends JsonSerializable {
      *
      * <p>config: Configuration for generating images.
      */
+    @CanIgnoreReturnValue
     public Builder config(GenerateImagesConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<GenerateImagesConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract GenerateImagesParameters build();

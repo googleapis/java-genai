@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +68,16 @@ public abstract class ReplayFile extends JsonSerializable {
     @JsonProperty("replay_id")
     public abstract Builder replayId(String replayId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder replayId(Optional<String> replayId);
+
+    /** Clears the value of replayId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReplayId() {
+      return replayId(Optional.empty());
+    }
+
     /**
      * Setter for interactions.
      *
@@ -80,6 +91,7 @@ public abstract class ReplayFile extends JsonSerializable {
      *
      * <p>interactions:
      */
+    @CanIgnoreReturnValue
     public Builder interactions(ReplayInteraction... interactions) {
       return interactions(Arrays.asList(interactions));
     }
@@ -89,11 +101,22 @@ public abstract class ReplayFile extends JsonSerializable {
      *
      * <p>interactions:
      */
+    @CanIgnoreReturnValue
     public Builder interactions(ReplayInteraction.Builder... interactionsBuilders) {
       return interactions(
           Arrays.asList(interactionsBuilders).stream()
               .map(ReplayInteraction.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder interactions(Optional<List<ReplayInteraction>> interactions);
+
+    /** Clears the value of interactions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInteractions() {
+      return interactions(Optional.empty());
     }
 
     public abstract ReplayFile build();

@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Chunk from Google Maps. */
+/** Chunk from Google Maps. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMaps.Builder.class)
 public abstract class GroundingChunkMaps extends JsonSerializable {
@@ -88,9 +89,21 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
      * <p>placeAnswerSources: Sources used to generate the place answer. This includes review
      * snippets and photos that were used to generate the answer, as well as uris to flag content.
      */
+    @CanIgnoreReturnValue
     public Builder placeAnswerSources(
         GroundingChunkMapsPlaceAnswerSources.Builder placeAnswerSourcesBuilder) {
       return placeAnswerSources(placeAnswerSourcesBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder placeAnswerSources(
+        Optional<GroundingChunkMapsPlaceAnswerSources> placeAnswerSources);
+
+    /** Clears the value of placeAnswerSources field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPlaceAnswerSources() {
+      return placeAnswerSources(Optional.empty());
     }
 
     /**
@@ -102,6 +115,16 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     @JsonProperty("placeId")
     public abstract Builder placeId(String placeId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder placeId(Optional<String> placeId);
+
+    /** Clears the value of placeId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPlaceId() {
+      return placeId(Optional.empty());
+    }
+
     /**
      * Setter for text.
      *
@@ -109,6 +132,16 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
 
     /**
      * Setter for title.
@@ -118,6 +151,16 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     @JsonProperty("title")
     public abstract Builder title(String title);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder title(Optional<String> title);
+
+    /** Clears the value of title field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTitle() {
+      return title(Optional.empty());
+    }
+
     /**
      * Setter for uri.
      *
@@ -125,6 +168,16 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uri(Optional<String> uri);
+
+    /** Clears the value of uri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUri() {
+      return uri(Optional.empty());
+    }
 
     public abstract GroundingChunkMaps build();
   }

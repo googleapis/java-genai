@@ -170,6 +170,7 @@ public class ModelsTest {
     for (GenerateContentResponse response : responseStream) {
       chunks++;
       assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -209,6 +210,7 @@ public class ModelsTest {
     for (GenerateContentResponse response : responseStream) {
       chunks++;
       assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -241,6 +243,7 @@ public class ModelsTest {
     int chunks = 0;
     for (GenerateContentResponse response : responseStream) {
       chunks++;
+      assertNotNull(response.sdkHttpResponse().get().headers());
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
@@ -400,6 +403,7 @@ public class ModelsTest {
             .outputCompressionQuality(80)
             .baseSteps(32)
             .addWatermark(false)
+            .labels(ImmutableMap.of("imagen_label_key", "edit_image"))
             .build();
 
     // Act

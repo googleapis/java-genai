@@ -85,8 +85,19 @@ public abstract class AuthConfig extends JsonSerializable {
      *
      * <p>apiKeyConfig: Config for API key auth.
      */
+    @CanIgnoreReturnValue
     public Builder apiKeyConfig(ApiKeyConfig.Builder apiKeyConfigBuilder) {
       return apiKeyConfig(apiKeyConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiKeyConfig(Optional<ApiKeyConfig> apiKeyConfig);
+
+    /** Clears the value of apiKeyConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiKeyConfig() {
+      return apiKeyConfig(Optional.empty());
     }
 
     /**
@@ -96,6 +107,16 @@ public abstract class AuthConfig extends JsonSerializable {
      */
     @JsonProperty("authType")
     public abstract Builder authType(AuthType authType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder authType(Optional<AuthType> authType);
+
+    /** Clears the value of authType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAuthType() {
+      return authType(Optional.empty());
+    }
 
     /**
      * Setter for authType given a known enum.
@@ -131,9 +152,21 @@ public abstract class AuthConfig extends JsonSerializable {
      *
      * <p>googleServiceAccountConfig: Config for Google Service Account auth.
      */
+    @CanIgnoreReturnValue
     public Builder googleServiceAccountConfig(
         AuthConfigGoogleServiceAccountConfig.Builder googleServiceAccountConfigBuilder) {
       return googleServiceAccountConfig(googleServiceAccountConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleServiceAccountConfig(
+        Optional<AuthConfigGoogleServiceAccountConfig> googleServiceAccountConfig);
+
+    /** Clears the value of googleServiceAccountConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleServiceAccountConfig() {
+      return googleServiceAccountConfig(Optional.empty());
     }
 
     /**
@@ -149,9 +182,21 @@ public abstract class AuthConfig extends JsonSerializable {
      *
      * <p>httpBasicAuthConfig: Config for HTTP Basic auth.
      */
+    @CanIgnoreReturnValue
     public Builder httpBasicAuthConfig(
         AuthConfigHttpBasicAuthConfig.Builder httpBasicAuthConfigBuilder) {
       return httpBasicAuthConfig(httpBasicAuthConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpBasicAuthConfig(
+        Optional<AuthConfigHttpBasicAuthConfig> httpBasicAuthConfig);
+
+    /** Clears the value of httpBasicAuthConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpBasicAuthConfig() {
+      return httpBasicAuthConfig(Optional.empty());
     }
 
     /**
@@ -167,8 +212,19 @@ public abstract class AuthConfig extends JsonSerializable {
      *
      * <p>oauthConfig: Config for user oauth.
      */
+    @CanIgnoreReturnValue
     public Builder oauthConfig(AuthConfigOauthConfig.Builder oauthConfigBuilder) {
       return oauthConfig(oauthConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder oauthConfig(Optional<AuthConfigOauthConfig> oauthConfig);
+
+    /** Clears the value of oauthConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOauthConfig() {
+      return oauthConfig(Optional.empty());
     }
 
     /**
@@ -184,8 +240,19 @@ public abstract class AuthConfig extends JsonSerializable {
      *
      * <p>oidcConfig: Config for user OIDC auth.
      */
+    @CanIgnoreReturnValue
     public Builder oidcConfig(AuthConfigOidcConfig.Builder oidcConfigBuilder) {
       return oidcConfig(oidcConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder oidcConfig(Optional<AuthConfigOidcConfig> oidcConfig);
+
+    /** Clears the value of oidcConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOidcConfig() {
+      return oidcConfig(Optional.empty());
     }
 
     public abstract AuthConfig build();

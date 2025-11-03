@@ -68,6 +68,16 @@ public abstract class ExecutableCode extends JsonSerializable {
     @JsonProperty("code")
     public abstract Builder code(String code);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder code(Optional<String> code);
+
+    /** Clears the value of code field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCode() {
+      return code(Optional.empty());
+    }
+
     /**
      * Setter for language.
      *
@@ -75,6 +85,16 @@ public abstract class ExecutableCode extends JsonSerializable {
      */
     @JsonProperty("language")
     public abstract Builder language(Language language);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder language(Optional<Language> language);
+
+    /** Clears the value of language field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguage() {
+      return language(Optional.empty());
+    }
 
     /**
      * Setter for language given a known enum.

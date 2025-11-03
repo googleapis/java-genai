@@ -114,6 +114,16 @@ public abstract class FunctionResponse extends JsonSerializable {
     @JsonProperty("willContinue")
     public abstract Builder willContinue(boolean willContinue);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder willContinue(Optional<Boolean> willContinue);
+
+    /** Clears the value of willContinue field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWillContinue() {
+      return willContinue(Optional.empty());
+    }
+
     /**
      * Setter for scheduling.
      *
@@ -122,6 +132,16 @@ public abstract class FunctionResponse extends JsonSerializable {
      */
     @JsonProperty("scheduling")
     public abstract Builder scheduling(FunctionResponseScheduling scheduling);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scheduling(Optional<FunctionResponseScheduling> scheduling);
+
+    /** Clears the value of scheduling field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScheduling() {
+      return scheduling(Optional.empty());
+    }
 
     /**
      * Setter for scheduling given a known enum.
@@ -160,6 +180,7 @@ public abstract class FunctionResponse extends JsonSerializable {
      * <p>parts: List of parts that constitute a function response. Each part may have a different
      * IANA MIME type.
      */
+    @CanIgnoreReturnValue
     public Builder parts(FunctionResponsePart... parts) {
       return parts(Arrays.asList(parts));
     }
@@ -170,11 +191,22 @@ public abstract class FunctionResponse extends JsonSerializable {
      * <p>parts: List of parts that constitute a function response. Each part may have a different
      * IANA MIME type.
      */
+    @CanIgnoreReturnValue
     public Builder parts(FunctionResponsePart.Builder... partsBuilders) {
       return parts(
           Arrays.asList(partsBuilders).stream()
               .map(FunctionResponsePart.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parts(Optional<List<FunctionResponsePart>> parts);
+
+    /** Clears the value of parts field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParts() {
+      return parts(Optional.empty());
     }
 
     /**
@@ -186,6 +218,16 @@ public abstract class FunctionResponse extends JsonSerializable {
     @JsonProperty("id")
     public abstract Builder id(String id);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder id(Optional<String> id);
+
+    /** Clears the value of id field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearId() {
+      return id(Optional.empty());
+    }
+
     /**
      * Setter for name.
      *
@@ -194,6 +236,16 @@ public abstract class FunctionResponse extends JsonSerializable {
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
 
     /**
      * Setter for response.
@@ -204,6 +256,16 @@ public abstract class FunctionResponse extends JsonSerializable {
      */
     @JsonProperty("response")
     public abstract Builder response(Map<String, Object> response);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder response(Optional<Map<String, Object>> response);
+
+    /** Clears the value of response field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponse() {
+      return response(Optional.empty());
+    }
 
     public abstract FunctionResponse build();
   }

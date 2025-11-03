@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -72,6 +73,16 @@ public abstract class CreateBatchJobParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for src.
      *
@@ -87,8 +98,19 @@ public abstract class CreateBatchJobParameters extends JsonSerializable {
      * <p>src: GCS URI(-s) or BigQuery URI to your input data to run batch job. Example:
      * "gs://path/to/input/data" or "bq://projectId.bqDatasetId.bqTableId".
      */
+    @CanIgnoreReturnValue
     public Builder src(BatchJobSource.Builder srcBuilder) {
       return src(srcBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder src(Optional<BatchJobSource> src);
+
+    /** Clears the value of src field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSrc() {
+      return src(Optional.empty());
     }
 
     /**
@@ -104,8 +126,19 @@ public abstract class CreateBatchJobParameters extends JsonSerializable {
      *
      * <p>config: Optional parameters for creating a BatchJob.
      */
+    @CanIgnoreReturnValue
     public Builder config(CreateBatchJobConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<CreateBatchJobConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract CreateBatchJobParameters build();

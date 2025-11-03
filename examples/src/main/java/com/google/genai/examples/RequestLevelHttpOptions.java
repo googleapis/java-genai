@@ -47,6 +47,7 @@ import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpRetryOptions;
 
 /** An example of setting http options at request level. */
 public final class RequestLevelHttpOptions {
@@ -74,10 +75,13 @@ public final class RequestLevelHttpOptions {
       System.out.println("Using Gemini Developer API");
     }
 
-    // Set a customized header per request config.
+    // Set a customized header and retry options per request config.
     GenerateContentConfig config =
         GenerateContentConfig.builder()
-            .httpOptions(HttpOptions.builder().headers(ImmutableMap.of("my-header", "my-value")))
+            .httpOptions(
+                HttpOptions.builder()
+                    .headers(ImmutableMap.of("my-header", "my-value"))
+                    .retryOptions(HttpRetryOptions.builder().attempts(3).httpStatusCodes(408, 429)))
             .build();
 
     GenerateContentResponse response =

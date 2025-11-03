@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -63,6 +64,16 @@ public abstract class Transcription extends JsonSerializable {
     @JsonProperty("text")
     public abstract Builder text(String text);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
+
     /**
      * Setter for finished.
      *
@@ -70,6 +81,16 @@ public abstract class Transcription extends JsonSerializable {
      */
     @JsonProperty("finished")
     public abstract Builder finished(boolean finished);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder finished(Optional<Boolean> finished);
+
+    /** Clears the value of finished field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFinished() {
+      return finished(Optional.empty());
+    }
 
     public abstract Transcription build();
   }

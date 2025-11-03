@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public abstract class TuningValidationDataset extends JsonSerializable {
   public abstract Optional<String> gcsUri();
 
   /**
-   * The resource name of the Vertex Multimodal Dataset that is used as training dataset. Example:
+   * The resource name of the Vertex Multimodal Dataset that is used as validation dataset. Example:
    * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
    */
   @JsonProperty("vertexDatasetResource")
@@ -66,15 +67,35 @@ public abstract class TuningValidationDataset extends JsonSerializable {
     @JsonProperty("gcsUri")
     public abstract Builder gcsUri(String gcsUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder gcsUri(Optional<String> gcsUri);
+
+    /** Clears the value of gcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGcsUri() {
+      return gcsUri(Optional.empty());
+    }
+
     /**
      * Setter for vertexDatasetResource.
      *
      * <p>vertexDatasetResource: The resource name of the Vertex Multimodal Dataset that is used as
-     * training dataset. Example:
+     * validation dataset. Example:
      * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
      */
     @JsonProperty("vertexDatasetResource")
     public abstract Builder vertexDatasetResource(String vertexDatasetResource);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDatasetResource(Optional<String> vertexDatasetResource);
+
+    /** Clears the value of vertexDatasetResource field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDatasetResource() {
+      return vertexDatasetResource(Optional.empty());
+    }
 
     public abstract TuningValidationDataset build();
   }

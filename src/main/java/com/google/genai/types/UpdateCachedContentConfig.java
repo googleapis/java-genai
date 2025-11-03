@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.time.Instant;
@@ -80,8 +81,19 @@ public abstract class UpdateCachedContentConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -93,6 +105,16 @@ public abstract class UpdateCachedContentConfig extends JsonSerializable {
     @JsonProperty("ttl")
     public abstract Builder ttl(Duration ttl);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder ttl(Optional<Duration> ttl);
+
+    /** Clears the value of ttl field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTtl() {
+      return ttl(Optional.empty());
+    }
+
     /**
      * Setter for expireTime.
      *
@@ -101,6 +123,16 @@ public abstract class UpdateCachedContentConfig extends JsonSerializable {
      */
     @JsonProperty("expireTime")
     public abstract Builder expireTime(Instant expireTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder expireTime(Optional<Instant> expireTime);
+
+    /** Clears the value of expireTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExpireTime() {
+      return expireTime(Optional.empty());
+    }
 
     public abstract UpdateCachedContentConfig build();
   }

@@ -70,6 +70,16 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     @JsonProperty("mode")
     public abstract Builder mode(FunctionCallingConfigMode mode);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mode(Optional<FunctionCallingConfigMode> mode);
+
+    /** Clears the value of mode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMode() {
+      return mode(Optional.empty());
+    }
+
     /**
      * Setter for mode given a known enum.
      *
@@ -107,8 +117,19 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
      * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
      * predict a function call from the set of function names provided.
      */
+    @CanIgnoreReturnValue
     public Builder allowedFunctionNames(String... allowedFunctionNames) {
       return allowedFunctionNames(Arrays.asList(allowedFunctionNames));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder allowedFunctionNames(Optional<List<String>> allowedFunctionNames);
+
+    /** Clears the value of allowedFunctionNames field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAllowedFunctionNames() {
+      return allowedFunctionNames(Optional.empty());
     }
 
     public abstract FunctionCallingConfig build();

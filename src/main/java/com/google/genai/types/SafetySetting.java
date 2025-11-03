@@ -30,13 +30,16 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = SafetySetting.Builder.class)
 public abstract class SafetySetting extends JsonSerializable {
-  /** Determines if the harm block method uses probability or probability and severity scores. */
-  @JsonProperty("method")
-  public abstract Optional<HarmBlockMethod> method();
-
   /** Required. Harm category. */
   @JsonProperty("category")
   public abstract Optional<HarmCategory> category();
+
+  /**
+   * Optional. Specify if the threshold is used for probability or severity score. If not specified,
+   * the threshold is used for probability score. This field is not supported in Gemini API.
+   */
+  @JsonProperty("method")
+  public abstract Optional<HarmBlockMethod> method();
 
   /** Required. The harm block threshold. */
   @JsonProperty("threshold")
@@ -61,43 +64,22 @@ public abstract class SafetySetting extends JsonSerializable {
     }
 
     /**
-     * Setter for method.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @JsonProperty("method")
-    public abstract Builder method(HarmBlockMethod method);
-
-    /**
-     * Setter for method given a known enum.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @CanIgnoreReturnValue
-    public Builder method(HarmBlockMethod.Known knownType) {
-      return method(new HarmBlockMethod(knownType));
-    }
-
-    /**
-     * Setter for method given a string.
-     *
-     * <p>method: Determines if the harm block method uses probability or probability and severity
-     * scores.
-     */
-    @CanIgnoreReturnValue
-    public Builder method(String method) {
-      return method(new HarmBlockMethod(method));
-    }
-
-    /**
      * Setter for category.
      *
      * <p>category: Required. Harm category.
      */
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder category(Optional<HarmCategory> category);
+
+    /** Clears the value of category field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCategory() {
+      return category(Optional.empty());
+    }
 
     /**
      * Setter for category given a known enum.
@@ -120,12 +102,66 @@ public abstract class SafetySetting extends JsonSerializable {
     }
 
     /**
+     * Setter for method.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @JsonProperty("method")
+    public abstract Builder method(HarmBlockMethod method);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder method(Optional<HarmBlockMethod> method);
+
+    /** Clears the value of method field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMethod() {
+      return method(Optional.empty());
+    }
+
+    /**
+     * Setter for method given a known enum.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(HarmBlockMethod.Known knownType) {
+      return method(new HarmBlockMethod(knownType));
+    }
+
+    /**
+     * Setter for method given a string.
+     *
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder method(String method) {
+      return method(new HarmBlockMethod(method));
+    }
+
+    /**
      * Setter for threshold.
      *
      * <p>threshold: Required. The harm block threshold.
      */
     @JsonProperty("threshold")
     public abstract Builder threshold(HarmBlockThreshold threshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder threshold(Optional<HarmBlockThreshold> threshold);
+
+    /** Clears the value of threshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThreshold() {
+      return threshold(Optional.empty());
+    }
 
     /**
      * Setter for threshold given a known enum.

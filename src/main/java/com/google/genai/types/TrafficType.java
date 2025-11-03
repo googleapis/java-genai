@@ -25,7 +25,7 @@ import java.util.Objects;
 
 /**
  * Output only. Traffic type. This shows whether a request consumes Pay-As-You-Go or Provisioned
- * Throughput quota.
+ * Throughput quota. This enum is not supported in Gemini API.
  */
 public class TrafficType {
 

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
@@ -35,26 +36,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Part.Builder.class)
 public abstract class Part extends JsonSerializable {
-  /** Metadata for a given video. */
-  @JsonProperty("videoMetadata")
-  public abstract Optional<VideoMetadata> videoMetadata();
-
-  /** Indicates if the part is thought from the model. */
-  @JsonProperty("thought")
-  public abstract Optional<Boolean> thought();
-
-  /** Optional. Inlined bytes data. */
-  @JsonProperty("inlineData")
-  public abstract Optional<Blob> inlineData();
-
-  /** Optional. URI based data. */
-  @JsonProperty("fileData")
-  public abstract Optional<FileData> fileData();
-
-  /** An opaque signature for the thought so it can be reused in subsequent requests. */
-  @JsonProperty("thoughtSignature")
-  public abstract Optional<byte[]> thoughtSignature();
-
   /**
    * A predicted [FunctionCall] returned from the model that contains a string representing the
    * [FunctionDeclaration.name] and a structured JSON object containing the parameters and their
@@ -71,6 +52,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("executableCode")
   public abstract Optional<ExecutableCode> executableCode();
 
+  /** Optional. URI based data. */
+  @JsonProperty("fileData")
+  public abstract Optional<FileData> fileData();
+
   /**
    * Optional. The result output of a [FunctionCall] that contains a string representing the
    * [FunctionDeclaration.name] and a structured JSON object containing any output from the function
@@ -79,9 +64,28 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("functionResponse")
   public abstract Optional<FunctionResponse> functionResponse();
 
+  /** Optional. Inlined bytes data. */
+  @JsonProperty("inlineData")
+  public abstract Optional<Blob> inlineData();
+
   /** Optional. Text part (can be code). */
   @JsonProperty("text")
   public abstract Optional<String> text();
+
+  /** Optional. Indicates if the part is thought from the model. */
+  @JsonProperty("thought")
+  public abstract Optional<Boolean> thought();
+
+  /** Optional. An opaque signature for the thought so it can be reused in subsequent requests. */
+  @JsonProperty("thoughtSignature")
+  public abstract Optional<byte[]> thoughtSignature();
+
+  /**
+   * Optional. Video metadata. The metadata should only be specified while the video data is
+   * presented in inline_data or file_data.
+   */
+  @JsonProperty("videoMetadata")
+  public abstract Optional<VideoMetadata> videoMetadata();
 
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
@@ -102,74 +106,6 @@ public abstract class Part extends JsonSerializable {
     }
 
     /**
-     * Setter for videoMetadata.
-     *
-     * <p>videoMetadata: Metadata for a given video.
-     */
-    @JsonProperty("videoMetadata")
-    public abstract Builder videoMetadata(VideoMetadata videoMetadata);
-
-    /**
-     * Setter for videoMetadata builder.
-     *
-     * <p>videoMetadata: Metadata for a given video.
-     */
-    public Builder videoMetadata(VideoMetadata.Builder videoMetadataBuilder) {
-      return videoMetadata(videoMetadataBuilder.build());
-    }
-
-    /**
-     * Setter for thought.
-     *
-     * <p>thought: Indicates if the part is thought from the model.
-     */
-    @JsonProperty("thought")
-    public abstract Builder thought(boolean thought);
-
-    /**
-     * Setter for inlineData.
-     *
-     * <p>inlineData: Optional. Inlined bytes data.
-     */
-    @JsonProperty("inlineData")
-    public abstract Builder inlineData(Blob inlineData);
-
-    /**
-     * Setter for inlineData builder.
-     *
-     * <p>inlineData: Optional. Inlined bytes data.
-     */
-    public Builder inlineData(Blob.Builder inlineDataBuilder) {
-      return inlineData(inlineDataBuilder.build());
-    }
-
-    /**
-     * Setter for fileData.
-     *
-     * <p>fileData: Optional. URI based data.
-     */
-    @JsonProperty("fileData")
-    public abstract Builder fileData(FileData fileData);
-
-    /**
-     * Setter for fileData builder.
-     *
-     * <p>fileData: Optional. URI based data.
-     */
-    public Builder fileData(FileData.Builder fileDataBuilder) {
-      return fileData(fileDataBuilder.build());
-    }
-
-    /**
-     * Setter for thoughtSignature.
-     *
-     * <p>thoughtSignature: An opaque signature for the thought so it can be reused in subsequent
-     * requests.
-     */
-    @JsonProperty("thoughtSignature")
-    public abstract Builder thoughtSignature(byte[] thoughtSignature);
-
-    /**
      * Setter for functionCall.
      *
      * <p>functionCall: A predicted [FunctionCall] returned from the model that contains a string
@@ -186,8 +122,19 @@ public abstract class Part extends JsonSerializable {
      * representing the [FunctionDeclaration.name] and a structured JSON object containing the
      * parameters and their values.
      */
+    @CanIgnoreReturnValue
     public Builder functionCall(FunctionCall.Builder functionCallBuilder) {
       return functionCall(functionCallBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionCall(Optional<FunctionCall> functionCall);
+
+    /** Clears the value of functionCall field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionCall() {
+      return functionCall(Optional.empty());
     }
 
     /**
@@ -203,8 +150,19 @@ public abstract class Part extends JsonSerializable {
      *
      * <p>codeExecutionResult: Optional. Result of executing the [ExecutableCode].
      */
+    @CanIgnoreReturnValue
     public Builder codeExecutionResult(CodeExecutionResult.Builder codeExecutionResultBuilder) {
       return codeExecutionResult(codeExecutionResultBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder codeExecutionResult(Optional<CodeExecutionResult> codeExecutionResult);
+
+    /** Clears the value of codeExecutionResult field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCodeExecutionResult() {
+      return codeExecutionResult(Optional.empty());
     }
 
     /**
@@ -220,8 +178,47 @@ public abstract class Part extends JsonSerializable {
      *
      * <p>executableCode: Optional. Code generated by the model that is meant to be executed.
      */
+    @CanIgnoreReturnValue
     public Builder executableCode(ExecutableCode.Builder executableCodeBuilder) {
       return executableCode(executableCodeBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder executableCode(Optional<ExecutableCode> executableCode);
+
+    /** Clears the value of executableCode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExecutableCode() {
+      return executableCode(Optional.empty());
+    }
+
+    /**
+     * Setter for fileData.
+     *
+     * <p>fileData: Optional. URI based data.
+     */
+    @JsonProperty("fileData")
+    public abstract Builder fileData(FileData fileData);
+
+    /**
+     * Setter for fileData builder.
+     *
+     * <p>fileData: Optional. URI based data.
+     */
+    @CanIgnoreReturnValue
+    public Builder fileData(FileData.Builder fileDataBuilder) {
+      return fileData(fileDataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fileData(Optional<FileData> fileData);
+
+    /** Clears the value of fileData field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFileData() {
+      return fileData(Optional.empty());
     }
 
     /**
@@ -241,8 +238,47 @@ public abstract class Part extends JsonSerializable {
      * representing the [FunctionDeclaration.name] and a structured JSON object containing any
      * output from the function call. It is used as context to the model.
      */
+    @CanIgnoreReturnValue
     public Builder functionResponse(FunctionResponse.Builder functionResponseBuilder) {
       return functionResponse(functionResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionResponse(Optional<FunctionResponse> functionResponse);
+
+    /** Clears the value of functionResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionResponse() {
+      return functionResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for inlineData.
+     *
+     * <p>inlineData: Optional. Inlined bytes data.
+     */
+    @JsonProperty("inlineData")
+    public abstract Builder inlineData(Blob inlineData);
+
+    /**
+     * Setter for inlineData builder.
+     *
+     * <p>inlineData: Optional. Inlined bytes data.
+     */
+    @CanIgnoreReturnValue
+    public Builder inlineData(Blob.Builder inlineDataBuilder) {
+      return inlineData(inlineDataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inlineData(Optional<Blob> inlineData);
+
+    /** Clears the value of inlineData field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInlineData() {
+      return inlineData(Optional.empty());
     }
 
     /**
@@ -252,6 +288,83 @@ public abstract class Part extends JsonSerializable {
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder text(Optional<String> text);
+
+    /** Clears the value of text field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearText() {
+      return text(Optional.empty());
+    }
+
+    /**
+     * Setter for thought.
+     *
+     * <p>thought: Optional. Indicates if the part is thought from the model.
+     */
+    @JsonProperty("thought")
+    public abstract Builder thought(boolean thought);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thought(Optional<Boolean> thought);
+
+    /** Clears the value of thought field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThought() {
+      return thought(Optional.empty());
+    }
+
+    /**
+     * Setter for thoughtSignature.
+     *
+     * <p>thoughtSignature: Optional. An opaque signature for the thought so it can be reused in
+     * subsequent requests.
+     */
+    @JsonProperty("thoughtSignature")
+    public abstract Builder thoughtSignature(byte[] thoughtSignature);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thoughtSignature(Optional<byte[]> thoughtSignature);
+
+    /** Clears the value of thoughtSignature field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThoughtSignature() {
+      return thoughtSignature(Optional.empty());
+    }
+
+    /**
+     * Setter for videoMetadata.
+     *
+     * <p>videoMetadata: Optional. Video metadata. The metadata should only be specified while the
+     * video data is presented in inline_data or file_data.
+     */
+    @JsonProperty("videoMetadata")
+    public abstract Builder videoMetadata(VideoMetadata videoMetadata);
+
+    /**
+     * Setter for videoMetadata builder.
+     *
+     * <p>videoMetadata: Optional. Video metadata. The metadata should only be specified while the
+     * video data is presented in inline_data or file_data.
+     */
+    @CanIgnoreReturnValue
+    public Builder videoMetadata(VideoMetadata.Builder videoMetadataBuilder) {
+      return videoMetadata(videoMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder videoMetadata(Optional<VideoMetadata> videoMetadata);
+
+    /** Clears the value of videoMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideoMetadata() {
+      return videoMetadata(Optional.empty());
+    }
 
     public abstract Part build();
   }
@@ -284,10 +397,14 @@ public abstract class Part extends JsonSerializable {
     return builder().functionCall(FunctionCall.builder().name(name).args(args).build()).build();
   }
 
-  /** Constructs a FunctionResponse Part from a function name and response. */
-  public static Part fromFunctionResponse(String name, Map<String, Object> response) {
+  /**
+   * Constructs a FunctionResponse Part from a function name, response and function response parts.
+   */
+  public static Part fromFunctionResponse(
+      String name, Map<String, Object> response, FunctionResponsePart... functionResponseParts) {
     return builder()
-        .functionResponse(FunctionResponse.builder().name(name).response(response).build())
+        .functionResponse(
+            FunctionResponse.builder().name(name).response(response).parts(functionResponseParts))
         .build();
   }
 }

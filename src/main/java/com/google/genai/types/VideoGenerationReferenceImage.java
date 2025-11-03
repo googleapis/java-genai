@@ -74,8 +74,19 @@ public abstract class VideoGenerationReferenceImage extends JsonSerializable {
      *
      * <p>image: The reference image.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**
@@ -86,6 +97,16 @@ public abstract class VideoGenerationReferenceImage extends JsonSerializable {
      */
     @JsonProperty("referenceType")
     public abstract Builder referenceType(VideoGenerationReferenceType referenceType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceType(Optional<VideoGenerationReferenceType> referenceType);
+
+    /** Clears the value of referenceType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceType() {
+      return referenceType(Optional.empty());
+    }
 
     /**
      * Setter for referenceType given a known enum.

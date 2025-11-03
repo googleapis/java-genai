@@ -68,4 +68,20 @@ public class CreateCachedContentConfigTest {
 
     assertEquals(original, deserialized);
   }
+
+  @Test
+  public void testClearMethods() {
+    Instant expireTime = Instant.parse("2023-10-26T10:15:30.123Z");
+    Duration ttl = Duration.ofSeconds(3600); // 1 hour
+    CreateCachedContentConfig config =
+        CreateCachedContentConfig.builder().expireTime(expireTime).ttl(ttl).build();
+
+    assertEquals(expireTime, config.expireTime().get());
+    assertEquals(ttl, config.ttl().get());
+
+    config = config.toBuilder().clearExpireTime().clearTtl().build();
+
+    assertFalse(config.expireTime().isPresent());
+    assertFalse(config.ttl().isPresent());
+  }
 }

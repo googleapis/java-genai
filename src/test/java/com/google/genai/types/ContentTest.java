@@ -17,6 +17,7 @@
 package com.google.genai.types;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -90,5 +91,18 @@ public class ContentTest {
     String text = content.text();
 
     assertEquals("", text);
+  }
+
+  @Test
+  public void testClearMethods() {
+    Content content = Content.builder().parts(TEXT_PART_1).role("user").build();
+
+    assertEquals(TEXT_PART_1, content.parts().get().get(0));
+    assertEquals("user", content.role().get());
+
+    content = content.toBuilder().clearParts().clearRole().build();
+
+    assertFalse(content.parts().isPresent());
+    assertFalse(content.role().isPresent());
   }
 }

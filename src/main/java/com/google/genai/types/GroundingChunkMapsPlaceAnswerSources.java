@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Sources used to generate the place answer. */
+/** Sources used to generate the place answer. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSources.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializable {
@@ -71,6 +72,16 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     @JsonProperty("flagContentUri")
     public abstract Builder flagContentUri(String flagContentUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder flagContentUri(Optional<String> flagContentUri);
+
+    /** Clears the value of flagContentUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFlagContentUri() {
+      return flagContentUri(Optional.empty());
+    }
+
     /**
      * Setter for reviewSnippets.
      *
@@ -85,6 +96,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
      *
      * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
      */
+    @CanIgnoreReturnValue
     public Builder reviewSnippets(
         GroundingChunkMapsPlaceAnswerSourcesReviewSnippet... reviewSnippets) {
       return reviewSnippets(Arrays.asList(reviewSnippets));
@@ -95,12 +107,24 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
      *
      * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
      */
+    @CanIgnoreReturnValue
     public Builder reviewSnippets(
         GroundingChunkMapsPlaceAnswerSourcesReviewSnippet.Builder... reviewSnippetsBuilders) {
       return reviewSnippets(
           Arrays.asList(reviewSnippetsBuilders).stream()
               .map(GroundingChunkMapsPlaceAnswerSourcesReviewSnippet.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder reviewSnippets(
+        Optional<List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet>> reviewSnippets);
+
+    /** Clears the value of reviewSnippets field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReviewSnippets() {
+      return reviewSnippets(Optional.empty());
     }
 
     public abstract GroundingChunkMapsPlaceAnswerSources build();

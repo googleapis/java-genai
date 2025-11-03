@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -85,8 +86,19 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
      *
      * <p>referenceImage: The reference image for the editing operation.
      */
+    @CanIgnoreReturnValue
     public Builder referenceImage(Image.Builder referenceImageBuilder) {
       return referenceImage(referenceImageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceImage(Optional<Image> referenceImage);
+
+    /** Clears the value of referenceImage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceImage() {
+      return referenceImage(Optional.empty());
     }
 
     /**
@@ -97,6 +109,16 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
     @JsonProperty("referenceId")
     public abstract Builder referenceId(Integer referenceId);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceId(Optional<Integer> referenceId);
+
+    /** Clears the value of referenceId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceId() {
+      return referenceId(Optional.empty());
+    }
+
     /**
      * Setter for referenceType.
      *
@@ -104,6 +126,16 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
      */
     @JsonProperty("referenceType")
     public abstract Builder referenceType(String referenceType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder referenceType(Optional<String> referenceType);
+
+    /** Clears the value of referenceType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReferenceType() {
+      return referenceType(Optional.empty());
+    }
 
     /**
      * Setter for config.
@@ -118,8 +150,19 @@ public abstract class ControlReferenceImage extends JsonSerializable implements 
      *
      * <p>config: Configuration for the control reference image.
      */
+    @CanIgnoreReturnValue
     public Builder config(ControlReferenceConfig.Builder configBuilder) {
       return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<ControlReferenceConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
     }
 
     public abstract ControlReferenceImage build();

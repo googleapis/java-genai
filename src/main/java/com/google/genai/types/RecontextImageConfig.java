@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** Configuration for recontextualizing an image. */
@@ -77,6 +78,10 @@ public abstract class RecontextImageConfig extends JsonSerializable {
   @JsonProperty("enhancePrompt")
   public abstract Optional<Boolean> enhancePrompt();
 
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
+
   /** Instantiates a builder for RecontextImageConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -108,8 +113,19 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -120,6 +136,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("numberOfImages")
     public abstract Builder numberOfImages(Integer numberOfImages);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder numberOfImages(Optional<Integer> numberOfImages);
+
+    /** Clears the value of numberOfImages field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNumberOfImages() {
+      return numberOfImages(Optional.empty());
+    }
+
     /**
      * Setter for baseSteps.
      *
@@ -129,6 +155,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("baseSteps")
     public abstract Builder baseSteps(Integer baseSteps);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseSteps(Optional<Integer> baseSteps);
+
+    /** Clears the value of baseSteps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseSteps() {
+      return baseSteps(Optional.empty());
+    }
+
     /**
      * Setter for outputGcsUri.
      *
@@ -136,6 +172,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      */
     @JsonProperty("outputGcsUri")
     public abstract Builder outputGcsUri(String outputGcsUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputGcsUri(Optional<String> outputGcsUri);
+
+    /** Clears the value of outputGcsUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputGcsUri() {
+      return outputGcsUri(Optional.empty());
+    }
 
     /**
      * Setter for seed.
@@ -145,6 +191,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("seed")
     public abstract Builder seed(Integer seed);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder seed(Optional<Integer> seed);
+
+    /** Clears the value of seed field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSeed() {
+      return seed(Optional.empty());
+    }
+
     /**
      * Setter for safetyFilterLevel.
      *
@@ -152,6 +208,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      */
     @JsonProperty("safetyFilterLevel")
     public abstract Builder safetyFilterLevel(SafetyFilterLevel safetyFilterLevel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder safetyFilterLevel(Optional<SafetyFilterLevel> safetyFilterLevel);
+
+    /** Clears the value of safetyFilterLevel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSafetyFilterLevel() {
+      return safetyFilterLevel(Optional.empty());
+    }
 
     /**
      * Setter for safetyFilterLevel given a known enum.
@@ -181,6 +247,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("personGeneration")
     public abstract Builder personGeneration(PersonGeneration personGeneration);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personGeneration(Optional<PersonGeneration> personGeneration);
+
+    /** Clears the value of personGeneration field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonGeneration() {
+      return personGeneration(Optional.empty());
+    }
+
     /**
      * Setter for personGeneration given a known enum.
      *
@@ -209,6 +285,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("addWatermark")
     public abstract Builder addWatermark(boolean addWatermark);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder addWatermark(Optional<Boolean> addWatermark);
+
+    /** Clears the value of addWatermark field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAddWatermark() {
+      return addWatermark(Optional.empty());
+    }
+
     /**
      * Setter for outputMimeType.
      *
@@ -216,6 +302,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      */
     @JsonProperty("outputMimeType")
     public abstract Builder outputMimeType(String outputMimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputMimeType(Optional<String> outputMimeType);
+
+    /** Clears the value of outputMimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputMimeType() {
+      return outputMimeType(Optional.empty());
+    }
 
     /**
      * Setter for outputCompressionQuality.
@@ -226,6 +322,16 @@ public abstract class RecontextImageConfig extends JsonSerializable {
     @JsonProperty("outputCompressionQuality")
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputCompressionQuality(Optional<Integer> outputCompressionQuality);
+
+    /** Clears the value of outputCompressionQuality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputCompressionQuality() {
+      return outputCompressionQuality(Optional.empty());
+    }
+
     /**
      * Setter for enhancePrompt.
      *
@@ -233,6 +339,34 @@ public abstract class RecontextImageConfig extends JsonSerializable {
      */
     @JsonProperty("enhancePrompt")
     public abstract Builder enhancePrompt(boolean enhancePrompt);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enhancePrompt(Optional<Boolean> enhancePrompt);
+
+    /** Clears the value of enhancePrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnhancePrompt() {
+      return enhancePrompt(Optional.empty());
+    }
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
+    }
 
     public abstract RecontextImageConfig build();
   }

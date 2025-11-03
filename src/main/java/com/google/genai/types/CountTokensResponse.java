@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -72,8 +73,19 @@ public abstract class CountTokensResponse extends JsonSerializable {
      *
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
+    @CanIgnoreReturnValue
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sdkHttpResponse(Optional<HttpResponse> sdkHttpResponse);
+
+    /** Clears the value of sdkHttpResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSdkHttpResponse() {
+      return sdkHttpResponse(Optional.empty());
     }
 
     /**
@@ -84,6 +96,16 @@ public abstract class CountTokensResponse extends JsonSerializable {
     @JsonProperty("totalTokens")
     public abstract Builder totalTokens(Integer totalTokens);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalTokens(Optional<Integer> totalTokens);
+
+    /** Clears the value of totalTokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalTokens() {
+      return totalTokens(Optional.empty());
+    }
+
     /**
      * Setter for cachedContentTokenCount.
      *
@@ -92,6 +114,16 @@ public abstract class CountTokensResponse extends JsonSerializable {
      */
     @JsonProperty("cachedContentTokenCount")
     public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cachedContentTokenCount(Optional<Integer> cachedContentTokenCount);
+
+    /** Clears the value of cachedContentTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCachedContentTokenCount() {
+      return cachedContentTokenCount(Optional.empty());
+    }
 
     public abstract CountTokensResponse build();
   }

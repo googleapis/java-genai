@@ -42,8 +42,8 @@ public final class AsyncTunings {
   ApiClient apiClient;
 
   public AsyncTunings(ApiClient apiClient) {
-    this.tunings = new Tunings(apiClient);
     this.apiClient = apiClient;
+    this.tunings = new Tunings(apiClient);
   }
 
   CompletableFuture<TuningJob> privateGet(String name, GetTuningJobConfig config) {
@@ -149,10 +149,8 @@ public final class AsyncTunings {
                 "Internal error: Pager expected ListTuningJobsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      tunings.privateList((ListTuningJobsConfig) requestConfig)));
+          return this.privateList((ListTuningJobsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
@@ -175,38 +173,33 @@ public final class AsyncTunings {
    */
   public CompletableFuture<TuningJob> tune(
       String baseModel, TuningDataset trainingDataset, CreateTuningJobConfig config) {
-    return CompletableFuture.supplyAsync(
-        () -> {
-          if (tunings.apiClient.vertexAI()) {
-            if (baseModel.startsWith("projects/")) {
-              PreTunedModel.Builder preTunedModelBuilder =
-                  PreTunedModel.builder().tunedModelName(baseModel);
-              if (config != null && config.preTunedModelCheckpointId().isPresent()) {
-                preTunedModelBuilder.checkpointId(config.preTunedModelCheckpointId().get());
-              }
-              return tunings.privateTune(
-                  null, preTunedModelBuilder.build(), trainingDataset, config);
-            } else {
-              return tunings.privateTune(baseModel, null, trainingDataset, config);
-            }
-          } else {
-            TuningOperation operation =
-                tunings.privateTuneMldev(baseModel, null, trainingDataset, config);
-            String tunedModelName = "";
-            if (operation.metadata().isPresent()
-                && operation.metadata().get().containsKey("tunedModel")) {
-              tunedModelName = (String) operation.metadata().get().get("tunedModel");
-            } else {
-              if (!operation.name().isPresent()) {
-                throw new IllegalArgumentException("Operation name is required.");
-              }
-              tunedModelName = operation.name().get().split("/operations/")[0];
-            }
-            return TuningJob.builder()
-                .name(tunedModelName)
-                .state(JobState.Known.JOB_STATE_QUEUED)
-                .build();
-          }
-        });
+
+    if (tunings.apiClient.vertexAI()) {
+      if (baseModel.startsWith("projects/")) {
+        PreTunedModel.Builder preTunedModelBuilder =
+            PreTunedModel.builder().tunedModelName(baseModel);
+        if (config != null && config.preTunedModelCheckpointId().isPresent()) {
+          preTunedModelBuilder.checkpointId(config.preTunedModelCheckpointId().get());
+        }
+        return this.privateTune(null, preTunedModelBuilder.build(), trainingDataset, config);
+      } else {
+        return this.privateTune(baseModel, null, trainingDataset, config);
+      }
+    } else {
+      TuningOperation operation =
+          tunings.privateTuneMldev(baseModel, null, trainingDataset, config);
+      String tunedModelName = "";
+      if (operation.metadata().isPresent()
+          && operation.metadata().get().containsKey("tunedModel")) {
+        tunedModelName = (String) operation.metadata().get().get("tunedModel");
+      } else {
+        if (!operation.name().isPresent()) {
+          throw new IllegalArgumentException("Operation name is required.");
+        }
+        tunedModelName = operation.name().get().split("/operations/")[0];
+      }
+      return CompletableFuture.completedFuture(
+          TuningJob.builder().name(tunedModelName).state(JobState.Known.JOB_STATE_QUEUED).build());
+    }
   }
 }

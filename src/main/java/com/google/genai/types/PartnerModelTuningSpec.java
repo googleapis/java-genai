@@ -22,11 +22,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
 
-/** Tuning spec for Partner models. */
+/** Tuning spec for Partner models. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = PartnerModelTuningSpec.Builder.class)
 public abstract class PartnerModelTuningSpec extends JsonSerializable {
@@ -78,6 +79,16 @@ public abstract class PartnerModelTuningSpec extends JsonSerializable {
     @JsonProperty("hyperParameters")
     public abstract Builder hyperParameters(Map<String, Object> hyperParameters);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hyperParameters(Optional<Map<String, Object>> hyperParameters);
+
+    /** Clears the value of hyperParameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHyperParameters() {
+      return hyperParameters(Optional.empty());
+    }
+
     /**
      * Setter for trainingDatasetUri.
      *
@@ -87,6 +98,16 @@ public abstract class PartnerModelTuningSpec extends JsonSerializable {
     @JsonProperty("trainingDatasetUri")
     public abstract Builder trainingDatasetUri(String trainingDatasetUri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder trainingDatasetUri(Optional<String> trainingDatasetUri);
+
+    /** Clears the value of trainingDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTrainingDatasetUri() {
+      return trainingDatasetUri(Optional.empty());
+    }
+
     /**
      * Setter for validationDatasetUri.
      *
@@ -95,6 +116,16 @@ public abstract class PartnerModelTuningSpec extends JsonSerializable {
      */
     @JsonProperty("validationDatasetUri")
     public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
+    }
 
     public abstract PartnerModelTuningSpec build();
   }

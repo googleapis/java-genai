@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -76,8 +77,19 @@ public abstract class UpdateModelConfig extends JsonSerializable {
      *
      * <p>httpOptions: Used to override HTTP request options.
      */
+    @CanIgnoreReturnValue
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -88,6 +100,16 @@ public abstract class UpdateModelConfig extends JsonSerializable {
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
     /**
      * Setter for description.
      *
@@ -96,6 +118,16 @@ public abstract class UpdateModelConfig extends JsonSerializable {
     @JsonProperty("description")
     public abstract Builder description(String description);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder description(Optional<String> description);
+
+    /** Clears the value of description field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDescription() {
+      return description(Optional.empty());
+    }
+
     /**
      * Setter for defaultCheckpointId.
      *
@@ -103,6 +135,16 @@ public abstract class UpdateModelConfig extends JsonSerializable {
      */
     @JsonProperty("defaultCheckpointId")
     public abstract Builder defaultCheckpointId(String defaultCheckpointId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder defaultCheckpointId(Optional<String> defaultCheckpointId);
+
+    /** Clears the value of defaultCheckpointId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDefaultCheckpointId() {
+      return defaultCheckpointId(Optional.empty());
+    }
 
     public abstract UpdateModelConfig build();
   }

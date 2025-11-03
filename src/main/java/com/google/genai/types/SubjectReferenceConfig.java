@@ -64,6 +64,16 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
     @JsonProperty("subjectType")
     public abstract Builder subjectType(SubjectReferenceType subjectType);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder subjectType(Optional<SubjectReferenceType> subjectType);
+
+    /** Clears the value of subjectType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSubjectType() {
+      return subjectType(Optional.empty());
+    }
+
     /**
      * Setter for subjectType given a known enum.
      *
@@ -91,6 +101,16 @@ public abstract class SubjectReferenceConfig extends JsonSerializable {
      */
     @JsonProperty("subjectDescription")
     public abstract Builder subjectDescription(String subjectDescription);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder subjectDescription(Optional<String> subjectDescription);
+
+    /** Clears the value of subjectDescription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSubjectDescription() {
+      return subjectDescription(Optional.empty());
+    }
 
     public abstract SubjectReferenceConfig build();
   }

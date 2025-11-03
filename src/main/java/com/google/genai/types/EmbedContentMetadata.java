@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -59,6 +60,16 @@ public abstract class EmbedContentMetadata extends JsonSerializable {
      */
     @JsonProperty("billableCharacterCount")
     public abstract Builder billableCharacterCount(Integer billableCharacterCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder billableCharacterCount(Optional<Integer> billableCharacterCount);
+
+    /** Clears the value of billableCharacterCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBillableCharacterCount() {
+      return billableCharacterCount(Optional.empty());
+    }
 
     public abstract EmbedContentMetadata build();
   }

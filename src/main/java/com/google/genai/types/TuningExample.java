@@ -22,20 +22,21 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** A single example for tuning. This data type is not supported in Vertex AI. */
 @AutoValue
 @JsonDeserialize(builder = TuningExample.Builder.class)
 public abstract class TuningExample extends JsonSerializable {
-  /** Text model input. */
-  @JsonProperty("textInput")
-  public abstract Optional<String> textInput();
-
-  /** The expected model output. */
+  /** Required. The expected model output. */
   @JsonProperty("output")
   public abstract Optional<String> output();
+
+  /** Optional. Text model input. */
+  @JsonProperty("textInput")
+  public abstract Optional<String> textInput();
 
   /** Instantiates a builder for TuningExample. */
   @ExcludeFromGeneratedCoverageReport
@@ -56,20 +57,40 @@ public abstract class TuningExample extends JsonSerializable {
     }
 
     /**
+     * Setter for output.
+     *
+     * <p>output: Required. The expected model output.
+     */
+    @JsonProperty("output")
+    public abstract Builder output(String output);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder output(Optional<String> output);
+
+    /** Clears the value of output field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutput() {
+      return output(Optional.empty());
+    }
+
+    /**
      * Setter for textInput.
      *
-     * <p>textInput: Text model input.
+     * <p>textInput: Optional. Text model input.
      */
     @JsonProperty("textInput")
     public abstract Builder textInput(String textInput);
 
-    /**
-     * Setter for output.
-     *
-     * <p>output: The expected model output.
-     */
-    @JsonProperty("output")
-    public abstract Builder output(String output);
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder textInput(Optional<String> textInput);
+
+    /** Clears the value of textInput field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTextInput() {
+      return textInput(Optional.empty());
+    }
 
     public abstract TuningExample build();
   }

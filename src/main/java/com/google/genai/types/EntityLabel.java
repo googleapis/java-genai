@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -63,6 +64,16 @@ public abstract class EntityLabel extends JsonSerializable {
     @JsonProperty("label")
     public abstract Builder label(String label);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder label(Optional<String> label);
+
+    /** Clears the value of label field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabel() {
+      return label(Optional.empty());
+    }
+
     /**
      * Setter for score.
      *
@@ -70,6 +81,16 @@ public abstract class EntityLabel extends JsonSerializable {
      */
     @JsonProperty("score")
     public abstract Builder score(Float score);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder score(Optional<Float> score);
+
+    /** Clears the value of score field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScore() {
+      return score(Optional.empty());
+    }
 
     public abstract EntityLabel build();
   }

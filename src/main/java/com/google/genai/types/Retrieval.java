@@ -22,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Defines a retrieval tool that model can call to access external knowledge. */
+/**
+ * Defines a retrieval tool that model can call to access external knowledge. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = Retrieval.Builder.class)
 public abstract class Retrieval extends JsonSerializable {
@@ -74,6 +78,16 @@ public abstract class Retrieval extends JsonSerializable {
     @JsonProperty("disableAttribution")
     public abstract Builder disableAttribution(boolean disableAttribution);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder disableAttribution(Optional<Boolean> disableAttribution);
+
+    /** Clears the value of disableAttribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisableAttribution() {
+      return disableAttribution(Optional.empty());
+    }
+
     /**
      * Setter for externalApi.
      *
@@ -87,8 +101,19 @@ public abstract class Retrieval extends JsonSerializable {
      *
      * <p>externalApi: Use data source powered by external API for grounding.
      */
+    @CanIgnoreReturnValue
     public Builder externalApi(ExternalApi.Builder externalApiBuilder) {
       return externalApi(externalApiBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder externalApi(Optional<ExternalApi> externalApi);
+
+    /** Clears the value of externalApi field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExternalApi() {
+      return externalApi(Optional.empty());
     }
 
     /**
@@ -104,8 +129,19 @@ public abstract class Retrieval extends JsonSerializable {
      *
      * <p>vertexAiSearch: Set to use data source powered by Vertex AI Search.
      */
+    @CanIgnoreReturnValue
     public Builder vertexAiSearch(VertexAISearch.Builder vertexAiSearchBuilder) {
       return vertexAiSearch(vertexAiSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexAiSearch(Optional<VertexAISearch> vertexAiSearch);
+
+    /** Clears the value of vertexAiSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexAiSearch() {
+      return vertexAiSearch(Optional.empty());
     }
 
     /**
@@ -123,8 +159,19 @@ public abstract class Retrieval extends JsonSerializable {
      * <p>vertexRagStore: Set to use data source powered by Vertex RAG store. User data is uploaded
      * via the VertexRagDataService.
      */
+    @CanIgnoreReturnValue
     public Builder vertexRagStore(VertexRagStore.Builder vertexRagStoreBuilder) {
       return vertexRagStore(vertexRagStoreBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexRagStore(Optional<VertexRagStore> vertexRagStore);
+
+    /** Clears the value of vertexRagStore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexRagStore() {
+      return vertexRagStore(Optional.empty());
     }
 
     public abstract Retrieval build();

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -68,8 +69,19 @@ public abstract class RetrievalConfig extends JsonSerializable {
      *
      * <p>latLng: Optional. The location of the user.
      */
+    @CanIgnoreReturnValue
     public Builder latLng(LatLng.Builder latLngBuilder) {
       return latLng(latLngBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder latLng(Optional<LatLng> latLng);
+
+    /** Clears the value of latLng field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLatLng() {
+      return latLng(Optional.empty());
     }
 
     /**
@@ -79,6 +91,16 @@ public abstract class RetrievalConfig extends JsonSerializable {
      */
     @JsonProperty("languageCode")
     public abstract Builder languageCode(String languageCode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder languageCode(Optional<String> languageCode);
+
+    /** Clears the value of languageCode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguageCode() {
+      return languageCode(Optional.empty());
+    }
 
     public abstract RetrievalConfig build();
   }

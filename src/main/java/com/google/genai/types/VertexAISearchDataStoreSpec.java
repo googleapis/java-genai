@@ -22,13 +22,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
  * Define data stores within engine to filter on in a search call and configurations for those data
  * stores. For more information, see
- * https://cloud.google.com/generative-ai-app-builder/docs/reference/rpc/google.cloud.discoveryengine.v1#datastorespec
+ * https://cloud.google.com/generative-ai-app-builder/docs/reference/rpc/google.cloud.discoveryengine.v1#datastorespec.
+ * This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = VertexAISearchDataStoreSpec.Builder.class)
@@ -75,6 +77,16 @@ public abstract class VertexAISearchDataStoreSpec extends JsonSerializable {
     @JsonProperty("dataStore")
     public abstract Builder dataStore(String dataStore);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dataStore(Optional<String> dataStore);
+
+    /** Clears the value of dataStore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDataStore() {
+      return dataStore(Optional.empty());
+    }
+
     /**
      * Setter for filter.
      *
@@ -84,6 +96,16 @@ public abstract class VertexAISearchDataStoreSpec extends JsonSerializable {
      */
     @JsonProperty("filter")
     public abstract Builder filter(String filter);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder filter(Optional<String> filter);
+
+    /** Clears the value of filter field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFilter() {
+      return filter(Optional.empty());
+    }
 
     public abstract VertexAISearchDataStoreSpec build();
   }

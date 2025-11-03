@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Optional. Adapter size for tuning. */
+/** Adapter size for tuning. This enum is not supported in Gemini API. */
 public class AdapterSize {
 
   /** Enum representing the known values for AdapterSize. */

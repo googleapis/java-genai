@@ -24,12 +24,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Statistics computed over a tuning dataset. */
+/** Statistics computed over a tuning dataset. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = DatasetStats.Builder.class)
 public abstract class DatasetStats extends JsonSerializable {
@@ -92,6 +93,16 @@ public abstract class DatasetStats extends JsonSerializable {
     @JsonProperty("totalBillableCharacterCount")
     public abstract Builder totalBillableCharacterCount(Long totalBillableCharacterCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalBillableCharacterCount(Optional<Long> totalBillableCharacterCount);
+
+    /** Clears the value of totalBillableCharacterCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalBillableCharacterCount() {
+      return totalBillableCharacterCount(Optional.empty());
+    }
+
     /**
      * Setter for totalTuningCharacterCount.
      *
@@ -99,6 +110,16 @@ public abstract class DatasetStats extends JsonSerializable {
      */
     @JsonProperty("totalTuningCharacterCount")
     public abstract Builder totalTuningCharacterCount(Long totalTuningCharacterCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalTuningCharacterCount(Optional<Long> totalTuningCharacterCount);
+
+    /** Clears the value of totalTuningCharacterCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalTuningCharacterCount() {
+      return totalTuningCharacterCount(Optional.empty());
+    }
 
     /**
      * Setter for tuningDatasetExampleCount.
@@ -108,6 +129,16 @@ public abstract class DatasetStats extends JsonSerializable {
     @JsonProperty("tuningDatasetExampleCount")
     public abstract Builder tuningDatasetExampleCount(Long tuningDatasetExampleCount);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningDatasetExampleCount(Optional<Long> tuningDatasetExampleCount);
+
+    /** Clears the value of tuningDatasetExampleCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningDatasetExampleCount() {
+      return tuningDatasetExampleCount(Optional.empty());
+    }
+
     /**
      * Setter for tuningStepCount.
      *
@@ -115,6 +146,16 @@ public abstract class DatasetStats extends JsonSerializable {
      */
     @JsonProperty("tuningStepCount")
     public abstract Builder tuningStepCount(Long tuningStepCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningStepCount(Optional<Long> tuningStepCount);
+
+    /** Clears the value of tuningStepCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningStepCount() {
+      return tuningStepCount(Optional.empty());
+    }
 
     /**
      * Setter for userDatasetExamples.
@@ -129,6 +170,7 @@ public abstract class DatasetStats extends JsonSerializable {
      *
      * <p>userDatasetExamples: Output only. Sample user messages in the training dataset uri.
      */
+    @CanIgnoreReturnValue
     public Builder userDatasetExamples(Content... userDatasetExamples) {
       return userDatasetExamples(Arrays.asList(userDatasetExamples));
     }
@@ -138,11 +180,22 @@ public abstract class DatasetStats extends JsonSerializable {
      *
      * <p>userDatasetExamples: Output only. Sample user messages in the training dataset uri.
      */
+    @CanIgnoreReturnValue
     public Builder userDatasetExamples(Content.Builder... userDatasetExamplesBuilders) {
       return userDatasetExamples(
           Arrays.asList(userDatasetExamplesBuilders).stream()
               .map(Content.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userDatasetExamples(Optional<List<Content>> userDatasetExamples);
+
+    /** Clears the value of userDatasetExamples field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserDatasetExamples() {
+      return userDatasetExamples(Optional.empty());
     }
 
     /**
@@ -159,9 +212,21 @@ public abstract class DatasetStats extends JsonSerializable {
      *
      * <p>userInputTokenDistribution: Output only. Dataset distributions for the user input tokens.
      */
+    @CanIgnoreReturnValue
     public Builder userInputTokenDistribution(
         DatasetDistribution.Builder userInputTokenDistributionBuilder) {
       return userInputTokenDistribution(userInputTokenDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userInputTokenDistribution(
+        Optional<DatasetDistribution> userInputTokenDistribution);
+
+    /** Clears the value of userInputTokenDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserInputTokenDistribution() {
+      return userInputTokenDistribution(Optional.empty());
     }
 
     /**
@@ -180,9 +245,21 @@ public abstract class DatasetStats extends JsonSerializable {
      * <p>userMessagePerExampleDistribution: Output only. Dataset distributions for the messages per
      * example.
      */
+    @CanIgnoreReturnValue
     public Builder userMessagePerExampleDistribution(
         DatasetDistribution.Builder userMessagePerExampleDistributionBuilder) {
       return userMessagePerExampleDistribution(userMessagePerExampleDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userMessagePerExampleDistribution(
+        Optional<DatasetDistribution> userMessagePerExampleDistribution);
+
+    /** Clears the value of userMessagePerExampleDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserMessagePerExampleDistribution() {
+      return userMessagePerExampleDistribution(Optional.empty());
     }
 
     /**
@@ -201,9 +278,21 @@ public abstract class DatasetStats extends JsonSerializable {
      * <p>userOutputTokenDistribution: Output only. Dataset distributions for the user output
      * tokens.
      */
+    @CanIgnoreReturnValue
     public Builder userOutputTokenDistribution(
         DatasetDistribution.Builder userOutputTokenDistributionBuilder) {
       return userOutputTokenDistribution(userOutputTokenDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder userOutputTokenDistribution(
+        Optional<DatasetDistribution> userOutputTokenDistribution);
+
+    /** Clears the value of userOutputTokenDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUserOutputTokenDistribution() {
+      return userOutputTokenDistribution(Optional.empty());
     }
 
     public abstract DatasetStats build();

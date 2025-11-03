@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -73,6 +74,16 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for image.
      *
@@ -86,8 +97,19 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      *
      * <p>image: The input image to upscale.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**
@@ -98,6 +120,16 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
     @JsonProperty("upscaleFactor")
     public abstract Builder upscaleFactor(String upscaleFactor);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder upscaleFactor(Optional<String> upscaleFactor);
+
+    /** Clears the value of upscaleFactor field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpscaleFactor() {
+      return upscaleFactor(Optional.empty());
+    }
+
     /**
      * Setter for config.
      *
@@ -105,6 +137,16 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      */
     @JsonProperty("config")
     public abstract Builder config(UpscaleImageAPIConfig config);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<UpscaleImageAPIConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
+    }
 
     public abstract UpscaleImageAPIParameters build();
   }

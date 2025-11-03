@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public abstract class Video extends JsonSerializable {
     @JsonProperty("uri")
     public abstract Builder uri(String uri);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uri(Optional<String> uri);
+
+    /** Clears the value of uri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUri() {
+      return uri(Optional.empty());
+    }
+
     /**
      * Setter for videoBytes.
      *
@@ -75,6 +86,16 @@ public abstract class Video extends JsonSerializable {
     @JsonProperty("videoBytes")
     public abstract Builder videoBytes(byte[] videoBytes);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder videoBytes(Optional<byte[]> videoBytes);
+
+    /** Clears the value of videoBytes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideoBytes() {
+      return videoBytes(Optional.empty());
+    }
+
     /**
      * Setter for mimeType.
      *
@@ -82,6 +103,16 @@ public abstract class Video extends JsonSerializable {
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
 
     public abstract Video build();
   }

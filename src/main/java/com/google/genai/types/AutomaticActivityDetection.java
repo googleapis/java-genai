@@ -88,6 +88,16 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     @JsonProperty("disabled")
     public abstract Builder disabled(boolean disabled);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder disabled(Optional<Boolean> disabled);
+
+    /** Clears the value of disabled field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisabled() {
+      return disabled(Optional.empty());
+    }
+
     /**
      * Setter for startOfSpeechSensitivity.
      *
@@ -95,6 +105,16 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
      */
     @JsonProperty("startOfSpeechSensitivity")
     public abstract Builder startOfSpeechSensitivity(StartSensitivity startOfSpeechSensitivity);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startOfSpeechSensitivity(Optional<StartSensitivity> startOfSpeechSensitivity);
+
+    /** Clears the value of startOfSpeechSensitivity field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartOfSpeechSensitivity() {
+      return startOfSpeechSensitivity(Optional.empty());
+    }
 
     /**
      * Setter for startOfSpeechSensitivity given a known enum.
@@ -123,6 +143,16 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
      */
     @JsonProperty("endOfSpeechSensitivity")
     public abstract Builder endOfSpeechSensitivity(EndSensitivity endOfSpeechSensitivity);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder endOfSpeechSensitivity(Optional<EndSensitivity> endOfSpeechSensitivity);
+
+    /** Clears the value of endOfSpeechSensitivity field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEndOfSpeechSensitivity() {
+      return endOfSpeechSensitivity(Optional.empty());
+    }
 
     /**
      * Setter for endOfSpeechSensitivity given a known enum.
@@ -155,6 +185,16 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     @JsonProperty("prefixPaddingMs")
     public abstract Builder prefixPaddingMs(Integer prefixPaddingMs);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prefixPaddingMs(Optional<Integer> prefixPaddingMs);
+
+    /** Clears the value of prefixPaddingMs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPrefixPaddingMs() {
+      return prefixPaddingMs(Optional.empty());
+    }
+
     /**
      * Setter for silenceDurationMs.
      *
@@ -164,6 +204,16 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
      */
     @JsonProperty("silenceDurationMs")
     public abstract Builder silenceDurationMs(Integer silenceDurationMs);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder silenceDurationMs(Optional<Integer> silenceDurationMs);
+
+    /** Clears the value of silenceDurationMs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSilenceDurationMs() {
+      return silenceDurationMs(Optional.empty());
+    }
 
     public abstract AutomaticActivityDetection build();
   }

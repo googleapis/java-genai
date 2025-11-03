@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -70,6 +71,16 @@ public abstract class SlidingWindow extends JsonSerializable {
      */
     @JsonProperty("targetTokens")
     public abstract Builder targetTokens(Long targetTokens);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder targetTokens(Optional<Long> targetTokens);
+
+    /** Clears the value of targetTokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTargetTokens() {
+      return targetTokens(Optional.empty());
+    }
 
     public abstract SlidingWindow build();
   }

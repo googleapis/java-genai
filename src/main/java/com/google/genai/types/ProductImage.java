@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -64,8 +65,19 @@ public abstract class ProductImage extends JsonSerializable {
      *
      * <p>productImage: An image of the product to be recontextualized.
      */
+    @CanIgnoreReturnValue
     public Builder productImage(Image.Builder productImageBuilder) {
       return productImage(productImageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder productImage(Optional<Image> productImage);
+
+    /** Clears the value of productImage field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProductImage() {
+      return productImage(Optional.empty());
     }
 
     public abstract ProductImage build();

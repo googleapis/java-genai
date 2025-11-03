@@ -72,8 +72,19 @@ public abstract class VideoGenerationMask extends JsonSerializable {
      *
      * <p>image: The image mask to use for generating videos.
      */
+    @CanIgnoreReturnValue
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<Image> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**
@@ -84,6 +95,16 @@ public abstract class VideoGenerationMask extends JsonSerializable {
      */
     @JsonProperty("maskMode")
     public abstract Builder maskMode(VideoGenerationMaskMode maskMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maskMode(Optional<VideoGenerationMaskMode> maskMode);
+
+    /** Clears the value of maskMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaskMode() {
+      return maskMode(Optional.empty());
+    }
 
     /**
      * Setter for maskMode given a known enum.

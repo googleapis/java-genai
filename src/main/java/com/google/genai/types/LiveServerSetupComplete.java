@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -58,6 +59,16 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
      */
     @JsonProperty("sessionId")
     public abstract Builder sessionId(String sessionId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sessionId(Optional<String> sessionId);
+
+    /** Clears the value of sessionId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSessionId() {
+      return sessionId(Optional.empty());
+    }
 
     public abstract LiveServerSetupComplete build();
   }

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -58,6 +59,16 @@ public abstract class StyleReferenceConfig extends JsonSerializable {
      */
     @JsonProperty("styleDescription")
     public abstract Builder styleDescription(String styleDescription);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder styleDescription(Optional<String> styleDescription);
+
+    /** Clears the value of styleDescription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStyleDescription() {
+      return styleDescription(Optional.empty());
+    }
 
     public abstract StyleReferenceConfig build();
   }

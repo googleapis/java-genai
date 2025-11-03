@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -77,6 +78,16 @@ public abstract class SessionResumptionConfig extends JsonSerializable {
     @JsonProperty("handle")
     public abstract Builder handle(String handle);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder handle(Optional<String> handle);
+
+    /** Clears the value of handle field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHandle() {
+      return handle(Optional.empty());
+    }
+
     /**
      * Setter for transparent.
      *
@@ -85,6 +96,16 @@ public abstract class SessionResumptionConfig extends JsonSerializable {
      */
     @JsonProperty("transparent")
     public abstract Builder transparent(boolean transparent);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder transparent(Optional<Boolean> transparent);
+
+    /** Clears the value of transparent field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTransparent() {
+      return transparent(Optional.empty());
+    }
 
     public abstract SessionResumptionConfig build();
   }

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
 import java.util.Optional;
@@ -84,6 +85,16 @@ public abstract class CachedContent extends JsonSerializable {
     @JsonProperty("name")
     public abstract Builder name(String name);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
     /**
      * Setter for displayName.
      *
@@ -91,6 +102,16 @@ public abstract class CachedContent extends JsonSerializable {
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
 
     /**
      * Setter for model.
@@ -100,6 +121,16 @@ public abstract class CachedContent extends JsonSerializable {
     @JsonProperty("model")
     public abstract Builder model(String model);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder model(Optional<String> model);
+
+    /** Clears the value of model field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModel() {
+      return model(Optional.empty());
+    }
+
     /**
      * Setter for createTime.
      *
@@ -107,6 +138,16 @@ public abstract class CachedContent extends JsonSerializable {
      */
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
 
     /**
      * Setter for updateTime.
@@ -116,6 +157,16 @@ public abstract class CachedContent extends JsonSerializable {
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateTime(Optional<Instant> updateTime);
+
+    /** Clears the value of updateTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
+    }
+
     /**
      * Setter for expireTime.
      *
@@ -123,6 +174,16 @@ public abstract class CachedContent extends JsonSerializable {
      */
     @JsonProperty("expireTime")
     public abstract Builder expireTime(Instant expireTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder expireTime(Optional<Instant> expireTime);
+
+    /** Clears the value of expireTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExpireTime() {
+      return expireTime(Optional.empty());
+    }
 
     /**
      * Setter for usageMetadata.
@@ -137,8 +198,19 @@ public abstract class CachedContent extends JsonSerializable {
      *
      * <p>usageMetadata: Metadata on the usage of the cached content.
      */
+    @CanIgnoreReturnValue
     public Builder usageMetadata(CachedContentUsageMetadata.Builder usageMetadataBuilder) {
       return usageMetadata(usageMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder usageMetadata(Optional<CachedContentUsageMetadata> usageMetadata);
+
+    /** Clears the value of usageMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUsageMetadata() {
+      return usageMetadata(Optional.empty());
     }
 
     public abstract CachedContent build();

@@ -22,10 +22,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The tuning data statistic values for TuningJob. */
+/**
+ * The tuning data statistic values for TuningJob. This data type is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = TuningDataStats.Builder.class)
 public abstract class TuningDataStats extends JsonSerializable {
@@ -72,9 +75,20 @@ public abstract class TuningDataStats extends JsonSerializable {
      *
      * <p>distillationDataStats: Output only. Statistics for distillation.
      */
+    @CanIgnoreReturnValue
     public Builder distillationDataStats(
         DistillationDataStats.Builder distillationDataStatsBuilder) {
       return distillationDataStats(distillationDataStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationDataStats(Optional<DistillationDataStats> distillationDataStats);
+
+    /** Clears the value of distillationDataStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationDataStats() {
+      return distillationDataStats(Optional.empty());
     }
 
     /**
@@ -91,9 +105,21 @@ public abstract class TuningDataStats extends JsonSerializable {
      *
      * <p>preferenceOptimizationDataStats: Output only. Statistics for preference optimization.
      */
+    @CanIgnoreReturnValue
     public Builder preferenceOptimizationDataStats(
         PreferenceOptimizationDataStats.Builder preferenceOptimizationDataStatsBuilder) {
       return preferenceOptimizationDataStats(preferenceOptimizationDataStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder preferenceOptimizationDataStats(
+        Optional<PreferenceOptimizationDataStats> preferenceOptimizationDataStats);
+
+    /** Clears the value of preferenceOptimizationDataStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPreferenceOptimizationDataStats() {
+      return preferenceOptimizationDataStats(Optional.empty());
     }
 
     /**
@@ -110,9 +136,21 @@ public abstract class TuningDataStats extends JsonSerializable {
      *
      * <p>supervisedTuningDataStats: The SFT Tuning data stats.
      */
+    @CanIgnoreReturnValue
     public Builder supervisedTuningDataStats(
         SupervisedTuningDataStats.Builder supervisedTuningDataStatsBuilder) {
       return supervisedTuningDataStats(supervisedTuningDataStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder supervisedTuningDataStats(
+        Optional<SupervisedTuningDataStats> supervisedTuningDataStats);
+
+    /** Clears the value of supervisedTuningDataStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSupervisedTuningDataStats() {
+      return supervisedTuningDataStats(Optional.empty());
     }
 
     public abstract TuningDataStats build();

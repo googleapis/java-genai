@@ -40,8 +40,8 @@ public final class AsyncCaches {
   ApiClient apiClient;
 
   public AsyncCaches(ApiClient apiClient) {
-    this.caches = new Caches(apiClient);
     this.apiClient = apiClient;
+    this.caches = new Caches(apiClient);
   }
 
   /**
@@ -149,10 +149,8 @@ public final class AsyncCaches {
                 "Internal error: Pager expected ListCachedContentsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      caches.privateList((ListCachedContentsConfig) requestConfig)));
+          return this.privateList((ListCachedContentsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

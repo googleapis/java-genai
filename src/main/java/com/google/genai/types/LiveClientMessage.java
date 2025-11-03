@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -89,8 +90,19 @@ public abstract class LiveClientMessage extends JsonSerializable {
      * <p>setup: Message to be sent by the system when connecting to the API. SDK users should not
      * send this message.
      */
+    @CanIgnoreReturnValue
     public Builder setup(LiveClientSetup.Builder setupBuilder) {
       return setup(setupBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder setup(Optional<LiveClientSetup> setup);
+
+    /** Clears the value of setup field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSetup() {
+      return setup(Optional.empty());
     }
 
     /**
@@ -106,8 +118,19 @@ public abstract class LiveClientMessage extends JsonSerializable {
      *
      * <p>clientContent: Incremental update of the current conversation delivered from the client.
      */
+    @CanIgnoreReturnValue
     public Builder clientContent(LiveClientContent.Builder clientContentBuilder) {
       return clientContent(clientContentBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder clientContent(Optional<LiveClientContent> clientContent);
+
+    /** Clears the value of clientContent field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearClientContent() {
+      return clientContent(Optional.empty());
     }
 
     /**
@@ -123,8 +146,19 @@ public abstract class LiveClientMessage extends JsonSerializable {
      *
      * <p>realtimeInput: User input that is sent in real time.
      */
+    @CanIgnoreReturnValue
     public Builder realtimeInput(LiveClientRealtimeInput.Builder realtimeInputBuilder) {
       return realtimeInput(realtimeInputBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder realtimeInput(Optional<LiveClientRealtimeInput> realtimeInput);
+
+    /** Clears the value of realtimeInput field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRealtimeInput() {
+      return realtimeInput(Optional.empty());
     }
 
     /**
@@ -145,9 +179,21 @@ public abstract class LiveClientMessage extends JsonSerializable {
      * sendRealtimeInput to be transformed into `realtime_input` before being sent. Note: This will
      * overwrite any `realtime_input` field.
      */
+    @CanIgnoreReturnValue
     public Builder realtimeInputParameters(
         LiveSendRealtimeInputParameters.Builder realtimeInputParametersBuilder) {
       return realtimeInputParameters(realtimeInputParametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder realtimeInputParameters(
+        Optional<LiveSendRealtimeInputParameters> realtimeInputParameters);
+
+    /** Clears the value of realtimeInputParameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRealtimeInputParameters() {
+      return realtimeInputParameters(Optional.empty());
     }
 
     /**
@@ -163,8 +209,19 @@ public abstract class LiveClientMessage extends JsonSerializable {
      *
      * <p>toolResponse: Response to a `ToolCallMessage` received from the server.
      */
+    @CanIgnoreReturnValue
     public Builder toolResponse(LiveClientToolResponse.Builder toolResponseBuilder) {
       return toolResponse(toolResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolResponse(Optional<LiveClientToolResponse> toolResponse);
+
+    /** Clears the value of toolResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolResponse() {
+      return toolResponse(Optional.empty());
     }
 
     public abstract LiveClientMessage build();

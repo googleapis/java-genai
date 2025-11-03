@@ -22,10 +22,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The API secret. */
+/** The API secret. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = ApiAuthApiKeyConfig.Builder.class)
 public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
@@ -67,6 +68,16 @@ public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
     @JsonProperty("apiKeySecretVersion")
     public abstract Builder apiKeySecretVersion(String apiKeySecretVersion);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiKeySecretVersion(Optional<String> apiKeySecretVersion);
+
+    /** Clears the value of apiKeySecretVersion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiKeySecretVersion() {
+      return apiKeySecretVersion(Optional.empty());
+    }
+
     /**
      * Setter for apiKeyString.
      *
@@ -74,6 +85,16 @@ public abstract class ApiAuthApiKeyConfig extends JsonSerializable {
      */
     @JsonProperty("apiKeyString")
     public abstract Builder apiKeyString(String apiKeyString);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiKeyString(Optional<String> apiKeyString);
+
+    /** Clears the value of apiKeyString field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiKeyString() {
+      return apiKeyString(Optional.empty());
+    }
 
     public abstract ApiAuthApiKeyConfig build();
   }

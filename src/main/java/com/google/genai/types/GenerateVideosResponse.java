@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +77,7 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
      *
      * <p>generatedVideos: List of the generated videos
      */
+    @CanIgnoreReturnValue
     public Builder generatedVideos(GeneratedVideo... generatedVideos) {
       return generatedVideos(Arrays.asList(generatedVideos));
     }
@@ -85,11 +87,22 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
      *
      * <p>generatedVideos: List of the generated videos
      */
+    @CanIgnoreReturnValue
     public Builder generatedVideos(GeneratedVideo.Builder... generatedVideosBuilders) {
       return generatedVideos(
           Arrays.asList(generatedVideosBuilders).stream()
               .map(GeneratedVideo.Builder::build)
               .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder generatedVideos(Optional<List<GeneratedVideo>> generatedVideos);
+
+    /** Clears the value of generatedVideos field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGeneratedVideos() {
+      return generatedVideos(Optional.empty());
     }
 
     /**
@@ -99,6 +112,16 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
      */
     @JsonProperty("raiMediaFilteredCount")
     public abstract Builder raiMediaFilteredCount(Integer raiMediaFilteredCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder raiMediaFilteredCount(Optional<Integer> raiMediaFilteredCount);
+
+    /** Clears the value of raiMediaFilteredCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRaiMediaFilteredCount() {
+      return raiMediaFilteredCount(Optional.empty());
+    }
 
     /**
      * Setter for raiMediaFilteredReasons.
@@ -113,8 +136,19 @@ public abstract class GenerateVideosResponse extends JsonSerializable {
      *
      * <p>raiMediaFilteredReasons: Returns rai failure reasons if any.
      */
+    @CanIgnoreReturnValue
     public Builder raiMediaFilteredReasons(String... raiMediaFilteredReasons) {
       return raiMediaFilteredReasons(Arrays.asList(raiMediaFilteredReasons));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder raiMediaFilteredReasons(Optional<List<String>> raiMediaFilteredReasons);
+
+    /** Clears the value of raiMediaFilteredReasons field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRaiMediaFilteredReasons() {
+      return raiMediaFilteredReasons(Optional.empty());
     }
 
     public abstract GenerateVideosResponse build();

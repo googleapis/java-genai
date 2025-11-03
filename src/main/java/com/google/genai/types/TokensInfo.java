@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +70,16 @@ public abstract class TokensInfo extends JsonSerializable {
     @JsonProperty("role")
     public abstract Builder role(String role);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder role(Optional<String> role);
+
+    /** Clears the value of role field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRole() {
+      return role(Optional.empty());
+    }
+
     /**
      * Setter for tokenIds.
      *
@@ -82,8 +93,19 @@ public abstract class TokensInfo extends JsonSerializable {
      *
      * <p>tokenIds: A list of token ids from the input.
      */
+    @CanIgnoreReturnValue
     public Builder tokenIds(Long... tokenIds) {
       return tokenIds(Arrays.asList(tokenIds));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokenIds(Optional<List<Long>> tokenIds);
+
+    /** Clears the value of tokenIds field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokenIds() {
+      return tokenIds(Optional.empty());
     }
 
     /**
@@ -99,8 +121,19 @@ public abstract class TokensInfo extends JsonSerializable {
      *
      * <p>tokens: A list of tokens from the input.
      */
+    @CanIgnoreReturnValue
     public Builder tokens(byte[]... tokens) {
       return tokens(Arrays.asList(tokens));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokens(Optional<List<byte[]>> tokens);
+
+    /** Clears the value of tokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokens() {
+      return tokens(Optional.empty());
     }
 
     public abstract TokensInfo build();

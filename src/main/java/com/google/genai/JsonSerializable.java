@@ -38,7 +38,7 @@ import com.google.genai.errors.GenAiIOException;
 /** A class that can be serialized to JSON and deserialized from JSON. */
 public abstract class JsonSerializable {
 
-  static final ObjectMapper objectMapper = new ObjectMapper();
+  @InternalApi protected static final ObjectMapper objectMapper = new ObjectMapper();
 
   /** Custom Jackson serializer for {@link java.time.Duration} to output "Xs" format. */
   static class CustomDurationSerializer extends JsonSerializer<java.time.Duration> {
@@ -134,7 +134,8 @@ public abstract class JsonSerializable {
   }
 
   /** Deserializes a JsonNode to an object of the given type. */
-  static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
+  @InternalApi
+  protected static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
     try {
       return objectMapper.treeToValue(jsonNode, clazz);
     } catch (JsonProcessingException e) {

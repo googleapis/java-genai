@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -70,6 +71,16 @@ public abstract class LatLng extends JsonSerializable {
     @JsonProperty("latitude")
     public abstract Builder latitude(Double latitude);
 
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder latitude(Optional<Double> latitude);
+
+    /** Clears the value of latitude field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLatitude() {
+      return latitude(Optional.empty());
+    }
+
     /**
      * Setter for longitude.
      *
@@ -77,6 +88,16 @@ public abstract class LatLng extends JsonSerializable {
      */
     @JsonProperty("longitude")
     public abstract Builder longitude(Double longitude);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder longitude(Optional<Double> longitude);
+
+    /** Clears the value of longitude field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLongitude() {
+      return longitude(Optional.empty());
+    }
 
     public abstract LatLng build();
   }

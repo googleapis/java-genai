@@ -26,8 +26,10 @@ import com.google.genai.types.BatchJob;
 import com.google.genai.types.BatchJobSource;
 import com.google.genai.types.CancelBatchJobConfig;
 import com.google.genai.types.CreateBatchJobConfig;
+import com.google.genai.types.CreateEmbeddingsBatchJobConfig;
 import com.google.genai.types.DeleteBatchJobConfig;
 import com.google.genai.types.DeleteResourceJob;
+import com.google.genai.types.EmbeddingsBatchJobSource;
 import com.google.genai.types.GetBatchJobConfig;
 import com.google.genai.types.ListBatchJobsConfig;
 import com.google.genai.types.ListBatchJobsResponse;
@@ -41,8 +43,8 @@ public final class AsyncBatches {
   ApiClient apiClient;
 
   public AsyncBatches(ApiClient apiClient) {
-    this.batches = new Batches(apiClient);
     this.apiClient = apiClient;
+    this.batches = new Batches(apiClient);
   }
 
   CompletableFuture<BatchJob> privateCreate(
@@ -54,6 +56,19 @@ public final class AsyncBatches {
             response -> {
               try (ApiResponse res = response) {
                 return batches.processResponseForPrivateCreate(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<BatchJob> privateCreateEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    BuiltRequest builtRequest = batches.buildRequestForPrivateCreateEmbeddings(model, src, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return batches.processResponseForPrivateCreateEmbeddings(res, config);
               }
             });
   }
@@ -139,7 +154,47 @@ public final class AsyncBatches {
    */
   public CompletableFuture<BatchJob> create(
       String model, BatchJobSource src, CreateBatchJobConfig config) {
-    return CompletableFuture.supplyAsync(() -> batches.create(model, src, config));
+    if (this.apiClient.vertexAI()) {
+      if (src.inlinedRequests().isPresent()) {
+        throw new GenAiIOException("inlinedRequests is not supported for Vertex AI.");
+      }
+      if (src.fileName().isPresent()) {
+        throw new GenAiIOException("fileName is not supported for Vertex AI.");
+      }
+      if (src.gcsUri().isPresent() && src.bigqueryUri().isPresent()) {
+        throw new GenAiIOException("Only one of gcsUri and bigqueryUri can be set.");
+      }
+      if (!src.gcsUri().isPresent() && !src.bigqueryUri().isPresent()) {
+        throw new GenAiIOException("One of gcsUri and bigqueryUri must be set.");
+      }
+    } else {
+      if (src.fileName().isPresent() && src.inlinedRequests().isPresent()) {
+        throw new GenAiIOException("Only one of fileName and InlinedRequests can be set.");
+      }
+      if (!src.fileName().isPresent() && !src.inlinedRequests().isPresent()) {
+        throw new GenAiIOException("one of fileName and InlinedRequests must be set.");
+      }
+    }
+    return this.privateCreate(model, src, config);
+  }
+
+  /**
+   * Makes an API request to create the batch embeddings job.
+   *
+   * <p>This method is experimental.
+   *
+   * @param model the name of the GenAI model to use for generation
+   * @param src The {@link EmbeddingsBatchJobSource} of the batch job.
+   * @param config The configuration {@link CreateEmbeddingsBatchJobConfig} for the batch job.
+   * @return A BatchJob.
+   */
+  public CompletableFuture<BatchJob> createEmbeddings(
+      String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "Vertex AI does not support batches.createEmbeddings.");
+    }
+    return this.privateCreateEmbeddings(model, src, config);
   }
 
   /**
@@ -159,10 +214,8 @@ public final class AsyncBatches {
                 "Internal error: Pager expected ListBatchJobsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      batches.privateList((ListBatchJobsConfig) requestConfig)));
+          return this.privateList((ListBatchJobsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->

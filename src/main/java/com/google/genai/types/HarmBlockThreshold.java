@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Required. The harm block threshold. */
+/** The harm block threshold. */
 public class HarmBlockThreshold {
 
   /** Enum representing the known values for HarmBlockThreshold. */

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Optional. The type of the data. */
+/** The type of the data. */
 public class Type {
 
   /** Enum representing the known values for Type. */
