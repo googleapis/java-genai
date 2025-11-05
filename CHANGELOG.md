@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.26.0](https://github.com/googleapis/java-genai/compare/v1.25.0...v1.26.0) (2025-11-05)
+
+
+### Features
+
+* Add clearXxx methods to data type builders ([a4900c9](https://github.com/googleapis/java-genai/commit/a4900c97ec7c256b45b729ae68404aea4fbf5830))
+* add complete stats to BatchJob ([659c65c](https://github.com/googleapis/java-genai/commit/659c65cc777c35ae5dc8ef84caf00f4aa30bb3db))
+* Add FileSearch tool and associated FileSearchStore management APIs ([8ada6ef](https://github.com/googleapis/java-genai/commit/8ada6efb0c2b2a2231acc08c952e2fc76e20a29d))
+* Add FileSearch tool and associated FileSearchStore management APIs ([e4df737](https://github.com/googleapis/java-genai/commit/e4df73794ef34aabc0ee346a313a6762ce3357fa))
+* Add image_size to ImageConfig (Early Access Program) ([c1af981](https://github.com/googleapis/java-genai/commit/c1af981dc19fad22db68126ec6153d9fa20ec734))
+* Added phish filtering feature. ([ed4e12c](https://github.com/googleapis/java-genai/commit/ed4e12c44e9fec3c2131a52d995cb0602dc246a0))
+* Return response headers for generateContentStream ([82a8118](https://github.com/googleapis/java-genai/commit/82a8118968bb5da37ec81dce83580bd86767bf62))
+* Support lists as function parameters in AFC (fixes [#527](https://github.com/googleapis/java-genai/issues/527)) ([452d2e5](https://github.com/googleapis/java-genai/commit/452d2e50a6c13ab94d5de380d32dcb164379a2cb))
+
+
+### Bug Fixes
+
+* disable AFC when there are AFC incompatible tool presented. ([6099d87](https://github.com/googleapis/java-genai/commit/6099d871ff703606dffbf533a231869725f32bc6))
+
+
+### Documentation
+
+* add blank line before version update marker ([82616c2](https://github.com/googleapis/java-genai/commit/82616c23be6cf7295049026985d105c5c2993c7a))
+* Update Java SDK README spacing ([82616c2](https://github.com/googleapis/java-genai/commit/82616c23be6cf7295049026985d105c5c2993c7a))
+
 ## [1.25.0](https://github.com/googleapis/java-genai/compare/v1.24.0...v1.25.0) (2025-10-29)
 
 
