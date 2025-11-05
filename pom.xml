@@ -407,18 +407,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.graalvm.buildtools</groupId>
-        <artifactId>native-maven-plugin</artifactId>
-        <version>0.11.1</version>
-        <extensions>true</extensions>
-        <configuration>
-          <buildArgs>
-            <buildArg>--no-fallback</buildArg>
-            <buildArg>--verbose</buildArg>
-          </buildArgs>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -454,9 +442,6 @@
 
     <profile>
       <id>native-tests</id>
-      <activation>
-        <jdk>[17,)</jdk>
-      </activation>
       <build>
         <plugins>
           <plugin>
@@ -464,6 +449,18 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <argLine>@{argLine} -agentlib:native-image-agent=config-output-dir=target/native-image</argLine>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>0.11.1</version>
+            <extensions>true</extensions>
+            <configuration>
+              <buildArgs>
+                <buildArg>--no-fallback</buildArg>
+                <buildArg>--verbose</buildArg>
+              </buildArgs>
             </configuration>
           </plugin>
         </plugins>
