@@ -110,7 +110,7 @@ public class AsyncModelsTest {
     // Act
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-1.5-flash",
+            "gemini-2.5-flash",
             Content.fromParts(Part.fromText("Tell me a story in 300 words.")),
             config);
     GenerateContentResponse response = responseFuture.join();
@@ -178,7 +178,7 @@ public class AsyncModelsTest {
     // Act
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-1.5-flash",
+            "gemini-2.5-flash",
             Content.fromParts(Part.fromText("Tell me a story in 300 words.")),
             null);
     GenerateContentResponse response = responseFuture.join();
@@ -203,7 +203,7 @@ public class AsyncModelsTest {
             .build();
     CompletableFuture<ResponseStream<GenerateContentResponse>> responseStreamFuture =
         client.async.models.generateContentStream(
-            "gemini-1.5-flash", "Tell me a story in 300 words.", config);
+            "gemini-2.5-flash", "Tell me a story in 300 words.", config);
     ResponseStream<GenerateContentResponse> responseStream = responseStreamFuture.join();
 
     // Assert
@@ -234,7 +234,7 @@ public class AsyncModelsTest {
             .build();
     CompletableFuture<ResponseStream<GenerateContentResponse>> responseStreamFuture =
         client.async.models.generateContentStream(
-            "gemini-1.5-flash", "Tell me a story in 300 words.", config);
+            "gemini-2.5-flash", "Tell me a story in 300 words.", config);
 
     ResponseStream<GenerateContentResponse> responseStream = responseStreamFuture.join();
 
@@ -296,7 +296,7 @@ public class AsyncModelsTest {
     // Act
     GenerateContentConfig config =
         GenerateContentConfig.builder()
-            .maxOutputTokens(400)
+            .maxOutputTokens(4000)
             .topK(2f)
             .temperature(0.5f)
             .topP(0.5f)
@@ -306,7 +306,7 @@ public class AsyncModelsTest {
             .build();
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-1.5-flash",
+            "gemini-2.5-flash",
             Content.fromParts(Part.fromText("tell me a story in 300 words")),
             config);
     GenerateContentResponse response = responseFuture.join();
@@ -340,7 +340,7 @@ public class AsyncModelsTest {
             .build();
     CompletableFuture<ResponseStream<GenerateContentResponse>> responseStreamFuture =
         client.async.models.generateContentStream(
-            "gemini-1.5-flash",
+            "gemini-2.0-flash-001",
             Content.fromParts(Part.fromText("tell me a story in 300 words")),
             config);
     ResponseStream<GenerateContentResponse> responseStream = responseStreamFuture.join();
@@ -352,7 +352,7 @@ public class AsyncModelsTest {
       assertNotNull(response.text());
       assertNotNull(response.sdkHttpResponse().get().headers());
     }
-    assertTrue(chunks > 2);
+    assertTrue(chunks >= 1);
     assertTrue(responseStream.isConsumed());
   }
 

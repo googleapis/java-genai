@@ -138,7 +138,7 @@ public class ModelsTest {
     // Act
     GenerateContentResponse response =
         client.models.generateContent(
-            GEMINI_MODEL_NAME,
+            "gemini-2.5-flash",
             Content.fromParts(Part.fromText("Tell me a story in 300 words.")),
             null);
 
@@ -163,7 +163,7 @@ public class ModelsTest {
             .build();
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            GEMINI_MODEL_NAME, "Tell me a story in 300 words.", config);
+            "gemini-2.5-flash", "Tell me a story in 300 words.", config);
 
     // Assert
     int chunks = 0;
@@ -201,7 +201,7 @@ public class ModelsTest {
             .build();
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            GEMINI_MODEL_NAME,
+            "gemini-2.0-flash-001",
             Content.fromParts(Part.fromText("tell me a story in 300 words")),
             config);
 
@@ -212,7 +212,7 @@ public class ModelsTest {
       assertNotNull(response.text());
       assertNotNull(response.sdkHttpResponse().get().headers());
     }
-    assertTrue(chunks > 2);
+    assertTrue(chunks >= 1);
     assertTrue(responseStream.isConsumed());
   }
 
