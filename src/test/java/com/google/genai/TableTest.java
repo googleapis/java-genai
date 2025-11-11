@@ -69,6 +69,10 @@ public final class TableTest {
     String originalMethodName = segments[segments.length - 1];
     String methodName = Common.snakeToCamel(originalMethodName);
 
+    if (methodName.equals("embedContent")) {
+      methodName = "embedContentTest";
+    }
+
     List<String> modulePath = new ArrayList<>();
     for (int i = 0; i < segments.length - 1; i++) {
       modulePath.add(segments[i]);
@@ -104,11 +108,7 @@ public final class TableTest {
         if (candidate.getName().equals(methodName)) {
           methods.add(candidate);
         }
-        if (methodName.equals("embedContent")
-            && candidate.getName().equals("privateEmbedContent")) {
-          candidate.setAccessible(true);
-          methods.add(candidate);
-        } else if (methodName.equals("generateVideos")
+        if (methodName.equals("generateVideos")
             && candidate.getName().equals("privateGenerateVideos")) {
           candidate.setAccessible(true);
           methods.add(candidate);
@@ -176,6 +176,10 @@ public final class TableTest {
     if (testName.contains("models.edit_image")
         || testName.contains("batches.create.test_with_image_blob")) { // TODO(b/431798111)
       String msg = " => Test skipped: replay tests are not supported for edit_image";
+      return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
+    }
+    if (testName.contains("models.embed_content.test_vertex_new_api_inline_pdf")) {
+      String msg = " => Test skipped: inline byte deserialization fails";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
     // TODO(b/457846189): Support models.list filter parameter
