@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.27.0](https://github.com/googleapis/java-genai/compare/v1.26.0...v1.27.0) (2025-11-12)
+
+
+### Features
+
+* Add `images()` convenience method to `GenerateImagesResponse` ([155df8d](https://github.com/googleapis/java-genai/commit/155df8d25bdbcf1e6ef4b9859b5be28dfe9f943e))
+* Add EvaluationConfig support to tune() in Java ([795cf73](https://github.com/googleapis/java-genai/commit/795cf73d87894243d06c793262bed9b488167f95))
+* Automatically set response type in FunctionDeclaration during the AFC ([5ce99df](https://github.com/googleapis/java-genai/commit/5ce99df9136b1606fed3f385ff68b4ef84e931eb))
+* Support overriding the max read length in the JSON parser ([29d2fca](https://github.com/googleapis/java-genai/commit/29d2fcac0202bd8ba81c0973f172432b18bc3f79))
+
+
+### Bug Fixes
+
+* Add missing fields to the model types ([7b7b41f](https://github.com/googleapis/java-genai/commit/7b7b41f05b21a37c4ce9bd712a28d9432d07105f))
+* Fix base_steps parameter for recontext_image ([85aaa79](https://github.com/googleapis/java-genai/commit/85aaa79121489181879f1e0ad84d683c1d000f53))
+* Fix models.list() filter parameter ([123ada5](https://github.com/googleapis/java-genai/commit/123ada51cba5de22ec755716e551f398a6210a38))
+
+
+### Documentation
+
+* Add README for Files API ([6d206aa](https://github.com/googleapis/java-genai/commit/6d206aaf3f85cf1460418ddabcd1b6cd07693357))
+
 ## [1.26.0](https://github.com/googleapis/java-genai/compare/v1.25.0...v1.26.0) (2025-11-05)
 
 
