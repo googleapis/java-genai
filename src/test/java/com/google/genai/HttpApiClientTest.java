@@ -36,8 +36,12 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
+import com.google.genai.types.ProxyOptions;
+import com.google.genai.types.ProxyType;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -65,6 +69,11 @@ public class HttpApiClientTest {
   private static final String API_KEY = "api-key";
   private static final String PROJECT = "project";
   private static final String LOCATION = "location";
+  private static final String PROXY_HOST = "localhost";
+  private static final int PROXY_PORT_HTTP = 8080;
+  private static final int PROXY_PORT_SOCKS = 1080;
+  private static final String PROXY_USERNAME = "user";
+  private static final String PROXY_PASSWORD = "pass";
   private static final HttpOptions defaultHttpOptionsMLDev =
       HttpApiClient.defaultHttpOptions(false, Optional.empty(), Optional.of(API_KEY));
   private static final HttpOptions defaultHttpOptionsVertex =
@@ -989,6 +998,141 @@ public class HttpApiClientTest {
     assertFalse(client.vertexAI());
     assertEquals(64, dispatcher.getMaxRequests());
     assertEquals(16, dispatcher.getMaxRequestsPerHost());
+  }
+
+  @Test
+  public void testHttpClientWithHttpProxy() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder()
+            .host(PROXY_HOST)
+            .port(PROXY_PORT_HTTP)
+            .type(ProxyType.Known.HTTP)
+            .build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+    assertNotNull(httpClient.proxy());
+    assertEquals(Proxy.Type.HTTP, httpClient.proxy().type());
+    assertEquals(new InetSocketAddress(PROXY_HOST, PROXY_PORT_HTTP), httpClient.proxy().address());
+  }
+
+  @Test
+  public void testHttpClientWithSocksProxy() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder()
+            .host(PROXY_HOST)
+            .port(PROXY_PORT_SOCKS)
+            .type(ProxyType.Known.SOCKS)
+            .build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+    assertNotNull(httpClient.proxy());
+    assertEquals(Proxy.Type.SOCKS, httpClient.proxy().type());
+    assertEquals(new InetSocketAddress(PROXY_HOST, PROXY_PORT_SOCKS), httpClient.proxy().address());
+  }
+
+  @Test
+  public void testHttpClientWithDirectProxy() throws Exception {
+    ProxyOptions proxyOptions = ProxyOptions.builder().type(ProxyType.Known.DIRECT).build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+    assertEquals(Proxy.NO_PROXY, httpClient.proxy());
+  }
+
+  @Test
+  public void testHttpClientWithProxyAuthentication() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder()
+            .host(PROXY_HOST)
+            .port(PROXY_PORT_HTTP)
+            .username(PROXY_USERNAME)
+            .password(PROXY_PASSWORD)
+            .build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    OkHttpClient httpClient = client.httpClient();
+    assertNotNull(httpClient.proxy());
+    assertNotNull(httpClient.proxyAuthenticator());
+  }
+
+  @Test
+  public void testHttpClientWithProxyUsernameOnly_throwsException() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder()
+            .host(PROXY_HOST)
+            .port(PROXY_PORT_HTTP)
+            .username(PROXY_USERNAME)
+            .build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new HttpApiClient(
+                    Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions)));
+    assertEquals(
+        "Proxy username and password must both be provided or not at all.", exception.getMessage());
+  }
+
+  @Test
+  public void testHttpClientWithProxyPasswordOnly_throwsException() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder()
+            .host(PROXY_HOST)
+            .port(PROXY_PORT_HTTP)
+            .password(PROXY_PASSWORD)
+            .build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new HttpApiClient(
+                    Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions)));
+    assertEquals(
+        "Proxy username and password must both be provided or not at all.", exception.getMessage());
+  }
+
+  @Test
+  public void testHttpClientWithHttpProxyNoHost_throwsException() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder().port(PROXY_PORT_HTTP).type(ProxyType.Known.HTTP).build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new HttpApiClient(
+                    Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions)));
+    assertEquals("Proxy host is required in the ProxyOptions.", exception.getMessage());
+  }
+
+  @Test
+  public void testHttpClientWithHttpProxyNoPort_throwsException() throws Exception {
+    ProxyOptions proxyOptions =
+        ProxyOptions.builder().host(PROXY_HOST).type(ProxyType.Known.HTTP).build();
+    ClientOptions clientOptions = ClientOptions.builder().proxyOptions(proxyOptions).build();
+
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                new HttpApiClient(
+                    Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions)));
+    assertEquals("Proxy port is required in the ProxyOptions.", exception.getMessage());
   }
 
   @Test
