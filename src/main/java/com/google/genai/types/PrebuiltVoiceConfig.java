@@ -26,11 +26,11 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for the prebuilt speaker to use. */
+/** Configuration for a prebuilt voice. */
 @AutoValue
 @JsonDeserialize(builder = PrebuiltVoiceConfig.Builder.class)
 public abstract class PrebuiltVoiceConfig extends JsonSerializable {
-  /** The name of the preset voice to use. */
+  /** The name of the prebuilt voice to use. */
   @JsonProperty("voiceName")
   public abstract Optional<String> voiceName();
 
@@ -55,7 +55,7 @@ public abstract class PrebuiltVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceName.
      *
-     * <p>voiceName: The name of the preset voice to use.
+     * <p>voiceName: The name of the prebuilt voice to use.
      */
     @JsonProperty("voiceName")
     public abstract Builder voiceName(String voiceName);

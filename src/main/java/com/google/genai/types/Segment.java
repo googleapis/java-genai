@@ -26,10 +26,17 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Segment of the content. */
+/** Segment of the content this support belongs to. */
 @AutoValue
 @JsonDeserialize(builder = Segment.Builder.class)
 public abstract class Segment extends JsonSerializable {
+  /**
+   * Output only. Start index in the given Part, measured in bytes. Offset from the start of the
+   * Part, inclusive, starting at zero.
+   */
+  @JsonProperty("startIndex")
+  public abstract Optional<Integer> startIndex();
+
   /**
    * Output only. End index in the given Part, measured in bytes. Offset from the start of the Part,
    * exclusive, starting at zero.
@@ -40,13 +47,6 @@ public abstract class Segment extends JsonSerializable {
   /** Output only. The index of a Part object within its parent Content object. */
   @JsonProperty("partIndex")
   public abstract Optional<Integer> partIndex();
-
-  /**
-   * Output only. Start index in the given Part, measured in bytes. Offset from the start of the
-   * Part, inclusive, starting at zero.
-   */
-  @JsonProperty("startIndex")
-  public abstract Optional<Integer> startIndex();
 
   /** Output only. The text corresponding to the segment from the response. */
   @JsonProperty("text")
@@ -68,6 +68,25 @@ public abstract class Segment extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_Segment.Builder();
+    }
+
+    /**
+     * Setter for startIndex.
+     *
+     * <p>startIndex: Output only. Start index in the given Part, measured in bytes. Offset from the
+     * start of the Part, inclusive, starting at zero.
+     */
+    @JsonProperty("startIndex")
+    public abstract Builder startIndex(Integer startIndex);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder startIndex(Optional<Integer> startIndex);
+
+    /** Clears the value of startIndex field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStartIndex() {
+      return startIndex(Optional.empty());
     }
 
     /**
@@ -105,25 +124,6 @@ public abstract class Segment extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPartIndex() {
       return partIndex(Optional.empty());
-    }
-
-    /**
-     * Setter for startIndex.
-     *
-     * <p>startIndex: Output only. Start index in the given Part, measured in bytes. Offset from the
-     * start of the Part, inclusive, starting at zero.
-     */
-    @JsonProperty("startIndex")
-    public abstract Builder startIndex(Integer startIndex);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder startIndex(Optional<Integer> startIndex);
-
-    /** Clears the value of startIndex field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearStartIndex() {
-      return startIndex(Optional.empty());
     }
 
     /**

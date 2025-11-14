@@ -26,22 +26,29 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Grounding chunk. */
+/** A chunk of evidence that was used to generate the response. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunk.Builder.class)
 public abstract class GroundingChunk extends JsonSerializable {
-  /** Grounding chunk from Google Maps. This field is not supported in Gemini API. */
+  /**
+   * A `Maps` chunk is a piece of evidence that comes from Google Maps. It contains information
+   * about a place, such as its name, address, and reviews. This is used to provide the user with
+   * rich, location-based information.
+   */
   @JsonProperty("maps")
   public abstract Optional<GroundingChunkMaps> maps();
 
   /**
-   * Grounding chunk from context retrieved by the retrieval tools. This field is not supported in
-   * Gemini API.
+   * A grounding chunk from a data source retrieved by a retrieval tool, such as Vertex AI Search.
+   * See the `RetrievedContext` message for details
    */
   @JsonProperty("retrievedContext")
   public abstract Optional<GroundingChunkRetrievedContext> retrievedContext();
 
-  /** Grounding chunk from the web. */
+  /**
+   * A grounding chunk from a web page, typically from Google Search. See the `Web` message for
+   * details.
+   */
   @JsonProperty("web")
   public abstract Optional<GroundingChunkWeb> web();
 
@@ -66,7 +73,9 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for maps.
      *
-     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
+     * <p>maps: A `Maps` chunk is a piece of evidence that comes from Google Maps. It contains
+     * information about a place, such as its name, address, and reviews. This is used to provide
+     * the user with rich, location-based information.
      */
     @JsonProperty("maps")
     public abstract Builder maps(GroundingChunkMaps maps);
@@ -74,7 +83,9 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for maps builder.
      *
-     * <p>maps: Grounding chunk from Google Maps. This field is not supported in Gemini API.
+     * <p>maps: A `Maps` chunk is a piece of evidence that comes from Google Maps. It contains
+     * information about a place, such as its name, address, and reviews. This is used to provide
+     * the user with rich, location-based information.
      */
     @CanIgnoreReturnValue
     public Builder maps(GroundingChunkMaps.Builder mapsBuilder) {
@@ -94,8 +105,8 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for retrievedContext.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
-     * field is not supported in Gemini API.
+     * <p>retrievedContext: A grounding chunk from a data source retrieved by a retrieval tool, such
+     * as Vertex AI Search. See the `RetrievedContext` message for details
      */
     @JsonProperty("retrievedContext")
     public abstract Builder retrievedContext(GroundingChunkRetrievedContext retrievedContext);
@@ -103,8 +114,8 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for retrievedContext builder.
      *
-     * <p>retrievedContext: Grounding chunk from context retrieved by the retrieval tools. This
-     * field is not supported in Gemini API.
+     * <p>retrievedContext: A grounding chunk from a data source retrieved by a retrieval tool, such
+     * as Vertex AI Search. See the `RetrievedContext` message for details
      */
     @CanIgnoreReturnValue
     public Builder retrievedContext(
@@ -125,7 +136,8 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for web.
      *
-     * <p>web: Grounding chunk from the web.
+     * <p>web: A grounding chunk from a web page, typically from Google Search. See the `Web`
+     * message for details.
      */
     @JsonProperty("web")
     public abstract Builder web(GroundingChunkWeb web);
@@ -133,7 +145,8 @@ public abstract class GroundingChunk extends JsonSerializable {
     /**
      * Setter for web builder.
      *
-     * <p>web: Grounding chunk from the web.
+     * <p>web: A grounding chunk from a web page, typically from Google Search. See the `Web`
+     * message for details.
      */
     @CanIgnoreReturnValue
     public Builder web(GroundingChunkWeb.Builder webBuilder) {
