@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.28.0](https://github.com/googleapis/java-genai/compare/v1.27.0...v1.28.0) (2025-11-14)
+
+
+### Features
+
+* add display name to FunctionResponseBlob ([8db8c57](https://github.com/googleapis/java-genai/commit/8db8c576247813991110e6ea10df999b756771ae))
+* support upload to file search stores ([7862ce3](https://github.com/googleapis/java-genai/commit/7862ce38e950e3e6ff269e4f571474c42f4b19e4))
+
 ## [1.27.0](https://github.com/googleapis/java-genai/compare/v1.26.0...v1.27.0) (2025-11-12)
 
 

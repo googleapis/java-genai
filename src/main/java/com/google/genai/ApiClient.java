@@ -48,7 +48,7 @@ import org.jspecify.annotations.Nullable;
 abstract class ApiClient {
 
   // {x-version-update-start:google-genai:released}
-  private static final String SDK_VERSION = "1.27.0";
+  private static final String SDK_VERSION = "1.28.0";
   // {x-version-update-end:google-genai:released}
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
