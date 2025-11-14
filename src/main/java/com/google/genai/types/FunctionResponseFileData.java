@@ -38,6 +38,12 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
+  /**
+   * Optional. Display name of the file. Used to provide a label or filename to distinguish files.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
   /** Instantiates a builder for FunctionResponseFileData. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -90,6 +96,25 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMimeType() {
       return mimeType(Optional.empty());
+    }
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. Display name of the file. Used to provide a label or filename to
+     * distinguish files.
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
     }
 
     public abstract FunctionResponseFileData build();
