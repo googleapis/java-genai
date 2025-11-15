@@ -44,6 +44,17 @@ public abstract class ImageConfig extends JsonSerializable {
   @JsonProperty("imageSize")
   public abstract Optional<String> imageSize();
 
+  /** MIME type of the generated image. This field is not supported in Gemini API. */
+  @JsonProperty("outputMimeType")
+  public abstract Optional<String> outputMimeType();
+
+  /**
+   * Compression quality of the generated image (for ``image/jpeg`` only). This field is not
+   * supported in Gemini API.
+   */
+  @JsonProperty("outputCompressionQuality")
+  public abstract Optional<Integer> outputCompressionQuality();
+
   /** Instantiates a builder for ImageConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -98,6 +109,44 @@ public abstract class ImageConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearImageSize() {
       return imageSize(Optional.empty());
+    }
+
+    /**
+     * Setter for outputMimeType.
+     *
+     * <p>outputMimeType: MIME type of the generated image. This field is not supported in Gemini
+     * API.
+     */
+    @JsonProperty("outputMimeType")
+    public abstract Builder outputMimeType(String outputMimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputMimeType(Optional<String> outputMimeType);
+
+    /** Clears the value of outputMimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputMimeType() {
+      return outputMimeType(Optional.empty());
+    }
+
+    /**
+     * Setter for outputCompressionQuality.
+     *
+     * <p>outputCompressionQuality: Compression quality of the generated image (for ``image/jpeg``
+     * only). This field is not supported in Gemini API.
+     */
+    @JsonProperty("outputCompressionQuality")
+    public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputCompressionQuality(Optional<Integer> outputCompressionQuality);
+
+    /** Clears the value of outputCompressionQuality field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputCompressionQuality() {
+      return outputCompressionQuality(Optional.empty());
     }
 
     public abstract ImageConfig build();
