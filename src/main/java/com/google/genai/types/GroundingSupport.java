@@ -28,27 +28,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Grounding support. */
+/** A collection of supporting references for a segment of the model's response. */
 @AutoValue
 @JsonDeserialize(builder = GroundingSupport.Builder.class)
 public abstract class GroundingSupport extends JsonSerializable {
   /**
-   * Confidence score of the support references. Ranges from 0 to 1. 1 is the most confident. For
-   * Gemini 2.0 and before, this list must have the same size as the grounding_chunk_indices. For
-   * Gemini 2.5 and after, this list will be empty and should be ignored.
+   * The confidence scores for the support references. This list is parallel to the
+   * `grounding_chunk_indices` list. A score is a value between 0.0 and 1.0, with a higher score
+   * indicating a higher confidence that the reference supports the claim. For Gemini 2.0 and
+   * before, this list has the same size as `grounding_chunk_indices`. For Gemini 2.5 and later,
+   * this list is empty and should be ignored.
    */
   @JsonProperty("confidenceScores")
   public abstract Optional<List<Float>> confidenceScores();
 
   /**
-   * A list of indices (into 'grounding_chunk') specifying the citations associated with the claim.
-   * For instance [1,3,4] means that grounding_chunk[1], grounding_chunk[3], grounding_chunk[4] are
-   * the retrieved content attributed to the claim.
+   * A list of indices into the `grounding_chunks` field of the `GroundingMetadata` message. These
+   * indices specify which grounding chunks support the claim made in the content segment. For
+   * example, if this field has the values `[1, 3]`, it means that `grounding_chunks[1]` and
+   * `grounding_chunks[3]` are the sources for the claim in the content segment.
    */
   @JsonProperty("groundingChunkIndices")
   public abstract Optional<List<Integer>> groundingChunkIndices();
 
-  /** Segment of the content this support belongs to. */
+  /** The content segment that this support message applies to. */
   @JsonProperty("segment")
   public abstract Optional<Segment> segment();
 
@@ -73,10 +76,11 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for confidenceScores.
      *
-     * <p>confidenceScores: Confidence score of the support references. Ranges from 0 to 1. 1 is the
-     * most confident. For Gemini 2.0 and before, this list must have the same size as the
-     * grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be
-     * ignored.
+     * <p>confidenceScores: The confidence scores for the support references. This list is parallel
+     * to the `grounding_chunk_indices` list. A score is a value between 0.0 and 1.0, with a higher
+     * score indicating a higher confidence that the reference supports the claim. For Gemini 2.0
+     * and before, this list has the same size as `grounding_chunk_indices`. For Gemini 2.5 and
+     * later, this list is empty and should be ignored.
      */
     @JsonProperty("confidenceScores")
     public abstract Builder confidenceScores(List<Float> confidenceScores);
@@ -84,10 +88,11 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for confidenceScores.
      *
-     * <p>confidenceScores: Confidence score of the support references. Ranges from 0 to 1. 1 is the
-     * most confident. For Gemini 2.0 and before, this list must have the same size as the
-     * grounding_chunk_indices. For Gemini 2.5 and after, this list will be empty and should be
-     * ignored.
+     * <p>confidenceScores: The confidence scores for the support references. This list is parallel
+     * to the `grounding_chunk_indices` list. A score is a value between 0.0 and 1.0, with a higher
+     * score indicating a higher confidence that the reference supports the claim. For Gemini 2.0
+     * and before, this list has the same size as `grounding_chunk_indices`. For Gemini 2.5 and
+     * later, this list is empty and should be ignored.
      */
     @CanIgnoreReturnValue
     public Builder confidenceScores(Float... confidenceScores) {
@@ -107,9 +112,11 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for groundingChunkIndices.
      *
-     * <p>groundingChunkIndices: A list of indices (into 'grounding_chunk') specifying the citations
-     * associated with the claim. For instance [1,3,4] means that grounding_chunk[1],
-     * grounding_chunk[3], grounding_chunk[4] are the retrieved content attributed to the claim.
+     * <p>groundingChunkIndices: A list of indices into the `grounding_chunks` field of the
+     * `GroundingMetadata` message. These indices specify which grounding chunks support the claim
+     * made in the content segment. For example, if this field has the values `[1, 3]`, it means
+     * that `grounding_chunks[1]` and `grounding_chunks[3]` are the sources for the claim in the
+     * content segment.
      */
     @JsonProperty("groundingChunkIndices")
     public abstract Builder groundingChunkIndices(List<Integer> groundingChunkIndices);
@@ -117,9 +124,11 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for groundingChunkIndices.
      *
-     * <p>groundingChunkIndices: A list of indices (into 'grounding_chunk') specifying the citations
-     * associated with the claim. For instance [1,3,4] means that grounding_chunk[1],
-     * grounding_chunk[3], grounding_chunk[4] are the retrieved content attributed to the claim.
+     * <p>groundingChunkIndices: A list of indices into the `grounding_chunks` field of the
+     * `GroundingMetadata` message. These indices specify which grounding chunks support the claim
+     * made in the content segment. For example, if this field has the values `[1, 3]`, it means
+     * that `grounding_chunks[1]` and `grounding_chunks[3]` are the sources for the claim in the
+     * content segment.
      */
     @CanIgnoreReturnValue
     public Builder groundingChunkIndices(Integer... groundingChunkIndices) {
@@ -139,7 +148,7 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for segment.
      *
-     * <p>segment: Segment of the content this support belongs to.
+     * <p>segment: The content segment that this support message applies to.
      */
     @JsonProperty("segment")
     public abstract Builder segment(Segment segment);
@@ -147,7 +156,7 @@ public abstract class GroundingSupport extends JsonSerializable {
     /**
      * Setter for segment builder.
      *
-     * <p>segment: Segment of the content this support belongs to.
+     * <p>segment: The content segment that this support message applies to.
      */
     @CanIgnoreReturnValue
     public Builder segment(Segment.Builder segmentBuilder) {

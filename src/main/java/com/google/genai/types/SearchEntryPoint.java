@@ -26,15 +26,26 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Google search entry point. */
+/**
+ * An entry point for displaying Google Search results. A `SearchEntryPoint` is populated when the
+ * grounding source for a model's response is Google Search. It provides information that you can
+ * use to display the search results in your application.
+ */
 @AutoValue
 @JsonDeserialize(builder = SearchEntryPoint.Builder.class)
 public abstract class SearchEntryPoint extends JsonSerializable {
-  /** Optional. Web content snippet that can be embedded in a web page or an app webview. */
+  /**
+   * Optional. An HTML snippet that can be embedded in a web page or an application's webview. This
+   * snippet displays a search result, including the title, URL, and a brief description of the
+   * search result.
+   */
   @JsonProperty("renderedContent")
   public abstract Optional<String> renderedContent();
 
-  /** Optional. Base64 encoded JSON representing array of tuple. */
+  /**
+   * Optional. A base64-encoded JSON object that contains a list of search queries and their
+   * corresponding search URLs. This information can be used to build a custom search UI.
+   */
   @JsonProperty("sdkBlob")
   public abstract Optional<byte[]> sdkBlob();
 
@@ -59,8 +70,9 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     /**
      * Setter for renderedContent.
      *
-     * <p>renderedContent: Optional. Web content snippet that can be embedded in a web page or an
-     * app webview.
+     * <p>renderedContent: Optional. An HTML snippet that can be embedded in a web page or an
+     * application's webview. This snippet displays a search result, including the title, URL, and a
+     * brief description of the search result.
      */
     @JsonProperty("renderedContent")
     public abstract Builder renderedContent(String renderedContent);
@@ -78,7 +90,8 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     /**
      * Setter for sdkBlob.
      *
-     * <p>sdkBlob: Optional. Base64 encoded JSON representing array of tuple.
+     * <p>sdkBlob: Optional. A base64-encoded JSON object that contains a list of search queries and
+     * their corresponding search URLs. This information can be used to build a custom search UI.
      */
     @JsonProperty("sdkBlob")
     public abstract Builder sdkBlob(byte[] sdkBlob);

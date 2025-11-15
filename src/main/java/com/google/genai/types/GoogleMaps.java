@@ -30,13 +30,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GoogleMaps.Builder.class)
 public abstract class GoogleMaps extends JsonSerializable {
-  /**
-   * The authentication config to access the API. Only API key is supported. This field is not
-   * supported in Gemini API.
-   */
-  @JsonProperty("authConfig")
-  public abstract Optional<AuthConfig> authConfig();
-
   /** Optional. If true, include the widget context token in the response. */
   @JsonProperty("enableWidget")
   public abstract Optional<Boolean> enableWidget();
@@ -57,36 +50,6 @@ public abstract class GoogleMaps extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_GoogleMaps.Builder();
-    }
-
-    /**
-     * Setter for authConfig.
-     *
-     * <p>authConfig: The authentication config to access the API. Only API key is supported. This
-     * field is not supported in Gemini API.
-     */
-    @JsonProperty("authConfig")
-    public abstract Builder authConfig(AuthConfig authConfig);
-
-    /**
-     * Setter for authConfig builder.
-     *
-     * <p>authConfig: The authentication config to access the API. Only API key is supported. This
-     * field is not supported in Gemini API.
-     */
-    @CanIgnoreReturnValue
-    public Builder authConfig(AuthConfig.Builder authConfigBuilder) {
-      return authConfig(authConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder authConfig(Optional<AuthConfig> authConfig);
-
-    /** Clears the value of authConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearAuthConfig() {
-      return authConfig(Optional.empty());
     }
 
     /**

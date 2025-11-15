@@ -26,31 +26,31 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Source attributions for content. This data type is not supported in Gemini API. */
+/** A citation for a piece of generatedcontent. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = Citation.Builder.class)
 public abstract class Citation extends JsonSerializable {
-  /** Output only. End index into the content. */
+  /** Output only. The end index of the citation in the content. */
   @JsonProperty("endIndex")
   public abstract Optional<Integer> endIndex();
 
-  /** Output only. License of the attribution. */
+  /** Output only. The license of the source of the citation. */
   @JsonProperty("license")
   public abstract Optional<String> license();
 
-  /** Output only. Publication date of the attribution. */
+  /** Output only. The publication date of the source of the citation. */
   @JsonProperty("publicationDate")
   public abstract Optional<GoogleTypeDate> publicationDate();
 
-  /** Output only. Start index into the content. */
+  /** Output only. The start index of the citation in the content. */
   @JsonProperty("startIndex")
   public abstract Optional<Integer> startIndex();
 
-  /** Output only. Title of the attribution. */
+  /** Output only. The title of the source of the citation. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** Output only. Url reference of the attribution. */
+  /** Output only. The URI of the source of the citation. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
@@ -75,7 +75,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for endIndex.
      *
-     * <p>endIndex: Output only. End index into the content.
+     * <p>endIndex: Output only. The end index of the citation in the content.
      */
     @JsonProperty("endIndex")
     public abstract Builder endIndex(Integer endIndex);
@@ -93,7 +93,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for license.
      *
-     * <p>license: Output only. License of the attribution.
+     * <p>license: Output only. The license of the source of the citation.
      */
     @JsonProperty("license")
     public abstract Builder license(String license);
@@ -111,7 +111,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for publicationDate.
      *
-     * <p>publicationDate: Output only. Publication date of the attribution.
+     * <p>publicationDate: Output only. The publication date of the source of the citation.
      */
     @JsonProperty("publicationDate")
     public abstract Builder publicationDate(GoogleTypeDate publicationDate);
@@ -119,7 +119,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for publicationDate builder.
      *
-     * <p>publicationDate: Output only. Publication date of the attribution.
+     * <p>publicationDate: Output only. The publication date of the source of the citation.
      */
     @CanIgnoreReturnValue
     public Builder publicationDate(GoogleTypeDate.Builder publicationDateBuilder) {
@@ -139,7 +139,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for startIndex.
      *
-     * <p>startIndex: Output only. Start index into the content.
+     * <p>startIndex: Output only. The start index of the citation in the content.
      */
     @JsonProperty("startIndex")
     public abstract Builder startIndex(Integer startIndex);
@@ -157,7 +157,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: Output only. Title of the attribution.
+     * <p>title: Output only. The title of the source of the citation.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -175,7 +175,7 @@ public abstract class Citation extends JsonSerializable {
     /**
      * Setter for uri.
      *
-     * <p>uri: Output only. Url reference of the attribution.
+     * <p>uri: Output only. The URI of the source of the citation.
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);

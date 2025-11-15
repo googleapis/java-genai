@@ -38,6 +38,15 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
+  /**
+   * Optional. Display name of the file data. Used to provide a label or filename to distinguish
+   * file datas. This field is only returned in PromptMessage for prompt management. It is currently
+   * used in the Gemini GenerateContent calls only when server side tools (code_execution,
+   * google_search, and url_context) are enabled.
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
   /** Instantiates a builder for FunctionResponseFileData. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -90,6 +99,27 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMimeType() {
       return mimeType(Optional.empty());
+    }
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. Display name of the file data. Used to provide a label or filename
+     * to distinguish file datas. This field is only returned in PromptMessage for prompt
+     * management. It is currently used in the Gemini GenerateContent calls only when server side
+     * tools (code_execution, google_search, and url_context) are enabled.
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
     }
 
     public abstract FunctionResponseFileData build();

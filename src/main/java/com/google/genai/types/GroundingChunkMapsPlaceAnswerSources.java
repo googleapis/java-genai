@@ -30,15 +30,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Sources used to generate the place answer. This data type is not supported in Gemini API. */
+/**
+ * The sources that were used to generate the place answer. This includes review snippets and photos
+ * that were used to generate the answer, as well as URIs to flag content. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSources.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializable {
-  /** A link where users can flag a problem with the generated answer. */
-  @JsonProperty("flagContentUri")
-  public abstract Optional<String> flagContentUri();
-
-  /** Snippets of reviews that are used to generate the answer. */
+  /** Snippets of reviews that were used to generate the answer. */
   @JsonProperty("reviewSnippets")
   public abstract Optional<List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet>>
       reviewSnippets();
@@ -65,27 +65,9 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     }
 
     /**
-     * Setter for flagContentUri.
-     *
-     * <p>flagContentUri: A link where users can flag a problem with the generated answer.
-     */
-    @JsonProperty("flagContentUri")
-    public abstract Builder flagContentUri(String flagContentUri);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder flagContentUri(Optional<String> flagContentUri);
-
-    /** Clears the value of flagContentUri field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearFlagContentUri() {
-      return flagContentUri(Optional.empty());
-    }
-
-    /**
      * Setter for reviewSnippets.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @JsonProperty("reviewSnippets")
     public abstract Builder reviewSnippets(
@@ -94,7 +76,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     /**
      * Setter for reviewSnippets.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @CanIgnoreReturnValue
     public Builder reviewSnippets(
@@ -105,7 +87,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     /**
      * Setter for reviewSnippets builder.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @CanIgnoreReturnValue
     public Builder reviewSnippets(

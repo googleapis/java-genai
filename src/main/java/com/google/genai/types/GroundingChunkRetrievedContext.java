@@ -27,32 +27,37 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Chunk from context retrieved by the retrieval tools. This data type is not supported in Gemini
- * API.
+ * Context retrieved from a data source to ground the model's response. This is used when a
+ * retrieval tool fetches information from a user-provided corpus or a public dataset. This data
+ * type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkRetrievedContext.Builder.class)
 public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
-  /** Output only. The full document name for the referenced Vertex AI Search document. */
+  /**
+   * Output only. The full resource name of the referenced Vertex AI Search document. This is used
+   * to identify the specific document that was retrieved. The format is
+   * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`.
+   */
   @JsonProperty("documentName")
   public abstract Optional<String> documentName();
 
   /**
-   * Additional context for the RAG retrieval result. This is only populated when using the RAG
-   * retrieval tool.
+   * Additional context for a Retrieval-Augmented Generation (RAG) retrieval result. This is
+   * populated only when the RAG retrieval tool is used.
    */
   @JsonProperty("ragChunk")
   public abstract Optional<RagChunk> ragChunk();
 
-  /** Text of the attribution. */
+  /** The content of the retrieved data source. */
   @JsonProperty("text")
   public abstract Optional<String> text();
 
-  /** Title of the attribution. */
+  /** The title of the retrieved data source. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** URI reference of the attribution. */
+  /** The URI of the retrieved data source. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
@@ -79,8 +84,9 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for documentName.
      *
-     * <p>documentName: Output only. The full document name for the referenced Vertex AI Search
-     * document.
+     * <p>documentName: Output only. The full resource name of the referenced Vertex AI Search
+     * document. This is used to identify the specific document that was retrieved. The format is
+     * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`.
      */
     @JsonProperty("documentName")
     public abstract Builder documentName(String documentName);
@@ -98,8 +104,8 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for ragChunk.
      *
-     * <p>ragChunk: Additional context for the RAG retrieval result. This is only populated when
-     * using the RAG retrieval tool.
+     * <p>ragChunk: Additional context for a Retrieval-Augmented Generation (RAG) retrieval result.
+     * This is populated only when the RAG retrieval tool is used.
      */
     @JsonProperty("ragChunk")
     public abstract Builder ragChunk(RagChunk ragChunk);
@@ -107,8 +113,8 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for ragChunk builder.
      *
-     * <p>ragChunk: Additional context for the RAG retrieval result. This is only populated when
-     * using the RAG retrieval tool.
+     * <p>ragChunk: Additional context for a Retrieval-Augmented Generation (RAG) retrieval result.
+     * This is populated only when the RAG retrieval tool is used.
      */
     @CanIgnoreReturnValue
     public Builder ragChunk(RagChunk.Builder ragChunkBuilder) {
@@ -128,7 +134,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for text.
      *
-     * <p>text: Text of the attribution.
+     * <p>text: The content of the retrieved data source.
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
@@ -146,7 +152,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: Title of the attribution.
+     * <p>title: The title of the retrieved data source.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -164,7 +170,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for uri.
      *
-     * <p>uri: URI reference of the attribution.
+     * <p>uri: The URI of the retrieved data source.
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.BatchJob;
@@ -62,6 +63,15 @@ public final class Batches {
 
   public Batches(ApiClient apiClient) {
     this.apiClient = apiClient;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  void taskTypeMldevEnumValidate(Object enumValue) {
+    ImmutableSet<String> invalidEnumValues = ImmutableSet.of("UNSPECIFIED");
+    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
+      throw new IllegalArgumentException(
+          String.format("%s enum value is not supported in Gemini API.", enumValue));
+    }
   }
 
   @ExcludeFromGeneratedCoverageReport
@@ -586,6 +596,23 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentEmbeddingToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"values"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"values"},
+          Common.getValueByPath(fromObject, new String[] {"values"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"statistics"}))) {
+      throw new IllegalArgumentException("statistics parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
@@ -867,6 +894,29 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode embedContentBatchOutputToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedResponses"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlinedResponses"},
+          inlinedEmbedContentResponsesToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inlinedResponses"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responsesFile"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responsesFile"},
+          Common.getValueByPath(fromObject, new String[] {"responsesFile"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentBatchToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -887,6 +937,89 @@ public final class Batches {
                   Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject));
       Common.moveValueByPath(toObject, ImmutableMap.of("requests[].*", "requests[].request.*"));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"batchStats"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"batchStats"},
+          Common.getValueByPath(fromObject, new String[] {"batchStats"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"createTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"createTime"},
+          Common.getValueByPath(fromObject, new String[] {"createTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"endTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"endTime"},
+          Common.getValueByPath(fromObject, new String[] {"endTime"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inputConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inputConfig"},
+          inputEmbedContentConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"output"},
+          embedContentBatchOutputToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"output"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"priority"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"priority"},
+          Common.getValueByPath(fromObject, new String[] {"priority"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"state"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"state"},
+          Common.getValueByPath(fromObject, new String[] {"state"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"updateTime"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"updateTime"},
+          Common.getValueByPath(fromObject, new String[] {"updateTime"}));
     }
 
     return toObject;
@@ -923,6 +1056,55 @@ public final class Batches {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"autoTruncate"}))) {
       throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode embedContentRequestToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"autoTruncate"}))) {
+      throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"content"},
+          contentToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"content"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"outputDimensionality"},
+          Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+      taskTypeMldevEnumValidate(Common.getValueByPath(fromObject, new String[] {"taskType"}));
+      Common.setValueByPath(
+          toObject,
+          new String[] {"taskType"},
+          Common.getValueByPath(fromObject, new String[] {"taskType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"title"},
+          Common.getValueByPath(fromObject, new String[] {"title"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"model"},
+          Common.getValueByPath(fromObject, new String[] {"model"}));
     }
 
     return toObject;
@@ -972,6 +1154,103 @@ public final class Batches {
           toObject,
           new String[] {"mimeType"},
           Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseFileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileUri"},
+          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
+      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponsePartToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          functionResponseFileDataToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"willContinue"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"willContinue"},
+          Common.getValueByPath(fromObject, new String[] {"willContinue"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"scheduling"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"scheduling"},
+          Common.getValueByPath(fromObject, new String[] {"scheduling"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionResponsePartToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          Common.getValueByPath(fromObject, new String[] {"response"}));
     }
 
     return toObject;
@@ -1182,7 +1461,10 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"imageConfig"},
-          Common.getValueByPath(fromObject, new String[] {"imageConfig"}));
+          imageConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
+              toObject));
     }
 
     return toObject;
@@ -1272,33 +1554,16 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
-      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enableWidget"},
-          Common.getValueByPath(fromObject, new String[] {"enableWidget"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
-      throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
       throw new IllegalArgumentException(
           "blockingConfidence parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -1306,6 +1571,124 @@ public final class Batches {
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode imageConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"aspectRatio"},
+          Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"imageSize"},
+          Common.getValueByPath(fromObject, new String[] {"imageSize"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
+      throw new IllegalArgumentException(
+          "imageOutputOptions parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"personGeneration"}))) {
+      throw new IllegalArgumentException(
+          "personGeneration parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inlinedEmbedContentRequestToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"metadata"},
+          Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"request"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"request"},
+          embedContentRequestToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"request"})),
+              toObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inlinedEmbedContentRequestsToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"requests"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"requests"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(inlinedEmbedContentRequestToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"requests"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inlinedEmbedContentResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"response"},
+          singleEmbedContentResponseToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"error"},
+          Common.getValueByPath(fromObject, new String[] {"error"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"metadata"},
+          Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inlinedEmbedContentResponsesToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"inlinedResponses"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"inlinedResponses"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(inlinedEmbedContentResponseToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"inlinedResponses"}, result);
     }
 
     return toObject;
@@ -1379,6 +1762,29 @@ public final class Batches {
           toObject,
           new String[] {"error"},
           Common.getValueByPath(fromObject, new String[] {"error"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode inputEmbedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileName"},
+          Common.getValueByPath(fromObject, new String[] {"fileName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"requests"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"requests"},
+          inlinedEmbedContentRequestsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"requests"})),
+              toObject));
     }
 
     return toObject;
@@ -1567,7 +1973,10 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+          functionResponseToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionResponse"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
@@ -1608,6 +2017,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"partMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1630,6 +2046,29 @@ public final class Batches {
           toObject,
           new String[] {"threshold"},
           Common.getValueByPath(fromObject, new String[] {"threshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode singleEmbedContentResponseToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"embedding"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"embedding"},
+          contentEmbeddingToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"embedding"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tokenCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tokenCount"},
+          Common.getValueByPath(fromObject, new String[] {"tokenCount"}));
     }
 
     return toObject;
@@ -1686,10 +2125,7 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"googleMaps"},
-          googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {

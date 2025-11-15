@@ -985,11 +985,25 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"customBaseModel"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"evaluateDatasetRuns"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"evaluateDatasetRuns"},
+          Common.getValueByPath(fromObject, new String[] {"evaluateDatasetRuns"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"experiment"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"experiment"},
           Common.getValueByPath(fromObject, new String[] {"experiment"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fullFineTuningSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fullFineTuningSpec"},
+          Common.getValueByPath(fromObject, new String[] {"fullFineTuningSpec"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
@@ -1025,6 +1039,13 @@ public final class Tunings {
           toObject,
           new String[] {"tunedModelDisplayName"},
           Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tuningJobState"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tuningJobState"},
+          Common.getValueByPath(fromObject, new String[] {"tuningJobState"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}) != null) {

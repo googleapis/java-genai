@@ -26,29 +26,34 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Segment of the content. */
+/** A segment of the content. */
 @AutoValue
 @JsonDeserialize(builder = Segment.Builder.class)
 public abstract class Segment extends JsonSerializable {
   /**
-   * Output only. End index in the given Part, measured in bytes. Offset from the start of the Part,
-   * exclusive, starting at zero.
+   * Output only. The end index of the segment in the `Part`, measured in bytes. This marks the end
+   * of the segment and is exclusive, meaning the segment includes content up to, but not including,
+   * the byte at this index.
    */
   @JsonProperty("endIndex")
   public abstract Optional<Integer> endIndex();
 
-  /** Output only. The index of a Part object within its parent Content object. */
+  /**
+   * Output only. The index of the `Part` object that this segment belongs to. This is useful for
+   * associating the segment with a specific part of the content.
+   */
   @JsonProperty("partIndex")
   public abstract Optional<Integer> partIndex();
 
   /**
-   * Output only. Start index in the given Part, measured in bytes. Offset from the start of the
-   * Part, inclusive, starting at zero.
+   * Output only. The start index of the segment in the `Part`, measured in bytes. This marks the
+   * beginning of the segment and is inclusive, meaning the byte at this index is the first byte of
+   * the segment.
    */
   @JsonProperty("startIndex")
   public abstract Optional<Integer> startIndex();
 
-  /** Output only. The text corresponding to the segment from the response. */
+  /** Output only. The text of the segment. */
   @JsonProperty("text")
   public abstract Optional<String> text();
 
@@ -73,8 +78,9 @@ public abstract class Segment extends JsonSerializable {
     /**
      * Setter for endIndex.
      *
-     * <p>endIndex: Output only. End index in the given Part, measured in bytes. Offset from the
-     * start of the Part, exclusive, starting at zero.
+     * <p>endIndex: Output only. The end index of the segment in the `Part`, measured in bytes. This
+     * marks the end of the segment and is exclusive, meaning the segment includes content up to,
+     * but not including, the byte at this index.
      */
     @JsonProperty("endIndex")
     public abstract Builder endIndex(Integer endIndex);
@@ -92,7 +98,8 @@ public abstract class Segment extends JsonSerializable {
     /**
      * Setter for partIndex.
      *
-     * <p>partIndex: Output only. The index of a Part object within its parent Content object.
+     * <p>partIndex: Output only. The index of the `Part` object that this segment belongs to. This
+     * is useful for associating the segment with a specific part of the content.
      */
     @JsonProperty("partIndex")
     public abstract Builder partIndex(Integer partIndex);
@@ -110,8 +117,9 @@ public abstract class Segment extends JsonSerializable {
     /**
      * Setter for startIndex.
      *
-     * <p>startIndex: Output only. Start index in the given Part, measured in bytes. Offset from the
-     * start of the Part, inclusive, starting at zero.
+     * <p>startIndex: Output only. The start index of the segment in the `Part`, measured in bytes.
+     * This marks the beginning of the segment and is inclusive, meaning the byte at this index is
+     * the first byte of the segment.
      */
     @JsonProperty("startIndex")
     public abstract Builder startIndex(Integer startIndex);
@@ -129,7 +137,7 @@ public abstract class Segment extends JsonSerializable {
     /**
      * Setter for text.
      *
-     * <p>text: Output only. The text corresponding to the segment from the response.
+     * <p>text: Output only. The text of the segment.
      */
     @JsonProperty("text")
     public abstract Builder text(String text);

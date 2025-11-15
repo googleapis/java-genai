@@ -44,6 +44,20 @@ public abstract class ImageConfig extends JsonSerializable {
   @JsonProperty("imageSize")
   public abstract Optional<String> imageSize();
 
+  /**
+   * Optional. The image output format for generated images. This field is not supported in Gemini
+   * API.
+   */
+  @JsonProperty("imageOutputOptions")
+  public abstract Optional<ImageConfigImageOutputOptions> imageOutputOptions();
+
+  /**
+   * Optional. Controls whether the model can generate people. This field is not supported in Gemini
+   * API.
+   */
+  @JsonProperty("personGeneration")
+  public abstract Optional<PersonGeneration> personGeneration();
+
   /** Instantiates a builder for ImageConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -98,6 +112,78 @@ public abstract class ImageConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearImageSize() {
       return imageSize(Optional.empty());
+    }
+
+    /**
+     * Setter for imageOutputOptions.
+     *
+     * <p>imageOutputOptions: Optional. The image output format for generated images. This field is
+     * not supported in Gemini API.
+     */
+    @JsonProperty("imageOutputOptions")
+    public abstract Builder imageOutputOptions(ImageConfigImageOutputOptions imageOutputOptions);
+
+    /**
+     * Setter for imageOutputOptions builder.
+     *
+     * <p>imageOutputOptions: Optional. The image output format for generated images. This field is
+     * not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder imageOutputOptions(
+        ImageConfigImageOutputOptions.Builder imageOutputOptionsBuilder) {
+      return imageOutputOptions(imageOutputOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageOutputOptions(Optional<ImageConfigImageOutputOptions> imageOutputOptions);
+
+    /** Clears the value of imageOutputOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageOutputOptions() {
+      return imageOutputOptions(Optional.empty());
+    }
+
+    /**
+     * Setter for personGeneration.
+     *
+     * <p>personGeneration: Optional. Controls whether the model can generate people. This field is
+     * not supported in Gemini API.
+     */
+    @JsonProperty("personGeneration")
+    public abstract Builder personGeneration(PersonGeneration personGeneration);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personGeneration(Optional<PersonGeneration> personGeneration);
+
+    /** Clears the value of personGeneration field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonGeneration() {
+      return personGeneration(Optional.empty());
+    }
+
+    /**
+     * Setter for personGeneration given a known enum.
+     *
+     * <p>personGeneration: Optional. Controls whether the model can generate people. This field is
+     * not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder personGeneration(PersonGeneration.Known knownType) {
+      return personGeneration(new PersonGeneration(knownType));
+    }
+
+    /**
+     * Setter for personGeneration given a string.
+     *
+     * <p>personGeneration: Optional. Controls whether the model can generate people. This field is
+     * not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder personGeneration(String personGeneration) {
+      return personGeneration(new PersonGeneration(personGeneration));
     }
 
     public abstract ImageConfig build();

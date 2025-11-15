@@ -26,15 +26,19 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Metadata related to retrieval in the grounding flow. */
+/**
+ * Metadata related to the retrieval grounding source. This is part of the `GroundingMetadata`
+ * returned when grounding is enabled.
+ */
 @AutoValue
 @JsonDeserialize(builder = RetrievalMetadata.Builder.class)
 public abstract class RetrievalMetadata extends JsonSerializable {
   /**
-   * Optional. Score indicating how likely information from Google Search could help answer the
-   * prompt. The score is in the range `[0, 1]`, where 0 is the least likely and 1 is the most
-   * likely. This score is only populated when Google Search grounding and dynamic retrieval is
-   * enabled. It will be compared to the threshold to determine whether to trigger Google Search.
+   * Optional. A score indicating how likely it is that a Google Search query could help answer the
+   * prompt. The score is in the range of `[0, 1]`. A score of 1 means the model is confident that a
+   * search will be helpful, and 0 means it is not. This score is populated only when Google Search
+   * grounding and dynamic retrieval are enabled. The score is used to determine whether to trigger
+   * a search.
    */
   @JsonProperty("googleSearchDynamicRetrievalScore")
   public abstract Optional<Float> googleSearchDynamicRetrievalScore();
@@ -60,11 +64,11 @@ public abstract class RetrievalMetadata extends JsonSerializable {
     /**
      * Setter for googleSearchDynamicRetrievalScore.
      *
-     * <p>googleSearchDynamicRetrievalScore: Optional. Score indicating how likely information from
-     * Google Search could help answer the prompt. The score is in the range `[0, 1]`, where 0 is
-     * the least likely and 1 is the most likely. This score is only populated when Google Search
-     * grounding and dynamic retrieval is enabled. It will be compared to the threshold to determine
-     * whether to trigger Google Search.
+     * <p>googleSearchDynamicRetrievalScore: Optional. A score indicating how likely it is that a
+     * Google Search query could help answer the prompt. The score is in the range of `[0, 1]`. A
+     * score of 1 means the model is confident that a search will be helpful, and 0 means it is not.
+     * This score is populated only when Google Search grounding and dynamic retrieval are enabled.
+     * The score is used to determine whether to trigger a search.
      */
     @JsonProperty("googleSearchDynamicRetrievalScore")
     public abstract Builder googleSearchDynamicRetrievalScore(
