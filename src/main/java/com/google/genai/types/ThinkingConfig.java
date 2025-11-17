@@ -44,6 +44,10 @@ public abstract class ThinkingConfig extends JsonSerializable {
   @JsonProperty("thinkingBudget")
   public abstract Optional<Integer> thinkingBudget();
 
+  /** Optional. The level of thoughts tokens that the model should generate. */
+  @JsonProperty("thinkingLevel")
+  public abstract Optional<ThinkingLevel> thinkingLevel();
+
   /** Instantiates a builder for ThinkingConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -98,6 +102,44 @@ public abstract class ThinkingConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearThinkingBudget() {
       return thinkingBudget(Optional.empty());
+    }
+
+    /**
+     * Setter for thinkingLevel.
+     *
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
+     */
+    @JsonProperty("thinkingLevel")
+    public abstract Builder thinkingLevel(ThinkingLevel thinkingLevel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thinkingLevel(Optional<ThinkingLevel> thinkingLevel);
+
+    /** Clears the value of thinkingLevel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThinkingLevel() {
+      return thinkingLevel(Optional.empty());
+    }
+
+    /**
+     * Setter for thinkingLevel given a known enum.
+     *
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
+     */
+    @CanIgnoreReturnValue
+    public Builder thinkingLevel(ThinkingLevel.Known knownType) {
+      return thinkingLevel(new ThinkingLevel(knownType));
+    }
+
+    /**
+     * Setter for thinkingLevel given a string.
+     *
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
+     */
+    @CanIgnoreReturnValue
+    public Builder thinkingLevel(String thinkingLevel) {
+      return thinkingLevel(new ThinkingLevel(thinkingLevel));
     }
 
     public abstract ThinkingConfig build();

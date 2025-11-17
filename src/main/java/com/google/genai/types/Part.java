@@ -36,6 +36,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Part.Builder.class)
 public abstract class Part extends JsonSerializable {
+  /** Media resolution for the input media. */
+  @JsonProperty("mediaResolution")
+  public abstract Optional<PartMediaResolution> mediaResolution();
+
   /** Optional. Result of executing the [ExecutableCode]. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -102,6 +106,34 @@ public abstract class Part extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_Part.Builder();
+    }
+
+    /**
+     * Setter for mediaResolution.
+     *
+     * <p>mediaResolution: Media resolution for the input media.
+     */
+    @JsonProperty("mediaResolution")
+    public abstract Builder mediaResolution(PartMediaResolution mediaResolution);
+
+    /**
+     * Setter for mediaResolution builder.
+     *
+     * <p>mediaResolution: Media resolution for the input media.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaResolution(PartMediaResolution.Builder mediaResolutionBuilder) {
+      return mediaResolution(mediaResolutionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mediaResolution(Optional<PartMediaResolution> mediaResolution);
+
+    /** Clears the value of mediaResolution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMediaResolution() {
+      return mediaResolution(Optional.empty());
     }
 
     /**
