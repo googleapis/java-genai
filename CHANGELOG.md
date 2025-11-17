@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.28.0](https://github.com/googleapis/java-genai/compare/v1.27.0...v1.28.0) (2025-11-17)
+
+
+### Features
+
+* add display name to FunctionResponseBlob ([8db8c57](https://github.com/googleapis/java-genai/commit/8db8c576247813991110e6ea10df999b756771ae))
+* add display name to FunctionResponseFileData ([f5ee8b7](https://github.com/googleapis/java-genai/commit/f5ee8b7744d7a729ac83c9072882c52345841625))
+* Add generate_content_config.thinking_level ([a47df92](https://github.com/googleapis/java-genai/commit/a47df920d935ba6e8e9751c0a50c0a2bb36c4189))
+* Add image output options to ImageConfig for Vertex ([3eac0b8](https://github.com/googleapis/java-genai/commit/3eac0b87c4e45e99123d7e321eb7d77007367b19))
+* Add part.media_resolution ([a47df92](https://github.com/googleapis/java-genai/commit/a47df920d935ba6e8e9751c0a50c0a2bb36c4189))
+* support Function call argument streaming for all languages ([f310452](https://github.com/googleapis/java-genai/commit/f3104521fc0cc934c2f5e29dedd8e22970a99897))
+* support upload to file search stores ([7862ce3](https://github.com/googleapis/java-genai/commit/7862ce38e950e3e6ff269e4f571474c42f4b19e4))
+
 ## [1.27.0](https://github.com/googleapis/java-genai/compare/v1.26.0...v1.27.0) (2025-11-12)
 
 
