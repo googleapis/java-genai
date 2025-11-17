@@ -18,12 +18,16 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,6 +52,20 @@ public abstract class FunctionCall extends JsonSerializable {
   /** Optional. The name of the function to call. Matches [FunctionDeclaration.name]. */
   @JsonProperty("name")
   public abstract Optional<String> name();
+
+  /**
+   * Optional. The partial argument value of the function call. If provided, represents the
+   * arguments/fields that are streamed incrementally. This field is not supported in Gemini API.
+   */
+  @JsonProperty("partialArgs")
+  public abstract Optional<List<PartialArg>> partialArgs();
+
+  /**
+   * Optional. Whether this is the last part of the FunctionCall. If true, another partial message
+   * for the current FunctionCall is expected to follow. This field is not supported in Gemini API.
+   */
+  @JsonProperty("willContinue")
+  public abstract Optional<Boolean> willContinue();
 
   /** Instantiates a builder for FunctionCall. */
   @ExcludeFromGeneratedCoverageReport
@@ -121,6 +139,73 @@ public abstract class FunctionCall extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearName() {
       return name(Optional.empty());
+    }
+
+    /**
+     * Setter for partialArgs.
+     *
+     * <p>partialArgs: Optional. The partial argument value of the function call. If provided,
+     * represents the arguments/fields that are streamed incrementally. This field is not supported
+     * in Gemini API.
+     */
+    @JsonProperty("partialArgs")
+    public abstract Builder partialArgs(List<PartialArg> partialArgs);
+
+    /**
+     * Setter for partialArgs.
+     *
+     * <p>partialArgs: Optional. The partial argument value of the function call. If provided,
+     * represents the arguments/fields that are streamed incrementally. This field is not supported
+     * in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder partialArgs(PartialArg... partialArgs) {
+      return partialArgs(Arrays.asList(partialArgs));
+    }
+
+    /**
+     * Setter for partialArgs builder.
+     *
+     * <p>partialArgs: Optional. The partial argument value of the function call. If provided,
+     * represents the arguments/fields that are streamed incrementally. This field is not supported
+     * in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder partialArgs(PartialArg.Builder... partialArgsBuilders) {
+      return partialArgs(
+          Arrays.asList(partialArgsBuilders).stream()
+              .map(PartialArg.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder partialArgs(Optional<List<PartialArg>> partialArgs);
+
+    /** Clears the value of partialArgs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPartialArgs() {
+      return partialArgs(Optional.empty());
+    }
+
+    /**
+     * Setter for willContinue.
+     *
+     * <p>willContinue: Optional. Whether this is the last part of the FunctionCall. If true,
+     * another partial message for the current FunctionCall is expected to follow. This field is not
+     * supported in Gemini API.
+     */
+    @JsonProperty("willContinue")
+    public abstract Builder willContinue(boolean willContinue);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder willContinue(Optional<Boolean> willContinue);
+
+    /** Clears the value of willContinue field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWillContinue() {
+      return willContinue(Optional.empty());
     }
 
     public abstract FunctionCall build();

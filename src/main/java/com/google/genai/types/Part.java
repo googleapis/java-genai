@@ -36,14 +36,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Part.Builder.class)
 public abstract class Part extends JsonSerializable {
-  /**
-   * A predicted [FunctionCall] returned from the model that contains a string representing the
-   * [FunctionDeclaration.name] and a structured JSON object containing the parameters and their
-   * values.
-   */
-  @JsonProperty("functionCall")
-  public abstract Optional<FunctionCall> functionCall();
-
   /** Optional. Result of executing the [ExecutableCode]. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -55,6 +47,13 @@ public abstract class Part extends JsonSerializable {
   /** Optional. URI based data. */
   @JsonProperty("fileData")
   public abstract Optional<FileData> fileData();
+
+  /**
+   * Optional. A predicted [FunctionCall] returned from the model that contains a string
+   * representing the [FunctionDeclaration.name] with the parameters and their values.
+   */
+  @JsonProperty("functionCall")
+  public abstract Optional<FunctionCall> functionCall();
 
   /**
    * Optional. The result output of a [FunctionCall] that contains a string representing the
@@ -103,38 +102,6 @@ public abstract class Part extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_Part.Builder();
-    }
-
-    /**
-     * Setter for functionCall.
-     *
-     * <p>functionCall: A predicted [FunctionCall] returned from the model that contains a string
-     * representing the [FunctionDeclaration.name] and a structured JSON object containing the
-     * parameters and their values.
-     */
-    @JsonProperty("functionCall")
-    public abstract Builder functionCall(FunctionCall functionCall);
-
-    /**
-     * Setter for functionCall builder.
-     *
-     * <p>functionCall: A predicted [FunctionCall] returned from the model that contains a string
-     * representing the [FunctionDeclaration.name] and a structured JSON object containing the
-     * parameters and their values.
-     */
-    @CanIgnoreReturnValue
-    public Builder functionCall(FunctionCall.Builder functionCallBuilder) {
-      return functionCall(functionCallBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder functionCall(Optional<FunctionCall> functionCall);
-
-    /** Clears the value of functionCall field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearFunctionCall() {
-      return functionCall(Optional.empty());
     }
 
     /**
@@ -219,6 +186,36 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFileData() {
       return fileData(Optional.empty());
+    }
+
+    /**
+     * Setter for functionCall.
+     *
+     * <p>functionCall: Optional. A predicted [FunctionCall] returned from the model that contains a
+     * string representing the [FunctionDeclaration.name] with the parameters and their values.
+     */
+    @JsonProperty("functionCall")
+    public abstract Builder functionCall(FunctionCall functionCall);
+
+    /**
+     * Setter for functionCall builder.
+     *
+     * <p>functionCall: Optional. A predicted [FunctionCall] returned from the model that contains a
+     * string representing the [FunctionDeclaration.name] with the parameters and their values.
+     */
+    @CanIgnoreReturnValue
+    public Builder functionCall(FunctionCall.Builder functionCallBuilder) {
+      return functionCall(functionCallBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionCall(Optional<FunctionCall> functionCall);
+
+    /** Clears the value of functionCall field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionCall() {
+      return functionCall(Optional.empty());
     }
 
     /**

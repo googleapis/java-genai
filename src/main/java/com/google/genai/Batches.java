@@ -978,6 +978,65 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"args"},
+          Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"name"},
+          Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partialArgs"}))) {
+      throw new IllegalArgumentException("partialArgs parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
+      throw new IllegalArgumentException("willContinue parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"allowedFunctionNames"},
+          Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"streamFunctionCallArguments"}))) {
+      throw new IllegalArgumentException(
+          "streamFunctionCallArguments parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
@@ -1129,7 +1188,10 @@ public final class Batches {
       Common.setValueByPath(
           parentObject,
           new String[] {"toolConfig"},
-          Common.getValueByPath(fromObject, new String[] {"toolConfig"}));
+          toolConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
+              toObject));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
@@ -1566,12 +1628,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionCall"},
-          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
-    }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
@@ -1594,6 +1650,16 @@ public final class Batches {
           fileDataToMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          functionCallToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
               toObject));
     }
 
@@ -1664,6 +1730,29 @@ public final class Batches {
           toObject,
           new String[] {"threshold"},
           Common.getValueByPath(fromObject, new String[] {"threshold"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCallingConfig"},
+          functionCallingConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     return toObject;

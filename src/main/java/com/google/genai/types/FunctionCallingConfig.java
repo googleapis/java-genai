@@ -44,6 +44,14 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   @JsonProperty("allowedFunctionNames")
   public abstract Optional<List<String>> allowedFunctionNames();
 
+  /**
+   * Optional. When set to true, arguments of a single function call will be streamed out in
+   * multiple parts/contents/responses. Partial parameter results will be returned in the
+   * [FunctionCall.partial_args] field. This field is not supported in Gemini API.
+   */
+  @JsonProperty("streamFunctionCallArguments")
+  public abstract Optional<Boolean> streamFunctionCallArguments();
+
   /** Instantiates a builder for FunctionCallingConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -130,6 +138,27 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAllowedFunctionNames() {
       return allowedFunctionNames(Optional.empty());
+    }
+
+    /**
+     * Setter for streamFunctionCallArguments.
+     *
+     * <p>streamFunctionCallArguments: Optional. When set to true, arguments of a single function
+     * call will be streamed out in multiple parts/contents/responses. Partial parameter results
+     * will be returned in the [FunctionCall.partial_args] field. This field is not supported in
+     * Gemini API.
+     */
+    @JsonProperty("streamFunctionCallArguments")
+    public abstract Builder streamFunctionCallArguments(boolean streamFunctionCallArguments);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder streamFunctionCallArguments(Optional<Boolean> streamFunctionCallArguments);
+
+    /** Clears the value of streamFunctionCallArguments field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStreamFunctionCallArguments() {
+      return streamFunctionCallArguments(Optional.empty());
     }
 
     public abstract FunctionCallingConfig build();
