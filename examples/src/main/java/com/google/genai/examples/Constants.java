@@ -52,7 +52,7 @@ public final class Constants {
   public static final String SEGMENT_IMAGE_MODEL_NAME = "image-segmentation-001";
 
   /** The name of the Veo model to be used in the examples. */
-  public static final String VEO_MODEL_NAME = "veo-2.0-generate-001";
+  public static final String VEO_MODEL_NAME = "veo-3.1-generate-preview";
 
   /** The name of the embedding model to be used in the examples. */
   public static final String EMBEDDING_MODEL_NAME = "text-embedding-004";

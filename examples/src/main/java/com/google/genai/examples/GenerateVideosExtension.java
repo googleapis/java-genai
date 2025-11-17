@@ -35,8 +35,8 @@
  *
  * <p>2. Compile the java package and run the sample code.
  *
- * <p>mvn clean compile exec:java -Dexec.mainClass="com.google.genai.examples.GenerateVideos"
- * -Dexec.args="YOUR_MODEL_ID"
+ * <p>mvn clean compile exec:java
+ * -Dexec.mainClass="com.google.genai.examples.GenerateVideosExtension" -Dexec.args="YOUR_MODEL_ID"
  */
 package com.google.genai.examples;
 
@@ -48,14 +48,14 @@ import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.Video;
 
-/** An example of using the Unified Gen AI Java SDK to generate videos. */
+/** An example of using the Unified Gen AI Java SDK to extend a video. */
 public final class GenerateVideosExtension {
   public static void main(String[] args) {
     final String modelId;
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = "veo-3-exp";
+      modelId = Constants.VEO_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -75,7 +75,7 @@ public final class GenerateVideosExtension {
       System.out.println("Using Gemini Developer API");
     }
 
-    // Optinoal: If the default 20MB limit is not enough for the generated video response, you can
+    // Optional: If the default 20MB limit is not enough for the generated video response, you can
     // increase the limit via system property `genai.json.maxReadLength` or via this static method
     // `JsonSerializable.setMaxReadLength`.
     JsonSerializable.setMaxReadLength(100_000_000);

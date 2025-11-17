@@ -58,7 +58,7 @@ public final class GenerateVideosEditOutpaint {
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = "veo-2.0-generate-exp"; // Only supported on experimental model currently.
+      modelId = "veo-2.0-generate-preview"; // Only supported on preview model currently.
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
