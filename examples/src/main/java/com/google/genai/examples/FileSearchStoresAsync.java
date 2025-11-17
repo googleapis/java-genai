@@ -117,10 +117,9 @@ public final class FileSearchStoresAsync {
                         .thenAccept(
                             pager -> {
                               System.out.println("List all stores names: ");
-                              var unused =
-                                  pager.forEach(
-                                      item ->
-                                          System.out.println("Store name: " + item.name().get()));
+                              pager.forEach(
+                                  item ->
+                                      System.out.println("Store name: " + item.name().get()));
                             })
                         .thenApply(v -> store);
                   })
@@ -193,11 +192,10 @@ public final class FileSearchStoresAsync {
                         .thenAccept(
                             pager -> {
                               System.out.println("List all document names: ");
-                              var unused =
-                                  pager.forEach(
-                                      item ->
-                                          System.out.println(
-                                              "document name: " + item.name().get()));
+                              pager.forEach(
+                                  item ->
+                                      System.out.println(
+                                          "document name: " + item.name().get()));
                             })
 
                         // Delete document
