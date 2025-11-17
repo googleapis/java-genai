@@ -87,15 +87,15 @@ public final class FileSearchStores {
       System.out.println("Created file store: " + fileSearchStore.name().get());
 
       // Get the uploaded file search store.
-      FileSearchStore retrievedFile =
+      FileSearchStore retrievedFileStore =
           client.fileSearchStores.get(fileSearchStore.name().get(), null);
-      System.out.println("Retrieved file: " + retrievedFile.name().get());
+      System.out.println("Retrieved file store: " + retrievedFileStore.name().get());
 
       // List all file stores.
       System.out.println("List file stores: ");
       for (FileSearchStore f :
           client.fileSearchStores.list(ListFileSearchStoresConfig.builder().pageSize(10).build())) {
-        System.out.println("File store name: " + f.name().get());
+        System.out.println("  File store name: " + f.name().get());
       }
 
       // Upload a file to the Files Service.
@@ -145,7 +145,7 @@ public final class FileSearchStores {
       System.out.println("List documents: ");
       for (Document d :
           client.fileSearchStores.documents.list(fileSearchStore.name().get(), null)) {
-        System.out.println("Document name: " + d.name().get());
+        System.out.println("  Document name: " + d.name().get());
       }
 
       // Delete the imported document

@@ -37,7 +37,7 @@
  *
  * <p>mvn clean compile
  *
- * <p>mvn exec:java -Dexec.mainClass="com.google.genai.examples.FileSearchStores"
+ * <p>mvn exec:java -Dexec.mainClass="com.google.genai.examples.FileSearchStoresAsync"
  * -Dexec.args="path/to/file"
  */
 package com.google.genai.examples;
@@ -79,7 +79,7 @@ public final class FileSearchStoresAsync {
         .thenCompose(newOp -> awaitOperationComplete(client, (T) newOp));
   }
 
-  public static void main(String[] args) throws ExecutionException, InterruptedException {
+  public static void main(String[] args) throws Exception {
     String filePath = args.length > 0 ? args[0] : Constants.UPLOAD_FILE_PATH;
 
     try (Client client = new Client()) {
@@ -97,7 +97,7 @@ public final class FileSearchStoresAsync {
               .create(null)
               .thenCompose(
                   store -> {
-                    System.out.println("\n--- Created Store: " + store.name().get() + " ---");
+                    System.out.println("Created file store: " + store.name().get());
 
                     // Get store
                     return client
@@ -107,20 +107,20 @@ public final class FileSearchStoresAsync {
                         .thenAccept(
                             retrievedStore ->
                                 System.out.println(
-                                    "Get Store: Success (" + retrievedStore.name().get() + ")"))
+                                    "Retrieved file store: " + retrievedStore.name().get() + ")"))
 
                         // List stores.
                         .thenCompose(
                             v ->
                                 client.async.fileSearchStores.list(
                                     ListFileSearchStoresConfig.builder().pageSize(10).build()))
-                        .thenAccept(
+                        .thenCompose(
                             pager -> {
-                              System.out.println("List all stores names: ");
-                              var unused =
-                                  pager.forEach(
-                                      item ->
-                                          System.out.println("Store name: " + item.name().get()));
+                              System.out.println("List file stores: ");
+                              return pager.forEach(
+                                  item ->
+                                      System.out.println(
+                                          "  File store name: " + item.name().get()));
                             })
                         .thenApply(v -> store);
                   })
@@ -133,9 +133,8 @@ public final class FileSearchStoresAsync {
                         .upload(filePath, UploadFileConfig.builder().mimeType("text/plain").build())
                         .thenApply(
                             file -> {
-                              System.out.println(
-                                  "Upload File (Files Service): " + file.name().get());
-                              return new Object[] {store, file}; // Pass both
+                              System.out.println("Uploaded file: " + file.name().get());
+                              return new Object[] {store, file};
                             });
                   })
               .thenCompose(
@@ -190,14 +189,12 @@ public final class FileSearchStoresAsync {
                             v ->
                                 client.async.fileSearchStores.documents.list(
                                     store.name().get(), null))
-                        .thenAccept(
+                        .thenCompose(
                             pager -> {
                               System.out.println("List all document names: ");
-                              var unused =
-                                  pager.forEach(
-                                      item ->
-                                          System.out.println(
-                                              "document name: " + item.name().get()));
+                              return pager.forEach(
+                                  item ->
+                                      System.out.println("  document name: " + item.name().get()));
                             })
 
                         // Delete document
@@ -211,9 +208,8 @@ public final class FileSearchStoresAsync {
                         .thenAccept(v -> System.out.println("Delete Store: Success."));
                   });
       finalFuture.get();
-    } catch (Exception e) {
-      System.err.println("An error occurred during async execution: " + e.getMessage());
     }
+    System.out.println("Async execution for file search stores completed successfully.");
   }
 
   private FileSearchStoresAsync() {}
