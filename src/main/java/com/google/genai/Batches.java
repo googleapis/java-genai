@@ -1182,7 +1182,10 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"imageConfig"},
-          Common.getValueByPath(fromObject, new String[] {"imageConfig"}));
+          imageConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
+              toObject));
     }
 
     return toObject;
@@ -1306,6 +1309,37 @@ public final class Batches {
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode imageConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"aspectRatio"},
+          Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"imageSize"},
+          Common.getValueByPath(fromObject, new String[] {"imageSize"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
+      throw new IllegalArgumentException(
+          "outputMimeType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}))) {
+      throw new IllegalArgumentException(
+          "outputCompressionQuality parameter is not supported in Gemini API.");
     }
 
     return toObject;
