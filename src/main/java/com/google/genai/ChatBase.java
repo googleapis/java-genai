@@ -175,13 +175,13 @@ class ChatBase {
     }
   }
 
-  private Content aggregateStreamingResponse(List<GenerateContentResponse> responseChunks) {
+  private List<Content> aggregateStreamingResponse(List<GenerateContentResponse> responseChunks) {
+    List<Content> aggregatedContents = new ArrayList<>();
 
     if (responseChunks == null || responseChunks.isEmpty()) {
-      return Content.builder().build();
+      return aggregatedContents;
     }
 
-    List<Part> aggregatedParts = new ArrayList<>();
     String aggregatedText = "";
 
     for (GenerateContentResponse responseChunk : responseChunks) {
@@ -205,7 +205,7 @@ class ChatBase {
                     || part.thought().isPresent()
                     || part.inlineData().isPresent();
             if (hasOtherContentParts) {
-              aggregatedParts.add(part);
+              aggregatedContents.add(candidate.content().get());
             }
           }
         }
@@ -213,8 +213,9 @@ class ChatBase {
     }
 
     // Construct the final response
-    aggregatedParts.add(Part.fromText(aggregatedText));
-    return Content.builder().parts(aggregatedParts).role("model").build();
+    aggregatedContents.add(
+        Content.builder().parts(Part.builder().text(aggregatedText).build()).role("model").build());
+    return aggregatedContents;
   }
 
   protected void checkStreamResponseAndUpdateHistory() {
@@ -222,8 +223,9 @@ class ChatBase {
       throwIfStreamNotConsumed();
       List<Content> streamingResponseContents = new ArrayList<>();
       streamingResponseContents.addAll(this.currentUserMessage);
-      Content aggregatedResponse = aggregateStreamingResponse(this.currentResponseStream.history);
-      streamingResponseContents.add(aggregatedResponse);
+      List<Content> aggregatedResponse =
+          aggregateStreamingResponse(this.currentResponseStream.history);
+      streamingResponseContents.addAll(aggregatedResponse);
       recordHistory(
           streamingResponseContents, Iterables.getLast(this.currentResponseStream.history));
     }
