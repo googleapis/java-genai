@@ -26,6 +26,7 @@ import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CancelTuningJobConfig;
 import com.google.genai.types.CancelTuningJobParameters;
+import com.google.genai.types.CancelTuningJobResponse;
 import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.CreateTuningJobParametersPrivate;
 import com.google.genai.types.GetTuningJobConfig;
@@ -79,6 +80,32 @@ public final class Tunings {
           toObject,
           new String[] {"_url", "name"},
           Common.getValueByPath(fromObject, new String[] {"name"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode cancelTuningJobResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode cancelTuningJobResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
     }
 
     return toObject;
@@ -1311,6 +1338,40 @@ public final class Tunings {
     return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
   }
 
+  /** A shared processResponse function for both sync and async methods. */
+  CancelTuningJobResponse processResponseForCancel(
+      ApiResponse response, CancelTuningJobConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      responseNode = cancelTuningJobResponseFromVertex(responseNode, null);
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = cancelTuningJobResponseFromMldev(responseNode, null);
+    }
+
+    CancelTuningJobResponse sdkResponse =
+        JsonSerializable.fromJsonNode(responseNode, CancelTuningJobResponse.class);
+    Headers responseHeaders = response.getHeaders();
+    if (responseHeaders == null) {
+      return sdkResponse;
+    }
+    Map<String, String> headers = new HashMap<>();
+    for (String headerName : responseHeaders.names()) {
+      headers.put(headerName, responseHeaders.get(headerName));
+    }
+    return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
+  }
+
   /**
    * Cancels a tuning job resource.
    *
@@ -1318,13 +1379,13 @@ public final class Tunings {
    *     For Gemini API, this is `tunedModels/{id}`.
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
-  public void cancel(String name, CancelTuningJobConfig config) {
+  public CancelTuningJobResponse cancel(String name, CancelTuningJobConfig config) {
     BuiltRequest builtRequest = buildRequestForCancel(name, config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
-      return;
+      return processResponseForCancel(response, config);
     }
   }
 
