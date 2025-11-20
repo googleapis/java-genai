@@ -368,7 +368,7 @@ import java.lang.reflect.Method;
 
 public class GenerateContentWithFunctionCall {
   public static String getCurrentWeather(String location, String unit) {
-    return "The weather in " + location + " is " + "very nice.";
+    return "The weather in " + location + " is " + unit + ".";
   }
 
   public static void main(String[] args) throws NoSuchMethodException {
