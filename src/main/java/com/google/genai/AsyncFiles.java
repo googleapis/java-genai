@@ -49,12 +49,6 @@ public final class AsyncFiles {
     this.files = new Files(apiClient);
   }
 
-  /**
-   * Asynchronously lists all files from the service.
-   *
-   * @param config - Optional, configuration for the list method.
-   * @return The ListFilesResponse, the response for the list method.
-   */
   CompletableFuture<ListFilesResponse> privateList(ListFilesConfig config) {
     BuiltRequest builtRequest = files.buildRequestForPrivateList(config);
     return this.apiClient
@@ -115,6 +109,39 @@ public final class AsyncFiles {
                 return files.processResponseForDelete(res, config);
               }
             });
+  }
+
+  /**
+   * Asynchronously makes an API request to list the available files.
+   *
+   * @param config A {@link ListFilesConfig} for configuring the list request.
+   * @return A CompletableFuture that resolves to a {@link AsyncPager}. The AsyncPager has a
+   *     `forEach` method that can be used to asynchronously process items in the page and
+   *     automatically query the next page once the current page is exhausted.
+   */
+  @SuppressWarnings("PatternMatchingInstanceof")
+  public CompletableFuture<AsyncPager<File>> list(ListFilesConfig config) {
+    if (config == null) {
+      config = ListFilesConfig.builder().build();
+    }
+    ListFilesConfig finalConfig = config;
+    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+        requestConfig -> {
+          if (!(requestConfig instanceof ListFilesConfig)) {
+            throw new GenAiIOException(
+                "Internal error: Pager expected ListFilesConfig but received "
+                    + requestConfig.getClass().getName());
+          }
+          return this.privateList((ListFilesConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
+        };
+    return CompletableFuture.supplyAsync(
+        () ->
+            new AsyncPager<File>(
+                Pager.PagedItem.FILES,
+                request,
+                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                request.apply(finalConfig)));
   }
 
   /**
@@ -212,34 +239,5 @@ public final class AsyncFiles {
   public CompletableFuture<Void> download(
       File file, String downloadPath, DownloadFileConfig config) {
     return CompletableFuture.runAsync(() -> files.download(file, downloadPath, config));
-  }
-
-  /**
-   * Asynchronously makes an API request to list the available files.
-   *
-   * @param config A {@link ListFilesConfig} for configuring the list request.
-   * @return A CompletableFuture that resolves to a {@link AsyncPager}. The AsyncPager has a
-   *     `forEach` method that can be used to asynchronously process items in the page and
-   *     automatically query the next page once the current page is exhausted.
-   */
-  @SuppressWarnings("PatternMatchingInstanceof")
-  public CompletableFuture<AsyncPager<File>> list(ListFilesConfig config) {
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
-        requestConfig -> {
-          if (!(requestConfig instanceof ListFilesConfig)) {
-            throw new GenAiIOException(
-                "Internal error: Pager expected ListFilesConfig but received "
-                    + requestConfig.getClass().getName());
-          }
-          return this.privateList((ListFilesConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
-        };
-    return CompletableFuture.supplyAsync(
-        () ->
-            new AsyncPager<>(
-                Pager.PagedItem.FILES,
-                request,
-                (ObjectNode) JsonSerializable.toJsonNode(config),
-                request.apply(config)));
   }
 }

@@ -368,6 +368,7 @@ public final class Documents {
   /**
    * Makes an API request to list the available documents.
    *
+   * @param parent The name of the RagStore containing the Documents.
    * @param config A {@link ListDocumentsConfig} for configuring the list request.
    * @return A {@link Pager} object that contains the list of documents. The pager is an iterable
    *     and automatically queries the next page once the current page is exhausted.

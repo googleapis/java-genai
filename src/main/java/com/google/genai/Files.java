@@ -271,12 +271,6 @@ public final class Files {
     return sdkResponse.toBuilder().sdkHttpResponse(HttpResponse.builder().headers(headers)).build();
   }
 
-  /**
-   * Lists all files from the service.
-   *
-   * @param config - Optional, configuration for the list method.
-   * @return The ListFilesResponse, the response for the list method.
-   */
   ListFilesResponse privateList(ListFilesConfig config) {
     BuiltRequest builtRequest = buildRequestForPrivateList(config);
 
@@ -556,6 +550,34 @@ public final class Files {
   }
 
   /**
+   * Makes an API request to list the available files.
+   *
+   * @param config A {@link ListFilesConfig} for configuring the list request.
+   * @return A {@link Pager} object that contains the list of files. The pager is an iterable and
+   *     automatically queries the next page once the current page is exhausted.
+   */
+  @SuppressWarnings("PatternMatchingInstanceof")
+  public Pager<File> list(ListFilesConfig config) {
+    if (config == null) {
+      config = ListFilesConfig.builder().build();
+    }
+    Function<JsonSerializable, Object> request =
+        requestConfig -> {
+          if (!(requestConfig instanceof ListFilesConfig)) {
+            throw new GenAiIOException(
+                "Internal error: Pager expected ListFilesConfig but received "
+                    + requestConfig.getClass().getName());
+          }
+          return this.privateList((ListFilesConfig) requestConfig);
+        };
+    return new Pager<>(
+        Pager.PagedItem.FILES,
+        request,
+        (ObjectNode) JsonSerializable.toJsonNode(config),
+        JsonSerializable.toJsonNode(privateList(config)));
+  }
+
+  /**
    * Uploads a file to the API.
    *
    * @param file The file to upload.
@@ -785,30 +807,5 @@ public final class Files {
     } catch (IOException e) {
       throw new GenAiIOException("Failed to save file.", e);
     }
-  }
-
-  /**
-   * makes an API request to list the available files.
-   *
-   * @param config A {@link ListFilesConfig} for configuring the list request.
-   * @return A {@link Pager} object that contains the list of files. The pager is an iterable and
-   *     automatically queries the next page once the current page is exhausted.
-   */
-  @SuppressWarnings("PatternMatchingInstanceof")
-  public Pager<File> list(ListFilesConfig config) {
-    Function<JsonSerializable, Object> request =
-        requestConfig -> {
-          if (!(requestConfig instanceof ListFilesConfig)) {
-            throw new GenAiIOException(
-                "Internal error: Pager expected ListFilesConfig but received "
-                    + requestConfig.getClass().getName());
-          }
-          return this.privateList((ListFilesConfig) requestConfig);
-        };
-    return new Pager<>(
-        Pager.PagedItem.FILES,
-        request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
   }
 }

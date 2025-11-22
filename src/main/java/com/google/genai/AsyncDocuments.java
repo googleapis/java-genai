@@ -78,6 +78,7 @@ public final class AsyncDocuments {
   /**
    * Asynchronously makes an API request to list the available documents.
    *
+   * @param parent The name of the RagStore containing the Documents.
    * @param config A {@link ListDocumentsConfig} for configuring the list request.
    * @return A CompletableFuture that resolves to a {@link AsyncPager}. The AsyncPager has a
    *     `forEach` method that can be used to asynchronously process items in the page and
@@ -96,14 +97,12 @@ public final class AsyncDocuments {
                 "Internal error: Pager expected ListDocumentsConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      documents.privateList(parent, (ListDocumentsConfig) requestConfig)));
+          return this.privateList(parent, (ListDocumentsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
-            new AsyncPager<>(
+            new AsyncPager<Document>(
                 Pager.PagedItem.DOCUMENTS,
                 request,
                 (ObjectNode) JsonSerializable.toJsonNode(finalConfig),

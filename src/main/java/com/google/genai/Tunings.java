@@ -1531,17 +1531,6 @@ public final class Tunings {
   }
 
   /**
-   * Makes an API request to get a tuning job.
-   *
-   * @param name The resource name of the tuning job.
-   * @param config A {@link GetTuningJobConfig} for configuring the get request.
-   * @return A {@link TuningJob} object.
-   */
-  public TuningJob get(String name, GetTuningJobConfig config) {
-    return this.privateGet(name, config);
-  }
-
-  /**
    * Makes an API request to list the available tuning jobs.
    *
    * @param config A {@link ListTuningJobsConfig} for configuring the list request.
@@ -1550,6 +1539,9 @@ public final class Tunings {
    */
   @SuppressWarnings("PatternMatchingInstanceof")
   public Pager<TuningJob> list(ListTuningJobsConfig config) {
+    if (config == null) {
+      config = ListTuningJobsConfig.builder().build();
+    }
     Function<JsonSerializable, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListTuningJobsConfig)) {
@@ -1559,14 +1551,22 @@ public final class Tunings {
           }
           return this.privateList((ListTuningJobsConfig) requestConfig);
         };
-    if (config == null) {
-      config = ListTuningJobsConfig.builder().build();
-    }
     return new Pager<>(
         Pager.PagedItem.TUNING_JOBS,
         request,
         (ObjectNode) JsonSerializable.toJsonNode(config),
         JsonSerializable.toJsonNode(privateList(config)));
+  }
+
+  /**
+   * Makes an API request to get a tuning job.
+   *
+   * @param name The resource name of the tuning job.
+   * @param config A {@link GetTuningJobConfig} for configuring the get request.
+   * @return A {@link TuningJob} object.
+   */
+  public TuningJob get(String name, GetTuningJobConfig config) {
+    return this.privateGet(name, config);
   }
 
   /**

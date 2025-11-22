@@ -154,14 +154,12 @@ public final class AsyncFileSearchStores {
                 "Internal error: Pager expected ListFileSearchStoresConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return CompletableFuture.supplyAsync(
-              () ->
-                  JsonSerializable.toJsonNode(
-                      fileSearchStores.privateList((ListFileSearchStoresConfig) requestConfig)));
+          return this.privateList((ListFileSearchStoresConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
-            new AsyncPager<>(
+            new AsyncPager<FileSearchStore>(
                 Pager.PagedItem.FILE_SEARCH_STORES,
                 request,
                 (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
