@@ -2330,6 +2330,34 @@ public final class Batches {
   }
 
   /**
+   * Makes an API request to list the available batch jobs.
+   *
+   * @param config A {@link ListBatchJobsConfig} for configuring the list request.
+   * @return A {@link Pager} object that contains the list of batch jobs. The pager is an iterable
+   *     and automatically queries the next page once the current page is exhausted.
+   */
+  @SuppressWarnings("PatternMatchingInstanceof")
+  public Pager<BatchJob> list(ListBatchJobsConfig config) {
+    if (config == null) {
+      config = ListBatchJobsConfig.builder().build();
+    }
+    Function<JsonSerializable, Object> request =
+        requestConfig -> {
+          if (!(requestConfig instanceof ListBatchJobsConfig)) {
+            throw new GenAiIOException(
+                "Internal error: Pager expected ListBatchJobsConfig but received "
+                    + requestConfig.getClass().getName());
+          }
+          return this.privateList((ListBatchJobsConfig) requestConfig);
+        };
+    return new Pager<>(
+        Pager.PagedItem.BATCH_JOBS,
+        request,
+        (ObjectNode) JsonSerializable.toJsonNode(config),
+        JsonSerializable.toJsonNode(privateList(config)));
+  }
+
+  /**
    * Makes an API request to create the batch job.
    *
    * @param model the name of the GenAI model to use for generation
@@ -2379,30 +2407,5 @@ public final class Batches {
           "Vertex AI does not support batches.createEmbeddings.");
     }
     return this.privateCreateEmbeddings(model, src, config);
-  }
-
-  /**
-   * Makes an API request to list the available batch jobs.
-   *
-   * @param config A {@link ListBatchJobsConfig} for configuring the list request.
-   * @return A {@link Pager} object that contains the list of batch jobs. The pager is an iterable
-   *     and automatically queries the next page once the current page is exhausted.
-   */
-  @SuppressWarnings("PatternMatchingInstanceof")
-  public Pager<BatchJob> list(ListBatchJobsConfig config) {
-    Function<JsonSerializable, Object> request =
-        requestConfig -> {
-          if (!(requestConfig instanceof ListBatchJobsConfig)) {
-            throw new GenAiIOException(
-                "Internal error: Pager expected ListBatchJobsConfig but received "
-                    + requestConfig.getClass().getName());
-          }
-          return this.privateList((ListBatchJobsConfig) requestConfig);
-        };
-    return new Pager<>(
-        Pager.PagedItem.BATCH_JOBS,
-        request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
   }
 }

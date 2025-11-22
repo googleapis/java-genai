@@ -122,17 +122,6 @@ public final class AsyncTunings {
   }
 
   /**
-   * Asynchronously makes an API request to get a tuning job.
-   *
-   * @param name The resource name of the tuning job.
-   * @param config A {@link GetTuningJobConfig} for configuring the get request.
-   * @return A CompletableFuture that resolves to a {@link TuningJob} object.
-   */
-  public CompletableFuture<TuningJob> get(String name, GetTuningJobConfig config) {
-    return CompletableFuture.supplyAsync(() -> tunings.privateGet(name, config));
-  }
-
-  /**
    * Asynchronously makes an API request to list the available tuning jobs.
    *
    * @param config A {@link ListTuningJobsConfig} for configuring the list request.
@@ -142,6 +131,10 @@ public final class AsyncTunings {
    */
   @SuppressWarnings("PatternMatchingInstanceof")
   public CompletableFuture<AsyncPager<TuningJob>> list(ListTuningJobsConfig config) {
+    if (config == null) {
+      config = ListTuningJobsConfig.builder().build();
+    }
+    ListTuningJobsConfig finalConfig = config;
     Function<JsonSerializable, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListTuningJobsConfig)) {
@@ -154,11 +147,22 @@ public final class AsyncTunings {
         };
     return CompletableFuture.supplyAsync(
         () ->
-            new AsyncPager<>(
+            new AsyncPager<TuningJob>(
                 Pager.PagedItem.TUNING_JOBS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(config),
-                request.apply(config)));
+                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                request.apply(finalConfig)));
+  }
+
+  /**
+   * Asynchronously makes an API request to get a tuning job.
+   *
+   * @param name The resource name of the tuning job.
+   * @param config A {@link GetTuningJobConfig} for configuring the get request.
+   * @return A CompletableFuture that resolves to a {@link TuningJob} object.
+   */
+  public CompletableFuture<TuningJob> get(String name, GetTuningJobConfig config) {
+    return CompletableFuture.supplyAsync(() -> tunings.privateGet(name, config));
   }
 
   /**

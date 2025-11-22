@@ -1455,6 +1455,9 @@ public final class Caches {
    */
   @SuppressWarnings("PatternMatchingInstanceof")
   public Pager<CachedContent> list(ListCachedContentsConfig config) {
+    if (config == null) {
+      config = ListCachedContentsConfig.builder().build();
+    }
     Function<JsonSerializable, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListCachedContentsConfig)) {

@@ -142,6 +142,10 @@ public final class AsyncCaches {
    */
   @SuppressWarnings("PatternMatchingInstanceof")
   public CompletableFuture<AsyncPager<CachedContent>> list(ListCachedContentsConfig config) {
+    if (config == null) {
+      config = ListCachedContentsConfig.builder().build();
+    }
+    ListCachedContentsConfig finalConfig = config;
     Function<JsonSerializable, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListCachedContentsConfig)) {
@@ -154,10 +158,10 @@ public final class AsyncCaches {
         };
     return CompletableFuture.supplyAsync(
         () ->
-            new AsyncPager<>(
+            new AsyncPager<CachedContent>(
                 Pager.PagedItem.CACHED_CONTENTS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(config),
-                request.apply(config)));
+                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                request.apply(finalConfig)));
   }
 }

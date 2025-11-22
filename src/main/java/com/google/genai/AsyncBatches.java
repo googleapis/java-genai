@@ -145,6 +145,39 @@ public final class AsyncBatches {
   }
 
   /**
+   * Asynchronously makes an API request to list the available batch jobs.
+   *
+   * @param config A {@link ListBatchJobsConfig} for configuring the list request.
+   * @return A CompletableFuture that resolves to a {@link AsyncPager}. The AsyncPager has a
+   *     `forEach` method that can be used to asynchronously process items in the page and
+   *     automatically query the next page once the current page is exhausted.
+   */
+  @SuppressWarnings("PatternMatchingInstanceof")
+  public CompletableFuture<AsyncPager<BatchJob>> list(ListBatchJobsConfig config) {
+    if (config == null) {
+      config = ListBatchJobsConfig.builder().build();
+    }
+    ListBatchJobsConfig finalConfig = config;
+    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+        requestConfig -> {
+          if (!(requestConfig instanceof ListBatchJobsConfig)) {
+            throw new GenAiIOException(
+                "Internal error: Pager expected ListBatchJobsConfig but received "
+                    + requestConfig.getClass().getName());
+          }
+          return this.privateList((ListBatchJobsConfig) requestConfig)
+              .thenApply(JsonSerializable::toJsonNode);
+        };
+    return CompletableFuture.supplyAsync(
+        () ->
+            new AsyncPager<BatchJob>(
+                Pager.PagedItem.BATCH_JOBS,
+                request,
+                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                request.apply(finalConfig)));
+  }
+
+  /**
    * Asynchronously creates a batch job.
    *
    * @param model the name of the GenAI model to use for batch generation.
@@ -195,34 +228,5 @@ public final class AsyncBatches {
           "Vertex AI does not support batches.createEmbeddings.");
     }
     return this.privateCreateEmbeddings(model, src, config);
-  }
-
-  /**
-   * Asynchronously makes an API request to list the available batch jobs.
-   *
-   * @param config A {@link ListBatchJobsConfig} for configuring the list request.
-   * @return A CompletableFuture that resolves to a {@link AsyncPager}. The AsyncPager has a
-   *     `forEach` method that can be used to asynchronously process items in the page and
-   *     automatically query the next page once the current page is exhausted.
-   */
-  @SuppressWarnings("PatternMatchingInstanceof")
-  public CompletableFuture<AsyncPager<BatchJob>> list(ListBatchJobsConfig config) {
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
-        requestConfig -> {
-          if (!(requestConfig instanceof ListBatchJobsConfig)) {
-            throw new GenAiIOException(
-                "Internal error: Pager expected ListBatchJobsConfig but received "
-                    + requestConfig.getClass().getName());
-          }
-          return this.privateList((ListBatchJobsConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
-        };
-    return CompletableFuture.supplyAsync(
-        () ->
-            new AsyncPager<>(
-                Pager.PagedItem.BATCH_JOBS,
-                request,
-                (ObjectNode) JsonSerializable.toJsonNode(config),
-                request.apply(config)));
   }
 }
