@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CancelTuningJobConfig;
+import com.google.genai.types.CancelTuningJobResponse;
 import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.GetTuningJobConfig;
 import com.google.genai.types.JobState;
@@ -77,13 +78,16 @@ public final class AsyncTunings {
    *     For Gemini API, this is `tunedModels/{id}`.
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
-  public CompletableFuture<Void> cancel(String name, CancelTuningJobConfig config) {
+  public CompletableFuture<CancelTuningJobResponse> cancel(
+      String name, CancelTuningJobConfig config) {
     BuiltRequest builtRequest = tunings.buildRequestForCancel(name, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
-        .thenAccept(
+        .thenApplyAsync(
             response -> {
-              try (ApiResponse res = response) {}
+              try (ApiResponse res = response) {
+                return tunings.processResponseForCancel(res, config);
+              }
             });
   }
 
