@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.0](https://github.com/googleapis/java-genai/compare/v1.28.0...v1.29.0) (2025-11-22)
+
+
+### Bug Fixes
+
+* Match the versions of the Java Protobuf and Google API Common dependencies (com.google.protobuf:protobuf-java:3.25.5 & com.google.api:api-common:2.45.0) with Google Cloud Java SDKs. ([6c37f58](https://github.com/googleapis/java-genai/commit/6c37f5858f81f4bfd338c92c712d45222670e24b))
+
 ## [1.28.0](https://github.com/googleapis/java-genai/compare/v1.27.0...v1.28.0) (2025-11-17)
 
 
