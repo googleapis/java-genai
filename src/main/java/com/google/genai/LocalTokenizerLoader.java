@@ -65,6 +65,7 @@ final class LocalTokenizerLoader {
     modelMap.put("gemini-2.5-pro-preview-06-05", "gemma3");
     modelMap.put("gemini-2.5-pro", "gemma3");
     modelMap.put("gemini-live-2.5-flash", "gemma3");
+    modelMap.put("gemini-3-pro-preview", "gemma3");
     GEMINI_MODELS_TO_TOKENIZER_NAMES = Collections.unmodifiableMap(modelMap);
   }
 
