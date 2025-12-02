@@ -141,6 +141,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
    * objects, but also primitives and arrays. Represents a select subset of an [OpenAPI 3.0 schema
    * object](https://spec.openapis.org/oas/v3.0.3#schema). If set, a compatible response_mime_type
    * must also be set. Compatible mimetypes: `application/json`: Schema for JSON response.
+   *
+   * <p>If `response_schema` doesn't process your schema correctly, try using `response_json_schema`
+   * instead.
    */
   @JsonProperty("responseSchema")
   public abstract Optional<Schema> responseSchema();
@@ -569,6 +572,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
      * [OpenAPI 3.0 schema object](https://spec.openapis.org/oas/v3.0.3#schema). If set, a
      * compatible response_mime_type must also be set. Compatible mimetypes: `application/json`:
      * Schema for JSON response.
+     *
+     * <p>If `response_schema` doesn't process your schema correctly, try using
+     * `response_json_schema` instead.
      */
     @JsonProperty("responseSchema")
     public abstract Builder responseSchema(Schema responseSchema);
@@ -581,6 +587,9 @@ public abstract class GenerateContentConfig extends JsonSerializable {
      * [OpenAPI 3.0 schema object](https://spec.openapis.org/oas/v3.0.3#schema). If set, a
      * compatible response_mime_type must also be set. Compatible mimetypes: `application/json`:
      * Schema for JSON response.
+     *
+     * <p>If `response_schema` doesn't process your schema correctly, try using
+     * `response_json_schema` instead.
      */
     @CanIgnoreReturnValue
     public Builder responseSchema(Schema.Builder responseSchemaBuilder) {
