@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.29.0](https://github.com/googleapis/java-genai/compare/v1.28.0...v1.29.0) (2025-12-03)
+
+
+### Features
+
+* Add empty response for tunings.cancel() ([57218f5](https://github.com/googleapis/java-genai/commit/57218f56512ac6221a72f930d95a07dac2209cf6))
+
+
+### Bug Fixes
+
+* Match the versions of the Java Protobuf and Google API Common dependencies (com.google.protobuf:protobuf-java:3.25.5 & com.google.api:api-common:2.45.0) with Google Cloud Java SDKs. ([6c37f58](https://github.com/googleapis/java-genai/commit/6c37f5858f81f4bfd338c92c712d45222670e24b))
+
+
+### Documentation
+
+* Recommend using response_json_schema in error messages and docstrings. ([6b952e9](https://github.com/googleapis/java-genai/commit/6b952e949d46ae9d2123045a8dd741305c50a2ce))
+
 ## [1.28.0](https://github.com/googleapis/java-genai/compare/v1.27.0...v1.28.0) (2025-11-17)
 
 
