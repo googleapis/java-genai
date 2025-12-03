@@ -43,12 +43,16 @@
  */
 package com.google.genai.examples;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.Chat;
 import com.google.genai.Client;
 import com.google.genai.ResponseStream;
+import com.google.genai.types.Content;
 import com.google.genai.types.FunctionCallingConfig;
+import com.google.genai.types.FunctionResponse;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolConfig;
 import java.lang.reflect.Method;
@@ -67,7 +71,7 @@ public final class ChatWithHistoryStreamingFunctionCall {
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
+      modelId = Constants.GEMINI_3_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -113,13 +117,29 @@ public final class ChatWithHistoryStreamingFunctionCall {
       System.out.print(response.functionCalls());
     }
 
+    FunctionResponse functionResponse =
+        FunctionResponse.builder()
+            .name("getCurrentWeather")
+            .response(ImmutableMap.of("response", "The weather in San Francisco is very nice."))
+            .build();
     ResponseStream<GenerateContentResponse> responseStream2 =
-        chatSession.sendMessageStream("what is the weather in New York?", null);
-
+        chatSession.sendMessageStream(
+            Content.builder()
+                .parts(Part.builder().functionResponse(functionResponse).build())
+                .role("user")
+                .build(),
+            null);
     System.out.println("Streaming response 2:");
     for (GenerateContentResponse response : responseStream2) {
       // Iterate over the stream and print each response as it arrives.
-      System.out.print(response.functionCalls());
+      System.out.print(response.text());
+    }
+
+    ResponseStream<GenerateContentResponse> responseStream3 =
+        chatSession.sendMessageStream("Thanks!", null);
+    for (GenerateContentResponse response : responseStream3) {
+      // Iterate over the stream and print each response as it arrives.
+      System.out.print(response.text());
     }
 
     // Get the history of the chat session.

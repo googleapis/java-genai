@@ -62,7 +62,7 @@ public final class GenerateContentStreamingFunctionCall {
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
+      modelId = Constants.GEMINI_3_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API

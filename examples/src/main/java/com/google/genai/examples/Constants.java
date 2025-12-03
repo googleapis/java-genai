@@ -24,6 +24,9 @@ public final class Constants {
   /** The name of the generative model to be used in the examples. */
   public static final String GEMINI_MODEL_NAME = "gemini-2.5-flash";
 
+  /** The name of the gemini 3 model to be used in the examples. */
+  public static final String GEMINI_3_MODEL_NAME = "gemini-3-pro-preview";
+
   /** The name of the live model to be used in the examples. */
   public static final String GEMINI_LIVE_MODEL_NAME = "gemini-live-2.5-flash";
 

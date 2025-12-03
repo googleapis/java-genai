@@ -43,12 +43,16 @@
  */
 package com.google.genai.examples;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.AsyncChat;
 import com.google.genai.Client;
 import com.google.genai.ResponseStream;
+import com.google.genai.types.Content;
 import com.google.genai.types.FunctionCallingConfig;
+import com.google.genai.types.FunctionResponse;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolConfig;
 import java.lang.reflect.Method;
@@ -69,7 +73,7 @@ public final class ChatWithHistoryAsyncStreamingFunctionCall {
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
+      modelId = Constants.GEMINI_3_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -121,6 +125,31 @@ public final class ChatWithHistoryAsyncStreamingFunctionCall {
             (response, throwable) -> {
               if (throwable != null) {
                 System.out.println("Chat response future failed: " + throwable.getMessage());
+              }
+            })
+        .join();
+
+    FunctionResponse functionResponse =
+        FunctionResponse.builder()
+            .name("getCurrentWeather")
+            .response(ImmutableMap.of("response", "The weather in San Francisco is very nice."))
+            .build();
+
+    CompletableFuture<ResponseStream<GenerateContentResponse>> chatResponse2Future =
+        chatSession.sendMessageStream(
+            Content.builder()
+                .parts(Part.builder().functionResponse(functionResponse).build())
+                .role("user")
+                .build());
+
+    chatResponse2Future
+        .thenAccept(
+            responseStream -> {
+              System.out.println("\n\nFinal Model Response:");
+              for (GenerateContentResponse response : responseStream) {
+                if (response.text() != null) {
+                  System.out.print(response.text());
+                }
               }
             })
         .join();

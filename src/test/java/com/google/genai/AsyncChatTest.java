@@ -259,7 +259,7 @@ public class AsyncChatTest {
     assert chunkCount.get() == 3;
 
     // History is updated after the stream is consumed
-    assert chatSession.getHistory(false).size() == 2;
+    assert chatSession.getHistory(false).size() == 4;
     CompletableFuture<ResponseStream<GenerateContentResponse>> responseStreamFuture2 =
         chatSession.sendMessageStream("Tell me another story.");
 
@@ -276,7 +276,7 @@ public class AsyncChatTest {
         .join();
 
     List<Content> historyAfterSecondStreamCall = chatSession.getHistory(false);
-    assert historyAfterSecondStreamCall.size() == 4;
+    assert historyAfterSecondStreamCall.size() == 7;
 
     // Second item in history should be the aggregated model response from the stream chunks
     assert historyAfterSecondStreamCall
@@ -286,8 +286,23 @@ public class AsyncChatTest {
         .get(0)
         .text()
         .orElse(null)
-        .equals(
-            STREAMING_RESPONSE_CHUNK_1 + STREAMING_RESPONSE_CHUNK_2 + STREAMING_RESPONSE_CHUNK_3);
+        .equals(STREAMING_RESPONSE_CHUNK_1);
+    assert historyAfterSecondStreamCall
+        .get(2)
+        .parts()
+        .get()
+        .get(0)
+        .text()
+        .orElse(null)
+        .equals(STREAMING_RESPONSE_CHUNK_2);
+    assert historyAfterSecondStreamCall
+        .get(3)
+        .parts()
+        .get()
+        .get(0)
+        .text()
+        .orElse(null)
+        .equals(STREAMING_RESPONSE_CHUNK_3);
   }
 
   @Test
