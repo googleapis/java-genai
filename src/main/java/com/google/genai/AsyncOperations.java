@@ -42,7 +42,7 @@ public final class AsyncOperations {
     BuiltRequest builtRequest =
         operations.buildRequestForPrivateGetVideosOperation(operationName, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -57,7 +57,7 @@ public final class AsyncOperations {
         operations.buildRequestForPrivateFetchPredictVideosOperation(
             operationName, resourceName, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

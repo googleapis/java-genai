@@ -21,6 +21,7 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.core.InternalApi;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
@@ -45,7 +46,8 @@ import okhttp3.RequestBody;
 import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
-abstract class ApiClient {
+@InternalApi
+public abstract class ApiClient {
 
   // {x-version-update-start:google-genai:released}
   private static final String SDK_VERSION = "1.29.0";
@@ -437,8 +439,13 @@ abstract class ApiClient {
   }
 
   /** Returns the HttpClient for API calls. */
-  OkHttpClient httpClient() {
+  public OkHttpClient httpClient() {
     return httpClient;
+  }
+
+  /** Returns the HTTP options for API calls. */
+  public HttpOptions httpOptions() {
+    return httpOptions;
   }
 
   /**
@@ -611,7 +618,7 @@ abstract class ApiClient {
    *   <li>vertexBaseUrl -> GOOGLE_VERTEX_BASE_URL: Base URL for Vertex AI APIs.
    * </ul>
    */
-  static ImmutableMap<String, String> defaultEnvironmentVariables() {
+  public static ImmutableMap<String, String> defaultEnvironmentVariables() {
     ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();
     String value;
     value = System.getenv("GOOGLE_API_KEY");
@@ -646,7 +653,8 @@ abstract class ApiClient {
   }
 
   /** Overrides the base URLs for the Gemini API and/or Vertex AI API. */
-  static void setDefaultBaseUrls(Optional<String> geminiBaseUrl, Optional<String> vertexBaseUrl) {
+  public static void setDefaultBaseUrls(
+      Optional<String> geminiBaseUrl, Optional<String> vertexBaseUrl) {
     ApiClient.geminiBaseUrl = geminiBaseUrl;
     ApiClient.vertexBaseUrl = vertexBaseUrl;
   }

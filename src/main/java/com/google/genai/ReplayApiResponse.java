@@ -18,6 +18,7 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.api.core.InternalApi;
 import com.google.genai.errors.ApiException;
 import com.google.genai.errors.GenAiIOException;
 import java.io.ByteArrayOutputStream;
@@ -28,8 +29,9 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 
 /** Provides a simulated HTTP response from a replay file. */
+@InternalApi
 @ExcludeFromGeneratedCoverageReport
-final class ReplayApiResponse extends ApiResponse {
+public final class ReplayApiResponse extends ApiResponse {
 
   private final ResponseBody body;
   private final int statusCode;

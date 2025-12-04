@@ -61,7 +61,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -85,7 +85,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
       ObjectMapper objectMapper = new ObjectMapper();
@@ -109,7 +109,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createCachedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"ttl"}) != null) {
       Common.setValueByPath(
@@ -186,7 +186,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createCachedContentConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"ttl"}) != null) {
       Common.setValueByPath(
@@ -255,7 +255,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createCachedContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -278,7 +278,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createCachedContentParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -301,7 +301,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteCachedContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -316,7 +316,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteCachedContentParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -330,7 +330,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteCachedContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -343,7 +343,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteCachedContentResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -356,7 +356,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
       throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
     }
@@ -380,7 +380,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
@@ -413,7 +413,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -439,7 +439,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionDeclarationToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
       throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
     }
@@ -492,7 +492,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getCachedContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -507,7 +507,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getCachedContentParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -521,7 +521,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
       throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
     }
@@ -538,7 +538,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
       throw new IllegalArgumentException(
           "excludeDomains parameter is not supported in Gemini API.");
@@ -561,7 +561,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -582,7 +582,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -603,7 +603,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listCachedContentsConfigToMldev(
@@ -617,7 +617,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listCachedContentsConfigToVertex(
@@ -631,7 +631,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -658,7 +658,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listCachedContentsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -685,7 +685,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -777,7 +777,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -800,7 +800,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -877,7 +877,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
@@ -955,7 +955,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateCachedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"ttl"}) != null) {
       Common.setValueByPath(
@@ -976,7 +976,7 @@ public final class Caches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateCachedContentConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"ttl"}) != null) {
       Common.setValueByPath(
@@ -998,7 +998,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateCachedContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1021,7 +1021,7 @@ public final class Caches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateCachedContentParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1112,7 +1112,7 @@ public final class Caches {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForCreate(response, config);
     }
   }
@@ -1187,7 +1187,7 @@ public final class Caches {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForGet(response, config);
     }
   }
@@ -1281,7 +1281,7 @@ public final class Caches {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForDelete(response, config);
     }
   }
@@ -1357,7 +1357,7 @@ public final class Caches {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "patch", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForUpdate(response, config);
     }
   }
@@ -1441,7 +1441,7 @@ public final class Caches {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateList(response, config);
     }
   }

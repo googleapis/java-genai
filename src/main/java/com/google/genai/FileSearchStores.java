@@ -67,7 +67,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -81,7 +81,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createFileSearchStoreConfigToMldev(
@@ -95,7 +95,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"force"}) != null) {
       Common.setValueByPath(
@@ -109,7 +109,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -130,7 +130,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -143,7 +143,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"customMetadata"}) != null) {
       Common.setValueByPath(
@@ -164,7 +164,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -208,7 +208,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fileSearchStoreName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -236,7 +236,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -263,7 +263,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -284,7 +284,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listFileSearchStoresConfigToMldev(
@@ -298,7 +298,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -325,7 +325,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
@@ -361,7 +361,7 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fileSearchStoreName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -383,7 +383,7 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreResumableResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -461,7 +461,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForCreate(response, config);
     }
   }
@@ -534,7 +534,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForGet(response, config);
     }
   }
@@ -588,7 +588,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return;
     }
   }
@@ -664,7 +664,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateList(response, config);
     }
   }
@@ -765,7 +765,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateUploadToFileSearchStore(response, config);
     }
   }
@@ -847,7 +847,7 @@ public final class FileSearchStores {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForImportFile(response, config);
     }
   }

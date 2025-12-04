@@ -16,11 +16,13 @@
 
 package com.google.genai;
 
+import com.google.api.core.InternalApi;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 
 /** The API response contains a response to a call to the GenAI APIs. */
-abstract class ApiResponse implements AutoCloseable {
+@InternalApi
+public abstract class ApiResponse implements AutoCloseable {
   /** Gets the ResponseBody. */
   public abstract ResponseBody getBody();
 

@@ -44,7 +44,7 @@ public final class AsyncDocuments {
   public CompletableFuture<Document> get(String name, GetDocumentConfig config) {
     BuiltRequest builtRequest = documents.buildRequestForGet(name, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -56,7 +56,8 @@ public final class AsyncDocuments {
   public CompletableFuture<Void> delete(String name, DeleteDocumentConfig config) {
     BuiltRequest builtRequest = documents.buildRequestForDelete(name, config);
     return this.apiClient
-        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest(
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenAccept(
             response -> {
               try (ApiResponse res = response) {}
@@ -66,7 +67,7 @@ public final class AsyncDocuments {
   CompletableFuture<ListDocumentsResponse> privateList(String parent, ListDocumentsConfig config) {
     BuiltRequest builtRequest = documents.buildRequestForPrivateList(parent, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

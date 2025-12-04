@@ -84,7 +84,7 @@ public final class AsyncModels {
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContent(model, contents, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -98,7 +98,7 @@ public final class AsyncModels {
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContentStream(model, contents, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               return models.processResponseForPrivateGenerateContentStream(response, config);
@@ -109,7 +109,7 @@ public final class AsyncModels {
       String model, List<Content> contents, EmbedContentConfig config) {
     BuiltRequest builtRequest = models.buildRequestForPrivateEmbedContent(model, contents, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -123,7 +123,7 @@ public final class AsyncModels {
       String model, String prompt, GenerateImagesConfig config) {
     BuiltRequest builtRequest = models.buildRequestForPrivateGenerateImages(model, prompt, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -141,7 +141,7 @@ public final class AsyncModels {
     BuiltRequest builtRequest =
         models.buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -156,7 +156,7 @@ public final class AsyncModels {
     BuiltRequest builtRequest =
         models.buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -189,7 +189,7 @@ public final class AsyncModels {
       String model, RecontextImageSource source, RecontextImageConfig config) {
     BuiltRequest builtRequest = models.buildRequestForRecontextImage(model, source, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -215,7 +215,7 @@ public final class AsyncModels {
       String model, SegmentImageSource source, SegmentImageConfig config) {
     BuiltRequest builtRequest = models.buildRequestForSegmentImage(model, source, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -232,7 +232,7 @@ public final class AsyncModels {
   public CompletableFuture<Model> get(String model, GetModelConfig config) {
     BuiltRequest builtRequest = models.buildRequestForGet(model, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -244,7 +244,7 @@ public final class AsyncModels {
   CompletableFuture<ListModelsResponse> privateList(ListModelsConfig config) {
     BuiltRequest builtRequest = models.buildRequestForPrivateList(config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -267,7 +267,7 @@ public final class AsyncModels {
   public CompletableFuture<Model> update(String model, UpdateModelConfig config) {
     BuiltRequest builtRequest = models.buildRequestForUpdate(model, config);
     return this.apiClient
-        .asyncRequest("patch", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("patch", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -284,7 +284,8 @@ public final class AsyncModels {
   public CompletableFuture<DeleteModelResponse> delete(String model, DeleteModelConfig config) {
     BuiltRequest builtRequest = models.buildRequestForDelete(model, config);
     return this.apiClient
-        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest(
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -307,7 +308,7 @@ public final class AsyncModels {
       String model, List<Content> contents, CountTokensConfig config) {
     BuiltRequest builtRequest = models.buildRequestForCountTokens(model, contents, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -330,7 +331,7 @@ public final class AsyncModels {
       String model, List<Content> contents, ComputeTokensConfig config) {
     BuiltRequest builtRequest = models.buildRequestForComputeTokens(model, contents, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -350,7 +351,7 @@ public final class AsyncModels {
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

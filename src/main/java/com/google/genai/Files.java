@@ -72,7 +72,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"file"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -85,7 +85,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -98,7 +98,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -111,7 +111,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -124,7 +124,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -137,7 +137,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -158,7 +158,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listFilesConfigToMldev(
@@ -172,7 +172,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -276,7 +276,7 @@ public final class Files {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateList(response, config);
     }
   }
@@ -370,7 +370,7 @@ public final class Files {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateCreate(response, config);
     }
   }
@@ -450,7 +450,7 @@ public final class Files {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForGet(response, config);
     }
   }
@@ -544,7 +544,7 @@ public final class Files {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForDelete(response, config);
     }
   }

@@ -34,7 +34,7 @@ import okhttp3.Response;
 public class HttpApiClient extends ApiClient {
 
   /** Constructs an ApiClient for Google AI APIs. */
-  HttpApiClient(
+  public HttpApiClient(
       Optional<String> apiKey,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions) {
@@ -42,7 +42,7 @@ public class HttpApiClient extends ApiClient {
   }
 
   /** Constructs an ApiClient for Vertex AI APIs. */
-  HttpApiClient(
+  public HttpApiClient(
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,

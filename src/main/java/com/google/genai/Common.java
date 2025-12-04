@@ -19,6 +19,7 @@ package com.google.genai;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.api.core.InternalApi;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.HttpOptions;
 import java.io.UnsupportedEncodingException;
@@ -33,21 +34,34 @@ import java.util.StringJoiner;
 import org.jspecify.annotations.Nullable;
 
 /** Common utility methods for the GenAI SDK. */
-final class Common {
+@InternalApi
+public final class Common {
 
   private Common() {}
 
   /** A class that holds the path, body, and http options of an API request. */
-  static class BuiltRequest {
+  public static class BuiltRequest {
     final String path;
     final String body;
     final Optional<HttpOptions> httpOptions;
 
     /** Constructor for BuiltRequest. */
-    BuiltRequest(String path, String body, Optional<HttpOptions> httpOptions) {
+    public BuiltRequest(String path, String body, Optional<HttpOptions> httpOptions) {
       this.path = path;
       this.body = body;
       this.httpOptions = httpOptions;
+    }
+
+    public String body() {
+      return body;
+    }
+
+    public String path() {
+      return path;
+    }
+
+    public Optional<HttpOptions> httpOptions() {
+      return httpOptions;
     }
   }
 
@@ -61,7 +75,7 @@ final class Common {
    * <p>setValueByPath({'a': {'b':[{'c': v1}, {'c': v2}]}}, ['a', 'b[]', 'd'], v3) -> {'a': {'b':
    * [{'c': v1, 'd': v3}, {'c': v2,'d': v3}]}}
    */
-  static void setValueByPath(ObjectNode jsonObject, String[] path, Object value) {
+  public static void setValueByPath(ObjectNode jsonObject, String[] path, Object value) {
     if (path == null || path.length == 0) {
       throw new IllegalArgumentException("Path cannot be empty.");
     }
@@ -134,7 +148,7 @@ final class Common {
    *
    * <p>getValueByPath({'a': {'b': [{'c': v1}, {'c': v2}]}}, ['a', 'b[]', 'c']) -> [v1, v2]
    */
-  static @Nullable Object getValueByPath(JsonNode object, String[] keys) {
+  public static @Nullable Object getValueByPath(JsonNode object, String[] keys) {
     return getValueByPath(object, keys, null);
   }
 
@@ -145,7 +159,7 @@ final class Common {
    *
    * <p>getValueByPath({'a': {'c': v}}, ['a', 'b'], 'default') -> 'default'
    */
-  static @Nullable Object getValueByPath(
+  public static @Nullable Object getValueByPath(
       JsonNode object, String[] keys, @Nullable Object defaultValue) {
     if (object == null || keys == null) {
       return defaultValue;
@@ -171,7 +185,7 @@ final class Common {
           if (keys.length - 1 == i) {
             return arrayNode;
           }
-          ArrayNode result = JsonSerializable.objectMapper.createArrayNode();
+          ArrayNode result = JsonSerializable.objectMapper().createArrayNode();
           for (JsonNode element : arrayNode) {
             JsonNode node =
                 (JsonNode)
@@ -207,7 +221,7 @@ final class Common {
     return currentObject;
   }
 
-  static String formatMap(String template, JsonNode data) {
+  public static String formatMap(String template, JsonNode data) {
     if (data == null) {
       return template;
     }
@@ -224,7 +238,7 @@ final class Common {
     return template;
   }
 
-  static boolean isZero(Object obj) {
+  public static boolean isZero(Object obj) {
     if (obj == null) {
       return true;
     }
@@ -281,7 +295,7 @@ final class Common {
   }
 
   /** Converts a snake_case string to camelCase. */
-  static String snakeToCamel(String str) {
+  public static String snakeToCamel(String str) {
     if (str == null || str.isEmpty()) {
       return str;
     }
@@ -306,7 +320,7 @@ final class Common {
    * 'requests[].request.*'} ) -> {'requests': [{'request': {'content': v1}}, {'request':
    * {'content': v2}}]}
    */
-  static void moveValueByPath(JsonNode data, Map<String, String> paths) {
+  public static void moveValueByPath(JsonNode data, Map<String, String> paths) {
     if (data == null || paths == null) {
       return;
     }
@@ -355,7 +369,7 @@ final class Common {
    * @param keyIdx The current index in the key arrays
    * @param excludeKeys Keys to exclude when processing wildcards
    */
-  private static void moveValueRecursive(
+  public static void moveValueRecursive(
       JsonNode data,
       String[] sourceKeys,
       String[] destKeys,

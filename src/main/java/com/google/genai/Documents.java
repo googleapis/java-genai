@@ -46,7 +46,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteDocumentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"force"}) != null) {
       Common.setValueByPath(
@@ -60,7 +60,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteDocumentParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -81,7 +81,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getDocumentParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -94,7 +94,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -115,7 +115,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parent"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -136,7 +136,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -229,7 +229,7 @@ public final class Documents {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForGet(response, config);
     }
   }
@@ -282,7 +282,7 @@ public final class Documents {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return;
     }
   }
@@ -360,7 +360,7 @@ public final class Documents {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateList(response, config);
     }
   }

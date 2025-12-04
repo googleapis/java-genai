@@ -60,7 +60,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -74,7 +74,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -87,7 +87,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -100,7 +100,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -114,7 +114,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"validationDataset"}))) {
       throw new IllegalArgumentException(
@@ -195,7 +195,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     JsonNode discriminatorValidationDataset =
         (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
@@ -386,7 +386,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -425,7 +425,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -463,7 +463,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode evaluationConfigFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"metrics"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -491,7 +491,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode evaluationConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"metrics"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -519,7 +519,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getTuningJobParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -533,7 +533,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getTuningJobParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -547,7 +547,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -576,7 +576,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -605,7 +605,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listTuningJobsConfigToMldev(
@@ -621,7 +621,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listTuningJobsConfigToVertex(
@@ -636,7 +636,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -668,7 +668,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -700,7 +700,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tunedModelFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -721,7 +721,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
       throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
     }
@@ -744,7 +744,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     JsonNode discriminatorGcsUri =
         (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
@@ -796,7 +796,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -875,7 +875,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1066,7 +1066,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1108,7 +1108,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningValidationDatasetToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1206,7 +1206,7 @@ public final class Tunings {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateGet(response, config);
     }
   }
@@ -1290,7 +1290,7 @@ public final class Tunings {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateList(response, config);
     }
   }
@@ -1384,7 +1384,7 @@ public final class Tunings {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForCancel(response, config);
     }
   }
@@ -1482,7 +1482,7 @@ public final class Tunings {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateTune(response, config);
     }
   }
@@ -1586,7 +1586,7 @@ public final class Tunings {
 
     try (ApiResponse response =
         this.apiClient.request(
-            "post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)) {
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
       return processResponseForPrivateTuneMldev(response, config);
     }
   }

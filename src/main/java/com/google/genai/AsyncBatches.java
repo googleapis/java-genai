@@ -51,7 +51,7 @@ public final class AsyncBatches {
       String model, BatchJobSource src, CreateBatchJobConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForPrivateCreate(model, src, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -64,7 +64,7 @@ public final class AsyncBatches {
       String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForPrivateCreateEmbeddings(model, src, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -85,7 +85,7 @@ public final class AsyncBatches {
   public CompletableFuture<BatchJob> get(String name, GetBatchJobConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForGet(name, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -105,7 +105,7 @@ public final class AsyncBatches {
   public CompletableFuture<Void> cancel(String name, CancelBatchJobConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForCancel(name, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenAccept(
             response -> {
               try (ApiResponse res = response) {}
@@ -115,7 +115,7 @@ public final class AsyncBatches {
   CompletableFuture<ListBatchJobsResponse> privateList(ListBatchJobsConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForPrivateList(config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -135,7 +135,8 @@ public final class AsyncBatches {
   public CompletableFuture<DeleteResourceJob> delete(String name, DeleteBatchJobConfig config) {
     BuiltRequest builtRequest = batches.buildRequestForDelete(name, config);
     return this.apiClient
-        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest(
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

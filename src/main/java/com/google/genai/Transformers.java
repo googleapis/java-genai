@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+import com.google.api.core.InternalApi;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.Blob;
 import com.google.genai.types.Content;
@@ -50,7 +51,8 @@ import java.util.regex.Pattern;
 import org.jspecify.annotations.Nullable;
 
 /** Transformers for GenAI SDK. */
-final class Transformers {
+@InternalApi
+public final class Transformers {
   private static final Logger logger = Logger.getLogger(Transformers.class.getName());
 
   private Transformers() {}

@@ -52,7 +52,7 @@ public final class AsyncFiles {
   CompletableFuture<ListFilesResponse> privateList(ListFilesConfig config) {
     BuiltRequest builtRequest = files.buildRequestForPrivateList(config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -64,7 +64,7 @@ public final class AsyncFiles {
   CompletableFuture<CreateFileResponse> privateCreate(File file, CreateFileConfig config) {
     BuiltRequest builtRequest = files.buildRequestForPrivateCreate(file, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -83,7 +83,7 @@ public final class AsyncFiles {
   public CompletableFuture<File> get(String name, GetFileConfig config) {
     BuiltRequest builtRequest = files.buildRequestForGet(name, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -102,7 +102,8 @@ public final class AsyncFiles {
   public CompletableFuture<DeleteFileResponse> delete(String name, DeleteFileConfig config) {
     BuiltRequest builtRequest = files.buildRequestForDelete(name, config);
     return this.apiClient
-        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest(
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

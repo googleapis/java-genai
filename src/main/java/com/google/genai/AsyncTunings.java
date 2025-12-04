@@ -50,7 +50,7 @@ public final class AsyncTunings {
   CompletableFuture<TuningJob> privateGet(String name, GetTuningJobConfig config) {
     BuiltRequest builtRequest = tunings.buildRequestForPrivateGet(name, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -62,7 +62,7 @@ public final class AsyncTunings {
   CompletableFuture<ListTuningJobsResponse> privateList(ListTuningJobsConfig config) {
     BuiltRequest builtRequest = tunings.buildRequestForPrivateList(config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -82,7 +82,7 @@ public final class AsyncTunings {
       String name, CancelTuningJobConfig config) {
     BuiltRequest builtRequest = tunings.buildRequestForCancel(name, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -99,7 +99,7 @@ public final class AsyncTunings {
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -116,7 +116,7 @@ public final class AsyncTunings {
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {

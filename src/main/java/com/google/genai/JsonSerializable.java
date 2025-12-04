@@ -142,7 +142,7 @@ public abstract class JsonSerializable {
   }
 
   /** Serializes an object to a Json string. */
-  static String toJsonString(Object object) {
+  public static String toJsonString(Object object) {
     try {
       return objectMapper.writeValueAsString(object);
     } catch (JsonProcessingException e) {
@@ -151,14 +151,13 @@ public abstract class JsonSerializable {
   }
 
   /** Serializes an object to a JsonNode. */
-  static JsonNode toJsonNode(Object object) {
+  public static JsonNode toJsonNode(Object object) {
     return objectMapper.valueToTree(object);
   }
 
   /** Deserializes a Json string to an object of the given type. This is for internal use only. */
   @InternalApi
-  protected static <T extends JsonSerializable> T fromJsonString(
-      String jsonString, Class<T> clazz) {
+  public static <T extends JsonSerializable> T fromJsonString(String jsonString, Class<T> clazz) {
     try {
       return objectMapper.readValue(jsonString, clazz);
     } catch (JsonProcessingException e) {
@@ -168,7 +167,7 @@ public abstract class JsonSerializable {
 
   /** Deserializes a JsonNode to an object of the given type. */
   @InternalApi
-  protected static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
+  public static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
     try {
       return objectMapper.treeToValue(jsonNode, clazz);
     } catch (JsonProcessingException e) {
@@ -195,5 +194,9 @@ public abstract class JsonSerializable {
    */
   public static void setMaxReadLength(int maxReadLength) {
     configureStreamReadConstraints(maxReadLength);
+  }
+
+  public static ObjectMapper objectMapper() {
+    return objectMapper;
   }
 }

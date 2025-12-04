@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.api.core.InternalApi;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.errors.GenAiIOException;
@@ -51,8 +52,9 @@ import okhttp3.RequestBody;
 import okio.Buffer;
 
 /** Base client for the HTTP APIs. */
+@InternalApi
 @ExcludeFromGeneratedCoverageReport
-final class ReplayApiClient extends ApiClient {
+public final class ReplayApiClient extends ApiClient {
   private final String clientMode;
   private final String replaysDirectory;
   private String replayId;
@@ -60,7 +62,7 @@ final class ReplayApiClient extends ApiClient {
   private List<ReplayInteraction> replayInteractions;
 
   /** Constructs an ApiClient for Google AI APIs. */
-  ReplayApiClient(
+  public ReplayApiClient(
       Optional<String> apiKey,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions,
@@ -78,7 +80,7 @@ final class ReplayApiClient extends ApiClient {
   }
 
   /** Constructs an ApiClient for Vertex AI APIs. */
-  ReplayApiClient(
+  public ReplayApiClient(
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,
@@ -108,7 +110,7 @@ final class ReplayApiClient extends ApiClient {
   }
 
   /** Initializes the replay session. */
-  void initializeReplaySession(String replayId) {
+  public void initializeReplaySession(String replayId) {
     this.replayId = replayId;
     String replayPath = this.replaysDirectory + "/" + this.replayId;
     String replayData = readString(Paths.get(replayPath));

@@ -61,7 +61,7 @@ public final class AsyncFileSearchStores {
   public CompletableFuture<FileSearchStore> create(CreateFileSearchStoreConfig config) {
     BuiltRequest builtRequest = fileSearchStores.buildRequestForCreate(config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -73,7 +73,7 @@ public final class AsyncFileSearchStores {
   public CompletableFuture<FileSearchStore> get(String name, GetFileSearchStoreConfig config) {
     BuiltRequest builtRequest = fileSearchStores.buildRequestForGet(name, config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -85,7 +85,8 @@ public final class AsyncFileSearchStores {
   public CompletableFuture<Void> delete(String name, DeleteFileSearchStoreConfig config) {
     BuiltRequest builtRequest = fileSearchStores.buildRequestForDelete(name, config);
     return this.apiClient
-        .asyncRequest("delete", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest(
+            "delete", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenAccept(
             response -> {
               try (ApiResponse res = response) {}
@@ -95,7 +96,7 @@ public final class AsyncFileSearchStores {
   CompletableFuture<ListFileSearchStoresResponse> privateList(ListFileSearchStoresConfig config) {
     BuiltRequest builtRequest = fileSearchStores.buildRequestForPrivateList(config);
     return this.apiClient
-        .asyncRequest("get", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -109,7 +110,7 @@ public final class AsyncFileSearchStores {
     BuiltRequest builtRequest =
         fileSearchStores.buildRequestForPrivateUploadToFileSearchStore(fileSearchStoreName, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
@@ -124,7 +125,7 @@ public final class AsyncFileSearchStores {
     BuiltRequest builtRequest =
         fileSearchStores.buildRequestForImportFile(fileSearchStoreName, fileName, config);
     return this.apiClient
-        .asyncRequest("post", builtRequest.path, builtRequest.body, builtRequest.httpOptions)
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
