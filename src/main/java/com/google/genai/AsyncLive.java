@@ -36,8 +36,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.jspecify.annotations.Nullable;
 
 /**
  * AsyncLive provides asynchronous access to a bidirectional GenAI live session. The live module is
@@ -46,6 +48,7 @@ import org.java_websocket.handshake.ServerHandshake;
 public class AsyncLive {
 
   private final ApiClient apiClient;
+  private static final Logger logger = Logger.getLogger(AsyncLive.class.getName());
 
   AsyncLive(ApiClient apiClient) {
     this.apiClient = apiClient;
@@ -99,10 +102,25 @@ public class AsyncLive {
               .toString();
 
       if (!apiClient.vertexAI()) {
+        String method;
+        if (apiClient.apiKey().startsWith("auth_tokens/")) {
+          logger.warning(
+              "Warning: Ephemeral token support is experimental and may change in future"
+                  + " versions.");
+          if (!apiClient.httpOptions.apiVersion().orElse("v1beta").equals("v1alpha")) {
+            logger.warning(
+                "Warning: The SDK's ephemeral token support is in v1alpha only. Please use  client"
+                    + " = Client.builder().httpOptions(HttpOptions.builder().apiVersion(\"v1alpha\").build()).build()"
+                    + " before session connection.");
+          }
+          method = "BidiGenerateContentConstrained";
+        } else {
+          method = "BidiGenerateContent";
+        }
         return new URI(
             String.format(
-                "%s/ws/google.ai.generativelanguage.%s.GenerativeService.BidiGenerateContent",
-                wsBaseUrl, apiClient.httpOptions.apiVersion().orElse("v1beta")));
+                "%s/ws/google.ai.generativelanguage.%s.GenerativeService.%s",
+                wsBaseUrl, apiClient.httpOptions.apiVersion().orElse("v1beta"), method));
       } else {
         return new URI(
             String.format(
@@ -129,11 +147,14 @@ public class AsyncLive {
         throw new GenAiIOException("Failed to refresh credentials for Vertex AI.", e);
       }
     } else {
-      String apiKey = apiClient.apiKey();
-      if (apiKey == null || apiKey.isEmpty()) {
+      @Nullable String apiKey = apiClient.apiKey();
+      if (apiKey == null) {
         throw new IllegalArgumentException("Missing API key in the client.");
+      } else if (apiKey.startsWith("auth_tokens/")) {
+        headers.put("Authorization", "Token " + apiKey);
+      } else {
+        headers.put("x-goog-api-key", apiKey);
       }
-      headers.put("x-goog-api-key", apiKey);
     }
     return headers;
   }

@@ -38,6 +38,7 @@ public final class Client implements AutoCloseable {
     public final AsyncLive live;
     public final AsyncChats chats;
     public final AsyncFiles files;
+    public final AsyncTokens authTokens;
     public final AsyncTunings tunings;
     public final AsyncFileSearchStores fileSearchStores;
 
@@ -49,6 +50,7 @@ public final class Client implements AutoCloseable {
       this.live = new AsyncLive(apiClient);
       this.files = new AsyncFiles(apiClient);
       this.chats = new AsyncChats(apiClient);
+      this.authTokens = new AsyncTokens(apiClient);
       this.tunings = new AsyncTunings(apiClient);
       this.fileSearchStores = new AsyncFileSearchStores(apiClient);
     }
@@ -63,6 +65,7 @@ public final class Client implements AutoCloseable {
   public final Chats chats;
   public final Files files;
   public final Async async;
+  public final Tokens authTokens;
   public final Tunings tunings;
   public final FileSearchStores fileSearchStores;
 
@@ -274,6 +277,7 @@ public final class Client implements AutoCloseable {
     chats = new Chats(this.apiClient);
     async = new Async(this.apiClient);
     files = new Files(this.apiClient);
+    authTokens = new Tokens(this.apiClient);
     tunings = new Tunings(this.apiClient);
     fileSearchStores = new FileSearchStores(this.apiClient);
   }
