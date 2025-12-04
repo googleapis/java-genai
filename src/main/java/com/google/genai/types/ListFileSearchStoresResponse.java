@@ -38,7 +38,10 @@ public abstract class ListFileSearchStoresResponse extends JsonSerializable {
   @JsonProperty("sdkHttpResponse")
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
-  /** */
+  /**
+   * A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted,
+   * there are no more pages.
+   */
   @JsonProperty("nextPageToken")
   public abstract Optional<String> nextPageToken();
 
@@ -97,7 +100,8 @@ public abstract class ListFileSearchStoresResponse extends JsonSerializable {
     /**
      * Setter for nextPageToken.
      *
-     * <p>nextPageToken:
+     * <p>nextPageToken: A token, which can be sent as `page_token` to retrieve the next page. If
+     * this field is omitted, there are no more pages.
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);

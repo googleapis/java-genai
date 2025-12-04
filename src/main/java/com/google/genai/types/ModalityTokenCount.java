@@ -34,7 +34,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
   @JsonProperty("modality")
   public abstract Optional<MediaModality> modality();
 
-  /** Number of tokens. */
+  /** The number of tokens counted for this modality. */
   @JsonProperty("tokenCount")
   public abstract Optional<Integer> tokenCount();
 
@@ -97,7 +97,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
     /**
      * Setter for tokenCount.
      *
-     * <p>tokenCount: Number of tokens.
+     * <p>tokenCount: The number of tokens counted for this modality.
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Integer tokenCount);

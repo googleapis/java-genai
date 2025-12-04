@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Encapsulates a review snippet. This data type is not supported in Gemini API. */
+/** Encapsulates a review snippet. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSourcesReviewSnippet.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSourcesReviewSnippet extends JsonSerializable {

@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Configuration for a single speaker in a multi speaker setup. */
+/** Configuration for a single speaker in a multi-speaker setup. */
 @AutoValue
 @JsonDeserialize(builder = SpeakerVoiceConfig.Builder.class)
 public abstract class SpeakerVoiceConfig extends JsonSerializable {
