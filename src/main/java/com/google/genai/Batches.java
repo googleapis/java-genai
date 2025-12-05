@@ -65,46 +65,6 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"apiKey"},
-          Common.getValueByPath(fromObject, new String[] {"apiKey"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"}))) {
-      throw new IllegalArgumentException("apiKeyConfig parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authType"}))) {
-      throw new IllegalArgumentException("authType parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}))) {
-      throw new IllegalArgumentException(
-          "googleServiceAccountConfig parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}))) {
-      throw new IllegalArgumentException(
-          "httpBasicAuthConfig parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oauthConfig"}))) {
-      throw new IllegalArgumentException("oauthConfig parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oidcConfig"}))) {
-      throw new IllegalArgumentException("oidcConfig parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobDestinationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
@@ -567,18 +527,18 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"finishReason"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"groundingMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"avgLogprobs"},
           Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"groundingMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"index"}) != null) {
@@ -1264,11 +1224,8 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSpeechConfig(
-                      Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
-              toObject));
+          Transformers.tSpeechConfig(
+              Common.getValueByPath(fromObject, new String[] {"speechConfig"})));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
@@ -1382,14 +1339,8 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"authConfig"},
-          authConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
-              toObject));
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
+      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
@@ -1405,14 +1356,14 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
-      throw new IllegalArgumentException(
-          "blockingConfidence parameter is not supported in Gemini API.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
       throw new IllegalArgumentException(
           "excludeDomains parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
+      throw new IllegalArgumentException(
+          "blockingConfidence parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -1451,16 +1402,6 @@ public final class Batches {
         Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}))) {
       throw new IllegalArgumentException(
           "outputCompressionQuality parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
-      throw new IllegalArgumentException(
-          "imageOutputOptions parameter is not supported in Gemini API.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"personGeneration"}))) {
-      throw new IllegalArgumentException(
-          "personGeneration parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -1685,24 +1626,6 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode multiSpeakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(speakerVoiceConfigToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
@@ -1791,13 +1714,6 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"partMetadata"},
-          Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
-    }
-
     return toObject;
   }
 
@@ -1820,62 +1736,6 @@ public final class Batches {
           toObject,
           new String[] {"threshold"},
           Common.getValueByPath(fromObject, new String[] {"threshold"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speakerVoiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"speaker"},
-          Common.getValueByPath(fromObject, new String[] {"speaker"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"multiSpeakerVoiceConfig"},
-          multiSpeakerVoiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
     }
 
     return toObject;
@@ -1939,16 +1799,6 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleMaps"},
-          googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1959,6 +1809,16 @@ public final class Batches {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
       throw new IllegalArgumentException(
           "enterpriseWebSearch parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
@@ -1976,24 +1836,6 @@ public final class Batches {
           toObject,
           new String[] {"urlContext"},
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"}))) {
-      throw new IllegalArgumentException(
-          "replicatedVoiceConfig parameter is not supported in Gemini API.");
     }
 
     return toObject;

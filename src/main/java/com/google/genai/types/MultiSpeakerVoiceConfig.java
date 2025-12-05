@@ -30,14 +30,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Configuration for a multi-speaker text-to-speech request. */
+/** The configuration for the multi-speaker setup. This data type is not supported in Vertex AI. */
 @AutoValue
 @JsonDeserialize(builder = MultiSpeakerVoiceConfig.Builder.class)
 public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
-  /**
-   * Required. A list of configurations for the voices of the speakers. Exactly two speaker voice
-   * configurations must be provided.
-   */
+  /** Required. All the enabled speaker voices. */
   @JsonProperty("speakerVoiceConfigs")
   public abstract Optional<List<SpeakerVoiceConfig>> speakerVoiceConfigs();
 
@@ -62,8 +59,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs.
      *
-     * <p>speakerVoiceConfigs: Required. A list of configurations for the voices of the speakers.
-     * Exactly two speaker voice configurations must be provided.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     @JsonProperty("speakerVoiceConfigs")
     public abstract Builder speakerVoiceConfigs(List<SpeakerVoiceConfig> speakerVoiceConfigs);
@@ -71,8 +67,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs.
      *
-     * <p>speakerVoiceConfigs: Required. A list of configurations for the voices of the speakers.
-     * Exactly two speaker voice configurations must be provided.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     @CanIgnoreReturnValue
     public Builder speakerVoiceConfigs(SpeakerVoiceConfig... speakerVoiceConfigs) {
@@ -82,8 +77,7 @@ public abstract class MultiSpeakerVoiceConfig extends JsonSerializable {
     /**
      * Setter for speakerVoiceConfigs builder.
      *
-     * <p>speakerVoiceConfigs: Required. A list of configurations for the voices of the speakers.
-     * Exactly two speaker voice configurations must be provided.
+     * <p>speakerVoiceConfigs: Required. All the enabled speaker voices.
      */
     @CanIgnoreReturnValue
     public Builder speakerVoiceConfigs(SpeakerVoiceConfig.Builder... speakerVoiceConfigsBuilders) {

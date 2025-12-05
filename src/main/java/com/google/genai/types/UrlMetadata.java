@@ -26,15 +26,15 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The metadata for a single URL retrieval. */
+/** Context of the a single url retrieval. */
 @AutoValue
 @JsonDeserialize(builder = UrlMetadata.Builder.class)
 public abstract class UrlMetadata extends JsonSerializable {
-  /** The URL retrieved by the tool. */
+  /** Retrieved url by the tool. */
   @JsonProperty("retrievedUrl")
   public abstract Optional<String> retrievedUrl();
 
-  /** The status of the URL retrieval. */
+  /** Status of the url retrieval. */
   @JsonProperty("urlRetrievalStatus")
   public abstract Optional<UrlRetrievalStatus> urlRetrievalStatus();
 
@@ -59,7 +59,7 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for retrievedUrl.
      *
-     * <p>retrievedUrl: The URL retrieved by the tool.
+     * <p>retrievedUrl: Retrieved url by the tool.
      */
     @JsonProperty("retrievedUrl")
     public abstract Builder retrievedUrl(String retrievedUrl);
@@ -77,7 +77,7 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for urlRetrievalStatus.
      *
-     * <p>urlRetrievalStatus: The status of the URL retrieval.
+     * <p>urlRetrievalStatus: Status of the url retrieval.
      */
     @JsonProperty("urlRetrievalStatus")
     public abstract Builder urlRetrievalStatus(UrlRetrievalStatus urlRetrievalStatus);
@@ -95,7 +95,7 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for urlRetrievalStatus given a known enum.
      *
-     * <p>urlRetrievalStatus: The status of the URL retrieval.
+     * <p>urlRetrievalStatus: Status of the url retrieval.
      */
     @CanIgnoreReturnValue
     public Builder urlRetrievalStatus(UrlRetrievalStatus.Known knownType) {
@@ -105,7 +105,7 @@ public abstract class UrlMetadata extends JsonSerializable {
     /**
      * Setter for urlRetrievalStatus given a string.
      *
-     * <p>urlRetrievalStatus: The status of the URL retrieval.
+     * <p>urlRetrievalStatus: Status of the url retrieval.
      */
     @CanIgnoreReturnValue
     public Builder urlRetrievalStatus(String urlRetrievalStatus) {

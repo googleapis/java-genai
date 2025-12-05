@@ -32,10 +32,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = TuningDataStats.Builder.class)
 public abstract class TuningDataStats extends JsonSerializable {
-  /**
-   * Output only. Statistics for distillation prompt dataset. These statistics do not include the
-   * responses sampled from the teacher model.
-   */
+  /** Output only. Statistics for distillation. */
   @JsonProperty("distillationDataStats")
   public abstract Optional<DistillationDataStats> distillationDataStats();
 
@@ -68,8 +65,7 @@ public abstract class TuningDataStats extends JsonSerializable {
     /**
      * Setter for distillationDataStats.
      *
-     * <p>distillationDataStats: Output only. Statistics for distillation prompt dataset. These
-     * statistics do not include the responses sampled from the teacher model.
+     * <p>distillationDataStats: Output only. Statistics for distillation.
      */
     @JsonProperty("distillationDataStats")
     public abstract Builder distillationDataStats(DistillationDataStats distillationDataStats);
@@ -77,8 +73,7 @@ public abstract class TuningDataStats extends JsonSerializable {
     /**
      * Setter for distillationDataStats builder.
      *
-     * <p>distillationDataStats: Output only. Statistics for distillation prompt dataset. These
-     * statistics do not include the responses sampled from the teacher model.
+     * <p>distillationDataStats: Output only. Statistics for distillation.
      */
     @CanIgnoreReturnValue
     public Builder distillationDataStats(

@@ -30,17 +30,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = PartialArg.Builder.class)
 public abstract class PartialArg extends JsonSerializable {
-  /** Optional. Represents a boolean value. */
-  @JsonProperty("boolValue")
-  public abstract Optional<Boolean> boolValue();
-
-  /**
-   * Required. A JSON Path (RFC 9535) to the argument being streamed.
-   * https://datatracker.ietf.org/doc/html/rfc9535. e.g. "$.foo.bar[0].data".
-   */
-  @JsonProperty("jsonPath")
-  public abstract Optional<String> jsonPath();
-
   /** Optional. Represents a null value. */
   @JsonProperty("nullValue")
   public abstract Optional<NullValue> nullValue();
@@ -52,6 +41,17 @@ public abstract class PartialArg extends JsonSerializable {
   /** Optional. Represents a string value. */
   @JsonProperty("stringValue")
   public abstract Optional<String> stringValue();
+
+  /** Optional. Represents a boolean value. */
+  @JsonProperty("boolValue")
+  public abstract Optional<Boolean> boolValue();
+
+  /**
+   * Required. A JSON Path (RFC 9535) to the argument being streamed.
+   * https://datatracker.ietf.org/doc/html/rfc9535. e.g. "$.foo.bar[0].data".
+   */
+  @JsonProperty("jsonPath")
+  public abstract Optional<String> jsonPath();
 
   /**
    * Optional. Whether this is not the last part of the same json_path. If true, another PartialArg
@@ -76,43 +76,6 @@ public abstract class PartialArg extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_PartialArg.Builder();
-    }
-
-    /**
-     * Setter for boolValue.
-     *
-     * <p>boolValue: Optional. Represents a boolean value.
-     */
-    @JsonProperty("boolValue")
-    public abstract Builder boolValue(boolean boolValue);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder boolValue(Optional<Boolean> boolValue);
-
-    /** Clears the value of boolValue field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearBoolValue() {
-      return boolValue(Optional.empty());
-    }
-
-    /**
-     * Setter for jsonPath.
-     *
-     * <p>jsonPath: Required. A JSON Path (RFC 9535) to the argument being streamed.
-     * https://datatracker.ietf.org/doc/html/rfc9535. e.g. "$.foo.bar[0].data".
-     */
-    @JsonProperty("jsonPath")
-    public abstract Builder jsonPath(String jsonPath);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder jsonPath(Optional<String> jsonPath);
-
-    /** Clears the value of jsonPath field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearJsonPath() {
-      return jsonPath(Optional.empty());
     }
 
     /**
@@ -187,6 +150,43 @@ public abstract class PartialArg extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearStringValue() {
       return stringValue(Optional.empty());
+    }
+
+    /**
+     * Setter for boolValue.
+     *
+     * <p>boolValue: Optional. Represents a boolean value.
+     */
+    @JsonProperty("boolValue")
+    public abstract Builder boolValue(boolean boolValue);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder boolValue(Optional<Boolean> boolValue);
+
+    /** Clears the value of boolValue field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBoolValue() {
+      return boolValue(Optional.empty());
+    }
+
+    /**
+     * Setter for jsonPath.
+     *
+     * <p>jsonPath: Required. A JSON Path (RFC 9535) to the argument being streamed.
+     * https://datatracker.ietf.org/doc/html/rfc9535. e.g. "$.foo.bar[0].data".
+     */
+    @JsonProperty("jsonPath")
+    public abstract Builder jsonPath(String jsonPath);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder jsonPath(Optional<String> jsonPath);
+
+    /** Clears the value of jsonPath field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearJsonPath() {
+      return jsonPath(Optional.empty());
     }
 
     /**

@@ -57,48 +57,30 @@ public abstract class Candidate extends JsonSerializable {
   @JsonProperty("finishReason")
   public abstract Optional<FinishReason> finishReason();
 
-  /**
-   * Output only. Grounding metadata for the candidate.
-   *
-   * <p>This field is populated for `GenerateContent` calls.
-   */
-  @JsonProperty("groundingMetadata")
-  public abstract Optional<GroundingMetadata> groundingMetadata();
-
-  /**
-   * Output only. The average log probability of the tokens in this candidate. This is a
-   * length-normalized score that can be used to compare the quality of candidates of different
-   * lengths. A higher average log probability suggests a more confident and coherent response.
-   */
+  /** Output only. Average log probability score of the candidate. */
   @JsonProperty("avgLogprobs")
   public abstract Optional<Double> avgLogprobs();
 
-  /**
-   * Output only. The 0-based index of this candidate in the list of generated responses. This is
-   * useful for distinguishing between multiple candidates when `candidate_count` > 1.
-   */
+  /** Output only. Metadata specifies sources used to ground generated content. */
+  @JsonProperty("groundingMetadata")
+  public abstract Optional<GroundingMetadata> groundingMetadata();
+
+  /** Output only. Index of the candidate. */
   @JsonProperty("index")
   public abstract Optional<Integer> index();
 
-  /**
-   * Output only. The detailed log probability information for the tokens in this candidate. This is
-   * useful for debugging, understanding model uncertainty, and identifying potential
-   * "hallucinations".
-   */
+  /** Output only. Log-likelihood scores for the response tokens and top tokens */
   @JsonProperty("logprobsResult")
   public abstract Optional<LogprobsResult> logprobsResult();
 
   /**
-   * Output only. A list of ratings for the safety of a response candidate. There is at most one
+   * Output only. List of ratings for the safety of a response candidate. There is at most one
    * rating per category.
    */
   @JsonProperty("safetyRatings")
   public abstract Optional<List<SafetyRating>> safetyRatings();
 
-  /**
-   * Output only. Metadata returned when the model uses the `url_context` tool to get information
-   * from a user-provided URL.
-   */
+  /** Output only. Metadata related to url context retrieval tool. */
   @JsonProperty("urlContextMetadata")
   public abstract Optional<UrlContextMetadata> urlContextMetadata();
 
@@ -254,11 +236,28 @@ public abstract class Candidate extends JsonSerializable {
     }
 
     /**
+     * Setter for avgLogprobs.
+     *
+     * <p>avgLogprobs: Output only. Average log probability score of the candidate.
+     */
+    @JsonProperty("avgLogprobs")
+    public abstract Builder avgLogprobs(Double avgLogprobs);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder avgLogprobs(Optional<Double> avgLogprobs);
+
+    /** Clears the value of avgLogprobs field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAvgLogprobs() {
+      return avgLogprobs(Optional.empty());
+    }
+
+    /**
      * Setter for groundingMetadata.
      *
-     * <p>groundingMetadata: Output only. Grounding metadata for the candidate.
-     *
-     * <p>This field is populated for `GenerateContent` calls.
+     * <p>groundingMetadata: Output only. Metadata specifies sources used to ground generated
+     * content.
      */
     @JsonProperty("groundingMetadata")
     public abstract Builder groundingMetadata(GroundingMetadata groundingMetadata);
@@ -266,9 +265,8 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for groundingMetadata builder.
      *
-     * <p>groundingMetadata: Output only. Grounding metadata for the candidate.
-     *
-     * <p>This field is populated for `GenerateContent` calls.
+     * <p>groundingMetadata: Output only. Metadata specifies sources used to ground generated
+     * content.
      */
     @CanIgnoreReturnValue
     public Builder groundingMetadata(GroundingMetadata.Builder groundingMetadataBuilder) {
@@ -286,32 +284,9 @@ public abstract class Candidate extends JsonSerializable {
     }
 
     /**
-     * Setter for avgLogprobs.
-     *
-     * <p>avgLogprobs: Output only. The average log probability of the tokens in this candidate.
-     * This is a length-normalized score that can be used to compare the quality of candidates of
-     * different lengths. A higher average log probability suggests a more confident and coherent
-     * response.
-     */
-    @JsonProperty("avgLogprobs")
-    public abstract Builder avgLogprobs(Double avgLogprobs);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder avgLogprobs(Optional<Double> avgLogprobs);
-
-    /** Clears the value of avgLogprobs field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearAvgLogprobs() {
-      return avgLogprobs(Optional.empty());
-    }
-
-    /**
      * Setter for index.
      *
-     * <p>index: Output only. The 0-based index of this candidate in the list of generated
-     * responses. This is useful for distinguishing between multiple candidates when
-     * `candidate_count` > 1.
+     * <p>index: Output only. Index of the candidate.
      */
     @JsonProperty("index")
     public abstract Builder index(Integer index);
@@ -329,9 +304,7 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for logprobsResult.
      *
-     * <p>logprobsResult: Output only. The detailed log probability information for the tokens in
-     * this candidate. This is useful for debugging, understanding model uncertainty, and
-     * identifying potential "hallucinations".
+     * <p>logprobsResult: Output only. Log-likelihood scores for the response tokens and top tokens
      */
     @JsonProperty("logprobsResult")
     public abstract Builder logprobsResult(LogprobsResult logprobsResult);
@@ -339,9 +312,7 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for logprobsResult builder.
      *
-     * <p>logprobsResult: Output only. The detailed log probability information for the tokens in
-     * this candidate. This is useful for debugging, understanding model uncertainty, and
-     * identifying potential "hallucinations".
+     * <p>logprobsResult: Output only. Log-likelihood scores for the response tokens and top tokens
      */
     @CanIgnoreReturnValue
     public Builder logprobsResult(LogprobsResult.Builder logprobsResultBuilder) {
@@ -361,8 +332,8 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for safetyRatings.
      *
-     * <p>safetyRatings: Output only. A list of ratings for the safety of a response candidate.
-     * There is at most one rating per category.
+     * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
+     * is at most one rating per category.
      */
     @JsonProperty("safetyRatings")
     public abstract Builder safetyRatings(List<SafetyRating> safetyRatings);
@@ -370,8 +341,8 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for safetyRatings.
      *
-     * <p>safetyRatings: Output only. A list of ratings for the safety of a response candidate.
-     * There is at most one rating per category.
+     * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
+     * is at most one rating per category.
      */
     @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating... safetyRatings) {
@@ -381,8 +352,8 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for safetyRatings builder.
      *
-     * <p>safetyRatings: Output only. A list of ratings for the safety of a response candidate.
-     * There is at most one rating per category.
+     * <p>safetyRatings: Output only. List of ratings for the safety of a response candidate. There
+     * is at most one rating per category.
      */
     @CanIgnoreReturnValue
     public Builder safetyRatings(SafetyRating.Builder... safetyRatingsBuilders) {
@@ -405,8 +376,7 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for urlContextMetadata.
      *
-     * <p>urlContextMetadata: Output only. Metadata returned when the model uses the `url_context`
-     * tool to get information from a user-provided URL.
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
      */
     @JsonProperty("urlContextMetadata")
     public abstract Builder urlContextMetadata(UrlContextMetadata urlContextMetadata);
@@ -414,8 +384,7 @@ public abstract class Candidate extends JsonSerializable {
     /**
      * Setter for urlContextMetadata builder.
      *
-     * <p>urlContextMetadata: Output only. Metadata returned when the model uses the `url_context`
-     * tool to get information from a user-provided URL.
+     * <p>urlContextMetadata: Output only. Metadata related to url context retrieval tool.
      */
     @CanIgnoreReturnValue
     public Builder urlContextMetadata(UrlContextMetadata.Builder urlContextMetadataBuilder) {

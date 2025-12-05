@@ -44,7 +44,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
   @JsonProperty("thinkingBudget")
   public abstract Optional<Integer> thinkingBudget();
 
-  /** Optional. The number of thoughts tokens that the model should generate. */
+  /** Optional. The level of thoughts tokens that the model should generate. */
   @JsonProperty("thinkingLevel")
   public abstract Optional<ThinkingLevel> thinkingLevel();
 
@@ -107,7 +107,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
     /**
      * Setter for thinkingLevel.
      *
-     * <p>thinkingLevel: Optional. The number of thoughts tokens that the model should generate.
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
      */
     @JsonProperty("thinkingLevel")
     public abstract Builder thinkingLevel(ThinkingLevel thinkingLevel);
@@ -125,7 +125,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
     /**
      * Setter for thinkingLevel given a known enum.
      *
-     * <p>thinkingLevel: Optional. The number of thoughts tokens that the model should generate.
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
      */
     @CanIgnoreReturnValue
     public Builder thinkingLevel(ThinkingLevel.Known knownType) {
@@ -135,7 +135,7 @@ public abstract class ThinkingConfig extends JsonSerializable {
     /**
      * Setter for thinkingLevel given a string.
      *
-     * <p>thinkingLevel: Optional. The number of thoughts tokens that the model should generate.
+     * <p>thinkingLevel: Optional. The level of thoughts tokens that the model should generate.
      */
     @CanIgnoreReturnValue
     public Builder thinkingLevel(String thinkingLevel) {
