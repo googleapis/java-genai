@@ -26,24 +26,24 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The speech generation config. */
+/** Configuration for speech generation. */
 @AutoValue
 @JsonDeserialize(builder = SpeechConfig.Builder.class)
 public abstract class SpeechConfig extends JsonSerializable {
-  /** Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization. */
+  /** Optional. The language code (ISO 639-1) for the speech synthesis. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
 
-  /** The configuration for the speaker to use. */
-  @JsonProperty("voiceConfig")
-  public abstract Optional<VoiceConfig> voiceConfig();
-
   /**
-   * Optional. The configuration for the multi-speaker setup. It is mutually exclusive with the
-   * voice_config field. This field is not supported in Vertex AI.
+   * The configuration for a multi-speaker text-to-speech request. This field is mutually exclusive
+   * with `voice_config`.
    */
   @JsonProperty("multiSpeakerVoiceConfig")
   public abstract Optional<MultiSpeakerVoiceConfig> multiSpeakerVoiceConfig();
+
+  /** The configuration for the voice to use. */
+  @JsonProperty("voiceConfig")
+  public abstract Optional<VoiceConfig> voiceConfig();
 
   /** Instantiates a builder for SpeechConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -66,7 +66,7 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for languageCode.
      *
-     * <p>languageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization.
+     * <p>languageCode: Optional. The language code (ISO 639-1) for the speech synthesis.
      */
     @JsonProperty("languageCode")
     public abstract Builder languageCode(String languageCode);
@@ -82,38 +82,10 @@ public abstract class SpeechConfig extends JsonSerializable {
     }
 
     /**
-     * Setter for voiceConfig.
-     *
-     * <p>voiceConfig: The configuration for the speaker to use.
-     */
-    @JsonProperty("voiceConfig")
-    public abstract Builder voiceConfig(VoiceConfig voiceConfig);
-
-    /**
-     * Setter for voiceConfig builder.
-     *
-     * <p>voiceConfig: The configuration for the speaker to use.
-     */
-    @CanIgnoreReturnValue
-    public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
-      return voiceConfig(voiceConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder voiceConfig(Optional<VoiceConfig> voiceConfig);
-
-    /** Clears the value of voiceConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVoiceConfig() {
-      return voiceConfig(Optional.empty());
-    }
-
-    /**
      * Setter for multiSpeakerVoiceConfig.
      *
-     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
-     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
+     * <p>multiSpeakerVoiceConfig: The configuration for a multi-speaker text-to-speech request.
+     * This field is mutually exclusive with `voice_config`.
      */
     @JsonProperty("multiSpeakerVoiceConfig")
     public abstract Builder multiSpeakerVoiceConfig(
@@ -122,8 +94,8 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for multiSpeakerVoiceConfig builder.
      *
-     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
-     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
+     * <p>multiSpeakerVoiceConfig: The configuration for a multi-speaker text-to-speech request.
+     * This field is mutually exclusive with `voice_config`.
      */
     @CanIgnoreReturnValue
     public Builder multiSpeakerVoiceConfig(
@@ -140,6 +112,34 @@ public abstract class SpeechConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMultiSpeakerVoiceConfig() {
       return multiSpeakerVoiceConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for voiceConfig.
+     *
+     * <p>voiceConfig: The configuration for the voice to use.
+     */
+    @JsonProperty("voiceConfig")
+    public abstract Builder voiceConfig(VoiceConfig voiceConfig);
+
+    /**
+     * Setter for voiceConfig builder.
+     *
+     * <p>voiceConfig: The configuration for the voice to use.
+     */
+    @CanIgnoreReturnValue
+    public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
+      return voiceConfig(voiceConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceConfig(Optional<VoiceConfig> voiceConfig);
+
+    /** Clears the value of voiceConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceConfig() {
+      return voiceConfig(Optional.empty());
     }
 
     public abstract SpeechConfig build();

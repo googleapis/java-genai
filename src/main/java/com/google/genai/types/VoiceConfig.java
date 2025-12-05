@@ -26,13 +26,20 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The configuration for the voice to use. */
+/** Configuration for a voice. */
 @AutoValue
 @JsonDeserialize(builder = VoiceConfig.Builder.class)
 public abstract class VoiceConfig extends JsonSerializable {
-  /** The configuration for the prebuilt voice to use. */
+  /** The configuration for a prebuilt voice. */
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
+
+  /**
+   * Optional. The configuration for a replicated voice. This enables users to replicate a voice
+   * from an audio sample. This field is not supported in Gemini API.
+   */
+  @JsonProperty("replicatedVoiceConfig")
+  public abstract Optional<ReplicatedVoiceConfig> replicatedVoiceConfig();
 
   /** Instantiates a builder for VoiceConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -55,7 +62,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
+     * <p>prebuiltVoiceConfig: The configuration for a prebuilt voice.
      */
     @JsonProperty("prebuiltVoiceConfig")
     public abstract Builder prebuiltVoiceConfig(PrebuiltVoiceConfig prebuiltVoiceConfig);
@@ -63,7 +70,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig builder.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
+     * <p>prebuiltVoiceConfig: The configuration for a prebuilt voice.
      */
     @CanIgnoreReturnValue
     public Builder prebuiltVoiceConfig(PrebuiltVoiceConfig.Builder prebuiltVoiceConfigBuilder) {
@@ -78,6 +85,37 @@ public abstract class VoiceConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPrebuiltVoiceConfig() {
       return prebuiltVoiceConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for replicatedVoiceConfig.
+     *
+     * <p>replicatedVoiceConfig: Optional. The configuration for a replicated voice. This enables
+     * users to replicate a voice from an audio sample. This field is not supported in Gemini API.
+     */
+    @JsonProperty("replicatedVoiceConfig")
+    public abstract Builder replicatedVoiceConfig(ReplicatedVoiceConfig replicatedVoiceConfig);
+
+    /**
+     * Setter for replicatedVoiceConfig builder.
+     *
+     * <p>replicatedVoiceConfig: Optional. The configuration for a replicated voice. This enables
+     * users to replicate a voice from an audio sample. This field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder replicatedVoiceConfig(
+        ReplicatedVoiceConfig.Builder replicatedVoiceConfigBuilder) {
+      return replicatedVoiceConfig(replicatedVoiceConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder replicatedVoiceConfig(Optional<ReplicatedVoiceConfig> replicatedVoiceConfig);
+
+    /** Clears the value of replicatedVoiceConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReplicatedVoiceConfig() {
+      return replicatedVoiceConfig(Optional.empty());
     }
 
     public abstract VoiceConfig build();
