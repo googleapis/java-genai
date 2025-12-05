@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Status of the url retrieval. */
+/** The status of the URL retrieval. */
 public class UrlRetrievalStatus {
 
   /** Enum representing the known values for UrlRetrievalStatus. */
@@ -31,10 +31,10 @@ public class UrlRetrievalStatus {
     /** Default value. This value is unused. */
     URL_RETRIEVAL_STATUS_UNSPECIFIED,
 
-    /** Url retrieval is successful. */
+    /** The URL was retrieved successfully. */
     URL_RETRIEVAL_STATUS_SUCCESS,
 
-    /** Url retrieval is failed due to error. */
+    /** The URL retrieval failed. */
     URL_RETRIEVAL_STATUS_ERROR,
 
     /**

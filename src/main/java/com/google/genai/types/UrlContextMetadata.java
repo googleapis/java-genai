@@ -30,11 +30,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Metadata related to url context retrieval tool. */
+/**
+ * Metadata returned when the model uses the `url_context` tool to get information from a
+ * user-provided URL.
+ */
 @AutoValue
 @JsonDeserialize(builder = UrlContextMetadata.Builder.class)
 public abstract class UrlContextMetadata extends JsonSerializable {
-  /** Output only. List of url context. */
+  /** Output only. A list of URL metadata, with one entry for each URL retrieved by the tool. */
   @JsonProperty("urlMetadata")
   public abstract Optional<List<UrlMetadata>> urlMetadata();
 
@@ -59,7 +62,8 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata.
      *
-     * <p>urlMetadata: Output only. List of url context.
+     * <p>urlMetadata: Output only. A list of URL metadata, with one entry for each URL retrieved by
+     * the tool.
      */
     @JsonProperty("urlMetadata")
     public abstract Builder urlMetadata(List<UrlMetadata> urlMetadata);
@@ -67,7 +71,8 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata.
      *
-     * <p>urlMetadata: Output only. List of url context.
+     * <p>urlMetadata: Output only. A list of URL metadata, with one entry for each URL retrieved by
+     * the tool.
      */
     @CanIgnoreReturnValue
     public Builder urlMetadata(UrlMetadata... urlMetadata) {
@@ -77,7 +82,8 @@ public abstract class UrlContextMetadata extends JsonSerializable {
     /**
      * Setter for urlMetadata builder.
      *
-     * <p>urlMetadata: Output only. List of url context.
+     * <p>urlMetadata: Output only. A list of URL metadata, with one entry for each URL retrieved by
+     * the tool.
      */
     @CanIgnoreReturnValue
     public Builder urlMetadata(UrlMetadata.Builder... urlMetadataBuilders) {

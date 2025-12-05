@@ -70,6 +70,13 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("fileSearch")
   public abstract Optional<FileSearch> fileSearch();
 
+  /**
+   * Optional. Tool that allows grounding the model's response with geospatial context related to
+   * the user's query.
+   */
+  @JsonProperty("googleMaps")
+  public abstract Optional<GoogleMaps> googleMaps();
+
   /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
   @JsonProperty("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
@@ -80,10 +87,6 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("enterpriseWebSearch")
   public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
-
-  /** Optional. GoogleMaps tool type. Tool to support Google Maps in Model. */
-  @JsonProperty("googleMaps")
-  public abstract Optional<GoogleMaps> googleMaps();
 
   /**
    * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
@@ -307,6 +310,36 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
+     * Setter for googleMaps.
+     *
+     * <p>googleMaps: Optional. Tool that allows grounding the model's response with geospatial
+     * context related to the user's query.
+     */
+    @JsonProperty("googleMaps")
+    public abstract Builder googleMaps(GoogleMaps googleMaps);
+
+    /**
+     * Setter for googleMaps builder.
+     *
+     * <p>googleMaps: Optional. Tool that allows grounding the model's response with geospatial
+     * context related to the user's query.
+     */
+    @CanIgnoreReturnValue
+    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
+      return googleMaps(googleMapsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
+
+    /** Clears the value of googleMaps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleMaps() {
+      return googleMaps(Optional.empty());
+    }
+
+    /**
      * Setter for codeExecution.
      *
      * <p>codeExecution: Optional. CodeExecution tool type. Enables the model to execute code as
@@ -364,34 +397,6 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnterpriseWebSearch() {
       return enterpriseWebSearch(Optional.empty());
-    }
-
-    /**
-     * Setter for googleMaps.
-     *
-     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
-     */
-    @JsonProperty("googleMaps")
-    public abstract Builder googleMaps(GoogleMaps googleMaps);
-
-    /**
-     * Setter for googleMaps builder.
-     *
-     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
-     */
-    @CanIgnoreReturnValue
-    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
-      return googleMaps(googleMapsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
-
-    /** Clears the value of googleMaps field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearGoogleMaps() {
-      return googleMaps(Optional.empty());
     }
 
     /**
