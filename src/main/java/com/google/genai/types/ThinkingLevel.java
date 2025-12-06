@@ -23,12 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The level of thoughts tokens that the model should generate. */
+/** The number of thoughts tokens that the model should generate. */
 public class ThinkingLevel {
 
   /** Enum representing the known values for ThinkingLevel. */
   public enum Known {
-    /** Default value. */
+    /** Unspecified thinking level. */
     THINKING_LEVEL_UNSPECIFIED,
 
     /** Low thinking level. */
