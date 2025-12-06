@@ -38,6 +38,10 @@ public abstract class ClientOptions extends JsonSerializable {
   @JsonProperty("maxConnectionsPerHost")
   public abstract Optional<Integer> maxConnectionsPerHost();
 
+  /** Proxy configuration to be used in the client. */
+  @JsonProperty("proxyOptions")
+  public abstract Optional<ProxyOptions> proxyOptions();
+
   /** Instantiates a builder for ClientOptions. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -90,6 +94,34 @@ public abstract class ClientOptions extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMaxConnectionsPerHost() {
       return maxConnectionsPerHost(Optional.empty());
+    }
+
+    /**
+     * Setter for proxyOptions.
+     *
+     * <p>proxyOptions: Proxy configuration to be used in the client.
+     */
+    @JsonProperty("proxyOptions")
+    public abstract Builder proxyOptions(ProxyOptions proxyOptions);
+
+    /**
+     * Setter for proxyOptions builder.
+     *
+     * <p>proxyOptions: Proxy configuration to be used in the client.
+     */
+    @CanIgnoreReturnValue
+    public Builder proxyOptions(ProxyOptions.Builder proxyOptionsBuilder) {
+      return proxyOptions(proxyOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder proxyOptions(Optional<ProxyOptions> proxyOptions);
+
+    /** Clears the value of proxyOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProxyOptions() {
+      return proxyOptions(Optional.empty());
     }
 
     public abstract ClientOptions build();

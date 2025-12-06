@@ -188,19 +188,51 @@ retry settings configured on the client.
 
 ### ClientOptions
 [ClientOptions](https://github.com/googleapis/java-genai/blob/main/src/main/java/com/google/genai/types/ClientOptions.java)
-enables you to customize the behavior of the HTTP client. It currently supports
-configuring the connection pool via `maxConnections` (total maximum connections)
-and `maxConnectionsPerHost` (maximum connections to a single host).
+enables you to customize the behavior of the HTTP client, including connection
+pool settings and proxy configurations.
+
+#### Connection Pool
+You can configure the connection pool via `maxConnections` (total maximum
+connections) and `maxConnectionsPerHost` (maximum connections to a single host).
 
 ```java
 import com.google.genai.Client;
 import com.google.genai.types.ClientOptions;
 
-Client client = Client.builder()
-  .apiKey("your-api-key")
-  .clientOptions(ClientOptions.builder().maxConnections(64).maxConnectionsPerHost(16))
-  .build();
+Client client =
+    Client.builder()
+        .apiKey("your-api-key")
+        .clientOptions(
+            ClientOptions.builder().maxConnections(64).maxConnectionsPerHost(16).build())
+        .build();
 ```
+
+#### Proxy
+If your environment requires connecting through a proxy, you can configure it
+using `ProxyOptions`. The SDK supports `HTTP`, `SOCKS`, and `DIRECT` (no proxy)
+connection types, along with basic proxy authentication.
+
+```java
+import com.google.genai.Client;
+import com.google.genai.types.ClientOptions;
+import com.google.genai.types.ProxyOptions;
+import com.google.genai.types.ProxyType;
+
+ClientOptions clientOptions =
+    ClientOptions.builder()
+        .proxyOptions(
+            ProxyOptions.builder()
+                .type(ProxyType.Known.HTTP)
+                .host("your-proxy-host")
+                .port(8080)
+                .username("your-proxy-username")
+                .password("your-proxy-password"))
+        .build();
+Client client = Client.builder().apiKey("your-api-key").clientOptions(clientOptions).build();
+```
+
+If `ProxyOptions` is provided with `type` set to `DIRECT`, it will enforce a
+direct connection, bypassing any system-level proxy settings.
 
 ### Interact with models
 The Google Gen AI Java SDK allows you to access the service programmatically.
