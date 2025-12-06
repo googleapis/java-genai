@@ -1250,6 +1250,13 @@ public final class Batches {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enableEnhancedCivicAnswers"},
+          Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}));
+    }
+
     return toObject;
   }
 

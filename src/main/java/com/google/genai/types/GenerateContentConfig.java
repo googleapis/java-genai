@@ -226,6 +226,13 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("imageConfig")
   public abstract Optional<ImageConfig> imageConfig();
 
+  /**
+   * Enables enhanced civic answers. It may not be available for all models. This field is not
+   * supported in Vertex AI.
+   */
+  @JsonProperty("enableEnhancedCivicAnswers")
+  public abstract Optional<Boolean> enableEnhancedCivicAnswers();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1039,6 +1046,25 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearImageConfig() {
       return imageConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for enableEnhancedCivicAnswers.
+     *
+     * <p>enableEnhancedCivicAnswers: Enables enhanced civic answers. It may not be available for
+     * all models. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("enableEnhancedCivicAnswers")
+    public abstract Builder enableEnhancedCivicAnswers(boolean enableEnhancedCivicAnswers);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enableEnhancedCivicAnswers(Optional<Boolean> enableEnhancedCivicAnswers);
+
+    /** Clears the value of enableEnhancedCivicAnswers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnableEnhancedCivicAnswers() {
+      return enableEnhancedCivicAnswers(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();

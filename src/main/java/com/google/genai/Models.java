@@ -1372,6 +1372,13 @@ public final class Models {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enableEnhancedCivicAnswers"},
+          Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}));
+    }
+
     return toObject;
   }
 
@@ -1589,6 +1596,12 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
               toObject));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
+      throw new IllegalArgumentException(
+          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
     }
 
     return toObject;
