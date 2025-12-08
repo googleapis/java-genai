@@ -26,17 +26,17 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The speech generation config. */
+/** None */
 @AutoValue
 @JsonDeserialize(builder = SpeechConfig.Builder.class)
 public abstract class SpeechConfig extends JsonSerializable {
+  /** Configuration for the voice of the response. */
+  @JsonProperty("voiceConfig")
+  public abstract Optional<VoiceConfig> voiceConfig();
+
   /** Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
-
-  /** The configuration for the speaker to use. */
-  @JsonProperty("voiceConfig")
-  public abstract Optional<VoiceConfig> voiceConfig();
 
   /**
    * Optional. The configuration for the multi-speaker setup. It is mutually exclusive with the
@@ -64,6 +64,34 @@ public abstract class SpeechConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for voiceConfig.
+     *
+     * <p>voiceConfig: Configuration for the voice of the response.
+     */
+    @JsonProperty("voiceConfig")
+    public abstract Builder voiceConfig(VoiceConfig voiceConfig);
+
+    /**
+     * Setter for voiceConfig builder.
+     *
+     * <p>voiceConfig: Configuration for the voice of the response.
+     */
+    @CanIgnoreReturnValue
+    public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
+      return voiceConfig(voiceConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceConfig(Optional<VoiceConfig> voiceConfig);
+
+    /** Clears the value of voiceConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceConfig() {
+      return voiceConfig(Optional.empty());
+    }
+
+    /**
      * Setter for languageCode.
      *
      * <p>languageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization.
@@ -79,34 +107,6 @@ public abstract class SpeechConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearLanguageCode() {
       return languageCode(Optional.empty());
-    }
-
-    /**
-     * Setter for voiceConfig.
-     *
-     * <p>voiceConfig: The configuration for the speaker to use.
-     */
-    @JsonProperty("voiceConfig")
-    public abstract Builder voiceConfig(VoiceConfig voiceConfig);
-
-    /**
-     * Setter for voiceConfig builder.
-     *
-     * <p>voiceConfig: The configuration for the speaker to use.
-     */
-    @CanIgnoreReturnValue
-    public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {
-      return voiceConfig(voiceConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder voiceConfig(Optional<VoiceConfig> voiceConfig);
-
-    /** Clears the value of voiceConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVoiceConfig() {
-      return voiceConfig(Optional.empty());
     }
 
     /**
