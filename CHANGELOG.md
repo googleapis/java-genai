@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.30.0](https://github.com/googleapis/java-genai/compare/v1.29.0...v1.30.0) (2025-12-08)
+
+
+### Features
+
+* Add ProxyOptions in ClientOptions for configuring proxies ([eafdf79](https://github.com/googleapis/java-genai/commit/eafdf791f9beea50b6944a8f2118e9a1934f3a17))
+* Ephemeral token for Gemini Live API support in Java ([4ce094b](https://github.com/googleapis/java-genai/commit/4ce094b015e39574976086fb5c84a468481794b8))
+* Update data types from discovery doc. ([36ba543](https://github.com/googleapis/java-genai/commit/36ba543978c484114e62decefa7df2a2bbce6d0b))
+* Update data types from discovery doc. ([42e76ee](https://github.com/googleapis/java-genai/commit/42e76ee401c25f06da12e7dc1080fd7d794b3fd8))
+
 ## [1.29.0](https://github.com/googleapis/java-genai/compare/v1.28.0...v1.29.0) (2025-12-03)
 
 
