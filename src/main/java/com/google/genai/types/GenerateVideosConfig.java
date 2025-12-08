@@ -119,6 +119,13 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("compressionQuality")
   public abstract Optional<VideoCompressionQuality> compressionQuality();
 
+  /**
+   * Output video mode. Only allowed for reference to video generation. Supported values are:
+   * precise (default), expressive.
+   */
+  @JsonProperty("videoMode")
+  public abstract Optional<String> videoMode();
+
   /** Instantiates a builder for GenerateVideosConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -530,6 +537,25 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder compressionQuality(String compressionQuality) {
       return compressionQuality(new VideoCompressionQuality(compressionQuality));
+    }
+
+    /**
+     * Setter for videoMode.
+     *
+     * <p>videoMode: Output video mode. Only allowed for reference to video generation. Supported
+     * values are: precise (default), expressive.
+     */
+    @JsonProperty("videoMode")
+    public abstract Builder videoMode(String videoMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder videoMode(Optional<String> videoMode);
+
+    /** Clears the value of videoMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVideoMode() {
+      return videoMode(Optional.empty());
     }
 
     public abstract GenerateVideosConfig build();
