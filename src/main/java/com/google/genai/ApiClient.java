@@ -30,7 +30,11 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
+import com.google.genai.types.ProxyOptions;
+import com.google.genai.types.ProxyType;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +42,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+import okhttp3.Credentials;
 import okhttp3.Dispatcher;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -245,9 +250,72 @@ public abstract class ApiClient {
           options.maxConnections().ifPresent(dispatcher::setMaxRequests);
           options.maxConnectionsPerHost().ifPresent(dispatcher::setMaxRequestsPerHost);
           builder.dispatcher(dispatcher);
+          options
+              .proxyOptions()
+              .ifPresent(
+                  proxyOptions -> {
+                    applyProxyOptions(proxyOptions, builder);
+                  });
         });
 
     return builder.build();
+  }
+
+  /** Applies the proxy options to the OkHttpClient builder. */
+  private void applyProxyOptions(ProxyOptions proxyOptions, OkHttpClient.Builder builder) {
+    final ProxyType proxyType = proxyOptions.type().orElse(new ProxyType("HTTP"));
+    final Proxy.Type type;
+
+    switch (proxyType.knownEnum()) {
+      case SOCKS:
+        type = Proxy.Type.SOCKS;
+        break;
+      case HTTP:
+        type = Proxy.Type.HTTP;
+        break;
+      case DIRECT:
+        builder.proxy(Proxy.NO_PROXY);
+        return;
+      default:
+        throw new IllegalArgumentException("Unsupported proxy type: " + proxyType);
+    }
+    // Set the proxy for non-direct types.
+    String host =
+        proxyOptions
+            .host()
+            .orElseThrow(
+                () -> new IllegalArgumentException("Proxy host is required in the ProxyOptions."));
+    int port =
+        proxyOptions
+            .port()
+            .orElseThrow(
+                () -> new IllegalArgumentException("Proxy port is required in the ProxyOptions."));
+
+    builder.proxy(new Proxy(type, new InetSocketAddress(host, port)));
+
+    // Set the proxy authenticator if username and password are provided.
+    boolean userPresent = proxyOptions.username().isPresent();
+    boolean passPresent = proxyOptions.password().isPresent();
+
+    if (userPresent != passPresent) {
+      throw new IllegalArgumentException(
+          "Proxy username and password must both be provided or not at all.");
+    }
+    if (userPresent && passPresent) {
+      final String credential =
+          Credentials.basic(proxyOptions.username().get(), proxyOptions.password().get());
+      builder.proxyAuthenticator(
+          (route, response) -> {
+            if (response.request().header("Proxy-Authorization") != null) {
+              return null;
+            }
+            return response
+                .request()
+                .newBuilder()
+                .header("Proxy-Authorization", credential)
+                .build();
+          });
+    }
   }
 
   /** Builds a HTTP request given the http method, path, and request json string. */
