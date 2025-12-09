@@ -27,17 +27,18 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * The configuration for routing the request to a specific model. This data type is not supported in
- * Gemini API.
+ * The configuration for routing the request to a specific model. This can be used to control which
+ * model is used for the generation, either automatically or by specifying a model name. This data
+ * type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfig.Builder.class)
 public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
-  /** Automated routing. */
+  /** In this mode, the model is selected automatically based on the content of the request. */
   @JsonProperty("autoMode")
   public abstract Optional<GenerationConfigRoutingConfigAutoRoutingMode> autoMode();
 
-  /** Manual routing. */
+  /** In this mode, the model is specified manually. */
   @JsonProperty("manualMode")
   public abstract Optional<GenerationConfigRoutingConfigManualRoutingMode> manualMode();
 
@@ -64,7 +65,8 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
     /**
      * Setter for autoMode.
      *
-     * <p>autoMode: Automated routing.
+     * <p>autoMode: In this mode, the model is selected automatically based on the content of the
+     * request.
      */
     @JsonProperty("autoMode")
     public abstract Builder autoMode(GenerationConfigRoutingConfigAutoRoutingMode autoMode);
@@ -72,7 +74,8 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
     /**
      * Setter for autoMode builder.
      *
-     * <p>autoMode: Automated routing.
+     * <p>autoMode: In this mode, the model is selected automatically based on the content of the
+     * request.
      */
     @CanIgnoreReturnValue
     public Builder autoMode(GenerationConfigRoutingConfigAutoRoutingMode.Builder autoModeBuilder) {
@@ -92,7 +95,7 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
     /**
      * Setter for manualMode.
      *
-     * <p>manualMode: Manual routing.
+     * <p>manualMode: In this mode, the model is specified manually.
      */
     @JsonProperty("manualMode")
     public abstract Builder manualMode(GenerationConfigRoutingConfigManualRoutingMode manualMode);
@@ -100,7 +103,7 @@ public abstract class GenerationConfigRoutingConfig extends JsonSerializable {
     /**
      * Setter for manualMode builder.
      *
-     * <p>manualMode: Manual routing.
+     * <p>manualMode: In this mode, the model is specified manually.
      */
     @CanIgnoreReturnValue
     public Builder manualMode(

@@ -31,17 +31,17 @@ public class ThinkingLevel {
     /** Unspecified thinking level. */
     THINKING_LEVEL_UNSPECIFIED,
 
+    /** Little to no thinking. This enum value is not supported in Vertex AI. */
+    MINIMAL,
+
     /** Low thinking level. */
     LOW,
 
-    /** Medium thinking level. */
+    /** Medium thinking level. This enum value is not supported in Vertex AI. */
     MEDIUM,
 
     /** High thinking level. */
-    HIGH,
-
-    /** MINIMAL thinking level. */
-    MINIMAL
+    HIGH
   }
 
   private Known thinkingLevelEnum;

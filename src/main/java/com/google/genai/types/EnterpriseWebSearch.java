@@ -36,18 +36,18 @@ import java.util.Optional;
 @JsonDeserialize(builder = EnterpriseWebSearch.Builder.class)
 public abstract class EnterpriseWebSearch extends JsonSerializable {
   /**
-   * Optional. List of domains to be excluded from the search results. The default limit is 2000
-   * domains.
-   */
-  @JsonProperty("excludeDomains")
-  public abstract Optional<List<String>> excludeDomains();
-
-  /**
    * Optional. Sites with confidence level chosen & above this value will be blocked from the search
    * results.
    */
   @JsonProperty("blockingConfidence")
   public abstract Optional<PhishBlockThreshold> blockingConfidence();
+
+  /**
+   * Optional. List of domains to be excluded from the search results. The default limit is 2000
+   * domains.
+   */
+  @JsonProperty("excludeDomains")
+  public abstract Optional<List<String>> excludeDomains();
 
   /** Instantiates a builder for EnterpriseWebSearch. */
   @ExcludeFromGeneratedCoverageReport
@@ -65,36 +65,6 @@ public abstract class EnterpriseWebSearch extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_EnterpriseWebSearch.Builder();
-    }
-
-    /**
-     * Setter for excludeDomains.
-     *
-     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
-     * default limit is 2000 domains.
-     */
-    @JsonProperty("excludeDomains")
-    public abstract Builder excludeDomains(List<String> excludeDomains);
-
-    /**
-     * Setter for excludeDomains.
-     *
-     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
-     * default limit is 2000 domains.
-     */
-    @CanIgnoreReturnValue
-    public Builder excludeDomains(String... excludeDomains) {
-      return excludeDomains(Arrays.asList(excludeDomains));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder excludeDomains(Optional<List<String>> excludeDomains);
-
-    /** Clears the value of excludeDomains field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearExcludeDomains() {
-      return excludeDomains(Optional.empty());
     }
 
     /**
@@ -136,6 +106,36 @@ public abstract class EnterpriseWebSearch extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder blockingConfidence(String blockingConfidence) {
       return blockingConfidence(new PhishBlockThreshold(blockingConfidence));
+    }
+
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains.
+     */
+    @JsonProperty("excludeDomains")
+    public abstract Builder excludeDomains(List<String> excludeDomains);
+
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains.
+     */
+    @CanIgnoreReturnValue
+    public Builder excludeDomains(String... excludeDomains) {
+      return excludeDomains(Arrays.asList(excludeDomains));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder excludeDomains(Optional<List<String>> excludeDomains);
+
+    /** Clears the value of excludeDomains field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExcludeDomains() {
+      return excludeDomains(Optional.empty());
     }
 
     public abstract EnterpriseWebSearch build();
