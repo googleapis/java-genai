@@ -395,6 +395,11 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}))) {
+      throw new IllegalArgumentException(
+          "explicitVadSignal parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 

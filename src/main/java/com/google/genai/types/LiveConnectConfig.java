@@ -154,6 +154,13 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   @JsonProperty("proactivity")
   public abstract Optional<ProactivityConfig> proactivity();
 
+  /**
+   * Configures the explicit VAD signal. If enabled, the client will send vad_signal to indicate the
+   * start and end of speech. This allows the server to process the audio more efficiently.
+   */
+  @JsonProperty("explicitVadSignal")
+  public abstract Optional<Boolean> explicitVadSignal();
+
   /** Instantiates a builder for LiveConnectConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -760,6 +767,26 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearProactivity() {
       return proactivity(Optional.empty());
+    }
+
+    /**
+     * Setter for explicitVadSignal.
+     *
+     * <p>explicitVadSignal: Configures the explicit VAD signal. If enabled, the client will send
+     * vad_signal to indicate the start and end of speech. This allows the server to process the
+     * audio more efficiently.
+     */
+    @JsonProperty("explicitVadSignal")
+    public abstract Builder explicitVadSignal(boolean explicitVadSignal);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder explicitVadSignal(Optional<Boolean> explicitVadSignal);
+
+    /** Clears the value of explicitVadSignal field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExplicitVadSignal() {
+      return explicitVadSignal(Optional.empty());
     }
 
     public abstract LiveConnectConfig build();

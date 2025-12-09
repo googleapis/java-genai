@@ -728,6 +728,11 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}))) {
+      throw new IllegalArgumentException(
+          "explicitVadSignal parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -812,6 +817,13 @@ final class LiveConverters {
           toObject,
           new String[] {"proactivity"},
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"explicitVadSignal"},
+          Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}));
     }
 
     return toObject;
@@ -961,6 +973,11 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}))) {
+      throw new IllegalArgumentException(
+          "explicitVadSignal parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -1103,6 +1120,13 @@ final class LiveConverters {
           parentObject,
           new String[] {"setup", "proactivity"},
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "explicitVadSignal"},
+          Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}));
     }
 
     return toObject;
@@ -1335,6 +1359,13 @@ final class LiveConverters {
           toObject,
           new String[] {"sessionResumptionUpdate"},
           Common.getValueByPath(fromObject, new String[] {"sessionResumptionUpdate"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceActivityDetectionSignal"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceActivityDetectionSignal"},
+          Common.getValueByPath(fromObject, new String[] {"voiceActivityDetectionSignal"}));
     }
 
     return toObject;
