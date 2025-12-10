@@ -49,6 +49,7 @@ public final class AsyncBatches {
 
   CompletableFuture<BatchJob> privateCreate(
       String model, BatchJobSource src, CreateBatchJobConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForPrivateCreate(model, src, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -62,6 +63,7 @@ public final class AsyncBatches {
 
   CompletableFuture<BatchJob> privateCreateEmbeddings(
       String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForPrivateCreateEmbeddings(model, src, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -83,6 +85,7 @@ public final class AsyncBatches {
    * @return A {@link BatchJob} object that contains the info of the batch job.
    */
   public CompletableFuture<BatchJob> get(String name, GetBatchJobConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -103,6 +106,7 @@ public final class AsyncBatches {
    * @param config A {@link CancelBatchJobConfig} for configuring the cancel request.
    */
   public CompletableFuture<Void> cancel(String name, CancelBatchJobConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForCancel(name, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -113,6 +117,7 @@ public final class AsyncBatches {
   }
 
   CompletableFuture<ListBatchJobsResponse> privateList(ListBatchJobsConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -133,6 +138,7 @@ public final class AsyncBatches {
    * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
    */
   public CompletableFuture<DeleteResourceJob> delete(String name, DeleteBatchJobConfig config) {
+
     BuiltRequest builtRequest = batches.buildRequestForDelete(name, config);
     return this.apiClient
         .asyncRequest(

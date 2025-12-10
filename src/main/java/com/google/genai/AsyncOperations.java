@@ -39,6 +39,7 @@ public final class AsyncOperations {
 
   CompletableFuture<JsonNode> privateGetVideosOperation(
       String operationName, GetOperationConfig config) {
+
     BuiltRequest builtRequest =
         operations.buildRequestForPrivateGetVideosOperation(operationName, config);
     return this.apiClient
@@ -53,6 +54,7 @@ public final class AsyncOperations {
 
   CompletableFuture<JsonNode> privateFetchPredictVideosOperation(
       String operationName, String resourceName, FetchPredictOperationConfig config) {
+
     BuiltRequest builtRequest =
         operations.buildRequestForPrivateFetchPredictVideosOperation(
             operationName, resourceName, config);
