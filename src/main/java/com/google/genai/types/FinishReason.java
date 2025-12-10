@@ -81,7 +81,13 @@ public class FinishReason {
     IMAGE_PROHIBITED_CONTENT,
 
     /** The model was expected to generate an image, but none was generated. */
-    NO_IMAGE
+    NO_IMAGE,
+
+    /** Image generation stopped because the generated image may be a recitation from a source. */
+    IMAGE_RECITATION,
+
+    /** Image generation stopped for a reason not otherwise specified. */
+    IMAGE_OTHER
   }
 
   private Known finishReasonEnum;
