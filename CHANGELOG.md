@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.31.0](https://github.com/googleapis/java-genai/compare/v1.30.0...v1.31.0) (2025-12-11)
+
+
+### Features
+
+* Add enableEnhancedCivicAnswers feature in GenerateContentConfig ([0570478](https://github.com/googleapis/java-genai/commit/05704781fa7627efb5f4486b0a8763698bd6e6f2))
+* Add IMAGE_RECITATION and IMAGE_OTHER enum values to FinishReason ([26c3c35](https://github.com/googleapis/java-genai/commit/26c3c351fde231c943a3695af35961535923c8b1))
+* Add voice activity detection signal. ([d1ca685](https://github.com/googleapis/java-genai/commit/d1ca6854006248e1eab10212d1b1dade56e9b158))
+
+
+### Documentation
+
+* Add an example for ClientOptions usage ([0a8a26e](https://github.com/googleapis/java-genai/commit/0a8a26e0e75e791c2a99b012aba5c9bc09430cd7))
+
 ## [1.30.0](https://github.com/googleapis/java-genai/compare/v1.29.0...v1.30.0) (2025-12-08)
 
 
