@@ -39,8 +39,8 @@ public abstract class SpeechConfig extends JsonSerializable {
   public abstract Optional<String> languageCode();
 
   /**
-   * Optional. The configuration for the multi-speaker setup. It is mutually exclusive with the
-   * voice_config field. This field is not supported in Vertex AI.
+   * The configuration for a multi-speaker text-to-speech request. This field is mutually exclusive
+   * with `voice_config`.
    */
   @JsonProperty("multiSpeakerVoiceConfig")
   public abstract Optional<MultiSpeakerVoiceConfig> multiSpeakerVoiceConfig();
@@ -112,8 +112,8 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for multiSpeakerVoiceConfig.
      *
-     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
-     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
+     * <p>multiSpeakerVoiceConfig: The configuration for a multi-speaker text-to-speech request.
+     * This field is mutually exclusive with `voice_config`.
      */
     @JsonProperty("multiSpeakerVoiceConfig")
     public abstract Builder multiSpeakerVoiceConfig(
@@ -122,8 +122,8 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for multiSpeakerVoiceConfig builder.
      *
-     * <p>multiSpeakerVoiceConfig: Optional. The configuration for the multi-speaker setup. It is
-     * mutually exclusive with the voice_config field. This field is not supported in Vertex AI.
+     * <p>multiSpeakerVoiceConfig: The configuration for a multi-speaker text-to-speech request.
+     * This field is mutually exclusive with `voice_config`.
      */
     @CanIgnoreReturnValue
     public Builder multiSpeakerVoiceConfig(

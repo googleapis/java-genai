@@ -1567,11 +1567,8 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Transformers.tSpeechConfig(
-                      Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
-              toObject));
+          Transformers.tSpeechConfig(
+              Common.getValueByPath(fromObject, new String[] {"speechConfig"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}) != null) {
@@ -2980,10 +2977,7 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"speechConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"stopSequences"}) != null) {
@@ -4203,32 +4197,6 @@ public final class Models {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"scribbleImage"})),
               toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          Common.getValueByPath(fromObject, new String[] {"voiceConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}))) {
-      throw new IllegalArgumentException(
-          "multiSpeakerVoiceConfig parameter is not supported in Vertex AI.");
     }
 
     return toObject;
