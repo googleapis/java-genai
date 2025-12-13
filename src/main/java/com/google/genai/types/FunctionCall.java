@@ -148,7 +148,7 @@ public abstract class FunctionCall extends JsonSerializable {
      * represents the arguments/fields that are streamed incrementally. This field is not supported
      * in Gemini API.
      */
-    @JsonProperty("partialArgs")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder partialArgs(List<PartialArg> partialArgs);
 
     /**
@@ -178,7 +178,7 @@ public abstract class FunctionCall extends JsonSerializable {
               .collect(toImmutableList()));
     }
 
-    @ExcludeFromGeneratedCoverageReport
+    @JsonProperty("partialArgs")
     abstract Builder partialArgs(Optional<List<PartialArg>> partialArgs);
 
     /** Clears the value of partialArgs field. */
