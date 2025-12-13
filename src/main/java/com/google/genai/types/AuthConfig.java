@@ -26,10 +26,17 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Auth configuration to run the extension. This data type is not supported in Gemini API. */
+/** The authentication config to access the API. */
 @AutoValue
 @JsonDeserialize(builder = AuthConfig.Builder.class)
 public abstract class AuthConfig extends JsonSerializable {
+  /**
+   * The authentication config to access the API. Only API key is supported. This field is not
+   * supported in Gemini API.
+   */
+  @JsonProperty("apiKey")
+  public abstract Optional<String> apiKey();
+
   /** Config for API key auth. */
   @JsonProperty("apiKeyConfig")
   public abstract Optional<ApiKeyConfig> apiKeyConfig();
@@ -70,6 +77,25 @@ public abstract class AuthConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_AuthConfig.Builder();
+    }
+
+    /**
+     * Setter for apiKey.
+     *
+     * <p>apiKey: The authentication config to access the API. Only API key is supported. This field
+     * is not supported in Gemini API.
+     */
+    @JsonProperty("apiKey")
+    public abstract Builder apiKey(String apiKey);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder apiKey(Optional<String> apiKey);
+
+    /** Clears the value of apiKey field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearApiKey() {
+      return apiKey(Optional.empty());
     }
 
     /**

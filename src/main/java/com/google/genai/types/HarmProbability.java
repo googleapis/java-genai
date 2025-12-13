@@ -23,24 +23,24 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Output only. Harm probability levels in the content. */
+/** Output only. The probability of harm for this category. */
 public class HarmProbability {
 
   /** Enum representing the known values for HarmProbability. */
   public enum Known {
-    /** Harm probability unspecified. */
+    /** The harm probability is unspecified. */
     HARM_PROBABILITY_UNSPECIFIED,
 
-    /** Negligible level of harm. */
+    /** The harm probability is negligible. */
     NEGLIGIBLE,
 
-    /** Low level of harm. */
+    /** The harm probability is low. */
     LOW,
 
-    /** Medium level of harm. */
+    /** The harm probability is medium. */
     MEDIUM,
 
-    /** High level of harm. */
+    /** The harm probability is high. */
     HIGH
   }
 
