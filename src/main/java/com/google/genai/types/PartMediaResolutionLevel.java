@@ -40,6 +40,9 @@ public class PartMediaResolutionLevel {
     /** Media resolution set to high. */
     MEDIA_RESOLUTION_HIGH,
 
+    /** Media resolution set to ultra high. */
+    MEDIA_RESOLUTION_ULTRA_HIGH,
+
     PART_MEDIA_RESOLUTION_LEVEL_UNSPECIFIED
   }
 
