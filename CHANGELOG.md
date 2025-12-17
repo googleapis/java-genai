@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.32.0](https://github.com/googleapis/java-genai/compare/v1.31.0...v1.32.0) (2025-12-17)
+
+
+### Features
+
+* Add minimal and medium thinking levels. ([ecfadfe](https://github.com/googleapis/java-genai/commit/ecfadfe6717870d1ea403091863d16cec5fcff79))
+* Add PersonGeneration to ImageConfig for Vertex Gempix ([d8a4c43](https://github.com/googleapis/java-genai/commit/d8a4c432e5024bd171cf4b791925a40b285d7793))
+* Add ultra high resolution to the media resolution in Parts. ([7c9b7f6](https://github.com/googleapis/java-genai/commit/7c9b7f62275487183b7f5ded4db40af9a4422a67))
+* support multi speaker for Vertex AI ([c50e47b](https://github.com/googleapis/java-genai/commit/c50e47bfba44d7bd979b37b7c4b024424c08c29a))
+
 ## [1.31.0](https://github.com/googleapis/java-genai/compare/v1.30.0...v1.31.0) (2025-12-11)
 
 
