@@ -44,6 +44,12 @@ public abstract class ImageConfig extends JsonSerializable {
   @JsonProperty("imageSize")
   public abstract Optional<String> imageSize();
 
+  /**
+   * Controls the generation of people. Supported values are: ALLOW_ALL, ALLOW_ADULT, ALLOW_NONE.
+   */
+  @JsonProperty("personGeneration")
+  public abstract Optional<String> personGeneration();
+
   /** MIME type of the generated image. This field is not supported in Gemini API. */
   @JsonProperty("outputMimeType")
   public abstract Optional<String> outputMimeType();
@@ -109,6 +115,25 @@ public abstract class ImageConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearImageSize() {
       return imageSize(Optional.empty());
+    }
+
+    /**
+     * Setter for personGeneration.
+     *
+     * <p>personGeneration: Controls the generation of people. Supported values are: ALLOW_ALL,
+     * ALLOW_ADULT, ALLOW_NONE.
+     */
+    @JsonProperty("personGeneration")
+    public abstract Builder personGeneration(String personGeneration);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder personGeneration(Optional<String> personGeneration);
+
+    /** Clears the value of personGeneration field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPersonGeneration() {
+      return personGeneration(Optional.empty());
     }
 
     /**

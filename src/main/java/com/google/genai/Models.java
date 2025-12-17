@@ -3111,6 +3111,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"imageSize"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"personGeneration"}))) {
+      throw new IllegalArgumentException(
+          "personGeneration parameter is not supported in Gemini API.");
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
       throw new IllegalArgumentException(
           "outputMimeType parameter is not supported in Gemini API.");
@@ -3140,6 +3145,13 @@ public final class Models {
           toObject,
           new String[] {"imageSize"},
           Common.getValueByPath(fromObject, new String[] {"imageSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"personGeneration"},
+          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {

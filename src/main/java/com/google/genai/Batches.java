@@ -1400,6 +1400,11 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"imageSize"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"personGeneration"}))) {
+      throw new IllegalArgumentException(
+          "personGeneration parameter is not supported in Gemini API.");
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
       throw new IllegalArgumentException(
           "outputMimeType parameter is not supported in Gemini API.");
