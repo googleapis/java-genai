@@ -30,16 +30,16 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = DynamicRetrievalConfig.Builder.class)
 public abstract class DynamicRetrievalConfig extends JsonSerializable {
-  /** The mode of the predictor to be used in dynamic retrieval. */
-  @JsonProperty("mode")
-  public abstract Optional<DynamicRetrievalConfigMode> mode();
-
   /**
    * Optional. The threshold to be used in dynamic retrieval. If not set, a system default value is
    * used.
    */
   @JsonProperty("dynamicThreshold")
   public abstract Optional<Float> dynamicThreshold();
+
+  /** The mode of the predictor to be used in dynamic retrieval. */
+  @JsonProperty("mode")
+  public abstract Optional<DynamicRetrievalConfigMode> mode();
 
   /** Instantiates a builder for DynamicRetrievalConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -57,6 +57,25 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DynamicRetrievalConfig.Builder();
+    }
+
+    /**
+     * Setter for dynamicThreshold.
+     *
+     * <p>dynamicThreshold: Optional. The threshold to be used in dynamic retrieval. If not set, a
+     * system default value is used.
+     */
+    @JsonProperty("dynamicThreshold")
+    public abstract Builder dynamicThreshold(Float dynamicThreshold);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder dynamicThreshold(Optional<Float> dynamicThreshold);
+
+    /** Clears the value of dynamicThreshold field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDynamicThreshold() {
+      return dynamicThreshold(Optional.empty());
     }
 
     /**
@@ -95,25 +114,6 @@ public abstract class DynamicRetrievalConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder mode(String mode) {
       return mode(new DynamicRetrievalConfigMode(mode));
-    }
-
-    /**
-     * Setter for dynamicThreshold.
-     *
-     * <p>dynamicThreshold: Optional. The threshold to be used in dynamic retrieval. If not set, a
-     * system default value is used.
-     */
-    @JsonProperty("dynamicThreshold")
-    public abstract Builder dynamicThreshold(Float dynamicThreshold);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder dynamicThreshold(Optional<Float> dynamicThreshold);
-
-    /** Clears the value of dynamicThreshold field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearDynamicThreshold() {
-      return dynamicThreshold(Optional.empty());
     }
 
     public abstract DynamicRetrievalConfig build();

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Config for the dynamic retrieval config mode. */
+/** The mode of the predictor to be used in dynamic retrieval. */
 public class DynamicRetrievalConfigMode {
 
   /** Enum representing the known values for DynamicRetrievalConfigMode. */

@@ -139,10 +139,6 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionDeclarationToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -183,6 +179,10 @@ final class LiveConverters {
           toObject,
           new String[] {"responseJsonSchema"},
           Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
+      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
     }
 
     return toObject;
@@ -1477,22 +1477,8 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionDeclarations"},
-          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1521,6 +1507,13 @@ final class LiveConverters {
           "enterpriseWebSearch parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1541,6 +1534,13 @@ final class LiveConverters {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1554,30 +1554,11 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"retrieval"},
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1605,6 +1586,18 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1617,6 +1610,13 @@ final class LiveConverters {
           toObject,
           new String[] {"googleSearch"},
           Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {

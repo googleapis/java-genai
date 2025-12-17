@@ -1013,18 +1013,18 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mode"},
-          Common.getValueByPath(fromObject, new String[] {"mode"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"allowedFunctionNames"},
           Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mode"},
+          Common.getValueByPath(fromObject, new String[] {"mode"}));
     }
 
     if (!Common.isZero(
@@ -1756,6 +1756,13 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1766,35 +1773,14 @@ public final class Batches {
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
-    }
-
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionDeclarations"},
-          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearchRetrieval"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -1823,6 +1809,13 @@ public final class Batches {
           "enterpriseWebSearch parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1841,6 +1834,13 @@ public final class Batches {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearchRetrieval"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
