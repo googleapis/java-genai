@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.33.0](https://github.com/googleapis/java-genai/compare/v1.32.0...v1.33.0) (2026-01-07)
+
+
+### Features
+
+* [Python] add RegisterFiles so gcs files can be used with genai. ([10bfaec](https://github.com/googleapis/java-genai/commit/10bfaecf4b100f16f2e7252b568aef346d9329de))
+* Add gemini-3-pro-preview support for local tokenizer ([40480f4](https://github.com/googleapis/java-genai/commit/40480f4e784f076be787c0c3213918e88ffc4296))
+
+
+### Documentation
+
+* Update Virtual Try-On model id in samples and docstrings ([e349635](https://github.com/googleapis/java-genai/commit/e349635621abe4b27a88a30e2f7c1ad960851767))
+
 ## [1.32.0](https://github.com/googleapis/java-genai/compare/v1.31.0...v1.32.0) (2025-12-17)
 
 
