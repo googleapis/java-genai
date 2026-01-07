@@ -34,6 +34,8 @@ public class FileSource {
 
     GENERATED,
 
+    REGISTERED,
+
     FILE_SOURCE_UNSPECIFIED
   }
 
