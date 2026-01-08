@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/googleapis/java-genai/compare/v1.33.0...v1.34.0) (2026-01-08)
+
+
+### Features
+
+* Update comments in releases.txt ([1368773](https://github.com/googleapis/java-genai/commit/13687737e1cd375f4a26d09828a9791b97c61b0b))
+
 ## [1.33.0](https://github.com/googleapis/java-genai/compare/v1.32.0...v1.33.0) (2026-01-07)
 
 
