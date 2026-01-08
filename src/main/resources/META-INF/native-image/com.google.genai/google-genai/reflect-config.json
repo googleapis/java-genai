@@ -177,7 +177,7 @@
   "methods":[{"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"defaultEnvironmentVariables","parameterTypes":[] }, {"name":"defaultHttpOptions","parameterTypes":["boolean","java.util.Optional","java.util.Optional"] }, {"name":"getApiKeyFromEnv","parameterTypes":[] }, {"name":"httpClient","parameterTypes":[] }, {"name":"libraryVersion","parameterTypes":[] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"setDefaultBaseUrls","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"vertexAI","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiClient$MockitoMock$n6VFvt7V",
+  "name":"com.google.genai.ApiClient$MockitoMock$ZuWcAMhm",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["java.util.Optional","java.util.Optional","java.util.Optional"] }]
@@ -191,7 +191,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"getBody","parameterTypes":[] }, {"name":"getHeaders","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiResponse$MockitoMock$siVt50Ic",
+  "name":"com.google.genai.ApiResponse$MockitoMock$G4xqijea",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -5532,7 +5532,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"okhttp3.Call$MockitoMock$b4NmQjWj",
+  "name":"okhttp3.Call$MockitoMock$cT6RSqwg",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -5553,7 +5553,7 @@
   "methods":[{"name":"call","parameterTypes":[] }, {"name":"connectTimeoutMillis","parameterTypes":[] }, {"name":"connection","parameterTypes":[] }, {"name":"proceed","parameterTypes":["okhttp3.Request"] }, {"name":"readTimeoutMillis","parameterTypes":[] }, {"name":"request","parameterTypes":[] }, {"name":"withConnectTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withReadTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withWriteTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"writeTimeoutMillis","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.Interceptor$Chain$MockitoMock$4XddB0sn",
+  "name":"okhttp3.Interceptor$Chain$MockitoMock$s01ssmxI",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -5574,7 +5574,7 @@
   "methods":[{"name":"contentLength","parameterTypes":[] }, {"name":"contentType","parameterTypes":[] }, {"name":"source","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.ResponseBody$MockitoMock$q51qkApd",
+  "name":"okhttp3.ResponseBody$MockitoMock$jWzu1mxh",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -5794,7 +5794,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$bu0baKDP",
+  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$npcXjMVp",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
