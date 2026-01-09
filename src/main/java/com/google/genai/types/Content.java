@@ -44,8 +44,8 @@ public abstract class Content extends JsonSerializable {
   public abstract Optional<List<Part>> parts();
 
   /**
-   * Optional. The producer of the content. Must be either 'user' or 'model'. Useful to set for
-   * multi-turn conversations, otherwise can be left blank or unset.
+   * Optional. The producer of the content. Must be either 'user' or 'model'. If not set, the
+   * service will default to 'user'.
    */
   @JsonProperty("role")
   public abstract Optional<String> role();
@@ -115,8 +115,8 @@ public abstract class Content extends JsonSerializable {
     /**
      * Setter for role.
      *
-     * <p>role: Optional. The producer of the content. Must be either 'user' or 'model'. Useful to
-     * set for multi-turn conversations, otherwise can be left blank or unset.
+     * <p>role: Optional. The producer of the content. Must be either 'user' or 'model'. If not set,
+     * the service will default to 'user'.
      */
     @JsonProperty("role")
     public abstract Builder role(String role);
