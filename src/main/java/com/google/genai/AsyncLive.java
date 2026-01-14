@@ -92,9 +92,10 @@ public class AsyncLive {
     }
     try {
       URI baseUri = new URI(baseUrl);
+      String wsScheme = "https".equalsIgnoreCase(baseUri.getScheme()) ? "wss" : "ws";
       String wsBaseUrl =
           new URI(
-                  "wss",
+                  wsScheme,
                   baseUri.getAuthority(),
                   baseUri.getPath(),
                   baseUri.getQuery(),
