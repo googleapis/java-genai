@@ -23,12 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The media resolution to use. */
+/** If specified, the media resolution specified will be used. */
 public class MediaResolution {
 
   /** Enum representing the known values for MediaResolution. */
   public enum Known {
-    /** Media resolution has not been set */
+    /** Media resolution has not been set. */
     MEDIA_RESOLUTION_UNSPECIFIED,
 
     /** Media resolution set to low (64 tokens). */
