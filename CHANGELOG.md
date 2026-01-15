@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-15)
+## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-14)
 
 
 ### Features
