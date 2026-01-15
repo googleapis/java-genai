@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-15)
+
+
+### Features
+
+* voice activity support ([5ffcf2b](https://github.com/googleapis/java-genai/commit/5ffcf2b20c95bf7cd84070700383b105e849d7a3))
+
 ## [1.34.0](https://github.com/googleapis/java-genai/compare/v1.33.0...v1.34.0) (2026-01-08)
 
 
