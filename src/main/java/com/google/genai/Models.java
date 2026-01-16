@@ -1379,6 +1379,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}))) {
+      throw new IllegalArgumentException(
+          "modelArmorConfig parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -1599,6 +1604,13 @@ public final class Models {
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
           "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"modelArmorConfig"},
+          Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}));
     }
 
     return toObject;

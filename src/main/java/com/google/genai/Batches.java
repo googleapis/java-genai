@@ -1257,6 +1257,11 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}))) {
+      throw new IllegalArgumentException(
+          "modelArmorConfig parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
