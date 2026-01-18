@@ -62,13 +62,6 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("fileSearch")
   public abstract Optional<FileSearch> fileSearch();
 
-  /**
-   * Optional. Tool that allows grounding the model's response with geospatial context related to
-   * the user's query.
-   */
-  @JsonProperty("googleMaps")
-  public abstract Optional<GoogleMaps> googleMaps();
-
   /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
   @JsonProperty("codeExecution")
   public abstract Optional<ToolCodeExecution> codeExecution();
@@ -90,6 +83,10 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("functionDeclarations")
   public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
 
+  /** Optional. GoogleMaps tool type. Tool to support Google Maps in Model. */
+  @JsonProperty("googleMaps")
+  public abstract Optional<GoogleMaps> googleMaps();
+
   /**
    * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
    */
@@ -100,21 +97,9 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("googleSearchRetrieval")
   public abstract Optional<GoogleSearchRetrieval> googleSearchRetrieval();
 
-  /**
-   * Optional. If specified, Vertex AI will use Parallel.ai to search for information to answer user
-   * queries. The search results will be grounded on Parallel.ai and presented to the model for
-   * response generation. This field is not supported in Gemini API.
-   */
-  @JsonProperty("parallelAiSearch")
-  public abstract Optional<ToolParallelAiSearch> parallelAiSearch();
-
   /** Optional. Tool to support URL context retrieval. */
   @JsonProperty("urlContext")
   public abstract Optional<UrlContext> urlContext();
-
-  /** Optional. MCP Servers to connect to. This field is not supported in Vertex AI. */
-  @JsonProperty("mcpServers")
-  public abstract Optional<List<McpServer>> mcpServers();
 
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
@@ -255,36 +240,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for googleMaps.
-     *
-     * <p>googleMaps: Optional. Tool that allows grounding the model's response with geospatial
-     * context related to the user's query.
-     */
-    @JsonProperty("googleMaps")
-    public abstract Builder googleMaps(GoogleMaps googleMaps);
-
-    /**
-     * Setter for googleMaps builder.
-     *
-     * <p>googleMaps: Optional. Tool that allows grounding the model's response with geospatial
-     * context related to the user's query.
-     */
-    @CanIgnoreReturnValue
-    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
-      return googleMaps(googleMapsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
-
-    /** Clears the value of googleMaps field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearGoogleMaps() {
-      return googleMaps(Optional.empty());
-    }
-
-    /**
      * Setter for codeExecution.
      *
      * <p>codeExecution: Optional. CodeExecution tool type. Enables the model to execute code as
@@ -402,6 +357,34 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
+     * Setter for googleMaps.
+     *
+     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
+     */
+    @JsonProperty("googleMaps")
+    public abstract Builder googleMaps(GoogleMaps googleMaps);
+
+    /**
+     * Setter for googleMaps builder.
+     *
+     * <p>googleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in Model.
+     */
+    @CanIgnoreReturnValue
+    public Builder googleMaps(GoogleMaps.Builder googleMapsBuilder) {
+      return googleMaps(googleMapsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleMaps(Optional<GoogleMaps> googleMaps);
+
+    /** Clears the value of googleMaps field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleMaps() {
+      return googleMaps(Optional.empty());
+    }
+
+    /**
      * Setter for googleSearch.
      *
      * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
@@ -463,38 +446,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for parallelAiSearch.
-     *
-     * <p>parallelAiSearch: Optional. If specified, Vertex AI will use Parallel.ai to search for
-     * information to answer user queries. The search results will be grounded on Parallel.ai and
-     * presented to the model for response generation. This field is not supported in Gemini API.
-     */
-    @JsonProperty("parallelAiSearch")
-    public abstract Builder parallelAiSearch(ToolParallelAiSearch parallelAiSearch);
-
-    /**
-     * Setter for parallelAiSearch builder.
-     *
-     * <p>parallelAiSearch: Optional. If specified, Vertex AI will use Parallel.ai to search for
-     * information to answer user queries. The search results will be grounded on Parallel.ai and
-     * presented to the model for response generation. This field is not supported in Gemini API.
-     */
-    @CanIgnoreReturnValue
-    public Builder parallelAiSearch(ToolParallelAiSearch.Builder parallelAiSearchBuilder) {
-      return parallelAiSearch(parallelAiSearchBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder parallelAiSearch(Optional<ToolParallelAiSearch> parallelAiSearch);
-
-    /** Clears the value of parallelAiSearch field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearParallelAiSearch() {
-      return parallelAiSearch(Optional.empty());
-    }
-
-    /**
      * Setter for urlContext.
      *
      * <p>urlContext: Optional. Tool to support URL context retrieval.
@@ -520,47 +471,6 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUrlContext() {
       return urlContext(Optional.empty());
-    }
-
-    /**
-     * Setter for mcpServers.
-     *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
-     */
-    @JsonProperty("mcpServers")
-    public abstract Builder mcpServers(List<McpServer> mcpServers);
-
-    /**
-     * Setter for mcpServers.
-     *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder mcpServers(McpServer... mcpServers) {
-      return mcpServers(Arrays.asList(mcpServers));
-    }
-
-    /**
-     * Setter for mcpServers builder.
-     *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder mcpServers(McpServer.Builder... mcpServersBuilders) {
-      return mcpServers(
-          Arrays.asList(mcpServersBuilders).stream()
-              .map(McpServer.Builder::build)
-              .collect(toImmutableList()));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder mcpServers(Optional<List<McpServer>> mcpServers);
-
-    /** Clears the value of mcpServers field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearMcpServers() {
-      return mcpServers(Optional.empty());
     }
 
     public abstract Tool build();

@@ -31,9 +31,6 @@ public class ThinkingLevel {
     /** Unspecified thinking level. */
     THINKING_LEVEL_UNSPECIFIED,
 
-    /** MINIMAL thinking level. */
-    MINIMAL,
-
     /** Low thinking level. */
     LOW,
 
@@ -41,7 +38,10 @@ public class ThinkingLevel {
     MEDIUM,
 
     /** High thinking level. */
-    HIGH
+    HIGH,
+
+    /** MINIMAL thinking level. */
+    MINIMAL
   }
 
   private Known thinkingLevelEnum;

@@ -26,41 +26,32 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * A `Maps` chunk is a piece of evidence that comes from Google Maps.
- *
- * <p>It contains information about a place, such as its name, address, and reviews. This is used to
- * provide the user with rich, location-based information.
- */
+/** Chunk from Google Maps. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMaps.Builder.class)
 public abstract class GroundingChunkMaps extends JsonSerializable {
   /**
-   * The sources that were used to generate the place answer.
-   *
-   * <p>This includes review snippets and photos that were used to generate the answer, as well as
-   * URIs to flag content.
+   * Sources used to generate the place answer. This includes review snippets and photos that were
+   * used to generate the answer, as well as uris to flag content.
    */
   @JsonProperty("placeAnswerSources")
   public abstract Optional<GroundingChunkMapsPlaceAnswerSources> placeAnswerSources();
 
   /**
-   * This Place's resource name, in `places/{place_id}` format.
-   *
-   * <p>This can be used to look up the place in the Google Maps API.
+   * This Place's resource name, in `places/{place_id}` format. Can be used to look up the Place.
    */
   @JsonProperty("placeId")
   public abstract Optional<String> placeId();
 
-  /** The text of the place answer. */
+  /** Text of the place answer. */
   @JsonProperty("text")
   public abstract Optional<String> text();
 
-  /** The title of the place. */
+  /** Title of the place. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** The URI of the place. */
+  /** URI reference of the place. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
@@ -85,10 +76,8 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for placeAnswerSources.
      *
-     * <p>placeAnswerSources: The sources that were used to generate the place answer.
-     *
-     * <p>This includes review snippets and photos that were used to generate the answer, as well as
-     * URIs to flag content.
+     * <p>placeAnswerSources: Sources used to generate the place answer. This includes review
+     * snippets and photos that were used to generate the answer, as well as uris to flag content.
      */
     @JsonProperty("placeAnswerSources")
     public abstract Builder placeAnswerSources(
@@ -97,10 +86,8 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for placeAnswerSources builder.
      *
-     * <p>placeAnswerSources: The sources that were used to generate the place answer.
-     *
-     * <p>This includes review snippets and photos that were used to generate the answer, as well as
-     * URIs to flag content.
+     * <p>placeAnswerSources: Sources used to generate the place answer. This includes review
+     * snippets and photos that were used to generate the answer, as well as uris to flag content.
      */
     @CanIgnoreReturnValue
     public Builder placeAnswerSources(
@@ -122,9 +109,8 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for placeId.
      *
-     * <p>placeId: This Place's resource name, in `places/{place_id}` format.
-     *
-     * <p>This can be used to look up the place in the Google Maps API.
+     * <p>placeId: This Place's resource name, in `places/{place_id}` format. Can be used to look up
+     * the Place.
      */
     @JsonProperty("placeId")
     public abstract Builder placeId(String placeId);
@@ -142,7 +128,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for text.
      *
-     * <p>text: The text of the place answer.
+     * <p>text: Text of the place answer.
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
@@ -160,7 +146,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: The title of the place.
+     * <p>title: Title of the place.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -178,7 +164,7 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     /**
      * Setter for uri.
      *
-     * <p>uri: The URI of the place.
+     * <p>uri: URI reference of the place.
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);

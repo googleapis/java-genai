@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tool to retrieve knowledge from Google Maps. */
+/** Tool to retrieve public maps data for grounding, powered by Google. */
 @AutoValue
 @JsonDeserialize(builder = GoogleMaps.Builder.class)
 public abstract class GoogleMaps extends JsonSerializable {
@@ -37,11 +37,7 @@ public abstract class GoogleMaps extends JsonSerializable {
   @JsonProperty("authConfig")
   public abstract Optional<AuthConfig> authConfig();
 
-  /**
-   * Optional. Whether to return a widget context token in the GroundingMetadata of the response.
-   * Developers can use the widget context token to render a Google Maps widget with geospatial
-   * context related to the places that the model references in the response.
-   */
+  /** Optional. If true, include the widget context token in the response. */
   @JsonProperty("enableWidget")
   public abstract Optional<Boolean> enableWidget();
 
@@ -96,9 +92,7 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for enableWidget.
      *
-     * <p>enableWidget: Optional. Whether to return a widget context token in the GroundingMetadata
-     * of the response. Developers can use the widget context token to render a Google Maps widget
-     * with geospatial context related to the places that the model references in the response.
+     * <p>enableWidget: Optional. If true, include the widget context token in the response.
      */
     @JsonProperty("enableWidget")
     public abstract Builder enableWidget(boolean enableWidget);

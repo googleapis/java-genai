@@ -26,15 +26,15 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Metadata returned to client when grounding is enabled. */
+/** Metadata related to retrieval in the grounding flow. */
 @AutoValue
 @JsonDeserialize(builder = RetrievalMetadata.Builder.class)
 public abstract class RetrievalMetadata extends JsonSerializable {
   /**
-   * Optional. Score indicating how likely information from google search could help answer the
-   * prompt. The score is in the range [0, 1], where 0 is the least likely and 1 is the most likely.
-   * This score is only populated when google search grounding and dynamic retrieval is enabled. It
-   * will be compared to the threshold to determine whether to trigger Google search.
+   * Optional. Score indicating how likely information from Google Search could help answer the
+   * prompt. The score is in the range `[0, 1]`, where 0 is the least likely and 1 is the most
+   * likely. This score is only populated when Google Search grounding and dynamic retrieval is
+   * enabled. It will be compared to the threshold to determine whether to trigger Google Search.
    */
   @JsonProperty("googleSearchDynamicRetrievalScore")
   public abstract Optional<Float> googleSearchDynamicRetrievalScore();
@@ -61,10 +61,10 @@ public abstract class RetrievalMetadata extends JsonSerializable {
      * Setter for googleSearchDynamicRetrievalScore.
      *
      * <p>googleSearchDynamicRetrievalScore: Optional. Score indicating how likely information from
-     * google search could help answer the prompt. The score is in the range [0, 1], where 0 is the
-     * least likely and 1 is the most likely. This score is only populated when google search
+     * Google Search could help answer the prompt. The score is in the range `[0, 1]`, where 0 is
+     * the least likely and 1 is the most likely. This score is only populated when Google Search
      * grounding and dynamic retrieval is enabled. It will be compared to the threshold to determine
-     * whether to trigger Google search.
+     * whether to trigger Google Search.
      */
     @JsonProperty("googleSearchDynamicRetrievalScore")
     public abstract Builder googleSearchDynamicRetrievalScore(

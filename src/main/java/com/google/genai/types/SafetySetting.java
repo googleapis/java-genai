@@ -26,28 +26,22 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * A safety setting that affects the safety-blocking behavior. A SafetySetting consists of a harm
- * category and a threshold for that category.
- */
+/** Safety settings. */
 @AutoValue
 @JsonDeserialize(builder = SafetySetting.Builder.class)
 public abstract class SafetySetting extends JsonSerializable {
-  /** Required. The harm category to be blocked. */
+  /** Required. Harm category. */
   @JsonProperty("category")
   public abstract Optional<HarmCategory> category();
 
   /**
-   * Optional. The method for blocking content. If not specified, the default behavior is to use the
-   * probability score. This field is not supported in Gemini API.
+   * Optional. Specify if the threshold is used for probability or severity score. If not specified,
+   * the threshold is used for probability score. This field is not supported in Gemini API.
    */
   @JsonProperty("method")
   public abstract Optional<HarmBlockMethod> method();
 
-  /**
-   * Required. The threshold for blocking content. If the harm probability exceeds this threshold,
-   * the content will be blocked.
-   */
+  /** Required. The harm block threshold. */
   @JsonProperty("threshold")
   public abstract Optional<HarmBlockThreshold> threshold();
 
@@ -72,7 +66,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for category.
      *
-     * <p>category: Required. The harm category to be blocked.
+     * <p>category: Required. Harm category.
      */
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
@@ -90,7 +84,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for category given a known enum.
      *
-     * <p>category: Required. The harm category to be blocked.
+     * <p>category: Required. Harm category.
      */
     @CanIgnoreReturnValue
     public Builder category(HarmCategory.Known knownType) {
@@ -100,7 +94,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for category given a string.
      *
-     * <p>category: Required. The harm category to be blocked.
+     * <p>category: Required. Harm category.
      */
     @CanIgnoreReturnValue
     public Builder category(String category) {
@@ -110,8 +104,9 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for method.
      *
-     * <p>method: Optional. The method for blocking content. If not specified, the default behavior
-     * is to use the probability score. This field is not supported in Gemini API.
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("method")
     public abstract Builder method(HarmBlockMethod method);
@@ -129,8 +124,9 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for method given a known enum.
      *
-     * <p>method: Optional. The method for blocking content. If not specified, the default behavior
-     * is to use the probability score. This field is not supported in Gemini API.
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder method(HarmBlockMethod.Known knownType) {
@@ -140,8 +136,9 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for method given a string.
      *
-     * <p>method: Optional. The method for blocking content. If not specified, the default behavior
-     * is to use the probability score. This field is not supported in Gemini API.
+     * <p>method: Optional. Specify if the threshold is used for probability or severity score. If
+     * not specified, the threshold is used for probability score. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder method(String method) {
@@ -151,8 +148,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for threshold.
      *
-     * <p>threshold: Required. The threshold for blocking content. If the harm probability exceeds
-     * this threshold, the content will be blocked.
+     * <p>threshold: Required. The harm block threshold.
      */
     @JsonProperty("threshold")
     public abstract Builder threshold(HarmBlockThreshold threshold);
@@ -170,8 +166,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for threshold given a known enum.
      *
-     * <p>threshold: Required. The threshold for blocking content. If the harm probability exceeds
-     * this threshold, the content will be blocked.
+     * <p>threshold: Required. The harm block threshold.
      */
     @CanIgnoreReturnValue
     public Builder threshold(HarmBlockThreshold.Known knownType) {
@@ -181,8 +176,7 @@ public abstract class SafetySetting extends JsonSerializable {
     /**
      * Setter for threshold given a string.
      *
-     * <p>threshold: Required. The threshold for blocking content. If the harm probability exceeds
-     * this threshold, the content will be blocked.
+     * <p>threshold: Required. The harm block threshold.
      */
     @CanIgnoreReturnValue
     public Builder threshold(String threshold) {

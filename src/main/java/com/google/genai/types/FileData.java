@@ -26,23 +26,20 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * URI-based data. A FileData message contains a URI pointing to data of a specific media type. It
- * is used to represent images, audio, and video stored in Google Cloud Storage.
- */
+/** URI based data. */
 @AutoValue
 @JsonDeserialize(builder = FileData.Builder.class)
 public abstract class FileData extends JsonSerializable {
   /**
-   * Optional. The display name of the file. Used to provide a label or filename to distinguish
-   * files. This field is only returned in `PromptMessage` for prompt management. It is used in the
-   * Gemini calls only when server side tools (`code_execution`, `google_search`, and `url_context`)
-   * are enabled. This field is not supported in Gemini API.
+   * Optional. Display name of the file data. Used to provide a label or filename to distinguish
+   * file datas. This field is only returned in PromptMessage for prompt management. It is currently
+   * used in the Gemini GenerateContent calls only when server side tools (code_execution,
+   * google_search, and url_context) are enabled. This field is not supported in Gemini API.
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
 
-  /** Required. The URI of the file in Google Cloud Storage. */
+  /** Required. URI. */
   @JsonProperty("fileUri")
   public abstract Optional<String> fileUri();
 
@@ -71,10 +68,11 @@ public abstract class FileData extends JsonSerializable {
     /**
      * Setter for displayName.
      *
-     * <p>displayName: Optional. The display name of the file. Used to provide a label or filename
-     * to distinguish files. This field is only returned in `PromptMessage` for prompt management.
-     * It is used in the Gemini calls only when server side tools (`code_execution`,
-     * `google_search`, and `url_context`) are enabled. This field is not supported in Gemini API.
+     * <p>displayName: Optional. Display name of the file data. Used to provide a label or filename
+     * to distinguish file datas. This field is only returned in PromptMessage for prompt
+     * management. It is currently used in the Gemini GenerateContent calls only when server side
+     * tools (code_execution, google_search, and url_context) are enabled. This field is not
+     * supported in Gemini API.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
@@ -92,7 +90,7 @@ public abstract class FileData extends JsonSerializable {
     /**
      * Setter for fileUri.
      *
-     * <p>fileUri: Required. The URI of the file in Google Cloud Storage.
+     * <p>fileUri: Required. URI.
      */
     @JsonProperty("fileUri")
     public abstract Builder fileUri(String fileUri);
