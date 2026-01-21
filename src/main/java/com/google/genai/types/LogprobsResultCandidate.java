@@ -26,19 +26,27 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Candidate for the logprobs token and score. */
+/** A single token and its associated log probability. */
 @AutoValue
 @JsonDeserialize(builder = LogprobsResultCandidate.Builder.class)
 public abstract class LogprobsResultCandidate extends JsonSerializable {
-  /** The candidate's log probability. */
+  /**
+   * The log probability of this token. A higher value indicates that the model was more confident
+   * in this token. The log probability can be used to assess the relative likelihood of different
+   * tokens and to identify when the model is uncertain.
+   */
   @JsonProperty("logProbability")
   public abstract Optional<Float> logProbability();
 
-  /** The candidate's token string value. */
+  /** The token's string representation. */
   @JsonProperty("token")
   public abstract Optional<String> token();
 
-  /** The candidate's token id value. */
+  /**
+   * The token's numerical ID. While the `token` field provides the string representation of the
+   * token, the `token_id` is the numerical representation that the model uses internally. This can
+   * be useful for developers who want to build custom logic based on the model's vocabulary.
+   */
   @JsonProperty("tokenId")
   public abstract Optional<Integer> tokenId();
 
@@ -63,7 +71,9 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
     /**
      * Setter for logProbability.
      *
-     * <p>logProbability: The candidate's log probability.
+     * <p>logProbability: The log probability of this token. A higher value indicates that the model
+     * was more confident in this token. The log probability can be used to assess the relative
+     * likelihood of different tokens and to identify when the model is uncertain.
      */
     @JsonProperty("logProbability")
     public abstract Builder logProbability(Float logProbability);
@@ -81,7 +91,7 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
     /**
      * Setter for token.
      *
-     * <p>token: The candidate's token string value.
+     * <p>token: The token's string representation.
      */
     @JsonProperty("token")
     public abstract Builder token(String token);
@@ -99,7 +109,10 @@ public abstract class LogprobsResultCandidate extends JsonSerializable {
     /**
      * Setter for tokenId.
      *
-     * <p>tokenId: The candidate's token id value.
+     * <p>tokenId: The token's numerical ID. While the `token` field provides the string
+     * representation of the token, the `token_id` is the numerical representation that the model
+     * uses internally. This can be useful for developers who want to build custom logic based on
+     * the model's vocabulary.
      */
     @JsonProperty("tokenId")
     public abstract Builder tokenId(Integer tokenId);

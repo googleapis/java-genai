@@ -27,7 +27,10 @@ import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.util.Optional;
 
-/** Metadata describes the input video content. */
+/**
+ * Provides metadata for a video, including the start and end offsets for clipping and the frame
+ * rate.
+ */
 @AutoValue
 @JsonDeserialize(builder = VideoMetadata.Builder.class)
 public abstract class VideoMetadata extends JsonSerializable {
@@ -36,8 +39,8 @@ public abstract class VideoMetadata extends JsonSerializable {
   public abstract Optional<Duration> endOffset();
 
   /**
-   * Optional. The frame rate of the video sent to the model. If not specified, the default value
-   * will be 1.0. The fps range is (0.0, 24.0].
+   * Optional. The frame rate of the video sent to the model. If not specified, the default value is
+   * 1.0. The valid range is (0.0, 24.0].
    */
   @JsonProperty("fps")
   public abstract Optional<Double> fps();
@@ -86,7 +89,7 @@ public abstract class VideoMetadata extends JsonSerializable {
      * Setter for fps.
      *
      * <p>fps: Optional. The frame rate of the video sent to the model. If not specified, the
-     * default value will be 1.0. The fps range is (0.0, 24.0].
+     * default value is 1.0. The valid range is (0.0, 24.0].
      */
     @JsonProperty("fps")
     public abstract Builder fps(Double fps);
