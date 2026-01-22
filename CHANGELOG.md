@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.0](https://github.com/googleapis/java-genai/compare/v1.35.0...v1.36.0) (2026-01-22)
+
+
+### Features
+
+* Add ModelArmorConfig support for prompt and response sanitization via the Model Armor service ([9c77a8f](https://github.com/googleapis/java-genai/commit/9c77a8f05959b205e025c70eb794740ac2e1724b))
+
 ## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-14)
 
 
