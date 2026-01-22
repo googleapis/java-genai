@@ -6,8 +6,6 @@
 ### Features
 
 * Add ModelArmorConfig support for prompt and response sanitization via the Model Armor service ([9c77a8f](https://github.com/googleapis/java-genai/commit/9c77a8f05959b205e025c70eb794740ac2e1724b))
-* Update data types from discovery doc. ([fb1f53d](https://github.com/googleapis/java-genai/commit/fb1f53deb7097cbea375edf89abd1a076bf2cc61))
-* Update data types from discovery doc. ([6444fb0](https://github.com/googleapis/java-genai/commit/6444fb0219ee9d7e22768ebef62c0a7c6f501ae5))
 
 ## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-14)
 
