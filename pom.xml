@@ -323,6 +323,7 @@
               </formats>
               <excludes>
                 <exclude>com/google/genai/types/AutoValue_*.class</exclude>
+                <exclude>com/google/genai/types/interactions/AutoValue_*.class</exclude>
               </excludes>
               <rules>
                 <rule>
