@@ -16,6 +16,7 @@
 
 package com.google.genai;
 
+
 /** Data class configuration for debugging or testing the Client. */
 @ExcludeFromGeneratedCoverageReport
 final class DebugConfig {
