@@ -34,6 +34,9 @@ public class TuningMethod {
     /** Preference optimization tuning. */
     PREFERENCE_TUNING,
 
+    /** Distillation tuning. */
+    DISTILLATION,
+
     TUNING_METHOD_UNSPECIFIED
   }
 
