@@ -101,6 +101,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("preferenceOptimizationSpec")
   public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
 
+  /** Tuning Spec for Distillation. */
+  @JsonProperty("distillationSpec")
+  public abstract Optional<DistillationSpec> distillationSpec();
+
   /** Output only. The tuning data statistics associated with this TuningJob. */
   @JsonProperty("tuningDataStats")
   public abstract Optional<TuningDataStats> tuningDataStats();
@@ -538,6 +542,34 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPreferenceOptimizationSpec() {
       return preferenceOptimizationSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for distillationSpec.
+     *
+     * <p>distillationSpec: Tuning Spec for Distillation.
+     */
+    @JsonProperty("distillationSpec")
+    public abstract Builder distillationSpec(DistillationSpec distillationSpec);
+
+    /**
+     * Setter for distillationSpec builder.
+     *
+     * <p>distillationSpec: Tuning Spec for Distillation.
+     */
+    @CanIgnoreReturnValue
+    public Builder distillationSpec(DistillationSpec.Builder distillationSpecBuilder) {
+      return distillationSpec(distillationSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationSpec(Optional<DistillationSpec> distillationSpec);
+
+    /** Clears the value of distillationSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationSpec() {
+      return distillationSpec(Optional.empty());
     }
 
     /**

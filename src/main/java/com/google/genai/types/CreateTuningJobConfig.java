@@ -36,8 +36,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /**
-   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not set, the
-   * default method (SFT) will be used.
+   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or DISTILLATION). If
+   * not set, the default method (SFT) will be used.
    */
   @JsonProperty("method")
   public abstract Optional<TuningMethod> method();
@@ -112,6 +112,22 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("beta")
   public abstract Optional<Float> beta();
 
+  /** The base teacher model that is being distilled. Distillation only. */
+  @JsonProperty("baseTeacherModel")
+  public abstract Optional<String> baseTeacherModel();
+
+  /** The resource name of the Tuned teacher model. Distillation only. */
+  @JsonProperty("tunedTeacherModelSource")
+  public abstract Optional<String> tunedTeacherModelSource();
+
+  /** Multiplier for adjusting the weight of the SFT loss. Distillation only. */
+  @JsonProperty("sftLossWeightMultiplier")
+  public abstract Optional<Float> sftLossWeightMultiplier();
+
+  /** The Google Cloud Storage location where the tuning job outputs are written. */
+  @JsonProperty("outputUri")
+  public abstract Optional<String> outputUri();
+
   /** Instantiates a builder for CreateTuningJobConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -161,8 +177,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @JsonProperty("method")
     public abstract Builder method(TuningMethod method);
@@ -180,8 +196,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method given a known enum.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(TuningMethod.Known knownType) {
@@ -191,8 +207,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method given a string.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(String method) {
@@ -483,6 +499,79 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearBeta() {
       return beta(Optional.empty());
+    }
+
+    /**
+     * Setter for baseTeacherModel.
+     *
+     * <p>baseTeacherModel: The base teacher model that is being distilled. Distillation only.
+     */
+    @JsonProperty("baseTeacherModel")
+    public abstract Builder baseTeacherModel(String baseTeacherModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseTeacherModel(Optional<String> baseTeacherModel);
+
+    /** Clears the value of baseTeacherModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseTeacherModel() {
+      return baseTeacherModel(Optional.empty());
+    }
+
+    /**
+     * Setter for tunedTeacherModelSource.
+     *
+     * <p>tunedTeacherModelSource: The resource name of the Tuned teacher model. Distillation only.
+     */
+    @JsonProperty("tunedTeacherModelSource")
+    public abstract Builder tunedTeacherModelSource(String tunedTeacherModelSource);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedTeacherModelSource(Optional<String> tunedTeacherModelSource);
+
+    /** Clears the value of tunedTeacherModelSource field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedTeacherModelSource() {
+      return tunedTeacherModelSource(Optional.empty());
+    }
+
+    /**
+     * Setter for sftLossWeightMultiplier.
+     *
+     * <p>sftLossWeightMultiplier: Multiplier for adjusting the weight of the SFT loss. Distillation
+     * only.
+     */
+    @JsonProperty("sftLossWeightMultiplier")
+    public abstract Builder sftLossWeightMultiplier(Float sftLossWeightMultiplier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sftLossWeightMultiplier(Optional<Float> sftLossWeightMultiplier);
+
+    /** Clears the value of sftLossWeightMultiplier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSftLossWeightMultiplier() {
+      return sftLossWeightMultiplier(Optional.empty());
+    }
+
+    /**
+     * Setter for outputUri.
+     *
+     * <p>outputUri: The Google Cloud Storage location where the tuning job outputs are written.
+     */
+    @JsonProperty("outputUri")
+    public abstract Builder outputUri(String outputUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputUri(Optional<String> outputUri);
+
+    /** Clears the value of outputUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputUri() {
+      return outputUri(Optional.empty());
     }
 
     public abstract CreateTuningJobConfig build();
