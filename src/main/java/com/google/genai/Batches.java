@@ -65,6 +65,46 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"apiKey"},
+          Common.getValueByPath(fromObject, new String[] {"apiKey"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"}))) {
+      throw new IllegalArgumentException("apiKeyConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authType"}))) {
+      throw new IllegalArgumentException("authType parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}))) {
+      throw new IllegalArgumentException(
+          "googleServiceAccountConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}))) {
+      throw new IllegalArgumentException(
+          "httpBasicAuthConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oauthConfig"}))) {
+      throw new IllegalArgumentException("oauthConfig parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oidcConfig"}))) {
+      throw new IllegalArgumentException("oidcConfig parameter is not supported in Gemini API.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobDestinationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
@@ -527,18 +567,18 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"finishReason"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"avgLogprobs"},
-          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"groundingMetadata"},
           Common.getValueByPath(fromObject, new String[] {"groundingMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"avgLogprobs"},
+          Common.getValueByPath(fromObject, new String[] {"avgLogprobs"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"index"}) != null) {
@@ -1315,6 +1355,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"usageMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"modelStatus"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"modelStatus"},
+          Common.getValueByPath(fromObject, new String[] {"modelStatus"}));
+    }
+
     return toObject;
   }
 
@@ -1351,8 +1398,14 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authConfig"}))) {
-      throw new IllegalArgumentException("authConfig parameter is not supported in Gemini API.");
+    if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"authConfig"},
+          authConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"enableWidget"}) != null) {
@@ -1368,14 +1421,14 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
-      throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
       throw new IllegalArgumentException(
           "blockingConfidence parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
+      throw new IllegalArgumentException(
+          "excludeDomains parameter is not supported in Gemini API.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -1419,6 +1472,11 @@ public final class Batches {
         Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}))) {
       throw new IllegalArgumentException(
           "outputCompressionQuality parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
+      throw new IllegalArgumentException(
+          "imageOutputOptions parameter is not supported in Gemini API.");
     }
 
     return toObject;
@@ -1731,6 +1789,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"partMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1802,6 +1867,16 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          googleMapsToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1821,16 +1896,6 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleMaps"},
-          googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1848,11 +1913,23 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"parallelAiSearch"}))) {
+      throw new IllegalArgumentException(
+          "parallelAiSearch parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"urlContext"},
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mcpServers"},
+          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
     }
 
     return toObject;

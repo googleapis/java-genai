@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Map;
 import java.util.Optional;
 
 /** Config for `inlined_embedding_responses` parameter. */
@@ -37,6 +38,10 @@ public abstract class InlinedEmbedContentResponse extends JsonSerializable {
   /** The error encountered while processing the request. */
   @JsonProperty("error")
   public abstract Optional<JobError> error();
+
+  /** Output only. The metadata associated with the request. */
+  @JsonProperty("metadata")
+  public abstract Optional<Map<String, Object>> metadata();
 
   /** Instantiates a builder for InlinedEmbedContentResponse. */
   @ExcludeFromGeneratedCoverageReport
@@ -110,6 +115,24 @@ public abstract class InlinedEmbedContentResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearError() {
       return error(Optional.empty());
+    }
+
+    /**
+     * Setter for metadata.
+     *
+     * <p>metadata: Output only. The metadata associated with the request.
+     */
+    @JsonProperty("metadata")
+    public abstract Builder metadata(Map<String, Object> metadata);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder metadata(Optional<Map<String, Object>> metadata);
+
+    /** Clears the value of metadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMetadata() {
+      return metadata(Optional.empty());
     }
 
     public abstract InlinedEmbedContentResponse build();

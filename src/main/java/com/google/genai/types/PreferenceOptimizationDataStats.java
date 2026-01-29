@@ -37,6 +37,17 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = PreferenceOptimizationDataStats.Builder.class)
 public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
+  /** Output only. A partial sample of the indices (starting from 1) of the dropped examples. */
+  @JsonProperty("droppedExampleIndices")
+  public abstract Optional<List<Long>> droppedExampleIndices();
+
+  /**
+   * Output only. For each index in `dropped_example_indices`, the user-facing reason why the
+   * example was dropped.
+   */
+  @JsonProperty("droppedExampleReasons")
+  public abstract Optional<List<String>> droppedExampleReasons();
+
   /** Output only. Dataset distributions for scores variance per example. */
   @JsonProperty("scoreVariancePerExampleDistribution")
   public abstract Optional<DatasetDistribution> scoreVariancePerExampleDistribution();
@@ -87,6 +98,66 @@ public abstract class PreferenceOptimizationDataStats extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_PreferenceOptimizationDataStats.Builder();
+    }
+
+    /**
+     * Setter for droppedExampleIndices.
+     *
+     * <p>droppedExampleIndices: Output only. A partial sample of the indices (starting from 1) of
+     * the dropped examples.
+     */
+    @JsonProperty("droppedExampleIndices")
+    public abstract Builder droppedExampleIndices(List<Long> droppedExampleIndices);
+
+    /**
+     * Setter for droppedExampleIndices.
+     *
+     * <p>droppedExampleIndices: Output only. A partial sample of the indices (starting from 1) of
+     * the dropped examples.
+     */
+    @CanIgnoreReturnValue
+    public Builder droppedExampleIndices(Long... droppedExampleIndices) {
+      return droppedExampleIndices(Arrays.asList(droppedExampleIndices));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder droppedExampleIndices(Optional<List<Long>> droppedExampleIndices);
+
+    /** Clears the value of droppedExampleIndices field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDroppedExampleIndices() {
+      return droppedExampleIndices(Optional.empty());
+    }
+
+    /**
+     * Setter for droppedExampleReasons.
+     *
+     * <p>droppedExampleReasons: Output only. For each index in `dropped_example_indices`, the
+     * user-facing reason why the example was dropped.
+     */
+    @JsonProperty("droppedExampleReasons")
+    public abstract Builder droppedExampleReasons(List<String> droppedExampleReasons);
+
+    /**
+     * Setter for droppedExampleReasons.
+     *
+     * <p>droppedExampleReasons: Output only. For each index in `dropped_example_indices`, the
+     * user-facing reason why the example was dropped.
+     */
+    @CanIgnoreReturnValue
+    public Builder droppedExampleReasons(String... droppedExampleReasons) {
+      return droppedExampleReasons(Arrays.asList(droppedExampleReasons));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder droppedExampleReasons(Optional<List<String>> droppedExampleReasons);
+
+    /** Clears the value of droppedExampleReasons field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDroppedExampleReasons() {
+      return droppedExampleReasons(Optional.empty());
     }
 
     /**
