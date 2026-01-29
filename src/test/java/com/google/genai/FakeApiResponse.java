@@ -42,6 +42,6 @@ public final class FakeApiResponse extends ApiResponse {
 
   @Override
   public void close() {
-    throw new UnsupportedOperationException("Not implemented yet.");
+    // No-op for fake response.
   }
 }
