@@ -162,6 +162,15 @@ public final class Tunings {
       throw new IllegalArgumentException("adapterSize parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"tuningMode"}))) {
+      throw new IllegalArgumentException("tuningMode parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"customBaseModel"}))) {
+      throw new IllegalArgumentException(
+          "customBaseModel parameter is not supported in Gemini API.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -389,12 +398,54 @@ public final class Tunings {
             Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
       }
     }
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"batchSize"}))) {
-      throw new IllegalArgumentException("batchSize parameter is not supported in Vertex AI.");
+
+    JsonNode discriminatorTuningMode =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueTuningMode =
+        discriminatorTuningMode == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorTuningMode.asText();
+    if (discriminatorValueTuningMode.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"tuningMode"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "tuningMode"},
+            Common.getValueByPath(fromObject, new String[] {"tuningMode"}));
+      }
+    }
+    if (Common.getValueByPath(fromObject, new String[] {"customBaseModel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"customBaseModel"},
+          Common.getValueByPath(fromObject, new String[] {"customBaseModel"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"learningRate"}))) {
-      throw new IllegalArgumentException("learningRate parameter is not supported in Vertex AI.");
+    JsonNode discriminatorBatchSize =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueBatchSize =
+        discriminatorBatchSize == null ? "SUPERVISED_FINE_TUNING" : discriminatorBatchSize.asText();
+    if (discriminatorValueBatchSize.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "hyperParameters", "batchSize"},
+            Common.getValueByPath(fromObject, new String[] {"batchSize"}));
+      }
+    }
+
+    JsonNode discriminatorLearningRate =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
+    String discriminatorValueLearningRate =
+        discriminatorLearningRate == null
+            ? "SUPERVISED_FINE_TUNING"
+            : discriminatorLearningRate.asText();
+    if (discriminatorValueLearningRate.equals("SUPERVISED_FINE_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"supervisedTuningSpec", "hyperParameters", "learningRate"},
+            Common.getValueByPath(fromObject, new String[] {"learningRate"}));
+      }
     }
 
     JsonNode discriminatorEvaluationConfig =

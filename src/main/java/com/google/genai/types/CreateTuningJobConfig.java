@@ -61,7 +61,10 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("epochCount")
   public abstract Optional<Integer> epochCount();
 
-  /** Multiplier for adjusting the default learning rate. */
+  /**
+   * Multiplier for adjusting the default learning rate. 1P models only. Mutually exclusive with
+   * learning_rate.
+   */
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Float> learningRateMultiplier();
 
@@ -80,16 +83,21 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
 
-  /**
-   * The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will be used based
-   * on the number of training examples.
-   */
+  /** Tuning mode for SFT tuning. */
+  @JsonProperty("tuningMode")
+  public abstract Optional<TuningMode> tuningMode();
+
+  /** Custom base model for tuning. This is only supported for OSS models in Vertex. */
+  @JsonProperty("customBaseModel")
+  public abstract Optional<String> customBaseModel();
+
+  /** The batch size hyperparameter for tuning. This is only supported for OSS models in Vertex. */
   @JsonProperty("batchSize")
   public abstract Optional<Integer> batchSize();
 
   /**
-   * The learning rate hyperparameter for tuning. If not set, a default of 0.001 or 0.0002 will be
-   * calculated based on the number of training examples.
+   * The learning rate for tuning. OSS models only. Mutually exclusive with
+   * learning_rate_multiplier.
    */
   @JsonProperty("learningRate")
   public abstract Optional<Float> learningRate();
@@ -304,7 +312,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for learningRateMultiplier.
      *
-     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate.
+     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate. 1P models
+     * only. Mutually exclusive with learning_rate.
      */
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Float learningRateMultiplier);
@@ -396,10 +405,67 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for tuningMode.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @JsonProperty("tuningMode")
+    public abstract Builder tuningMode(TuningMode tuningMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningMode(Optional<TuningMode> tuningMode);
+
+    /** Clears the value of tuningMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningMode() {
+      return tuningMode(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningMode given a known enum.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(TuningMode.Known knownType) {
+      return tuningMode(new TuningMode(knownType));
+    }
+
+    /**
+     * Setter for tuningMode given a string.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(String tuningMode) {
+      return tuningMode(new TuningMode(tuningMode));
+    }
+
+    /**
+     * Setter for customBaseModel.
+     *
+     * <p>customBaseModel: Custom base model for tuning. This is only supported for OSS models in
+     * Vertex.
+     */
+    @JsonProperty("customBaseModel")
+    public abstract Builder customBaseModel(String customBaseModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customBaseModel(Optional<String> customBaseModel);
+
+    /** Clears the value of customBaseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomBaseModel() {
+      return customBaseModel(Optional.empty());
+    }
+
+    /**
      * Setter for batchSize.
      *
-     * <p>batchSize: The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will
-     * be used based on the number of training examples.
+     * <p>batchSize: The batch size hyperparameter for tuning. This is only supported for OSS models
+     * in Vertex.
      */
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Integer batchSize);
@@ -417,8 +483,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for learningRate.
      *
-     * <p>learningRate: The learning rate hyperparameter for tuning. If not set, a default of 0.001
-     * or 0.0002 will be calculated based on the number of training examples.
+     * <p>learningRate: The learning rate for tuning. OSS models only. Mutually exclusive with
+     * learning_rate_multiplier.
      */
     @JsonProperty("learningRate")
     public abstract Builder learningRate(Float learningRate);
