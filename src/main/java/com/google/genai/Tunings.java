@@ -86,7 +86,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelTuningJobResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelTuningJobResponseFromMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -99,7 +100,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode cancelTuningJobResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode cancelTuningJobResponseFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -612,7 +614,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode evaluationConfigFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode evaluationConfigFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"metrics"}) != null) {
       Common.setValueByPath(
@@ -785,7 +788,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsResponseFromMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -808,7 +812,7 @@ public final class Tunings {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(tuningJobFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(tuningJobFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
     }
@@ -817,7 +821,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode listTuningJobsResponseFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -840,7 +845,7 @@ public final class Tunings {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject));
+        result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
     }
@@ -849,7 +854,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tunedModelFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tunedModelFromMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
@@ -959,7 +965,7 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningJobFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -1031,14 +1037,16 @@ public final class Tunings {
           tunedModelFromMldev(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"_self"})),
-              toObject));
+              toObject,
+              rootObject));
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningJobFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -1173,7 +1181,8 @@ public final class Tunings {
           evaluationConfigFromVertex(
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"evaluationConfig"})),
-              toObject));
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"customBaseModel"}) != null) {
@@ -1236,7 +1245,8 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode tuningOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode tuningOperationFromMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
@@ -1341,7 +1351,8 @@ public final class Tunings {
   }
 
   /** A shared processResponse function for both sync and async methods. */
-  TuningJob processResponseForPrivateGet(ApiResponse response, GetTuningJobConfig config) {
+  TuningJob processResponseForPrivateGet(
+      ApiResponse response, GetTuningJobConfig config, JsonNode parameterNode) {
     ResponseBody responseBody = response.getBody();
     String responseString;
     try {
@@ -1353,11 +1364,11 @@ public final class Tunings {
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
-      responseNode = tuningJobFromVertex(responseNode, null);
+      responseNode = tuningJobFromVertex(responseNode, null, parameterNode);
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = tuningJobFromMldev(responseNode, null);
+      responseNode = tuningJobFromMldev(responseNode, null, parameterNode);
     }
 
     TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
@@ -1373,12 +1384,21 @@ public final class Tunings {
   }
 
   TuningJob privateGet(String name, GetTuningJobConfig config) {
+    GetTuningJobParameters.Builder parameterBuilder = GetTuningJobParameters.builder();
+
+    if (!Common.isZero(name)) {
+      parameterBuilder.name(name);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateGet(name, config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
-      return processResponseForPrivateGet(response, config);
+      return processResponseForPrivateGet(response, config, parameterNode);
     }
   }
 
@@ -1424,7 +1444,7 @@ public final class Tunings {
 
   /** A shared processResponse function for both sync and async methods. */
   ListTuningJobsResponse processResponseForPrivateList(
-      ApiResponse response, ListTuningJobsConfig config) {
+      ApiResponse response, ListTuningJobsConfig config, JsonNode parameterNode) {
     ResponseBody responseBody = response.getBody();
     String responseString;
     try {
@@ -1436,11 +1456,11 @@ public final class Tunings {
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
-      responseNode = listTuningJobsResponseFromVertex(responseNode, null);
+      responseNode = listTuningJobsResponseFromVertex(responseNode, null, parameterNode);
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = listTuningJobsResponseFromMldev(responseNode, null);
+      responseNode = listTuningJobsResponseFromMldev(responseNode, null, parameterNode);
     }
 
     ListTuningJobsResponse sdkResponse =
@@ -1457,12 +1477,18 @@ public final class Tunings {
   }
 
   ListTuningJobsResponse privateList(ListTuningJobsConfig config) {
+    ListTuningJobsParameters.Builder parameterBuilder = ListTuningJobsParameters.builder();
+
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateList(config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
-      return processResponseForPrivateList(response, config);
+      return processResponseForPrivateList(response, config, parameterNode);
     }
   }
 
@@ -1511,7 +1537,7 @@ public final class Tunings {
 
   /** A shared processResponse function for both sync and async methods. */
   CancelTuningJobResponse processResponseForCancel(
-      ApiResponse response, CancelTuningJobConfig config) {
+      ApiResponse response, CancelTuningJobConfig config, JsonNode parameterNode) {
     ResponseBody responseBody = response.getBody();
     String responseString;
     try {
@@ -1523,11 +1549,11 @@ public final class Tunings {
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
-      responseNode = cancelTuningJobResponseFromVertex(responseNode, null);
+      responseNode = cancelTuningJobResponseFromVertex(responseNode, null, parameterNode);
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = cancelTuningJobResponseFromMldev(responseNode, null);
+      responseNode = cancelTuningJobResponseFromMldev(responseNode, null, parameterNode);
     }
 
     CancelTuningJobResponse sdkResponse =
@@ -1551,12 +1577,21 @@ public final class Tunings {
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
   public CancelTuningJobResponse cancel(String name, CancelTuningJobConfig config) {
+    CancelTuningJobParameters.Builder parameterBuilder = CancelTuningJobParameters.builder();
+
+    if (!Common.isZero(name)) {
+      parameterBuilder.name(name);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForCancel(name, config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
-      return processResponseForCancel(response, config);
+      return processResponseForCancel(response, config, parameterNode);
     }
   }
 
@@ -1611,7 +1646,8 @@ public final class Tunings {
   }
 
   /** A shared processResponse function for both sync and async methods. */
-  TuningJob processResponseForPrivateTune(ApiResponse response, CreateTuningJobConfig config) {
+  TuningJob processResponseForPrivateTune(
+      ApiResponse response, CreateTuningJobConfig config, JsonNode parameterNode) {
     ResponseBody responseBody = response.getBody();
     String responseString;
     try {
@@ -1623,7 +1659,7 @@ public final class Tunings {
     JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
-      responseNode = tuningJobFromVertex(responseNode, null);
+      responseNode = tuningJobFromVertex(responseNode, null, parameterNode);
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -1648,13 +1684,29 @@ public final class Tunings {
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
       CreateTuningJobConfig config) {
+    CreateTuningJobParametersPrivate.Builder parameterBuilder =
+        CreateTuningJobParametersPrivate.builder();
+
+    if (!Common.isZero(baseModel)) {
+      parameterBuilder.baseModel(baseModel);
+    }
+    if (!Common.isZero(preTunedModel)) {
+      parameterBuilder.preTunedModel(preTunedModel);
+    }
+    if (!Common.isZero(trainingDataset)) {
+      parameterBuilder.trainingDataset(trainingDataset);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
-      return processResponseForPrivateTune(response, config);
+      return processResponseForPrivateTune(response, config, parameterNode);
     }
   }
 
@@ -1714,7 +1766,7 @@ public final class Tunings {
 
   /** A shared processResponse function for both sync and async methods. */
   TuningOperation processResponseForPrivateTuneMldev(
-      ApiResponse response, CreateTuningJobConfig config) {
+      ApiResponse response, CreateTuningJobConfig config, JsonNode parameterNode) {
     ResponseBody responseBody = response.getBody();
     String responseString;
     try {
@@ -1731,7 +1783,7 @@ public final class Tunings {
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = tuningOperationFromMldev(responseNode, null);
+      responseNode = tuningOperationFromMldev(responseNode, null, parameterNode);
     }
 
     TuningOperation sdkResponse =
@@ -1752,13 +1804,29 @@ public final class Tunings {
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
       CreateTuningJobConfig config) {
+    CreateTuningJobParametersPrivate.Builder parameterBuilder =
+        CreateTuningJobParametersPrivate.builder();
+
+    if (!Common.isZero(baseModel)) {
+      parameterBuilder.baseModel(baseModel);
+    }
+    if (!Common.isZero(preTunedModel)) {
+      parameterBuilder.preTunedModel(preTunedModel);
+    }
+    if (!Common.isZero(trainingDataset)) {
+      parameterBuilder.trainingDataset(trainingDataset);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
 
     try (ApiResponse response =
         this.apiClient.request(
             "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
-      return processResponseForPrivateTuneMldev(response, config);
+      return processResponseForPrivateTuneMldev(response, config, parameterNode);
     }
   }
 

@@ -1,18 +1,5 @@
 # Changelog
 
-## [1.37.0](https://github.com/googleapis/java-genai/compare/v1.36.0...v1.37.0) (2026-01-30)
-
-
-### Features
-
-* Support distillation tuning ([cec1b88](https://github.com/googleapis/java-genai/commit/cec1b88ab5a8d5cb801f4db19ce73f3f01732c70))
-* Support OSS Tuning in GenAI SDK ([868d8ed](https://github.com/googleapis/java-genai/commit/868d8edee6a449937ed8b74f909071d8496fc68f))
-
-
-### Bug Fixes
-
-* Add metadata in batch inlined response ([c80dd07](https://github.com/googleapis/java-genai/commit/c80dd070d9f23ec6463e7e704f003ffb4dba354c))
-
 ## [1.36.0](https://github.com/googleapis/java-genai/compare/v1.35.0...v1.36.0) (2026-01-22)
 
 

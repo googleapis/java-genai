@@ -52,6 +52,7 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the created resource.
    */
   public CompletableFuture<CachedContent> create(String model, CreateCachedContentConfig config) {
+
     BuiltRequest builtRequest = caches.buildRequestForCreate(model, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -71,6 +72,7 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the cached content.
    */
   public CompletableFuture<CachedContent> get(String name, GetCachedContentConfig config) {
+
     BuiltRequest builtRequest = caches.buildRequestForGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -90,6 +92,7 @@ public final class AsyncCaches {
    */
   public CompletableFuture<DeleteCachedContentResponse> delete(
       String name, DeleteCachedContentConfig config) {
+
     BuiltRequest builtRequest = caches.buildRequestForDelete(name, config);
     return this.apiClient
         .asyncRequest(
@@ -110,6 +113,7 @@ public final class AsyncCaches {
    * @return A {@link CachedContent} object that contains the info of the updated resource.
    */
   public CompletableFuture<CachedContent> update(String name, UpdateCachedContentConfig config) {
+
     BuiltRequest builtRequest = caches.buildRequestForUpdate(name, config);
     return this.apiClient
         .asyncRequest("patch", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -122,6 +126,7 @@ public final class AsyncCaches {
   }
 
   CompletableFuture<ListCachedContentsResponse> privateList(ListCachedContentsConfig config) {
+
     BuiltRequest builtRequest = caches.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())

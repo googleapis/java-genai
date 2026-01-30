@@ -50,6 +50,7 @@ public final class AsyncFiles {
   }
 
   CompletableFuture<ListFilesResponse> privateList(ListFilesConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -62,6 +63,7 @@ public final class AsyncFiles {
   }
 
   CompletableFuture<CreateFileResponse> privateCreate(File file, CreateFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForPrivateCreate(file, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -81,6 +83,7 @@ public final class AsyncFiles {
    * @return A File object representing the file.
    */
   public CompletableFuture<File> get(String name, GetFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -100,6 +103,7 @@ public final class AsyncFiles {
    * @return The DeleteFileResponse, the response for the delete method.
    */
   public CompletableFuture<DeleteFileResponse> delete(String name, DeleteFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForDelete(name, config);
     return this.apiClient
         .asyncRequest(

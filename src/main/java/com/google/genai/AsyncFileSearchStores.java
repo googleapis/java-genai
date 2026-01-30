@@ -59,6 +59,7 @@ public final class AsyncFileSearchStores {
   }
 
   public CompletableFuture<FileSearchStore> create(CreateFileSearchStoreConfig config) {
+
     BuiltRequest builtRequest = fileSearchStores.buildRequestForCreate(config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -71,6 +72,7 @@ public final class AsyncFileSearchStores {
   }
 
   public CompletableFuture<FileSearchStore> get(String name, GetFileSearchStoreConfig config) {
+
     BuiltRequest builtRequest = fileSearchStores.buildRequestForGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -83,6 +85,7 @@ public final class AsyncFileSearchStores {
   }
 
   public CompletableFuture<Void> delete(String name, DeleteFileSearchStoreConfig config) {
+
     BuiltRequest builtRequest = fileSearchStores.buildRequestForDelete(name, config);
     return this.apiClient
         .asyncRequest(
@@ -94,6 +97,7 @@ public final class AsyncFileSearchStores {
   }
 
   CompletableFuture<ListFileSearchStoresResponse> privateList(ListFileSearchStoresConfig config) {
+
     BuiltRequest builtRequest = fileSearchStores.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -107,6 +111,7 @@ public final class AsyncFileSearchStores {
 
   CompletableFuture<UploadToFileSearchStoreResumableResponse> privateUploadToFileSearchStore(
       String fileSearchStoreName, UploadToFileSearchStoreConfig config) {
+
     BuiltRequest builtRequest =
         fileSearchStores.buildRequestForPrivateUploadToFileSearchStore(fileSearchStoreName, config);
     return this.apiClient
@@ -122,6 +127,7 @@ public final class AsyncFileSearchStores {
 
   public CompletableFuture<ImportFileOperation> importFile(
       String fileSearchStoreName, String fileName, ImportFileConfig config) {
+
     BuiltRequest builtRequest =
         fileSearchStores.buildRequestForImportFile(fileSearchStoreName, fileName, config);
     return this.apiClient

@@ -23,11 +23,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CancelTuningJobConfig;
+import com.google.genai.types.CancelTuningJobParameters;
 import com.google.genai.types.CancelTuningJobResponse;
 import com.google.genai.types.CreateTuningJobConfig;
+import com.google.genai.types.CreateTuningJobParametersPrivate;
 import com.google.genai.types.GetTuningJobConfig;
+import com.google.genai.types.GetTuningJobParameters;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
+import com.google.genai.types.ListTuningJobsParameters;
 import com.google.genai.types.ListTuningJobsResponse;
 import com.google.genai.types.PreTunedModel;
 import com.google.genai.types.TuningDataset;
@@ -48,25 +52,40 @@ public final class AsyncTunings {
   }
 
   CompletableFuture<TuningJob> privateGet(String name, GetTuningJobConfig config) {
+    GetTuningJobParameters.Builder parameterBuilder = GetTuningJobParameters.builder();
+
+    if (!Common.isZero(name)) {
+      parameterBuilder.name(name);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForPrivateGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return tunings.processResponseForPrivateGet(res, config);
+                return tunings.processResponseForPrivateGet(res, config, parameterNode);
               }
             });
   }
 
   CompletableFuture<ListTuningJobsResponse> privateList(ListTuningJobsConfig config) {
+    ListTuningJobsParameters.Builder parameterBuilder = ListTuningJobsParameters.builder();
+
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return tunings.processResponseForPrivateList(res, config);
+                return tunings.processResponseForPrivateList(res, config, parameterNode);
               }
             });
   }
@@ -80,13 +99,22 @@ public final class AsyncTunings {
    */
   public CompletableFuture<CancelTuningJobResponse> cancel(
       String name, CancelTuningJobConfig config) {
+    CancelTuningJobParameters.Builder parameterBuilder = CancelTuningJobParameters.builder();
+
+    if (!Common.isZero(name)) {
+      parameterBuilder.name(name);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForCancel(name, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return tunings.processResponseForCancel(res, config);
+                return tunings.processResponseForCancel(res, config, parameterNode);
               }
             });
   }
@@ -96,6 +124,22 @@ public final class AsyncTunings {
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
       CreateTuningJobConfig config) {
+    CreateTuningJobParametersPrivate.Builder parameterBuilder =
+        CreateTuningJobParametersPrivate.builder();
+
+    if (!Common.isZero(baseModel)) {
+      parameterBuilder.baseModel(baseModel);
+    }
+    if (!Common.isZero(preTunedModel)) {
+      parameterBuilder.preTunedModel(preTunedModel);
+    }
+    if (!Common.isZero(trainingDataset)) {
+      parameterBuilder.trainingDataset(trainingDataset);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
@@ -103,7 +147,7 @@ public final class AsyncTunings {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return tunings.processResponseForPrivateTune(res, config);
+                return tunings.processResponseForPrivateTune(res, config, parameterNode);
               }
             });
   }
@@ -113,6 +157,22 @@ public final class AsyncTunings {
       PreTunedModel preTunedModel,
       TuningDataset trainingDataset,
       CreateTuningJobConfig config) {
+    CreateTuningJobParametersPrivate.Builder parameterBuilder =
+        CreateTuningJobParametersPrivate.builder();
+
+    if (!Common.isZero(baseModel)) {
+      parameterBuilder.baseModel(baseModel);
+    }
+    if (!Common.isZero(preTunedModel)) {
+      parameterBuilder.preTunedModel(preTunedModel);
+    }
+    if (!Common.isZero(trainingDataset)) {
+      parameterBuilder.trainingDataset(trainingDataset);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
@@ -120,7 +180,7 @@ public final class AsyncTunings {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return tunings.processResponseForPrivateTuneMldev(res, config);
+                return tunings.processResponseForPrivateTuneMldev(res, config, parameterNode);
               }
             });
   }
