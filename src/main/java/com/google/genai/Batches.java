@@ -1487,6 +1487,13 @@ public final class Batches {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"metadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"metadata"},
+          Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"error"}) != null) {
       Common.setValueByPath(
           toObject,

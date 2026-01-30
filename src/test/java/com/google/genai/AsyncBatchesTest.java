@@ -212,10 +212,27 @@ public class AsyncBatchesTest {
     BatchJobSource src =
         BatchJobSource.builder()
             .inlinedRequests(
-                InlinedRequest.builder()
-                    .contents(Content.builder().parts(Part.fromText("Hello!")).role("user"))
-                    .metadata(ImmutableMap.of("key", "request-1"))
-                    .config(GenerateContentConfig.builder().safetySettings(safetySettings)))
+                ImmutableList.of(
+                    InlinedRequest.builder()
+                        .contents(
+                            Content.builder()
+                                .parts(
+                                    Part.fromText(
+                                        "what is the number after 1? return just the number."))
+                                .role("user"))
+                        .metadata(ImmutableMap.of("key", "request-1"))
+                        .config(GenerateContentConfig.builder().safetySettings(safetySettings))
+                        .build(),
+                    InlinedRequest.builder()
+                        .contents(
+                            Content.builder()
+                                .parts(
+                                    Part.fromText(
+                                        "what is the number after 2? return just the number."))
+                                .role("user"))
+                        .metadata(ImmutableMap.of("key", "request-2"))
+                        .config(GenerateContentConfig.builder().safetySettings(safetySettings))
+                        .build()))
             .build();
 
     // Act
@@ -262,7 +279,7 @@ public class AsyncBatchesTest {
         TestUtils.createClient(vertexAI, "tests/batches/get/test_async_get." + suffix + ".json");
 
     String vertexJob = "5798522612028014592";
-    String mldevJob = "batches/0yew7plxupyybd7appsrq5vw7w0lp3l79lab";
+    String mldevJob = "batches/z2p8ksus4lyxt25rntl3fpd67p2niw4hfij5";
     String name = vertexAI ? vertexJob : mldevJob;
 
     // Act
