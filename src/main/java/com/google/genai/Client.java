@@ -41,6 +41,7 @@ public final class Client implements AutoCloseable {
     public final AsyncTokens authTokens;
     public final AsyncTunings tunings;
     public final AsyncFileSearchStores fileSearchStores;
+    public final AsyncInteractions interactions;
 
     public Async(ApiClient apiClient) {
       this.models = new AsyncModels(apiClient);
@@ -53,6 +54,7 @@ public final class Client implements AutoCloseable {
       this.authTokens = new AsyncTokens(apiClient);
       this.tunings = new AsyncTunings(apiClient);
       this.fileSearchStores = new AsyncFileSearchStores(apiClient);
+      this.interactions = new AsyncInteractions(apiClient);
     }
   }
 
@@ -68,6 +70,7 @@ public final class Client implements AutoCloseable {
   public final Tokens authTokens;
   public final Tunings tunings;
   public final FileSearchStores fileSearchStores;
+  public final Interactions interactions;
 
   /** Builder for {@link Client}. */
   public static class Builder {
@@ -280,6 +283,7 @@ public final class Client implements AutoCloseable {
     authTokens = new Tokens(this.apiClient);
     tunings = new Tunings(this.apiClient);
     fileSearchStores = new FileSearchStores(this.apiClient);
+    interactions = new Interactions(this.apiClient);
   }
 
   /** Returns whether the client is using Vertex AI APIs. */

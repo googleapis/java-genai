@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.google.genai.types;
+package com.google.genai.types.interactions;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Annotation to exclude a method or constructor from the Jacoco coverage report.
- *
- * <p>Jacoco will exclude methods that have an annotation with the word "generated" in it.
- */
-@Retention(RetentionPolicy.CLASS)
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
-public @interface ExcludeFromGeneratedCoverageReport {}
+/** Represents the status of URL context retrieval in an interaction. */
+public enum UrlContextResultStatus {
+  /** URL retrieval is successful. */
+  @JsonProperty("success")
+  SUCCESS,
+
+  /** URL retrieval failed due to an error. */
+  @JsonProperty("error")
+  ERROR,
+
+  /** URL retrieval failed because content is behind a paywall. */
+  @JsonProperty("paywall")
+  PAYWALL,
+
+  /** URL retrieval failed because content is unsafe. */
+  @JsonProperty("unsafe")
+  UNSAFE
+}

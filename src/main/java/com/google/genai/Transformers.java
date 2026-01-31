@@ -409,6 +409,21 @@ public final class Transformers {
         "Unsupported cached content name type: " + origin.getClass());
   }
 
+  /** Transforms an object to an interaction ID for the API. */
+  public static String tInteractionId(ApiClient apiClient, Object origin) {
+    if (origin == null) {
+      return null;
+    } else if (origin instanceof String) {
+      return getResourceName(apiClient, (String) origin, "interactions");
+    } else if (origin instanceof JsonNode) {
+      String interactionId = JsonSerializable.toJsonString((JsonNode) origin);
+      interactionId = interactionId.replace("\"", "");
+      return getResourceName(apiClient, interactionId, "interactions");
+    }
+    throw new IllegalArgumentException(
+        "Unsupported interaction ID type: " + origin.getClass());
+  }
+
   /** Transforms an object to a list of Content for the embedding API. */
   @SuppressWarnings("unchecked")
   public static @Nullable List<Object> tContentsForEmbed(ApiClient apiClient, Object origin) {

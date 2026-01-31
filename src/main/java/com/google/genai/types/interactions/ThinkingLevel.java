@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-// Auto-generated code. Do not edit.
-
-package com.google.genai.types;
+package com.google.genai.types.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
+import com.google.genai.types.ExcludeFromGeneratedCoverageReport;
 import java.util.Objects;
 
 /**
- * Controls the depth and extent of the model's reasoning process.
+ * Controls the depth and extent of the model's reasoning process for the Interactions API.
  *
  * <p>The thinking level determines how many internal reasoning tokens the model should generate
  * before producing its final response. Higher thinking levels allow the model to engage in more
  * thorough analysis, exploration of alternative approaches, and step-by-step reasoning, which can
  * lead to more accurate and well-reasoned responses for complex tasks.
  *
- * <p>This class is shared across multiple APIs (Interactions API, etc.) and follows the standard
- * enum wrapper pattern used throughout the codebase. The {@code Known} enum contains all
+ * <p>This class is specific to the Interactions API and serializes enum values to lowercase (e.g.,
+ * "low", "medium", "high") per the OpenAPI specification. The {@code Known} enum contains all
  * recognized values from the OpenAPI specification, and {@code THINKING_LEVEL_UNSPECIFIED} serves
  * as a fallback for forward compatibility.
  *
@@ -67,7 +66,7 @@ public class ThinkingLevel {
      * recognized by this version of the SDK. This ensures forward compatibility when new thinking
      * levels are added to the API.
      */
-    THINKING_LEVEL_UNSPECIFIED,
+    THINKING_LEVEL_UNSPECIFIED("unspecified"),
 
     /**
      * Low thinking level.
@@ -76,7 +75,7 @@ public class ThinkingLevel {
      * benefit from some deliberation but don't require extensive analysis. Generates fewer
      * thinking tokens than MEDIUM or HIGH.
      */
-    LOW,
+    LOW("low"),
 
     /**
      * Medium thinking level.
@@ -85,7 +84,7 @@ public class ThinkingLevel {
      * suitable for tasks of average complexity that benefit from careful consideration. Generates
      * more thinking tokens than LOW but fewer than HIGH.
      */
-    MEDIUM,
+    MEDIUM("medium"),
 
     /**
      * High thinking level.
@@ -95,7 +94,7 @@ public class ThinkingLevel {
      * most thinking tokens, which may increase latency but can significantly improve response
      * quality for challenging problems.
      */
-    HIGH,
+    HIGH("high"),
 
     /**
      * Minimal thinking level.
@@ -104,7 +103,18 @@ public class ThinkingLevel {
      * straightforward tasks where immediate responses are preferred and extensive deliberation
      * would not improve the output quality. Generates the fewest thinking tokens.
      */
-    MINIMAL
+    MINIMAL("minimal");
+
+    private final String value;
+
+    Known(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return this.value;
+    }
   }
 
   private Known thinkingLevelEnum;
