@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -241,8 +242,7 @@ public class AsyncLive {
 
     @Override
     public void onError(Exception ex) {
-      System.err.println("Error during live session: " + ex.getMessage());
-      ex.printStackTrace();
+      logger.log(Level.SEVERE, "Error during live session", ex);
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(ex);
       }
@@ -250,7 +250,10 @@ public class AsyncLive {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-      System.out.println("Live session closed with code: " + code + " and reason: " + reason);
+      logger.log(
+          Level.INFO,
+          "Live session closed with code: {0} and reason: {1}",
+          new Object[] {code, reason});
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(
             new GenAiIOException("WebSocket closed unexpectedly: " + reason));
@@ -275,8 +278,7 @@ public class AsyncLive {
                     "Initial message from WebSocket did not contain setupComplete: " + message));
           }
         } catch (RuntimeException e) {
-          System.err.println("Error deserializing message: " + e.getMessage());
-          e.printStackTrace();
+          logger.log(Level.SEVERE, "Error deserializing message", e);
           sessionFuture.completeExceptionally(e);
         }
         return;
@@ -293,13 +295,12 @@ public class AsyncLive {
               JsonSerializable.fromJsonNode(responseNode, LiveServerMessage.class);
           messageCallback.accept(serverMessage);
         } catch (RuntimeException e) {
-          System.err.println("Error deserializing message: " + e.getMessage());
-          e.printStackTrace();
+          logger.log(Level.SEVERE, "Error deserializing message", e);
         }
       } else {
-        System.err.println(
-            "Received message from live session but no callback registered! Please call"
-                + " `AsyncSession.receive()` to register a callback.");
+        logger.severe(
+            "Received message from live session, but no callback registered! Please call"
+                + " `AsyncSession.receive()` to register a callback first.");
       }
     }
   }
