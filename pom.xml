@@ -90,6 +90,8 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>${apache.httpcomponents.httpclient.version}</version>
+      <!-- TODO(vorburger): Fully remove this later; see https://github.com/googleapis/java-genai/issues/741. -->
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.google.auto.value</groupId>
