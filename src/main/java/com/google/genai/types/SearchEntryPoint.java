@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** The entry point used to search for grounding sources. */
+/** Google search entry point. */
 @AutoValue
 @JsonDeserialize(builder = SearchEntryPoint.Builder.class)
 public abstract class SearchEntryPoint extends JsonSerializable {
@@ -34,7 +34,7 @@ public abstract class SearchEntryPoint extends JsonSerializable {
   @JsonProperty("renderedContent")
   public abstract Optional<String> renderedContent();
 
-  /** Optional. JSON representing array of tuples. */
+  /** Optional. Base64 encoded JSON representing array of tuple. */
   @JsonProperty("sdkBlob")
   public abstract Optional<byte[]> sdkBlob();
 
@@ -78,7 +78,7 @@ public abstract class SearchEntryPoint extends JsonSerializable {
     /**
      * Setter for sdkBlob.
      *
-     * <p>sdkBlob: Optional. JSON representing array of tuples.
+     * <p>sdkBlob: Optional. Base64 encoded JSON representing array of tuple.
      */
     @JsonProperty("sdkBlob")
     public abstract Builder sdkBlob(byte[] sdkBlob);

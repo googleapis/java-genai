@@ -23,30 +23,27 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/**
- * The threshold for blocking content. If the harm probability exceeds this threshold, the content
- * will be blocked.
- */
+/** The harm block threshold. */
 public class HarmBlockThreshold {
 
   /** Enum representing the known values for HarmBlockThreshold. */
   public enum Known {
-    /** The harm block threshold is unspecified. */
+    /** Unspecified harm block threshold. */
     HARM_BLOCK_THRESHOLD_UNSPECIFIED,
 
-    /** Block content with a low harm probability or higher. */
+    /** Block low threshold and above (i.e. block more). */
     BLOCK_LOW_AND_ABOVE,
 
-    /** Block content with a medium harm probability or higher. */
+    /** Block medium threshold and above. */
     BLOCK_MEDIUM_AND_ABOVE,
 
-    /** Block content with a high harm probability. */
+    /** Block only high threshold (i.e. block less). */
     BLOCK_ONLY_HIGH,
 
-    /** Do not block any content, regardless of its harm probability. */
+    /** Block none. */
     BLOCK_NONE,
 
-    /** Turn off the safety filter entirely. */
+    /** Turn off the safety filter. */
     OFF
   }
 

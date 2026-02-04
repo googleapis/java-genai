@@ -27,16 +27,17 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Represents a customer-managed encryption key specification that can be applied to a Vertex AI
- * resource. This data type is not supported in Gemini API.
+ * Represents a customer-managed encryption key spec that can be applied to a top-level resource.
+ * This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = EncryptionSpec.Builder.class)
 public abstract class EncryptionSpec extends JsonSerializable {
   /**
-   * Required. Resource name of the Cloud KMS key used to protect the resource. The Cloud KMS key
-   * must be in the same region as the resource. It must have the format
-   * `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}`.
+   * Required. The Cloud KMS resource identifier of the customer managed encryption key used to
+   * protect a resource. Has the form:
+   * `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to be
+   * in the same region as where the compute resource is created.
    */
   @JsonProperty("kmsKeyName")
   public abstract Optional<String> kmsKeyName();
@@ -62,9 +63,10 @@ public abstract class EncryptionSpec extends JsonSerializable {
     /**
      * Setter for kmsKeyName.
      *
-     * <p>kmsKeyName: Required. Resource name of the Cloud KMS key used to protect the resource. The
-     * Cloud KMS key must be in the same region as the resource. It must have the format
-     * `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}`.
+     * <p>kmsKeyName: Required. The Cloud KMS resource identifier of the customer managed encryption
+     * key used to protect a resource. Has the form:
+     * `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. The key needs to
+     * be in the same region as where the compute resource is created.
      */
     @JsonProperty("kmsKeyName")
     public abstract Builder kmsKeyName(String kmsKeyName);

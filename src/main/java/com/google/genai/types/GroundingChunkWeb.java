@@ -26,26 +26,19 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * A `Web` chunk is a piece of evidence that comes from a web page. It contains the URI of the web
- * page, the title of the page, and the domain of the page. This is used to provide the user with a
- * link to the source of the information.
- */
+/** Chunk from the web. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkWeb.Builder.class)
 public abstract class GroundingChunkWeb extends JsonSerializable {
-  /**
-   * The domain of the web page that contains the evidence. This can be used to filter out
-   * low-quality sources. This field is not supported in Gemini API.
-   */
+  /** Domain of the (original) URI. This field is not supported in Gemini API. */
   @JsonProperty("domain")
   public abstract Optional<String> domain();
 
-  /** The title of the web page that contains the evidence. */
+  /** Title of the chunk. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** The URI of the web page that contains the evidence. */
+  /** URI reference of the chunk. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
@@ -70,8 +63,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
     /**
      * Setter for domain.
      *
-     * <p>domain: The domain of the web page that contains the evidence. This can be used to filter
-     * out low-quality sources. This field is not supported in Gemini API.
+     * <p>domain: Domain of the (original) URI. This field is not supported in Gemini API.
      */
     @JsonProperty("domain")
     public abstract Builder domain(String domain);
@@ -89,7 +81,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: The title of the web page that contains the evidence.
+     * <p>title: Title of the chunk.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -107,7 +99,7 @@ public abstract class GroundingChunkWeb extends JsonSerializable {
     /**
      * Setter for uri.
      *
-     * <p>uri: The URI of the web page that contains the evidence.
+     * <p>uri: URI reference of the chunk.
      */
     @JsonProperty("uri")
     public abstract Builder uri(String uri);

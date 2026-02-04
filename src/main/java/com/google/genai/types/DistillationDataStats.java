@@ -27,8 +27,8 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Statistics for distillation prompt dataset. These statistics do not include the responses sampled
- * from the teacher model. This data type is not supported in Gemini API.
+ * Statistics computed for datasets used for distillation. This data type is not supported in Gemini
+ * API.
  */
 @AutoValue
 @JsonDeserialize(builder = DistillationDataStats.Builder.class)

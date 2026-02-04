@@ -23,26 +23,24 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/**
- * Output only. The severity of harm for this category. This enum is not supported in Gemini API.
- */
+/** Output only. Harm severity levels in the content. This enum is not supported in Gemini API. */
 public class HarmSeverity {
 
   /** Enum representing the known values for HarmSeverity. */
   public enum Known {
-    /** The harm severity is unspecified. */
+    /** Harm severity unspecified. */
     HARM_SEVERITY_UNSPECIFIED,
 
-    /** The harm severity is negligible. */
+    /** Negligible level of harm severity. */
     HARM_SEVERITY_NEGLIGIBLE,
 
-    /** The harm severity is low. */
+    /** Low level of harm severity. */
     HARM_SEVERITY_LOW,
 
-    /** The harm severity is medium. */
+    /** Medium level of harm severity. */
     HARM_SEVERITY_MEDIUM,
 
-    /** The harm severity is high. */
+    /** High level of harm severity. */
     HARM_SEVERITY_HIGH
   }
 

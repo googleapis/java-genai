@@ -79,12 +79,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   @JsonProperty("usageMetadata")
   public abstract Optional<GenerateContentResponseUsageMetadata> usageMetadata();
 
-  /**
-   * Output only. The current model status of this model. This field is not supported in Vertex AI.
-   */
-  @JsonProperty("modelStatus")
-  public abstract Optional<ModelStatus> modelStatus();
-
   /** Instantiates a builder for GenerateContentResponse. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -331,36 +325,6 @@ public abstract class GenerateContentResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUsageMetadata() {
       return usageMetadata(Optional.empty());
-    }
-
-    /**
-     * Setter for modelStatus.
-     *
-     * <p>modelStatus: Output only. The current model status of this model. This field is not
-     * supported in Vertex AI.
-     */
-    @JsonProperty("modelStatus")
-    public abstract Builder modelStatus(ModelStatus modelStatus);
-
-    /**
-     * Setter for modelStatus builder.
-     *
-     * <p>modelStatus: Output only. The current model status of this model. This field is not
-     * supported in Vertex AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder modelStatus(ModelStatus.Builder modelStatusBuilder) {
-      return modelStatus(modelStatusBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder modelStatus(Optional<ModelStatus> modelStatus);
-
-    /** Clears the value of modelStatus field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearModelStatus() {
-      return modelStatus(Optional.empty());
     }
 
     public abstract GenerateContentResponse build();

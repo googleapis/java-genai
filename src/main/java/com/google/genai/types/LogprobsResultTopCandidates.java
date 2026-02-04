@@ -30,14 +30,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * A list of the top candidate tokens and their log probabilities at each decoding step. This can be
- * used to see what other tokens the model considered.
- */
+/** Candidates with top log probabilities at each decoding step. */
 @AutoValue
 @JsonDeserialize(builder = LogprobsResultTopCandidates.Builder.class)
 public abstract class LogprobsResultTopCandidates extends JsonSerializable {
-  /** The list of candidate tokens, sorted by log probability in descending order. */
+  /** Sorted by log probability in descending order. */
   @JsonProperty("candidates")
   public abstract Optional<List<LogprobsResultCandidate>> candidates();
 
@@ -62,7 +59,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
     /**
      * Setter for candidates.
      *
-     * <p>candidates: The list of candidate tokens, sorted by log probability in descending order.
+     * <p>candidates: Sorted by log probability in descending order.
      */
     @JsonProperty("candidates")
     public abstract Builder candidates(List<LogprobsResultCandidate> candidates);
@@ -70,7 +67,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
     /**
      * Setter for candidates.
      *
-     * <p>candidates: The list of candidate tokens, sorted by log probability in descending order.
+     * <p>candidates: Sorted by log probability in descending order.
      */
     @CanIgnoreReturnValue
     public Builder candidates(LogprobsResultCandidate... candidates) {
@@ -80,7 +77,7 @@ public abstract class LogprobsResultTopCandidates extends JsonSerializable {
     /**
      * Setter for candidates builder.
      *
-     * <p>candidates: The list of candidate tokens, sorted by log probability in descending order.
+     * <p>candidates: Sorted by log probability in descending order.
      */
     @CanIgnoreReturnValue
     public Builder candidates(LogprobsResultCandidate.Builder... candidatesBuilders) {
