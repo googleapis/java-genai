@@ -26,19 +26,22 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Content blob. */
+/**
+ * A content blob. A Blob contains data of a specific media type. It is used to represent images,
+ * audio, and video.
+ */
 @AutoValue
 @JsonDeserialize(builder = Blob.Builder.class)
 public abstract class Blob extends JsonSerializable {
-  /** Required. Raw bytes. */
+  /** Required. The raw bytes of the data. */
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
 
   /**
-   * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
-   * This field is only returned in PromptMessage for prompt management. It is currently used in the
-   * Gemini GenerateContent calls only when server side tools (code_execution, google_search, and
-   * url_context) are enabled. This field is not supported in Gemini API.
+   * Optional. The display name of the blob. Used to provide a label or filename to distinguish
+   * blobs. This field is only returned in `PromptMessage` for prompt management. It is used in the
+   * Gemini calls only when server-side tools (`code_execution`, `google_search`, and `url_context`)
+   * are enabled. This field is not supported in Gemini API.
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
@@ -68,7 +71,7 @@ public abstract class Blob extends JsonSerializable {
     /**
      * Setter for data.
      *
-     * <p>data: Required. Raw bytes.
+     * <p>data: Required. The raw bytes of the data.
      */
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
@@ -86,11 +89,10 @@ public abstract class Blob extends JsonSerializable {
     /**
      * Setter for displayName.
      *
-     * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
-     * distinguish blobs. This field is only returned in PromptMessage for prompt management. It is
-     * currently used in the Gemini GenerateContent calls only when server side tools
-     * (code_execution, google_search, and url_context) are enabled. This field is not supported in
-     * Gemini API.
+     * <p>displayName: Optional. The display name of the blob. Used to provide a label or filename
+     * to distinguish blobs. This field is only returned in `PromptMessage` for prompt management.
+     * It is used in the Gemini calls only when server-side tools (`code_execution`,
+     * `google_search`, and `url_context`) are enabled. This field is not supported in Gemini API.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);

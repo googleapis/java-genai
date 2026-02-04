@@ -26,15 +26,18 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Safety rating corresponding to the generated content. */
+/**
+ * A safety rating for a piece of content. The safety rating contains the harm category and the harm
+ * probability level.
+ */
 @AutoValue
 @JsonDeserialize(builder = SafetyRating.Builder.class)
 public abstract class SafetyRating extends JsonSerializable {
-  /** Output only. Indicates whether the content was filtered out because of this rating. */
+  /** Output only. Indicates whether the content was blocked because of this rating. */
   @JsonProperty("blocked")
   public abstract Optional<Boolean> blocked();
 
-  /** Output only. Harm category. */
+  /** Output only. The harm category of this rating. */
   @JsonProperty("category")
   public abstract Optional<HarmCategory> category();
 
@@ -46,21 +49,27 @@ public abstract class SafetyRating extends JsonSerializable {
   @JsonProperty("overwrittenThreshold")
   public abstract Optional<HarmBlockThreshold> overwrittenThreshold();
 
-  /** Output only. Harm probability levels in the content. */
+  /** Output only. The probability of harm for this category. */
   @JsonProperty("probability")
   public abstract Optional<HarmProbability> probability();
 
-  /** Output only. Harm probability score. This field is not supported in Gemini API. */
+  /**
+   * Output only. The probability score of harm for this category. This field is not supported in
+   * Gemini API.
+   */
   @JsonProperty("probabilityScore")
   public abstract Optional<Float> probabilityScore();
 
   /**
-   * Output only. Harm severity levels in the content. This field is not supported in Gemini API.
+   * Output only. The severity of harm for this category. This field is not supported in Gemini API.
    */
   @JsonProperty("severity")
   public abstract Optional<HarmSeverity> severity();
 
-  /** Output only. Harm severity score. This field is not supported in Gemini API. */
+  /**
+   * Output only. The severity score of harm for this category. This field is not supported in
+   * Gemini API.
+   */
   @JsonProperty("severityScore")
   public abstract Optional<Float> severityScore();
 
@@ -85,8 +94,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for blocked.
      *
-     * <p>blocked: Output only. Indicates whether the content was filtered out because of this
-     * rating.
+     * <p>blocked: Output only. Indicates whether the content was blocked because of this rating.
      */
     @JsonProperty("blocked")
     public abstract Builder blocked(boolean blocked);
@@ -104,7 +112,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for category.
      *
-     * <p>category: Output only. Harm category.
+     * <p>category: Output only. The harm category of this rating.
      */
     @JsonProperty("category")
     public abstract Builder category(HarmCategory category);
@@ -122,7 +130,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for category given a known enum.
      *
-     * <p>category: Output only. Harm category.
+     * <p>category: Output only. The harm category of this rating.
      */
     @CanIgnoreReturnValue
     public Builder category(HarmCategory.Known knownType) {
@@ -132,7 +140,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for category given a string.
      *
-     * <p>category: Output only. Harm category.
+     * <p>category: Output only. The harm category of this rating.
      */
     @CanIgnoreReturnValue
     public Builder category(String category) {
@@ -189,7 +197,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probability.
      *
-     * <p>probability: Output only. Harm probability levels in the content.
+     * <p>probability: Output only. The probability of harm for this category.
      */
     @JsonProperty("probability")
     public abstract Builder probability(HarmProbability probability);
@@ -207,7 +215,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probability given a known enum.
      *
-     * <p>probability: Output only. Harm probability levels in the content.
+     * <p>probability: Output only. The probability of harm for this category.
      */
     @CanIgnoreReturnValue
     public Builder probability(HarmProbability.Known knownType) {
@@ -217,7 +225,7 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probability given a string.
      *
-     * <p>probability: Output only. Harm probability levels in the content.
+     * <p>probability: Output only. The probability of harm for this category.
      */
     @CanIgnoreReturnValue
     public Builder probability(String probability) {
@@ -227,8 +235,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for probabilityScore.
      *
-     * <p>probabilityScore: Output only. Harm probability score. This field is not supported in
-     * Gemini API.
+     * <p>probabilityScore: Output only. The probability score of harm for this category. This field
+     * is not supported in Gemini API.
      */
     @JsonProperty("probabilityScore")
     public abstract Builder probabilityScore(Float probabilityScore);
@@ -246,8 +254,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity.
      *
-     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
-     * Gemini API.
+     * <p>severity: Output only. The severity of harm for this category. This field is not supported
+     * in Gemini API.
      */
     @JsonProperty("severity")
     public abstract Builder severity(HarmSeverity severity);
@@ -265,8 +273,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity given a known enum.
      *
-     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
-     * Gemini API.
+     * <p>severity: Output only. The severity of harm for this category. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(HarmSeverity.Known knownType) {
@@ -276,8 +284,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severity given a string.
      *
-     * <p>severity: Output only. Harm severity levels in the content. This field is not supported in
-     * Gemini API.
+     * <p>severity: Output only. The severity of harm for this category. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder severity(String severity) {
@@ -287,8 +295,8 @@ public abstract class SafetyRating extends JsonSerializable {
     /**
      * Setter for severityScore.
      *
-     * <p>severityScore: Output only. Harm severity score. This field is not supported in Gemini
-     * API.
+     * <p>severityScore: Output only. The severity score of harm for this category. This field is
+     * not supported in Gemini API.
      */
     @JsonProperty("severityScore")
     public abstract Builder severityScore(Float severityScore);

@@ -23,24 +23,27 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Harm category. */
+/** The harm category to be blocked. */
 public class HarmCategory {
 
   /** Enum representing the known values for HarmCategory. */
   public enum Known {
-    /** The harm category is unspecified. */
+    /** Default value. This value is unused. */
     HARM_CATEGORY_UNSPECIFIED,
 
-    /** The harm category is harassment. */
+    /** Abusive, threatening, or content intended to bully, torment, or ridicule. */
     HARM_CATEGORY_HARASSMENT,
 
-    /** The harm category is hate speech. */
+    /**
+     * Content that promotes violence or incites hatred against individuals or groups based on
+     * certain attributes.
+     */
     HARM_CATEGORY_HATE_SPEECH,
 
-    /** The harm category is sexually explicit content. */
+    /** Content that contains sexually explicit material. */
     HARM_CATEGORY_SEXUALLY_EXPLICIT,
 
-    /** The harm category is dangerous content. */
+    /** Content that promotes, facilitates, or enables dangerous activities. */
     HARM_CATEGORY_DANGEROUS_CONTENT,
 
     /**
@@ -48,25 +51,23 @@ public class HarmCategory {
      */
     HARM_CATEGORY_CIVIC_INTEGRITY,
 
-    /** The harm category is image hate. This enum value is not supported in Gemini API. */
+    /** Images that contain hate speech. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_HATE,
 
-    /**
-     * The harm category is image dangerous content. This enum value is not supported in Gemini API.
-     */
+    /** Images that contain dangerous content. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_DANGEROUS_CONTENT,
 
-    /** The harm category is image harassment. This enum value is not supported in Gemini API. */
+    /** Images that contain harassment. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_HARASSMENT,
 
     /**
-     * The harm category is image sexually explicit content. This enum value is not supported in
-     * Gemini API.
+     * Images that contain sexually explicit content. This enum value is not supported in Gemini
+     * API.
      */
     HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT,
 
     /**
-     * The harm category is for jailbreak prompts. This enum value is not supported in Gemini API.
+     * Prompts designed to bypass safety filters. This enum value is not supported in Gemini API.
      */
     HARM_CATEGORY_JAILBREAK
   }
