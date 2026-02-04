@@ -34,7 +34,7 @@ public abstract class VoiceConfig extends JsonSerializable {
   @JsonProperty("replicatedVoiceConfig")
   public abstract Optional<ReplicatedVoiceConfig> replicatedVoiceConfig();
 
-  /** The configuration for the prebuilt voice to use. */
+  /** The configuration for a prebuilt voice. */
   @JsonProperty("prebuiltVoiceConfig")
   public abstract Optional<PrebuiltVoiceConfig> prebuiltVoiceConfig();
 
@@ -88,7 +88,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
+     * <p>prebuiltVoiceConfig: The configuration for a prebuilt voice.
      */
     @JsonProperty("prebuiltVoiceConfig")
     public abstract Builder prebuiltVoiceConfig(PrebuiltVoiceConfig prebuiltVoiceConfig);
@@ -96,7 +96,7 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for prebuiltVoiceConfig builder.
      *
-     * <p>prebuiltVoiceConfig: The configuration for the prebuilt voice to use.
+     * <p>prebuiltVoiceConfig: The configuration for a prebuilt voice.
      */
     @CanIgnoreReturnValue
     public Builder prebuiltVoiceConfig(PrebuiltVoiceConfig.Builder prebuiltVoiceConfigBuilder) {
