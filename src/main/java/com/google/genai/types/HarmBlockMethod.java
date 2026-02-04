@@ -24,8 +24,8 @@ import com.google.common.base.Ascii;
 import java.util.Objects;
 
 /**
- * Specify if the threshold is used for probability or severity score. If not specified, the
- * threshold is used for probability score. This enum is not supported in Gemini API.
+ * The method for blocking content. If not specified, the default behavior is to use the probability
+ * score. This enum is not supported in Gemini API.
  */
 public class HarmBlockMethod {
 
