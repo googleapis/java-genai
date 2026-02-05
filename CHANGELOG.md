@@ -5,8 +5,6 @@
 
 ### Features
 
-* Update data types from discovery doc. ([277fd4d](https://github.com/googleapis/java-genai/commit/277fd4d884e70673ead9cf526b006a4347cb61b7))
-
 
 ### Bug Fixes
 
