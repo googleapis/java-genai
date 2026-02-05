@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.38.0](https://github.com/googleapis/java-genai/compare/v1.37.0...v1.38.0) (2026-02-05)
+
+
+### Features
+
+* Update data types from discovery doc. ([277fd4d](https://github.com/googleapis/java-genai/commit/277fd4d884e70673ead9cf526b006a4347cb61b7))
+
+
+### Bug Fixes
+
+* 'No SLF4J providers were found' on examples ([97fa11f](https://github.com/googleapis/java-genai/commit/97fa11f7166b88b5d85dd6450ba345af7310b975))
+* Make Apache HTTP Components an optional Maven dependency in GenAI. ([a01e464](https://github.com/googleapis/java-genai/commit/a01e464573d0e7eea093734fcaad2d824173b41c))
+* Replace System .err & .out with correct (JUL) Logging in GenAI AsyncLive. ([1f756d6](https://github.com/googleapis/java-genai/commit/1f756d6a52b600f33793f898f30dd5cadaa52d23))
+
 ## [1.37.0](https://github.com/googleapis/java-genai/compare/v1.36.0...v1.37.0) (2026-01-30)
 
 
