@@ -221,6 +221,11 @@ public final class Tunings {
       throw new IllegalArgumentException("outputUri parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}))) {
+      throw new IllegalArgumentException(
+          "encryptionSpec parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -530,6 +535,13 @@ public final class Tunings {
           parentObject,
           new String[] {"outputUri"},
           Common.getValueByPath(fromObject, new String[] {"outputUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"encryptionSpec"},
+          Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}));
     }
 
     return toObject;
