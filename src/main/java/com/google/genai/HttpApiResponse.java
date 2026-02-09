@@ -16,13 +16,15 @@
 
 package com.google.genai;
 
+import com.google.api.core.InternalApi;
 import com.google.genai.errors.ApiException;
 import okhttp3.Headers;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /** Wraps a real HTTP response to expose the methods needed by the GenAI SDK. */
-final class HttpApiResponse extends ApiResponse {
+@InternalApi
+public final class HttpApiResponse extends ApiResponse {
 
   private final Response response;
 
