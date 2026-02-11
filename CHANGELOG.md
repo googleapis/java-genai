@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.39.0](https://github.com/googleapis/java-genai/compare/v1.38.0...v1.39.0) (2026-02-07)
+
+
+### Features
+
+* Support encryption_spec in tuning job creation configuration for GenAI SDK ([7a4fb51](https://github.com/googleapis/java-genai/commit/7a4fb51127dd9cba8e32587866ae03608505b2bd))
+
 ## [1.38.0](https://github.com/googleapis/java-genai/compare/v1.37.0...v1.38.0) (2026-02-05)
 
 
