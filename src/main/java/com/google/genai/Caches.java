@@ -693,6 +693,13 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"testJava"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"testJava"},
+          Common.getValueByPath(fromObject, new String[] {"testJava"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
