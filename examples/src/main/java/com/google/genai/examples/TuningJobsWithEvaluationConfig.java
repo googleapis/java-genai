@@ -49,7 +49,8 @@ import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.EvaluationConfig;
 import com.google.genai.types.GcsDestination;
 import com.google.genai.types.ListTuningJobsConfig;
-import com.google.genai.types.Metric;
+import com.google.genai.types.UnifiedMetric;
+import com.google.genai.types.BleuSpec;
 import com.google.genai.types.OutputConfig;
 import com.google.genai.types.TuningDataset;
 import com.google.genai.types.TuningJob;
@@ -92,21 +93,12 @@ public final class TuningJobsWithEvaluationConfig {
                   "gs://cloud-samples-data/ai-platform/generative_ai/gemini-1_5/text/sft_train_data.jsonl")
               .build();
 
-      Metric promptRelevance =
-          Metric.builder()
-              .name("prompt_relevance")
-              .promptTemplate(
-                  "How well does the response address the prompt?: PROMPT: {request}\n"
-                      + " RESPONSE: {response}\n")
-              .returnRawOutput(true)
-              .judgeModelSystemInstruction(
-                  "You are a cat. Make all evaluations from this perspective.")
+      UnifiedMetric bleu =
+          UnifiedMetric.builder()
+              .bleuSpec(BleuSpec.builder().useEffectiveOrder(true).build())
               .build();
 
-      Metric bleu = Metric.builder().name("bleu").build();
-      Metric rouge = Metric.builder().name("rouge_1").build();
-
-      ImmutableList<Metric> metrics = ImmutableList.of(promptRelevance, bleu, rouge);
+      ImmutableList<UnifiedMetric> metrics = ImmutableList.of(bleu);
 
       EvaluationConfig evaluationConfig =
           EvaluationConfig.builder()
