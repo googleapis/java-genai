@@ -39,13 +39,13 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
   /**
-   * A token to retrieve the next page of results. Pass to ListTuningJobsRequest.page_token to
-   * obtain that page.
+   * A token to retrieve the next page of results. Pass this token in a subsequent
+   * [GenAiTuningService.ListTuningJobs] call to retrieve the next page of results.
    */
   @JsonProperty("nextPageToken")
   public abstract Optional<String> nextPageToken();
 
-  /** List of TuningJobs in the requested page. */
+  /** The tuning jobs that match the request. */
   @JsonProperty("tuningJobs")
   public abstract Optional<List<TuningJob>> tuningJobs();
 
@@ -98,8 +98,8 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
     /**
      * Setter for nextPageToken.
      *
-     * <p>nextPageToken: A token to retrieve the next page of results. Pass to
-     * ListTuningJobsRequest.page_token to obtain that page.
+     * <p>nextPageToken: A token to retrieve the next page of results. Pass this token in a
+     * subsequent [GenAiTuningService.ListTuningJobs] call to retrieve the next page of results.
      */
     @JsonProperty("nextPageToken")
     public abstract Builder nextPageToken(String nextPageToken);
@@ -117,7 +117,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
     /**
      * Setter for tuningJobs.
      *
-     * <p>tuningJobs: List of TuningJobs in the requested page.
+     * <p>tuningJobs: The tuning jobs that match the request.
      */
     @JsonProperty("tuningJobs")
     public abstract Builder tuningJobs(List<TuningJob> tuningJobs);
@@ -125,7 +125,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
     /**
      * Setter for tuningJobs.
      *
-     * <p>tuningJobs: List of TuningJobs in the requested page.
+     * <p>tuningJobs: The tuning jobs that match the request.
      */
     @CanIgnoreReturnValue
     public Builder tuningJobs(TuningJob... tuningJobs) {
@@ -135,7 +135,7 @@ public abstract class ListTuningJobsResponse extends JsonSerializable {
     /**
      * Setter for tuningJobs builder.
      *
-     * <p>tuningJobs: List of TuningJobs in the requested page.
+     * <p>tuningJobs: The tuning jobs that match the request.
      */
     @CanIgnoreReturnValue
     public Builder tuningJobs(TuningJob.Builder... tuningJobsBuilders) {

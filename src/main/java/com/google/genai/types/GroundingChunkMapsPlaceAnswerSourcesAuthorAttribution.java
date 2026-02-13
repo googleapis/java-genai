@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Author attribution for a photo or review. This data type is not supported in Gemini API. */
+/** Author attribution for a photo or review. */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
