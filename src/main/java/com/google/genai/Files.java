@@ -22,7 +22,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CreateFileConfig;
@@ -38,9 +40,12 @@ import com.google.genai.types.GetFileConfig;
 import com.google.genai.types.GetFileParameters;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpResponse;
+import com.google.genai.types.InternalRegisterFilesParameters;
 import com.google.genai.types.ListFilesConfig;
 import com.google.genai.types.ListFilesParameters;
 import com.google.genai.types.ListFilesResponse;
+import com.google.genai.types.RegisterFilesConfig;
+import com.google.genai.types.RegisterFilesResponse;
 import com.google.genai.types.UploadFileConfig;
 import com.google.genai.types.Video;
 import java.io.FileInputStream;
@@ -48,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -136,6 +142,19 @@ public final class Files {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode internalRegisterFilesParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"uris"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"uris"},
+          Common.getValueByPath(fromObject, new String[] {"uris"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
@@ -185,6 +204,26 @@ public final class Files {
           toObject,
           new String[] {"nextPageToken"},
           Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"files"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"files"},
+          Common.getValueByPath(fromObject, new String[] {"files"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode registerFilesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"sdkHttpResponse"},
+          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"files"}) != null) {
@@ -549,6 +588,101 @@ public final class Files {
     }
   }
 
+  /** A shared buildRequest method for both sync and async methods. */
+  BuiltRequest buildRequestForPrivateRegisterFiles(List<String> uris, RegisterFilesConfig config) {
+
+    InternalRegisterFilesParameters.Builder parameterBuilder =
+        InternalRegisterFilesParameters.builder();
+
+    if (!Common.isZero(uris)) {
+      parameterBuilder.uris(uris);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+
+    ObjectNode body;
+    String path;
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    } else {
+      body = internalRegisterFilesParametersToMldev(parameterNode, null);
+      if (body.get("_url") != null) {
+        path = Common.formatMap("files:register", body.get("_url"));
+      } else {
+        path = "files:register";
+      }
+    }
+    body.remove("_url");
+
+    JsonNode queryParams = body.get("_query");
+    if (queryParams != null) {
+      body.remove("_query");
+      path = String.format("%s?%s", path, Common.urlEncode((ObjectNode) queryParams));
+    }
+
+    // TODO: Remove the hack that removes config.
+    Optional<HttpOptions> requestHttpOptions = Optional.empty();
+    if (config != null) {
+      requestHttpOptions = config.httpOptions();
+    }
+
+    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+  }
+
+  /** A shared processResponse function for both sync and async methods. */
+  RegisterFilesResponse processResponseForPrivateRegisterFiles(
+      ApiResponse response, RegisterFilesConfig config) {
+    ResponseBody responseBody = response.getBody();
+    String responseString;
+    try {
+      responseString = responseBody.string();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read HTTP response.", e);
+    }
+
+    if (config != null && config.shouldReturnHttpResponse().orElse(false)) {
+      Headers responseHeaders = response.getHeaders();
+      if (responseHeaders == null) {
+        return RegisterFilesResponse.builder()
+            .sdkHttpResponse(HttpResponse.builder().body(responseString))
+            .build();
+      }
+      Map<String, String> headers = new HashMap<>();
+      for (String headerName : responseHeaders.names()) {
+        headers.put(headerName, responseHeaders.get(headerName));
+      }
+      return RegisterFilesResponse.builder()
+          .sdkHttpResponse(HttpResponse.builder().headers(headers).body(responseString))
+          .build();
+    }
+
+    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
+
+    if (!this.apiClient.vertexAI()) {
+      responseNode = registerFilesResponseFromMldev(responseNode, null);
+    }
+
+    return JsonSerializable.fromJsonNode(responseNode, RegisterFilesResponse.class);
+  }
+
+  RegisterFilesResponse privateRegisterFiles(List<String> uris, RegisterFilesConfig config) {
+    BuiltRequest builtRequest = buildRequestForPrivateRegisterFiles(uris, config);
+
+    try (ApiResponse response =
+        this.apiClient.request(
+            "post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())) {
+      return processResponseForPrivateRegisterFiles(response, config);
+    }
+  }
+
   /**
    * Makes an API request to list the available files.
    *
@@ -575,6 +709,67 @@ public final class Files {
         request,
         (ObjectNode) JsonSerializable.toJsonNode(config),
         JsonSerializable.toJsonNode(privateList(config)));
+  }
+
+  /**
+   * Registers Google Cloud Storage files for use with the API.
+   *
+   * @param credentials The Google Cloud credentials to use for registering the files.
+   * @param uris The list of GCS URIs to register.
+   * @param config Optional configuration for the registration request.
+   * @return The response containing the registered files.
+   */
+  public RegisterFilesResponse registerFiles(
+      GoogleCredentials credentials, List<String> uris, RegisterFilesConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
+    checkNotNull(credentials, "credentials cannot be null");
+    checkNotNull(uris, "uris cannot be null");
+
+    RegisterFilesConfig updatedConfig = internalPrepareRegisterFilesConfig(credentials, config);
+
+    return privateRegisterFiles(uris, updatedConfig);
+  }
+
+  /**
+   * Prepares the configuration for the registerFiles request, including adding authorization
+   * headers from the provided credentials.
+   *
+   * @param credentials The Google Cloud credentials to use.
+   * @param config Optional configuration to start with.
+   * @return The updated configuration with authorization headers.
+   */
+  RegisterFilesConfig internalPrepareRegisterFilesConfig(
+      GoogleCredentials credentials, RegisterFilesConfig config) {
+    checkNotNull(credentials, "credentials cannot be null");
+
+    RegisterFilesConfig configToUse = config;
+    if (configToUse == null) {
+      configToUse = RegisterFilesConfig.builder().build();
+    }
+
+    try {
+      credentials.refreshIfExpired();
+    } catch (IOException | IllegalStateException e) {
+      throw new GenAiIOException("Failed to refresh credentials.", e);
+    }
+    if (credentials.getAccessToken() == null) {
+      throw new GenAiIOException("Failed to get access token from credentials.");
+    }
+    String accessToken = credentials.getAccessToken().getTokenValue();
+
+    HttpOptions httpOptions = configToUse.httpOptions().orElse(HttpOptions.builder().build());
+    Map<String, String> headers = new HashMap<>(httpOptions.headers().orElse(ImmutableMap.of()));
+    headers.put("Authorization", "Bearer " + accessToken);
+    if (credentials.getQuotaProjectId() != null) {
+      headers.put("x-goog-user-project", credentials.getQuotaProjectId());
+    }
+
+    return configToUse.toBuilder()
+        .httpOptions(httpOptions.toBuilder().headers(headers).build())
+        .build();
   }
 
   /**

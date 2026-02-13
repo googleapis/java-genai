@@ -26,6 +26,11 @@ public final class GenAiIOException extends BaseException {
     super(message, cause);
   }
 
+  /** Creates a new GenAiIoException with the specified message and the original cause. */
+  public GenAiIOException(String message, Throwable cause) {
+    super(message, cause);
+  }
+
   /** Creates a new GenAiIoException with the specified message. */
   public GenAiIOException(String message) {
     super(message);

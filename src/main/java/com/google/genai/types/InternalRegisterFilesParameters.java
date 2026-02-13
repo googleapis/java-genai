@@ -1,0 +1,129 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Auto-generated code. Do not edit.
+
+package com.google.genai.types;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.api.core.InternalApi;
+import com.google.auto.value.AutoValue;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+/** Parameters for the private _Register method. */
+@AutoValue
+@InternalApi
+@JsonDeserialize(builder = InternalRegisterFilesParameters.Builder.class)
+public abstract class InternalRegisterFilesParameters extends JsonSerializable {
+  /** The Google Cloud Storage URIs to register. Example: `gs://bucket/object`. */
+  @JsonProperty("uris")
+  public abstract Optional<List<String>> uris();
+
+  /** Used to override the default configuration. */
+  @JsonProperty("config")
+  public abstract Optional<RegisterFilesConfig> config();
+
+  /** Instantiates a builder for InternalRegisterFilesParameters. */
+  @ExcludeFromGeneratedCoverageReport
+  public static Builder builder() {
+    return new AutoValue_InternalRegisterFilesParameters.Builder();
+  }
+
+  /** Creates a builder with the same values as this instance. */
+  public abstract Builder toBuilder();
+
+  /** Builder for InternalRegisterFilesParameters. */
+  @AutoValue.Builder
+  public abstract static class Builder {
+    /**
+     * For internal usage. Please use `InternalRegisterFilesParameters.builder()` for instantiation.
+     */
+    @JsonCreator
+    private static Builder create() {
+      return new AutoValue_InternalRegisterFilesParameters.Builder();
+    }
+
+    /**
+     * Setter for uris.
+     *
+     * <p>uris: The Google Cloud Storage URIs to register. Example: `gs://bucket/object`.
+     */
+    @JsonProperty("uris")
+    public abstract Builder uris(List<String> uris);
+
+    /**
+     * Setter for uris.
+     *
+     * <p>uris: The Google Cloud Storage URIs to register. Example: `gs://bucket/object`.
+     */
+    @CanIgnoreReturnValue
+    public Builder uris(String... uris) {
+      return uris(Arrays.asList(uris));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uris(Optional<List<String>> uris);
+
+    /** Clears the value of uris field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUris() {
+      return uris(Optional.empty());
+    }
+
+    /**
+     * Setter for config.
+     *
+     * <p>config: Used to override the default configuration.
+     */
+    @JsonProperty("config")
+    public abstract Builder config(RegisterFilesConfig config);
+
+    /**
+     * Setter for config builder.
+     *
+     * <p>config: Used to override the default configuration.
+     */
+    @CanIgnoreReturnValue
+    public Builder config(RegisterFilesConfig.Builder configBuilder) {
+      return config(configBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder config(Optional<RegisterFilesConfig> config);
+
+    /** Clears the value of config field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearConfig() {
+      return config(Optional.empty());
+    }
+
+    public abstract InternalRegisterFilesParameters build();
+  }
+
+  /** Deserializes a JSON string to a InternalRegisterFilesParameters object. */
+  @ExcludeFromGeneratedCoverageReport
+  public static InternalRegisterFilesParameters fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, InternalRegisterFilesParameters.class);
+  }
+}
