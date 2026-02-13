@@ -41,7 +41,11 @@
 package com.google.genai.examples;
 
 import com.google.genai.Client;
+import com.google.genai.types.Content;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.FileData;
+import com.google.genai.types.Part;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 /** An example of using the Unified Gen AI Java SDK to embed content asynchronously. */
@@ -79,6 +83,28 @@ public final class EmbedContentAsync {
               System.out.println("Async embedding response: " + response);
             })
         .join();
+
+    // Vertex Multimodal embedding.
+    if (client.vertexAI()) {
+      System.out.println("Embed content with GCS image example.");
+      Part textPart = Part.builder().text("What is in this image?").build();
+      Part imagePart =
+          Part.builder()
+              .fileData(
+                  FileData.builder()
+                      .fileUri("gs://cloud-samples-data/generative-ai/image/a-man-and-a-dog.png")
+                      .mimeType("image/png")
+                      .build())
+              .build();
+      Content content = Content.builder().parts(Arrays.asList(textPart, imagePart)).build();
+      responseFuture =
+          client.async.models.embedContent(Constants.VERTEX_MULTIMODAL_EMBEDDING_MODEL_NAME, content, null);
+      responseFuture
+          .thenAccept(
+              response ->
+                  System.out.println("Async embedding response with GCS image: " + response))
+          .join();
+    }
   }
 
   private EmbedContentAsync() {}

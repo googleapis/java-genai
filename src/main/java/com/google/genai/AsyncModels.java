@@ -38,8 +38,9 @@ import com.google.genai.types.EditImageConfig;
 import com.google.genai.types.EditImageParameters;
 import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EmbedContentConfig;
-import com.google.genai.types.EmbedContentParameters;
+import com.google.genai.types.EmbedContentParametersPrivate;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.EmbeddingApiType;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentParameters;
 import com.google.genai.types.GenerateContentResponse;
@@ -145,8 +146,13 @@ public final class AsyncModels {
   }
 
   CompletableFuture<EmbedContentResponse> privateEmbedContent(
-      String model, List<Content> contents, EmbedContentConfig config) {
-    EmbedContentParameters.Builder parameterBuilder = EmbedContentParameters.builder();
+      String model,
+      List<Content> contents,
+      Content content,
+      EmbeddingApiType embeddingApiType,
+      EmbedContentConfig config) {
+    EmbedContentParametersPrivate.Builder parameterBuilder =
+        EmbedContentParametersPrivate.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
@@ -154,11 +160,19 @@ public final class AsyncModels {
     if (!Common.isZero(contents)) {
       parameterBuilder.contents(contents);
     }
+    if (!Common.isZero(content)) {
+      parameterBuilder.content(content);
+    }
+    if (!Common.isZero(embeddingApiType)) {
+      parameterBuilder.embeddingApiType(embeddingApiType);
+    }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
-    BuiltRequest builtRequest = models.buildRequestForPrivateEmbedContent(model, contents, config);
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateEmbedContent(
+            model, contents, content, embeddingApiType, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
@@ -956,7 +970,46 @@ public final class AsyncModels {
     for (String text : texts) {
       contents.add(Content.fromParts(Part.fromText(text)));
     }
-    return privateEmbedContent(model, contents, config);
+    Content content = null;
+    if (!contents.isEmpty()) {
+      content = contents.get(0);
+    }
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
+  }
+
+  /**
+   * Asynchronously embeds content given a GenAI model and a content object.
+   *
+   * @param model the name of the GenAI model to use for embedding
+   * @param content a {@link com.google.genai.types.Content} to send to the embedding model
+   * @return a {@link com.google.genai.types.EmbedContentResponse} instance that contains the
+   *     embedding.
+   */
+  public CompletableFuture<EmbedContentResponse> embedContent(
+      String model, Content content, EmbedContentConfig config) {
+    List<Content> contents = new ArrayList<>();
+    contents.add(content);
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
   }
 
   /**

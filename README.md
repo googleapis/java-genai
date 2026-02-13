@@ -586,12 +586,13 @@ public class ComputeTokens {
 #### Embed Content
 
 The `embedContent` method allows you to generate embeddings for words, phrases,
-sentences, and code. Note that only text embedding is supported in this method.
+sentences, and code, as well as multimodal content like images or videos via Vertex AI.
 
 ```java
 package <your package name>;
 
 import com.google.genai.Client;
+import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
 
 public class EmbedContent {
@@ -602,6 +603,24 @@ public class EmbedContent {
         client.models.embedContent("gemini-embedding-001", "why is the sky blue?", null);
 
     System.out.println("Embedding response: " + response);
+
+    // Multimodal embedding with Vertex AI
+    Client vertexClient = Client.builder().vertexAI(true).build();
+    EmbedContentConfig config =
+        EmbedContentConfig.builder()
+            .outputDimensionality(10)
+            .title("test_title")
+            .taskType("RETRIEVAL_DOCUMENT")
+            .build();
+
+    EmbedContentResponse mmResponse =
+        vertexClient.models.embedContent(
+            "gemini-embedding-2-exp-11-2025",
+            Content.fromParts(
+                Part.fromText("Hello"),
+                Part.fromUri("gs://cloud-samples-data/generative-ai/image/a-man-and-a-dog.png", "image/png")),
+            config);
+    System.out.println("Multimodal embedding response: " + mmResponse);
   }
 }
 ```

@@ -41,8 +41,9 @@ import com.google.genai.types.EditImageConfig;
 import com.google.genai.types.EditImageParameters;
 import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EmbedContentConfig;
-import com.google.genai.types.EmbedContentParameters;
+import com.google.genai.types.EmbedContentParametersPrivate;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.EmbeddingApiType;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentParameters;
 import com.google.genai.types.GenerateContentResponse;
@@ -861,46 +862,106 @@ public final class Models {
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
-    if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"instances[]", "task_type"},
-          Common.getValueByPath(fromObject, new String[] {"taskType"}));
+    JsonNode discriminatorTaskType =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueTaskType =
+        discriminatorTaskType == null ? "PREDICT" : discriminatorTaskType.asText();
+    if (discriminatorValueTaskType.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"instances[]", "task_type"},
+            Common.getValueByPath(fromObject, new String[] {"taskType"}));
+      }
+    } else if (discriminatorValueTaskType.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"taskType"},
+            Common.getValueByPath(fromObject, new String[] {"taskType"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"instances[]", "title"},
-          Common.getValueByPath(fromObject, new String[] {"title"}));
+    JsonNode discriminatorTitle =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueTitle =
+        discriminatorTitle == null ? "PREDICT" : discriminatorTitle.asText();
+    if (discriminatorValueTitle.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"instances[]", "title"},
+            Common.getValueByPath(fromObject, new String[] {"title"}));
+      }
+    } else if (discriminatorValueTitle.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"title"},
+            Common.getValueByPath(fromObject, new String[] {"title"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "outputDimensionality"},
-          Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+    JsonNode discriminatorOutputDimensionality =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueOutputDimensionality =
+        discriminatorOutputDimensionality == null
+            ? "PREDICT"
+            : discriminatorOutputDimensionality.asText();
+    if (discriminatorValueOutputDimensionality.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"parameters", "outputDimensionality"},
+            Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+      }
+    } else if (discriminatorValueOutputDimensionality.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"outputDimensionality"},
+            Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"instances[]", "mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    JsonNode discriminatorMimeType =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueMimeType =
+        discriminatorMimeType == null ? "PREDICT" : discriminatorMimeType.asText();
+    if (discriminatorValueMimeType.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"instances[]", "mimeType"},
+            Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+      }
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"autoTruncate"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "autoTruncate"},
-          Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
+    JsonNode discriminatorAutoTruncate =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueAutoTruncate =
+        discriminatorAutoTruncate == null ? "PREDICT" : discriminatorAutoTruncate.asText();
+    if (discriminatorValueAutoTruncate.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"autoTruncate"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"parameters", "autoTruncate"},
+            Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
+      }
+    } else if (discriminatorValueAutoTruncate.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"autoTruncate"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"autoTruncate"},
+            Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
+      }
     }
 
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode embedContentParametersToMldev(
+  ObjectNode embedContentParametersPrivateToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
@@ -919,6 +980,16 @@ public final class Models {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"contents"})));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
+      JsonNode unused =
+          contentToMldev(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"content"}))),
+              toObject,
+              rootObject);
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           embedContentConfigToMldev(
@@ -933,11 +1004,12 @@ public final class Models {
         new String[] {"requests[]", "model"},
         Transformers.tModel(
             this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
+
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode embedContentParametersToVertex(
+  ObjectNode embedContentParametersPrivateToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
@@ -948,12 +1020,31 @@ public final class Models {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[]", "content"},
-          Transformers.tContentsForEmbed(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"contents"})));
+    JsonNode discriminatorContents =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueContents =
+        discriminatorContents == null ? "PREDICT" : discriminatorContents.asText();
+    if (discriminatorValueContents.equals("PREDICT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
+        Common.setValueByPath(
+            toObject,
+            new String[] {"instances[]", "content"},
+            Transformers.tContentsForEmbed(
+                this.apiClient, Common.getValueByPath(fromObject, new String[] {"contents"})));
+      }
+    }
+
+    JsonNode discriminatorContent =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueContent =
+        discriminatorContent == null ? "PREDICT" : discriminatorContent.asText();
+    if (discriminatorValueContent.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
+        Common.setValueByPath(
+            toObject,
+            new String[] {"content"},
+            Transformers.tContent(Common.getValueByPath(fromObject, new String[] {"content"})));
+      }
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -1026,6 +1117,30 @@ public final class Models {
           toObject,
           new String[] {"metadata"},
           Common.getValueByPath(fromObject, new String[] {"metadata"}));
+    }
+
+    if (rootObject != null
+        && Common.getValueByPath(rootObject, new String[] {"embeddingApiType"}) != null
+        && ((JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"}))
+            .asText()
+            .equals("EMBED_CONTENT")) {
+      JsonNode embedding = (JsonNode) Common.getValueByPath(fromObject, new String[] {"embedding"});
+      JsonNode usageMetadata =
+          (JsonNode) Common.getValueByPath(fromObject, new String[] {"usageMetadata"});
+      JsonNode truncated = (JsonNode) Common.getValueByPath(fromObject, new String[] {"truncated"});
+      if (embedding != null) {
+        ObjectNode stats = JsonSerializable.objectMapper.createObjectNode();
+        if (usageMetadata != null && usageMetadata.get("promptTokenCount") != null) {
+          stats.set("token_count", usageMetadata.get("promptTokenCount"));
+        }
+        if (truncated != null) {
+          stats.set("truncated", truncated);
+        }
+        ((ObjectNode) embedding).set("statistics", stats);
+        ArrayNode embeddings = JsonSerializable.objectMapper.createArrayNode();
+        embeddings.add(embedding);
+        Common.setValueByPath(toObject, new String[] {"embeddings"}, embeddings);
+      }
     }
 
     return toObject;
@@ -5219,15 +5334,26 @@ public final class Models {
 
   /** A shared buildRequest method for both sync and async methods. */
   BuiltRequest buildRequestForPrivateEmbedContent(
-      String model, List<Content> contents, EmbedContentConfig config) {
+      String model,
+      List<Content> contents,
+      Content content,
+      EmbeddingApiType embeddingApiType,
+      EmbedContentConfig config) {
 
-    EmbedContentParameters.Builder parameterBuilder = EmbedContentParameters.builder();
+    EmbedContentParametersPrivate.Builder parameterBuilder =
+        EmbedContentParametersPrivate.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
     }
     if (!Common.isZero(contents)) {
       parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(content)) {
+      parameterBuilder.content(content);
+    }
+    if (!Common.isZero(embeddingApiType)) {
+      parameterBuilder.embeddingApiType(embeddingApiType);
     }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
@@ -5237,10 +5363,17 @@ public final class Models {
     ObjectNode body;
     String path;
     if (this.apiClient.vertexAI()) {
-      body = embedContentParametersToVertex(this.apiClient, parameterNode, null, parameterNode);
-      path = Common.formatMap("{model}:predict", body.get("_url"));
+      body =
+          embedContentParametersPrivateToVertex(this.apiClient, parameterNode, null, parameterNode);
+      String endpointUrl =
+          Transformers.tIsVertexEmbedContentModel(
+                  Common.getValueByPath(parameterNode, new String[] {"model"}).toString())
+              ? "{model}:embedContent"
+              : "{model}:predict";
+      path = Common.formatMap(endpointUrl, body.get("_url"));
     } else {
-      body = embedContentParametersToMldev(this.apiClient, parameterNode, null, parameterNode);
+      body =
+          embedContentParametersPrivateToMldev(this.apiClient, parameterNode, null, parameterNode);
       if (body.get("_url") != null) {
         path = Common.formatMap("{model}:batchEmbedContents", body.get("_url"));
       } else {
@@ -5299,8 +5432,13 @@ public final class Models {
   }
 
   EmbedContentResponse privateEmbedContent(
-      String model, List<Content> contents, EmbedContentConfig config) {
-    EmbedContentParameters.Builder parameterBuilder = EmbedContentParameters.builder();
+      String model,
+      List<Content> contents,
+      Content content,
+      EmbeddingApiType embeddingApiType,
+      EmbedContentConfig config) {
+    EmbedContentParametersPrivate.Builder parameterBuilder =
+        EmbedContentParametersPrivate.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
@@ -5308,11 +5446,18 @@ public final class Models {
     if (!Common.isZero(contents)) {
       parameterBuilder.contents(contents);
     }
+    if (!Common.isZero(content)) {
+      parameterBuilder.content(content);
+    }
+    if (!Common.isZero(embeddingApiType)) {
+      parameterBuilder.embeddingApiType(embeddingApiType);
+    }
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
-    BuiltRequest builtRequest = buildRequestForPrivateEmbedContent(model, contents, config);
+    BuiltRequest builtRequest =
+        buildRequestForPrivateEmbedContent(model, contents, content, embeddingApiType, config);
 
     try (ApiResponse response =
         this.apiClient.request(
@@ -7032,6 +7177,31 @@ public final class Models {
   }
 
   /**
+   * Embeds content given a GenAI model and a content object.
+   *
+   * @param model the name of the GenAI model to use for embedding
+   * @param content the {@link com.google.genai.types.Content} to send to the embedding model
+   * @return a {@link com.google.genai.types.EmbedContentResponse} instance that contains the
+   *     embedding.
+   */
+  public EmbedContentResponse embedContent(
+      String model, Content content, EmbedContentConfig config) {
+    List<Content> contents = new ArrayList<>();
+    contents.add(content);
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
+  }
+
+  /**
    * Embeds content given a GenAI model and a list of text strings.
    *
    * @param model the name of the GenAI model to use for embedding
@@ -7045,7 +7215,55 @@ public final class Models {
     for (String text : texts) {
       contents.add(Content.fromParts(Part.fromText(text)));
     }
-    return privateEmbedContent(model, contents, config);
+    Content content = null;
+    if (!contents.isEmpty()) {
+      content = contents.get(0);
+    }
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
+  }
+
+  /**
+   * Private method for embedding content, taking either a single content object or a list of
+   * content objects.
+   */
+  EmbedContentResponse embedContentTest(String model, Object contents, EmbedContentConfig config) {
+    List<Content> contentList = new ArrayList<>();
+    if (contents instanceof String) {
+      contentList.add(Content.fromParts(Part.fromText((String) contents)));
+    } else if (contents instanceof List) {
+      List<?> contentsObjectList = (List<?>) contents;
+      for (Object item : contentsObjectList) {
+        contentList.add(JsonSerializable.objectMapper.convertValue(item, Content.class));
+      }
+    } else {
+      throw new IllegalArgumentException("Unsupported contents type: " + contents.getClass());
+    }
+
+    Content content = null;
+    if (contentList != null && !contentList.isEmpty()) {
+      content = contentList.get(0);
+    }
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contentList.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contentList, content, apiType, config);
   }
 
   /**

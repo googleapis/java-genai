@@ -61,6 +61,10 @@ public final class Constants {
   /** The name of the embedding model to be used in the examples. */
   public static final String EMBEDDING_MODEL_NAME = "text-embedding-004";
 
+  /** The name of the vertex multimodal embedding model to be used in the examples. */
+  public static final String VERTEX_MULTIMODAL_EMBEDDING_MODEL_NAME =
+      "gemini-embedding-2-exp-11-2025";
+
   /** The file path to be used in the files operations examples. */
   public static final String UPLOAD_FILE_PATH = "./resources/test.txt";
 }
