@@ -175,6 +175,22 @@ public abstract class JsonSerializable {
     }
   }
 
+  /**
+   * Deserializes a JsonNode to an object of any type using Jackson polymorphic deserialization.
+   *
+   * <p>This method is intended for types that use Jackson's {@code @JsonTypeInfo} and
+   * {@code @JsonSubTypes} annotations for polymorphic deserialization, where the base type may be
+   * an interface.
+   */
+  @InternalApi
+  public static <T> T fromJsonNodePolymorphic(JsonNode jsonNode, Class<T> clazz) {
+    try {
+      return objectMapper.treeToValue(jsonNode, clazz);
+    } catch (JsonProcessingException e) {
+      throw new GenAiIOException("Failed to deserialize the JSON node.", e);
+    }
+  }
+
   /** Converts a Json string to a JsonNode. */
   public static JsonNode stringToJsonNode(String string) {
     try {
