@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.40.0](https://github.com/googleapis/java-genai/compare/v1.39.0...v1.40.0) (2026-02-13)
+
+
+### Features
+
+* Add UnifiedMetric support to Vertex Tuning evaluation config ([a28ebfc](https://github.com/googleapis/java-genai/commit/a28ebfc3ddff73b9c998015a0d6d78bb6171b2aa))
+* Support multimodal embedding for Gemini Embedding 2.0 and support MaaS models in Models.embed_content() (Vertex AI API) ([23a7913](https://github.com/googleapis/java-genai/commit/23a7913309416b09e4d8fb39d704b5dc26aa22f1))
+
 ## [1.39.0](https://github.com/googleapis/java-genai/compare/v1.38.0...v1.39.0) (2026-02-07)
 
 
