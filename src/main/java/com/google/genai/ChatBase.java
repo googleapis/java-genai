@@ -37,8 +37,8 @@ class ChatBase {
   private static final Logger logger = Logger.getLogger(ChatBase.class.getName());
 
   ChatBase(List<Content> comprehensiveHistory, List<Content> curatedHistory) {
-    this.comprehensiveHistory = new ArrayList<>();
-    this.curatedHistory = new ArrayList<>();
+    this.comprehensiveHistory = comprehensiveHistory;
+    this.curatedHistory = curatedHistory;
   }
 
   /**
