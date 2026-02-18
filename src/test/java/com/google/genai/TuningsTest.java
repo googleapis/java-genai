@@ -254,6 +254,8 @@ public class TuningsTest {
             .autoraterConfig(
                 AutoraterConfig.builder().autoraterModel("test-model").samplingCount(1).build())
             .metrics(metrics)
+            .inferenceGenerationConfig(
+                GenerationConfig.builder().temperature(0.5f).maxOutputTokens(1024).build())
             .build();
     CreateTuningJobConfig tuningConfig =
         CreateTuningJobConfig.builder()
@@ -277,6 +279,7 @@ public class TuningsTest {
     // Assert
     assertNotNull(currentJob);
     assertTrue(currentJob.evaluationConfig().isPresent());
+    assertTrue(currentJob.evaluationConfig().get().inferenceGenerationConfig().isPresent());
     assertTrue(currentJob.state().get().knownEnum() == JobState.Known.JOB_STATE_PENDING);
   }
 }
