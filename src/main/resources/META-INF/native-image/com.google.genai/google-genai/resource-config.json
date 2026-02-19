@@ -1,13 +1,13 @@
 {
   "resources":{
   "includes":[{
-    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+    "pattern":"\\QMETA-INF/services/com.google.auth.http.HttpTransportFactory\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/java.net.spi.InetAddressResolverProvider\\E"
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
   }, {
     "pattern":"\\QMETA-INF/services/java.net.spi.URLStreamHandlerProvider\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
+    "pattern":"\\QMETA-INF/services/java.nio.file.spi.FileTypeDetector\\E"
   }, {
     "pattern":"\\QMETA-INF/services/org.apache.maven.surefire.spi.MasterProcessChannelProcessorFactory\\E"
   }, {
@@ -20,6 +20,16 @@
     "pattern":"\\QMETA-INF/services/org.junit.platform.launcher.PostDiscoveryFilter\\E"
   }, {
     "pattern":"\\QMETA-INF/services/org.junit.platform.launcher.TestExecutionListener\\E"
+  }, {
+    "pattern":"\\Qbridge1.png\\E"
+  }, {
+    "pattern":"\\Qcheckerboard.png\\E"
+  }, {
+    "pattern":"\\Qcom/google/api/client/http/google-http-client.properties\\E"
+  }, {
+    "pattern":"\\Qcom/google/auth/oauth2/google-auth-library.properties\\E"
+  }, {
+    "pattern":"\\Qgoogle.png\\E"
   }, {
     "pattern":"\\Qjava/lang/reflect/AccessibleObject.class\\E"
   }, {
