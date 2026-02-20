@@ -330,6 +330,8 @@ public final class Client implements AutoCloseable {
   /** Closes the Client instance together with its instantiated http client. */
   @Override
   public void close() {
+
+    /*
     try {
       apiClient.httpClient().dispatcher().executorService().shutdown();
       apiClient.httpClient().connectionPool().evictAll();
@@ -339,6 +341,7 @@ public final class Client implements AutoCloseable {
     } catch (IOException e) {
       throw new GenAiIOException("Failed to close the client.", e);
     }
+    */
   }
 
   /**

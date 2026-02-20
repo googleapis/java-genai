@@ -44,7 +44,7 @@ package com.google.genai.examples;
 
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentConfig;
-import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.Tool;
 import java.lang.reflect.Method;
 import java.util.List;

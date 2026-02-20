@@ -49,15 +49,15 @@ package com.google.genai.examples;
 
 import com.google.genai.AsyncSession;
 import com.google.genai.Client;
-import com.google.genai.types.Blob;
 import com.google.genai.types.AutomaticActivityDetection;
+import com.google.genai.types.Blob;
 import com.google.genai.types.EndSensitivity;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
 import com.google.genai.types.LiveServerMessage;
 import com.google.genai.types.Modality;
-import com.google.genai.types.RealtimeInputConfig;
 import com.google.genai.types.PrebuiltVoiceConfig;
+import com.google.genai.types.RealtimeInputConfig;
 import com.google.genai.types.SpeechConfig;
 import com.google.genai.types.StartSensitivity;
 import com.google.genai.types.VoiceConfig;

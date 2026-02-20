@@ -45,17 +45,17 @@ package com.google.genai.examples;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.AutoraterConfig;
+import com.google.genai.types.BleuSpec;
 import com.google.genai.types.CreateTuningJobConfig;
 import com.google.genai.types.EvaluationConfig;
 import com.google.genai.types.GcsDestination;
+import com.google.genai.types.HttpOptions;
 import com.google.genai.types.ListTuningJobsConfig;
-import com.google.genai.types.UnifiedMetric;
-import com.google.genai.types.BleuSpec;
 import com.google.genai.types.OutputConfig;
 import com.google.genai.types.TuningDataset;
 import com.google.genai.types.TuningJob;
 import com.google.genai.types.TuningValidationDataset;
-import com.google.genai.types.HttpOptions;
+import com.google.genai.types.UnifiedMetric;
 
 /**
  * An example of using the Unified Gen AI Java SDK to do operations on tuning jobs with an
