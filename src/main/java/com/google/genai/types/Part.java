@@ -40,6 +40,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("mediaResolution")
   public abstract Optional<PartMediaResolution> mediaResolution();
 
+  /** Test field for Java TAP. */
+  @JsonProperty("testJava")
+  public abstract Optional<String> testJava();
+
   /** Optional. Result of executing the [ExecutableCode]. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -134,6 +138,24 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMediaResolution() {
       return mediaResolution(Optional.empty());
+    }
+
+    /**
+     * Setter for testJava.
+     *
+     * <p>testJava: Test field for Java TAP.
+     */
+    @JsonProperty("testJava")
+    public abstract Builder testJava(String testJava);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder testJava(Optional<String> testJava);
+
+    /** Clears the value of testJava field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTestJava() {
+      return testJava(Optional.empty());
     }
 
     /**
