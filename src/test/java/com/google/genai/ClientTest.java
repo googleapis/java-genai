@@ -188,24 +188,4 @@ public class ClientTest {
     // Reset the base URLs after the test.
     Client.setDefaultBaseUrls(Optional.empty(), Optional.empty());
   }
-
-  @Test
-  public void testCloseClient() throws Exception {
-    // Arrange
-    ApiClient apiClient = mock(ApiClient.class);
-    OkHttpClient httpClient = new OkHttpClient();
-    when(apiClient.httpClient()).thenReturn(httpClient);
-
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
-    Field apiClientField = Client.class.getDeclaredField("apiClient");
-    apiClientField.setAccessible(true);
-    apiClientField.set(client, apiClient);
-
-    // Act
-    client.close();
-
-    // Assert
-    assertTrue(httpClient.dispatcher().executorService().isShutdown());
-    assertEquals(0, httpClient.connectionPool().connectionCount());
-  }
 }

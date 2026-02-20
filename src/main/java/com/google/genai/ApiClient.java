@@ -52,7 +52,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Interface for an API client which issues HTTP requests to the GenAI APIs. */
 @InternalApi
-public abstract class ApiClient {
+public abstract class ApiClient implements AutoCloseable {
 
   // {x-version-update-start:google-genai:released}
   private static final String SDK_VERSION = "1.40.0";
@@ -725,5 +725,18 @@ public abstract class ApiClient {
       Optional<String> geminiBaseUrl, Optional<String> vertexBaseUrl) {
     ApiClient.geminiBaseUrl = geminiBaseUrl;
     ApiClient.vertexBaseUrl = vertexBaseUrl;
+  }
+
+  @Override
+  public void close() {
+    try {
+      httpClient().dispatcher().executorService().shutdown();
+      httpClient().connectionPool().evictAll();
+      if (httpClient().cache() != null) {
+        httpClient().cache().close();
+      }
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to close the client.", e);
+    }
   }
 }
