@@ -158,7 +158,6 @@
       <artifactId>jspecify</artifactId>
       <version>1.0.0</version>
     </dependency>
-    <!-- kotlin std lib (needed for okhttp3)-->
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
