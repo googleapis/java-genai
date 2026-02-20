@@ -28,4 +28,4 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE})
-@interface ExcludeFromGeneratedCoverageReport {}
+public @interface ExcludeFromGeneratedCoverageReport {}
