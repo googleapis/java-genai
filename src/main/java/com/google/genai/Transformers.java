@@ -776,7 +776,7 @@ public final class Transformers {
    */
   public static boolean tIsVertexEmbedContentModel(String model) {
     // Gemini Embeddings except gemini-embedding-001.
-    return (model.contains("gemini") && !model.equals("gemini-embedding-001"))
+    return (model.contains("gemini") && !model.contains("gemini-embedding-001"))
         // Open-source MaaS embedding models.
         || model.contains("maas");
   }

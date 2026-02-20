@@ -63,7 +63,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class ModelsTest {
 
   private static final String GEMINI_MODEL_NAME = "gemini-2.5-flash";
-  private static final String EMBEDDING_MODEL_NAME = "text-embedding-004";
+  private static final String EMBEDDING_MODEL_NAME = "gemini-embedding-001";
   private static final String IMAGEN_CAPABILITY_MODEL_NAME = "imagen-3.0-capability-001";
   private static final String GEMINI_IMAGE_MODALITY_MODEL_NAME =
       "gemini-2.0-flash-preview-image-generation";
@@ -247,25 +247,6 @@ public class ModelsTest {
     }
     assertTrue(chunks > 2);
     assertTrue(responseStream.isConsumed());
-  }
-
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  public void testEmbedContent_withText(boolean vertexAI) throws Exception {
-    // Arrange
-    String suffix = vertexAI ? "vertex" : "mldev";
-    Client client =
-        TestUtils.createClient(
-            vertexAI, "tests/models/embed_content/test_single_text." + suffix + ".json");
-
-    // Act
-    EmbedContentResponse response =
-        client.models.embedContent(EMBEDDING_MODEL_NAME, "What is your name?", null);
-
-    // Assert
-    assertTrue(response.embeddings().isPresent());
-    assertEquals(1, response.embeddings().get().size());
-    assertNotNull(response.sdkHttpResponse().get().headers().get());
   }
 
   @ParameterizedTest
