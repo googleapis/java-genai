@@ -101,6 +101,10 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("urlContext")
   public abstract Optional<UrlContext> urlContext();
 
+  /** Optional. MCP Servers to connect to. This field is not supported in Vertex AI. */
+  @JsonProperty("mcpServers")
+  public abstract Optional<List<McpServer>> mcpServers();
+
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -471,6 +475,47 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUrlContext() {
       return urlContext(Optional.empty());
+    }
+
+    /**
+     * Setter for mcpServers.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("mcpServers")
+    public abstract Builder mcpServers(List<McpServer> mcpServers);
+
+    /**
+     * Setter for mcpServers.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mcpServers(McpServer... mcpServers) {
+      return mcpServers(Arrays.asList(mcpServers));
+    }
+
+    /**
+     * Setter for mcpServers builder.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mcpServers(McpServer.Builder... mcpServersBuilders) {
+      return mcpServers(
+          Arrays.asList(mcpServersBuilders).stream()
+              .map(McpServer.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mcpServers(Optional<List<McpServer>> mcpServers);
+
+    /** Clears the value of mcpServers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMcpServers() {
+      return mcpServers(Optional.empty());
     }
 
     public abstract Tool build();

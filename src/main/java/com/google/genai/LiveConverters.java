@@ -1630,6 +1630,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mcpServers"},
+          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
+    }
+
     return toObject;
   }
 
@@ -1706,6 +1713,10 @@ final class LiveConverters {
           toObject,
           new String[] {"urlContext"},
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mcpServers"}))) {
+      throw new IllegalArgumentException("mcpServers parameter is not supported in Vertex AI.");
     }
 
     return toObject;

@@ -611,6 +611,13 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mcpServers"},
+          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
+    }
+
     return toObject;
   }
 }

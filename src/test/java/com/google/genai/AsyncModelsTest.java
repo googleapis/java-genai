@@ -45,6 +45,7 @@ import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
 import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
+import com.google.genai.types.McpServer;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
 import com.google.genai.types.PersonGeneration;
@@ -53,6 +54,7 @@ import com.google.genai.types.RagRetrievalConfigFilter;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.Retrieval;
 import com.google.genai.types.SafetyFilterLevel;
+import com.google.genai.types.StreamableHttpTransport;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolCodeExecution;
 import com.google.genai.types.UpdateModelConfig;
@@ -905,5 +907,41 @@ public class AsyncModelsTest {
       // Assert
       assertTrue(exception.getCause().getMessage().contains("404"));
     }
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false})
+  public void testGenerateContentStream_withServerSideMcpAsync(boolean vertexAI) throws Exception {
+    // Arrange
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            "tests/models/generate_content_tools/test_server_side_mcp_only_async."
+                + suffix
+                + ".json");
+
+    // Act
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder()
+                    .mcpServers(
+                        McpServer.builder()
+                            .name("get_weather")
+                            .streamableHttpTransport(
+                                StreamableHttpTransport.builder()
+                                    .url("https://gemini-api-demos.uc.r.appspot.com/mcp")
+                                    .headers(
+                                        ImmutableMap.of("AUTHORIZATION", "Bearer github_pat_XXXX"))
+                                    .build())
+                            .build())
+                    .build())
+            .build();
+    CompletableFuture<GenerateContentResponse> responseFuture =
+        client.async.models.generateContent(
+            "gemini-2.5-flash", "What is the weather like in New York on 02/02/2026?", config);
+    GenerateContentResponse response = responseFuture.join();
+    assertNotNull(response.text());
   }
 }

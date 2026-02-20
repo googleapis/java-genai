@@ -40,13 +40,16 @@ import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
 import com.google.genai.types.MaskReferenceConfig;
 import com.google.genai.types.MaskReferenceImage;
+import com.google.genai.types.McpServer;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
 import com.google.genai.types.RawReferenceImage;
+import com.google.genai.types.StreamableHttpTransport;
 import com.google.genai.types.StyleReferenceConfig;
 import com.google.genai.types.StyleReferenceImage;
 import com.google.genai.types.SubjectReferenceConfig;
 import com.google.genai.types.SubjectReferenceImage;
+import com.google.genai.types.Tool;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -554,5 +557,88 @@ public class ModelsTest {
       assertEquals(
           "This method is only supported in the Vertex AI client.", exception.getMessage());
     }
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false})
+  public void testGenerateContent_withServerSideMcp(boolean vertexAI) throws Exception {
+    // Arrange
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            "tests/models/generate_content_tools/test_server_side_mcp_only." + suffix + ".json");
+
+    // Act
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder()
+                    .mcpServers(
+                        McpServer.builder()
+                            .name("get_weather")
+                            .streamableHttpTransport(
+                                StreamableHttpTransport.builder()
+                                    .url("https://gemini-api-demos.uc.r.appspot.com/mcp")
+                                    .headers(
+                                        ImmutableMap.of("AUTHORIZATION", "Bearer github_pat_XXXX"))
+                                    .build())
+                            .build())
+                    .build())
+            .build();
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-pro",
+            Content.fromParts(
+                Part.fromText("What is the weather like in New York (NY) on 02/02/2026?")),
+            config);
+
+    // Assert
+    assertNotNull(response.text());
+    assertNotNull(response.sdkHttpResponse().get().headers());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false})
+  public void testGenerateContentStream_withServerSideMcp(boolean vertexAI) throws Exception {
+    // Arrange
+    String suffix = vertexAI ? "vertex" : "mldev";
+    Client client =
+        TestUtils.createClient(
+            vertexAI,
+            "tests/models/generate_content_tools/test_server_side_mcp_only_stream."
+                + suffix
+                + ".json");
+
+    // Act
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder()
+                    .mcpServers(
+                        McpServer.builder()
+                            .name("get_weather")
+                            .streamableHttpTransport(
+                                StreamableHttpTransport.builder()
+                                    .url("https://gemini-api-demos.uc.r.appspot.com/mcp")
+                                    .headers(
+                                        ImmutableMap.of("AUTHORIZATION", "Bearer github_pat_XXXX"))
+                                    .build())
+                            .build())
+                    .build())
+            .build();
+    ResponseStream<GenerateContentResponse> responseStream =
+        client.models.generateContentStream(
+            "gemini-2.5-pro", "What is the weather like in New York (NY) on 02/02/2026?", config);
+
+    // Assert
+    int chunks = 0;
+    for (GenerateContentResponse response : responseStream) {
+      chunks++;
+      assertNotNull(response.text());
+      assertNotNull(response.sdkHttpResponse().get().headers());
+    }
+    assertTrue(chunks > 2);
+    assertTrue(responseStream.isConsumed());
   }
 }
