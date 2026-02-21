@@ -510,17 +510,27 @@ public class GenerateContentWithSchema {
     Client client = new Client();
 
     // Define the schema for the response, in Json format.
-    ImmutableMap<String, Object> schema = ImmutableMap.of(
-        "type", "object",
-        "properties", ImmutableMap.of(
-            "recipe_name", ImmutableMap.of("type", "string"),
-            "ingredients", ImmutableMap.of(
-                "type", "array",
-                "items", ImmutableMap.of("type", "string")
-            )
-        ),
-        "required", ImmutableList.of("recipe_name", "ingredients")
-    );
+    Schema schema = Schema.builder()
+        .type("object")
+        .properties(ImmutableMap.of(
+                "recipe_name", Schema.builder()
+                        .type("string")
+                        .description("Name of the recipe")
+                        .build(),
+
+                "ingredients", Schema.builder()
+                        .type("array")
+                        .description("List of ingredients used in the recipe")
+                        .items(
+                                Schema.builder()
+                                        .type("string")
+                                        .build()
+                        )
+                        .build()
+        ))
+        .required(ImmutableList.of("recipe_name", "ingredients"))
+        .build();
+
 
     // Set the response schema in GenerateContentConfig
     GenerateContentConfig config =
