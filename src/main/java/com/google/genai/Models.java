@@ -5378,7 +5378,8 @@ public final class Models {
           embedContentParametersPrivateToVertex(this.apiClient, parameterNode, null, parameterNode);
       String endpointUrl =
           Transformers.tIsVertexEmbedContentModel(
-                  Common.getValueByPath(parameterNode, new String[] {"model"}).toString())
+                  ((JsonNode) Common.getValueByPath(parameterNode, new String[] {"model"}))
+                      .asText())
               ? "{model}:embedContent"
               : "{model}:predict";
       path = Common.formatMap(endpointUrl, body.get("_url"));
