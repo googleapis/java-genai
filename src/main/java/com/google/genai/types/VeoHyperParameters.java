@@ -47,6 +47,14 @@ public abstract class VeoHyperParameters extends JsonSerializable {
   @JsonProperty("tuningTask")
   public abstract Optional<TuningTask> tuningTask();
 
+  /**
+   * Optional. The ratio of Google internal dataset to use in the training mixture, in range of `[0,
+   * 1)`. If `0.2`, it means 20% of Google internal dataset and 80% of user dataset will be used for
+   * training. If not set, the default value is 0.1.
+   */
+  @JsonProperty("veoDataMixtureRatio")
+  public abstract Optional<Double> veoDataMixtureRatio();
+
   /** Instantiates a builder for VeoHyperParameters. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -138,6 +146,26 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder tuningTask(String tuningTask) {
       return tuningTask(new TuningTask(tuningTask));
+    }
+
+    /**
+     * Setter for veoDataMixtureRatio.
+     *
+     * <p>veoDataMixtureRatio: Optional. The ratio of Google internal dataset to use in the training
+     * mixture, in range of `[0, 1)`. If `0.2`, it means 20% of Google internal dataset and 80% of
+     * user dataset will be used for training. If not set, the default value is 0.1.
+     */
+    @JsonProperty("veoDataMixtureRatio")
+    public abstract Builder veoDataMixtureRatio(Double veoDataMixtureRatio);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder veoDataMixtureRatio(Optional<Double> veoDataMixtureRatio);
+
+    /** Clears the value of veoDataMixtureRatio field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVeoDataMixtureRatio() {
+      return veoDataMixtureRatio(Optional.empty());
     }
 
     public abstract VeoHyperParameters build();

@@ -34,6 +34,12 @@ public class TrafficType {
     /** The request was processed using Pay-As-You-Go quota. */
     ON_DEMAND,
 
+    /** Type for Priority Pay-As-You-Go traffic. */
+    ON_DEMAND_PRIORITY,
+
+    /** Type for Flex traffic. */
+    ON_DEMAND_FLEX,
+
     /** Type for Provisioned Throughput traffic. */
     PROVISIONED_THROUGHPUT
   }

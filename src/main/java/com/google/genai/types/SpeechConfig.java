@@ -34,7 +34,7 @@ public abstract class SpeechConfig extends JsonSerializable {
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
-  /** Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization. */
+  /** Optional. The language code (ISO 639-1) for the speech synthesis. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
 
@@ -94,7 +94,7 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for languageCode.
      *
-     * <p>languageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech synthesization.
+     * <p>languageCode: Optional. The language code (ISO 639-1) for the speech synthesis.
      */
     @JsonProperty("languageCode")
     public abstract Builder languageCode(String languageCode);

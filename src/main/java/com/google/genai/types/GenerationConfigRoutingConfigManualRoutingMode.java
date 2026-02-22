@@ -27,16 +27,13 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * When manual routing is set, the specified model will be used directly. This data type is not
- * supported in Gemini API.
+ * The configuration for manual routing. When manual routing is specified, the model will be
+ * selected based on the model name provided. This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = GenerationConfigRoutingConfigManualRoutingMode.Builder.class)
 public abstract class GenerationConfigRoutingConfigManualRoutingMode extends JsonSerializable {
-  /**
-   * The model name to use. Only the public LLM models are accepted. See [Supported
-   * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#supported-models).
-   */
+  /** The name of the model to use. Only public LLM models are accepted. */
   @JsonProperty("modelName")
   public abstract Optional<String> modelName();
 
@@ -64,8 +61,7 @@ public abstract class GenerationConfigRoutingConfigManualRoutingMode extends Jso
     /**
      * Setter for modelName.
      *
-     * <p>modelName: The model name to use. Only the public LLM models are accepted. See [Supported
-     * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#supported-models).
+     * <p>modelName: The name of the model to use. Only public LLM models are accepted.
      */
     @JsonProperty("modelName")
     public abstract Builder modelName(String modelName);
