@@ -53,15 +53,41 @@ public final class TableTest {
     String data = ReplayApiClient.readString(Paths.get(path));
     TestTableFile testTableFile = TestTableFile.fromJson(data);
 
+    int testTableIndex = path.lastIndexOf("/_test_table.json");
+    int replaysTestsIndex = path.lastIndexOf("/replays/tests/");
+    String testDirectory =
+        path.substring(replaysTestsIndex + "/replays/tests/".length(), testTableIndex);
+
     // Gets module name and method name.
     String testMethod = testTableFile.testMethod().get();
     String[] segments = testMethod.split("\\.");
+
     if (segments.length == 1) {
-      String msg = " => Test skipped: multistep test " + testMethod + " not supported in Java";
+      if (MultistepTest.customTestMethods.containsKey(testDirectory)) {
+        List<DynamicTest> dynamicTests = new ArrayList<>();
+        for (TestTableItem testTableItem : testTableFile.testTable().get()) {
+          String testName =
+              String.format("%s.%s.%s", testMethod, testTableItem.name().get(), suffix);
+          String replayId = testTableItem.name().get();
+          if (testTableItem.overrideReplayId().isPresent()) {
+            replayId = testTableItem.overrideReplayId().get();
+          }
+          String clientReplayId = testDirectory + "/" + replayId + "." + suffix + ".json";
+          dynamicTests.addAll(
+              createTestCasesForMultistep(
+                  testName, testTableItem, vertexAI, testDirectory, clientReplayId));
+        }
+        return dynamicTests;
+      }
+      String msg =
+          " => Test skipped: multistep test "
+              + testMethod
+              + " ("
+              + testDirectory
+              + ") not supported in Java";
       List<DynamicTest> dynamicTests = new ArrayList<>();
       for (TestTableItem testTableItem : testTableFile.testTable().get()) {
-        String testName =
-            String.format("%s.%s.%s", testMethod, testTableItem.name().get(), suffix);
+        String testName = String.format("%s.%s.%s", testMethod, testTableItem.name().get(), suffix);
         dynamicTests.add(DynamicTest.dynamicTest(testName + msg, () -> {}));
       }
       return dynamicTests;
@@ -130,10 +156,6 @@ public final class TableTest {
           String.format(
               "%s.%s.%s.%s",
               originalModuleName, originalMethodName, testTableItem.name().get(), suffix);
-      int testTableIndex = path.lastIndexOf("/_test_table.json");
-      int replaysTestsIndex = path.lastIndexOf("/replays/tests/");
-      String testDirectory =
-          path.substring(replaysTestsIndex + "/replays/tests/".length(), testTableIndex);
       String replayId = testTableItem.name().get();
       if (testTableItem.overrideReplayId().isPresent()) {
         replayId = testTableItem.overrideReplayId().get();
@@ -189,22 +211,7 @@ public final class TableTest {
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
 
-    Map<String, Object> fromParameters = (Map<String, Object>) normalizeKeys((Map<String, Object>) testTableItem.parameters().get());
-    ReplaySanitizer.sanitizeMapByPath(
-        fromParameters, "image.imageBytes", new ReplayBase64Sanitizer(), false);
-    ReplaySanitizer.sanitizeMapByPath(
-        fromParameters, "source.image.imageBytes", new ReplayBase64Sanitizer(), false);
-    ReplaySanitizer.sanitizeMapByPath(
-        fromParameters,
-        "source.scribbleImage.image.imageBytes",
-        new ReplayBase64Sanitizer(),
-        false);
-    // TODO(b/403368643): Support interface param types in Java replay tests.
-    // ReplaySanitizer.sanitizeMapByPath(
-    // fromParameters,
-    // "[]referenceImages.referenceImage.imageBytes",
-    // new ReplayBase64Sanitizer(),
-    // true);
+    Map<String, Object> fromParameters = prepareParameters(testTableItem);
 
     List<DynamicTest> dynamicTests = new ArrayList<>();
     // Iterate through overloading methods and find a match.
@@ -223,11 +230,9 @@ public final class TableTest {
           }
           parameters.add(parameter);
         }
-        Optional<String> skipInApiMode = testTableItem.skipInApiMode();
-        if (skipInApiMode.isPresent()
-            && (client.clientMode().equals("api") || client.clientMode().isEmpty())) {
-          String msg = " => Test skipped: " + skipInApiMode.get();
-          dynamicTests.add(DynamicTest.dynamicTest(testName + msg, () -> {}));
+        Optional<String> skipMsg = getSkipMessageInApiMode(testTableItem, client);
+        if (skipMsg.isPresent()) {
+          dynamicTests.add(DynamicTest.dynamicTest(testName + skipMsg.get(), () -> {}));
           continue;
         }
         dynamicTests.add(
@@ -255,58 +260,7 @@ public final class TableTest {
                       | IllegalArgumentException
                       | NoSuchFieldException e) {
                     Throwable cause = e instanceof InvocationTargetException ? e.getCause() : e;
-
-                    // Handle expected exceptions here
-                    Optional<String> exceptionIfMldev = testTableItem.exceptionIfMldev();
-                    Optional<String> exceptionIfVertex = testTableItem.exceptionIfVertex();
-                    if (exceptionIfMldev.isPresent() && !client.vertexAI()) {
-                      String exceptionMessage = cause.getMessage();
-
-                      // TODO(fix in future): hack for camelCase variable name mismatch with
-                      // expected snake_case name in exception messages.
-                      String geminiParameterException =
-                          " parameter is not supported in Gemini API.";
-                      if (exceptionMessage.endsWith(geminiParameterException)) {
-                        // camel to snake case the variable name in the exception message.
-                        String camelCaseVariable = exceptionMessage.split(" ")[0];
-                        String snakeCaseVariable = Transformers.camelToSnake(camelCaseVariable);
-                        exceptionMessage =
-                            exceptionMessage.replace(camelCaseVariable, snakeCaseVariable);
-                      }
-
-                      if (!exceptionMessage.contains(exceptionIfMldev.get())) {
-                        fail(
-                            String.format(
-                                "'%s' failed to match expected exception:\n"
-                                    + "Expected exception: %s\n"
-                                    + " Actual exception: %s\n",
-                                testName, exceptionIfMldev.get(), cause.getMessage()));
-                      }
-                    } else if (exceptionIfVertex.isPresent() && client.vertexAI()) {
-                      String exceptionMessage = cause.getMessage();
-
-                      // TODO(fix in future): hack for camelCase variable name mismatch with
-                      // expected snake_case name in exception messages.
-                      String vertexParameterException = " parameter is not supported in Vertex AI.";
-                      if (exceptionMessage.endsWith(vertexParameterException)) {
-                        // camel to snake case the variable name in the exception message.
-                        String camelCaseVariable = exceptionMessage.split(" ")[0];
-                        String snakeCaseVariable = Transformers.camelToSnake(camelCaseVariable);
-                        exceptionMessage =
-                            exceptionMessage.replace(camelCaseVariable, snakeCaseVariable);
-                      }
-
-                      if (!exceptionMessage.contains(exceptionIfVertex.get())) {
-                        fail(
-                            String.format(
-                                "'%s' failed to match expected exception:\n"
-                                    + "Expected exception: %s\n"
-                                    + " Actual exception: %s\n",
-                                testName, exceptionIfVertex.get(), cause.getMessage()));
-                      }
-                    } else {
-                      fail(String.format("'%s' failed: %s", testName, cause));
-                    }
+                    handleException(cause, testTableItem, client, testName);
                   } finally {
                     client.close();
                   }
@@ -323,6 +277,117 @@ public final class TableTest {
       dynamicTests.add(DynamicTest.dynamicTest(testName, () -> fail(msg)));
     }
     return dynamicTests;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static Collection<DynamicTest> createTestCasesForMultistep(
+      String testName,
+      TestTableItem testTableItem,
+      boolean vertexAI,
+      String customMethodKey,
+      String replayId) {
+
+    Client client = createClient(vertexAI);
+    List<DynamicTest> dynamicTests = new ArrayList<>();
+
+    if (client.clientMode().equals("replay")) {
+      String msg = " => Test skipped: multistep tests run in api mode only";
+      dynamicTests.add(DynamicTest.dynamicTest(testName + msg, () -> {}));
+      return dynamicTests;
+    }
+
+    Map<String, Object> fromParameters = prepareParameters(testTableItem);
+
+    Optional<String> skipMsg = getSkipMessageInApiMode(testTableItem, client);
+    if (skipMsg.isPresent()) {
+      dynamicTests.add(DynamicTest.dynamicTest(testName + skipMsg.get(), () -> {}));
+      return dynamicTests;
+    }
+
+    dynamicTests.add(
+        DynamicTest.dynamicTest(
+            testName,
+            () -> {
+              try {
+                client.setReplayId(replayId);
+                MultistepTest.MultistepFunction method =
+                    MultistepTest.customTestMethods.get(customMethodKey);
+                Object response = method.apply(client, fromParameters);
+              } catch (Exception e) {
+                Throwable cause = e instanceof InvocationTargetException ? e.getCause() : e;
+                handleException(cause, testTableItem, client, testName);
+              } finally {
+                client.close();
+              }
+            }));
+
+    return dynamicTests;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static Map<String, Object> prepareParameters(TestTableItem testTableItem) {
+    Map<String, Object> fromParameters =
+        (Map<String, Object>) normalizeKeys((Map<String, Object>) testTableItem.parameters().get());
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters, "image.imageBytes", new ReplayBase64Sanitizer(), false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters, "source.image.imageBytes", new ReplayBase64Sanitizer(), false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "source.scribbleImage.image.imageBytes",
+        new ReplayBase64Sanitizer(),
+        false);
+    return fromParameters;
+  }
+
+  private static void handleException(
+      Throwable cause, TestTableItem testTableItem, Client client, String testName) {
+    Optional<String> exceptionIfMldev = testTableItem.exceptionIfMldev();
+    Optional<String> exceptionIfVertex = testTableItem.exceptionIfVertex();
+    if (exceptionIfMldev.isPresent() && !client.vertexAI()) {
+      verifyExceptionMatch(testName, cause, exceptionIfMldev.get(), "Gemini API");
+    } else if (exceptionIfVertex.isPresent() && client.vertexAI()) {
+      verifyExceptionMatch(testName, cause, exceptionIfVertex.get(), "Vertex AI");
+    } else {
+      fail(String.format("'%s' failed: %s", testName, cause));
+    }
+  }
+
+  private static void verifyExceptionMatch(
+      String testName, Throwable cause, String expectedException, String platformName) {
+    String exceptionMessage = cause.getMessage();
+    String parameterException = " parameter is not supported in " + platformName + ".";
+    if (exceptionMessage != null && exceptionMessage.endsWith(parameterException)) {
+      String camelCaseVariable = exceptionMessage.split(" ")[0];
+      String snakeCaseVariable = Transformers.camelToSnake(camelCaseVariable);
+      exceptionMessage = exceptionMessage.replace(camelCaseVariable, snakeCaseVariable);
+    }
+
+    if (!exceptionMessage.contains(expectedException)) {
+      String expected = expectedException.replace(" in ", " ");
+      String actual =
+          exceptionMessage == null
+              ? ""
+              : exceptionMessage.replace(" in ", " ").replace(" for ", " ");
+      if (!actual.contains(expected)) {
+        fail(
+            String.format(
+                "'%s' failed to match expected exception:\n"
+                    + "Expected exception: %s\n"
+                    + " Actual exception: %s\n",
+                testName, expectedException, cause.getMessage()));
+      }
+    }
+  }
+
+  private static Optional<String> getSkipMessageInApiMode(
+      TestTableItem testTableItem, Client client) {
+    Optional<String> skipInApiMode = testTableItem.skipInApiMode();
+    if (skipInApiMode.isPresent()
+        && (client.clientMode().equals("api") || client.clientMode().isEmpty())) {
+      return Optional.of(" => Test skipped: " + skipInApiMode.get());
+    }
+    return Optional.empty();
   }
 
   private static String getReplayFilePath(String testName) {
