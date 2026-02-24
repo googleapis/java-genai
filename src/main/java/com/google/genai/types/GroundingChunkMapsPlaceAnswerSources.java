@@ -30,15 +30,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Sources used to generate the place answer. This data type is not supported in Gemini API. */
+/**
+ * The sources that were used to generate the place answer.
+ *
+ * <p>This includes review snippets and photos that were used to generate the answer, as well as
+ * URIs to flag content.
+ */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkMapsPlaceAnswerSources.Builder.class)
 public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializable {
+  /** Snippets of reviews that were used to generate the answer. */
+  @JsonProperty("reviewSnippet")
+  public abstract Optional<List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet>> reviewSnippet();
+
   /** A link where users can flag a problem with the generated answer. */
   @JsonProperty("flagContentUri")
   public abstract Optional<String> flagContentUri();
 
-  /** Snippets of reviews that are used to generate the answer. */
+  /** Snippets of reviews that were used to generate the answer. */
   @JsonProperty("reviewSnippets")
   public abstract Optional<List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet>>
       reviewSnippets();
@@ -65,6 +74,51 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     }
 
     /**
+     * Setter for reviewSnippet.
+     *
+     * <p>reviewSnippet: Snippets of reviews that were used to generate the answer.
+     */
+    @JsonProperty("reviewSnippet")
+    public abstract Builder reviewSnippet(
+        List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet> reviewSnippet);
+
+    /**
+     * Setter for reviewSnippet.
+     *
+     * <p>reviewSnippet: Snippets of reviews that were used to generate the answer.
+     */
+    @CanIgnoreReturnValue
+    public Builder reviewSnippet(
+        GroundingChunkMapsPlaceAnswerSourcesReviewSnippet... reviewSnippet) {
+      return reviewSnippet(Arrays.asList(reviewSnippet));
+    }
+
+    /**
+     * Setter for reviewSnippet builder.
+     *
+     * <p>reviewSnippet: Snippets of reviews that were used to generate the answer.
+     */
+    @CanIgnoreReturnValue
+    public Builder reviewSnippet(
+        GroundingChunkMapsPlaceAnswerSourcesReviewSnippet.Builder... reviewSnippetBuilders) {
+      return reviewSnippet(
+          Arrays.asList(reviewSnippetBuilders).stream()
+              .map(GroundingChunkMapsPlaceAnswerSourcesReviewSnippet.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder reviewSnippet(
+        Optional<List<GroundingChunkMapsPlaceAnswerSourcesReviewSnippet>> reviewSnippet);
+
+    /** Clears the value of reviewSnippet field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReviewSnippet() {
+      return reviewSnippet(Optional.empty());
+    }
+
+    /**
      * Setter for flagContentUri.
      *
      * <p>flagContentUri: A link where users can flag a problem with the generated answer.
@@ -85,7 +139,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     /**
      * Setter for reviewSnippets.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @JsonProperty("reviewSnippets")
     public abstract Builder reviewSnippets(
@@ -94,7 +148,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     /**
      * Setter for reviewSnippets.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @CanIgnoreReturnValue
     public Builder reviewSnippets(
@@ -105,7 +159,7 @@ public abstract class GroundingChunkMapsPlaceAnswerSources extends JsonSerializa
     /**
      * Setter for reviewSnippets builder.
      *
-     * <p>reviewSnippets: Snippets of reviews that are used to generate the answer.
+     * <p>reviewSnippets: Snippets of reviews that were used to generate the answer.
      */
     @CanIgnoreReturnValue
     public Builder reviewSnippets(

@@ -42,106 +42,124 @@ import java.util.Optional;
 @JsonDeserialize(builder = Schema.Builder.class)
 public abstract class Schema extends JsonSerializable {
   /**
-   * Optional. The value should be validated against any (one or more) of the subschemas in the
-   * list.
+   * Optional. The instance must be valid against any (one or more) of the subschemas listed in
+   * `any_of`.
    */
   @JsonProperty("anyOf")
   public abstract Optional<List<Schema>> anyOf();
 
-  /** Optional. Default value of the data. */
+  /** Optional. Default value to use if the field is not specified. */
   @JsonProperty("default")
   public abstract Optional<Object> default_();
 
-  /** Optional. The description of the data. */
+  /** Optional. Description of the schema. */
   @JsonProperty("description")
   public abstract Optional<String> description();
 
   /**
-   * Optional. Possible values of the element of primitive type with enum format. Examples: 1. We
-   * can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH", "SOUTH", "WEST"]} 2.
-   * We can define apartment number as : {type:INTEGER, format:enum, enum:["101", "201", "301"]}
+   * Optional. Possible values of the field. This field can be used to restrict a value to a fixed
+   * set of values. To mark a field as an enum, set `format` to `enum` and provide the list of
+   * possible values in `enum`. For example: 1. To define directions: `{type:STRING, format:enum,
+   * enum:["EAST", "NORTH", "SOUTH", "WEST"]}` 2. To define apartment numbers: `{type:INTEGER,
+   * format:enum, enum:["101", "201", "301"]}`
    */
   @JsonProperty("enum")
   public abstract Optional<List<String>> enum_();
 
-  /** Optional. Example of the object. Will only populated when the object is the root. */
+  /** Optional. Example of an instance of this schema. */
   @JsonProperty("example")
   public abstract Optional<Object> example();
 
   /**
-   * Optional. The format of the data. Supported formats: for NUMBER type: "float", "double" for
-   * INTEGER type: "int32", "int64" for STRING type: "email", "byte", etc
+   * Optional. The format of the data. For `NUMBER` type, format can be `float` or `double`. For
+   * `INTEGER` type, format can be `int32` or `int64`. For `STRING` type, format can be `email`,
+   * `byte`, `date`, `date-time`, `password`, and other formats to further refine the data type.
    */
   @JsonProperty("format")
   public abstract Optional<String> format();
 
-  /** Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY. */
+  /** Optional. If type is `ARRAY`, `items` specifies the schema of elements in the array. */
   @JsonProperty("items")
   public abstract Optional<Schema> items();
 
-  /** Optional. Maximum number of the elements for Type.ARRAY. */
+  /**
+   * Optional. If type is `ARRAY`, `max_items` specifies the maximum number of items in an array.
+   */
   @JsonProperty("maxItems")
   public abstract Optional<Long> maxItems();
 
-  /** Optional. Maximum length of the Type.STRING */
+  /** Optional. If type is `STRING`, `max_length` specifies the maximum length of the string. */
   @JsonProperty("maxLength")
   public abstract Optional<Long> maxLength();
 
-  /** Optional. Maximum number of the properties for Type.OBJECT. */
+  /**
+   * Optional. If type is `OBJECT`, `max_properties` specifies the maximum number of properties that
+   * can be provided.
+   */
   @JsonProperty("maxProperties")
   public abstract Optional<Long> maxProperties();
 
-  /** Optional. Maximum value of the Type.INTEGER and Type.NUMBER */
+  /** Optional. If type is `INTEGER` or `NUMBER`, `maximum` specifies the maximum allowed value. */
   @JsonProperty("maximum")
   public abstract Optional<Double> maximum();
 
-  /** Optional. Minimum number of the elements for Type.ARRAY. */
+  /**
+   * Optional. If type is `ARRAY`, `min_items` specifies the minimum number of items in an array.
+   */
   @JsonProperty("minItems")
   public abstract Optional<Long> minItems();
 
-  /** Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the Type.STRING */
+  /** Optional. If type is `STRING`, `min_length` specifies the minimum length of the string. */
   @JsonProperty("minLength")
   public abstract Optional<Long> minLength();
 
-  /** Optional. Minimum number of the properties for Type.OBJECT. */
+  /**
+   * Optional. If type is `OBJECT`, `min_properties` specifies the minimum number of properties that
+   * can be provided.
+   */
   @JsonProperty("minProperties")
   public abstract Optional<Long> minProperties();
 
-  /**
-   * Optional. SCHEMA FIELDS FOR TYPE INTEGER and NUMBER Minimum value of the Type.INTEGER and
-   * Type.NUMBER
-   */
+  /** Optional. If type is `INTEGER` or `NUMBER`, `minimum` specifies the minimum allowed value. */
   @JsonProperty("minimum")
   public abstract Optional<Double> minimum();
 
-  /** Optional. Indicates if the value may be null. */
+  /** Optional. Indicates if the value of this field can be null. */
   @JsonProperty("nullable")
   public abstract Optional<Boolean> nullable();
 
-  /** Optional. Pattern of the Type.STRING to restrict a string to a regular expression. */
+  /**
+   * Optional. If type is `STRING`, `pattern` specifies a regular expression that the string must
+   * match.
+   */
   @JsonProperty("pattern")
   public abstract Optional<String> pattern();
 
-  /** Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT. */
+  /**
+   * Optional. If type is `OBJECT`, `properties` is a map of property names to schema definitions
+   * for each property of the object.
+   */
   @JsonProperty("properties")
   public abstract Optional<Map<String, Schema>> properties();
 
   /**
-   * Optional. The order of the properties. Not a standard field in open api spec. Only used to
-   * support the order of the properties.
+   * Optional. Order of properties displayed or used where order matters. This is not a standard
+   * field in OpenAPI specification, but can be used to control the order of properties.
    */
   @JsonProperty("propertyOrdering")
   public abstract Optional<List<String>> propertyOrdering();
 
-  /** Optional. Required properties of Type.OBJECT. */
+  /**
+   * Optional. If type is `OBJECT`, `required` lists the names of properties that must be present.
+   */
   @JsonProperty("required")
   public abstract Optional<List<String>> required();
 
-  /** Optional. The title of the Schema. */
+  /** Optional. Title for the schema. */
   @JsonProperty("title")
   public abstract Optional<String> title();
 
-  /** Optional. The type of the data. */
+  /** Optional. Data type of the schema field. */
   @JsonProperty("type")
   public abstract Optional<Type> type();
 
@@ -166,8 +184,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for anyOf.
      *
-     * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
-     * in the list.
+     * <p>anyOf: Optional. The instance must be valid against any (one or more) of the subschemas
+     * listed in `any_of`.
      */
     @JsonProperty("anyOf")
     public abstract Builder anyOf(List<Schema> anyOf);
@@ -175,8 +193,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for anyOf.
      *
-     * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
-     * in the list.
+     * <p>anyOf: Optional. The instance must be valid against any (one or more) of the subschemas
+     * listed in `any_of`.
      */
     @CanIgnoreReturnValue
     public Builder anyOf(Schema... anyOf) {
@@ -186,8 +204,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for anyOf builder.
      *
-     * <p>anyOf: Optional. The value should be validated against any (one or more) of the subschemas
-     * in the list.
+     * <p>anyOf: Optional. The instance must be valid against any (one or more) of the subschemas
+     * listed in `any_of`.
      */
     @CanIgnoreReturnValue
     public Builder anyOf(Schema.Builder... anyOfBuilders) {
@@ -210,7 +228,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for default_.
      *
-     * <p>default_: Optional. Default value of the data.
+     * <p>default_: Optional. Default value to use if the field is not specified.
      */
     @JsonProperty("default")
     public abstract Builder default_(Object default_);
@@ -228,7 +246,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for description.
      *
-     * <p>description: Optional. The description of the data.
+     * <p>description: Optional. Description of the schema.
      */
     @JsonProperty("description")
     public abstract Builder description(String description);
@@ -246,10 +264,11 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for enum_.
      *
-     * <p>enum_: Optional. Possible values of the element of primitive type with enum format.
-     * Examples: 1. We can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH",
-     * "SOUTH", "WEST"]} 2. We can define apartment number as : {type:INTEGER, format:enum,
-     * enum:["101", "201", "301"]}
+     * <p>enum_: Optional. Possible values of the field. This field can be used to restrict a value
+     * to a fixed set of values. To mark a field as an enum, set `format` to `enum` and provide the
+     * list of possible values in `enum`. For example: 1. To define directions: `{type:STRING,
+     * format:enum, enum:["EAST", "NORTH", "SOUTH", "WEST"]}` 2. To define apartment numbers:
+     * `{type:INTEGER, format:enum, enum:["101", "201", "301"]}`
      */
     @JsonProperty("enum")
     public abstract Builder enum_(List<String> enum_);
@@ -257,10 +276,11 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for enum_.
      *
-     * <p>enum_: Optional. Possible values of the element of primitive type with enum format.
-     * Examples: 1. We can define direction as : {type:STRING, format:enum, enum:["EAST", NORTH",
-     * "SOUTH", "WEST"]} 2. We can define apartment number as : {type:INTEGER, format:enum,
-     * enum:["101", "201", "301"]}
+     * <p>enum_: Optional. Possible values of the field. This field can be used to restrict a value
+     * to a fixed set of values. To mark a field as an enum, set `format` to `enum` and provide the
+     * list of possible values in `enum`. For example: 1. To define directions: `{type:STRING,
+     * format:enum, enum:["EAST", "NORTH", "SOUTH", "WEST"]}` 2. To define apartment numbers:
+     * `{type:INTEGER, format:enum, enum:["101", "201", "301"]}`
      */
     @CanIgnoreReturnValue
     public Builder enum_(String... enum_) {
@@ -280,7 +300,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for example.
      *
-     * <p>example: Optional. Example of the object. Will only populated when the object is the root.
+     * <p>example: Optional. Example of an instance of this schema.
      */
     @JsonProperty("example")
     public abstract Builder example(Object example);
@@ -298,8 +318,10 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for format.
      *
-     * <p>format: Optional. The format of the data. Supported formats: for NUMBER type: "float",
-     * "double" for INTEGER type: "int32", "int64" for STRING type: "email", "byte", etc
+     * <p>format: Optional. The format of the data. For `NUMBER` type, format can be `float` or
+     * `double`. For `INTEGER` type, format can be `int32` or `int64`. For `STRING` type, format can
+     * be `email`, `byte`, `date`, `date-time`, `password`, and other formats to further refine the
+     * data type.
      */
     @JsonProperty("format")
     public abstract Builder format(String format);
@@ -317,7 +339,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for items.
      *
-     * <p>items: Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY.
+     * <p>items: Optional. If type is `ARRAY`, `items` specifies the schema of elements in the
+     * array.
      */
     @JsonProperty("items")
     public abstract Builder items(Schema items);
@@ -325,7 +348,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for items builder.
      *
-     * <p>items: Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of Type.ARRAY.
+     * <p>items: Optional. If type is `ARRAY`, `items` specifies the schema of elements in the
+     * array.
      */
     @CanIgnoreReturnValue
     public Builder items(Schema.Builder itemsBuilder) {
@@ -345,7 +369,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for maxItems.
      *
-     * <p>maxItems: Optional. Maximum number of the elements for Type.ARRAY.
+     * <p>maxItems: Optional. If type is `ARRAY`, `max_items` specifies the maximum number of items
+     * in an array.
      */
     @JsonProperty("maxItems")
     public abstract Builder maxItems(Long maxItems);
@@ -363,7 +388,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for maxLength.
      *
-     * <p>maxLength: Optional. Maximum length of the Type.STRING
+     * <p>maxLength: Optional. If type is `STRING`, `max_length` specifies the maximum length of the
+     * string.
      */
     @JsonProperty("maxLength")
     public abstract Builder maxLength(Long maxLength);
@@ -381,7 +407,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for maxProperties.
      *
-     * <p>maxProperties: Optional. Maximum number of the properties for Type.OBJECT.
+     * <p>maxProperties: Optional. If type is `OBJECT`, `max_properties` specifies the maximum
+     * number of properties that can be provided.
      */
     @JsonProperty("maxProperties")
     public abstract Builder maxProperties(Long maxProperties);
@@ -399,7 +426,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for maximum.
      *
-     * <p>maximum: Optional. Maximum value of the Type.INTEGER and Type.NUMBER
+     * <p>maximum: Optional. If type is `INTEGER` or `NUMBER`, `maximum` specifies the maximum
+     * allowed value.
      */
     @JsonProperty("maximum")
     public abstract Builder maximum(Double maximum);
@@ -417,7 +445,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for minItems.
      *
-     * <p>minItems: Optional. Minimum number of the elements for Type.ARRAY.
+     * <p>minItems: Optional. If type is `ARRAY`, `min_items` specifies the minimum number of items
+     * in an array.
      */
     @JsonProperty("minItems")
     public abstract Builder minItems(Long minItems);
@@ -435,7 +464,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for minLength.
      *
-     * <p>minLength: Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the Type.STRING
+     * <p>minLength: Optional. If type is `STRING`, `min_length` specifies the minimum length of the
+     * string.
      */
     @JsonProperty("minLength")
     public abstract Builder minLength(Long minLength);
@@ -453,7 +483,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for minProperties.
      *
-     * <p>minProperties: Optional. Minimum number of the properties for Type.OBJECT.
+     * <p>minProperties: Optional. If type is `OBJECT`, `min_properties` specifies the minimum
+     * number of properties that can be provided.
      */
     @JsonProperty("minProperties")
     public abstract Builder minProperties(Long minProperties);
@@ -471,8 +502,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for minimum.
      *
-     * <p>minimum: Optional. SCHEMA FIELDS FOR TYPE INTEGER and NUMBER Minimum value of the
-     * Type.INTEGER and Type.NUMBER
+     * <p>minimum: Optional. If type is `INTEGER` or `NUMBER`, `minimum` specifies the minimum
+     * allowed value.
      */
     @JsonProperty("minimum")
     public abstract Builder minimum(Double minimum);
@@ -490,7 +521,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for nullable.
      *
-     * <p>nullable: Optional. Indicates if the value may be null.
+     * <p>nullable: Optional. Indicates if the value of this field can be null.
      */
     @JsonProperty("nullable")
     public abstract Builder nullable(boolean nullable);
@@ -508,8 +539,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for pattern.
      *
-     * <p>pattern: Optional. Pattern of the Type.STRING to restrict a string to a regular
-     * expression.
+     * <p>pattern: Optional. If type is `STRING`, `pattern` specifies a regular expression that the
+     * string must match.
      */
     @JsonProperty("pattern")
     public abstract Builder pattern(String pattern);
@@ -527,7 +558,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for properties.
      *
-     * <p>properties: Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT.
+     * <p>properties: Optional. If type is `OBJECT`, `properties` is a map of property names to
+     * schema definitions for each property of the object.
      */
     @JsonProperty("properties")
     public abstract Builder properties(Map<String, Schema> properties);
@@ -545,8 +577,9 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for propertyOrdering.
      *
-     * <p>propertyOrdering: Optional. The order of the properties. Not a standard field in open api
-     * spec. Only used to support the order of the properties.
+     * <p>propertyOrdering: Optional. Order of properties displayed or used where order matters.
+     * This is not a standard field in OpenAPI specification, but can be used to control the order
+     * of properties.
      */
     @JsonProperty("propertyOrdering")
     public abstract Builder propertyOrdering(List<String> propertyOrdering);
@@ -554,8 +587,9 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for propertyOrdering.
      *
-     * <p>propertyOrdering: Optional. The order of the properties. Not a standard field in open api
-     * spec. Only used to support the order of the properties.
+     * <p>propertyOrdering: Optional. Order of properties displayed or used where order matters.
+     * This is not a standard field in OpenAPI specification, but can be used to control the order
+     * of properties.
      */
     @CanIgnoreReturnValue
     public Builder propertyOrdering(String... propertyOrdering) {
@@ -575,7 +609,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for required.
      *
-     * <p>required: Optional. Required properties of Type.OBJECT.
+     * <p>required: Optional. If type is `OBJECT`, `required` lists the names of properties that
+     * must be present.
      */
     @JsonProperty("required")
     public abstract Builder required(List<String> required);
@@ -583,7 +618,8 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for required.
      *
-     * <p>required: Optional. Required properties of Type.OBJECT.
+     * <p>required: Optional. If type is `OBJECT`, `required` lists the names of properties that
+     * must be present.
      */
     @CanIgnoreReturnValue
     public Builder required(String... required) {
@@ -603,7 +639,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for title.
      *
-     * <p>title: Optional. The title of the Schema.
+     * <p>title: Optional. Title for the schema.
      */
     @JsonProperty("title")
     public abstract Builder title(String title);
@@ -621,7 +657,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for type.
      *
-     * <p>type: Optional. The type of the data.
+     * <p>type: Optional. Data type of the schema field.
      */
     @JsonProperty("type")
     public abstract Builder type(Type type);
@@ -639,7 +675,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for type given a known enum.
      *
-     * <p>type: Optional. The type of the data.
+     * <p>type: Optional. Data type of the schema field.
      */
     @CanIgnoreReturnValue
     public Builder type(Type.Known knownType) {
@@ -649,7 +685,7 @@ public abstract class Schema extends JsonSerializable {
     /**
      * Setter for type given a string.
      *
-     * <p>type: Optional. The type of the data.
+     * <p>type: Optional. Data type of the schema field.
      */
     @CanIgnoreReturnValue
     public Builder type(String type) {

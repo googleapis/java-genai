@@ -27,17 +27,17 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Source content flagging uri for a place or review. This is currently populated only for Google
- * Maps grounding. This data type is not supported in Gemini API.
+ * A URI that can be used to flag a place or review for inappropriate content. This is populated
+ * only when the grounding source is Google Maps. This data type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(builder = GroundingMetadataSourceFlaggingUri.Builder.class)
 public abstract class GroundingMetadataSourceFlaggingUri extends JsonSerializable {
-  /** A link where users can flag a problem with the source (place or review). */
+  /** The URI that can be used to flag the content. */
   @JsonProperty("flagContentUri")
   public abstract Optional<String> flagContentUri();
 
-  /** Id of the place or review. */
+  /** The ID of the place or review. */
   @JsonProperty("sourceId")
   public abstract Optional<String> sourceId();
 
@@ -65,7 +65,7 @@ public abstract class GroundingMetadataSourceFlaggingUri extends JsonSerializabl
     /**
      * Setter for flagContentUri.
      *
-     * <p>flagContentUri: A link where users can flag a problem with the source (place or review).
+     * <p>flagContentUri: The URI that can be used to flag the content.
      */
     @JsonProperty("flagContentUri")
     public abstract Builder flagContentUri(String flagContentUri);
@@ -83,7 +83,7 @@ public abstract class GroundingMetadataSourceFlaggingUri extends JsonSerializabl
     /**
      * Setter for sourceId.
      *
-     * <p>sourceId: Id of the place or review.
+     * <p>sourceId: The ID of the place or review.
      */
     @JsonProperty("sourceId")
     public abstract Builder sourceId(String sourceId);
