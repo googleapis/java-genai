@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.41.0](https://github.com/googleapis/java-genai/compare/v1.40.0...v1.41.0) (2026-02-26)
+
+
+### Features
+
+* Add Image Grounding support to GoogleSearch tool ([0daefbc](https://github.com/googleapis/java-genai/commit/0daefbc3ea09a341162ff95b68bf7f2e25fa41ea))
+* enable server side MCP and disable all other AFC when server side MCP is configured. ([498a2c4](https://github.com/googleapis/java-genai/commit/498a2c422dabb493d9b3b133b88156e5b44abae0))
+* examples ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+* initial integration ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+* set up pom + fix test ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+
+
+### Bug Fixes
+
+* use `NonClosingDelegatingHttpClient` ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+
+
+### Documentation
+
+* explain how to run tests ([4f6a811](https://github.com/googleapis/java-genai/commit/4f6a8112e8513bed34a5d35a16f21459006944c3))
+
 ## [1.40.0](https://github.com/googleapis/java-genai/compare/v1.39.0...v1.40.0) (2026-02-19)
 
 
