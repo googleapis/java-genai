@@ -26,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -1697,4 +1698,37 @@ public class HttpApiClientTest {
     assertTrue(client.httpClient().dispatcher().executorService().isShutdown());
     assertEquals(0, client.httpClient().connectionPool().connectionCount());
   }
+
+  // @Test
+  // @SuppressWarnings("unchecked")
+  // public void testSendSecureRequest_includesRequestTtl() throws Exception {
+  //   // Arrange
+  //   HttpApiClient client =
+  //       new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+  //   SecureSessionConnection mockConnection = Mockito.mock(SecureSessionConnection.class);
+
+  //   // Put mock connection into activeSecureSessions
+  //   Field sessionsField = ApiClient.class.getDeclaredField("activeSecureSessions");
+  //   sessionsField.setAccessible(true);
+  //   Map<String, SecureSessionConnection> sessions =
+  //       (Map<String, SecureSessionConnection>) sessionsField.get(client);
+  //   sessions.put("models/model", mockConnection);
+
+  //   String requestJson = "{\"config\": {\"requestTtl\": \"120s\"}}";
+
+  //   ArgumentCaptor<String> jsonCaptor = ArgumentCaptor.forClass(String.class);
+  //   when(mockConnection.sendEncrypted(anyString(), jsonCaptor.capture()))
+  //       .thenReturn(new CompletableFuture<>());
+
+  //   // Act
+  //   client.asyncRequest("POST", "models/model", requestJson, Optional.empty());
+
+  //   // Assert
+  //   String transformedJson = jsonCaptor.getValue();
+  //   ObjectMapper mapper = new ObjectMapper();
+  //   JsonNode node = mapper.readTree(transformedJson);
+
+  //   assertEquals("120s", node.get("request_ttl").asText());
+  //   assertFalse(node.get("generate_content_request").get("config").has("requestTtl"));
+  // }
 }
