@@ -306,10 +306,16 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contents"},
-          Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
     return toObject;
@@ -407,6 +413,30 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode contentToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
+      ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(partToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"parts"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"role"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"role"},
+          Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode controlReferenceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -458,8 +488,12 @@ public final class Models {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
-          Transformers.tContent(
-              Common.getValueByPath(fromObject, new String[] {"systemInstruction"})));
+          contentToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"tools"}) != null) {
@@ -537,10 +571,16 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contents"},
-          Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -1083,7 +1123,12 @@ public final class Models {
         Common.setValueByPath(
             toObject,
             new String[] {"content"},
-            Transformers.tContent(Common.getValueByPath(fromObject, new String[] {"content"})));
+            contentToVertex(
+                JsonSerializable.toJsonNode(
+                    Transformers.tContent(
+                        Common.getValueByPath(fromObject, new String[] {"content"}))),
+                toObject,
+                rootObject));
       }
     }
 
@@ -1587,8 +1632,12 @@ public final class Models {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
-          Transformers.tContent(
-              Common.getValueByPath(fromObject, new String[] {"systemInstruction"})));
+          contentToVertex(
+              JsonSerializable.toJsonNode(
+                  Transformers.tContent(
+                      Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"temperature"}) != null) {
@@ -1729,7 +1778,11 @@ public final class Models {
       Common.setValueByPath(
           parentObject,
           new String[] {"toolConfig"},
-          Common.getValueByPath(fromObject, new String[] {"toolConfig"}));
+          toolConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
@@ -1863,10 +1916,16 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contents"},
-          Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"})));
+      ArrayNode keyArray =
+          (ArrayNode)
+              Transformers.tContents(Common.getValueByPath(fromObject, new String[] {"contents"}));
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
@@ -3958,11 +4017,11 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mediaResolution"},
-          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -3972,11 +4031,25 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+          new String[] {"mediaResolution"},
+          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
@@ -4017,6 +4090,97 @@ public final class Models {
                   Common.getValueByPath(fromObject, new String[] {"inlineData"})),
               toObject,
               rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"text"},
+          Common.getValueByPath(fromObject, new String[] {"text"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thought"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thought"},
+          Common.getValueByPath(fromObject, new String[] {"thought"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"thoughtSignature"},
+          Common.getValueByPath(fromObject, new String[] {"thoughtSignature"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"videoMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"videoMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecutionResult"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaResolution"},
+          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
+      throw new IllegalArgumentException("toolCall parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
+      throw new IllegalArgumentException("toolResponse parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"fileData"},
+          Common.getValueByPath(fromObject, new String[] {"fileData"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCall"},
+          Common.getValueByPath(fromObject, new String[] {"functionCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionResponse"},
+          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"inlineData"},
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -4561,6 +4725,14 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"includeServerSideToolInvocations"},
+          Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4570,6 +4742,32 @@ public final class Models {
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject,
               rootObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode toolConfigToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}))) {
+      throw new IllegalArgumentException(
+          "includeServerSideToolInvocations parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionCallingConfig"},
+          Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}));
     }
 
     return toObject;

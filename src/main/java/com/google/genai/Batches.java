@@ -1715,11 +1715,11 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mediaResolution"},
-          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+          new String[] {"executableCode"},
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -1729,11 +1729,25 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+          new String[] {"mediaResolution"},
+          Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
@@ -1836,6 +1850,14 @@ public final class Batches {
           toObject,
           new String[] {"retrievalConfig"},
           Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"includeServerSideToolInvocations"},
+          Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
