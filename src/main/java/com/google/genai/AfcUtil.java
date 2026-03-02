@@ -81,6 +81,9 @@ final class AfcUtil {
       if (tool.functionDeclarations().isPresent() && !tool.functionDeclarations().get().isEmpty()) {
         incompatibleToolsIndexesBuilder.add(i);
       }
+      if (tool.mcpServers().isPresent() && !tool.mcpServers().get().isEmpty()) {
+        incompatibleToolsIndexesBuilder.add(i);
+      }
     }
 
     return incompatibleToolsIndexesBuilder.build();

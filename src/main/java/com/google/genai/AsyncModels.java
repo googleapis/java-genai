@@ -25,39 +25,54 @@ import com.google.common.collect.ImmutableMap;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ComputeTokensConfig;
+import com.google.genai.types.ComputeTokensParameters;
 import com.google.genai.types.ComputeTokensResponse;
 import com.google.genai.types.Content;
 import com.google.genai.types.CountTokensConfig;
+import com.google.genai.types.CountTokensParameters;
 import com.google.genai.types.CountTokensResponse;
 import com.google.genai.types.DeleteModelConfig;
+import com.google.genai.types.DeleteModelParameters;
 import com.google.genai.types.DeleteModelResponse;
 import com.google.genai.types.EditImageConfig;
+import com.google.genai.types.EditImageParameters;
 import com.google.genai.types.EditImageResponse;
 import com.google.genai.types.EmbedContentConfig;
+import com.google.genai.types.EmbedContentParametersPrivate;
 import com.google.genai.types.EmbedContentResponse;
+import com.google.genai.types.EmbeddingApiType;
 import com.google.genai.types.GenerateContentConfig;
+import com.google.genai.types.GenerateContentParameters;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateImagesConfig;
+import com.google.genai.types.GenerateImagesParameters;
 import com.google.genai.types.GenerateImagesResponse;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
+import com.google.genai.types.GenerateVideosParameters;
 import com.google.genai.types.GenerateVideosSource;
 import com.google.genai.types.GetModelConfig;
+import com.google.genai.types.GetModelParameters;
 import com.google.genai.types.Image;
 import com.google.genai.types.ListModelsConfig;
+import com.google.genai.types.ListModelsParameters;
 import com.google.genai.types.ListModelsResponse;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
 import com.google.genai.types.RecontextImageConfig;
+import com.google.genai.types.RecontextImageParameters;
 import com.google.genai.types.RecontextImageResponse;
 import com.google.genai.types.RecontextImageSource;
 import com.google.genai.types.ReferenceImage;
 import com.google.genai.types.ReferenceImageAPI;
 import com.google.genai.types.SegmentImageConfig;
+import com.google.genai.types.SegmentImageParameters;
 import com.google.genai.types.SegmentImageResponse;
 import com.google.genai.types.SegmentImageSource;
 import com.google.genai.types.UpdateModelConfig;
+import com.google.genai.types.UpdateModelParameters;
 import com.google.genai.types.UpscaleImageAPIConfig;
+import com.google.genai.types.UpscaleImageAPIParameters;
 import com.google.genai.types.UpscaleImageConfig;
 import com.google.genai.types.UpscaleImageResponse;
 import com.google.genai.types.Video;
@@ -81,6 +96,18 @@ public final class AsyncModels {
 
   CompletableFuture<GenerateContentResponse> privateGenerateContent(
       String model, List<Content> contents, GenerateContentConfig config) {
+    GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(contents)) {
+      parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContent(model, contents, config);
     return this.apiClient
@@ -88,32 +115,70 @@ public final class AsyncModels {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateGenerateContent(res, config);
+                return models.processResponseForPrivateGenerateContent(res, config, parameterNode);
               }
             });
   }
 
   CompletableFuture<ResponseStream<GenerateContentResponse>> privateGenerateContentStream(
       String model, List<Content> contents, GenerateContentConfig config) {
+    GenerateContentParameters.Builder parameterBuilder = GenerateContentParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(contents)) {
+      parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContentStream(model, contents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
-              return models.processResponseForPrivateGenerateContentStream(response, config);
+              return models.processResponseForPrivateGenerateContentStream(
+                  response, config, parameterNode);
             });
   }
 
   CompletableFuture<EmbedContentResponse> privateEmbedContent(
-      String model, List<Content> contents, EmbedContentConfig config) {
-    BuiltRequest builtRequest = models.buildRequestForPrivateEmbedContent(model, contents, config);
+      String model,
+      List<Content> contents,
+      Content content,
+      EmbeddingApiType embeddingApiType,
+      EmbedContentConfig config) {
+    EmbedContentParametersPrivate.Builder parameterBuilder =
+        EmbedContentParametersPrivate.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(contents)) {
+      parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(content)) {
+      parameterBuilder.content(content);
+    }
+    if (!Common.isZero(embeddingApiType)) {
+      parameterBuilder.embeddingApiType(embeddingApiType);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    BuiltRequest builtRequest =
+        models.buildRequestForPrivateEmbedContent(
+            model, contents, content, embeddingApiType, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateEmbedContent(res, config);
+                return models.processResponseForPrivateEmbedContent(res, config, parameterNode);
               }
             });
   }
@@ -121,13 +186,25 @@ public final class AsyncModels {
   /** Asynchronously private method for generating images. */
   CompletableFuture<GenerateImagesResponse> privateGenerateImages(
       String model, String prompt, GenerateImagesConfig config) {
+    GenerateImagesParameters.Builder parameterBuilder = GenerateImagesParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(prompt)) {
+      parameterBuilder.prompt(prompt);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForPrivateGenerateImages(model, prompt, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateGenerateImages(res, config);
+                return models.processResponseForPrivateGenerateImages(res, config, parameterNode);
               }
             });
   }
@@ -138,6 +215,21 @@ public final class AsyncModels {
       String prompt,
       List<ReferenceImageAPI> referenceImages,
       EditImageConfig config) {
+    EditImageParameters.Builder parameterBuilder = EditImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(prompt)) {
+      parameterBuilder.prompt(prompt);
+    }
+    if (!Common.isZero(referenceImages)) {
+      parameterBuilder.referenceImages(referenceImages);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
     return this.apiClient
@@ -145,7 +237,7 @@ public final class AsyncModels {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateEditImage(res, config);
+                return models.processResponseForPrivateEditImage(res, config, parameterNode);
               }
             });
   }
@@ -153,6 +245,21 @@ public final class AsyncModels {
   /** Asynchronously private method for upscaling an image. */
   CompletableFuture<UpscaleImageResponse> privateUpscaleImage(
       String model, Image image, String upscaleFactor, UpscaleImageAPIConfig config) {
+    UpscaleImageAPIParameters.Builder parameterBuilder = UpscaleImageAPIParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(image)) {
+      parameterBuilder.image(image);
+    }
+    if (!Common.isZero(upscaleFactor)) {
+      parameterBuilder.upscaleFactor(upscaleFactor);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
     return this.apiClient
@@ -160,7 +267,7 @@ public final class AsyncModels {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateUpscaleImage(res, config);
+                return models.processResponseForPrivateUpscaleImage(res, config, parameterNode);
               }
             });
   }
@@ -187,13 +294,25 @@ public final class AsyncModels {
    */
   public CompletableFuture<RecontextImageResponse> recontextImage(
       String model, RecontextImageSource source, RecontextImageConfig config) {
+    RecontextImageParameters.Builder parameterBuilder = RecontextImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(source)) {
+      parameterBuilder.source(source);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForRecontextImage(model, source, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForRecontextImage(res, config);
+                return models.processResponseForRecontextImage(res, config, parameterNode);
               }
             });
   }
@@ -213,13 +332,25 @@ public final class AsyncModels {
    */
   public CompletableFuture<SegmentImageResponse> segmentImage(
       String model, SegmentImageSource source, SegmentImageConfig config) {
+    SegmentImageParameters.Builder parameterBuilder = SegmentImageParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(source)) {
+      parameterBuilder.source(source);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForSegmentImage(model, source, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForSegmentImage(res, config);
+                return models.processResponseForSegmentImage(res, config, parameterNode);
               }
             });
   }
@@ -230,25 +361,40 @@ public final class AsyncModels {
    * @example ```java Model model = client.models.get("gemini-2.0-flash"); ```
    */
   public CompletableFuture<Model> get(String model, GetModelConfig config) {
+    GetModelParameters.Builder parameterBuilder = GetModelParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForGet(model, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForGet(res, config);
+                return models.processResponseForGet(res, config, parameterNode);
               }
             });
   }
 
   CompletableFuture<ListModelsResponse> privateList(ListModelsConfig config) {
+    ListModelsParameters.Builder parameterBuilder = ListModelsParameters.builder();
+
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateList(res, config);
+                return models.processResponseForPrivateList(res, config, parameterNode);
               }
             });
   }
@@ -265,13 +411,22 @@ public final class AsyncModels {
    *     description") .build()); ```
    */
   public CompletableFuture<Model> update(String model, UpdateModelConfig config) {
+    UpdateModelParameters.Builder parameterBuilder = UpdateModelParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForUpdate(model, config);
     return this.apiClient
         .asyncRequest("patch", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForUpdate(res, config);
+                return models.processResponseForUpdate(res, config, parameterNode);
               }
             });
   }
@@ -282,6 +437,15 @@ public final class AsyncModels {
    * @example ```java Model model = client.models.delete("tunedModels/12345"); ```
    */
   public CompletableFuture<DeleteModelResponse> delete(String model, DeleteModelConfig config) {
+    DeleteModelParameters.Builder parameterBuilder = DeleteModelParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForDelete(model, config);
     return this.apiClient
         .asyncRequest(
@@ -289,7 +453,7 @@ public final class AsyncModels {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForDelete(res, config);
+                return models.processResponseForDelete(res, config, parameterNode);
               }
             });
   }
@@ -306,13 +470,25 @@ public final class AsyncModels {
    */
   public CompletableFuture<CountTokensResponse> countTokens(
       String model, List<Content> contents, CountTokensConfig config) {
+    CountTokensParameters.Builder parameterBuilder = CountTokensParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(contents)) {
+      parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForCountTokens(model, contents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForCountTokens(res, config);
+                return models.processResponseForCountTokens(res, config, parameterNode);
               }
             });
   }
@@ -329,13 +505,25 @@ public final class AsyncModels {
    */
   public CompletableFuture<ComputeTokensResponse> computeTokens(
       String model, List<Content> contents, ComputeTokensConfig config) {
+    ComputeTokensParameters.Builder parameterBuilder = ComputeTokensParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(contents)) {
+      parameterBuilder.contents(contents);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForComputeTokens(model, contents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForComputeTokens(res, config);
+                return models.processResponseForComputeTokens(res, config, parameterNode);
               }
             });
   }
@@ -348,6 +536,27 @@ public final class AsyncModels {
       Video video,
       GenerateVideosSource source,
       GenerateVideosConfig config) {
+    GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
+
+    if (!Common.isZero(model)) {
+      parameterBuilder.model(model);
+    }
+    if (!Common.isZero(prompt)) {
+      parameterBuilder.prompt(prompt);
+    }
+    if (!Common.isZero(image)) {
+      parameterBuilder.image(image);
+    }
+    if (!Common.isZero(video)) {
+      parameterBuilder.video(video);
+    }
+    if (!Common.isZero(source)) {
+      parameterBuilder.source(source);
+    }
+    if (!Common.isZero(config)) {
+      parameterBuilder.config(config);
+    }
+    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
     return this.apiClient
@@ -355,7 +564,7 @@ public final class AsyncModels {
         .thenApplyAsync(
             response -> {
               try (ApiResponse res = response) {
-                return models.processResponseForPrivateGenerateVideos(res, config);
+                return models.processResponseForPrivateGenerateVideos(res, config, parameterNode);
               }
             });
   }
@@ -761,7 +970,46 @@ public final class AsyncModels {
     for (String text : texts) {
       contents.add(Content.fromParts(Part.fromText(text)));
     }
-    return privateEmbedContent(model, contents, config);
+    Content content = null;
+    if (!contents.isEmpty()) {
+      content = contents.get(0);
+    }
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
+  }
+
+  /**
+   * Asynchronously embeds content given a GenAI model and a content object.
+   *
+   * @param model the name of the GenAI model to use for embedding
+   * @param content a {@link com.google.genai.types.Content} to send to the embedding model
+   * @return a {@link com.google.genai.types.EmbedContentResponse} instance that contains the
+   *     embedding.
+   */
+  public CompletableFuture<EmbedContentResponse> embedContent(
+      String model, Content content, EmbedContentConfig config) {
+    List<Content> contents = new ArrayList<>();
+    contents.add(content);
+    boolean isVertexEmbedContentModel =
+        this.apiClient.vertexAI() && Transformers.tIsVertexEmbedContentModel(model);
+    if (isVertexEmbedContentModel && contents.size() > 1) {
+      throw new IllegalArgumentException(
+          "The embedContent API for this model only supports one content at a time.");
+    }
+    EmbeddingApiType apiType =
+        isVertexEmbedContentModel
+            ? new EmbeddingApiType("EMBED_CONTENT")
+            : new EmbeddingApiType("PREDICT");
+    return privateEmbedContent(model, contents, content, apiType, config);
   }
 
   /**

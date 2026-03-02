@@ -64,9 +64,13 @@ public abstract class LiveServerMessage extends JsonSerializable {
   @JsonProperty("sessionResumptionUpdate")
   public abstract Optional<LiveServerSessionResumptionUpdate> sessionResumptionUpdate();
 
-  /** Voice activity detection signal. */
+  /** Voice activity detection signal. Allowlisted only. */
   @JsonProperty("voiceActivityDetectionSignal")
   public abstract Optional<VoiceActivityDetectionSignal> voiceActivityDetectionSignal();
+
+  /** Voice activity signal. */
+  @JsonProperty("voiceActivity")
+  public abstract Optional<VoiceActivity> voiceActivity();
 
   /** Instantiates a builder for LiveServerMessage. */
   @ExcludeFromGeneratedCoverageReport
@@ -297,7 +301,7 @@ public abstract class LiveServerMessage extends JsonSerializable {
     /**
      * Setter for voiceActivityDetectionSignal.
      *
-     * <p>voiceActivityDetectionSignal: Voice activity detection signal.
+     * <p>voiceActivityDetectionSignal: Voice activity detection signal. Allowlisted only.
      */
     @JsonProperty("voiceActivityDetectionSignal")
     public abstract Builder voiceActivityDetectionSignal(
@@ -306,7 +310,7 @@ public abstract class LiveServerMessage extends JsonSerializable {
     /**
      * Setter for voiceActivityDetectionSignal builder.
      *
-     * <p>voiceActivityDetectionSignal: Voice activity detection signal.
+     * <p>voiceActivityDetectionSignal: Voice activity detection signal. Allowlisted only.
      */
     @CanIgnoreReturnValue
     public Builder voiceActivityDetectionSignal(
@@ -323,6 +327,34 @@ public abstract class LiveServerMessage extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearVoiceActivityDetectionSignal() {
       return voiceActivityDetectionSignal(Optional.empty());
+    }
+
+    /**
+     * Setter for voiceActivity.
+     *
+     * <p>voiceActivity: Voice activity signal.
+     */
+    @JsonProperty("voiceActivity")
+    public abstract Builder voiceActivity(VoiceActivity voiceActivity);
+
+    /**
+     * Setter for voiceActivity builder.
+     *
+     * <p>voiceActivity: Voice activity signal.
+     */
+    @CanIgnoreReturnValue
+    public Builder voiceActivity(VoiceActivity.Builder voiceActivityBuilder) {
+      return voiceActivity(voiceActivityBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceActivity(Optional<VoiceActivity> voiceActivity);
+
+    /** Clears the value of voiceActivity field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceActivity() {
+      return voiceActivity(Optional.empty());
     }
 
     public abstract LiveServerMessage build();

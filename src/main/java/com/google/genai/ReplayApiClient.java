@@ -218,7 +218,7 @@ public final class ReplayApiClient extends ApiClient {
         JsonSerializable.toJsonNode(replayRequest.bodySegments().orElse(new ArrayList<>()).get(0));
     if (!equalsIgnoreKeyCase(replayBody, actualBody)) {
       throw new AssertionError(
-          String.format("Request body mismatch:\nReplay: %s\nActual: %s", replayBody, actualBody));
+          String.format("Request body mismatch:\nReplay: %s\nAfter key normalization: %s\nActual: %s", replayBody, normalizeKeyCase(replayBody), actualBody));
     }
   }
 

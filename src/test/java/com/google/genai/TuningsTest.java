@@ -24,16 +24,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.AdapterSize;
 import com.google.genai.types.AutoraterConfig;
+import com.google.genai.types.BleuSpec;
 import com.google.genai.types.CreateTuningJobConfig;
+import com.google.genai.types.CustomOutputFormatConfig;
 import com.google.genai.types.EvaluationConfig;
 import com.google.genai.types.GcsDestination;
 import com.google.genai.types.JobState;
 import com.google.genai.types.ListTuningJobsConfig;
-import com.google.genai.types.Metric;
 import com.google.genai.types.OutputConfig;
+import com.google.genai.types.PointwiseMetricSpec;
+import com.google.genai.types.RougeSpec;
 import com.google.genai.types.TuningDataset;
 import com.google.genai.types.TuningJob;
 import com.google.genai.types.TuningValidationDataset;
+import com.google.genai.types.UnifiedMetric;
 import java.util.List;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -208,7 +212,8 @@ public class TuningsTest {
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
         TestUtils.createClient(
-            vertexAI, "tests/tunings/tune/test_eval_config_with_metrics." + suffix + ".json");
+            vertexAI,
+            "tests/tunings/tune/test_eval_config_with_unified_metrics." + suffix + ".json");
 
     TuningDataset tuningDataset =
         TuningDataset.builder()
@@ -216,21 +221,28 @@ public class TuningsTest {
                 "gs://cloud-samples-data/ai-platform/generative_ai/gemini-2_0/text/sft_train_data.jsonl")
             .build();
 
-    Metric promptRelevance =
-        Metric.builder()
-            .name("prompt_relevance")
-            .promptTemplate(
-                "How well does the response address the prompt?: PROMPT: {request}\n"
-                    + " RESPONSE: {response}\n")
-            .returnRawOutput(true)
-            .judgeModelSystemInstruction(
-                "You are a cat. Make all evaluations from this perspective.")
+    UnifiedMetric promptRelevance =
+        UnifiedMetric.builder()
+            .pointwiseMetricSpec(
+                PointwiseMetricSpec.builder()
+                    .metricPromptTemplate(
+                        "How well does the response address the prompt?: PROMPT: {request}\n"
+                            + " RESPONSE: {response}\n")
+                    .systemInstruction("You are a cat. Make all evaluations from this perspective.")
+                    .customOutputFormatConfig(
+                        CustomOutputFormatConfig.builder().returnRawOutput(true).build())
+                    .build())
             .build();
 
-    Metric bleu = Metric.builder().name("bleu").build();
-    Metric rouge = Metric.builder().name("rouge_1").build();
+    UnifiedMetric bleu =
+        UnifiedMetric.builder()
+            .bleuSpec(BleuSpec.builder().useEffectiveOrder(true).build())
+            .build();
 
-    List<Metric> metrics = ImmutableList.of(promptRelevance, bleu, rouge);
+    UnifiedMetric rouge =
+        UnifiedMetric.builder().rougeSpec(RougeSpec.builder().rougeType("rouge1").build()).build();
+
+    List<UnifiedMetric> metrics = ImmutableList.of(promptRelevance, bleu, rouge);
 
     EvaluationConfig evaluationConfig =
         EvaluationConfig.builder()

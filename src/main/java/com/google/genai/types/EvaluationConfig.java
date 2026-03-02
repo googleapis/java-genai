@@ -36,7 +36,7 @@ import java.util.Optional;
 public abstract class EvaluationConfig extends JsonSerializable {
   /** The metrics used for evaluation. */
   @JsonProperty("metrics")
-  public abstract Optional<List<Metric>> metrics();
+  public abstract Optional<List<UnifiedMetric>> metrics();
 
   /** Config for evaluation output. */
   @JsonProperty("outputConfig")
@@ -70,7 +70,7 @@ public abstract class EvaluationConfig extends JsonSerializable {
      * <p>metrics: The metrics used for evaluation.
      */
     @JsonProperty("metrics")
-    public abstract Builder metrics(List<Metric> metrics);
+    public abstract Builder metrics(List<UnifiedMetric> metrics);
 
     /**
      * Setter for metrics.
@@ -78,7 +78,7 @@ public abstract class EvaluationConfig extends JsonSerializable {
      * <p>metrics: The metrics used for evaluation.
      */
     @CanIgnoreReturnValue
-    public Builder metrics(Metric... metrics) {
+    public Builder metrics(UnifiedMetric... metrics) {
       return metrics(Arrays.asList(metrics));
     }
 
@@ -88,15 +88,15 @@ public abstract class EvaluationConfig extends JsonSerializable {
      * <p>metrics: The metrics used for evaluation.
      */
     @CanIgnoreReturnValue
-    public Builder metrics(Metric.Builder... metricsBuilders) {
+    public Builder metrics(UnifiedMetric.Builder... metricsBuilders) {
       return metrics(
           Arrays.asList(metricsBuilders).stream()
-              .map(Metric.Builder::build)
+              .map(UnifiedMetric.Builder::build)
               .collect(toImmutableList()));
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder metrics(Optional<List<Metric>> metrics);
+    abstract Builder metrics(Optional<List<UnifiedMetric>> metrics);
 
     /** Clears the value of metrics field. */
     @ExcludeFromGeneratedCoverageReport

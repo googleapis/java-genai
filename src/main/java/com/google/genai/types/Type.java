@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The type of the data. */
+/** Data type of the schema field. */
 public class Type {
 
   /** Enum representing the known values for Type. */

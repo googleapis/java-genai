@@ -233,6 +233,13 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("enableEnhancedCivicAnswers")
   public abstract Optional<Boolean> enableEnhancedCivicAnswers();
 
+  /**
+   * Settings for prompt and response sanitization using the Model Armor service. If supplied,
+   * safety_settings must not be supplied.
+   */
+  @JsonProperty("modelArmorConfig")
+  public abstract Optional<ModelArmorConfig> modelArmorConfig();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1065,6 +1072,36 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnableEnhancedCivicAnswers() {
       return enableEnhancedCivicAnswers(Optional.empty());
+    }
+
+    /**
+     * Setter for modelArmorConfig.
+     *
+     * <p>modelArmorConfig: Settings for prompt and response sanitization using the Model Armor
+     * service. If supplied, safety_settings must not be supplied.
+     */
+    @JsonProperty("modelArmorConfig")
+    public abstract Builder modelArmorConfig(ModelArmorConfig modelArmorConfig);
+
+    /**
+     * Setter for modelArmorConfig builder.
+     *
+     * <p>modelArmorConfig: Settings for prompt and response sanitization using the Model Armor
+     * service. If supplied, safety_settings must not be supplied.
+     */
+    @CanIgnoreReturnValue
+    public Builder modelArmorConfig(ModelArmorConfig.Builder modelArmorConfigBuilder) {
+      return modelArmorConfig(modelArmorConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder modelArmorConfig(Optional<ModelArmorConfig> modelArmorConfig);
+
+    /** Clears the value of modelArmorConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearModelArmorConfig() {
+      return modelArmorConfig(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();

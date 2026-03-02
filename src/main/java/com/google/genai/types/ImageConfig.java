@@ -50,6 +50,15 @@ public abstract class ImageConfig extends JsonSerializable {
   @JsonProperty("personGeneration")
   public abstract Optional<String> personGeneration();
 
+  /**
+   * Controls whether prominent people (celebrities) generation is allowed. If used with
+   * personGeneration, personGeneration enum would take precedence. For instance, if ALLOW_NONE is
+   * set, all person generation would be blocked. If this field is unspecified, the default behavior
+   * is to allow prominent people.
+   */
+  @JsonProperty("prominentPeople")
+  public abstract Optional<ProminentPeople> prominentPeople();
+
   /** MIME type of the generated image. This field is not supported in Gemini API. */
   @JsonProperty("outputMimeType")
   public abstract Optional<String> outputMimeType();
@@ -60,6 +69,10 @@ public abstract class ImageConfig extends JsonSerializable {
    */
   @JsonProperty("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
+
+  /** Optional. The image output format for generated images. */
+  @JsonProperty("imageOutputOptions")
+  public abstract Optional<ImageConfigImageOutputOptions> imageOutputOptions();
 
   /** Instantiates a builder for ImageConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -137,6 +150,53 @@ public abstract class ImageConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for prominentPeople.
+     *
+     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
+     * used with personGeneration, personGeneration enum would take precedence. For instance, if
+     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
+     * default behavior is to allow prominent people.
+     */
+    @JsonProperty("prominentPeople")
+    public abstract Builder prominentPeople(ProminentPeople prominentPeople);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder prominentPeople(Optional<ProminentPeople> prominentPeople);
+
+    /** Clears the value of prominentPeople field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearProminentPeople() {
+      return prominentPeople(Optional.empty());
+    }
+
+    /**
+     * Setter for prominentPeople given a known enum.
+     *
+     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
+     * used with personGeneration, personGeneration enum would take precedence. For instance, if
+     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
+     * default behavior is to allow prominent people.
+     */
+    @CanIgnoreReturnValue
+    public Builder prominentPeople(ProminentPeople.Known knownType) {
+      return prominentPeople(new ProminentPeople(knownType));
+    }
+
+    /**
+     * Setter for prominentPeople given a string.
+     *
+     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
+     * used with personGeneration, personGeneration enum would take precedence. For instance, if
+     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
+     * default behavior is to allow prominent people.
+     */
+    @CanIgnoreReturnValue
+    public Builder prominentPeople(String prominentPeople) {
+      return prominentPeople(new ProminentPeople(prominentPeople));
+    }
+
+    /**
      * Setter for outputMimeType.
      *
      * <p>outputMimeType: MIME type of the generated image. This field is not supported in Gemini
@@ -172,6 +232,35 @@ public abstract class ImageConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearOutputCompressionQuality() {
       return outputCompressionQuality(Optional.empty());
+    }
+
+    /**
+     * Setter for imageOutputOptions.
+     *
+     * <p>imageOutputOptions: Optional. The image output format for generated images.
+     */
+    @JsonProperty("imageOutputOptions")
+    public abstract Builder imageOutputOptions(ImageConfigImageOutputOptions imageOutputOptions);
+
+    /**
+     * Setter for imageOutputOptions builder.
+     *
+     * <p>imageOutputOptions: Optional. The image output format for generated images.
+     */
+    @CanIgnoreReturnValue
+    public Builder imageOutputOptions(
+        ImageConfigImageOutputOptions.Builder imageOutputOptionsBuilder) {
+      return imageOutputOptions(imageOutputOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageOutputOptions(Optional<ImageConfigImageOutputOptions> imageOutputOptions);
+
+    /** Clears the value of imageOutputOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageOutputOptions() {
+      return imageOutputOptions(Optional.empty());
     }
 
     public abstract ImageConfig build();

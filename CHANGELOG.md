@@ -1,5 +1,81 @@
 # Changelog
 
+## [1.41.0](https://github.com/googleapis/java-genai/compare/v1.40.0...v1.41.0) (2026-02-26)
+
+
+### Features
+
+* Add Image Grounding support to GoogleSearch tool ([0daefbc](https://github.com/googleapis/java-genai/commit/0daefbc3ea09a341162ff95b68bf7f2e25fa41ea))
+* enable server side MCP and disable all other AFC when server side MCP is configured. ([498a2c4](https://github.com/googleapis/java-genai/commit/498a2c422dabb493d9b3b133b88156e5b44abae0))
+* examples ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+* initial integration ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+* set up pom + fix test ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+
+
+### Bug Fixes
+
+* use `NonClosingDelegatingHttpClient` ([917aee0](https://github.com/googleapis/java-genai/commit/917aee09737fec695fdb4fb665e6aaebfcf0a2fc))
+
+
+### Documentation
+
+* explain how to run tests ([4f6a811](https://github.com/googleapis/java-genai/commit/4f6a8112e8513bed34a5d35a16f21459006944c3))
+
+## [1.40.0](https://github.com/googleapis/java-genai/compare/v1.39.0...v1.40.0) (2026-02-19)
+
+
+### Features
+
+* Add `registerFiles` for Java. ([ce0b638](https://github.com/googleapis/java-genai/commit/ce0b6389330762ba649d25fc40d52b926232e7d1))
+* Add UnifiedMetric support to Vertex Tuning evaluation config ([a28ebfc](https://github.com/googleapis/java-genai/commit/a28ebfc3ddff73b9c998015a0d6d78bb6171b2aa))
+* Support multimodal embedding for Gemini Embedding 2.0 and support MaaS models in Models.embed_content() (Vertex AI API) ([23a7913](https://github.com/googleapis/java-genai/commit/23a7913309416b09e4d8fb39d704b5dc26aa22f1))
+
+## [1.39.0](https://github.com/googleapis/java-genai/compare/v1.38.0...v1.39.0) (2026-02-07)
+
+
+### Features
+
+* Support encryption_spec in tuning job creation configuration for GenAI SDK ([7a4fb51](https://github.com/googleapis/java-genai/commit/7a4fb51127dd9cba8e32587866ae03608505b2bd))
+
+## [1.38.0](https://github.com/googleapis/java-genai/compare/v1.37.0...v1.38.0) (2026-02-05)
+
+
+### Features
+
+
+### Bug Fixes
+
+* 'No SLF4J providers were found' on examples ([97fa11f](https://github.com/googleapis/java-genai/commit/97fa11f7166b88b5d85dd6450ba345af7310b975))
+* Make Apache HTTP Components an optional Maven dependency in GenAI. ([a01e464](https://github.com/googleapis/java-genai/commit/a01e464573d0e7eea093734fcaad2d824173b41c))
+* Replace System .err & .out with correct (JUL) Logging in GenAI AsyncLive. ([1f756d6](https://github.com/googleapis/java-genai/commit/1f756d6a52b600f33793f898f30dd5cadaa52d23))
+
+## [1.37.0](https://github.com/googleapis/java-genai/compare/v1.36.0...v1.37.0) (2026-01-30)
+
+
+### Features
+
+* Support distillation tuning ([cec1b88](https://github.com/googleapis/java-genai/commit/cec1b88ab5a8d5cb801f4db19ce73f3f01732c70))
+* Support OSS Tuning in GenAI SDK ([868d8ed](https://github.com/googleapis/java-genai/commit/868d8edee6a449937ed8b74f909071d8496fc68f))
+
+
+### Bug Fixes
+
+* Add metadata in batch inlined response ([c80dd07](https://github.com/googleapis/java-genai/commit/c80dd070d9f23ec6463e7e704f003ffb4dba354c))
+
+## [1.36.0](https://github.com/googleapis/java-genai/compare/v1.35.0...v1.36.0) (2026-01-22)
+
+
+### Features
+
+* Add ModelArmorConfig support for prompt and response sanitization via the Model Armor service ([9c77a8f](https://github.com/googleapis/java-genai/commit/9c77a8f05959b205e025c70eb794740ac2e1724b))
+
+## [1.35.0](https://github.com/googleapis/java-genai/compare/v1.34.0...v1.35.0) (2026-01-14)
+
+
+### Features
+
+* voice activity support ([5ffcf2b](https://github.com/googleapis/java-genai/commit/5ffcf2b20c95bf7cd84070700383b105e849d7a3))
+
 ## [1.34.0](https://github.com/googleapis/java-genai/compare/v1.33.0...v1.34.0) (2026-01-08)
 
 

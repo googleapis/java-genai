@@ -28,16 +28,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google. */
+/** Tool to support web search. */
 @AutoValue
 @JsonDeserialize(builder = GoogleSearch.Builder.class)
 public abstract class GoogleSearch extends JsonSerializable {
-  /**
-   * Optional. List of domains to be excluded from the search results. The default limit is 2000
-   * domains. Example: ["amazon.com", "facebook.com"]. This field is not supported in Gemini API.
-   */
-  @JsonProperty("excludeDomains")
-  public abstract Optional<List<String>> excludeDomains();
+  /** Different types of search that can be enabled on the GoogleSearch tool. */
+  @JsonProperty("searchTypes")
+  public abstract Optional<SearchTypes> searchTypes();
 
   /**
    * Optional. Sites with confidence level chosen & above this value will be blocked from the search
@@ -45,6 +42,13 @@ public abstract class GoogleSearch extends JsonSerializable {
    */
   @JsonProperty("blockingConfidence")
   public abstract Optional<PhishBlockThreshold> blockingConfidence();
+
+  /**
+   * Optional. List of domains to be excluded from the search results. The default limit is 2000
+   * domains. Example: ["amazon.com", "facebook.com"]. This field is not supported in Gemini API.
+   */
+  @JsonProperty("excludeDomains")
+  public abstract Optional<List<String>> excludeDomains();
 
   /**
    * Optional. Filter search results to a specific time range. If customers set a start time, they
@@ -72,35 +76,31 @@ public abstract class GoogleSearch extends JsonSerializable {
     }
 
     /**
-     * Setter for excludeDomains.
+     * Setter for searchTypes.
      *
-     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
-     * default limit is 2000 domains. Example: ["amazon.com", "facebook.com"]. This field is not
-     * supported in Gemini API.
+     * <p>searchTypes: Different types of search that can be enabled on the GoogleSearch tool.
      */
-    @JsonProperty("excludeDomains")
-    public abstract Builder excludeDomains(List<String> excludeDomains);
+    @JsonProperty("searchTypes")
+    public abstract Builder searchTypes(SearchTypes searchTypes);
 
     /**
-     * Setter for excludeDomains.
+     * Setter for searchTypes builder.
      *
-     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
-     * default limit is 2000 domains. Example: ["amazon.com", "facebook.com"]. This field is not
-     * supported in Gemini API.
+     * <p>searchTypes: Different types of search that can be enabled on the GoogleSearch tool.
      */
     @CanIgnoreReturnValue
-    public Builder excludeDomains(String... excludeDomains) {
-      return excludeDomains(Arrays.asList(excludeDomains));
+    public Builder searchTypes(SearchTypes.Builder searchTypesBuilder) {
+      return searchTypes(searchTypesBuilder.build());
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder excludeDomains(Optional<List<String>> excludeDomains);
+    abstract Builder searchTypes(Optional<SearchTypes> searchTypes);
 
-    /** Clears the value of excludeDomains field. */
+    /** Clears the value of searchTypes field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearExcludeDomains() {
-      return excludeDomains(Optional.empty());
+    public Builder clearSearchTypes() {
+      return searchTypes(Optional.empty());
     }
 
     /**
@@ -142,6 +142,38 @@ public abstract class GoogleSearch extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder blockingConfidence(String blockingConfidence) {
       return blockingConfidence(new PhishBlockThreshold(blockingConfidence));
+    }
+
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains. Example: ["amazon.com", "facebook.com"]. This field is not
+     * supported in Gemini API.
+     */
+    @JsonProperty("excludeDomains")
+    public abstract Builder excludeDomains(List<String> excludeDomains);
+
+    /**
+     * Setter for excludeDomains.
+     *
+     * <p>excludeDomains: Optional. List of domains to be excluded from the search results. The
+     * default limit is 2000 domains. Example: ["amazon.com", "facebook.com"]. This field is not
+     * supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder excludeDomains(String... excludeDomains) {
+      return excludeDomains(Arrays.asList(excludeDomains));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder excludeDomains(Optional<List<String>> excludeDomains);
+
+    /** Clears the value of excludeDomains field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExcludeDomains() {
+      return excludeDomains(Optional.empty());
     }
 
     /**

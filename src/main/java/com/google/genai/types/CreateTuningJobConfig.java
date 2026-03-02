@@ -36,8 +36,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /**
-   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not set, the
-   * default method (SFT) will be used.
+   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or DISTILLATION). If
+   * not set, the default method (SFT) will be used.
    */
   @JsonProperty("method")
   public abstract Optional<TuningMethod> method();
@@ -61,7 +61,10 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("epochCount")
   public abstract Optional<Integer> epochCount();
 
-  /** Multiplier for adjusting the default learning rate. */
+  /**
+   * Multiplier for adjusting the default learning rate. 1P models only. Mutually exclusive with
+   * learning_rate.
+   */
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Float> learningRateMultiplier();
 
@@ -80,16 +83,21 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
 
-  /**
-   * The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will be used based
-   * on the number of training examples.
-   */
+  /** Tuning mode for SFT tuning. */
+  @JsonProperty("tuningMode")
+  public abstract Optional<TuningMode> tuningMode();
+
+  /** Custom base model for tuning. This is only supported for OSS models in Vertex. */
+  @JsonProperty("customBaseModel")
+  public abstract Optional<String> customBaseModel();
+
+  /** The batch size hyperparameter for tuning. This is only supported for OSS models in Vertex. */
   @JsonProperty("batchSize")
   public abstract Optional<Integer> batchSize();
 
   /**
-   * The learning rate hyperparameter for tuning. If not set, a default of 0.001 or 0.0002 will be
-   * calculated based on the number of training examples.
+   * The learning rate for tuning. OSS models only. Mutually exclusive with
+   * learning_rate_multiplier.
    */
   @JsonProperty("learningRate")
   public abstract Optional<Float> learningRate();
@@ -111,6 +119,30 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   /** Weight for KL Divergence regularization, Preference Optimization tuning only. */
   @JsonProperty("beta")
   public abstract Optional<Float> beta();
+
+  /** The base teacher model that is being distilled. Distillation only. */
+  @JsonProperty("baseTeacherModel")
+  public abstract Optional<String> baseTeacherModel();
+
+  /** The resource name of the Tuned teacher model. Distillation only. */
+  @JsonProperty("tunedTeacherModelSource")
+  public abstract Optional<String> tunedTeacherModelSource();
+
+  /** Multiplier for adjusting the weight of the SFT loss. Distillation only. */
+  @JsonProperty("sftLossWeightMultiplier")
+  public abstract Optional<Float> sftLossWeightMultiplier();
+
+  /** The Google Cloud Storage location where the tuning job outputs are written. */
+  @JsonProperty("outputUri")
+  public abstract Optional<String> outputUri();
+
+  /**
+   * The encryption spec of the tuning job. Customer-managed encryption key options for a TuningJob.
+   * If this is set, then all resources created by the TuningJob will be encrypted with provided
+   * encryption key.
+   */
+  @JsonProperty("encryptionSpec")
+  public abstract Optional<EncryptionSpec> encryptionSpec();
 
   /** Instantiates a builder for CreateTuningJobConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -161,8 +193,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @JsonProperty("method")
     public abstract Builder method(TuningMethod method);
@@ -180,8 +212,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method given a known enum.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(TuningMethod.Known knownType) {
@@ -191,8 +223,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for method given a string.
      *
-     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING). If not
-     * set, the default method (SFT) will be used.
+     * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
+     * DISTILLATION). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(String method) {
@@ -288,7 +320,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for learningRateMultiplier.
      *
-     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate.
+     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate. 1P models
+     * only. Mutually exclusive with learning_rate.
      */
     @JsonProperty("learningRateMultiplier")
     public abstract Builder learningRateMultiplier(Float learningRateMultiplier);
@@ -380,10 +413,67 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for tuningMode.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @JsonProperty("tuningMode")
+    public abstract Builder tuningMode(TuningMode tuningMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningMode(Optional<TuningMode> tuningMode);
+
+    /** Clears the value of tuningMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningMode() {
+      return tuningMode(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningMode given a known enum.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(TuningMode.Known knownType) {
+      return tuningMode(new TuningMode(knownType));
+    }
+
+    /**
+     * Setter for tuningMode given a string.
+     *
+     * <p>tuningMode: Tuning mode for SFT tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(String tuningMode) {
+      return tuningMode(new TuningMode(tuningMode));
+    }
+
+    /**
+     * Setter for customBaseModel.
+     *
+     * <p>customBaseModel: Custom base model for tuning. This is only supported for OSS models in
+     * Vertex.
+     */
+    @JsonProperty("customBaseModel")
+    public abstract Builder customBaseModel(String customBaseModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customBaseModel(Optional<String> customBaseModel);
+
+    /** Clears the value of customBaseModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomBaseModel() {
+      return customBaseModel(Optional.empty());
+    }
+
+    /**
      * Setter for batchSize.
      *
-     * <p>batchSize: The batch size hyperparameter for tuning. If not set, a default of 4 or 16 will
-     * be used based on the number of training examples.
+     * <p>batchSize: The batch size hyperparameter for tuning. This is only supported for OSS models
+     * in Vertex.
      */
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Integer batchSize);
@@ -401,8 +491,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for learningRate.
      *
-     * <p>learningRate: The learning rate hyperparameter for tuning. If not set, a default of 0.001
-     * or 0.0002 will be calculated based on the number of training examples.
+     * <p>learningRate: The learning rate for tuning. OSS models only. Mutually exclusive with
+     * learning_rate_multiplier.
      */
     @JsonProperty("learningRate")
     public abstract Builder learningRate(Float learningRate);
@@ -483,6 +573,111 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearBeta() {
       return beta(Optional.empty());
+    }
+
+    /**
+     * Setter for baseTeacherModel.
+     *
+     * <p>baseTeacherModel: The base teacher model that is being distilled. Distillation only.
+     */
+    @JsonProperty("baseTeacherModel")
+    public abstract Builder baseTeacherModel(String baseTeacherModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseTeacherModel(Optional<String> baseTeacherModel);
+
+    /** Clears the value of baseTeacherModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseTeacherModel() {
+      return baseTeacherModel(Optional.empty());
+    }
+
+    /**
+     * Setter for tunedTeacherModelSource.
+     *
+     * <p>tunedTeacherModelSource: The resource name of the Tuned teacher model. Distillation only.
+     */
+    @JsonProperty("tunedTeacherModelSource")
+    public abstract Builder tunedTeacherModelSource(String tunedTeacherModelSource);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tunedTeacherModelSource(Optional<String> tunedTeacherModelSource);
+
+    /** Clears the value of tunedTeacherModelSource field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTunedTeacherModelSource() {
+      return tunedTeacherModelSource(Optional.empty());
+    }
+
+    /**
+     * Setter for sftLossWeightMultiplier.
+     *
+     * <p>sftLossWeightMultiplier: Multiplier for adjusting the weight of the SFT loss. Distillation
+     * only.
+     */
+    @JsonProperty("sftLossWeightMultiplier")
+    public abstract Builder sftLossWeightMultiplier(Float sftLossWeightMultiplier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sftLossWeightMultiplier(Optional<Float> sftLossWeightMultiplier);
+
+    /** Clears the value of sftLossWeightMultiplier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSftLossWeightMultiplier() {
+      return sftLossWeightMultiplier(Optional.empty());
+    }
+
+    /**
+     * Setter for outputUri.
+     *
+     * <p>outputUri: The Google Cloud Storage location where the tuning job outputs are written.
+     */
+    @JsonProperty("outputUri")
+    public abstract Builder outputUri(String outputUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputUri(Optional<String> outputUri);
+
+    /** Clears the value of outputUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputUri() {
+      return outputUri(Optional.empty());
+    }
+
+    /**
+     * Setter for encryptionSpec.
+     *
+     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
+     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
+     * encrypted with provided encryption key.
+     */
+    @JsonProperty("encryptionSpec")
+    public abstract Builder encryptionSpec(EncryptionSpec encryptionSpec);
+
+    /**
+     * Setter for encryptionSpec builder.
+     *
+     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
+     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
+     * encrypted with provided encryption key.
+     */
+    @CanIgnoreReturnValue
+    public Builder encryptionSpec(EncryptionSpec.Builder encryptionSpecBuilder) {
+      return encryptionSpec(encryptionSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder encryptionSpec(Optional<EncryptionSpec> encryptionSpec);
+
+    /** Clears the value of encryptionSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEncryptionSpec() {
+      return encryptionSpec(Optional.empty());
     }
 
     public abstract CreateTuningJobConfig build();

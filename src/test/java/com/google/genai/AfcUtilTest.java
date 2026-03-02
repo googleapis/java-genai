@@ -32,6 +32,7 @@ import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GoogleMaps;
 import com.google.genai.types.GoogleSearch;
 import com.google.genai.types.GoogleSearchRetrieval;
+import com.google.genai.types.McpServer;
 import com.google.genai.types.Part;
 import com.google.genai.types.Retrieval;
 import com.google.genai.types.Schema;
@@ -578,5 +579,40 @@ public final class AfcUtilTest {
     assertEquals(2, result.size());
     assertEquals(2, result.get(0).intValue());
     assertEquals(10, result.get(1).intValue());
+  }
+
+  @Test
+  void findAfcIncompatibleToolIndexes_withSercerSideMcpTools_returnsOnlyIncompatibleIndexes()
+      throws NoSuchMethodException {
+    // Arrange
+    Method testMethod1 = AfcUtilTest.class.getMethod("testFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder().functions(testMethod1).build(),
+                Tool.builder().googleSearch(GoogleSearch.builder()).build(),
+                Tool.builder().functionDeclarations(testFunctionDeclaration1).build(),
+                Tool.builder().googleSearchRetrieval(GoogleSearchRetrieval.builder()).build(),
+                Tool.builder()
+                    .mcpServers(ImmutableList.of(McpServer.builder().name("test").build()))
+                    .build(),
+                Tool.builder().googleMaps(GoogleMaps.builder()).build(),
+                Tool.builder().urlContext(UrlContext.builder()).build(),
+                Tool.builder().codeExecution(ToolCodeExecution.builder()).build(),
+                Tool.builder().computerUse(ComputerUse.builder()).build(),
+                Tool.builder().enterpriseWebSearch(EnterpriseWebSearch.builder()).build(),
+                Tool.builder()
+                    .functionDeclarations(testFunctionDeclaration1, testFunctionDeclaration2)
+                    .build())
+            .build();
+
+    // Act
+    ImmutableList<Integer> result = AfcUtil.findAfcIncompatibleToolIndexes(config);
+
+    // Assert
+    assertEquals(3, result.size());
+    assertEquals(2, result.get(0).intValue());
+    assertEquals(4, result.get(1).intValue());
+    assertEquals(10, result.get(2).intValue());
   }
 }

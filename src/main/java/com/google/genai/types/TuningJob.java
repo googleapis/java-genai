@@ -18,6 +18,8 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,6 +27,8 @@ import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -101,6 +105,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("preferenceOptimizationSpec")
   public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
 
+  /** Tuning Spec for Distillation. */
+  @JsonProperty("distillationSpec")
+  public abstract Optional<DistillationSpec> distillationSpec();
+
   /** Output only. The tuning data statistics associated with this TuningJob. */
   @JsonProperty("tuningDataStats")
   public abstract Optional<TuningDataStats> tuningDataStats();
@@ -130,9 +138,17 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("customBaseModel")
   public abstract Optional<String> customBaseModel();
 
+  /** Output only. Evaluation runs for the Tuning Job. */
+  @JsonProperty("evaluateDatasetRuns")
+  public abstract Optional<List<EvaluateDatasetRun>> evaluateDatasetRuns();
+
   /** Output only. The Experiment associated with this TuningJob. */
   @JsonProperty("experiment")
   public abstract Optional<String> experiment();
+
+  /** Tuning Spec for Full Fine Tuning. */
+  @JsonProperty("fullFineTuningSpec")
+  public abstract Optional<FullFineTuningSpec> fullFineTuningSpec();
 
   /**
    * Optional. The labels with user-defined metadata to organize TuningJob and generated resources
@@ -176,6 +192,10 @@ public abstract class TuningJob extends JsonSerializable {
    */
   @JsonProperty("tunedModelDisplayName")
   public abstract Optional<String> tunedModelDisplayName();
+
+  /** Output only. The detail state of the tuning job (while the overall `JobState` is running). */
+  @JsonProperty("tuningJobState")
+  public abstract Optional<TuningJobState> tuningJobState();
 
   /** Tuning Spec for Veo Tuning. */
   @JsonProperty("veoTuningSpec")
@@ -541,6 +561,34 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
+     * Setter for distillationSpec.
+     *
+     * <p>distillationSpec: Tuning Spec for Distillation.
+     */
+    @JsonProperty("distillationSpec")
+    public abstract Builder distillationSpec(DistillationSpec distillationSpec);
+
+    /**
+     * Setter for distillationSpec builder.
+     *
+     * <p>distillationSpec: Tuning Spec for Distillation.
+     */
+    @CanIgnoreReturnValue
+    public Builder distillationSpec(DistillationSpec.Builder distillationSpecBuilder) {
+      return distillationSpec(distillationSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationSpec(Optional<DistillationSpec> distillationSpec);
+
+    /** Clears the value of distillationSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationSpec() {
+      return distillationSpec(Optional.empty());
+    }
+
+    /**
      * Setter for tuningDataStats.
      *
      * <p>tuningDataStats: Output only. The tuning data statistics associated with this TuningJob.
@@ -681,6 +729,47 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
+     * Setter for evaluateDatasetRuns.
+     *
+     * <p>evaluateDatasetRuns: Output only. Evaluation runs for the Tuning Job.
+     */
+    @JsonProperty("evaluateDatasetRuns")
+    public abstract Builder evaluateDatasetRuns(List<EvaluateDatasetRun> evaluateDatasetRuns);
+
+    /**
+     * Setter for evaluateDatasetRuns.
+     *
+     * <p>evaluateDatasetRuns: Output only. Evaluation runs for the Tuning Job.
+     */
+    @CanIgnoreReturnValue
+    public Builder evaluateDatasetRuns(EvaluateDatasetRun... evaluateDatasetRuns) {
+      return evaluateDatasetRuns(Arrays.asList(evaluateDatasetRuns));
+    }
+
+    /**
+     * Setter for evaluateDatasetRuns builder.
+     *
+     * <p>evaluateDatasetRuns: Output only. Evaluation runs for the Tuning Job.
+     */
+    @CanIgnoreReturnValue
+    public Builder evaluateDatasetRuns(EvaluateDatasetRun.Builder... evaluateDatasetRunsBuilders) {
+      return evaluateDatasetRuns(
+          Arrays.asList(evaluateDatasetRunsBuilders).stream()
+              .map(EvaluateDatasetRun.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder evaluateDatasetRuns(Optional<List<EvaluateDatasetRun>> evaluateDatasetRuns);
+
+    /** Clears the value of evaluateDatasetRuns field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEvaluateDatasetRuns() {
+      return evaluateDatasetRuns(Optional.empty());
+    }
+
+    /**
      * Setter for experiment.
      *
      * <p>experiment: Output only. The Experiment associated with this TuningJob.
@@ -696,6 +785,34 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExperiment() {
       return experiment(Optional.empty());
+    }
+
+    /**
+     * Setter for fullFineTuningSpec.
+     *
+     * <p>fullFineTuningSpec: Tuning Spec for Full Fine Tuning.
+     */
+    @JsonProperty("fullFineTuningSpec")
+    public abstract Builder fullFineTuningSpec(FullFineTuningSpec fullFineTuningSpec);
+
+    /**
+     * Setter for fullFineTuningSpec builder.
+     *
+     * <p>fullFineTuningSpec: Tuning Spec for Full Fine Tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder fullFineTuningSpec(FullFineTuningSpec.Builder fullFineTuningSpecBuilder) {
+      return fullFineTuningSpec(fullFineTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fullFineTuningSpec(Optional<FullFineTuningSpec> fullFineTuningSpec);
+
+    /** Clears the value of fullFineTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFullFineTuningSpec() {
+      return fullFineTuningSpec(Optional.empty());
     }
 
     /**
@@ -800,6 +917,47 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTunedModelDisplayName() {
       return tunedModelDisplayName(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningJobState.
+     *
+     * <p>tuningJobState: Output only. The detail state of the tuning job (while the overall
+     * `JobState` is running).
+     */
+    @JsonProperty("tuningJobState")
+    public abstract Builder tuningJobState(TuningJobState tuningJobState);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningJobState(Optional<TuningJobState> tuningJobState);
+
+    /** Clears the value of tuningJobState field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningJobState() {
+      return tuningJobState(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningJobState given a known enum.
+     *
+     * <p>tuningJobState: Output only. The detail state of the tuning job (while the overall
+     * `JobState` is running).
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningJobState(TuningJobState.Known knownType) {
+      return tuningJobState(new TuningJobState(knownType));
+    }
+
+    /**
+     * Setter for tuningJobState given a string.
+     *
+     * <p>tuningJobState: Output only. The detail state of the tuning job (while the overall
+     * `JobState` is running).
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningJobState(String tuningJobState) {
+      return tuningJobState(new TuningJobState(tuningJobState));
     }
 
     /**

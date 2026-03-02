@@ -18,8 +18,11 @@
 
 package com.google.genai;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CreateFileConfig;
@@ -32,9 +35,12 @@ import com.google.genai.types.GeneratedVideo;
 import com.google.genai.types.GetFileConfig;
 import com.google.genai.types.ListFilesConfig;
 import com.google.genai.types.ListFilesResponse;
+import com.google.genai.types.RegisterFilesConfig;
+import com.google.genai.types.RegisterFilesResponse;
 import com.google.genai.types.UploadFileConfig;
 import com.google.genai.types.Video;
 import java.io.InputStream;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
@@ -50,6 +56,7 @@ public final class AsyncFiles {
   }
 
   CompletableFuture<ListFilesResponse> privateList(ListFilesConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -62,6 +69,7 @@ public final class AsyncFiles {
   }
 
   CompletableFuture<CreateFileResponse> privateCreate(File file, CreateFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForPrivateCreate(file, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -81,6 +89,7 @@ public final class AsyncFiles {
    * @return A File object representing the file.
    */
   public CompletableFuture<File> get(String name, GetFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -100,6 +109,7 @@ public final class AsyncFiles {
    * @return The DeleteFileResponse, the response for the delete method.
    */
   public CompletableFuture<DeleteFileResponse> delete(String name, DeleteFileConfig config) {
+
     BuiltRequest builtRequest = files.buildRequestForDelete(name, config);
     return this.apiClient
         .asyncRequest(
@@ -108,6 +118,20 @@ public final class AsyncFiles {
             response -> {
               try (ApiResponse res = response) {
                 return files.processResponseForDelete(res, config);
+              }
+            });
+  }
+
+  CompletableFuture<RegisterFilesResponse> privateRegisterFiles(
+      List<String> uris, RegisterFilesConfig config) {
+
+    BuiltRequest builtRequest = files.buildRequestForPrivateRegisterFiles(uris, config);
+    return this.apiClient
+        .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
+        .thenApplyAsync(
+            response -> {
+              try (ApiResponse res = response) {
+                return files.processResponseForPrivateRegisterFiles(res, config);
               }
             });
   }
@@ -143,6 +167,31 @@ public final class AsyncFiles {
                 request,
                 (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
+  }
+
+  /**
+   * Asynchronously registers Google Cloud Storage files for use with the API.
+   *
+   * @param credentials The Google Cloud credentials to use for registering the files.
+   * @param uris The list of GCS URIs to register.
+   * @param config Optional configuration for the registration request.
+   * @return A future that resolves to the response containing the registered files.
+   */
+  public CompletableFuture<RegisterFilesResponse> registerFiles(
+      GoogleCredentials credentials, List<String> uris, RegisterFilesConfig config) {
+    if (this.apiClient.vertexAI()) {
+      CompletableFuture<RegisterFilesResponse> future = new CompletableFuture<>();
+      future.completeExceptionally(
+          new UnsupportedOperationException(
+              "This method is only supported in the Gemini Developer client."));
+      return future;
+    }
+    checkNotNull(credentials, "credentials cannot be null");
+    checkNotNull(uris, "uris cannot be null");
+
+    return CompletableFuture.supplyAsync(
+            () -> files.internalPrepareRegisterFilesConfig(credentials, config))
+        .thenCompose(updatedConfig -> privateRegisterFiles(uris, updatedConfig));
   }
 
   /**
