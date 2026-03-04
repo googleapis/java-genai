@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.42.0](https://github.com/googleapis/java-genai/compare/v1.41.0...v1.42.0) (2026-03-04)
+
+
+### Features
+
+* Update data types from discovery doc. ([850d527](https://github.com/googleapis/java-genai/commit/850d527dd945a040c2aa9a50f82060c53fde4d64))
+
+
+### Bug Fixes
+
+* initialize comprehensive and curated history in constructor ([f74a426](https://github.com/googleapis/java-genai/commit/f74a426adcf282f726a49b38958c4df3982a2d0d))
+
 ## [1.41.0](https://github.com/googleapis/java-genai/compare/v1.40.0...v1.41.0) (2026-02-26)
 
 
