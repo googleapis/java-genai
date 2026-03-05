@@ -550,6 +550,39 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testInitHttpClientCustomUserAgent() throws Exception {
+    HttpApiClient client1 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    assertTrue(client1.httpOptions.headers().get().get("user-agent").contains("google-genai-sdk"));
+    assertTrue(
+        client1.httpOptions.headers().get().get("x-goog-api-client").contains("google-genai-sdk"));
+
+    HttpApiClient.setLibraryLabel("custom-user-agent/1.2.3");
+
+    HttpApiClient client2 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    assertTrue(
+        client2.httpOptions.headers().get().get("user-agent").contains("custom-user-agent/1.2.3"));
+    assertTrue(
+        client2
+            .httpOptions
+            .headers()
+            .get()
+            .get("x-goog-api-client")
+            .contains("custom-user-agent/1.2.3"));
+
+    HttpApiClient.setLibraryLabel(null);
+
+    HttpApiClient client3 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    assertTrue(client3.httpOptions.headers().get().get("user-agent").contains("google-genai-sdk"));
+    assertTrue(
+        client3.httpOptions.headers().get().get("x-goog-api-client").contains("google-genai-sdk"));
+  }
+
+  @Test
   public void testInitHttpClientMldev() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder()
