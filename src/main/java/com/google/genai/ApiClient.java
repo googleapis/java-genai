@@ -57,6 +57,7 @@ public abstract class ApiClient implements AutoCloseable {
   // {x-version-update-start:google-genai:released}
   private static final String SDK_VERSION = "1.42.0";
   // {x-version-update-end:google-genai:released}
+  private static String libraryLabelOverride = null;
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
   private static final ImmutableSet<String> METHODS_WITH_BODY =
@@ -476,10 +477,18 @@ public abstract class ApiClient implements AutoCloseable {
   public abstract CompletableFuture<ApiResponse> asyncRequest(
       String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions);
 
+  /** Sets the library label. */
+  public static void setLibraryLabel(String label) {
+    libraryLabelOverride = label;
+  }
+
   /** Returns the library version. */
   static String libraryVersion() {
     // TODO: Automate revisions to the SDK library version.
     String libraryLabel = String.format("google-genai-sdk/%s", SDK_VERSION);
+    if (libraryLabelOverride != null) {
+      libraryLabel = libraryLabelOverride;
+    }
     String languageLabel = "gl-java/" + System.getProperty("java.version");
     return libraryLabel + " " + languageLabel;
   }
