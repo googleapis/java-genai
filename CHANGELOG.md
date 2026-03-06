@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.43.0](https://github.com/googleapis/java-genai/compare/v1.42.0...v1.43.0) (2026-03-06)
+
+
+### Features
+
+* Add inference_generation_config to EvaluationConfig for Tuning ([c9632f0](https://github.com/googleapis/java-genai/commit/c9632f024d80f0ede17b6a4df423c33cd09c6fa9))
+
 ## [1.42.0](https://github.com/googleapis/java-genai/compare/v1.41.0...v1.42.0) (2026-03-04)
 
 
