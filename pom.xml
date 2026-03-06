@@ -55,6 +55,8 @@
     <junit.version>5.11.4</junit.version>
     <java-websocket.version>1.6.0</java-websocket.version>
     <okhttp.version>4.12.0</okhttp.version>
+    <main.java.src.dir>src/main/java</main.java.src.dir>
+    <test.java.src.dir>src/test/java</test.java.src.dir>
   </properties>
 
   <distributionManagement>
@@ -166,6 +168,8 @@
   </dependencies>
 
   <build>
+    <sourceDirectory>${project.basedir}/${main.java.src.dir}</sourceDirectory>
+    <testSourceDirectory>${project.basedir}/${test.java.src.dir}</testSourceDirectory>
     <extensions>
       <extension>
         <groupId>kr.motd.maven</groupId>
@@ -467,5 +471,6 @@
         </plugins>
       </build>
     </profile>
+
   </profiles>
 </project>
