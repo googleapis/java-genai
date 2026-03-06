@@ -25,11 +25,6 @@ import com.google.api.core.InternalApi;
 import java.io.IOException;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
 
 /** General exception class for all exceptions originating from the GenAI API side. */
 public class ApiException extends BaseException {
@@ -56,31 +51,6 @@ public class ApiException extends BaseException {
    * Throws an ApiException from the response if the response is not a OK status.
    *
    * @param response The response from the API call.
-   * @deprecated Use {@link #throwFromResponse(Response)} instead.
-   */
-  @ExcludeFromGeneratedCoverageReport
-  @Deprecated
-  public static void throwFromResponse(CloseableHttpResponse response) {
-    StatusLine statusLine = response.getStatusLine();
-    int code = statusLine.getStatusCode();
-    if (code == HttpStatus.SC_OK) {
-      return;
-    }
-    String status = statusLine.getReasonPhrase();
-    String message = getErrorMessageFromResponse(response);
-    if (code >= 400 && code < 500) { // Client errors.
-      throw new ClientException(code, status, message);
-    } else if (code >= 500 && code < 600) { // Server errors.
-      throw new ServerException(code, status, message);
-    } else {
-      throw new ApiException(code, status, message);
-    }
-  }
-
-  /**
-   * Throws an ApiException from the response if the response is not a OK status.
-   *
-   * @param response The response from the API call.
    */
   @InternalApi
   public static void throwFromResponse(Response response) {
@@ -96,33 +66,6 @@ public class ApiException extends BaseException {
       throw new ServerException(code, status, message);
     } else {
       throw new ApiException(code, status, message);
-    }
-  }
-
-  /**
-   * Returns the error message from the response, if no error or error message is not found, then
-   * returns an empty string.
-   */
-  @ExcludeFromGeneratedCoverageReport
-  @Deprecated
-  static String getErrorMessageFromResponse(CloseableHttpResponse response) {
-    HttpEntity entity = response.getEntity();
-    try {
-      String responseBody = EntityUtils.toString(entity);
-      if (responseBody == null || responseBody.isEmpty()) {
-        return "";
-      }
-      ObjectMapper mapper = new ObjectMapper();
-      JsonNode errorNode = mapper.readTree(responseBody).get("error");
-      if (errorNode != null && errorNode.isObject()) {
-        JsonNode messageNode = errorNode.get("message");
-        if (messageNode != null && messageNode.isTextual()) {
-          return messageNode.asText();
-        }
-      }
-      return "";
-    } catch (IOException ignored) {
-      return "";
     }
   }
 
