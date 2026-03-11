@@ -168,7 +168,7 @@ public abstract class ApiClient implements AutoCloseable {
               + " only one of them.");
     }
 
-    // Handle when to use Vertex AI in express mode (api key).
+    // Handle when to use VertexAI in express mode (api key).
     // Explicit initializer arguments are already validated above.
     if (hasCredentials && hasEnvApiKeyValue) {
       logger.warning(
