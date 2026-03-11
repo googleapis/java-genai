@@ -552,6 +552,60 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testInitHttpClientCustomUserAgent() throws Exception {
+    HttpApiClient client1 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    String userAgentRegex1 = "^google-genai-sdk/[^ ]+ gl-java/[^ ]+$";
+    assertTrue(
+        client1.httpOptions.headers().get().get("user-agent").matches(userAgentRegex1),
+        "The User-Agent string '"
+            + client1.httpOptions.headers().get().get("user-agent")
+            + "' does not match the expected format.");
+    assertTrue(
+        client1.httpOptions.headers().get().get("x-goog-api-client").matches(userAgentRegex1),
+        "The x-goog-api-client string '"
+            + client1.httpOptions.headers().get().get("x-goog-api-client")
+            + "' does not match the expected format.");
+
+    ImmutableMap<String, String> trackingHeaders =
+        ImmutableMap.of(
+            "x-goog-api-client", "library-name/1.2.3",
+            "user-agent", "library-name/1.2.3");
+    HttpOptions httpOptions = HttpOptions.builder().headers(trackingHeaders).build();
+    HttpApiClient client2 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.of(httpOptions), Optional.empty());
+
+    // Ex. google-genai-sdk/1.42.0 gl-java/22.0.2 library-name/1.2.3
+    String userAgentRegex2 = "^google-genai-sdk/[^ ]+ gl-java/[^ ]+ library-name/1.2.3$";
+    assertTrue(
+        client2.httpOptions.headers().get().get("user-agent").matches(userAgentRegex2),
+        "The User-Agent string '"
+            + client2.httpOptions.headers().get().get("user-agent")
+            + "' does not match the expected format.");
+    assertTrue(
+        client2.httpOptions.headers().get().get("x-goog-api-client").matches(userAgentRegex2),
+        "The x-goog-api-client string '"
+            + client2.httpOptions.headers().get().get("x-goog-api-client")
+            + "' does not match the expected format.");
+
+    // Ensure that new clients still have the default tracking headers.
+    HttpApiClient client3 =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+
+    assertTrue(
+        client3.httpOptions.headers().get().get("user-agent").matches(userAgentRegex1),
+        "The User-Agent string '"
+            + client3.httpOptions.headers().get().get("user-agent")
+            + "' does not match the expected format.");
+    assertTrue(
+        client3.httpOptions.headers().get().get("x-goog-api-client").matches(userAgentRegex1),
+        "The x-goog-api-client string '"
+            + client3.httpOptions.headers().get().get("x-goog-api-client")
+            + "' does not match the expected format.");
+  }
+
+  @Test
   public void testInitHttpClientMldev() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder()

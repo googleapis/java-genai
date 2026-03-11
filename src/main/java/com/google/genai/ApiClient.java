@@ -17,7 +17,6 @@
 package com.google.genai;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +38,7 @@ import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -660,10 +660,20 @@ public abstract class ApiClient implements AutoCloseable {
                       .entrySet()
                       .stream()),
               httpOptionsToApply.headers().orElse(ImmutableMap.of()).entrySet().stream());
-      Map<String, String> mergedHeaders =
-          headersStream.collect(
-              toImmutableMap(Map.Entry::getKey, Map.Entry::getValue, (val1, val2) -> val2));
-      mergedHttpOptionsBuilder.headers(mergedHeaders);
+      final Map<String, String> mergedHeaders = new HashMap<>();
+      headersStream.forEach(
+          entry ->
+              mergedHeaders.merge(
+                  entry.getKey(),
+                  entry.getValue(),
+                  (val1, val2) -> {
+                    if (entry.getKey().equals("user-agent")
+                        || entry.getKey().equals("x-goog-api-client")) {
+                      return val1 + " " + val2;
+                    }
+                    return val2;
+                  }));
+      mergedHttpOptionsBuilder.headers(ImmutableMap.copyOf(mergedHeaders));
     }
 
     return mergedHttpOptionsBuilder.build();
