@@ -83,7 +83,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
 
-  /** Tuning mode for SFT tuning. */
+  /** Tuning mode for tuning. */
   @JsonProperty("tuningMode")
   public abstract Optional<TuningMode> tuningMode();
 
@@ -415,7 +415,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for tuningMode.
      *
-     * <p>tuningMode: Tuning mode for SFT tuning.
+     * <p>tuningMode: Tuning mode for tuning.
      */
     @JsonProperty("tuningMode")
     public abstract Builder tuningMode(TuningMode tuningMode);
@@ -433,7 +433,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for tuningMode given a known enum.
      *
-     * <p>tuningMode: Tuning mode for SFT tuning.
+     * <p>tuningMode: Tuning mode for tuning.
      */
     @CanIgnoreReturnValue
     public Builder tuningMode(TuningMode.Known knownType) {
@@ -443,7 +443,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     /**
      * Setter for tuningMode given a string.
      *
-     * <p>tuningMode: Tuning mode for SFT tuning.
+     * <p>tuningMode: Tuning mode for tuning.
      */
     @CanIgnoreReturnValue
     public Builder tuningMode(String tuningMode) {
