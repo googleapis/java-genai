@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.43.0](https://github.com/googleapis/java-genai/compare/v1.42.0...v1.43.0) (2026-03-12)
+
+
+### Features
+
+* Add inference_generation_config to EvaluationConfig for Tuning ([c9632f0](https://github.com/googleapis/java-genai/commit/c9632f024d80f0ede17b6a4df423c33cd09c6fa9))
+* Allow custom endpoints for authentication with Vertex AI in Java ([5b38728](https://github.com/googleapis/java-genai/commit/5b3872897a68d00f536b94bb11bb580c45e8cd55))
+* enable language code for audio transcription config in Live API for Vertex AI ([fb034ff](https://github.com/googleapis/java-genai/commit/fb034ff044d3c73721f3253845ac5e2c00e8d262))
+
 ## [1.42.0](https://github.com/googleapis/java-genai/compare/v1.41.0...v1.42.0) (2026-03-04)
 
 
