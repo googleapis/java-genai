@@ -794,6 +794,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"historyConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"historyConfig"},
+          Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}))) {
       throw new IllegalArgumentException(
           "explicitVadSignal parameter is not supported in Gemini API.");
@@ -883,6 +890,10 @@ final class LiveConverters {
           toObject,
           new String[] {"proactivity"},
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"historyConfig"}))) {
+      throw new IllegalArgumentException("historyConfig parameter is not supported in Vertex AI.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}) != null) {
@@ -1045,6 +1056,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"historyConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "historyConfig"},
+          Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}))) {
       throw new IllegalArgumentException(
           "explicitVadSignal parameter is not supported in Gemini API.");
@@ -1189,6 +1207,10 @@ final class LiveConverters {
           parentObject,
           new String[] {"setup", "proactivity"},
           Common.getValueByPath(fromObject, new String[] {"proactivity"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"historyConfig"}))) {
+      throw new IllegalArgumentException("historyConfig parameter is not supported in Vertex AI.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}) != null) {
