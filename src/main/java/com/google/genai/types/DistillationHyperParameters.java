@@ -27,11 +27,19 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Hyperparameters for Distillation. This data type is not supported in Gemini API. */
+/** Hyperparameters for distillation. */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = DistillationHyperParameters.Builder.class)
 public abstract class DistillationHyperParameters extends JsonSerializable {
+  /** The batch size hyperparameter for tuning. This is only supported for OSS models in Vertex. */
+  @JsonProperty("batchSize")
+  public abstract Optional<Integer> batchSize();
+
+  /** The learning rate for tuning. OSS models only. */
+  @JsonProperty("learningRate")
+  public abstract Optional<Float> learningRate();
+
   /** Optional. Adapter size for distillation. */
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
@@ -63,6 +71,43 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DistillationHyperParameters.Builder();
+    }
+
+    /**
+     * Setter for batchSize.
+     *
+     * <p>batchSize: The batch size hyperparameter for tuning. This is only supported for OSS models
+     * in Vertex.
+     */
+    @JsonProperty("batchSize")
+    public abstract Builder batchSize(Integer batchSize);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder batchSize(Optional<Integer> batchSize);
+
+    /** Clears the value of batchSize field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBatchSize() {
+      return batchSize(Optional.empty());
+    }
+
+    /**
+     * Setter for learningRate.
+     *
+     * <p>learningRate: The learning rate for tuning. OSS models only.
+     */
+    @JsonProperty("learningRate")
+    public abstract Builder learningRate(Float learningRate);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder learningRate(Optional<Float> learningRate);
+
+    /** Clears the value of learningRate field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLearningRate() {
+      return learningRate(Optional.empty());
     }
 
     /**

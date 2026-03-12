@@ -34,16 +34,20 @@ public abstract class DistillationSpec extends JsonSerializable {
   @JsonProperty("promptDatasetUri")
   public abstract Optional<String> promptDatasetUri();
 
+  /** Tuning mode for tuning. */
+  @JsonProperty("tuningMode")
+  public abstract Optional<TuningMode> tuningMode();
+
+  /** Optional. Hyperparameters for Distillation. */
+  @JsonProperty("hyperParameters")
+  public abstract Optional<DistillationHyperParameters> hyperParameters();
+
   /**
    * The base teacher model that is being distilled. See [Supported
    * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
    */
   @JsonProperty("baseTeacherModel")
   public abstract Optional<String> baseTeacherModel();
-
-  /** Optional. Hyperparameters for Distillation. */
-  @JsonProperty("hyperParameters")
-  public abstract Optional<DistillationHyperParameters> hyperParameters();
 
   /**
    * Deprecated. A path in a Cloud Storage bucket, which will be treated as the root output
@@ -118,22 +122,41 @@ public abstract class DistillationSpec extends JsonSerializable {
     }
 
     /**
-     * Setter for baseTeacherModel.
+     * Setter for tuningMode.
      *
-     * <p>baseTeacherModel: The base teacher model that is being distilled. See [Supported
-     * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+     * <p>tuningMode: Tuning mode for tuning.
      */
-    @JsonProperty("baseTeacherModel")
-    public abstract Builder baseTeacherModel(String baseTeacherModel);
+    @JsonProperty("tuningMode")
+    public abstract Builder tuningMode(TuningMode tuningMode);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder baseTeacherModel(Optional<String> baseTeacherModel);
+    abstract Builder tuningMode(Optional<TuningMode> tuningMode);
 
-    /** Clears the value of baseTeacherModel field. */
+    /** Clears the value of tuningMode field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearBaseTeacherModel() {
-      return baseTeacherModel(Optional.empty());
+    public Builder clearTuningMode() {
+      return tuningMode(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningMode given a known enum.
+     *
+     * <p>tuningMode: Tuning mode for tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(TuningMode.Known knownType) {
+      return tuningMode(new TuningMode(knownType));
+    }
+
+    /**
+     * Setter for tuningMode given a string.
+     *
+     * <p>tuningMode: Tuning mode for tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(String tuningMode) {
+      return tuningMode(new TuningMode(tuningMode));
     }
 
     /**
@@ -162,6 +185,25 @@ public abstract class DistillationSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearHyperParameters() {
       return hyperParameters(Optional.empty());
+    }
+
+    /**
+     * Setter for baseTeacherModel.
+     *
+     * <p>baseTeacherModel: The base teacher model that is being distilled. See [Supported
+     * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+     */
+    @JsonProperty("baseTeacherModel")
+    public abstract Builder baseTeacherModel(String baseTeacherModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder baseTeacherModel(Optional<String> baseTeacherModel);
+
+    /** Clears the value of baseTeacherModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBaseTeacherModel() {
+      return baseTeacherModel(Optional.empty());
     }
 
     /**
