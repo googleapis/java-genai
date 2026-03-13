@@ -19,7 +19,7 @@
 package com.google.genai.interactions.core.http
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Objects
 
@@ -59,7 +59,7 @@ private constructor(
 
     inline fun <reified T> json(): T =
         try {
-            jsonMapper.readerFor(jacksonTypeRef<T>()).readValue(jsonNode)
+            jsonMapper.readerFor(object : TypeReference<T>() {}).readValue(jsonNode)
         } catch (e: Exception) {
             throw GeminiNextGenApiInvalidDataException("Error reading response", e)
         }

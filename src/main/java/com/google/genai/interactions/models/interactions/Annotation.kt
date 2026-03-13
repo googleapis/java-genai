@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.JsonValue
@@ -204,17 +204,17 @@ private constructor(
 
             when (type) {
                 "url_citation" -> {
-                    return tryDeserialize(node, jacksonTypeRef<UrlCitation>())?.let {
+                    return tryDeserialize(node, object : TypeReference<UrlCitation>() {})?.let {
                         Annotation(urlCitation = it, _json = json)
                     } ?: Annotation(_json = json)
                 }
                 "file_citation" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FileCitation>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FileCitation>() {})?.let {
                         Annotation(fileCitation = it, _json = json)
                     } ?: Annotation(_json = json)
                 }
                 "place_citation" -> {
-                    return tryDeserialize(node, jacksonTypeRef<PlaceCitation>())?.let {
+                    return tryDeserialize(node, object : TypeReference<PlaceCitation>() {})?.let {
                         Annotation(placeCitation = it, _json = json)
                     } ?: Annotation(_json = json)
                 }

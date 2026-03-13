@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.ExcludeMissing
@@ -418,12 +418,12 @@ private constructor(
 
                 when (type) {
                     "text" -> {
-                        return tryDeserialize(node, jacksonTypeRef<TextContent>())?.let {
+                        return tryDeserialize(node, object : TypeReference<TextContent>() {})?.let {
                             Summary(text = it, _json = json)
                         } ?: Summary(_json = json)
                     }
                     "image" -> {
-                        return tryDeserialize(node, jacksonTypeRef<ImageContent>())?.let {
+                        return tryDeserialize(node, object : TypeReference<ImageContent>() {})?.let {
                             Summary(image = it, _json = json)
                         } ?: Summary(_json = json)
                     }

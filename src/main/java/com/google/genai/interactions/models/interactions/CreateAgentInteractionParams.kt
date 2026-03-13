@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.Enum
@@ -1635,28 +1635,28 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<TextContent>())?.let {
+                            tryDeserialize(node, object : TypeReference<TextContent>() {})?.let {
                                 Input(textContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<ImageContent>())?.let {
+                            tryDeserialize(node, object : TypeReference<ImageContent>() {})?.let {
                                 Input(imageContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<AudioContent>())?.let {
+                            tryDeserialize(node, object : TypeReference<AudioContent>() {})?.let {
                                 Input(audioContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<DocumentContent>())?.let {
+                            tryDeserialize(node, object : TypeReference<DocumentContent>() {})?.let {
                                 Input(documentContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<VideoContent>())?.let {
+                            tryDeserialize(node, object : TypeReference<VideoContent>() {})?.let {
                                 Input(videoContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<String>())?.let {
+                            tryDeserialize(node, object : TypeReference<String>() {})?.let {
                                 Input(string = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<List<Step>>())?.let {
+                            tryDeserialize(node, object : TypeReference<List<Step>>() {})?.let {
                                 Input(stepList = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<List<Content>>())?.let {
+                            tryDeserialize(node, object : TypeReference<List<Content>>() {})?.let {
                                 Input(contentList = it, _json = json)
                             },
                         )
@@ -1848,12 +1848,12 @@ private constructor(
 
                 when (type) {
                     "dynamic" -> {
-                        return tryDeserialize(node, jacksonTypeRef<DynamicAgentConfig>())?.let {
+                        return tryDeserialize(node, object : TypeReference<DynamicAgentConfig>() {})?.let {
                             AgentConfig(dynamic = it, _json = json)
                         } ?: AgentConfig(_json = json)
                     }
                     "deep-research" -> {
-                        return tryDeserialize(node, jacksonTypeRef<DeepResearchAgentConfig>())
+                        return tryDeserialize(node, object : TypeReference<DeepResearchAgentConfig>() {})
                             ?.let { AgentConfig(deepResearch = it, _json = json) }
                             ?: AgentConfig(_json = json)
                     }
@@ -2116,22 +2116,22 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<AudioResponseFormat>())?.let {
+                            tryDeserialize(node, object : TypeReference<AudioResponseFormat>() {})?.let {
                                 ResponseFormat(audio = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<TextResponseFormat>())?.let {
+                            tryDeserialize(node, object : TypeReference<TextResponseFormat>() {})?.let {
                                 ResponseFormat(text = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
+                            tryDeserialize(node, object : TypeReference<ImageResponseFormat>() {})?.let {
                                 ResponseFormat(image = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
+                            tryDeserialize(node, object : TypeReference<VideoResponseFormat>() {})?.let {
                                 ResponseFormat(video = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<List<InnerResponseFormat>>())?.let {
+                            tryDeserialize(node, object : TypeReference<List<InnerResponseFormat>>() {})?.let {
                                 ResponseFormat(list = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                            tryDeserialize(node, object : TypeReference<JsonValue>() {})?.let {
                                 ResponseFormat(jsonValue = it, _json = json)
                             },
                         )
@@ -2387,19 +2387,19 @@ private constructor(
 
                     val bestMatches =
                         sequenceOf(
-                                tryDeserialize(node, jacksonTypeRef<AudioResponseFormat>())?.let {
+                                tryDeserialize(node, object : TypeReference<AudioResponseFormat>() {})?.let {
                                     InnerResponseFormat(audio = it, _json = json)
                                 },
-                                tryDeserialize(node, jacksonTypeRef<TextResponseFormat>())?.let {
+                                tryDeserialize(node, object : TypeReference<TextResponseFormat>() {})?.let {
                                     InnerResponseFormat(text = it, _json = json)
                                 },
-                                tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
+                                tryDeserialize(node, object : TypeReference<ImageResponseFormat>() {})?.let {
                                     InnerResponseFormat(image = it, _json = json)
                                 },
-                                tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
+                                tryDeserialize(node, object : TypeReference<VideoResponseFormat>() {})?.let {
                                     InnerResponseFormat(video = it, _json = json)
                                 },
-                                tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                tryDeserialize(node, object : TypeReference<JsonValue>() {})?.let {
                                     InnerResponseFormat(jsonValue = it, _json = json)
                                 },
                             )
