@@ -19,6 +19,7 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
@@ -41,6 +42,10 @@ public abstract class ClientOptions extends JsonSerializable {
   /** Proxy configuration to be used in the client. */
   @JsonProperty("proxyOptions")
   public abstract Optional<ProxyOptions> proxyOptions();
+
+  /** The executor to use for running async stream handler callbacks. */
+  @JsonIgnore
+  public abstract Optional<java.util.concurrent.Executor> streamHandlerExecutor();
 
   /** Instantiates a builder for ClientOptions. */
   @ExcludeFromGeneratedCoverageReport
