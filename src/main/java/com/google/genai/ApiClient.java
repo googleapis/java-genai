@@ -277,7 +277,9 @@ public abstract class ApiClient implements AutoCloseable {
     builder.readTimeout(Duration.ofMillis(0));
     builder.writeTimeout(Duration.ofMillis(0));
 
-    httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
+    httpOptions
+        .timeout()
+        .ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
 
     HttpRetryOptions retryOptions =
         httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
@@ -486,7 +488,7 @@ public abstract class ApiClient implements AutoCloseable {
   }
 
   /** Sets the required headers (including auth) on the request object. */
-  private void setHeaders(Request.Builder request, HttpOptions requestHttpOptions) {
+  protected void setHeaders(Request.Builder request, HttpOptions requestHttpOptions) {
     for (Map.Entry<String, String> header :
         requestHttpOptions.headers().orElse(ImmutableMap.of()).entrySet()) {
       request.header(header.getKey(), header.getValue());
@@ -842,6 +844,7 @@ public abstract class ApiClient implements AutoCloseable {
   @Override
   public void close() {
     try {
+
       httpClient().dispatcher().executorService().shutdown();
       httpClient().connectionPool().evictAll();
       if (httpClient().cache() != null) {
