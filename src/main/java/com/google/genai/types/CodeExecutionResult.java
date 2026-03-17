@@ -27,8 +27,9 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Result of executing the [ExecutableCode]. Only generated when using the [CodeExecution] tool, and
- * always follows a `part` containing the [ExecutableCode].
+ * Result of executing the `ExecutableCode`.
+ *
+ * <p>Generated only when the `CodeExecution` tool is used.
  */
 @AutoValue
 @JsonDeserialize(builder = CodeExecutionResult.Builder.class)
@@ -43,6 +44,13 @@ public abstract class CodeExecutionResult extends JsonSerializable {
    */
   @JsonProperty("output")
   public abstract Optional<String> output();
+
+  /**
+   * The identifier of the `ExecutableCode` part this result is for. Only populated if the
+   * corresponding `ExecutableCode` has an id.
+   */
+  @JsonProperty("id")
+  public abstract Optional<String> id();
 
   /** Instantiates a builder for CodeExecutionResult. */
   @ExcludeFromGeneratedCoverageReport
@@ -117,6 +125,25 @@ public abstract class CodeExecutionResult extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearOutput() {
       return output(Optional.empty());
+    }
+
+    /**
+     * Setter for id.
+     *
+     * <p>id: The identifier of the `ExecutableCode` part this result is for. Only populated if the
+     * corresponding `ExecutableCode` has an id.
+     */
+    @JsonProperty("id")
+    public abstract Builder id(String id);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder id(Optional<String> id);
+
+    /** Clears the value of id field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearId() {
+      return id(Optional.empty());
     }
 
     public abstract CodeExecutionResult build();

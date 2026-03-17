@@ -42,6 +42,13 @@ public abstract class ToolConfig extends JsonSerializable {
   @JsonProperty("functionCallingConfig")
   public abstract Optional<FunctionCallingConfig> functionCallingConfig();
 
+  /**
+   * If true, the API response will include the server-side tool calls and responses within the
+   * `Content` message. This allows clients to observe the server's tool invocations.
+   */
+  @JsonProperty("includeServerSideToolInvocations")
+  public abstract Optional<Boolean> includeServerSideToolInvocations();
+
   /** Instantiates a builder for ToolConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -115,6 +122,28 @@ public abstract class ToolConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFunctionCallingConfig() {
       return functionCallingConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for includeServerSideToolInvocations.
+     *
+     * <p>includeServerSideToolInvocations: If true, the API response will include the server-side
+     * tool calls and responses within the `Content` message. This allows clients to observe the
+     * server's tool invocations.
+     */
+    @JsonProperty("includeServerSideToolInvocations")
+    public abstract Builder includeServerSideToolInvocations(
+        boolean includeServerSideToolInvocations);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder includeServerSideToolInvocations(
+        Optional<Boolean> includeServerSideToolInvocations);
+
+    /** Clears the value of includeServerSideToolInvocations field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearIncludeServerSideToolInvocations() {
+      return includeServerSideToolInvocations(Optional.empty());
     }
 
     public abstract ToolConfig build();

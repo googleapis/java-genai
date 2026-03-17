@@ -586,6 +586,20 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
     return toObject;
   }
 

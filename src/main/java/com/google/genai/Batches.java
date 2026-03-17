@@ -1801,6 +1801,20 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
     return toObject;
   }
 
@@ -1846,6 +1860,14 @@ public final class Batches {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"includeServerSideToolInvocations"},
+          Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}));
     }
 
     return toObject;
