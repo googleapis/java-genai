@@ -25,6 +25,7 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveConnectParameters;
 import com.google.genai.types.LiveServerMessage;
+import com.google.genai.types.LiveServerSetupComplete;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -283,11 +284,13 @@ public class AsyncLive {
         try {
           LiveServerMessage initialResponse = LiveServerMessage.fromJson(message);
           if (initialResponse.setupComplete().isPresent()) {
+            LiveServerSetupComplete setupComplete = initialResponse.setupComplete().get();
             sessionFuture.complete(
                 new AsyncSession(
                     apiClient,
                     this,
-                    initialResponse.setupComplete().get().sessionId().orElse(null)));
+                    setupComplete.sessionId().orElse(null),
+                    setupComplete));
           } else {
             sessionFuture.completeExceptionally(
                 new GenAiIOException(
