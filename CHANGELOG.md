@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.0](https://github.com/googleapis/java-genai/compare/v1.43.0...v1.44.0) (2026-03-18)
+
+
+### Features
+
+* Support include_server_side_tool_invocations for genai. ([d92fdb1](https://github.com/googleapis/java-genai/commit/d92fdb167b1c06ae0dc3cbe8ad0c4c903a29f2ee))
+
 ## [1.43.0](https://github.com/googleapis/java-genai/compare/v1.42.0...v1.43.0) (2026-03-12)
 
 
