@@ -94,6 +94,8 @@ public final class LiveAudioConversationAsync {
   private static SourceDataLine speakerLine;
   private static AsyncSession session;
   private static ExecutorService micExecutor = Executors.newSingleThreadExecutor();
+  private static String promptString = null;
+  private static java.io.ByteArrayOutputStream audioResponseBytes = new java.io.ByteArrayOutputStream();
 
   /** Creates the parameters for sending an audio chunk. */
   public static LiveSendRealtimeInputParameters createAudioContent(byte[] audioData) {
@@ -155,9 +157,54 @@ public final class LiveAudioConversationAsync {
       System.out.println("Using Gemini Developer API");
     }
 
+    String getModelFromArgs = null;
+    String voiceSamplePath = null;
+    String voiceConsentPath = null;
+    String voiceSignature = null;
+    promptString = null;
+
+    for (String arg : args) {
+      if (arg.startsWith("--model=")) {
+        getModelFromArgs = arg.substring("--model=".length());
+      } else if (arg.startsWith("--voice-sample=")) {
+        voiceSamplePath = arg.substring("--voice-sample=".length());
+      } else if (arg.startsWith("--voice-consent=")) {
+        voiceConsentPath = arg.substring("--voice-consent=".length());
+      } else if (arg.startsWith("--voice-signature=")) {
+        voiceSignature = arg.substring("--voice-signature=".length());
+      } else if (arg.startsWith("--prompt=")) {
+        promptString = arg.substring("--prompt=".length());
+      } else if (!arg.startsWith("--") && getModelFromArgs == null) {
+        getModelFromArgs = arg;
+      }
+    }
+
+    byte[] voiceSampleAudio = null;
+    byte[] consentAudio = null;
+
+    if (voiceSamplePath != null) {
+      try {
+        voiceSampleAudio = java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(voiceSamplePath));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException("Failed to read voice sample: " + e.getMessage());
+      }
+      if (voiceConsentPath == null && voiceSignature == null) {
+        throw new IllegalArgumentException(
+            "Either --voice-consent or --voice-signature must be provided when --voice-sample is"
+                + " used.");
+      }
+    }
+    if (voiceConsentPath != null) {
+      try {
+        consentAudio = java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(voiceConsentPath));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException("Failed to read voice consent: " + e.getMessage());
+      }
+    }
+
     final String modelId;
-    if (args.length != 0) {
-      modelId = args[0];
+    if (getModelFromArgs != null) {
+      modelId = getModelFromArgs;
     } else if (client.vertexAI()) {
       modelId = Constants.GEMINI_LIVE_MODEL_NAME;
     } else {
@@ -165,21 +212,40 @@ public final class LiveAudioConversationAsync {
     }
 
     // --- Audio Line Setup ---
-    microphoneLine = getMicrophoneLine();
-    speakerLine = getSpeakerLine();
+    if (promptString == null) {
+      microphoneLine = getMicrophoneLine();
+      speakerLine = getSpeakerLine();
+    }
 
     // --- Live API Config for Audio ---
     // Choice of ["Aoede", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Zephyr"]
     String voiceName = "Aoede";
+    
+    VoiceConfig.Builder voiceConfigBuilder = VoiceConfig.builder();
+    if (voiceSampleAudio != null) {
+      com.google.genai.types.ReplicatedVoiceConfig.Builder repBuilder = 
+          com.google.genai.types.ReplicatedVoiceConfig.builder()
+              .mimeType("audio/wav")
+              .voiceSampleAudio(voiceSampleAudio);
+      if (consentAudio != null) {
+        repBuilder.consentAudio(consentAudio);
+      }
+      if (voiceSignature != null) {
+        repBuilder.voiceConsentSignature(
+            com.google.genai.types.VoiceConsentSignature.builder().signature(voiceSignature));
+      }
+      voiceConfigBuilder.replicatedVoiceConfig(repBuilder);
+    } else {
+      voiceConfigBuilder.prebuiltVoiceConfig(
+          PrebuiltVoiceConfig.builder().voiceName(voiceName));
+    }
+
     LiveConnectConfig config =
         LiveConnectConfig.builder()
             .responseModalities(Modality.Known.AUDIO)
             .speechConfig(
                 SpeechConfig.builder()
-                    .voiceConfig(
-                        VoiceConfig.builder()
-                            .prebuiltVoiceConfig(
-                                PrebuiltVoiceConfig.builder().voiceName(voiceName)))
+                    .voiceConfig(voiceConfigBuilder)
                     .languageCode("en-US"))
             .realtimeInputConfig(
                 RealtimeInputConfig.builder()
@@ -232,19 +298,33 @@ public final class LiveAudioConversationAsync {
       session = client.async.live.connect(modelId, config).get();
       System.out.println("Connected.");
 
-      // --- Start Audio Lines ---
-      microphoneLine.start();
-      speakerLine.start();
-      System.out.println("Microphone and speakers started. Speak now (Press Ctrl+C to exit)...");
+      if (session.setupComplete() != null && session.setupComplete().voiceConsentSignature().isPresent()) {
+        System.out.println(
+            "\n=== Voice Consent Signature Received ===\n"
+                + session.setupComplete().voiceConsentSignature().get().signature().orElse("")
+                + "\n========================================\n");
+      }
 
       // --- Start Receiving Audio Responses ---
       CompletableFuture<Void> receiveFuture =
           session.receive(LiveAudioConversationAsync::handleAudioResponse);
-      System.err.println("Receive stream started."); // Add this line
+      System.err.println("Receive stream started.");
 
-      // --- Start Sending Microphone Audio ---
-      CompletableFuture<Void> sendFuture =
-          CompletableFuture.runAsync(LiveAudioConversationAsync::sendMicrophoneAudio, micExecutor);
+      CompletableFuture<Void> sendFuture;
+      if (promptString == null) {
+        // --- Start Audio Lines ---
+        microphoneLine.start();
+        speakerLine.start();
+        System.out.println("Microphone and speakers started. Speak now (Press Ctrl+C to exit)...");
+
+        // --- Start Sending Microphone Audio ---
+        sendFuture = CompletableFuture.runAsync(LiveAudioConversationAsync::sendMicrophoneAudio, micExecutor);
+      } else {
+        System.out.println("Sending prompt: " + promptString);
+        session.sendRealtimeInput(
+            LiveSendRealtimeInputParameters.builder().text(promptString).build()).get();
+        sendFuture = CompletableFuture.completedFuture(null);
+      }
 
       // Keep the main thread alive. Wait for sending or receiving to finish (or
       // error).
@@ -313,13 +393,19 @@ public final class LiveAudioConversationAsync {
             content -> {
               // Handle interruptions from Gemini.
               if (content.interrupted().orElse(false)) {
-                speakerLine.flush();
+                if (speakerLine != null && speakerLine.isOpen()) {
+                  speakerLine.flush();
+                }
                 return; // Skip processing the rest of this message's audio.
               }
 
               // Handle Model turn completion.
               if (content.turnComplete().orElse(false)) {
-                // The turn is over, no more audio will be sent for this turn.
+                if (promptString != null) {
+                  saveWavFile();
+                  System.out.println("Response received, exiting.");
+                  System.exit(0);
+                }
                 return;
               }
 
@@ -334,14 +420,44 @@ public final class LiveAudioConversationAsync {
                         if (speakerLine != null && speakerLine.isOpen()) {
                           // Write audio data to the speaker
                           speakerLine.write(audioBytes, 0, audioBytes.length);
+                        } else {
+                          System.out.println(
+                              "Received audio response chunk: " + audioBytes.length + " bytes.");
+                        }
+                        try {
+                          audioResponseBytes.write(audioBytes);
+                        } catch (java.io.IOException e) {
+                          System.err.println("Failed to accumulate audio bytes: " + e.getMessage());
                         }
                       });
 
               // If this is the last message of a generation, drain the buffer.
               if (content.generationComplete().orElse(false)) {
-                speakerLine.drain();
+                if (speakerLine != null && speakerLine.isOpen()) {
+                  speakerLine.drain();
+                }
               }
             });
+  }
+
+  private static void saveWavFile() {
+    byte[] audioData = audioResponseBytes.toByteArray();
+    if (audioData.length == 0) {
+      System.out.println("No audio data received to save.");
+      return;
+    }
+    try {
+      javax.sound.sampled.AudioInputStream ais = new javax.sound.sampled.AudioInputStream(
+          new java.io.ByteArrayInputStream(audioData),
+          SPEAKER_AUDIO_FORMAT,
+          audioData.length / SPEAKER_AUDIO_FORMAT.getFrameSize()
+      );
+      java.io.File outputFile = new java.io.File("output.wav");
+      javax.sound.sampled.AudioSystem.write(ais, javax.sound.sampled.AudioFileFormat.Type.WAVE, outputFile);
+      System.out.println("Saved audio response to " + outputFile.getAbsolutePath());
+    } catch (Exception e) {
+      System.err.println("Failed to save WAV file: " + e.getMessage());
+    }
   }
 
   private LiveAudioConversationAsync() {}
