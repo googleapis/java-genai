@@ -28,25 +28,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Tool to retrieve knowledge from the File Search Stores. */
+/**
+ * The FileSearch tool that retrieves knowledge from Semantic Retrieval corpora. Files are imported
+ * to Semantic Retrieval corpora using the ImportFile API. This data type is not supported in Vertex
+ * AI.
+ */
 @AutoValue
 @JsonDeserialize(builder = FileSearch.Builder.class)
 public abstract class FileSearch extends JsonSerializable {
   /**
-   * The names of the file_search_stores to retrieve from. Example:
+   * Required. The names of the file_search_stores to retrieve from. Example:
    * `fileSearchStores/my-file-search-store-123`
    */
   @JsonProperty("fileSearchStoreNames")
   public abstract Optional<List<String>> fileSearchStoreNames();
 
-  /** The number of file search retrieval chunks to retrieve. */
+  /** Optional. The number of semantic retrieval chunks to retrieve. */
   @JsonProperty("topK")
   public abstract Optional<Integer> topK();
 
-  /**
-   * Metadata filter to apply to the file search retrieval documents. See https://google.aip.dev/160
-   * for the syntax of the filter expression.
-   */
+  /** Optional. Metadata filter to apply to the semantic retrieval documents and chunks. */
   @JsonProperty("metadataFilter")
   public abstract Optional<String> metadataFilter();
 
@@ -71,8 +72,8 @@ public abstract class FileSearch extends JsonSerializable {
     /**
      * Setter for fileSearchStoreNames.
      *
-     * <p>fileSearchStoreNames: The names of the file_search_stores to retrieve from. Example:
-     * `fileSearchStores/my-file-search-store-123`
+     * <p>fileSearchStoreNames: Required. The names of the file_search_stores to retrieve from.
+     * Example: `fileSearchStores/my-file-search-store-123`
      */
     @JsonProperty("fileSearchStoreNames")
     public abstract Builder fileSearchStoreNames(List<String> fileSearchStoreNames);
@@ -80,8 +81,8 @@ public abstract class FileSearch extends JsonSerializable {
     /**
      * Setter for fileSearchStoreNames.
      *
-     * <p>fileSearchStoreNames: The names of the file_search_stores to retrieve from. Example:
-     * `fileSearchStores/my-file-search-store-123`
+     * <p>fileSearchStoreNames: Required. The names of the file_search_stores to retrieve from.
+     * Example: `fileSearchStores/my-file-search-store-123`
      */
     @CanIgnoreReturnValue
     public Builder fileSearchStoreNames(String... fileSearchStoreNames) {
@@ -101,7 +102,7 @@ public abstract class FileSearch extends JsonSerializable {
     /**
      * Setter for topK.
      *
-     * <p>topK: The number of file search retrieval chunks to retrieve.
+     * <p>topK: Optional. The number of semantic retrieval chunks to retrieve.
      */
     @JsonProperty("topK")
     public abstract Builder topK(Integer topK);
@@ -119,8 +120,8 @@ public abstract class FileSearch extends JsonSerializable {
     /**
      * Setter for metadataFilter.
      *
-     * <p>metadataFilter: Metadata filter to apply to the file search retrieval documents. See
-     * https://google.aip.dev/160 for the syntax of the filter expression.
+     * <p>metadataFilter: Optional. Metadata filter to apply to the semantic retrieval documents and
+     * chunks.
      */
     @JsonProperty("metadataFilter")
     public abstract Builder metadataFilter(String metadataFilter);

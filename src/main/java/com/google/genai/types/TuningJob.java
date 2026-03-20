@@ -201,6 +201,14 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("veoTuningSpec")
   public abstract Optional<VeoTuningSpec> veoTuningSpec();
 
+  /** Optional. Spec for creating a distillation dataset. */
+  @JsonProperty("distillationSamplingSpec")
+  public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
+
+  /** Output only. Tuning Job metadata. */
+  @JsonProperty("tuningJobMetadata")
+  public abstract Optional<TuningJobMetadata> tuningJobMetadata();
+
   /** Instantiates a builder for TuningJob. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -986,6 +994,65 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearVeoTuningSpec() {
       return veoTuningSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for distillationSamplingSpec.
+     *
+     * <p>distillationSamplingSpec: Optional. Spec for creating a distillation dataset.
+     */
+    @JsonProperty("distillationSamplingSpec")
+    public abstract Builder distillationSamplingSpec(
+        DistillationSamplingSpec distillationSamplingSpec);
+
+    /**
+     * Setter for distillationSamplingSpec builder.
+     *
+     * <p>distillationSamplingSpec: Optional. Spec for creating a distillation dataset.
+     */
+    @CanIgnoreReturnValue
+    public Builder distillationSamplingSpec(
+        DistillationSamplingSpec.Builder distillationSamplingSpecBuilder) {
+      return distillationSamplingSpec(distillationSamplingSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationSamplingSpec(
+        Optional<DistillationSamplingSpec> distillationSamplingSpec);
+
+    /** Clears the value of distillationSamplingSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationSamplingSpec() {
+      return distillationSamplingSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningJobMetadata.
+     *
+     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
+     */
+    @JsonProperty("tuningJobMetadata")
+    public abstract Builder tuningJobMetadata(TuningJobMetadata tuningJobMetadata);
+
+    /**
+     * Setter for tuningJobMetadata builder.
+     *
+     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningJobMetadata(TuningJobMetadata.Builder tuningJobMetadataBuilder) {
+      return tuningJobMetadata(tuningJobMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningJobMetadata(Optional<TuningJobMetadata> tuningJobMetadata);
+
+    /** Clears the value of tuningJobMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningJobMetadata() {
+      return tuningJobMetadata(Optional.empty());
     }
 
     public abstract TuningJob build();

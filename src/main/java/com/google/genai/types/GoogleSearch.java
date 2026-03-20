@@ -28,11 +28,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Tool to support web search. */
+/** GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google. */
 @AutoValue
 @JsonDeserialize(builder = GoogleSearch.Builder.class)
 public abstract class GoogleSearch extends JsonSerializable {
-  /** Different types of search that can be enabled on the GoogleSearch tool. */
+  /** Optional. The set of search types to enable. If not set, web search is enabled by default. */
   @JsonProperty("searchTypes")
   public abstract Optional<SearchTypes> searchTypes();
 
@@ -78,7 +78,8 @@ public abstract class GoogleSearch extends JsonSerializable {
     /**
      * Setter for searchTypes.
      *
-     * <p>searchTypes: Different types of search that can be enabled on the GoogleSearch tool.
+     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
+     * enabled by default.
      */
     @JsonProperty("searchTypes")
     public abstract Builder searchTypes(SearchTypes searchTypes);
@@ -86,7 +87,8 @@ public abstract class GoogleSearch extends JsonSerializable {
     /**
      * Setter for searchTypes builder.
      *
-     * <p>searchTypes: Different types of search that can be enabled on the GoogleSearch tool.
+     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
+     * enabled by default.
      */
     @CanIgnoreReturnValue
     public Builder searchTypes(SearchTypes.Builder searchTypesBuilder) {

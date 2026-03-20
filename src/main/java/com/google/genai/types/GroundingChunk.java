@@ -50,7 +50,7 @@ public abstract class GroundingChunk extends JsonSerializable {
 
   /**
    * A grounding chunk from a data source retrieved by a retrieval tool, such as Vertex AI Search.
-   * See the `RetrievedContext` message for details. This field is not supported in Gemini API.
+   * See the `RetrievedContext` message for details
    */
   @JsonProperty("retrievedContext")
   public abstract Optional<GroundingChunkRetrievedContext> retrievedContext();
@@ -146,8 +146,7 @@ public abstract class GroundingChunk extends JsonSerializable {
      * Setter for retrievedContext.
      *
      * <p>retrievedContext: A grounding chunk from a data source retrieved by a retrieval tool, such
-     * as Vertex AI Search. See the `RetrievedContext` message for details. This field is not
-     * supported in Gemini API.
+     * as Vertex AI Search. See the `RetrievedContext` message for details
      */
     @JsonProperty("retrievedContext")
     public abstract Builder retrievedContext(GroundingChunkRetrievedContext retrievedContext);
@@ -156,8 +155,7 @@ public abstract class GroundingChunk extends JsonSerializable {
      * Setter for retrievedContext builder.
      *
      * <p>retrievedContext: A grounding chunk from a data source retrieved by a retrieval tool, such
-     * as Vertex AI Search. See the `RetrievedContext` message for details. This field is not
-     * supported in Gemini API.
+     * as Vertex AI Search. See the `RetrievedContext` message for details
      */
     @CanIgnoreReturnValue
     public Builder retrievedContext(

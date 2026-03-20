@@ -26,15 +26,15 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Tool to support computer use. */
+/** Different types of search that can be enabled on the GoogleSearch tool. */
 @AutoValue
 @JsonDeserialize(builder = SearchTypes.Builder.class)
 public abstract class SearchTypes extends JsonSerializable {
-  /** Setting this field enables web search. Only text results are returned. */
+  /** Optional. Setting this field enables web search. Only text results are returned. */
   @JsonProperty("webSearch")
   public abstract Optional<WebSearch> webSearch();
 
-  /** Setting this field enables image search. Image bytes are returned. */
+  /** Optional. Setting this field enables image search. Image bytes are returned. */
   @JsonProperty("imageSearch")
   public abstract Optional<ImageSearch> imageSearch();
 
@@ -59,7 +59,8 @@ public abstract class SearchTypes extends JsonSerializable {
     /**
      * Setter for webSearch.
      *
-     * <p>webSearch: Setting this field enables web search. Only text results are returned.
+     * <p>webSearch: Optional. Setting this field enables web search. Only text results are
+     * returned.
      */
     @JsonProperty("webSearch")
     public abstract Builder webSearch(WebSearch webSearch);
@@ -67,7 +68,8 @@ public abstract class SearchTypes extends JsonSerializable {
     /**
      * Setter for webSearch builder.
      *
-     * <p>webSearch: Setting this field enables web search. Only text results are returned.
+     * <p>webSearch: Optional. Setting this field enables web search. Only text results are
+     * returned.
      */
     @CanIgnoreReturnValue
     public Builder webSearch(WebSearch.Builder webSearchBuilder) {
@@ -87,7 +89,7 @@ public abstract class SearchTypes extends JsonSerializable {
     /**
      * Setter for imageSearch.
      *
-     * <p>imageSearch: Setting this field enables image search. Image bytes are returned.
+     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
      */
     @JsonProperty("imageSearch")
     public abstract Builder imageSearch(ImageSearch imageSearch);
@@ -95,7 +97,7 @@ public abstract class SearchTypes extends JsonSerializable {
     /**
      * Setter for imageSearch builder.
      *
-     * <p>imageSearch: Setting this field enables image search. Image bytes are returned.
+     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
      */
     @CanIgnoreReturnValue
     public Builder imageSearch(ImageSearch.Builder imageSearchBuilder) {

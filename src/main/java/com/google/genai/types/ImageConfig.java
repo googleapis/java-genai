@@ -51,10 +51,10 @@ public abstract class ImageConfig extends JsonSerializable {
   public abstract Optional<String> personGeneration();
 
   /**
-   * Controls whether prominent people (celebrities) generation is allowed. If used with
+   * Optional. Controls whether prominent people (celebrities) generation is allowed. If used with
    * personGeneration, personGeneration enum would take precedence. For instance, if ALLOW_NONE is
    * set, all person generation would be blocked. If this field is unspecified, the default behavior
-   * is to allow prominent people.
+   * is to allow prominent people. This field is not supported in Gemini API.
    */
   @JsonProperty("prominentPeople")
   public abstract Optional<ProminentPeople> prominentPeople();
@@ -70,7 +70,10 @@ public abstract class ImageConfig extends JsonSerializable {
   @JsonProperty("outputCompressionQuality")
   public abstract Optional<Integer> outputCompressionQuality();
 
-  /** Optional. The image output format for generated images. */
+  /**
+   * Optional. The image output format for generated images. This field is not supported in Gemini
+   * API.
+   */
   @JsonProperty("imageOutputOptions")
   public abstract Optional<ImageConfigImageOutputOptions> imageOutputOptions();
 
@@ -152,10 +155,11 @@ public abstract class ImageConfig extends JsonSerializable {
     /**
      * Setter for prominentPeople.
      *
-     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
-     * used with personGeneration, personGeneration enum would take precedence. For instance, if
-     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
-     * default behavior is to allow prominent people.
+     * <p>prominentPeople: Optional. Controls whether prominent people (celebrities) generation is
+     * allowed. If used with personGeneration, personGeneration enum would take precedence. For
+     * instance, if ALLOW_NONE is set, all person generation would be blocked. If this field is
+     * unspecified, the default behavior is to allow prominent people. This field is not supported
+     * in Gemini API.
      */
     @JsonProperty("prominentPeople")
     public abstract Builder prominentPeople(ProminentPeople prominentPeople);
@@ -173,10 +177,11 @@ public abstract class ImageConfig extends JsonSerializable {
     /**
      * Setter for prominentPeople given a known enum.
      *
-     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
-     * used with personGeneration, personGeneration enum would take precedence. For instance, if
-     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
-     * default behavior is to allow prominent people.
+     * <p>prominentPeople: Optional. Controls whether prominent people (celebrities) generation is
+     * allowed. If used with personGeneration, personGeneration enum would take precedence. For
+     * instance, if ALLOW_NONE is set, all person generation would be blocked. If this field is
+     * unspecified, the default behavior is to allow prominent people. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder prominentPeople(ProminentPeople.Known knownType) {
@@ -186,10 +191,11 @@ public abstract class ImageConfig extends JsonSerializable {
     /**
      * Setter for prominentPeople given a string.
      *
-     * <p>prominentPeople: Controls whether prominent people (celebrities) generation is allowed. If
-     * used with personGeneration, personGeneration enum would take precedence. For instance, if
-     * ALLOW_NONE is set, all person generation would be blocked. If this field is unspecified, the
-     * default behavior is to allow prominent people.
+     * <p>prominentPeople: Optional. Controls whether prominent people (celebrities) generation is
+     * allowed. If used with personGeneration, personGeneration enum would take precedence. For
+     * instance, if ALLOW_NONE is set, all person generation would be blocked. If this field is
+     * unspecified, the default behavior is to allow prominent people. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder prominentPeople(String prominentPeople) {
@@ -237,7 +243,8 @@ public abstract class ImageConfig extends JsonSerializable {
     /**
      * Setter for imageOutputOptions.
      *
-     * <p>imageOutputOptions: Optional. The image output format for generated images.
+     * <p>imageOutputOptions: Optional. The image output format for generated images. This field is
+     * not supported in Gemini API.
      */
     @JsonProperty("imageOutputOptions")
     public abstract Builder imageOutputOptions(ImageConfigImageOutputOptions imageOutputOptions);
@@ -245,7 +252,8 @@ public abstract class ImageConfig extends JsonSerializable {
     /**
      * Setter for imageOutputOptions builder.
      *
-     * <p>imageOutputOptions: Optional. The image output format for generated images.
+     * <p>imageOutputOptions: Optional. The image output format for generated images. This field is
+     * not supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder imageOutputOptions(

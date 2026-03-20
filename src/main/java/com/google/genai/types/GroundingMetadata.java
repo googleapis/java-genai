@@ -67,8 +67,7 @@ public abstract class GroundingMetadata extends JsonSerializable {
 
   /**
    * Optional. Output only. A token that can be used to render a Google Maps widget with the
-   * contextual data. This field is populated only when the grounding source is Google Maps. This
-   * field is not supported in Gemini API.
+   * contextual data. This field is populated only when the grounding source is Google Maps.
    */
   @JsonProperty("googleMapsWidgetContextToken")
   public abstract Optional<String> googleMapsWidgetContextToken();
@@ -316,7 +315,7 @@ public abstract class GroundingMetadata extends JsonSerializable {
      *
      * <p>googleMapsWidgetContextToken: Optional. Output only. A token that can be used to render a
      * Google Maps widget with the contextual data. This field is populated only when the grounding
-     * source is Google Maps. This field is not supported in Gemini API.
+     * source is Google Maps.
      */
     @JsonProperty("googleMapsWidgetContextToken")
     public abstract Builder googleMapsWidgetContextToken(String googleMapsWidgetContextToken);

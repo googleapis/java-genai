@@ -64,6 +64,10 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
   @JsonProperty("uri")
   public abstract Optional<String> uri();
 
+  /** Output only. Route information. */
+  @JsonProperty("route")
+  public abstract Optional<GroundingChunkMapsRoute> route();
+
   /** Instantiates a builder for GroundingChunkMaps. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -191,6 +195,34 @@ public abstract class GroundingChunkMaps extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUri() {
       return uri(Optional.empty());
+    }
+
+    /**
+     * Setter for route.
+     *
+     * <p>route: Output only. Route information.
+     */
+    @JsonProperty("route")
+    public abstract Builder route(GroundingChunkMapsRoute route);
+
+    /**
+     * Setter for route builder.
+     *
+     * <p>route: Output only. Route information.
+     */
+    @CanIgnoreReturnValue
+    public Builder route(GroundingChunkMapsRoute.Builder routeBuilder) {
+      return route(routeBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder route(Optional<GroundingChunkMapsRoute> route);
+
+    /** Clears the value of route field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRoute() {
+      return route(Optional.empty());
     }
 
     public abstract GroundingChunkMaps build();

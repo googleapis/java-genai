@@ -55,6 +55,10 @@ public abstract class LogprobsResult extends JsonSerializable {
   @JsonProperty("topCandidates")
   public abstract Optional<List<LogprobsResultTopCandidates>> topCandidates();
 
+  /** Sum of log probabilities for all tokens. This field is not supported in Vertex AI. */
+  @JsonProperty("logProbabilitySum")
+  public abstract Optional<Float> logProbabilitySum();
+
   /** Instantiates a builder for LogprobsResult. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -162,6 +166,25 @@ public abstract class LogprobsResult extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTopCandidates() {
       return topCandidates(Optional.empty());
+    }
+
+    /**
+     * Setter for logProbabilitySum.
+     *
+     * <p>logProbabilitySum: Sum of log probabilities for all tokens. This field is not supported in
+     * Vertex AI.
+     */
+    @JsonProperty("logProbabilitySum")
+    public abstract Builder logProbabilitySum(Float logProbabilitySum);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder logProbabilitySum(Optional<Float> logProbabilitySum);
+
+    /** Clears the value of logProbabilitySum field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLogProbabilitySum() {
+      return logProbabilitySum(Optional.empty());
     }
 
     public abstract LogprobsResult build();

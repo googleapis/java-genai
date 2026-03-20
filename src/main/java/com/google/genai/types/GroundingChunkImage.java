@@ -27,10 +27,9 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * A piece of evidence that comes from an image search result.
- *
- * <p>It contains the URI of the image search result and the URI of the image. This is used to
- * provide the user with a link to the source of the information.
+ * An `Image` chunk is a piece of evidence that comes from an image search result. It contains the
+ * URI of the image search result and the URI of the image. This is used to provide the user with a
+ * link to the source of the information.
  */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkImage.Builder.class)

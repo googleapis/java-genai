@@ -23,17 +23,21 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** State for the lifecycle of a Document. */
+/** Output only. Current state of the `Document`. This enum is not supported in Vertex AI. */
 public class DocumentState {
 
   /** Enum representing the known values for DocumentState. */
   public enum Known {
+    /** The default value. This value is used if the state is omitted. */
     STATE_UNSPECIFIED,
 
+    /** Some `Chunks` of the `Document` are being processed (embedding and vector storage). */
     STATE_PENDING,
 
+    /** All `Chunks` of the `Document` is processed and available for querying. */
     STATE_ACTIVE,
 
+    /** Some `Chunks` of the `Document` failed processing. */
     STATE_FAILED,
 
     DOCUMENT_STATE_UNSPECIFIED

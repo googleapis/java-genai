@@ -30,11 +30,11 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Transcription.Builder.class)
 public abstract class Transcription extends JsonSerializable {
-  /** Transcription text. */
+  /** Optional. Transcription text. */
   @JsonProperty("text")
   public abstract Optional<String> text();
 
-  /** The bool indicates the end of the transcription. */
+  /** Optional. The bool indicates the end of the transcription. */
   @JsonProperty("finished")
   public abstract Optional<Boolean> finished();
 
@@ -59,7 +59,7 @@ public abstract class Transcription extends JsonSerializable {
     /**
      * Setter for text.
      *
-     * <p>text: Transcription text.
+     * <p>text: Optional. Transcription text.
      */
     @JsonProperty("text")
     public abstract Builder text(String text);
@@ -77,7 +77,7 @@ public abstract class Transcription extends JsonSerializable {
     /**
      * Setter for finished.
      *
-     * <p>finished: The bool indicates the end of the transcription.
+     * <p>finished: Optional. The bool indicates the end of the transcription.
      */
     @JsonProperty("finished")
     public abstract Builder finished(boolean finished);

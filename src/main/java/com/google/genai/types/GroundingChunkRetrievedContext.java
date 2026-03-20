@@ -18,18 +18,21 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Context retrieved from a data source to ground the model's response. This is used when a
- * retrieval tool fetches information from a user-provided corpus or a public dataset. This data
- * type is not supported in Gemini API.
+ * retrieval tool fetches information from a user-provided corpus or a public dataset.
  */
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkRetrievedContext.Builder.class)
@@ -38,13 +41,14 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
    * Output only. The full resource name of the referenced Vertex AI Search document. This is used
    * to identify the specific document that was retrieved. The format is
    * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`.
+   * This field is not supported in Gemini API.
    */
   @JsonProperty("documentName")
   public abstract Optional<String> documentName();
 
   /**
    * Additional context for a Retrieval-Augmented Generation (RAG) retrieval result. This is
-   * populated only when the RAG retrieval tool is used.
+   * populated only when the RAG retrieval tool is used. This field is not supported in Gemini API.
    */
   @JsonProperty("ragChunk")
   public abstract Optional<RagChunk> ragChunk();
@@ -60,6 +64,20 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   /** The URI of the retrieved data source. */
   @JsonProperty("uri")
   public abstract Optional<String> uri();
+
+  /**
+   * Optional. User-provided metadata about the retrieved context. This field is not supported in
+   * Vertex AI.
+   */
+  @JsonProperty("customMetadata")
+  public abstract Optional<List<GroundingChunkCustomMetadata>> customMetadata();
+
+  /**
+   * Optional. Name of the `FileSearchStore` containing the document. Example:
+   * `fileSearchStores/123`. This field is not supported in Vertex AI.
+   */
+  @JsonProperty("fileSearchStore")
+  public abstract Optional<String> fileSearchStore();
 
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
   @ExcludeFromGeneratedCoverageReport
@@ -87,6 +105,7 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
      * <p>documentName: Output only. The full resource name of the referenced Vertex AI Search
      * document. This is used to identify the specific document that was retrieved. The format is
      * `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`.
+     * This field is not supported in Gemini API.
      */
     @JsonProperty("documentName")
     public abstract Builder documentName(String documentName);
@@ -105,7 +124,8 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
      * Setter for ragChunk.
      *
      * <p>ragChunk: Additional context for a Retrieval-Augmented Generation (RAG) retrieval result.
-     * This is populated only when the RAG retrieval tool is used.
+     * This is populated only when the RAG retrieval tool is used. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("ragChunk")
     public abstract Builder ragChunk(RagChunk ragChunk);
@@ -114,7 +134,8 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
      * Setter for ragChunk builder.
      *
      * <p>ragChunk: Additional context for a Retrieval-Augmented Generation (RAG) retrieval result.
-     * This is populated only when the RAG retrieval tool is used.
+     * This is populated only when the RAG retrieval tool is used. This field is not supported in
+     * Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder ragChunk(RagChunk.Builder ragChunkBuilder) {
@@ -183,6 +204,69 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUri() {
       return uri(Optional.empty());
+    }
+
+    /**
+     * Setter for customMetadata.
+     *
+     * <p>customMetadata: Optional. User-provided metadata about the retrieved context. This field
+     * is not supported in Vertex AI.
+     */
+    @JsonProperty("customMetadata")
+    public abstract Builder customMetadata(List<GroundingChunkCustomMetadata> customMetadata);
+
+    /**
+     * Setter for customMetadata.
+     *
+     * <p>customMetadata: Optional. User-provided metadata about the retrieved context. This field
+     * is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder customMetadata(GroundingChunkCustomMetadata... customMetadata) {
+      return customMetadata(Arrays.asList(customMetadata));
+    }
+
+    /**
+     * Setter for customMetadata builder.
+     *
+     * <p>customMetadata: Optional. User-provided metadata about the retrieved context. This field
+     * is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder customMetadata(GroundingChunkCustomMetadata.Builder... customMetadataBuilders) {
+      return customMetadata(
+          Arrays.asList(customMetadataBuilders).stream()
+              .map(GroundingChunkCustomMetadata.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customMetadata(Optional<List<GroundingChunkCustomMetadata>> customMetadata);
+
+    /** Clears the value of customMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomMetadata() {
+      return customMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for fileSearchStore.
+     *
+     * <p>fileSearchStore: Optional. Name of the `FileSearchStore` containing the document. Example:
+     * `fileSearchStores/123`. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("fileSearchStore")
+    public abstract Builder fileSearchStore(String fileSearchStore);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fileSearchStore(Optional<String> fileSearchStore);
+
+    /** Clears the value of fileSearchStore field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFileSearchStore() {
+      return fileSearchStore(Optional.empty());
     }
 
     public abstract GroundingChunkRetrievedContext build();

@@ -1682,6 +1682,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"partMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
+    }
+
     return toObject;
   }
 
@@ -1771,6 +1778,10 @@ final class LiveConverters {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
       throw new IllegalArgumentException("toolResponse parameter is not supported in Vertex AI.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
+      throw new IllegalArgumentException("partMetadata parameter is not supported in Vertex AI.");
     }
 
     return toObject;

@@ -52,10 +52,7 @@ public abstract class EvaluateDatasetRun extends JsonSerializable {
   @JsonProperty("evaluationRun")
   public abstract Optional<String> evaluationRun();
 
-  /**
-   * Output only. The operation ID of the evaluation run. Format:
-   * `projects/{project}/locations/{location}/operations/{operation_id}`.
-   */
+  /** Output only. Deprecated: The updated architecture uses evaluation_run instead. */
   @JsonProperty("operationName")
   public abstract Optional<String> operationName();
 
@@ -177,8 +174,8 @@ public abstract class EvaluateDatasetRun extends JsonSerializable {
     /**
      * Setter for operationName.
      *
-     * <p>operationName: Output only. The operation ID of the evaluation run. Format:
-     * `projects/{project}/locations/{location}/operations/{operation_id}`.
+     * <p>operationName: Output only. Deprecated: The updated architecture uses evaluation_run
+     * instead.
      */
     @JsonProperty("operationName")
     public abstract Builder operationName(String operationName);

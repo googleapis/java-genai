@@ -1355,6 +1355,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"usageMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"modelStatus"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"modelStatus"},
+          Common.getValueByPath(fromObject, new String[] {"modelStatus"}));
+    }
+
     return toObject;
   }
 
@@ -1813,6 +1820,13 @@ public final class Batches {
           toObject,
           new String[] {"toolResponse"},
           Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"partMetadata"},
+          Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
     }
 
     return toObject;

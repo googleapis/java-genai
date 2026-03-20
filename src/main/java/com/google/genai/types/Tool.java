@@ -58,11 +58,16 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("computerUse")
   public abstract Optional<ComputerUse> computerUse();
 
-  /** Optional. Tool to retrieve knowledge from the File Search Stores. */
+  /**
+   * Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic Retrieval corpora.
+   * This field is not supported in Vertex AI.
+   */
   @JsonProperty("fileSearch")
   public abstract Optional<FileSearch> fileSearch();
 
-  /** Enables the model to execute Google Search as part of generation. */
+  /**
+   * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
+   */
   @JsonProperty("googleSearch")
   public abstract Optional<GoogleSearch> googleSearch();
 
@@ -227,7 +232,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for fileSearch.
      *
-     * <p>fileSearch: Optional. Tool to retrieve knowledge from the File Search Stores.
+     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
+     * Retrieval corpora. This field is not supported in Vertex AI.
      */
     @JsonProperty("fileSearch")
     public abstract Builder fileSearch(FileSearch fileSearch);
@@ -235,7 +241,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for fileSearch builder.
      *
-     * <p>fileSearch: Optional. Tool to retrieve knowledge from the File Search Stores.
+     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
+     * Retrieval corpora. This field is not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder fileSearch(FileSearch.Builder fileSearchBuilder) {
@@ -255,7 +262,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for googleSearch.
      *
-     * <p>googleSearch: Enables the model to execute Google Search as part of generation.
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
      */
     @JsonProperty("googleSearch")
     public abstract Builder googleSearch(GoogleSearch googleSearch);
@@ -263,7 +271,8 @@ public abstract class Tool extends JsonSerializable {
     /**
      * Setter for googleSearch builder.
      *
-     * <p>googleSearch: Enables the model to execute Google Search as part of generation.
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
      */
     @CanIgnoreReturnValue
     public Builder googleSearch(GoogleSearch.Builder googleSearchBuilder) {

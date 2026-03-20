@@ -36,25 +36,32 @@ import java.util.Optional;
 @JsonDeserialize(builder = Document.Builder.class)
 public abstract class Document extends JsonSerializable {
   /**
-   * The resource name of the Document. Example:
-   * fileSearchStores/file-search-store-foo/documents/documents-bar
+   * Immutable. Identifier. The `Document` resource name. The ID (name excluding the
+   * "fileSearchStores/&#42;/documents/" prefix) can contain up to 40 characters that are lowercase
+   * alphanumeric or dashes (-). The ID cannot start or end with a dash. If the name is empty on
+   * create, a unique name will be derived from `display_name` along with a 12 character random
+   * suffix. Example:
+   * `fileSearchStores/{file_search_store_id}/documents/my-awesome-doc-123a456b789c`
    */
   @JsonProperty("name")
   public abstract Optional<String> name();
 
-  /** The human-readable display name for the Document. */
+  /**
+   * Optional. The human-readable display name for the `Document`. The display name must be no more
+   * than 512 characters in length, including spaces. Example: "Semantic Retriever Documentation".
+   */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
 
-  /** The current state of the Document. */
+  /** Output only. Current state of the `Document`. */
   @JsonProperty("state")
   public abstract Optional<DocumentState> state();
 
-  /** The size of the Document in bytes. */
+  /** Output only. The size of raw bytes ingested into the Document. */
   @JsonProperty("sizeBytes")
   public abstract Optional<Long> sizeBytes();
 
-  /** The MIME type of the Document. */
+  /** Output only. The mime type of the Document. */
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
@@ -94,8 +101,12 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for name.
      *
-     * <p>name: The resource name of the Document. Example:
-     * fileSearchStores/file-search-store-foo/documents/documents-bar
+     * <p>name: Immutable. Identifier. The `Document` resource name. The ID (name excluding the
+     * "fileSearchStores/&#42;/documents/" prefix) can contain up to 40 characters that are
+     * lowercase alphanumeric or dashes (-). The ID cannot start or end with a dash. If the name is
+     * empty on create, a unique name will be derived from `display_name` along with a 12 character
+     * random suffix. Example:
+     * `fileSearchStores/{file_search_store_id}/documents/my-awesome-doc-123a456b789c`
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
@@ -113,7 +124,9 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for displayName.
      *
-     * <p>displayName: The human-readable display name for the Document.
+     * <p>displayName: Optional. The human-readable display name for the `Document`. The display
+     * name must be no more than 512 characters in length, including spaces. Example: "Semantic
+     * Retriever Documentation".
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
@@ -131,7 +144,7 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for state.
      *
-     * <p>state: The current state of the Document.
+     * <p>state: Output only. Current state of the `Document`.
      */
     @JsonProperty("state")
     public abstract Builder state(DocumentState state);
@@ -149,7 +162,7 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for state given a known enum.
      *
-     * <p>state: The current state of the Document.
+     * <p>state: Output only. Current state of the `Document`.
      */
     @CanIgnoreReturnValue
     public Builder state(DocumentState.Known knownType) {
@@ -159,7 +172,7 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for state given a string.
      *
-     * <p>state: The current state of the Document.
+     * <p>state: Output only. Current state of the `Document`.
      */
     @CanIgnoreReturnValue
     public Builder state(String state) {
@@ -169,7 +182,7 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for sizeBytes.
      *
-     * <p>sizeBytes: The size of the Document in bytes.
+     * <p>sizeBytes: Output only. The size of raw bytes ingested into the Document.
      */
     @JsonProperty("sizeBytes")
     public abstract Builder sizeBytes(Long sizeBytes);
@@ -187,7 +200,7 @@ public abstract class Document extends JsonSerializable {
     /**
      * Setter for mimeType.
      *
-     * <p>mimeType: The MIME type of the Document.
+     * <p>mimeType: Output only. The mime type of the Document.
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);

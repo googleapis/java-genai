@@ -113,6 +113,15 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("toolResponse")
   public abstract Optional<ToolResponse> toolResponse();
 
+  /**
+   * Custom metadata associated with the Part. Agents using genai.Part as content representation may
+   * need to keep track of the additional information. For example it can be name of a file/source
+   * from which the Part originates or a way to multiplex multiple Part streams. This field is not
+   * supported in Vertex AI.
+   */
+  @JsonProperty("partMetadata")
+  public abstract Optional<Map<String, Object>> partMetadata();
+
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -483,6 +492,27 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearToolResponse() {
       return toolResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for partMetadata.
+     *
+     * <p>partMetadata: Custom metadata associated with the Part. Agents using genai.Part as content
+     * representation may need to keep track of the additional information. For example it can be
+     * name of a file/source from which the Part originates or a way to multiplex multiple Part
+     * streams. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("partMetadata")
+    public abstract Builder partMetadata(Map<String, Object> partMetadata);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder partMetadata(Optional<Map<String, Object>> partMetadata);
+
+    /** Clears the value of partMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPartMetadata() {
+      return partMetadata(Optional.empty());
     }
 
     public abstract Part build();

@@ -53,6 +53,13 @@ public abstract class GroundingSupport extends JsonSerializable {
   @JsonProperty("segment")
   public abstract Optional<Segment> segment();
 
+  /**
+   * Indices into the `rendered_parts` field of the `GroundingMetadata` message. These indices
+   * specify which rendered parts are associated with this support message.
+   */
+  @JsonProperty("renderedParts")
+  public abstract Optional<List<Integer>> renderedParts();
+
   /** Instantiates a builder for GroundingSupport. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -163,6 +170,36 @@ public abstract class GroundingSupport extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSegment() {
       return segment(Optional.empty());
+    }
+
+    /**
+     * Setter for renderedParts.
+     *
+     * <p>renderedParts: Indices into the `rendered_parts` field of the `GroundingMetadata` message.
+     * These indices specify which rendered parts are associated with this support message.
+     */
+    @JsonProperty("renderedParts")
+    public abstract Builder renderedParts(List<Integer> renderedParts);
+
+    /**
+     * Setter for renderedParts.
+     *
+     * <p>renderedParts: Indices into the `rendered_parts` field of the `GroundingMetadata` message.
+     * These indices specify which rendered parts are associated with this support message.
+     */
+    @CanIgnoreReturnValue
+    public Builder renderedParts(Integer... renderedParts) {
+      return renderedParts(Arrays.asList(renderedParts));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder renderedParts(Optional<List<Integer>> renderedParts);
+
+    /** Clears the value of renderedParts field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRenderedParts() {
+      return renderedParts(Optional.empty());
     }
 
     public abstract GroundingSupport build();

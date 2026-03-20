@@ -23,11 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
-/**
- * Standard web search for grounding and related configurations.
- *
- * <p>Only text results are returned.
- */
+/** Standard web search for grounding and related configurations. Only text results are returned. */
 @AutoValue
 @JsonDeserialize(builder = WebSearch.Builder.class)
 public abstract class WebSearch extends JsonSerializable {
