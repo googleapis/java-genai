@@ -34,7 +34,7 @@ import java.util.Optional;
 public abstract class DeleteBatchJobParameters extends JsonSerializable {
   /**
    * A fully-qualified BatchJob resource name or ID. Example:
-   * "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+   * "projects/.../locations/.../batchPredictionJobs/123" or "123" when project and location are
    * initialized in the client.
    */
   @JsonProperty("name")
@@ -66,7 +66,7 @@ public abstract class DeleteBatchJobParameters extends JsonSerializable {
      * Setter for name.
      *
      * <p>name: A fully-qualified BatchJob resource name or ID. Example:
-     * "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
+     * "projects/.../locations/.../batchPredictionJobs/123" or "123" when project and location are
      * initialized in the client.
      */
     @JsonProperty("name")
