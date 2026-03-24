@@ -984,7 +984,11 @@ public final class Tunings {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          Common.getValueByPath(fromObject, new String[] {"speechConfig"}));
+          speechConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"stopSequences"}) != null) {
@@ -1210,6 +1214,108 @@ public final class Tunings {
         result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode multiSpeakerVoiceConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(
+            speakerVoiceConfigToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode replicatedVoiceConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mimeType"},
+          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceSampleAudio"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceSampleAudio"},
+          Common.getValueByPath(fromObject, new String[] {"voiceSampleAudio"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode speakerVoiceConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"speaker"},
+          Common.getValueByPath(fromObject, new String[] {"speaker"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          voiceConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              toObject,
+              rootObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode speechConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"voiceConfig"},
+          voiceConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              toObject,
+              rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCode"},
+          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"multiSpeakerVoiceConfig"},
+          multiSpeakerVoiceConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
+              toObject,
+              rootObject));
     }
 
     return toObject;
@@ -1699,6 +1805,31 @@ public final class Tunings {
           toObject,
           new String[] {"validationDatasetUri"},
           Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode voiceConfigToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"replicatedVoiceConfig"},
+          replicatedVoiceConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"})),
+              toObject,
+              rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"prebuiltVoiceConfig"},
+          Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}));
     }
 
     return toObject;

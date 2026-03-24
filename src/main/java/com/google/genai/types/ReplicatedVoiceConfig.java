@@ -26,15 +26,18 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** ReplicatedVoiceConfig is used to configure replicated voice. */
+/** The configuration for the replicated voice to use. */
 @AutoValue
 @JsonDeserialize(builder = ReplicatedVoiceConfig.Builder.class)
 public abstract class ReplicatedVoiceConfig extends JsonSerializable {
-  /** The mime type of the replicated voice. */
+  /**
+   * The mimetype of the voice sample. The only currently supported value is `audio/wav`. This
+   * represents 16-bit signed little-endian wav data, with a 24kHz sampling rate.
+   */
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
-  /** The sample audio of the replicated voice. */
+  /** The sample of the custom voice. */
   @JsonProperty("voiceSampleAudio")
   public abstract Optional<byte[]> voiceSampleAudio();
 
@@ -59,7 +62,9 @@ public abstract class ReplicatedVoiceConfig extends JsonSerializable {
     /**
      * Setter for mimeType.
      *
-     * <p>mimeType: The mime type of the replicated voice.
+     * <p>mimeType: The mimetype of the voice sample. The only currently supported value is
+     * `audio/wav`. This represents 16-bit signed little-endian wav data, with a 24kHz sampling
+     * rate.
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
@@ -77,7 +82,7 @@ public abstract class ReplicatedVoiceConfig extends JsonSerializable {
     /**
      * Setter for voiceSampleAudio.
      *
-     * <p>voiceSampleAudio: The sample audio of the replicated voice.
+     * <p>voiceSampleAudio: The sample of the custom voice.
      */
     @JsonProperty("voiceSampleAudio")
     public abstract Builder voiceSampleAudio(byte[] voiceSampleAudio);

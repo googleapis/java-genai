@@ -26,11 +26,11 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** Config for speech generation and transcription. */
 @AutoValue
 @JsonDeserialize(builder = SpeechConfig.Builder.class)
 public abstract class SpeechConfig extends JsonSerializable {
-  /** Configuration for the voice of the response. */
+  /** The configuration in case of single-voice output. */
   @JsonProperty("voiceConfig")
   public abstract Optional<VoiceConfig> voiceConfig();
 
@@ -66,7 +66,7 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig.
      *
-     * <p>voiceConfig: Configuration for the voice of the response.
+     * <p>voiceConfig: The configuration in case of single-voice output.
      */
     @JsonProperty("voiceConfig")
     public abstract Builder voiceConfig(VoiceConfig voiceConfig);
@@ -74,7 +74,7 @@ public abstract class SpeechConfig extends JsonSerializable {
     /**
      * Setter for voiceConfig builder.
      *
-     * <p>voiceConfig: Configuration for the voice of the response.
+     * <p>voiceConfig: The configuration in case of single-voice output.
      */
     @CanIgnoreReturnValue
     public Builder voiceConfig(VoiceConfig.Builder voiceConfigBuilder) {

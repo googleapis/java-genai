@@ -26,11 +26,14 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** The configuration for the voice to use. */
 @AutoValue
 @JsonDeserialize(builder = VoiceConfig.Builder.class)
 public abstract class VoiceConfig extends JsonSerializable {
-  /** If true, the model will use a replicated voice for the response. */
+  /**
+   * The configuration for a replicated voice, which is a clone of a user's voice that can be used
+   * for speech synthesis. If this is unset, a default voice is used.
+   */
   @JsonProperty("replicatedVoiceConfig")
   public abstract Optional<ReplicatedVoiceConfig> replicatedVoiceConfig();
 
@@ -59,7 +62,9 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for replicatedVoiceConfig.
      *
-     * <p>replicatedVoiceConfig: If true, the model will use a replicated voice for the response.
+     * <p>replicatedVoiceConfig: The configuration for a replicated voice, which is a clone of a
+     * user's voice that can be used for speech synthesis. If this is unset, a default voice is
+     * used.
      */
     @JsonProperty("replicatedVoiceConfig")
     public abstract Builder replicatedVoiceConfig(ReplicatedVoiceConfig replicatedVoiceConfig);
@@ -67,7 +72,9 @@ public abstract class VoiceConfig extends JsonSerializable {
     /**
      * Setter for replicatedVoiceConfig builder.
      *
-     * <p>replicatedVoiceConfig: If true, the model will use a replicated voice for the response.
+     * <p>replicatedVoiceConfig: The configuration for a replicated voice, which is a clone of a
+     * user's voice that can be used for speech synthesis. If this is unset, a default voice is
+     * used.
      */
     @CanIgnoreReturnValue
     public Builder replicatedVoiceConfig(
