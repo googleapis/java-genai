@@ -28,6 +28,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Configuration for generating videos. */
@@ -118,6 +119,10 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   /** Compression quality of the generated videos. */
   @JsonProperty("compressionQuality")
   public abstract Optional<VideoCompressionQuality> compressionQuality();
+
+  /** User specified labels to track billing usage. */
+  @JsonProperty("labels")
+  public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for GenerateVideosConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -530,6 +535,24 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder compressionQuality(String compressionQuality) {
       return compressionQuality(new VideoCompressionQuality(compressionQuality));
+    }
+
+    /**
+     * Setter for labels.
+     *
+     * <p>labels: User specified labels to track billing usage.
+     */
+    @JsonProperty("labels")
+    public abstract Builder labels(Map<String, String> labels);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder labels(Optional<Map<String, String>> labels);
+
+    /** Clears the value of labels field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLabels() {
+      return labels(Optional.empty());
     }
 
     public abstract GenerateVideosConfig build();

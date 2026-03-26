@@ -2555,6 +2555,10 @@ public final class Models {
           "compressionQuality parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
+      throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -2687,6 +2691,13 @@ public final class Models {
           parentObject,
           new String[] {"parameters", "compressionQuality"},
           Common.getValueByPath(fromObject, new String[] {"compressionQuality"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"labels"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"labels"},
+          Common.getValueByPath(fromObject, new String[] {"labels"}));
     }
 
     return toObject;
