@@ -57,6 +57,7 @@ import org.jspecify.annotations.Nullable;
 @InternalApi
 public abstract class ApiClient implements AutoCloseable {
 
+
   // {x-version-update-start:google-genai:released}
   private static final String SDK_VERSION = "1.44.0";
   // {x-version-update-end:google-genai:released}
@@ -236,6 +237,9 @@ public abstract class ApiClient implements AutoCloseable {
             && locationValue.equals("global")
             && !customBaseUrl.isPresent())) {
       initHttpOptionsBuilder.baseUrl("https://aiplatform.googleapis.com");
+    } else if (locationValue != null && locationValue.equals("us") && !customBaseUrl.isPresent()) {
+      initHttpOptionsBuilder.baseUrl(
+          String.format("https://aiplatform.%s.rep.googleapis.com", locationValue));
     } else if (locationValue != null && !customBaseUrl.isPresent()) {
       initHttpOptionsBuilder.baseUrl(
           String.format("https://%s-aiplatform.googleapis.com", locationValue));
@@ -710,6 +714,9 @@ public abstract class ApiClient implements AutoCloseable {
         defaultHttpOptionsBuilder.baseUrl(customBaseUrl.get());
       } else if (apiKey.isPresent() || location.get().equalsIgnoreCase("global")) {
         defaultHttpOptionsBuilder.baseUrl("https://aiplatform.googleapis.com");
+      } else if (location.get().equals("us")) {
+        defaultHttpOptionsBuilder.baseUrl(
+            String.format("https://aiplatform.%s.rep.googleapis.com", location.get()));
       } else {
         defaultHttpOptionsBuilder.baseUrl(
             String.format("https://%s-aiplatform.googleapis.com", location.get()));

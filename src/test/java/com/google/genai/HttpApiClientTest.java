@@ -44,7 +44,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -681,6 +680,22 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testInitHttpClientVertexWithUsLocationAndCustomBaseUrl() throws Exception {
+    HttpOptions httpOptions = HttpOptions.builder().baseUrl("https://custom-url.com").build();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of("us"),
+            Optional.of(CREDENTIALS),
+            Optional.of(httpOptions),
+            Optional.empty());
+
+    assertEquals("us", client.location());
+    assertEquals(Optional.of("https://custom-url.com"), client.httpOptions.baseUrl());
+  }
+
+  @Test
   public void testInitHttpClientVertexWithApiKey() throws Exception {
     HttpApiClient client =
         new HttpApiClient(
@@ -816,6 +831,20 @@ public class HttpApiClientTest {
     assertNull(client.apiKey());
     assertTrue(client.vertexAI());
     assertEquals("https://location-aiplatform.googleapis.com", client.httpOptions.baseUrl().get());
+  }
+
+  @Test
+  public void testInitHttpClientVertexUsLocation() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of("us"),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("https://aiplatform.us.rep.googleapis.com", client.httpOptions.baseUrl().get());
   }
 
   @Test
@@ -1639,13 +1668,16 @@ public class HttpApiClientTest {
 
     byte[] payload = new byte[]{1, 2, 3};
     // 2. The server returns an absolute Google URL during the resumable upload initialization
-    String absoluteGoogleUrl = "https://generativelanguage.googleapis.com/upload/v1beta/files?uploadType=resumable";
+    String absoluteGoogleUrl =
+        "https://generativelanguage.googleapis.com/upload/v1beta/files?uploadType=resumable";
 
     // 3. We call the byte[] overload used by UploadClient
     Request request = client.buildRequest("POST", absoluteGoogleUrl, payload, Optional.empty());
 
     // 4. Verify the scheme and authority were rewritten, but path and query remained intact
-    assertEquals("https://my-proxy.company.com/upload/v1beta/files?uploadType=resumable", request.url().toString());
+    assertEquals(
+        "https://my-proxy.company.com/upload/v1beta/files?uploadType=resumable",
+        request.url().toString());
   }
 
 
