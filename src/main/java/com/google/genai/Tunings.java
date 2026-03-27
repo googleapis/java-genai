@@ -419,6 +419,13 @@ public final class Tunings {
             new String[] {"supervisedTuningSpec", "tuningMode"},
             Common.getValueByPath(fromObject, new String[] {"tuningMode"}));
       }
+    } else if (discriminatorValueTuningMode.equals("DISTILLATION")) {
+      if (Common.getValueByPath(fromObject, new String[] {"tuningMode"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"distillationSpec", "tuningMode"},
+            Common.getValueByPath(fromObject, new String[] {"tuningMode"}));
+      }
     }
     if (Common.getValueByPath(fromObject, new String[] {"customBaseModel"}) != null) {
       Common.setValueByPath(
@@ -438,6 +445,13 @@ public final class Tunings {
             new String[] {"supervisedTuningSpec", "hyperParameters", "batchSize"},
             Common.getValueByPath(fromObject, new String[] {"batchSize"}));
       }
+    } else if (discriminatorValueBatchSize.equals("DISTILLATION")) {
+      if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"distillationSpec", "hyperParameters", "batchSize"},
+            Common.getValueByPath(fromObject, new String[] {"batchSize"}));
+      }
     }
 
     JsonNode discriminatorLearningRate =
@@ -451,6 +465,13 @@ public final class Tunings {
         Common.setValueByPath(
             parentObject,
             new String[] {"supervisedTuningSpec", "hyperParameters", "learningRate"},
+            Common.getValueByPath(fromObject, new String[] {"learningRate"}));
+      }
+    } else if (discriminatorValueLearningRate.equals("DISTILLATION")) {
+      if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"distillationSpec", "hyperParameters", "learningRate"},
             Common.getValueByPath(fromObject, new String[] {"learningRate"}));
       }
     }

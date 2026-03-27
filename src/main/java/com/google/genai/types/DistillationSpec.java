@@ -81,6 +81,10 @@ public abstract class DistillationSpec extends JsonSerializable {
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
 
+  /** Tuning mode for tuning. */
+  @JsonProperty("tuningMode")
+  public abstract Optional<TuningMode> tuningMode();
+
   /** Instantiates a builder for DistillationSpec. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -258,6 +262,44 @@ public abstract class DistillationSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearValidationDatasetUri() {
       return validationDatasetUri(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningMode.
+     *
+     * <p>tuningMode: Tuning mode for tuning.
+     */
+    @JsonProperty("tuningMode")
+    public abstract Builder tuningMode(TuningMode tuningMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningMode(Optional<TuningMode> tuningMode);
+
+    /** Clears the value of tuningMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningMode() {
+      return tuningMode(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningMode given a known enum.
+     *
+     * <p>tuningMode: Tuning mode for tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(TuningMode.Known knownType) {
+      return tuningMode(new TuningMode(knownType));
+    }
+
+    /**
+     * Setter for tuningMode given a string.
+     *
+     * <p>tuningMode: Tuning mode for tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningMode(String tuningMode) {
+      return tuningMode(new TuningMode(tuningMode));
     }
 
     public abstract DistillationSpec build();
