@@ -1714,7 +1714,41 @@ public class HttpApiClientTest {
     assertTrue(client.httpClient().dispatcher().executorService().isShutdown());
     assertEquals(0, client.httpClient().connectionPool().connectionCount());
     if (client.interactionsClientOptions.streamHandlerExecutor() instanceof ExecutorService) {
-      assertTrue(((ExecutorService) client.interactionsClientOptions.streamHandlerExecutor()).isShutdown());
+      assertTrue(
+          ((ExecutorService) client.interactionsClientOptions.streamHandlerExecutor())
+              .isShutdown());
     }
+  }
+
+  @Test
+  public void testCloseClient_withExecutorService() {
+    ExecutorService customExecutor = java.util.concurrent.Executors.newSingleThreadExecutor();
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.of(ClientOptions.builder().streamHandlerExecutor(customExecutor).build()));
+
+    client.close();
+
+    assertTrue(customExecutor.isShutdown());
+  }
+
+  @Test
+  public void testStreamHandlerExecutorPassthrough() {
+    java.util.concurrent.Executor customExecutor = Runnable::run;
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.of(ClientOptions.builder().streamHandlerExecutor(customExecutor).build()));
+
+    assertEquals(customExecutor, client.interactionsClientOptions.streamHandlerExecutor());
   }
 }
