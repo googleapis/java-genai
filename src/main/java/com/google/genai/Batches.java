@@ -1302,6 +1302,13 @@ public final class Batches {
           "modelArmorConfig parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"serviceTier"},
+          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
+    }
+
     return toObject;
   }
 
