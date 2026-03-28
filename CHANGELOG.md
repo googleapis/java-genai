@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.45.0](https://github.com/googleapis/java-genai/compare/v1.44.0...v1.45.0) (2026-03-28)
+
+
+### Features
+
+* Add consent_audio and voice_consent_signature and AsyncSession.setup_complete ([959c01b](https://github.com/googleapis/java-genai/commit/959c01bb6ea75d4a498a6781f52d8741f3bade94))
+* Add labels field to Veo configs ([86f235a](https://github.com/googleapis/java-genai/commit/86f235af5751234c433236b93c92dc1d05e479bc))
+* Add model_status to GenerateContentResponse (Gemini API only) ([6c35249](https://github.com/googleapis/java-genai/commit/6c352493d503fb98e7738af3ea88ad7556b19a10))
+* Add part_metadata in Part (Gemini API only) ([6c35249](https://github.com/googleapis/java-genai/commit/6c352493d503fb98e7738af3ea88ad7556b19a10))
+* Add service tier to GenerateContent. ([5f61a16](https://github.com/googleapis/java-genai/commit/5f61a168d697588c2878461976cb31912cee9b3c))
+* **genai:** add TURN_INCLUDES_AUDIO_ACTIVITY_AND_ALL_VIDEO to TurnCoverage ([dbc4c33](https://github.com/googleapis/java-genai/commit/dbc4c33887d8d66cca0e474fde5faa8e98e13802))
+* support hyperparameters in distillation tuning ([fdedc74](https://github.com/googleapis/java-genai/commit/fdedc744dc3d447e94859c59379748286066353c))
+* Support rendered_parts in GroundingSupport ([6c35249](https://github.com/googleapis/java-genai/commit/6c352493d503fb98e7738af3ea88ad7556b19a10))
+
+
+### Bug Fixes
+
+* support us region routing ([3296bfe](https://github.com/googleapis/java-genai/commit/3296bfe392dc685a499a3c1c8477b23674089d77))
+
 ## [1.44.0](https://github.com/googleapis/java-genai/compare/v1.43.0...v1.44.0) (2026-03-18)
 
 
