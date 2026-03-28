@@ -5,7 +5,7 @@
 
 ### Features
 
-* [Python] Add consent_audio and voice_consent_signature and AsyncSession.setup_complete ([959c01b](https://github.com/googleapis/java-genai/commit/959c01bb6ea75d4a498a6781f52d8741f3bade94))
+* Add consent_audio and voice_consent_signature and AsyncSession.setup_complete ([959c01b](https://github.com/googleapis/java-genai/commit/959c01bb6ea75d4a498a6781f52d8741f3bade94))
 * Add labels field to Veo configs ([86f235a](https://github.com/googleapis/java-genai/commit/86f235af5751234c433236b93c92dc1d05e479bc))
 * Add model_status to GenerateContentResponse (Gemini API only) ([6c35249](https://github.com/googleapis/java-genai/commit/6c352493d503fb98e7738af3ea88ad7556b19a10))
 * Add part_metadata in Part (Gemini API only) ([6c35249](https://github.com/googleapis/java-genai/commit/6c352493d503fb98e7738af3ea88ad7556b19a10))
