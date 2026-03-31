@@ -29,16 +29,36 @@ public class ServiceTier {
   /** Enum representing the known values for ServiceTier. */
   public enum Known {
     /** Default service tier, which is standard. */
-    SERVICE_TIER_UNSPECIFIED,
+    UNSPECIFIED("unspecified"),
 
     /** Flex service tier. */
-    SERVICE_TIER_FLEX,
+    FLEX("flex"),
 
     /** Standard service tier. */
-    SERVICE_TIER_STANDARD,
+    STANDARD("standard"),
 
     /** Priority service tier. */
-    SERVICE_TIER_PRIORITY
+    PRIORITY("priority"),
+
+    SERVICE_TIER_UNSPECIFIED;
+    private final String value;
+
+    Known() {
+      this.value = this.name();
+    }
+
+    Known(String value) {
+      this.value = value;
+    }
+
+    public String value() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return value;
+    }
   }
 
   private Known serviceTierEnum;

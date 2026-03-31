@@ -239,7 +239,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("modelArmorConfig")
   public abstract Optional<ModelArmorConfig> modelArmorConfig();
 
-  /** The service tier to use for the request. For example, SERVICE_TIER_FLEX. */
+  /** The service tier to use for the request. For example, ServiceTier.FLEX. */
   @JsonProperty("serviceTier")
   public abstract Optional<ServiceTier> serviceTier();
 
@@ -1110,7 +1110,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     /**
      * Setter for serviceTier.
      *
-     * <p>serviceTier: The service tier to use for the request. For example, SERVICE_TIER_FLEX.
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
      */
     @JsonProperty("serviceTier")
     public abstract Builder serviceTier(ServiceTier serviceTier);
@@ -1128,7 +1128,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     /**
      * Setter for serviceTier given a known enum.
      *
-     * <p>serviceTier: The service tier to use for the request. For example, SERVICE_TIER_FLEX.
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
      */
     @CanIgnoreReturnValue
     public Builder serviceTier(ServiceTier.Known knownType) {
@@ -1138,7 +1138,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     /**
      * Setter for serviceTier given a string.
      *
-     * <p>serviceTier: The service tier to use for the request. For example, SERVICE_TIER_FLEX.
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
      */
     @CanIgnoreReturnValue
     public Builder serviceTier(String serviceTier) {

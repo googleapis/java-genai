@@ -29,30 +29,48 @@ public class ImagePromptLanguage {
   /** Enum representing the known values for ImagePromptLanguage. */
   public enum Known {
     /** Auto-detect the language. */
-    AUTO,
+    AUTO("auto"),
 
     /** English */
-    EN,
+    EN("en"),
 
     /** Japanese */
-    JA,
+    JA("ja"),
 
     /** Korean */
-    KO,
+    KO("ko"),
 
     /** Hindi */
-    HI,
+    HI("hi"),
 
     /** Chinese */
-    ZH,
+    ZH("zh"),
 
     /** Portuguese */
-    PT,
+    PT("pt"),
 
     /** Spanish */
-    ES,
+    ES("es"),
 
-    IMAGE_PROMPT_LANGUAGE_UNSPECIFIED
+    IMAGE_PROMPT_LANGUAGE_UNSPECIFIED;
+    private final String value;
+
+    Known() {
+      this.value = this.name();
+    }
+
+    Known(String value) {
+      this.value = value;
+    }
+
+    public String value() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return value;
+    }
   }
 
   private Known imagePromptLanguageEnum;

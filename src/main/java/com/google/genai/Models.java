@@ -1871,8 +1871,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"serviceTier"}))) {
-      throw new IllegalArgumentException("serviceTier parameter is not supported in Vertex AI.");
+    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"serviceTier"},
+          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
     }
 
     return toObject;
