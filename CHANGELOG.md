@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.46.0](https://github.com/googleapis/java-genai/compare/v1.45.0...v1.46.0) (2026-03-31)
+
+
+### Bug Fixes
+
+* Fix service_tier enums. ([d4641e4](https://github.com/googleapis/java-genai/commit/d4641e422c4dff90fc6a62cdbbe3e0d634b64740))
+
 ## [1.45.0](https://github.com/googleapis/java-genai/compare/v1.44.0...v1.45.0) (2026-03-28)
 
 
