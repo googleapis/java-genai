@@ -178,7 +178,7 @@
   "methods":[{"name":"apiKey","parameterTypes":[] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"credentials","parameterTypes":[] }, {"name":"customBaseUrl","parameterTypes":[] }, {"name":"defaultEnvironmentVariables","parameterTypes":[] }, {"name":"defaultHttpOptions","parameterTypes":["boolean","java.util.Optional","java.util.Optional","java.util.Optional","java.util.Optional"] }, {"name":"getApiKeyFromEnv","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"libraryVersion","parameterTypes":[] }, {"name":"location","parameterTypes":[] }, {"name":"project","parameterTypes":[] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"setDefaultBaseUrls","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"vertexAI","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiClient$MockitoMock$xLcXsAdR",
+  "name":"com.google.genai.ApiClient$MockitoMock$AnEIbcTd",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["java.util.Optional","java.util.Optional","java.util.Optional"] }]
@@ -192,7 +192,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"getBody","parameterTypes":[] }, {"name":"getHeaders","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiResponse$MockitoMock$CDMgN07B",
+  "name":"com.google.genai.ApiResponse$MockitoMock$VemAqjkB",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -613,7 +613,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }]
 },
 {
-  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$6sLnqzkK",
+  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$S7XfQLm7",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -628,7 +628,7 @@
   "methods":[{"name":"body","parameterTypes":[] }, {"name":"close","parameterTypes":[] }, {"name":"headers","parameterTypes":[] }, {"name":"statusCode","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.interactions.core.http.HttpResponse$MockitoMock$AeN27LLx",
+  "name":"com.google.genai.interactions.core.http.HttpResponse$MockitoMock$TVuXkgrU",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -1190,7 +1190,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"audioTimestamp","parameterTypes":[] }, {"name":"automaticFunctionCalling","parameterTypes":[] }, {"name":"cachedContent","parameterTypes":[] }, {"name":"candidateCount","parameterTypes":[] }, {"name":"enableEnhancedCivicAnswers","parameterTypes":[] }, {"name":"frequencyPenalty","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"imageConfig","parameterTypes":[] }, {"name":"labels","parameterTypes":[] }, {"name":"logprobs","parameterTypes":[] }, {"name":"maxOutputTokens","parameterTypes":[] }, {"name":"mediaResolution","parameterTypes":[] }, {"name":"modelArmorConfig","parameterTypes":[] }, {"name":"modelSelectionConfig","parameterTypes":[] }, {"name":"presencePenalty","parameterTypes":[] }, {"name":"responseJsonSchema","parameterTypes":[] }, {"name":"responseLogprobs","parameterTypes":[] }, {"name":"responseMimeType","parameterTypes":[] }, {"name":"responseModalities","parameterTypes":[] }, {"name":"responseSchema","parameterTypes":[] }, {"name":"routingConfig","parameterTypes":[] }, {"name":"safetySettings","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"shouldReturnHttpResponse","parameterTypes":[] }, {"name":"speechConfig","parameterTypes":[] }, {"name":"stopSequences","parameterTypes":[] }, {"name":"systemInstruction","parameterTypes":[] }, {"name":"temperature","parameterTypes":[] }, {"name":"thinkingConfig","parameterTypes":[] }, {"name":"toolConfig","parameterTypes":[] }, {"name":"tools","parameterTypes":[] }, {"name":"topK","parameterTypes":[] }, {"name":"topP","parameterTypes":[] }]
+  "methods":[{"name":"audioTimestamp","parameterTypes":[] }, {"name":"automaticFunctionCalling","parameterTypes":[] }, {"name":"cachedContent","parameterTypes":[] }, {"name":"candidateCount","parameterTypes":[] }, {"name":"enableEnhancedCivicAnswers","parameterTypes":[] }, {"name":"frequencyPenalty","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"imageConfig","parameterTypes":[] }, {"name":"labels","parameterTypes":[] }, {"name":"logprobs","parameterTypes":[] }, {"name":"maxOutputTokens","parameterTypes":[] }, {"name":"mediaResolution","parameterTypes":[] }, {"name":"modelArmorConfig","parameterTypes":[] }, {"name":"modelSelectionConfig","parameterTypes":[] }, {"name":"presencePenalty","parameterTypes":[] }, {"name":"responseJsonSchema","parameterTypes":[] }, {"name":"responseLogprobs","parameterTypes":[] }, {"name":"responseMimeType","parameterTypes":[] }, {"name":"responseModalities","parameterTypes":[] }, {"name":"responseSchema","parameterTypes":[] }, {"name":"routingConfig","parameterTypes":[] }, {"name":"safetySettings","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"serviceTier","parameterTypes":[] }, {"name":"shouldReturnHttpResponse","parameterTypes":[] }, {"name":"speechConfig","parameterTypes":[] }, {"name":"stopSequences","parameterTypes":[] }, {"name":"systemInstruction","parameterTypes":[] }, {"name":"temperature","parameterTypes":[] }, {"name":"thinkingConfig","parameterTypes":[] }, {"name":"toolConfig","parameterTypes":[] }, {"name":"tools","parameterTypes":[] }, {"name":"topK","parameterTypes":[] }, {"name":"topP","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_GenerateContentParameters",
@@ -3134,7 +3134,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"audioTimestamp","parameterTypes":["boolean"] }, {"name":"build","parameterTypes":[] }, {"name":"cachedContent","parameterTypes":["java.lang.String"] }, {"name":"candidateCount","parameterTypes":["java.lang.Integer"] }, {"name":"create","parameterTypes":[] }, {"name":"enableEnhancedCivicAnswers","parameterTypes":["boolean"] }, {"name":"frequencyPenalty","parameterTypes":["java.lang.Float"] }, {"name":"httpOptions","parameterTypes":["com.google.genai.types.HttpOptions"] }, {"name":"imageConfig","parameterTypes":["com.google.genai.types.ImageConfig"] }, {"name":"labels","parameterTypes":["java.util.Map"] }, {"name":"logprobs","parameterTypes":["java.lang.Integer"] }, {"name":"maxOutputTokens","parameterTypes":["java.lang.Integer"] }, {"name":"mediaResolution","parameterTypes":["com.google.genai.types.MediaResolution"] }, {"name":"modelArmorConfig","parameterTypes":["com.google.genai.types.ModelArmorConfig"] }, {"name":"presencePenalty","parameterTypes":["java.lang.Float"] }, {"name":"responseLogprobs","parameterTypes":["boolean"] }, {"name":"responseMimeType","parameterTypes":["java.lang.String"] }, {"name":"responseModalities","parameterTypes":["java.util.List"] }, {"name":"responseSchema","parameterTypes":["com.google.genai.types.Schema"] }, {"name":"safetySettings","parameterTypes":["java.util.List"] }, {"name":"seed","parameterTypes":["java.lang.Integer"] }, {"name":"speechConfig","parameterTypes":["com.google.genai.types.SpeechConfig"] }, {"name":"stopSequences","parameterTypes":["java.util.List"] }, {"name":"systemInstruction","parameterTypes":["com.google.genai.types.Content"] }, {"name":"temperature","parameterTypes":["java.lang.Float"] }, {"name":"thinkingConfig","parameterTypes":["com.google.genai.types.ThinkingConfig"] }, {"name":"toolConfig","parameterTypes":["com.google.genai.types.ToolConfig"] }, {"name":"tools","parameterTypes":["java.util.List"] }, {"name":"topK","parameterTypes":["java.lang.Float"] }, {"name":"topP","parameterTypes":["java.lang.Float"] }]
+  "methods":[{"name":"audioTimestamp","parameterTypes":["boolean"] }, {"name":"build","parameterTypes":[] }, {"name":"cachedContent","parameterTypes":["java.lang.String"] }, {"name":"candidateCount","parameterTypes":["java.lang.Integer"] }, {"name":"create","parameterTypes":[] }, {"name":"enableEnhancedCivicAnswers","parameterTypes":["boolean"] }, {"name":"frequencyPenalty","parameterTypes":["java.lang.Float"] }, {"name":"httpOptions","parameterTypes":["com.google.genai.types.HttpOptions"] }, {"name":"imageConfig","parameterTypes":["com.google.genai.types.ImageConfig"] }, {"name":"labels","parameterTypes":["java.util.Map"] }, {"name":"logprobs","parameterTypes":["java.lang.Integer"] }, {"name":"maxOutputTokens","parameterTypes":["java.lang.Integer"] }, {"name":"mediaResolution","parameterTypes":["com.google.genai.types.MediaResolution"] }, {"name":"modelArmorConfig","parameterTypes":["com.google.genai.types.ModelArmorConfig"] }, {"name":"presencePenalty","parameterTypes":["java.lang.Float"] }, {"name":"responseLogprobs","parameterTypes":["boolean"] }, {"name":"responseMimeType","parameterTypes":["java.lang.String"] }, {"name":"responseModalities","parameterTypes":["java.util.List"] }, {"name":"responseSchema","parameterTypes":["com.google.genai.types.Schema"] }, {"name":"safetySettings","parameterTypes":["java.util.List"] }, {"name":"seed","parameterTypes":["java.lang.Integer"] }, {"name":"serviceTier","parameterTypes":["com.google.genai.types.ServiceTier"] }, {"name":"speechConfig","parameterTypes":["com.google.genai.types.SpeechConfig"] }, {"name":"stopSequences","parameterTypes":["java.util.List"] }, {"name":"systemInstruction","parameterTypes":["com.google.genai.types.Content"] }, {"name":"temperature","parameterTypes":["java.lang.Float"] }, {"name":"thinkingConfig","parameterTypes":["com.google.genai.types.ThinkingConfig"] }, {"name":"toolConfig","parameterTypes":["com.google.genai.types.ToolConfig"] }, {"name":"tools","parameterTypes":["java.util.List"] }, {"name":"topK","parameterTypes":["java.lang.Float"] }, {"name":"topP","parameterTypes":["java.lang.Float"] }]
 },
 {
   "name":"com.google.genai.types.GenerateContentParameters",
@@ -3151,7 +3151,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"automaticFunctionCallingHistory","parameterTypes":["java.util.List"] }, {"name":"build","parameterTypes":[] }, {"name":"candidates","parameterTypes":["java.util.List"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"modelVersion","parameterTypes":["java.lang.String"] }, {"name":"promptFeedback","parameterTypes":["com.google.genai.types.GenerateContentResponsePromptFeedback"] }, {"name":"responseId","parameterTypes":["java.lang.String"] }, {"name":"sdkHttpResponse","parameterTypes":["com.google.genai.types.HttpResponse"] }, {"name":"usageMetadata","parameterTypes":["com.google.genai.types.GenerateContentResponseUsageMetadata"] }]
+  "methods":[{"name":"automaticFunctionCallingHistory","parameterTypes":["java.util.List"] }, {"name":"build","parameterTypes":[] }, {"name":"candidates","parameterTypes":["java.util.List"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"modelStatus","parameterTypes":["com.google.genai.types.ModelStatus"] }, {"name":"modelVersion","parameterTypes":["java.lang.String"] }, {"name":"promptFeedback","parameterTypes":["com.google.genai.types.GenerateContentResponsePromptFeedback"] }, {"name":"responseId","parameterTypes":["java.lang.String"] }, {"name":"sdkHttpResponse","parameterTypes":["com.google.genai.types.HttpResponse"] }, {"name":"usageMetadata","parameterTypes":["com.google.genai.types.GenerateContentResponseUsageMetadata"] }]
 },
 {
   "name":"com.google.genai.types.GenerateContentResponsePromptFeedback$Builder",
@@ -4092,7 +4092,8 @@
   "name":"com.google.genai.types.ModelStatus$Builder",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.MultiSpeakerVoiceConfig",
@@ -4641,6 +4642,13 @@
 },
 {
   "name":"com.google.genai.types.SegmentMode",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }, {"name":"toString","parameterTypes":[] }]
+},
+{
+  "name":"com.google.genai.types.ServiceTier",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
@@ -5521,10 +5529,6 @@
   "methods":[{"name":"getSecurityManager","parameterTypes":[] }]
 },
 {
-  "name":"java.lang.Thread",
-  "fields":[{"name":"threadLocalRandomProbe"}]
-},
-{
   "name":"java.lang.WeakPairMap"
 },
 {
@@ -5733,10 +5737,6 @@
 {
   "name":"java.util.concurrent.atomic.AtomicReference",
   "fields":[{"name":"value"}]
-},
-{
-  "name":"java.util.concurrent.atomic.Striped64",
-  "fields":[{"name":"base"}, {"name":"cellsBusy"}]
 },
 {
   "name":"java.util.function.Consumer",
@@ -6114,7 +6114,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"okhttp3.Call$MockitoMock$lqh313va",
+  "name":"okhttp3.Call$MockitoMock$pWfgBlJj",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6135,7 +6135,7 @@
   "methods":[{"name":"call","parameterTypes":[] }, {"name":"connectTimeoutMillis","parameterTypes":[] }, {"name":"connection","parameterTypes":[] }, {"name":"proceed","parameterTypes":["okhttp3.Request"] }, {"name":"readTimeoutMillis","parameterTypes":[] }, {"name":"request","parameterTypes":[] }, {"name":"withConnectTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withReadTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withWriteTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"writeTimeoutMillis","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.Interceptor$Chain$MockitoMock$Zlat82V5",
+  "name":"okhttp3.Interceptor$Chain$MockitoMock$9Q1vgbXL",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6145,7 +6145,7 @@
   "allDeclaredClasses":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["okhttp3.OkHttpClient$Builder"] }, {"name":"newCall","parameterTypes":["okhttp3.Request"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"newCall","parameterTypes":["okhttp3.Request"] }]
 },
 {
   "name":"okhttp3.ResponseBody",
@@ -6156,7 +6156,7 @@
   "methods":[{"name":"contentLength","parameterTypes":[] }, {"name":"contentType","parameterTypes":[] }, {"name":"source","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.ResponseBody$MockitoMock$Vx6JAqjJ",
+  "name":"okhttp3.ResponseBody$MockitoMock$5RFnsSTE",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6376,7 +6376,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$h9tTjJHO",
+  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$Rv3M5WAm",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
