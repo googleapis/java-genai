@@ -1,7 +1,7 @@
 # Google Gen AI Java SDK
 
 Java idiomatic SDK for the
-[Gemini Developer APIs][gemini-api-doc] and [Vertex AI][vertex-api-doc] APIs.
+[Gemini Developer APIs][gemini-api-doc] and [Gemini Enterprise Agent Platform][vertex-api-doc] APIs.
 
 **Note:** The SDK now has experimental support for the [Interactions API](#interactions-experimental).
 
