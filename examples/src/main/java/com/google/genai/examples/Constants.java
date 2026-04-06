@@ -46,9 +46,6 @@ public final class Constants {
   /** The name of the Imagen ingredients model to be used in the examples. */
   public static final String IMAGEN_INGREDIENTS_MODEL_NAME = "imagen-4.0-ingredients-preview";
 
-  /** The name of the Imagen product recontext model to be used in the examples. */
-  public static final String IMAGEN_RECONTEXT_MODEL_NAME = "imagen-product-recontext-preview-06-30";
-
   /** The name of the Virtual try-on model to be used in the examples. */
   public static final String VIRTUAL_TRY_ON_MODEL_NAME = "virtual-try-on-001";
 
