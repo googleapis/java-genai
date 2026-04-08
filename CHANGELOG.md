@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.47.0](https://github.com/googleapis/java-genai/compare/v1.46.0...v1.47.0) (2026-04-08)
+
+
+### Documentation
+
+* Remove deprecated product recontext model samples from docstrings ([6f73c4a](https://github.com/googleapis/java-genai/commit/6f73c4a996f5ccdc1f2b73000c849cadcdeb8a62))
+
 ## [1.46.0](https://github.com/googleapis/java-genai/compare/v1.45.0...v1.46.0) (2026-04-01)
 
 
