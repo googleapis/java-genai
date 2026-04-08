@@ -275,18 +275,14 @@ public final class AsyncModels {
   /**
    * Asynchronously recontextualizes an image.
    *
-   * <p>There are two types of recontextualization currently supported: 1) Imagen Product Recontext
-   * - Generate images of products in new scenes and contexts. 2) Virtual Try-On: Generate images of
-   * persons modeling fashion products.
+   * <p>There is one type of recontextualization currently supported: 1) Virtual Try-On: Generate
+   * images of persons modeling fashion products.
    *
    * @param model the name of the GenAI model to use for image recontext
    * @param source a {@link com.google.genai.types.RecontextImageSource} An object containing the
-   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is optional
-   *     for product recontext and disallowed for virtual try-on. personImage is required for
-   *     virtual try-on, disallowed for product recontext. productImages is required for both
-   *     product recontext and virtual try-on. Only one product image is supported for virtual
-   *     try-on, and up to 3 product images (different angles of the same product) are supported for
-   *     product recontext.
+   *     source inputs (prompt, personImage, productImages) for image recontext. prompt is behind an
+   *     allowlist. personImage is required. productImages is required. Only one product image is
+   *     supported currently.
    * @param config a {@link com.google.genai.types.RecontextImageConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.RecontextImageResponse} instance that contains the
