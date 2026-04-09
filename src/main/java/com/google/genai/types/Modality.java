@@ -38,7 +38,10 @@ public class Modality {
     IMAGE,
 
     /** Indicates the model should return audio. */
-    AUDIO
+    AUDIO,
+
+    /** Indicates the model should return video. */
+    VIDEO
   }
 
   private Known modalityEnum;

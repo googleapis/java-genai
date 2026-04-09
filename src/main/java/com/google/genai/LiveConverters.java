@@ -850,6 +850,25 @@ final class LiveConverters {
           "explicitVadSignal parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"avatarConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"avatarConfig"},
+          Common.getValueByPath(fromObject, new String[] {"avatarConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"safetySettings"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(safetySettingToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"safetySettings"}, result);
+    }
+
     return toObject;
   }
 
@@ -944,6 +963,20 @@ final class LiveConverters {
           toObject,
           new String[] {"explicitVadSignal"},
           Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"avatarConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"avatarConfig"},
+          Common.getValueByPath(fromObject, new String[] {"avatarConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"safetySettings"},
+          Common.getValueByPath(fromObject, new String[] {"safetySettings"}));
     }
 
     return toObject;
@@ -1104,6 +1137,25 @@ final class LiveConverters {
           "explicitVadSignal parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"avatarConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "avatarConfig"},
+          Common.getValueByPath(fromObject, new String[] {"avatarConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"safetySettings"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(safetySettingToMldev(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(parentObject, new String[] {"setup", "safetySettings"}, result);
+    }
+
     return toObject;
   }
 
@@ -1253,6 +1305,20 @@ final class LiveConverters {
           parentObject,
           new String[] {"setup", "explicitVadSignal"},
           Common.getValueByPath(fromObject, new String[] {"explicitVadSignal"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"avatarConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "avatarConfig"},
+          Common.getValueByPath(fromObject, new String[] {"avatarConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "safetySettings"},
+          Common.getValueByPath(fromObject, new String[] {"safetySettings"}));
     }
 
     return toObject;
@@ -1782,6 +1848,30 @@ final class LiveConverters {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
       throw new IllegalArgumentException("partMetadata parameter is not supported in Vertex AI.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"category"},
+          Common.getValueByPath(fromObject, new String[] {"category"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
+      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"threshold"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"threshold"},
+          Common.getValueByPath(fromObject, new String[] {"threshold"}));
     }
 
     return toObject;

@@ -102,6 +102,14 @@ public abstract class LiveClientSetup extends JsonSerializable {
   @JsonProperty("explicitVadSignal")
   public abstract Optional<Boolean> explicitVadSignal();
 
+  /** Configures the avatar model behavior. */
+  @JsonProperty("avatarConfig")
+  public abstract Optional<AvatarConfig> avatarConfig();
+
+  /** Safety settings in the request to block unsafe content in the response. */
+  @JsonProperty("safetySettings")
+  public abstract Optional<List<SafetySetting>> safetySettings();
+
   /** Instantiates a builder for LiveClientSetup. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -457,6 +465,75 @@ public abstract class LiveClientSetup extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExplicitVadSignal() {
       return explicitVadSignal(Optional.empty());
+    }
+
+    /**
+     * Setter for avatarConfig.
+     *
+     * <p>avatarConfig: Configures the avatar model behavior.
+     */
+    @JsonProperty("avatarConfig")
+    public abstract Builder avatarConfig(AvatarConfig avatarConfig);
+
+    /**
+     * Setter for avatarConfig builder.
+     *
+     * <p>avatarConfig: Configures the avatar model behavior.
+     */
+    @CanIgnoreReturnValue
+    public Builder avatarConfig(AvatarConfig.Builder avatarConfigBuilder) {
+      return avatarConfig(avatarConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder avatarConfig(Optional<AvatarConfig> avatarConfig);
+
+    /** Clears the value of avatarConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAvatarConfig() {
+      return avatarConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for safetySettings.
+     *
+     * <p>safetySettings: Safety settings in the request to block unsafe content in the response.
+     */
+    @JsonProperty("safetySettings")
+    public abstract Builder safetySettings(List<SafetySetting> safetySettings);
+
+    /**
+     * Setter for safetySettings.
+     *
+     * <p>safetySettings: Safety settings in the request to block unsafe content in the response.
+     */
+    @CanIgnoreReturnValue
+    public Builder safetySettings(SafetySetting... safetySettings) {
+      return safetySettings(Arrays.asList(safetySettings));
+    }
+
+    /**
+     * Setter for safetySettings builder.
+     *
+     * <p>safetySettings: Safety settings in the request to block unsafe content in the response.
+     */
+    @CanIgnoreReturnValue
+    public Builder safetySettings(SafetySetting.Builder... safetySettingsBuilders) {
+      return safetySettings(
+          Arrays.asList(safetySettingsBuilders).stream()
+              .map(SafetySetting.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder safetySettings(Optional<List<SafetySetting>> safetySettings);
+
+    /** Clears the value of safetySettings field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSafetySettings() {
+      return safetySettings(Optional.empty());
     }
 
     public abstract LiveClientSetup build();

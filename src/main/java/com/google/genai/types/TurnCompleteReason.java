@@ -38,7 +38,79 @@ public class TurnCompleteReason {
     RESPONSE_REJECTED,
 
     /** Needs more input from the user. */
-    NEED_MORE_INPUT
+    NEED_MORE_INPUT,
+
+    /** Input content is prohibited. */
+    PROHIBITED_INPUT_CONTENT,
+
+    /** Input image contains prohibited content. */
+    IMAGE_PROHIBITED_INPUT_CONTENT,
+
+    /** Input text contains prominent person reference. */
+    INPUT_TEXT_CONTAIN_PROMINENT_PERSON_PROHIBITED,
+
+    /** Input image contains celebrity. */
+    INPUT_IMAGE_CELEBRITY,
+
+    /** Input image contains photo realistic child. */
+    INPUT_IMAGE_PHOTO_REALISTIC_CHILD_PROHIBITED,
+
+    /** Input text contains NCII content. */
+    INPUT_TEXT_NCII_PROHIBITED,
+
+    /** Other input safety issue. */
+    INPUT_OTHER,
+
+    /** Input contains IP violation. */
+    INPUT_IP_PROHIBITED,
+
+    /** Input matched blocklist. */
+    BLOCKLIST,
+
+    /** Input is unsafe for image generation. */
+    UNSAFE_PROMPT_FOR_IMAGE_GENERATION,
+
+    /** Generated image failed safety check. */
+    GENERATED_IMAGE_SAFETY,
+
+    /** Generated content failed safety check. */
+    GENERATED_CONTENT_SAFETY,
+
+    /** Generated audio failed safety check. */
+    GENERATED_AUDIO_SAFETY,
+
+    /** Generated video failed safety check. */
+    GENERATED_VIDEO_SAFETY,
+
+    /** Generated content is prohibited. */
+    GENERATED_CONTENT_PROHIBITED,
+
+    /** Generated content matched blocklist. */
+    GENERATED_CONTENT_BLOCKLIST,
+
+    /** Generated image is prohibited. */
+    GENERATED_IMAGE_PROHIBITED,
+
+    /** Generated image contains celebrity. */
+    GENERATED_IMAGE_CELEBRITY,
+
+    /** Generated image contains prominent people detected by rewriter. */
+    GENERATED_IMAGE_PROMINENT_PEOPLE_DETECTED_BY_REWRITER,
+
+    /** Generated image contains identifiable people. */
+    GENERATED_IMAGE_IDENTIFIABLE_PEOPLE,
+
+    /** Generated image contains minors. */
+    GENERATED_IMAGE_MINORS,
+
+    /** Generated image contains IP violation. */
+    OUTPUT_IMAGE_IP_PROHIBITED,
+
+    /** Other generated content issue. */
+    GENERATED_OTHER,
+
+    /** Max regeneration attempts reached. */
+    MAX_REGENERATION_REACHED
   }
 
   private Known turnCompleteReasonEnum;
