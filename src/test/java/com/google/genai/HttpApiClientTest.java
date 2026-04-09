@@ -680,6 +680,22 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testInitHttpClientVertexWithEuLocation() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.empty(),
+            Optional.of(PROJECT),
+            Optional.of("eu"),
+            Optional.of(CREDENTIALS),
+            Optional.empty(),
+            Optional.empty());
+
+    assertEquals("eu", client.location());
+    assertEquals(
+        Optional.of("https://aiplatform.eu.rep.googleapis.com"), client.httpOptions.baseUrl());
+  }
+
+  @Test
   public void testInitHttpClientVertexWithUsLocationAndCustomBaseUrl() throws Exception {
     HttpOptions httpOptions = HttpOptions.builder().baseUrl("https://custom-url.com").build();
     HttpApiClient client =

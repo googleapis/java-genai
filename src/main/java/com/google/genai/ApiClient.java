@@ -68,6 +68,8 @@ public abstract class ApiClient implements AutoCloseable {
   private static final ImmutableSet<String> VALID_HTTP_METHODS =
       ImmutableSet.<String>builder().addAll(METHODS_WITH_BODY).add("GET").add("DELETE").build();
 
+  private static final ImmutableSet<String> MULTI_REGIONAL_LOCATIONS = ImmutableSet.of("us", "eu");
+
   private static Optional<String> geminiBaseUrl = Optional.empty();
   private static Optional<String> vertexBaseUrl = Optional.empty();
 
@@ -236,7 +238,9 @@ public abstract class ApiClient implements AutoCloseable {
             && locationValue.equals("global")
             && !customBaseUrl.isPresent())) {
       initHttpOptionsBuilder.baseUrl("https://aiplatform.googleapis.com");
-    } else if (locationValue != null && locationValue.equals("us") && !customBaseUrl.isPresent()) {
+    } else if (locationValue != null
+        && MULTI_REGIONAL_LOCATIONS.contains(locationValue)
+        && !customBaseUrl.isPresent()) {
       initHttpOptionsBuilder.baseUrl(
           String.format("https://aiplatform.%s.rep.googleapis.com", locationValue));
     } else if (locationValue != null && !customBaseUrl.isPresent()) {
@@ -713,7 +717,7 @@ public abstract class ApiClient implements AutoCloseable {
         defaultHttpOptionsBuilder.baseUrl(customBaseUrl.get());
       } else if (apiKey.isPresent() || location.get().equalsIgnoreCase("global")) {
         defaultHttpOptionsBuilder.baseUrl("https://aiplatform.googleapis.com");
-      } else if (location.get().equals("us")) {
+      } else if (MULTI_REGIONAL_LOCATIONS.contains(location.get())) {
         defaultHttpOptionsBuilder.baseUrl(
             String.format("https://aiplatform.%s.rep.googleapis.com", location.get()));
       } else {
