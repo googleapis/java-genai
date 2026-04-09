@@ -200,7 +200,7 @@ public final class TableTest {
       String msg = " => Test skipped: replay tests are not supported for edit_image";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
-    if (testName.contains("models.embed_content.test_vertex_new_api_inline_pdf")) {
+    if (testName.contains("models.embed_content.test_new_api_inline_pdf")) {
       String msg = " => Test skipped: inline byte deserialization fails";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
