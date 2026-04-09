@@ -194,16 +194,6 @@ public final class TableTest {
       String msg = " => Test skipped: parameters contain unsupported union type";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
-    // Edit image ReferenceImages are not correctly deserialized for replay tests
-    if (testName.contains("models.edit_image")
-        || testName.contains("batches.create.test_with_image_blob")) { // TODO(b/431798111)
-      String msg = " => Test skipped: replay tests are not supported for edit_image";
-      return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
-    }
-    if (testName.contains("models.embed_content.test_new_api_inline_pdf")) {
-      String msg = " => Test skipped: inline byte deserialization fails";
-      return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
-    }
     // TODO(b/457846189): Support models.list filter parameter
     if (testName.contains("models.list.test_tuned_models_with_filter")
         || testName.contains("models.list.test_tuned_models.vertex")) {
@@ -224,7 +214,8 @@ public final class TableTest {
           Object fromValue = fromParameters.getOrDefault(parameterName, null);
           // May throw IllegalArgumentException here
           Object parameter =
-              JsonSerializable.objectMapper.convertValue(fromValue, method.getParameterTypes()[i]);
+              TestUtils.getTestObjectMapper().convertValue(
+                  fromValue, TestUtils.getTestObjectMapper().constructType(method.getGenericParameterTypes()[i]));
           if (method.getName().equals("embedContent") && parameter instanceof List) {
             throw new IllegalArgumentException();
           }
@@ -335,6 +326,38 @@ public final class TableTest {
     ReplaySanitizer.sanitizeMapByPath(
         fromParameters,
         "source.scribbleImage.image.imageBytes",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "[]referenceImages.referenceImage.imageBytes",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "referenceImages.[]referenceImage.imageBytes",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters, "[]contents.[]parts.inlineData.data", new ReplayBase64Sanitizer(), false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "contents.[]parts.inlineData.data",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "[]contents.[]parts.functionResponse.[]parts.inlineData.data",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "contents.[]parts.functionResponse.[]parts.inlineData.data",
+        new ReplayBase64Sanitizer(),
+        false);
+    ReplaySanitizer.sanitizeMapByPath(
+        fromParameters,
+        "src.[]inlinedRequests.[]contents.[]parts.inlineData.data",
         new ReplayBase64Sanitizer(),
         false);
     return fromParameters;

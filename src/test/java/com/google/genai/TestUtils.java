@@ -16,10 +16,90 @@
 
 package com.google.genai;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.genai.types.ContentReferenceImage;
+import com.google.genai.types.ControlReferenceImage;
+import com.google.genai.types.MaskReferenceImage;
+import com.google.genai.types.RawReferenceImage;
+import com.google.genai.types.ReferenceImage;
+import com.google.genai.types.StyleReferenceImage;
+import com.google.genai.types.SubjectReferenceImage;
+import java.io.IOException;
+
 public final class TestUtils {
   static final String API_KEY = "api-key";
   static final String PROJECT = "project";
   static final String LOCATION = "location";
+
+  private static ObjectMapper testObjectMapper;
+
+  public static ObjectMapper getTestObjectMapper() {
+    if (testObjectMapper == null) {
+      testObjectMapper = JsonSerializable.objectMapper.copy();
+      SimpleModule customModule = new SimpleModule();
+      customModule.addDeserializer(ReferenceImage.class, new ReferenceImageDeserializer());
+      testObjectMapper.registerModule(customModule);
+    }
+    return testObjectMapper;
+  }
+
+  private static class ReferenceImageDeserializer extends StdDeserializer<ReferenceImage> {
+    public ReferenceImageDeserializer() {
+      this(null);
+    }
+
+    public ReferenceImageDeserializer(Class<?> vc) {
+      super(vc);
+    }
+
+    @Override
+    public ReferenceImage deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException {
+      JsonNode node = jp.getCodec().readTree(jp);
+      if (node.isObject()) {
+        com.fasterxml.jackson.databind.node.ObjectNode objNode =
+            (com.fasterxml.jackson.databind.node.ObjectNode) node;
+        if (objNode.has("maskImageConfig")) {
+          objNode.set("config", objNode.get("maskImageConfig"));
+        }
+        if (objNode.has("styleImageConfig")) {
+          objNode.set("config", objNode.get("styleImageConfig"));
+        }
+        if (objNode.has("controlImageConfig")) {
+          objNode.set("config", objNode.get("controlImageConfig"));
+        }
+        if (objNode.has("subjectImageConfig")) {
+          objNode.set("config", objNode.get("subjectImageConfig"));
+        }
+        if (objNode.has("contentImageConfig")) {
+          objNode.set("config", objNode.get("contentImageConfig"));
+        }
+      }
+
+      if (node.has("referenceType")) {
+        String type = node.get("referenceType").asText();
+        if ("REFERENCE_TYPE_RAW".equals(type)) {
+          return jp.getCodec().treeToValue(node, RawReferenceImage.class);
+        } else if ("REFERENCE_TYPE_MASK".equals(type)) {
+          return jp.getCodec().treeToValue(node, MaskReferenceImage.class);
+        } else if ("REFERENCE_TYPE_CONTROL".equals(type)) {
+          return jp.getCodec().treeToValue(node, ControlReferenceImage.class);
+        } else if ("REFERENCE_TYPE_STYLE".equals(type)) {
+          return jp.getCodec().treeToValue(node, StyleReferenceImage.class);
+        } else if ("REFERENCE_TYPE_SUBJECT".equals(type)) {
+          return jp.getCodec().treeToValue(node, SubjectReferenceImage.class);
+        } else if ("REFERENCE_TYPE_CONTENT".equals(type)) {
+          return jp.getCodec().treeToValue(node, ContentReferenceImage.class);
+        }
+      }
+      throw new IOException("Unknown or missing referenceType for ReferenceImage");
+    }
+  }
 
   private TestUtils() {}
 
