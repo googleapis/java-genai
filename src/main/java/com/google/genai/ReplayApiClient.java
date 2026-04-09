@@ -352,6 +352,14 @@ public final class ReplayApiClient extends ApiClient {
                 entry -> {
                   String newKey = Common.snakeToCamel(entry.getKey());
                   Object normalizedValue = normalizeKeyCase(entry.getValue());
+                  if (newKey.equals("data") || newKey.equals("imageBytes")) {
+                    if (normalizedValue instanceof JsonNode && ((JsonNode) normalizedValue).isTextual()) {
+                      String base64Str = ((JsonNode) normalizedValue).asText();
+                      // Normalize URL-safe Base64 to Standard Base64 and remove padding for comparison
+                      base64Str = base64Str.replace('-', '+').replace('_', '/').replaceAll("=", "");
+                      normalizedValue = JsonSerializable.toJsonNode(base64Str);
+                    }
+                  }
                   normalizedNode.set(newKey, JsonSerializable.toJsonNode(normalizedValue));
                 });
         return normalizedNode;
