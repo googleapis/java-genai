@@ -381,10 +381,7 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"speechConfig"},
-          speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"speechConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"stopSequences"}) != null) {
@@ -1167,11 +1164,8 @@ final class LiveConverters {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "generationConfig", "speechConfig"},
-          speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Transformers.tLiveSpeechConfig(
-                      Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
-              toObject));
+          Transformers.tLiveSpeechConfig(
+              Common.getValueByPath(fromObject, new String[] {"speechConfig"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
@@ -1586,24 +1580,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode multiSpeakerVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(speakerVoiceConfigToVertex(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
@@ -1812,26 +1788,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode replicatedVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceSampleAudio"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceSampleAudio"},
-          Common.getValueByPath(fromObject, new String[] {"voiceSampleAudio"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode sessionResumptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
@@ -1843,62 +1799,6 @@ final class LiveConverters {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"transparent"}))) {
       throw new IllegalArgumentException("transparent parameter is not supported in Gemini API.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speakerVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"speaker"},
-          Common.getValueByPath(fromObject, new String[] {"speaker"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode speechConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"voiceConfig"},
-          voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"languageCode"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"languageCode"},
-          Common.getValueByPath(fromObject, new String[] {"languageCode"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"multiSpeakerVoiceConfig"},
-          multiSpeakerVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
-              toObject));
     }
 
     return toObject;
@@ -2186,29 +2086,6 @@ final class LiveConverters {
           toObject,
           new String[] {"voiceActivityType"},
           Common.getValueByPath(fromObject, new String[] {"type"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode voiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"replicatedVoiceConfig"},
-          replicatedVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prebuiltVoiceConfig"},
-          Common.getValueByPath(fromObject, new String[] {"prebuiltVoiceConfig"}));
     }
 
     return toObject;
