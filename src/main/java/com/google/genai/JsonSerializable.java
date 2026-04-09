@@ -94,6 +94,40 @@ public abstract class JsonSerializable {
     }
   }
 
+  /** Custom Jackson serializer for {@code byte[]} to output URL-safe base64. */
+  static class CustomByteArraySerializer extends JsonSerializer<byte[]> {
+    @Override
+    public void serialize(byte[] value, JsonGenerator gen, SerializerProvider serializers)
+        throws java.io.IOException {
+      if (value == null) {
+        gen.writeNull();
+      } else {
+        gen.writeString(java.util.Base64.getUrlEncoder().encodeToString(value));
+      }
+    }
+  }
+
+  /** Custom Jackson deserializer for {@code byte[]} to support URL-safe base64 strings. */
+  static class CustomByteArrayDeserializer extends JsonDeserializer<byte[]> {
+    @Override
+    public byte[] deserialize(JsonParser p, DeserializationContext ctxt)
+        throws java.io.IOException, JsonProcessingException {
+      String value = p.getValueAsString();
+      if (value == null) {
+        return null;
+      }
+      try {
+        if (value.contains("-") || value.contains("_")) {
+          return java.util.Base64.getUrlDecoder().decode(value);
+        } else {
+          return java.util.Base64.getDecoder().decode(value);
+        }
+      } catch (IllegalArgumentException e) {
+        throw ctxt.weirdStringException(value, byte[].class, "Failed to decode base64 string");
+      }
+    }
+  }
+
   /** Configures the stream read constraints for the JSON parser. */
   private static void configureStreamReadConstraints(int maxReadLength) {
     if (maxReadLength <= 0) {
@@ -116,6 +150,8 @@ public abstract class JsonSerializable {
     SimpleModule customModule = new SimpleModule();
     customModule.addSerializer(java.time.Duration.class, new CustomDurationSerializer());
     customModule.addDeserializer(java.time.Duration.class, new CustomDurationDeserializer());
+    customModule.addSerializer(byte[].class, new CustomByteArraySerializer());
+    customModule.addDeserializer(byte[].class, new CustomByteArrayDeserializer());
 
     // Register JavaTimeModule for other java.time types *before* the custom module
     // This ensures our custom Duration handling takes precedence over the default one
