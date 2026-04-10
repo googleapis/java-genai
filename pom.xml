@@ -328,6 +328,7 @@
               </formats>
               <excludes>
                 <exclude>com/google/genai/types/AutoValue_*.class</exclude>
+                <exclude>com/google/genai/shaded/**/*.class</exclude>
               </excludes>
               <rules>
                 <rule>
@@ -390,6 +391,48 @@
               <goal>compile</goal>
               <goal>test-compile</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>org.jetbrains.kotlin:kotlin-stdlib-jdk8</include>
+                  <include>org.jetbrains.kotlin:kotlin-stdlib</include>
+                  <include>com.fasterxml.jackson.module:jackson-module-kotlin</include>
+                </includes>
+              </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>kotlin.</pattern>
+                  <shadedPattern>com.google.genai.shaded.kotlin.</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml.jackson.module.kotlin.</pattern>
+                  <shadedPattern>com.google.genai.shaded.jackson.module.kotlin.</shadedPattern>
+                </relocation>
+              </relocations>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
           </execution>
         </executions>
       </plugin>
