@@ -965,6 +965,15 @@ public final class Batches {
       throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"documentOcr"}))) {
+      throw new IllegalArgumentException("documentOcr parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}))) {
+      throw new IllegalArgumentException(
+          "audioTrackExtraction parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 

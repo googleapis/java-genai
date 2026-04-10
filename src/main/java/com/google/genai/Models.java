@@ -934,6 +934,15 @@ public final class Models {
       throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"documentOcr"}))) {
+      throw new IllegalArgumentException("documentOcr parameter is not supported in Gemini API.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}))) {
+      throw new IllegalArgumentException(
+          "audioTrackExtraction parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -957,7 +966,7 @@ public final class Models {
       if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
         Common.setValueByPath(
             parentObject,
-            new String[] {"taskType"},
+            new String[] {"embedContentConfig", "taskType"},
             Common.getValueByPath(fromObject, new String[] {"taskType"}));
       }
     }
@@ -977,7 +986,7 @@ public final class Models {
       if (Common.getValueByPath(fromObject, new String[] {"title"}) != null) {
         Common.setValueByPath(
             parentObject,
-            new String[] {"title"},
+            new String[] {"embedContentConfig", "title"},
             Common.getValueByPath(fromObject, new String[] {"title"}));
       }
     }
@@ -999,7 +1008,7 @@ public final class Models {
       if (Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}) != null) {
         Common.setValueByPath(
             parentObject,
-            new String[] {"outputDimensionality"},
+            new String[] {"embedContentConfig", "outputDimensionality"},
             Common.getValueByPath(fromObject, new String[] {"outputDimensionality"}));
       }
     }
@@ -1032,8 +1041,36 @@ public final class Models {
       if (Common.getValueByPath(fromObject, new String[] {"autoTruncate"}) != null) {
         Common.setValueByPath(
             parentObject,
-            new String[] {"autoTruncate"},
+            new String[] {"embedContentConfig", "autoTruncate"},
             Common.getValueByPath(fromObject, new String[] {"autoTruncate"}));
+      }
+    }
+
+    JsonNode discriminatorDocumentOcr =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueDocumentOcr =
+        discriminatorDocumentOcr == null ? "PREDICT" : discriminatorDocumentOcr.asText();
+    if (discriminatorValueDocumentOcr.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"documentOcr"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"embedContentConfig", "documentOcr"},
+            Common.getValueByPath(fromObject, new String[] {"documentOcr"}));
+      }
+    }
+
+    JsonNode discriminatorAudioTrackExtraction =
+        (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
+    String discriminatorValueAudioTrackExtraction =
+        discriminatorAudioTrackExtraction == null
+            ? "PREDICT"
+            : discriminatorAudioTrackExtraction.asText();
+    if (discriminatorValueAudioTrackExtraction.equals("EMBED_CONTENT")) {
+      if (Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"embedContentConfig", "audioTrackExtraction"},
+            Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}));
       }
     }
 

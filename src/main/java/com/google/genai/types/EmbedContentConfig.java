@@ -62,6 +62,20 @@ public abstract class EmbedContentConfig extends JsonSerializable {
   @JsonProperty("autoTruncate")
   public abstract Optional<Boolean> autoTruncate();
 
+  /**
+   * Vertex API only. Whether to enable OCR for document content. Only applicable to Gemini
+   * Embedding 2 models.
+   */
+  @JsonProperty("documentOcr")
+  public abstract Optional<Boolean> documentOcr();
+
+  /**
+   * Vertex API only. Whether to extract audio from video content. Only applicable to Gemini
+   * Embedding 2 models.
+   */
+  @JsonProperty("audioTrackExtraction")
+  public abstract Optional<Boolean> audioTrackExtraction();
+
   /** Instantiates a builder for EmbedContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -200,6 +214,44 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAutoTruncate() {
       return autoTruncate(Optional.empty());
+    }
+
+    /**
+     * Setter for documentOcr.
+     *
+     * <p>documentOcr: Vertex API only. Whether to enable OCR for document content. Only applicable
+     * to Gemini Embedding 2 models.
+     */
+    @JsonProperty("documentOcr")
+    public abstract Builder documentOcr(boolean documentOcr);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder documentOcr(Optional<Boolean> documentOcr);
+
+    /** Clears the value of documentOcr field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDocumentOcr() {
+      return documentOcr(Optional.empty());
+    }
+
+    /**
+     * Setter for audioTrackExtraction.
+     *
+     * <p>audioTrackExtraction: Vertex API only. Whether to extract audio from video content. Only
+     * applicable to Gemini Embedding 2 models.
+     */
+    @JsonProperty("audioTrackExtraction")
+    public abstract Builder audioTrackExtraction(boolean audioTrackExtraction);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTrackExtraction(Optional<Boolean> audioTrackExtraction);
+
+    /** Clears the value of audioTrackExtraction field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTrackExtraction() {
+      return audioTrackExtraction(Optional.empty());
     }
 
     public abstract EmbedContentConfig build();
