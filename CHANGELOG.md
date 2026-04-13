@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.48.0](https://github.com/googleapis/java-genai/compare/v1.47.0...v1.48.0) (2026-04-13)
+
+
+### Features
+
+* [Experimental] Add interactions support. ([abc1ee4](https://github.com/googleapis/java-genai/commit/abc1ee4b47c1af5fe7da9f98ce64fe4c7e3fcec7))
+* Add "eu" as a supported service location for Vertex AI platform. ([78e1bc1](https://github.com/googleapis/java-genai/commit/78e1bc19d154ba5dad4e4986a9d6e7f8a6c585b8))
+* Add Live Avatar new fields ([8e8146a](https://github.com/googleapis/java-genai/commit/8e8146a3a8d6d37e8fe691a6f96e7fd2b055d988))
+* Add webhook_config to batches.create() and models.generate_videos() ([ac0e49e](https://github.com/googleapis/java-genai/commit/ac0e49e187ecbda2b58d10e60161b3ab6fd24667))
+
 ## [1.47.0](https://github.com/googleapis/java-genai/compare/v1.46.0...v1.47.0) (2026-04-08)
 
 
