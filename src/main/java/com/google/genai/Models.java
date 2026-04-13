@@ -2606,6 +2606,13 @@ public final class Models {
       throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"webhookConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"webhookConfig"},
+          Common.getValueByPath(fromObject, new String[] {"webhookConfig"}));
+    }
+
     return toObject;
   }
 
@@ -2745,6 +2752,10 @@ public final class Models {
           parentObject,
           new String[] {"labels"},
           Common.getValueByPath(fromObject, new String[] {"labels"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"webhookConfig"}))) {
+      throw new IllegalArgumentException("webhookConfig parameter is not supported in Vertex AI.");
     }
 
     return toObject;

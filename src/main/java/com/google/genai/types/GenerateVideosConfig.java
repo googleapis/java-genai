@@ -124,6 +124,13 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("labels")
   public abstract Optional<Map<String, String>> labels();
 
+  /**
+   * Webhook configuration for receiving notifications when the video generation operation
+   * completes.
+   */
+  @JsonProperty("webhookConfig")
+  public abstract Optional<WebhookConfig> webhookConfig();
+
   /** Instantiates a builder for GenerateVideosConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -553,6 +560,36 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearLabels() {
       return labels(Optional.empty());
+    }
+
+    /**
+     * Setter for webhookConfig.
+     *
+     * <p>webhookConfig: Webhook configuration for receiving notifications when the video generation
+     * operation completes.
+     */
+    @JsonProperty("webhookConfig")
+    public abstract Builder webhookConfig(WebhookConfig webhookConfig);
+
+    /**
+     * Setter for webhookConfig builder.
+     *
+     * <p>webhookConfig: Webhook configuration for receiving notifications when the video generation
+     * operation completes.
+     */
+    @CanIgnoreReturnValue
+    public Builder webhookConfig(WebhookConfig.Builder webhookConfigBuilder) {
+      return webhookConfig(webhookConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder webhookConfig(Optional<WebhookConfig> webhookConfig);
+
+    /** Clears the value of webhookConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWebhookConfig() {
+      return webhookConfig(Optional.empty());
     }
 
     public abstract GenerateVideosConfig build();

@@ -664,6 +664,13 @@ public final class Batches {
       throw new IllegalArgumentException("dest parameter is not supported in Gemini API.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"webhookConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"batch", "webhookConfig"},
+          Common.getValueByPath(fromObject, new String[] {"webhookConfig"}));
+    }
+
     return toObject;
   }
 
@@ -687,6 +694,10 @@ public final class Batches {
                   Transformers.tBatchJobDestination(
                       Common.getValueByPath(fromObject, new String[] {"dest"}))),
               toObject));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"webhookConfig"}))) {
+      throw new IllegalArgumentException("webhookConfig parameter is not supported in Vertex AI.");
     }
 
     return toObject;

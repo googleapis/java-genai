@@ -45,6 +45,10 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
   @JsonProperty("dest")
   public abstract Optional<BatchJobDestination> dest();
 
+  /** Webhook configuration for receiving notifications when the batch operation completes. */
+  @JsonProperty("webhookConfig")
+  public abstract Optional<WebhookConfig> webhookConfig();
+
   /** Instantiates a builder for CreateBatchJobConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -137,6 +141,36 @@ public abstract class CreateBatchJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearDest() {
       return dest(Optional.empty());
+    }
+
+    /**
+     * Setter for webhookConfig.
+     *
+     * <p>webhookConfig: Webhook configuration for receiving notifications when the batch operation
+     * completes.
+     */
+    @JsonProperty("webhookConfig")
+    public abstract Builder webhookConfig(WebhookConfig webhookConfig);
+
+    /**
+     * Setter for webhookConfig builder.
+     *
+     * <p>webhookConfig: Webhook configuration for receiving notifications when the batch operation
+     * completes.
+     */
+    @CanIgnoreReturnValue
+    public Builder webhookConfig(WebhookConfig.Builder webhookConfigBuilder) {
+      return webhookConfig(webhookConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder webhookConfig(Optional<WebhookConfig> webhookConfig);
+
+    /** Clears the value of webhookConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWebhookConfig() {
+      return webhookConfig(Optional.empty());
     }
 
     public abstract CreateBatchJobConfig build();
