@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Dispatcher;
@@ -1712,5 +1713,8 @@ public class HttpApiClientTest {
 
     assertTrue(client.httpClient().dispatcher().executorService().isShutdown());
     assertEquals(0, client.httpClient().connectionPool().connectionCount());
+    if (client.interactionsClientOptions.streamHandlerExecutor() instanceof ExecutorService) {
+      assertTrue(((ExecutorService) client.interactionsClientOptions.streamHandlerExecutor()).isShutdown());
+    }
   }
 }

@@ -3,6 +3,8 @@
 Java idiomatic SDK for the
 [Gemini Developer APIs][gemini-api-doc] and [Vertex AI][vertex-api-doc] APIs.
 
+**Note:** The SDK now has experimental support for the [Interactions API](#interactions-experimental).
+
 [![Maven][maven-version-image]][maven-version-link]
 [![Javadoc][javadoc-image]][javadoc-link]
 
@@ -971,6 +973,58 @@ public final class FileOperations {
   }
 }
 ```
+
+### Interactions (Experimental)
+
+The `interactions` service provides access to experimental features.
+
+> [!WARNING]
+> This service is experimental and subject to change or removal in future releases.
+
+You can access it via the client:
+```java
+client.interactions
+```
+or asynchronously:
+```java
+client.async.interactions
+```
+
+### Example: Create Interaction
+
+This example demonstrates creating a simple model interaction.
+
+```java
+import com.google.genai.Client;
+import com.google.genai.interactions.models.interactions.Content;
+import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
+import com.google.genai.interactions.models.interactions.Interaction;
+import com.google.genai.interactions.models.interactions.Model;
+
+Client client = new Client();
+
+CreateModelInteractionParams params =
+    CreateModelInteractionParams.builder()
+        .input("Why is the sky blue?")
+        .model(Model.GEMINI_2_5_FLASH)
+        .build();
+
+Interaction interaction = client.interactions.create(params);
+
+System.out.println("Interaction ID: " + interaction.id());
+System.out.println("Status: " + interaction.status());
+
+// Print the text outputs from the interaction.
+interaction.outputs().ifPresent(outputs -> {
+  for (Content output : outputs) {
+    output.text().ifPresent(text -> System.out.println("Output: " + text.text()));
+  }
+});
+```
+
+For more examples, see `interactions*` in the [examples directory](https://github.com/googleapis/java-genai/tree/main/examples/).
+
+
 
 ## Versioning
 

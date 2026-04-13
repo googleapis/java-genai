@@ -19,6 +19,7 @@ package com.google.genai;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,13 +37,11 @@ import okhttp3.ResponseBody;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 class RetryInterceptorTest {
 
-  @Mock Interceptor.Chain chain;
-  @Mock Random random;
+  private Interceptor.Chain chain;
+  private FakeRandom random;
 
   private Request baseRequest;
   private HttpRetryOptions retryOptions;
@@ -51,11 +50,10 @@ class RetryInterceptorTest {
   private Response nonRetryableErrorResponse;
   private IOException ioException;
 
-  private AutoCloseable openMocks;
-
   @BeforeEach
   void setUp() {
-    openMocks = MockitoAnnotations.openMocks(this);
+    chain = mock(Interceptor.Chain.class);
+    random = new FakeRandom();
     // A base request that our mock chain will return
     baseRequest = new Request.Builder().url("http://localhost").build();
     lenient().when(chain.request()).thenReturn(baseRequest);
@@ -85,10 +83,6 @@ class RetryInterceptorTest {
     ioException = new IOException("Network failed");
   }
 
-  @AfterEach
-  void tearDown() throws Exception {
-    openMocks.close();
-  }
 
   /** Helper to create mock OkHttp Responses. */
   private Response createMockResponse(int code) {
@@ -239,7 +233,7 @@ class RetryInterceptorTest {
   @Test
   void testCalculateDelay_FirstAttempt() {
     RetryInterceptor interceptor = new RetryInterceptor(retryOptions, random);
-    when(random.nextDouble()).thenReturn(0.5);
+    random.setNextDouble(0.5);
 
     long delayMs = interceptor.calculateDelay(retryOptions, 1);
 
@@ -249,7 +243,7 @@ class RetryInterceptorTest {
   @Test
   void testCalculateDelay_SecondAttempt() {
     RetryInterceptor interceptor = new RetryInterceptor(retryOptions, random);
-    when(random.nextDouble()).thenReturn(1.0);
+    random.setNextDouble(1.0);
 
     long delayMs = interceptor.calculateDelay(retryOptions, 2);
 
@@ -259,7 +253,7 @@ class RetryInterceptorTest {
   @Test
   void testCalculateDelay_ThirdAttempt_ReachMaxDelay() {
     RetryInterceptor interceptor = new RetryInterceptor(retryOptions, random);
-    when(random.nextDouble()).thenReturn(0.5);
+    random.setNextDouble(0.5);
 
     long delayMs = interceptor.calculateDelay(retryOptions, 3);
 
@@ -269,7 +263,7 @@ class RetryInterceptorTest {
   @Test
   void testCalculateDelay_DefaultValues() {
     RetryInterceptor interceptor = new RetryInterceptor(HttpRetryOptions.builder().build(), random);
-    when(random.nextDouble()).thenReturn(1.0);
+    random.setNextDouble(1.0);
 
     long delayMs = interceptor.calculateDelay(HttpRetryOptions.builder().build(), 2);
 
@@ -281,11 +275,24 @@ class RetryInterceptorTest {
   @Test
   void testCalculateDelay_DefaultValues_MaxDelay() {
     RetryInterceptor interceptor = new RetryInterceptor(HttpRetryOptions.builder().build(), random);
-    when(random.nextDouble()).thenReturn(1.0);
+    random.setNextDouble(1.0);
 
     long delayMs = interceptor.calculateDelay(HttpRetryOptions.builder().build(), 10);
 
     // Default maxDelay is 60.0
     assertEquals(60000L, delayMs);
+  }
+
+  private static class FakeRandom extends Random {
+    private double nextDoubleValue = 0.0;
+
+    void setNextDouble(double value) {
+      this.nextDoubleValue = value;
+    }
+
+    @Override
+    public double nextDouble() {
+      return nextDoubleValue;
+    }
   }
 }

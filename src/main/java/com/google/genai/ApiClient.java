@@ -26,6 +26,10 @@ import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.genai.errors.GenAiIOException;
+// interactions:strip_begin
+import com.google.genai.interactions.core.VertexInfo;
+import com.google.genai.interactions.core.http.HttpClient;
+// interactions:strip_end
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
@@ -77,6 +81,9 @@ public abstract class ApiClient implements AutoCloseable {
   HttpOptions httpOptions;
   final boolean vertexAI;
   final Optional<ClientOptions> clientOptions;
+  // interactions:strip_begin
+  final com.google.genai.interactions.core.ClientOptions interactionsClientOptions;
+  // interactions:strip_end
   final Optional<String> customBaseUrl;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -120,6 +127,9 @@ public abstract class ApiClient implements AutoCloseable {
     }
 
     this.httpClient = createHttpClient(httpOptions, clientOptions);
+    // interactions:strip_begin
+    this.interactionsClientOptions = createInteractionsClientOptions();
+    // interactions:strip_end
   }
 
   ApiClient(
@@ -274,6 +284,9 @@ public abstract class ApiClient implements AutoCloseable {
     }
     this.vertexAI = true;
     this.httpClient = createHttpClient(httpOptions, clientOptions);
+    // interactions:strip_begin
+    this.interactionsClientOptions = createInteractionsClientOptions();
+    // interactions:strip_end
   }
 
   private OkHttpClient createHttpClient(
@@ -363,6 +376,67 @@ public abstract class ApiClient implements AutoCloseable {
           });
     }
   }
+
+  // interactions:strip_begin
+  private com.google.genai.interactions.core.ClientOptions createInteractionsClientOptions() {
+    HttpClient httpClient =
+            // Wrap in a non-closing client so that we can call `.close()` on the client options
+            // below without closing twice.
+            new NonClosingDelegatingHttpClient(
+                    new com.google.genai.interactions.client.okhttp.OkHttpClient(this.httpClient));
+    if (credentials.isPresent()) {
+      httpClient = new GoogleCredentialsHttpClient(httpClient, credentials.get());
+    }
+
+    // NOTE: We purposefully DO NOT set the following:
+    // - `checkJacksonVersionCompatibility`, `jsonMapper`, `sleeper`, `clock`,
+    //   `responseValidation`, and `queryParams` because the defaults are fine and there are no
+    // corresponding fields in
+    //   the main client.
+    // - `timeout` because we override it by passing a custom `OkHttpClient`, which has timeouts
+    // configured.
+    // - `maxRetries` because we don't wrap in `RetryingHttpClient` because retries are configured
+    // on the `OkHttpClient`
+    //   instead.
+    com.google.genai.interactions.core.ClientOptions.Builder builder =
+        com.google.genai.interactions.core.ClientOptions.builder()
+            .httpClient(httpClient)
+            .baseUrl(httpOptions.baseUrl())
+            .apiKey(apiKey);
+
+    // BEGIN_SDK_PRIVATE_ONLY
+    // clientOptions
+    //     .flatMap(ClientOptions::streamHandlerExecutor)
+    //     .ifPresent(
+    //         streamHandlerExecutor -> {
+    //           com.google.genai.interactions.core.ClientOptions.Builder unused =
+    //               builder.streamHandlerExecutor(streamHandlerExecutor);
+    //         });
+    // END_SDK_PRIVATE_ONLY
+
+    httpOptions
+        .apiVersion()
+        .ifPresent(
+            apiVersion -> {
+              com.google.genai.interactions.core.ClientOptions.Builder unused =
+                  builder.apiVersion(apiVersion);
+            });
+    if (vertexAI && project.isPresent() && location.isPresent()) {
+      com.google.genai.interactions.core.ClientOptions.Builder unused =
+          builder.vertexInfo(new VertexInfo(project.get(), location.get()));
+    }
+    httpOptions
+        .headers()
+        .ifPresent(
+            headers ->
+                headers.forEach(
+                    (name, value) -> {
+                      com.google.genai.interactions.core.ClientOptions.Builder unused =
+                          builder.putHeader(name, value);
+                    }));
+    return builder.build();
+  }
+  // interactions:strip_end
 
   /** Builds a HTTP request given the http method, path, and request json string. */
   @SuppressWarnings("unchecked")
@@ -857,6 +931,9 @@ public abstract class ApiClient implements AutoCloseable {
       if (httpClient().cache() != null) {
         httpClient().cache().close();
       }
+      // interactions:strip_begin
+      this.interactionsClientOptions.close();
+      // interactions:strip_end
     } catch (IOException e) {
       throw new GenAiIOException("Failed to close the client.", e);
     }

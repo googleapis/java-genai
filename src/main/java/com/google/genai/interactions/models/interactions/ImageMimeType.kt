@@ -1,0 +1,170 @@
+/*
+* Copyright 2025 Google LLC
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+// File generated from our OpenAPI spec by Stainless.
+
+package com.google.genai.interactions.models.interactions
+
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.google.genai.interactions.core.Enum
+import com.google.genai.interactions.core.JsonField
+import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
+
+/** The mime type of the image. */
+class ImageMimeType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+    /**
+     * Returns this class instance's raw value.
+     *
+     * This is usually only useful if this instance was deserialized from data that doesn't match
+     * any known member, and you want to know that value. For example, if the SDK is on an older
+     * version than the API, then the API may respond with new members that the SDK is unaware of.
+     */
+    @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+    companion object {
+
+        @JvmField val IMAGE_PNG = of("image/png")
+
+        @JvmField val IMAGE_JPEG = of("image/jpeg")
+
+        @JvmField val IMAGE_WEBP = of("image/webp")
+
+        @JvmField val IMAGE_HEIC = of("image/heic")
+
+        @JvmField val IMAGE_HEIF = of("image/heif")
+
+        @JvmStatic fun of(value: String) = ImageMimeType(JsonField.of(value))
+    }
+
+    /** An enum containing [ImageMimeType]'s known values. */
+    enum class Known {
+        IMAGE_PNG,
+        IMAGE_JPEG,
+        IMAGE_WEBP,
+        IMAGE_HEIC,
+        IMAGE_HEIF,
+    }
+
+    /**
+     * An enum containing [ImageMimeType]'s known values, as well as an [_UNKNOWN] member.
+     *
+     * An instance of [ImageMimeType] can contain an unknown value in a couple of cases:
+     * - It was deserialized from data that doesn't match any known member. For example, if the SDK
+     *   is on an older version than the API, then the API may respond with new members that the SDK
+     *   is unaware of.
+     * - It was constructed with an arbitrary value using the [of] method.
+     */
+    enum class Value {
+        IMAGE_PNG,
+        IMAGE_JPEG,
+        IMAGE_WEBP,
+        IMAGE_HEIC,
+        IMAGE_HEIF,
+        /**
+         * An enum member indicating that [ImageMimeType] was instantiated with an unknown value.
+         */
+        _UNKNOWN,
+    }
+
+    /**
+     * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN] if
+     * the class was instantiated with an unknown value.
+     *
+     * Use the [known] method instead if you're certain the value is always known or if you want to
+     * throw for the unknown case.
+     */
+    fun value(): Value =
+        when (this) {
+            IMAGE_PNG -> Value.IMAGE_PNG
+            IMAGE_JPEG -> Value.IMAGE_JPEG
+            IMAGE_WEBP -> Value.IMAGE_WEBP
+            IMAGE_HEIC -> Value.IMAGE_HEIC
+            IMAGE_HEIF -> Value.IMAGE_HEIF
+            else -> Value._UNKNOWN
+        }
+
+    /**
+     * Returns an enum member corresponding to this class instance's value.
+     *
+     * Use the [value] method instead if you're uncertain the value is always known and don't want
+     * to throw for the unknown case.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if this class instance's value is a not a known
+     *   member.
+     */
+    fun known(): Known =
+        when (this) {
+            IMAGE_PNG -> Known.IMAGE_PNG
+            IMAGE_JPEG -> Known.IMAGE_JPEG
+            IMAGE_WEBP -> Known.IMAGE_WEBP
+            IMAGE_HEIC -> Known.IMAGE_HEIC
+            IMAGE_HEIF -> Known.IMAGE_HEIF
+            else -> throw GeminiNextGenApiInvalidDataException("Unknown ImageMimeType: $value")
+        }
+
+    /**
+     * Returns this class instance's primitive wire representation.
+     *
+     * This differs from the [toString] method because that method is primarily for debugging and
+     * generally doesn't throw.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if this class instance's value does not have the
+     *   expected primitive type.
+     */
+    fun asString(): String =
+        _value().asString().orElseThrow {
+            GeminiNextGenApiInvalidDataException("Value is not a String")
+        }
+
+    private var validated: Boolean = false
+
+    fun validate(): ImageMimeType = apply {
+        if (validated) {
+            return@apply
+        }
+
+        known()
+        validated = true
+    }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: GeminiNextGenApiInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is ImageMimeType && value == other.value
+    }
+
+    override fun hashCode() = value.hashCode()
+
+    override fun toString() = value.toString()
+}
