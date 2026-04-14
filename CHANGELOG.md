@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.49.0](https://github.com/googleapis/java-genai/compare/v1.48.0...v1.49.0) (2026-04-14)
+
+
+### Bug Fixes
+
+* fix broken javadoc by switching to dokka. ([4b76baf](https://github.com/googleapis/java-genai/commit/4b76baf1c1f6f8d802169fc138b90098c416bf42))
+* internal workflow change ([b80b142](https://github.com/googleapis/java-genai/commit/b80b1425359952ad1db25a3b5e5606cf5e6c6b5e))
+
 ## [1.48.0](https://github.com/googleapis/java-genai/compare/v1.47.0...v1.48.0) (2026-04-13)
 
 
