@@ -172,6 +172,11 @@
       <artifactId>kotlin-stdlib-jdk8</artifactId>
       <version>${kotlin.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-reflect</artifactId>
+      <version>${kotlin.version}</version>
+    </dependency>
     <!-- interactions SDK dependencies -->
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
@@ -508,6 +513,7 @@
                 <includes>
                   <include>org.jetbrains.kotlin:kotlin-stdlib-jdk8</include>
                   <include>org.jetbrains.kotlin:kotlin-stdlib</include>
+                  <include>org.jetbrains.kotlin:kotlin-reflect</include>
                   <include>com.fasterxml.jackson.module:jackson-module-kotlin</include>
                 </includes>
               </artifactSet>

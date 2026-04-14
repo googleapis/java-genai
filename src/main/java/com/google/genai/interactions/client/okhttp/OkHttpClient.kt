@@ -191,7 +191,9 @@ class OkHttpClient constructor(@JvmSynthetic internal val okHttpClient: okhttp3.
 
     private fun okhttp3.Headers.toHeaders(): Headers {
         val headersBuilder = Headers.builder()
-        forEach { (name, value) -> headersBuilder.put(name, value) }
+        for (i in 0 until size) {
+            headersBuilder.put(name(i), value(i))
+        }
         return headersBuilder.build()
     }
 
