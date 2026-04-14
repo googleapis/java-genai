@@ -38,17 +38,25 @@ class DeepResearchAgentConfig
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val type: JsonValue,
+    private val collaborativePlanning: JsonField<Boolean>,
     private val thinkingSummaries: JsonField<ThinkingSummaries>,
+    private val visualization: JsonField<Visualization>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+        @JsonProperty("collaborative_planning")
+        @ExcludeMissing
+        collaborativePlanning: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("thinking_summaries")
         @ExcludeMissing
         thinkingSummaries: JsonField<ThinkingSummaries> = JsonMissing.of(),
-    ) : this(type, thinkingSummaries, mutableMapOf())
+        @JsonProperty("visualization")
+        @ExcludeMissing
+        visualization: JsonField<Visualization> = JsonMissing.of(),
+    ) : this(type, collaborativePlanning, thinkingSummaries, visualization, mutableMapOf())
 
     /**
      * Expected to always return the following:
@@ -62,6 +70,17 @@ private constructor(
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
 
     /**
+     * Enables human-in-the-loop planning for the Deep Research agent. If set to true, the Deep
+     * Research agent will provide a research plan in its response. The agent will then proceed only
+     * if the user confirms the plan in the next turn. Relevant issue: b/482352502.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun collaborativePlanning(): Optional<Boolean> =
+        collaborativePlanning.getOptional("collaborative_planning")
+
+    /**
      * Whether to include thought summaries in the response.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -69,6 +88,24 @@ private constructor(
      */
     fun thinkingSummaries(): Optional<ThinkingSummaries> =
         thinkingSummaries.getOptional("thinking_summaries")
+
+    /**
+     * Whether to include visualizations in the response.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun visualization(): Optional<Visualization> = visualization.getOptional("visualization")
+
+    /**
+     * Returns the raw JSON value of [collaborativePlanning].
+     *
+     * Unlike [collaborativePlanning], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("collaborative_planning")
+    @ExcludeMissing
+    fun _collaborativePlanning(): JsonField<Boolean> = collaborativePlanning
 
     /**
      * Returns the raw JSON value of [thinkingSummaries].
@@ -79,6 +116,15 @@ private constructor(
     @JsonProperty("thinking_summaries")
     @ExcludeMissing
     fun _thinkingSummaries(): JsonField<ThinkingSummaries> = thinkingSummaries
+
+    /**
+     * Returns the raw JSON value of [visualization].
+     *
+     * Unlike [visualization], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("visualization")
+    @ExcludeMissing
+    fun _visualization(): JsonField<Visualization> = visualization
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -102,13 +148,17 @@ private constructor(
     class Builder internal constructor() {
 
         private var type: JsonValue = JsonValue.from("deep-research")
+        private var collaborativePlanning: JsonField<Boolean> = JsonMissing.of()
         private var thinkingSummaries: JsonField<ThinkingSummaries> = JsonMissing.of()
+        private var visualization: JsonField<Visualization> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(deepResearchAgentConfig: DeepResearchAgentConfig) = apply {
             type = deepResearchAgentConfig.type
+            collaborativePlanning = deepResearchAgentConfig.collaborativePlanning
             thinkingSummaries = deepResearchAgentConfig.thinkingSummaries
+            visualization = deepResearchAgentConfig.visualization
             additionalProperties = deepResearchAgentConfig.additionalProperties.toMutableMap()
         }
 
@@ -126,6 +176,25 @@ private constructor(
          */
         fun type(type: JsonValue) = apply { this.type = type }
 
+        /**
+         * Enables human-in-the-loop planning for the Deep Research agent. If set to true, the Deep
+         * Research agent will provide a research plan in its response. The agent will then proceed
+         * only if the user confirms the plan in the next turn. Relevant issue: b/482352502.
+         */
+        fun collaborativePlanning(collaborativePlanning: Boolean) =
+            collaborativePlanning(JsonField.of(collaborativePlanning))
+
+        /**
+         * Sets [Builder.collaborativePlanning] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.collaborativePlanning] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun collaborativePlanning(collaborativePlanning: JsonField<Boolean>) = apply {
+            this.collaborativePlanning = collaborativePlanning
+        }
+
         /** Whether to include thought summaries in the response. */
         fun thinkingSummaries(thinkingSummaries: ThinkingSummaries) =
             thinkingSummaries(JsonField.of(thinkingSummaries))
@@ -139,6 +208,20 @@ private constructor(
          */
         fun thinkingSummaries(thinkingSummaries: JsonField<ThinkingSummaries>) = apply {
             this.thinkingSummaries = thinkingSummaries
+        }
+
+        /** Whether to include visualizations in the response. */
+        fun visualization(visualization: Visualization) = visualization(JsonField.of(visualization))
+
+        /**
+         * Sets [Builder.visualization] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.visualization] with a well-typed [Visualization] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun visualization(visualization: JsonField<Visualization>) = apply {
+            this.visualization = visualization
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -166,7 +249,13 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): DeepResearchAgentConfig =
-            DeepResearchAgentConfig(type, thinkingSummaries, additionalProperties.toMutableMap())
+            DeepResearchAgentConfig(
+                type,
+                collaborativePlanning,
+                thinkingSummaries,
+                visualization,
+                additionalProperties.toMutableMap(),
+            )
     }
 
     private var validated: Boolean = false
@@ -181,7 +270,9 @@ private constructor(
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
+        collaborativePlanning()
         thinkingSummaries().ifPresent { it.validate() }
+        visualization().ifPresent { it.validate() }
         validated = true
     }
 
@@ -201,7 +292,9 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         type.let { if (it == JsonValue.from("deep-research")) 1 else 0 } +
-            (thinkingSummaries.asKnown().getOrNull()?.validity() ?: 0)
+            (if (collaborativePlanning.asKnown().isPresent) 1 else 0) +
+            (thinkingSummaries.asKnown().getOrNull()?.validity() ?: 0) +
+            (visualization.asKnown().getOrNull()?.validity() ?: 0)
 
     /** Whether to include thought summaries in the response. */
     class ThinkingSummaries @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -336,6 +429,138 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Whether to include visualizations in the response. */
+    class Visualization @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val OFF = of("off")
+
+            @JvmField val AUTO = of("auto")
+
+            @JvmStatic fun of(value: String) = Visualization(JsonField.of(value))
+        }
+
+        /** An enum containing [Visualization]'s known values. */
+        enum class Known {
+            OFF,
+            AUTO,
+        }
+
+        /**
+         * An enum containing [Visualization]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Visualization] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            OFF,
+            AUTO,
+            /**
+             * An enum member indicating that [Visualization] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                OFF -> Value.OFF
+                AUTO -> Value.AUTO
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                OFF -> Known.OFF
+                AUTO -> Known.AUTO
+                else -> throw GeminiNextGenApiInvalidDataException("Unknown Visualization: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                GeminiNextGenApiInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): Visualization = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Visualization && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -343,16 +568,24 @@ private constructor(
 
         return other is DeepResearchAgentConfig &&
             type == other.type &&
+            collaborativePlanning == other.collaborativePlanning &&
             thinkingSummaries == other.thinkingSummaries &&
+            visualization == other.visualization &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(type, thinkingSummaries, additionalProperties)
+        Objects.hash(
+            type,
+            collaborativePlanning,
+            thinkingSummaries,
+            visualization,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DeepResearchAgentConfig{type=$type, thinkingSummaries=$thinkingSummaries, additionalProperties=$additionalProperties}"
+        "DeepResearchAgentConfig{type=$type, collaborativePlanning=$collaborativePlanning, thinkingSummaries=$thinkingSummaries, visualization=$visualization, additionalProperties=$additionalProperties}"
 }

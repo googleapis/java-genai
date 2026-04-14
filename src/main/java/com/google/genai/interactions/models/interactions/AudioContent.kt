@@ -363,6 +363,12 @@ private constructor(
 
             @JvmField val AUDIO_L16 = of("audio/l16")
 
+            @JvmField val AUDIO_OPUS = of("audio/opus")
+
+            @JvmField val AUDIO_ALAW = of("audio/alaw")
+
+            @JvmField val AUDIO_MULAW = of("audio/mulaw")
+
             @JvmStatic fun of(value: String) = MimeType(JsonField.of(value))
         }
 
@@ -377,6 +383,9 @@ private constructor(
             AUDIO_MPEG,
             AUDIO_M4A,
             AUDIO_L16,
+            AUDIO_OPUS,
+            AUDIO_ALAW,
+            AUDIO_MULAW,
         }
 
         /**
@@ -398,6 +407,9 @@ private constructor(
             AUDIO_MPEG,
             AUDIO_M4A,
             AUDIO_L16,
+            AUDIO_OPUS,
+            AUDIO_ALAW,
+            AUDIO_MULAW,
             /** An enum member indicating that [MimeType] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -420,6 +432,9 @@ private constructor(
                 AUDIO_MPEG -> Value.AUDIO_MPEG
                 AUDIO_M4A -> Value.AUDIO_M4A
                 AUDIO_L16 -> Value.AUDIO_L16
+                AUDIO_OPUS -> Value.AUDIO_OPUS
+                AUDIO_ALAW -> Value.AUDIO_ALAW
+                AUDIO_MULAW -> Value.AUDIO_MULAW
                 else -> Value._UNKNOWN
             }
 
@@ -443,6 +458,9 @@ private constructor(
                 AUDIO_MPEG -> Known.AUDIO_MPEG
                 AUDIO_M4A -> Known.AUDIO_M4A
                 AUDIO_L16 -> Known.AUDIO_L16
+                AUDIO_OPUS -> Known.AUDIO_OPUS
+                AUDIO_ALAW -> Known.AUDIO_ALAW
+                AUDIO_MULAW -> Known.AUDIO_MULAW
                 else -> throw GeminiNextGenApiInvalidDataException("Unknown MimeType: $value")
             }
 

@@ -34,9 +34,7 @@ import com.google.genai.interactions.models.interactions.InteractionSseEvent
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
-/**
- * <p>The interactions service is experimental.
- */
+/** <p>The interactions service is experimental. */
 interface InteractionService {
 
     /**

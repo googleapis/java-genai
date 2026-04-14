@@ -71,6 +71,7 @@ private constructor(
     private val systemInstruction: JsonField<String>,
     private val tools: JsonField<List<Tool>>,
     private val usage: JsonField<Usage>,
+    private val webhookConfig: JsonField<WebhookConfig>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -117,6 +118,9 @@ private constructor(
         systemInstruction: JsonField<String> = JsonMissing.of(),
         @JsonProperty("tools") @ExcludeMissing tools: JsonField<List<Tool>> = JsonMissing.of(),
         @JsonProperty("usage") @ExcludeMissing usage: JsonField<Usage> = JsonMissing.of(),
+        @JsonProperty("webhook_config")
+        @ExcludeMissing
+        webhookConfig: JsonField<WebhookConfig> = JsonMissing.of(),
     ) : this(
         id,
         created,
@@ -137,6 +141,7 @@ private constructor(
         systemInstruction,
         tools,
         usage,
+        webhookConfig,
         mutableMapOf(),
     )
 
@@ -304,6 +309,14 @@ private constructor(
     fun usage(): Optional<Usage> = usage.getOptional("usage")
 
     /**
+     * Optional. Webhook configuration for receiving notifications when the interaction completes.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun webhookConfig(): Optional<WebhookConfig> = webhookConfig.getOptional("webhook_config")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -448,6 +461,15 @@ private constructor(
      */
     @JsonProperty("usage") @ExcludeMissing fun _usage(): JsonField<Usage> = usage
 
+    /**
+     * Returns the raw JSON value of [webhookConfig].
+     *
+     * Unlike [webhookConfig], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("webhook_config")
+    @ExcludeMissing
+    fun _webhookConfig(): JsonField<WebhookConfig> = webhookConfig
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -498,6 +520,7 @@ private constructor(
         private var systemInstruction: JsonField<String> = JsonMissing.of()
         private var tools: JsonField<MutableList<Tool>>? = null
         private var usage: JsonField<Usage> = JsonMissing.of()
+        private var webhookConfig: JsonField<WebhookConfig> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -521,6 +544,7 @@ private constructor(
             systemInstruction = interaction.systemInstruction
             tools = interaction.tools.map { it.toMutableList() }
             usage = interaction.usage
+            webhookConfig = interaction.webhookConfig
             additionalProperties = interaction.additionalProperties.toMutableMap()
         }
 
@@ -1088,6 +1112,23 @@ private constructor(
          */
         fun usage(usage: JsonField<Usage>) = apply { this.usage = usage }
 
+        /**
+         * Optional. Webhook configuration for receiving notifications when the interaction
+         * completes.
+         */
+        fun webhookConfig(webhookConfig: WebhookConfig) = webhookConfig(JsonField.of(webhookConfig))
+
+        /**
+         * Sets [Builder.webhookConfig] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.webhookConfig] with a well-typed [WebhookConfig] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun webhookConfig(webhookConfig: JsonField<WebhookConfig>) = apply {
+            this.webhookConfig = webhookConfig
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1143,6 +1184,7 @@ private constructor(
                 systemInstruction,
                 (tools ?: JsonMissing.of()).map { it.toImmutable() },
                 usage,
+                webhookConfig,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1172,6 +1214,7 @@ private constructor(
         systemInstruction()
         tools().ifPresent { it.forEach { it.validate() } }
         usage().ifPresent { it.validate() }
+        webhookConfig().ifPresent { it.validate() }
         validated = true
     }
 
@@ -1207,7 +1250,8 @@ private constructor(
             (serviceTier.asKnown().getOrNull()?.validity() ?: 0) +
             (if (systemInstruction.asKnown().isPresent) 1 else 0) +
             (tools.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            (usage.asKnown().getOrNull()?.validity() ?: 0)
+            (usage.asKnown().getOrNull()?.validity() ?: 0) +
+            (webhookConfig.asKnown().getOrNull()?.validity() ?: 0)
 
     /** Required. Output only. The status of the interaction. */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -2909,6 +2953,322 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Message for configuring webhook events for a request. */
+    class WebhookConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val uris: JsonField<List<String>>,
+        private val userMetadata: JsonField<UserMetadata>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("uris") @ExcludeMissing uris: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("user_metadata")
+            @ExcludeMissing
+            userMetadata: JsonField<UserMetadata> = JsonMissing.of(),
+        ) : this(uris, userMetadata, mutableMapOf())
+
+        /**
+         * Optional. If set, these webhook URIs will be used for webhook events instead of the
+         * registered webhooks.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun uris(): Optional<List<String>> = uris.getOptional("uris")
+
+        /**
+         * Optional. The user metadata that will be returned on each event emission to the webhooks.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun userMetadata(): Optional<UserMetadata> = userMetadata.getOptional("user_metadata")
+
+        /**
+         * Returns the raw JSON value of [uris].
+         *
+         * Unlike [uris], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("uris") @ExcludeMissing fun _uris(): JsonField<List<String>> = uris
+
+        /**
+         * Returns the raw JSON value of [userMetadata].
+         *
+         * Unlike [userMetadata], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("user_metadata")
+        @ExcludeMissing
+        fun _userMetadata(): JsonField<UserMetadata> = userMetadata
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [WebhookConfig]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [WebhookConfig]. */
+        class Builder internal constructor() {
+
+            private var uris: JsonField<MutableList<String>>? = null
+            private var userMetadata: JsonField<UserMetadata> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(webhookConfig: WebhookConfig) = apply {
+                uris = webhookConfig.uris.map { it.toMutableList() }
+                userMetadata = webhookConfig.userMetadata
+                additionalProperties = webhookConfig.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * Optional. If set, these webhook URIs will be used for webhook events instead of the
+             * registered webhooks.
+             */
+            fun uris(uris: List<String>) = uris(JsonField.of(uris))
+
+            /**
+             * Sets [Builder.uris] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.uris] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun uris(uris: JsonField<List<String>>) = apply {
+                this.uris = uris.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [Builder.uris].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addUris(uris: String) = apply {
+                this.uris =
+                    (this.uris ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("uris", it).add(uris)
+                    }
+            }
+
+            /**
+             * Optional. The user metadata that will be returned on each event emission to the
+             * webhooks.
+             */
+            fun userMetadata(userMetadata: UserMetadata) = userMetadata(JsonField.of(userMetadata))
+
+            /**
+             * Sets [Builder.userMetadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.userMetadata] with a well-typed [UserMetadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun userMetadata(userMetadata: JsonField<UserMetadata>) = apply {
+                this.userMetadata = userMetadata
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [WebhookConfig].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): WebhookConfig =
+                WebhookConfig(
+                    (uris ?: JsonMissing.of()).map { it.toImmutable() },
+                    userMetadata,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): WebhookConfig = apply {
+            if (validated) {
+                return@apply
+            }
+
+            uris()
+            userMetadata().ifPresent { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (uris.asKnown().getOrNull()?.size ?: 0) +
+                (userMetadata.asKnown().getOrNull()?.validity() ?: 0)
+
+        /**
+         * Optional. The user metadata that will be returned on each event emission to the webhooks.
+         */
+        class UserMetadata
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [UserMetadata]. */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [UserMetadata]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(userMetadata: UserMetadata) = apply {
+                    additionalProperties = userMetadata.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [UserMetadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): UserMetadata = UserMetadata(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UserMetadata = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is UserMetadata && additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() = "UserMetadata{additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is WebhookConfig &&
+                uris == other.uris &&
+                userMetadata == other.userMetadata &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(uris, userMetadata, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "WebhookConfig{uris=$uris, userMetadata=$userMetadata, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -2934,6 +3294,7 @@ private constructor(
             systemInstruction == other.systemInstruction &&
             tools == other.tools &&
             usage == other.usage &&
+            webhookConfig == other.webhookConfig &&
             additionalProperties == other.additionalProperties
     }
 
@@ -2958,6 +3319,7 @@ private constructor(
             systemInstruction,
             tools,
             usage,
+            webhookConfig,
             additionalProperties,
         )
     }
@@ -2965,5 +3327,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, outputs=$outputs, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, additionalProperties=$additionalProperties}"
+        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, outputs=$outputs, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
 }

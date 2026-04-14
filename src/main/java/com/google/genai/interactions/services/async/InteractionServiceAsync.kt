@@ -36,9 +36,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-/**
- * <p>The interactions service is experimental.
- */
+/** <p>The interactions service is experimental. */
 interface InteractionServiceAsync {
 
     /**
