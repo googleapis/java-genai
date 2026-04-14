@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.google.genai"},{"l":"com.google.genai.errors"},{"l":"com.google.genai.proto"},{"l":"com.google.genai.types"}];updateSearchResults();
+var packageSearchIndex = [{"l":"com.google.genai","url":"com/google/genai/package-summary.html"}, {"l":"com.google.genai.errors","url":"com/google/genai/errors/package-summary.html"}, {"l":"com.google.genai.types","url":"com/google/genai/types/package-summary.html"}, {"l":"All packages","url":"index.html"}]
