@@ -135,6 +135,12 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
         @JvmField val GEMINI_3_1_FLASH_LITE_PREVIEW = of("gemini-3.1-flash-lite-preview")
 
         /**
+         * Gemini 3.1 Flash TTS: Powerful, low-latency speech generation. Enjoy natural outputs,
+         * steerable prompts, and new expressive audio tags for precise narration control.
+         */
+        @JvmField val GEMINI_3_1_FLASH_TTS_PREVIEW = of("gemini-3.1-flash-tts-preview")
+
+        /**
          * Our low-latency, music generation model optimized for high-fidelity audio clips and
          * precise rhythmic control.
          */
@@ -225,6 +231,11 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
          * simple data processing.
          */
         GEMINI_3_1_FLASH_LITE_PREVIEW,
+        /**
+         * Gemini 3.1 Flash TTS: Powerful, low-latency speech generation. Enjoy natural outputs,
+         * steerable prompts, and new expressive audio tags for precise narration control.
+         */
+        GEMINI_3_1_FLASH_TTS_PREVIEW,
         /**
          * Our low-latency, music generation model optimized for high-fidelity audio clips and
          * precise rhythmic control.
@@ -322,6 +333,11 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
          */
         GEMINI_3_1_FLASH_LITE_PREVIEW,
         /**
+         * Gemini 3.1 Flash TTS: Powerful, low-latency speech generation. Enjoy natural outputs,
+         * steerable prompts, and new expressive audio tags for precise narration control.
+         */
+        GEMINI_3_1_FLASH_TTS_PREVIEW,
+        /**
          * Our low-latency, music generation model optimized for high-fidelity audio clips and
          * precise rhythmic control.
          */
@@ -361,6 +377,7 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
             GEMINI_3_1_PRO_PREVIEW -> Value.GEMINI_3_1_PRO_PREVIEW
             GEMINI_3_1_FLASH_IMAGE_PREVIEW -> Value.GEMINI_3_1_FLASH_IMAGE_PREVIEW
             GEMINI_3_1_FLASH_LITE_PREVIEW -> Value.GEMINI_3_1_FLASH_LITE_PREVIEW
+            GEMINI_3_1_FLASH_TTS_PREVIEW -> Value.GEMINI_3_1_FLASH_TTS_PREVIEW
             LYRIA_3_CLIP_PREVIEW -> Value.LYRIA_3_CLIP_PREVIEW
             LYRIA_3_PRO_PREVIEW -> Value.LYRIA_3_PRO_PREVIEW
             else -> Value._UNKNOWN
@@ -394,6 +411,7 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
             GEMINI_3_1_PRO_PREVIEW -> Known.GEMINI_3_1_PRO_PREVIEW
             GEMINI_3_1_FLASH_IMAGE_PREVIEW -> Known.GEMINI_3_1_FLASH_IMAGE_PREVIEW
             GEMINI_3_1_FLASH_LITE_PREVIEW -> Known.GEMINI_3_1_FLASH_LITE_PREVIEW
+            GEMINI_3_1_FLASH_TTS_PREVIEW -> Known.GEMINI_3_1_FLASH_TTS_PREVIEW
             LYRIA_3_CLIP_PREVIEW -> Known.LYRIA_3_CLIP_PREVIEW
             LYRIA_3_PRO_PREVIEW -> Known.LYRIA_3_PRO_PREVIEW
             else -> throw GeminiNextGenApiInvalidDataException("Unknown Model: $value")
