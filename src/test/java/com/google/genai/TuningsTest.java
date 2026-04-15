@@ -57,6 +57,10 @@ public class TuningsTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testPager(boolean vertexAI) {
+    if (!vertexAI) {
+      return;
+    }
+
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =

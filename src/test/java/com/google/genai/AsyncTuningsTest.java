@@ -57,6 +57,10 @@ public class AsyncTuningsTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   public void testAsyncPager(boolean vertexAI) throws ExecutionException, InterruptedException {
+    if (!vertexAI) {
+      return;
+    }
+
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =

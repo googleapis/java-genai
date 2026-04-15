@@ -1081,35 +1081,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsConfigToMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageSize"},
-          Common.getValueByPath(fromObject, new String[] {"pageSize"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"pageToken"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "pageToken"},
-          Common.getValueByPath(fromObject, new String[] {"pageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"filter"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"_query", "filter"},
-          Common.getValueByPath(fromObject, new String[] {"filter"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -1139,22 +1110,6 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsParametersToMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      JsonNode unused =
-          listTuningJobsConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject,
-              rootObject);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -1165,39 +1120,6 @@ public final class Tunings {
                   Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode listTuningJobsResponseFromMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sdkHttpResponse"},
-          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"nextPageToken"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"nextPageToken"},
-          Common.getValueByPath(fromObject, new String[] {"nextPageToken"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"tunedModels"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"tunedModels"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(tuningJobFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
     }
 
     return toObject;
@@ -1836,12 +1758,8 @@ public final class Tunings {
       body = listTuningJobsParametersToVertex(parameterNode, null, parameterNode);
       path = Common.formatMap("tuningJobs", body.get("_url"));
     } else {
-      body = listTuningJobsParametersToMldev(parameterNode, null, parameterNode);
-      if (body.get("_url") != null) {
-        path = Common.formatMap("tunedModels", body.get("_url"));
-      } else {
-        path = "tunedModels";
-      }
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
     }
     body.remove("_url");
 
@@ -1878,7 +1796,8 @@ public final class Tunings {
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = listTuningJobsResponseFromMldev(responseNode, null, parameterNode);
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Vertex AI client.");
     }
 
     ListTuningJobsResponse sdkResponse =
