@@ -19,6 +19,7 @@
 package com.google.genai.interactions.client
 
 import com.google.genai.interactions.core.ClientOptions
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 import com.google.genai.interactions.core.getPackageVersion
 import com.google.genai.interactions.services.blocking.InteractionService
 import com.google.genai.interactions.services.blocking.InteractionServiceImpl
@@ -44,6 +45,7 @@ class GeminiNextGenApiClientImpl(private val clientOptions: ClientOptions) :
         WithRawResponseImpl(clientOptions)
     }
 
+    @ExperimentalGenAiApi
     private val interactions: InteractionService by lazy {
         InteractionServiceImpl(clientOptionsWithUserAgent)
     }
@@ -55,6 +57,7 @@ class GeminiNextGenApiClientImpl(private val clientOptions: ClientOptions) :
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): GeminiNextGenApiClient =
         GeminiNextGenApiClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
+        @ExperimentalGenAiApi
     override fun interactions(): InteractionService = interactions
 
     override fun close() = clientOptions.close()
@@ -62,6 +65,7 @@ class GeminiNextGenApiClientImpl(private val clientOptions: ClientOptions) :
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         GeminiNextGenApiClient.WithRawResponse {
 
+        @ExperimentalGenAiApi
         private val interactions: InteractionService.WithRawResponse by lazy {
             InteractionServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -73,6 +77,7 @@ class GeminiNextGenApiClientImpl(private val clientOptions: ClientOptions) :
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
+        @ExperimentalGenAiApi
         override fun interactions(): InteractionService.WithRawResponse = interactions
     }
 }

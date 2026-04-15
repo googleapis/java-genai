@@ -1,4 +1,4 @@
-name: Build Examples and Javadoc
+name: Pre-release Tests
 
 on:
   pull_request:
@@ -24,4 +24,4 @@ jobs:
     - name: Compile Examples
       run: mvn -B -ntp compile -f examples/pom.xml
     - name: Generate Javadoc
-      run: mvn -B -ntp dokka:javadoc
+      run: mvn -B -ntp package -DperformRelease=true -DskipTests -Djacoco.skip=true -Dclirr.skip=true

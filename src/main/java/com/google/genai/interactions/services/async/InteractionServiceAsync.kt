@@ -35,8 +35,10 @@ import com.google.genai.interactions.models.interactions.InteractionSseEvent
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 
-/** <p>The interactions service is experimental. */
+/** <b>EXPERIMENTAL:</b> The interactions service is experimental and subject to change. */
+@ExperimentalGenAiApi
 interface InteractionServiceAsync {
 
     /**

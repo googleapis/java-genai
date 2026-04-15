@@ -19,6 +19,7 @@
 package com.google.genai.interactions.client
 
 import com.google.genai.interactions.core.ClientOptions
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 import com.google.genai.interactions.services.async.InteractionServiceAsync
 import java.util.function.Consumer
 
@@ -58,6 +59,7 @@ interface GeminiNextGenApiClientAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): GeminiNextGenApiClientAsync
 
+    @ExperimentalGenAiApi
     fun interactions(): InteractionServiceAsync
 
     /**
@@ -88,6 +90,7 @@ interface GeminiNextGenApiClientAsync {
             modifier: Consumer<ClientOptions.Builder>
         ): GeminiNextGenApiClientAsync.WithRawResponse
 
+        @ExperimentalGenAiApi
         fun interactions(): InteractionServiceAsync.WithRawResponse
     }
 }

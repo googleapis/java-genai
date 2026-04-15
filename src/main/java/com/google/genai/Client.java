@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.interactions.core.ExperimentalGenAiApi;
 // interactions:strip_begin
 import com.google.genai.interactions.services.async.InteractionServiceAsync;
 import com.google.genai.interactions.services.async.InteractionServiceAsyncImpl;
@@ -51,7 +52,8 @@ public final class Client implements AutoCloseable {
     public final AsyncFileSearchStores fileSearchStores;
 
     // interactions:strip_begin
-    /** The interactions service is experimental. */
+    /** **EXPERIMENTAL:** The interactions service is experimental and subject to change. */
+    @ExperimentalGenAiApi
     public final InteractionServiceAsync interactions;
 
     // interactions:strip_end
@@ -87,7 +89,8 @@ public final class Client implements AutoCloseable {
   public final FileSearchStores fileSearchStores;
 
   // interactions:strip_begin
-  /** The interactions service is experimental. */
+  /** **EXPERIMENTAL:** The interactions service is experimental and subject to change. */
+  @ExperimentalGenAiApi
   public final InteractionService interactions;
 
   // interactions:strip_end

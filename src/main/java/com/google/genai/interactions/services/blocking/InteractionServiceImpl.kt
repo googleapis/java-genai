@@ -19,6 +19,7 @@
 package com.google.genai.interactions.services.blocking
 
 import com.google.genai.interactions.core.ClientOptions
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 import com.google.genai.interactions.core.JsonValue
 import com.google.genai.interactions.core.RequestOptions
 import com.google.genai.interactions.core.checkRequired
@@ -49,6 +50,7 @@ import com.google.genai.interactions.models.interactions.InteractionSseEvent
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+@ExperimentalGenAiApi
 class InteractionServiceImpl constructor(private val clientOptions: ClientOptions) :
     InteractionService {
 
