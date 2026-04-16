@@ -38,32 +38,35 @@ public final class ReplayApiResponse extends ApiResponse {
   private final Headers headers;
   private final ArrayNode bodySegments;
 
-  public ReplayApiResponse(ArrayNode bodySegments, int statusCode, Headers headers) {
+  public ReplayApiResponse(
+      ArrayNode bodySegments, int statusCode, Headers headers, boolean isStream) {
     this.bodySegments = bodySegments;
     this.statusCode = statusCode;
     this.headers = headers;
     if (bodySegments.size() == 0) {
       this.body = ResponseBody.create(MediaType.parse("application/json"), "");
-    } else if (bodySegments.size() == 1) {
-      // For unary response
-      this.body =
-          ResponseBody.create(
-              JsonSerializable.toJsonString(bodySegments.get(0)),
-              MediaType.parse("application/json"));
-    } else {
+    } else if (isStream || bodySegments.size() > 1) {
       // For streaming response
       try {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] newline = "\n".getBytes(StandardCharsets.UTF_8);
+        byte[] dataPrefix = "data: ".getBytes(StandardCharsets.UTF_8);
+        byte[] doubleNewline = "\n\n".getBytes(StandardCharsets.UTF_8);
         for (JsonNode segment : bodySegments) {
+          outputStream.write(dataPrefix);
           outputStream.write(JsonSerializable.objectMapper.writeValueAsBytes(segment));
-          outputStream.write(newline);
+          outputStream.write(doubleNewline);
         }
         this.body =
             ResponseBody.create(outputStream.toByteArray(), MediaType.parse("application/json"));
       } catch (IOException e) {
         throw new GenAiIOException("Failed to convert body segments to a JSON string.", e);
       }
+    } else {
+      // For unary response
+      this.body =
+          ResponseBody.create(
+              JsonSerializable.toJsonString(bodySegments.get(0)),
+              MediaType.parse("application/json"));
     }
   }
 

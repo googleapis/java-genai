@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.errors.ApiException;
 import com.google.genai.errors.GenAiIOException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 import okhttp3.Headers;
+import org.jspecify.annotations.Nullable;
 
 /** An iterable of datatype objects. */
 public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, AutoCloseable {
@@ -114,6 +117,18 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       nextJson = readNextJson();
       try {
         JsonNode currentJsonNode = JsonSerializable.stringToJsonNode(currentJson);
+
+        if (currentJsonNode.isObject() && currentJsonNode.has("error")) {
+          int extractedCode = 500;
+          JsonNode errorNode = currentJsonNode.get("error");
+          if (errorNode.has("code") && errorNode.get("code").isInt()) {
+            extractedCode = errorNode.get("code").asInt();
+          }
+          ArrayNode arrayNode = JsonSerializable.objectMapper.createArrayNode();
+          arrayNode.add(currentJsonNode);
+          ApiException.throwFromErrorNode(arrayNode, extractedCode);
+        }
+
         if (responseHeaders != null && currentJsonNode.isObject()) {
           ObjectNode rootNode = (ObjectNode) currentJsonNode;
           ObjectNode headersNode = JsonSerializable.objectMapper.createObjectNode();
@@ -142,23 +157,47 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       }
     }
 
-    private String readNextJson() {
+    private @Nullable String readNextJson() {
       // Streaming API returns in the following format:
       // data: {contents: ...}
       // \n
       // data: {contents: ...}
       // \n
       // ...
+      List<String> dataBuffer = new ArrayList<>();
       try {
-        String line = reader.readLine();
-        if (line == null) {
-          return null;
-        } else if (line.length() == 0) {
-          return readNextJson();
-        } else if (line.startsWith("data: ")) {
-          return line.substring("data: ".length());
-        } else {
-          return line;
+        while (true) {
+          String line = reader.readLine();
+          if (line == null) {
+            if (!dataBuffer.isEmpty()) {
+              return String.join("\n", dataBuffer);
+            }
+            return null;
+          }
+          if (line.isEmpty()) {
+            if (!dataBuffer.isEmpty()) {
+              // Handle multi-line SSE data
+              return String.join("\n", dataBuffer);
+            }
+            continue;
+          }
+          if (line.startsWith(":")) {
+            continue;
+          }
+          int colonIndex = line.indexOf(':');
+          String fieldname = line;
+          String value = "";
+          if (colonIndex != -1) {
+            fieldname = line.substring(0, colonIndex);
+            value = line.substring(colonIndex + 1);
+            if (value.startsWith(" ")) {
+              value = value.substring(1);
+            }
+          }
+
+          if (fieldname.equals("data")) {
+            dataBuffer.add(value);
+          }
         }
       } catch (IOException e) {
         throw new GenAiIOException("Failed to read next JSON object from the stream", e);

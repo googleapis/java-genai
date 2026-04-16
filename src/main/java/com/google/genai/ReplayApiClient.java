@@ -135,7 +135,13 @@ public final class ReplayApiClient extends ApiClient {
       matchRequest(
           currentInteraction.request().orElse(null),
           buildRequest(httpMethod, path, requestJson, httpOptions));
-      return buildResponseFromReplay(currentInteraction.response().orElse(null));
+      boolean isStream =
+          currentInteraction
+              .request()
+              .flatMap(r -> r.url())
+              .map(u -> u.contains("streamGenerateContent"))
+              .orElse(false);
+      return buildResponseFromReplay(currentInteraction.response().orElse(null), isStream);
     } else {
       // Note that if the client mode is "api", then the ReplayApiClient will not be used.
       throw new IllegalArgumentException("Invalid client mode: " + this.clientMode);
@@ -227,7 +233,8 @@ public final class ReplayApiClient extends ApiClient {
   }
 
   /** Builds the response from a {@link ReplayResponse}. */
-  private ReplayApiResponse buildResponseFromReplay(ReplayResponse replayResponse) {
+  private ReplayApiResponse buildResponseFromReplay(
+      ReplayResponse replayResponse, boolean isStream) {
     if (replayResponse == null) {
       throw new IllegalArgumentException("Replay response is null.");
     }
@@ -235,7 +242,7 @@ public final class ReplayApiClient extends ApiClient {
         JsonSerializable.toJsonNode(replayResponse.bodySegments().orElse(new ArrayList<>()));
     Headers headers = Headers.of(replayResponse.headers().orElse(ImmutableMap.of()));
     return new ReplayApiResponse(
-        (ArrayNode) bodyNode, replayResponse.statusCode().orElse(0), headers);
+        (ArrayNode) bodyNode, replayResponse.statusCode().orElse(0), headers, isStream);
   }
 
   private static String formatUrl(String url) {

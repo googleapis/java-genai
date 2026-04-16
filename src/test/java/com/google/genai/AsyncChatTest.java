@@ -96,8 +96,16 @@ public class AsyncChatTest {
   String jsonChunk3 = responseChunk3.toJson();
 
   String streamData =
-      "data: " + jsonChunk1 + "\n" + "data: " + jsonChunk2 + "\n" + "data: " + jsonChunk3 + "\n";
-  String streamData2 = "data: " + jsonChunk1 + "\n" + "data: " + jsonChunk2 + "\n";
+      "data: "
+          + jsonChunk1
+          + "\n\n"
+          + "data: "
+          + jsonChunk2
+          + "\n\n"
+          + "data: "
+          + jsonChunk3
+          + "\n\n";
+  String streamData2 = "data: " + jsonChunk1 + "\n\n" + "data: " + jsonChunk2 + "\n\n";
 
   GenerateContentResponse nonStreamingResponse =
       GenerateContentResponse.builder()
