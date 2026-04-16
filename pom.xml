@@ -634,5 +634,46 @@
       </build>
     </profile>
 
+    <profile>
+      <id>private</id>
+      <properties>
+        <main.java.src.dir>src/private/java</main.java.src.dir>
+        <test.java.src.dir>src/private/test/java</test.java.src.dir>
+        <jacoco.skip>true</jacoco.skip>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <!-- Ensure public tests are also compiled and run for private builds. -->
+              <execution>
+                <id>add-public-test-source</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/test/java</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Exclude HttpApiClientTest from compilation because it uses interactions types. -->
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testExcludes>
+                <exclude>**/HttpApiClientTest.java</exclude>
+                <exclude>**/GoogleCredentialsHttpClientTest.java</exclude>
+              </testExcludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
