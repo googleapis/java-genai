@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.51.0](https://github.com/googleapis/java-genai/compare/v1.50.0...v1.51.0) (2026-04-16)
+## [1.50.1](https://github.com/googleapis/java-genai/compare/v1.50.0...v1.50.1) (2026-04-16)
 
 
 ### Features
@@ -12,6 +12,10 @@
 
 * ResponseStream fails to parse error message and multi-line SSE data payloads ([3a1cb22](https://github.com/googleapis/java-genai/commit/3a1cb226bc31f5528a56a2d9fd62fcfe89ca77e1))
 
+
+### Miscellaneous Chores
+
+* release 1.50.1 ([6c82a9c](https://github.com/googleapis/java-genai/commit/6c82a9c806664dbf52c5d15275e7a15dcd121294))
 
 ## [1.50.0](https://github.com/googleapis/java-genai/compare/v1.49.0...v1.50.0) (2026-04-14)
 
