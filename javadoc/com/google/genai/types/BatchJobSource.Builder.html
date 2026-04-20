@@ -356,6 +356,22 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobSource.Builder
                                         </tr>
                                         
                                         <tr id="i13" class="rowColor">
+                                            <td class="colFirst"><code>abstract <a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobSource.Builder.html#vertexDatasetName(java.lang.String)>vertexDatasetName</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> vertexDatasetName) </code>
+                                            </th>
+                                            <td class="colLast">Setter for vertexDatasetName.</td>
+                                        </tr>
+                                        
+                                        <tr id="i14" class="altColor">
+                                            <td class="colFirst"><code><a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobSource.Builder.html#clearVertexDatasetName()>clearVertexDatasetName</a>() </code>
+                                            </th>
+                                            <td class="colLast">Clears the value of vertexDatasetName field.</td>
+                                        </tr>
+                                        
+                                        <tr id="i15" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=BatchJobSource.html>BatchJobSource</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJobSource.Builder.html#build()>build</a>() </code>
@@ -426,7 +442,7 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobSource.Builder
                                     <li class="blockList">
                                         <h4>format</h4>
                                         <pre class="methodSignature"> abstract <a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a> <a href=BatchJobSource.Builder.html#format(java.lang.String)>format</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> format)</pre>
-                                        <div class="block"><p>Setter for format. </p><p>format: Storage format of the input files. Must be one of: 'jsonl', 'bigquery'.</p></div>
+                                        <div class="block"><p>Setter for format. </p><p>format: Storage format of the input files. Must be one of: 'jsonl', 'bigquery', 'vertex-dataset'.</p></div>
 
                                         <dl>
 
@@ -703,6 +719,52 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobSource.Builder
                                         <h4>clearInlinedRequests</h4>
                                         <pre class="methodSignature">@CanIgnoreReturnValue() <a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a> <a href=BatchJobSource.Builder.html#clearInlinedRequests()>clearInlinedRequests</a>()</pre>
                                         <div class="block"><p>Clears the value of inlinedRequests field.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="vertexDatasetName(java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>vertexDatasetName</h4>
+                                        <pre class="methodSignature"> abstract <a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a> <a href=BatchJobSource.Builder.html#vertexDatasetName(java.lang.String)>vertexDatasetName</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> vertexDatasetName)</pre>
+                                        <div class="block"><p>Setter for vertexDatasetName. </p><p>vertexDatasetName: This field is experimental and may change in future versions. The Vertex AI dataset resource name to use as input. Must be of type multimodal.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="clearVertexDatasetName()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>clearVertexDatasetName</h4>
+                                        <pre class="methodSignature">@CanIgnoreReturnValue() <a href=BatchJobSource.Builder.html>BatchJobSource.Builder</a> <a href=BatchJobSource.Builder.html#clearVertexDatasetName()>clearVertexDatasetName</a>()</pre>
+                                        <div class="block"><p>Clears the value of vertexDatasetName field.</p></div>
 
                                         <dl>
 

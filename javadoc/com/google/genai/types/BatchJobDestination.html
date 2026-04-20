@@ -313,6 +313,14 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         </tr>
                                         
                                         <tr id="i6" class="altColor">
+                                            <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=VertexMultimodalDatasetDestination.html>VertexMultimodalDatasetDestination</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobDestination.html#vertexDataset()>vertexDataset</a>() </code>
+                                            </th>
+                                            <td class="colLast">This field is experimental and may change in future versions.</td>
+                                        </tr>
+                                        
+                                        <tr id="i7" class="rowColor">
                                             <td class="colFirst"><code>static <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJobDestination.html#builder()>builder</a>() </code>
@@ -320,7 +328,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                             <td class="colLast">Instantiates a builder for BatchJobDestination.</td>
                                         </tr>
                                         
-                                        <tr id="i7" class="rowColor">
+                                        <tr id="i8" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJobDestination.html#toBuilder()>toBuilder</a>() </code>
@@ -328,7 +336,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                             <td class="colLast">Creates a builder with the same values as this instance.</td>
                                         </tr>
                                         
-                                        <tr id="i8" class="altColor">
+                                        <tr id="i9" class="rowColor">
                                             <td class="colFirst"><code>static <a href=BatchJobDestination.html>BatchJobDestination</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJobDestination.html#fromJson(java.lang.String)>fromJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> jsonString) </code>
@@ -405,7 +413,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                     <li class="blockList">
                                         <h4>format</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>&gt; <a href=BatchJobDestination.html#format()>format</a>()</pre>
-                                        <div class="block"><p>Storage format of the output files. Must be one of: 'jsonl', 'bigquery'.</p></div>
+                                        <div class="block"><p>Storage format of the output files. Must be one of: 'jsonl', 'bigquery', 'vertex-dataset'.</p></div>
 
                                         <dl>
 
@@ -521,6 +529,29 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <h4>inlinedEmbedContentResponses</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=InlinedEmbedContentResponse.html>InlinedEmbedContentResponse</a>&gt;&gt; <a href=BatchJobDestination.html#inlinedEmbedContentResponses()>inlinedEmbedContentResponses</a>()</pre>
                                         <div class="block"><p>The responses to the requests in the batch. Returned when the batch was built using inlined requests. The responses will be in the same order as the input requests.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="vertexDataset()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>vertexDataset</h4>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=VertexMultimodalDatasetDestination.html>VertexMultimodalDatasetDestination</a>&gt; <a href=BatchJobDestination.html#vertexDataset()>vertexDataset</a>()</pre>
+                                        <div class="block"><p>This field is experimental and may change in future versions. The Vertex AI dataset destination.</p></div>
 
                                         <dl>
 

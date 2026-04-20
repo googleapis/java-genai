@@ -380,6 +380,30 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobDestination.Bu
                                         </tr>
                                         
                                         <tr id="i16" class="altColor">
+                                            <td class="colFirst"><code>abstract <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobDestination.Builder.html#vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination)>vertexDataset</a>(<a href=VertexMultimodalDatasetDestination.html>VertexMultimodalDatasetDestination</a> vertexDataset) </code>
+                                            </th>
+                                            <td class="colLast">Setter for vertexDataset.</td>
+                                        </tr>
+                                        
+                                        <tr id="i17" class="rowColor">
+                                            <td class="colFirst"><code><a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobDestination.Builder.html#vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination.Builder)>vertexDataset</a>(<a href=VertexMultimodalDatasetDestination.Builder.html>VertexMultimodalDatasetDestination.Builder</a> vertexDatasetBuilder) </code>
+                                            </th>
+                                            <td class="colLast">Setter for vertexDataset builder.</td>
+                                        </tr>
+                                        
+                                        <tr id="i18" class="altColor">
+                                            <td class="colFirst"><code><a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJobDestination.Builder.html#clearVertexDataset()>clearVertexDataset</a>() </code>
+                                            </th>
+                                            <td class="colLast">Clears the value of vertexDataset field.</td>
+                                        </tr>
+                                        
+                                        <tr id="i19" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=BatchJobDestination.html>BatchJobDestination</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJobDestination.Builder.html#build()>build</a>() </code>
@@ -450,7 +474,7 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobDestination.Bu
                                     <li class="blockList">
                                         <h4>format</h4>
                                         <pre class="methodSignature"> abstract <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a> <a href=BatchJobDestination.Builder.html#format(java.lang.String)>format</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> format)</pre>
-                                        <div class="block"><p>Setter for format. </p><p>format: Storage format of the output files. Must be one of: 'jsonl', 'bigquery'.</p></div>
+                                        <div class="block"><p>Setter for format. </p><p>format: Storage format of the output files. Must be one of: 'jsonl', 'bigquery', 'vertex-dataset'.</p></div>
 
                                         <dl>
 
@@ -796,6 +820,75 @@ public abstract class <span class="typeNameLabel"><a href=BatchJobDestination.Bu
                                         <h4>clearInlinedEmbedContentResponses</h4>
                                         <pre class="methodSignature">@CanIgnoreReturnValue() <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a> <a href=BatchJobDestination.Builder.html#clearInlinedEmbedContentResponses()>clearInlinedEmbedContentResponses</a>()</pre>
                                         <div class="block"><p>Clears the value of inlinedEmbedContentResponses field.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>vertexDataset</h4>
+                                        <pre class="methodSignature"> abstract <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a> <a href=BatchJobDestination.Builder.html#vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination)>vertexDataset</a>(<a href=VertexMultimodalDatasetDestination.html>VertexMultimodalDatasetDestination</a> vertexDataset)</pre>
+                                        <div class="block"><p>Setter for vertexDataset. </p><p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI dataset destination.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination.Builder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>vertexDataset</h4>
+                                        <pre class="methodSignature">@CanIgnoreReturnValue() <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a> <a href=BatchJobDestination.Builder.html#vertexDataset(com.google.genai.types.VertexMultimodalDatasetDestination.Builder)>vertexDataset</a>(<a href=VertexMultimodalDatasetDestination.Builder.html>VertexMultimodalDatasetDestination.Builder</a> vertexDatasetBuilder)</pre>
+                                        <div class="block"><p>Setter for vertexDataset builder. </p><p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI dataset destination.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="clearVertexDataset()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>clearVertexDataset</h4>
+                                        <pre class="methodSignature">@CanIgnoreReturnValue() <a href=BatchJobDestination.Builder.html>BatchJobDestination.Builder</a> <a href=BatchJobDestination.Builder.html#clearVertexDataset()>clearVertexDataset</a>()</pre>
+                                        <div class="block"><p>Clears the value of vertexDataset field.</p></div>
 
                                         <dl>
 
