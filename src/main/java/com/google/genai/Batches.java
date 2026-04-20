@@ -169,6 +169,18 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"vertexMultimodalDatasetDestination"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexDataset"},
+          vertexMultimodalDatasetDestinationFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(
+                      fromObject, new String[] {"vertexMultimodalDatasetDestination"})),
+              toObject));
+    }
+
     return toObject;
   }
 
@@ -209,6 +221,16 @@ public final class Batches {
         Common.getValueByPath(fromObject, new String[] {"inlinedEmbedContentResponses"}))) {
       throw new IllegalArgumentException(
           "inlinedEmbedContentResponses parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDataset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexMultimodalDatasetDestination"},
+          vertexMultimodalDatasetDestinationToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"vertexDataset"})),
+              toObject));
     }
 
     return toObject;
@@ -402,6 +424,16 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"bigquerySource", "inputUri"}));
     }
 
+    if (Common.getValueByPath(
+            fromObject, new String[] {"vertexMultimodalDatasetSource", "datasetName"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexDatasetName"},
+          Common.getValueByPath(
+              fromObject, new String[] {"vertexMultimodalDatasetSource", "datasetName"}));
+    }
+
     return toObject;
   }
 
@@ -440,6 +472,11 @@ public final class Batches {
       Common.setValueByPath(toObject, new String[] {"requests", "requests"}, result);
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}))) {
+      throw new IllegalArgumentException(
+          "vertexDatasetName parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -474,6 +511,13 @@ public final class Batches {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"inlinedRequests"}))) {
       throw new IllegalArgumentException(
           "inlinedRequests parameter is not supported in Vertex AI.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexMultimodalDatasetSource", "datasetName"},
+          Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}));
     }
 
     return toObject;
@@ -2003,6 +2047,49 @@ public final class Batches {
     return toObject;
   }
 
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode vertexMultimodalDatasetDestinationFromVertex(
+      JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigqueryDestination"},
+          Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode vertexMultimodalDatasetDestinationToVertex(
+      JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"bigqueryDestination", "outputUri"},
+          Common.getValueByPath(fromObject, new String[] {"bigqueryDestination"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"displayName"},
+          Common.getValueByPath(fromObject, new String[] {"displayName"}));
+    }
+
+    return toObject;
+  }
+
   /** A shared buildRequest method for both sync and async methods. */
   BuiltRequest buildRequestForPrivateCreate(
       String model, BatchJobSource src, CreateBatchJobConfig config) {
@@ -2535,11 +2622,22 @@ public final class Batches {
       if (src.fileName().isPresent()) {
         throw new GenAiIOException("fileName is not supported for Vertex AI.");
       }
-      if (src.gcsUri().isPresent() && src.bigqueryUri().isPresent()) {
-        throw new GenAiIOException("Only one of gcsUri and bigqueryUri can be set.");
+      int count = 0;
+      if (src.gcsUri().isPresent()) {
+        count++;
       }
-      if (!src.gcsUri().isPresent() && !src.bigqueryUri().isPresent()) {
-        throw new GenAiIOException("One of gcsUri and bigqueryUri must be set.");
+      if (src.bigqueryUri().isPresent()) {
+        count++;
+      }
+      if (src.vertexDatasetName().isPresent()) {
+        count++;
+      }
+      if (count > 1) {
+        throw new GenAiIOException(
+            "Only one of gcsUri, bigqueryUri, and vertexDatasetName can be set.");
+      }
+      if (count == 0) {
+        throw new GenAiIOException("One of gcsUri, bigqueryUri, or vertexDatasetName must be set.");
       }
     } else {
       if (src.fileName().isPresent() && src.inlinedRequests().isPresent()) {

@@ -201,11 +201,22 @@ public final class AsyncBatches {
       if (src.fileName().isPresent()) {
         throw new GenAiIOException("fileName is not supported for Vertex AI.");
       }
-      if (src.gcsUri().isPresent() && src.bigqueryUri().isPresent()) {
-        throw new GenAiIOException("Only one of gcsUri and bigqueryUri can be set.");
+      int count = 0;
+      if (src.gcsUri().isPresent()) {
+        count++;
       }
-      if (!src.gcsUri().isPresent() && !src.bigqueryUri().isPresent()) {
-        throw new GenAiIOException("One of gcsUri and bigqueryUri must be set.");
+      if (src.bigqueryUri().isPresent()) {
+        count++;
+      }
+      if (src.vertexDatasetName().isPresent()) {
+        count++;
+      }
+      if (count > 1) {
+        throw new GenAiIOException(
+            "Only one of gcsUri, bigqueryUri, and vertexDatasetName can be set.");
+      }
+      if (count == 0) {
+        throw new GenAiIOException("One of gcsUri, bigqueryUri, or vertexDatasetName must be set.");
       }
     } else {
       if (src.fileName().isPresent() && src.inlinedRequests().isPresent()) {

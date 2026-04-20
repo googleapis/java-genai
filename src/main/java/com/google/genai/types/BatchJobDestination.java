@@ -34,7 +34,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = BatchJobDestination.Builder.class)
 public abstract class BatchJobDestination extends JsonSerializable {
-  /** Storage format of the output files. Must be one of: 'jsonl', 'bigquery'. */
+  /** Storage format of the output files. Must be one of: 'jsonl', 'bigquery', 'vertex-dataset'. */
   @JsonProperty("format")
   public abstract Optional<String> format();
 
@@ -69,6 +69,13 @@ public abstract class BatchJobDestination extends JsonSerializable {
   @JsonProperty("inlinedEmbedContentResponses")
   public abstract Optional<List<InlinedEmbedContentResponse>> inlinedEmbedContentResponses();
 
+  /**
+   * This field is experimental and may change in future versions. The Vertex AI dataset
+   * destination.
+   */
+  @JsonProperty("vertexDataset")
+  public abstract Optional<VertexMultimodalDatasetDestination> vertexDataset();
+
   /** Instantiates a builder for BatchJobDestination. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -90,7 +97,8 @@ public abstract class BatchJobDestination extends JsonSerializable {
     /**
      * Setter for format.
      *
-     * <p>format: Storage format of the output files. Must be one of: 'jsonl', 'bigquery'.
+     * <p>format: Storage format of the output files. Must be one of: 'jsonl', 'bigquery',
+     * 'vertex-dataset'.
      */
     @JsonProperty("format")
     public abstract Builder format(String format);
@@ -255,6 +263,36 @@ public abstract class BatchJobDestination extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearInlinedEmbedContentResponses() {
       return inlinedEmbedContentResponses(Optional.empty());
+    }
+
+    /**
+     * Setter for vertexDataset.
+     *
+     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
+     * dataset destination.
+     */
+    @JsonProperty("vertexDataset")
+    public abstract Builder vertexDataset(VertexMultimodalDatasetDestination vertexDataset);
+
+    /**
+     * Setter for vertexDataset builder.
+     *
+     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
+     * dataset destination.
+     */
+    @CanIgnoreReturnValue
+    public Builder vertexDataset(VertexMultimodalDatasetDestination.Builder vertexDatasetBuilder) {
+      return vertexDataset(vertexDatasetBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDataset(Optional<VertexMultimodalDatasetDestination> vertexDataset);
+
+    /** Clears the value of vertexDataset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDataset() {
+      return vertexDataset(Optional.empty());
     }
 
     public abstract BatchJobDestination build();

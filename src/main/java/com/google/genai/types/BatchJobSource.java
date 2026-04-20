@@ -34,7 +34,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = BatchJobSource.Builder.class)
 public abstract class BatchJobSource extends JsonSerializable {
-  /** Storage format of the input files. Must be one of: 'jsonl', 'bigquery'. */
+  /** Storage format of the input files. Must be one of: 'jsonl', 'bigquery', 'vertex-dataset'. */
   @JsonProperty("format")
   public abstract Optional<String> format();
 
@@ -53,6 +53,13 @@ public abstract class BatchJobSource extends JsonSerializable {
   /** The Gemini Developer API's inlined input data to run batch job. */
   @JsonProperty("inlinedRequests")
   public abstract Optional<List<InlinedRequest>> inlinedRequests();
+
+  /**
+   * This field is experimental and may change in future versions. The Vertex AI dataset resource
+   * name to use as input. Must be of type multimodal.
+   */
+  @JsonProperty("vertexDatasetName")
+  public abstract Optional<String> vertexDatasetName();
 
   /** Instantiates a builder for BatchJobSource. */
   @ExcludeFromGeneratedCoverageReport
@@ -75,7 +82,8 @@ public abstract class BatchJobSource extends JsonSerializable {
     /**
      * Setter for format.
      *
-     * <p>format: Storage format of the input files. Must be one of: 'jsonl', 'bigquery'.
+     * <p>format: Storage format of the input files. Must be one of: 'jsonl', 'bigquery',
+     * 'vertex-dataset'.
      */
     @JsonProperty("format")
     public abstract Builder format(String format);
@@ -194,6 +202,25 @@ public abstract class BatchJobSource extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearInlinedRequests() {
       return inlinedRequests(Optional.empty());
+    }
+
+    /**
+     * Setter for vertexDatasetName.
+     *
+     * <p>vertexDatasetName: This field is experimental and may change in future versions. The
+     * Vertex AI dataset resource name to use as input. Must be of type multimodal.
+     */
+    @JsonProperty("vertexDatasetName")
+    public abstract Builder vertexDatasetName(String vertexDatasetName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDatasetName(Optional<String> vertexDatasetName);
+
+    /** Clears the value of vertexDatasetName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDatasetName() {
+      return vertexDatasetName(Optional.empty());
     }
 
     public abstract BatchJobSource build();
