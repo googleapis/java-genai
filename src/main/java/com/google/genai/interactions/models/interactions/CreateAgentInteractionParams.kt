@@ -1265,7 +1265,7 @@ private constructor(
             (usage.asKnown().getOrNull()?.validity() ?: 0) +
             (webhookConfig.asKnown().getOrNull()?.validity() ?: 0)
 
-    /** Gemini Deep Research Agent */
+    /** The name of the `Agent` used for generating the interaction. */
     class Agent @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1280,15 +1280,28 @@ private constructor(
 
         companion object {
 
+            /** Gemini Deep Research Agent */
             @JvmField
             val DEEP_RESEARCH_PRO_PREVIEW_12_2025 = of("deep-research-pro-preview-12-2025")
+
+            /** Gemini Deep Research Agent */
+            @JvmField val DEEP_RESEARCH_PREVIEW_04_2026 = of("deep-research-preview-04-2026")
+
+            /** Gemini Deep Research Max Agent */
+            @JvmField
+            val DEEP_RESEARCH_MAX_PREVIEW_04_2026 = of("deep-research-max-preview-04-2026")
 
             @JvmStatic fun of(value: String) = Agent(JsonField.of(value))
         }
 
         /** An enum containing [Agent]'s known values. */
         enum class Known {
-            DEEP_RESEARCH_PRO_PREVIEW_12_2025
+            /** Gemini Deep Research Agent */
+            DEEP_RESEARCH_PRO_PREVIEW_12_2025,
+            /** Gemini Deep Research Agent */
+            DEEP_RESEARCH_PREVIEW_04_2026,
+            /** Gemini Deep Research Max Agent */
+            DEEP_RESEARCH_MAX_PREVIEW_04_2026,
         }
 
         /**
@@ -1301,7 +1314,12 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            /** Gemini Deep Research Agent */
             DEEP_RESEARCH_PRO_PREVIEW_12_2025,
+            /** Gemini Deep Research Agent */
+            DEEP_RESEARCH_PREVIEW_04_2026,
+            /** Gemini Deep Research Max Agent */
+            DEEP_RESEARCH_MAX_PREVIEW_04_2026,
             /** An enum member indicating that [Agent] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1316,6 +1334,8 @@ private constructor(
         fun value(): Value =
             when (this) {
                 DEEP_RESEARCH_PRO_PREVIEW_12_2025 -> Value.DEEP_RESEARCH_PRO_PREVIEW_12_2025
+                DEEP_RESEARCH_PREVIEW_04_2026 -> Value.DEEP_RESEARCH_PREVIEW_04_2026
+                DEEP_RESEARCH_MAX_PREVIEW_04_2026 -> Value.DEEP_RESEARCH_MAX_PREVIEW_04_2026
                 else -> Value._UNKNOWN
             }
 
@@ -1331,6 +1351,8 @@ private constructor(
         fun known(): Known =
             when (this) {
                 DEEP_RESEARCH_PRO_PREVIEW_12_2025 -> Known.DEEP_RESEARCH_PRO_PREVIEW_12_2025
+                DEEP_RESEARCH_PREVIEW_04_2026 -> Known.DEEP_RESEARCH_PREVIEW_04_2026
+                DEEP_RESEARCH_MAX_PREVIEW_04_2026 -> Known.DEEP_RESEARCH_MAX_PREVIEW_04_2026
                 else -> throw GeminiNextGenApiInvalidDataException("Unknown Agent: $value")
             }
 
