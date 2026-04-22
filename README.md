@@ -1040,7 +1040,7 @@ The Google Gen AI Java SDK will accept contributions in the future.
 Apache 2.0 - See [LICENSE][license] for more information.
 
 [gemini-api-doc]: https://ai.google.dev/gemini-api/docs
-[gemini-enterprise-agent-platform-doc]: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview
+[gemini-enterprise-agent-platform-doc]: https://docs.cloud.google.com/gemini-enterprise-agent-platform
 [maven-version-image]: https://img.shields.io/maven-central/v/com.google.genai/google-genai.svg
 [maven-version-link]: https://central.sonatype.com/artifact/com.google.genai/google-genai
 [javadoc-image]: https://img.shields.io/badge/JavaDoc-Online-green
