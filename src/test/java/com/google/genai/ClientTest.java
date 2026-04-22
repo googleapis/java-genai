@@ -22,16 +22,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.HttpOptions;
 import java.lang.reflect.Field;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(EnvironmentVariablesMockingExtension.class)
+
 public class ClientTest {
   private static final String API_KEY = "api-key";
   private static final String PROJECT = "project";
@@ -219,5 +221,148 @@ public class ClientTest {
     assertEquals(null, client.location());
     assertTrue(client.vertexAI());
     assertEquals("https://my-endpoint.com", client.baseUrl().orElse(null));
+  }
+
+  @Test
+  void enterpriseFlag_whenSetToTrue_isRespected() {
+    Client client =
+        Client.builder()
+            .enterprise(true)
+            .project("project")
+            .location("location")
+            .credentials(CREDENTIALS)
+            .build();
+
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  void enterpriseFlag_whenSetToFalse_isRespected() {
+    Client client = Client.builder().enterprise(false).apiKey("api-key").build();
+    assertFalse(client.vertexAI());
+  }
+
+  @Test
+  void vertexAIFlag_whenSetToTrue_isRespected() {
+    Client client =
+        Client.builder()
+            .vertexAI(true)
+            .project("project")
+            .location("location")
+            .credentials(CREDENTIALS)
+            .build();
+
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  void conflictingFlags_throwsException() {
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                Client.builder()
+                    .enterprise(true)
+                    .vertexAI(false)
+                    .credentials(CREDENTIALS)
+                    .project("project")
+                    .location("location")
+                    .build());
+    assertEquals(
+        "enterprise and vertexAI flags have conflicting values, please set enterprise value only.",
+        exception.getMessage());
+  }
+
+  @Test
+  void nonConflictingFlags_doesNotThrowException() {
+    Client client =
+        Client.builder()
+            .enterprise(true)
+            .vertexAI(true)
+            .project("project")
+            .location("location")
+            .credentials(CREDENTIALS)
+            .build();
+
+    assertTrue(client.vertexAI());
+  }
+
+  @Test
+  void enterpriseEnvVar_isRespected() {
+    try (MockedStatic<ApiClient> mocked =
+            Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS);
+        MockedStatic<GoogleCredentials> mockedCredentials =
+            Mockito.mockStatic(GoogleCredentials.class)) {
+      mockedCredentials.when(GoogleCredentials::getApplicationDefault).thenReturn(CREDENTIALS);
+
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(
+              ImmutableMap.of("enterprise", "true", "project", "project", "location", "location"));
+      Client client = new Client();
+      assertTrue(client.vertexAI());
+    }
+  }
+
+  @Test
+  void vertexAIEnvVar_isRespected() {
+    try (MockedStatic<ApiClient> mocked =
+            Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS);
+        MockedStatic<GoogleCredentials> mockedCredentials =
+            Mockito.mockStatic(GoogleCredentials.class)) {
+      mockedCredentials.when(GoogleCredentials::getApplicationDefault).thenReturn(CREDENTIALS);
+
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(
+              ImmutableMap.of("vertexAI", "true", "project", "project", "location", "location"));
+      Client client = new Client();
+      assertTrue(client.vertexAI());
+    }
+  }
+
+  @Test
+  void enterpriseEnvVar_takesPrecedenceOverVertexAIEnvVar() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(
+              ImmutableMap.of(
+                  "enterprise", "false", "vertexAI", "true", "googleApiKey", "api-key"));
+      Client client = new Client();
+      assertFalse(client.vertexAI());
+    }
+  }
+
+  @Test
+  void flags_takePrecedenceOverEnvVars() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(ImmutableMap.of("enterprise", "false"));
+      Client client =
+          Client.builder()
+              .enterprise(true)
+              .project("project")
+              .location("location")
+              .credentials(CREDENTIALS)
+              .build();
+
+      assertTrue(client.vertexAI());
+    }
+  }
+
+  @Test
+  void defaultIsFalse_whenNoFlagsOrEnvsAreSet() {
+    try (MockedStatic<ApiClient> mocked =
+        Mockito.mockStatic(ApiClient.class, Mockito.CALLS_REAL_METHODS)) {
+      mocked
+          .when(ApiClient::defaultEnvironmentVariables)
+          .thenReturn(ImmutableMap.of("googleApiKey", "api-key"));
+      Client client = new Client();
+      assertFalse(client.vertexAI());
+    }
   }
 }

@@ -905,6 +905,10 @@ public abstract class ApiClient implements AutoCloseable {
     if (value != null && !value.isEmpty()) {
       mapBuilder.put("vertexAI", value);
     }
+    value = System.getenv("GOOGLE_GENAI_USE_ENTERPRISE");
+    if (value != null && !value.isEmpty()) {
+      mapBuilder.put("enterprise", value);
+    }
     value = System.getenv("GOOGLE_GEMINI_BASE_URL");
     if (value != null && !value.isEmpty()) {
       mapBuilder.put("geminiBaseUrl", value);

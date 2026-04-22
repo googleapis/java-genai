@@ -26,12 +26,16 @@ import com.google.genai.interactions.services.async.InteractionServiceAsyncImpl;
 import com.google.genai.interactions.services.blocking.InteractionService;
 import com.google.genai.interactions.services.blocking.InteractionServiceImpl;
 // interactions:strip_end
+import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /** Client class for GenAI. This class is thread-safe. */
 public final class Client implements AutoCloseable {
+
+  private static final Logger logger = Logger.getLogger(Client.class.getName());
 
   /** Async class for GenAI. */
   public final class Async {
@@ -96,6 +100,7 @@ public final class Client implements AutoCloseable {
     private Optional<GoogleCredentials> credentials = Optional.empty();
     private Optional<ClientOptions> clientOptions = Optional.empty();
     private Optional<HttpOptions> httpOptions = Optional.empty();
+    private Optional<Boolean> enterprise = Optional.empty();
     private Optional<Boolean> vertexAI = Optional.empty();
     private Optional<DebugConfig> debugConfig = Optional.empty();
 
@@ -108,6 +113,7 @@ public final class Client implements AutoCloseable {
           credentials,
           httpOptions,
           clientOptions,
+          enterprise,
           vertexAI,
           debugConfig);
     }
@@ -160,7 +166,18 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets whether to use Vertex AI APIs. */
+    /** Sets whether to use Gemini Enterprise Agent Platform.
+     * When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.
+     */
+    @CanIgnoreReturnValue
+    public Builder enterprise(boolean enterprise) {
+      this.enterprise = Optional.of(enterprise);
+      return this;
+    }
+
+    /** Sets whether to use Vertex AI APIs.
+     * When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.
+     */
     @CanIgnoreReturnValue
     public Builder vertexAI(boolean vertexAI) {
       this.vertexAI = Optional.of(vertexAI);
@@ -193,6 +210,7 @@ public final class Client implements AutoCloseable {
         /* credentials= */ Optional.empty(),
         /* httpOptions= */ Optional.empty(),
         /* clientOptions= */ Optional.empty(),
+        /* enterprise= */ Optional.empty(),
         /* vertexAI= */ Optional.empty(),
         /* debugConfig= */ Optional.empty());
   }
@@ -223,17 +241,43 @@ public final class Client implements AutoCloseable {
       Optional<GoogleCredentials> credentials,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions,
+      Optional<Boolean> enterprise,
       Optional<Boolean> vertexAI,
       Optional<DebugConfig> debugConfig) {
     checkNotNull(vertexAI, "vertexAI cannot be null");
+    checkNotNull(enterprise, "enterprise cannot be null");
     checkNotNull(debugConfig, "debugConfig cannot be null");
 
+    if (enterprise.isPresent() && vertexAI.isPresent() && !enterprise.get().equals(vertexAI.get())) {
+      throw new IllegalArgumentException(
+          "enterprise and vertexAI flags have conflicting values, please set enterprise value only.");
+    }
+
     boolean useVertexAI;
-    if (vertexAI.isPresent()) {
+    if (enterprise.isPresent()) {
+      useVertexAI = enterprise.get();
+    } else if (vertexAI.isPresent()) {
       useVertexAI = vertexAI.get();
     } else {
-      String envVar = ApiClient.defaultEnvironmentVariables().get("vertexAI");
-      useVertexAI = envVar != null && envVar.equalsIgnoreCase("true");
+      ImmutableMap<String, String> envVars = ApiClient.defaultEnvironmentVariables();
+      String enterpriseEnv = envVars.get("enterprise");
+      String vertexEnv = envVars.get("vertexAI");
+
+      boolean enterpriseEnvPresent = enterpriseEnv != null;
+      boolean vertexEnvPresent = vertexEnv != null;
+
+      if (enterpriseEnvPresent && vertexEnvPresent && !enterpriseEnv.equalsIgnoreCase(vertexEnv)) {
+        logger.warning(
+            "Warning: Both GOOGLE_GENAI_USE_ENTERPRISE and GOOGLE_GENAI_USE_VERTEXAI are set with conflicting values. The value of GOOGLE_GENAI_USE_ENTERPRISE will be used.");
+      }
+
+      if (enterpriseEnvPresent) {
+        useVertexAI = enterpriseEnv.equalsIgnoreCase("true");
+      } else if (vertexEnvPresent) {
+        useVertexAI = vertexEnv.equalsIgnoreCase("true");
+      } else {
+        useVertexAI = false;
+      }
     }
 
     if (project.isPresent() || location.isPresent()) {
@@ -302,6 +346,11 @@ public final class Client implements AutoCloseable {
     // interactions:strip_begin
     interactions = new InteractionServiceImpl(this.apiClient.interactionsClientOptions);
     // interactions:strip_end
+  }
+
+  /** Returns whether the client is using Gemini Enterprise Agent Platform. */
+  public boolean enterprise() {
+    return apiClient.vertexAI();
   }
 
   /** Returns whether the client is using Vertex AI APIs. */
