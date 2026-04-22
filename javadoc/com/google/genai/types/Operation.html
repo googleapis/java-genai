@@ -174,7 +174,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         
                                         <tr class="altColor">
                                             <td class="colFirst"><code>public final static <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a></code></td>
-                                            <th class="colSecond" scope="row"><code><a href=AuthConfigOauthConfig.html#MAX_READ_LENGTH_PROPERTY>MAX_READ_LENGTH_PROPERTY</a></code></th>
+                                            <th class="colSecond" scope="row"><code><a href=ThinkingConfig.html#MAX_READ_LENGTH_PROPERTY>MAX_READ_LENGTH_PROPERTY</a></code></th>
                                             <td class="colLast"></td>
                                         </tr>
                                         
@@ -260,7 +260,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <tr id="i0" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>&gt;</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=Operation.html#name()>name</a>() </code>
+                                            <th class="colSecond" scope="row"><code><a href=ImportFileOperation.html#name()>name</a>() </code>
                                             </th>
                                             <td class="colLast">The server-assigned name, which is only unique within the same service that originally returns it.</td>
                                         </tr>
@@ -268,7 +268,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <tr id="i1" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt;</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=Operation.html#metadata()>metadata</a>() </code>
+                                            <th class="colSecond" scope="row"><code><a href=ImportFileOperation.html#metadata()>metadata</a>() </code>
                                             </th>
                                             <td class="colLast">Service-specific metadata associated with the operation.</td>
                                         </tr>
@@ -276,7 +276,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <tr id="i2" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html>Boolean</a>&gt;</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=Operation.html#done()>done</a>() </code>
+                                            <th class="colSecond" scope="row"><code><a href=ImportFileOperation.html#done()>done</a>() </code>
                                             </th>
                                             <td class="colLast">If the value is `false`, it means the operation is still in progress.</td>
                                         </tr>
@@ -284,7 +284,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <tr id="i3" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt;</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=Operation.html#error()>error</a>() </code>
+                                            <th class="colSecond" scope="row"><code><a href=ImportFileOperation.html#error()>error</a>() </code>
                                             </th>
                                             <td class="colLast">The error result of the operation in case of failure or cancellation.</td>
                                         </tr>
@@ -373,7 +373,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                           >
                                     <li class="blockList">
                                         <h4>name</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>&gt; <a href=Operation.html#name()>name</a>()</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>&gt; <a href=ImportFileOperation.html#name()>name</a>()</pre>
                                         <div class="block"><p>The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.</p></div>
 
                                         <dl>
@@ -396,7 +396,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                           >
                                     <li class="blockList">
                                         <h4>metadata</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt; <a href=Operation.html#metadata()>metadata</a>()</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt; <a href=ImportFileOperation.html#metadata()>metadata</a>()</pre>
                                         <div class="block"><p>Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.</p></div>
 
                                         <dl>
@@ -419,7 +419,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                           >
                                     <li class="blockList">
                                         <h4>done</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html>Boolean</a>&gt; <a href=Operation.html#done()>done</a>()</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html>Boolean</a>&gt; <a href=ImportFileOperation.html#done()>done</a>()</pre>
                                         <div class="block"><p>If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.</p></div>
 
                                         <dl>
@@ -442,7 +442,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                           >
                                     <li class="blockList">
                                         <h4>error</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt; <a href=Operation.html#error()>error</a>()</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>Map</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html>Object</a>&gt;&gt; <a href=ImportFileOperation.html#error()>error</a>()</pre>
                                         <div class="block"><p>The error result of the operation in case of failure or cancellation.</p></div>
 
                                         <dl>
