@@ -310,6 +310,14 @@ public class <span class="typeNameLabel"><a href=Client.Builder.html>Client.Buil
                                         <tr id="i7" class="rowColor">
                                             <td class="colFirst"><code><a href=Client.Builder.html>Client.Builder</a></code>
                                             </td>
+                                            <th class="colSecond" scope="row"><code><a href=Client.Builder.html#enterprise(boolean)>enterprise</a>(boolean enterprise) </code>
+                                            </th>
+                                            <td class="colLast">Sets whether to use Gemini Enterprise Agent Platform.</td>
+                                        </tr>
+                                        
+                                        <tr id="i8" class="altColor">
+                                            <td class="colFirst"><code><a href=Client.Builder.html>Client.Builder</a></code>
+                                            </td>
                                             <th class="colSecond" scope="row"><code><a href=Client.Builder.html#vertexAI(boolean)>vertexAI</a>(boolean vertexAI) </code>
                                             </th>
                                             <td class="colLast">Sets whether to use Vertex AI APIs.</td>
@@ -530,6 +538,29 @@ public class <span class="typeNameLabel"><a href=Client.Builder.html>Client.Buil
                                     </li>
                                 </ul>
                                 
+                                <a id="enterprise(boolean)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>enterprise</h4>
+                                        <pre class="methodSignature">@CanIgnoreReturnValue() <a href=Client.Builder.html>Client.Builder</a> <a href=Client.Builder.html#enterprise(boolean)>enterprise</a>(boolean enterprise)</pre>
+                                        <div class="block"><p>Sets whether to use Gemini Enterprise Agent Platform. When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
                                 <a id="vertexAI(boolean)">
                                     <!--   -->
                                 </a>
@@ -539,7 +570,7 @@ public class <span class="typeNameLabel"><a href=Client.Builder.html>Client.Buil
                                     <li class="blockList">
                                         <h4>vertexAI</h4>
                                         <pre class="methodSignature">@CanIgnoreReturnValue() <a href=Client.Builder.html>Client.Builder</a> <a href=Client.Builder.html#vertexAI(boolean)>vertexAI</a>(boolean vertexAI)</pre>
-                                        <div class="block"><p>Sets whether to use Vertex AI APIs.</p></div>
+                                        <div class="block"><p>Sets whether to use Vertex AI APIs. When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.</p></div>
 
                                         <dl>
 
