@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Enum representing the Vertex embedding API to use. */
+/** Enum representing the Gemini Enterprise Agent Platform embedding API to use. */
 public class EmbeddingApiType {
 
   /** Enum representing the known values for EmbeddingApiType. */

@@ -26,11 +26,14 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Request-level metadata for the Vertex Embed Content API. */
+/** Request-level metadata for the Gemini Enterprise Agent Platform Embed Content API. */
 @AutoValue
 @JsonDeserialize(builder = EmbedContentMetadata.Builder.class)
 public abstract class EmbedContentMetadata extends JsonSerializable {
-  /** Vertex API only. The total number of billable characters included in the request. */
+  /**
+   * Gemini Enterprise Agent Platform only. The total number of billable characters included in the
+   * request.
+   */
   @JsonProperty("billableCharacterCount")
   public abstract Optional<Integer> billableCharacterCount();
 
@@ -55,8 +58,8 @@ public abstract class EmbedContentMetadata extends JsonSerializable {
     /**
      * Setter for billableCharacterCount.
      *
-     * <p>billableCharacterCount: Vertex API only. The total number of billable characters included
-     * in the request.
+     * <p>billableCharacterCount: Gemini Enterprise Agent Platform only. The total number of
+     * billable characters included in the request.
      */
     @JsonProperty("billableCharacterCount")
     public abstract Builder billableCharacterCount(Integer billableCharacterCount);

@@ -355,7 +355,7 @@ public final class TableTest {
     if (exceptionIfMldev.isPresent() && !client.vertexAI()) {
       verifyExceptionMatch(testName, cause, exceptionIfMldev.get(), "Gemini API");
     } else if (exceptionIfVertex.isPresent() && client.vertexAI()) {
-      verifyExceptionMatch(testName, cause, exceptionIfVertex.get(), "Vertex AI");
+      verifyExceptionMatch(testName, cause, exceptionIfVertex.get(), "Gemini Enterprise Agent Platform");
     } else {
       fail(String.format("'%s' failed: %s", testName, cause));
     }

@@ -135,7 +135,10 @@ public class AsyncBatchesTest {
               () -> client.async.batches.create(MODEL_ID, src, config).get());
 
       // Assert
-      assertEquals(exception.getMessage(), "fileName is not supported for Vertex AI.");
+      assertEquals(
+          exception.getMessage(),
+          "fileName is not supported for Gemini Enterprise Agent Platform (previously known as"
+              + " Vertex AI).");
     } else {
       BatchJob batchJob = client.async.batches.create(MODEL_ID, src, config).get();
 
@@ -242,7 +245,12 @@ public class AsyncBatchesTest {
               GenAiIOException.class, () -> client.async.batches.create(MODEL_ID, src, null).get());
 
       // Assert
-      assertTrue(exception.getMessage().equals("inlinedRequests is not supported for Vertex AI."));
+      assertTrue(
+          exception
+              .getMessage()
+              .equals(
+                  "inlinedRequests is not supported for Gemini Enterprise Agent Platform"
+                      + " (previously known as Vertex AI)."));
     } else {
       BatchJob batchJob = client.async.batches.create(MODEL_ID, src, null).get();
 

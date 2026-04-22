@@ -47,7 +47,10 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Double> learningRateMultiplier();
 
-  /** The batch size hyperparameter for tuning. This is only supported for OSS models in Vertex. */
+  /**
+   * The batch size hyperparameter for tuning. This is only supported for OSS models in Gemini
+   * Enterprise Agent Platform.
+   */
   @JsonProperty("batchSize")
   public abstract Optional<Integer> batchSize();
 
@@ -152,7 +155,7 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
      * Setter for batchSize.
      *
      * <p>batchSize: The batch size hyperparameter for tuning. This is only supported for OSS models
-     * in Vertex.
+     * in Gemini Enterprise Agent Platform.
      */
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Integer batchSize);

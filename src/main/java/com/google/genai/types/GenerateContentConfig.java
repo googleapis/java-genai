@@ -227,7 +227,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
 
   /**
    * Enables enhanced civic answers. It may not be available for all models. This field is not
-   * supported in Vertex AI.
+   * supported in Gemini Enterprise Agent Platform.
    */
   @JsonProperty("enableEnhancedCivicAnswers")
   public abstract Optional<Boolean> enableEnhancedCivicAnswers();
@@ -1062,7 +1062,7 @@ public abstract class GenerateContentConfig extends JsonSerializable {
      * Setter for enableEnhancedCivicAnswers.
      *
      * <p>enableEnhancedCivicAnswers: Enables enhanced civic answers. It may not be available for
-     * all models. This field is not supported in Vertex AI.
+     * all models. This field is not supported in Gemini Enterprise Agent Platform.
      */
     @JsonProperty("enableEnhancedCivicAnswers")
     public abstract Builder enableEnhancedCivicAnswers(boolean enableEnhancedCivicAnswers);

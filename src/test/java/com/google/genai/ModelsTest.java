@@ -414,7 +414,8 @@ public class ModelsTest {
                       config));
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.", exception.getMessage());
     }
   }
 
@@ -459,7 +460,8 @@ public class ModelsTest {
                       config));
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.", exception.getMessage());
     }
   }
 
@@ -506,7 +508,8 @@ public class ModelsTest {
                       config));
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.", exception.getMessage());
     }
   }
 
@@ -555,7 +558,8 @@ public class ModelsTest {
                       config));
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.", exception.getMessage());
     }
   }
 

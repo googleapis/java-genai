@@ -475,7 +475,9 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.",
+          exception.getMessage());
     }
   }
 
@@ -486,8 +488,7 @@ public class AsyncModelsTest {
     String suffix = vertexAI ? "vertex" : "mldev";
     Client client =
         TestUtils.createClient(
-            vertexAI,
-            "tests/models/generate_content_tools/test_google_search." + suffix + ".json");
+            vertexAI, "tests/models/generate_content_tools/test_google_search." + suffix + ".json");
 
     Tool tool = Tool.builder().googleSearch(GoogleSearch.builder()).build();
     GenerateContentConfig config = GenerateContentConfig.builder().tools(tool).build();
@@ -663,7 +664,9 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Vertex AI client.", exception.getMessage());
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.",
+          exception.getMessage());
     }
   }
 

@@ -42,7 +42,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
   @JsonProperty("embeddings")
   public abstract Optional<List<ContentEmbedding>> embeddings();
 
-  /** Vertex API only. Metadata about the request. */
+  /** Gemini Enterprise Agent Platform only. Metadata about the request. */
   @JsonProperty("metadata")
   public abstract Optional<EmbedContentMetadata> metadata();
 
@@ -139,7 +139,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
     /**
      * Setter for metadata.
      *
-     * <p>metadata: Vertex API only. Metadata about the request.
+     * <p>metadata: Gemini Enterprise Agent Platform only. Metadata about the request.
      */
     @JsonProperty("metadata")
     public abstract Builder metadata(EmbedContentMetadata metadata);
@@ -147,7 +147,7 @@ public abstract class EmbedContentResponse extends JsonSerializable {
     /**
      * Setter for metadata builder.
      *
-     * <p>metadata: Vertex API only. Metadata about the request.
+     * <p>metadata: Gemini Enterprise Agent Platform only. Metadata about the request.
      */
     @CanIgnoreReturnValue
     public Builder metadata(EmbedContentMetadata.Builder metadataBuilder) {

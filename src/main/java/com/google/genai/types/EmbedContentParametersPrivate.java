@@ -51,7 +51,7 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
   @JsonProperty("content")
   public abstract Optional<Content> content();
 
-  /** The Vertex embedding API to use. */
+  /** The Gemini Enterprise Agent Platform embedding API to use. */
   @JsonProperty("embeddingApiType")
   public abstract Optional<EmbeddingApiType> embeddingApiType();
 
@@ -170,7 +170,7 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
     /**
      * Setter for embeddingApiType.
      *
-     * <p>embeddingApiType: The Vertex embedding API to use.
+     * <p>embeddingApiType: The Gemini Enterprise Agent Platform embedding API to use.
      */
     @JsonProperty("embeddingApiType")
     public abstract Builder embeddingApiType(EmbeddingApiType embeddingApiType);
@@ -188,7 +188,7 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
     /**
      * Setter for embeddingApiType given a known enum.
      *
-     * <p>embeddingApiType: The Vertex embedding API to use.
+     * <p>embeddingApiType: The Gemini Enterprise Agent Platform embedding API to use.
      */
     @CanIgnoreReturnValue
     public Builder embeddingApiType(EmbeddingApiType.Known knownType) {
@@ -198,7 +198,7 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
     /**
      * Setter for embeddingApiType given a string.
      *
-     * <p>embeddingApiType: The Vertex embedding API to use.
+     * <p>embeddingApiType: The Gemini Enterprise Agent Platform embedding API to use.
      */
     @CanIgnoreReturnValue
     public Builder embeddingApiType(String embeddingApiType) {

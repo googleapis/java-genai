@@ -39,7 +39,8 @@ public abstract class TuningDataset extends JsonSerializable {
   public abstract Optional<String> gcsUri();
 
   /**
-   * The resource name of the Vertex Multimodal Dataset that is used as training dataset. Example:
+   * The resource name of the Gemini Enterprise Agent Platform (previously known as Vertex AI)
+   * Multimodal Dataset that is used as training dataset. Example:
    * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
    */
   @JsonProperty("vertexDatasetResource")
@@ -88,8 +89,8 @@ public abstract class TuningDataset extends JsonSerializable {
     /**
      * Setter for vertexDatasetResource.
      *
-     * <p>vertexDatasetResource: The resource name of the Vertex Multimodal Dataset that is used as
-     * training dataset. Example:
+     * <p>vertexDatasetResource: The resource name of the Gemini Enterprise Agent Platform
+     * (previously known as Vertex AI) Multimodal Dataset that is used as training dataset. Example:
      * 'projects/my-project-id-or-number/locations/my-location/datasets/my-dataset-id'.
      */
     @JsonProperty("vertexDatasetResource")

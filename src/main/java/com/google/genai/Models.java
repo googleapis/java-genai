@@ -1420,7 +1420,8 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "behavior parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -1894,7 +1895,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
-          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+          "enableEnhancedCivicAnswers parameter is not supported in Gemini Enterprise Agent"
+              + " Platform.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}) != null) {
@@ -2755,7 +2757,8 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"webhookConfig"}))) {
-      throw new IllegalArgumentException("webhookConfig parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "webhookConfig parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -3419,7 +3422,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
-          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+          "enableEnhancedCivicAnswers parameter is not supported in Gemini Enterprise Agent"
+              + " Platform.");
     }
 
     return toObject;
@@ -4291,15 +4295,18 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
-      throw new IllegalArgumentException("toolCall parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "toolCall parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
-      throw new IllegalArgumentException("toolResponse parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "toolResponse parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
-      throw new IllegalArgumentException("partMetadata parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "partMetadata parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -4858,7 +4865,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}))) {
       throw new IllegalArgumentException(
-          "includeServerSideToolInvocations parameter is not supported in Vertex AI.");
+          "includeServerSideToolInvocations parameter is not supported in Gemini Enterprise Agent"
+              + " Platform.");
     }
 
     return toObject;
@@ -4973,7 +4981,8 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
-      throw new IllegalArgumentException("fileSearch parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "fileSearch parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
@@ -5039,7 +5048,8 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mcpServers"}))) {
-      throw new IllegalArgumentException("mcpServers parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "mcpServers parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -5992,7 +6002,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -6030,7 +6041,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     EditImageResponse sdkResponse =
@@ -6104,7 +6116,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -6142,7 +6155,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     UpscaleImageResponse sdkResponse =
@@ -6210,7 +6224,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -6248,7 +6263,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
@@ -6317,7 +6333,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -6355,7 +6372,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
@@ -6913,7 +6931,8 @@ public final class Models {
       path = Common.formatMap("{model}:computeTokens", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -6951,7 +6970,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     ComputeTokensResponse sdkResponse =

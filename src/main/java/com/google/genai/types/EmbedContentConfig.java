@@ -50,28 +50,28 @@ public abstract class EmbedContentConfig extends JsonSerializable {
   @JsonProperty("outputDimensionality")
   public abstract Optional<Integer> outputDimensionality();
 
-  /** Vertex API only. The MIME type of the input. */
+  /** Gemini Enterprise Agent Platform only. The MIME type of the input. */
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
   /**
-   * Vertex API only. Whether to silently truncate inputs longer than the max sequence length. If
-   * this option is set to false, oversized inputs will lead to an INVALID_ARGUMENT error, similar
-   * to other text APIs.
+   * Gemini Enterprise Agent Platform only. Whether to silently truncate inputs longer than the max
+   * sequence length. If this option is set to false, oversized inputs will lead to an
+   * INVALID_ARGUMENT error, similar to other text APIs.
    */
   @JsonProperty("autoTruncate")
   public abstract Optional<Boolean> autoTruncate();
 
   /**
-   * Vertex API only. Whether to enable OCR for document content. Only applicable to Gemini
-   * Embedding 2 models.
+   * Gemini Enterprise Agent Platform only. Whether to enable OCR for document content. Only
+   * applicable to Gemini Embedding 2 models.
    */
   @JsonProperty("documentOcr")
   public abstract Optional<Boolean> documentOcr();
 
   /**
-   * Vertex API only. Whether to extract audio from video content. Only applicable to Gemini
-   * Embedding 2 models.
+   * Gemini Enterprise Agent Platform only. Whether to extract audio from video content. Only
+   * applicable to Gemini Embedding 2 models.
    */
   @JsonProperty("audioTrackExtraction")
   public abstract Optional<Boolean> audioTrackExtraction();
@@ -181,7 +181,7 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     /**
      * Setter for mimeType.
      *
-     * <p>mimeType: Vertex API only. The MIME type of the input.
+     * <p>mimeType: Gemini Enterprise Agent Platform only. The MIME type of the input.
      */
     @JsonProperty("mimeType")
     public abstract Builder mimeType(String mimeType);
@@ -199,9 +199,9 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     /**
      * Setter for autoTruncate.
      *
-     * <p>autoTruncate: Vertex API only. Whether to silently truncate inputs longer than the max
-     * sequence length. If this option is set to false, oversized inputs will lead to an
-     * INVALID_ARGUMENT error, similar to other text APIs.
+     * <p>autoTruncate: Gemini Enterprise Agent Platform only. Whether to silently truncate inputs
+     * longer than the max sequence length. If this option is set to false, oversized inputs will
+     * lead to an INVALID_ARGUMENT error, similar to other text APIs.
      */
     @JsonProperty("autoTruncate")
     public abstract Builder autoTruncate(boolean autoTruncate);
@@ -219,8 +219,8 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     /**
      * Setter for documentOcr.
      *
-     * <p>documentOcr: Vertex API only. Whether to enable OCR for document content. Only applicable
-     * to Gemini Embedding 2 models.
+     * <p>documentOcr: Gemini Enterprise Agent Platform only. Whether to enable OCR for document
+     * content. Only applicable to Gemini Embedding 2 models.
      */
     @JsonProperty("documentOcr")
     public abstract Builder documentOcr(boolean documentOcr);
@@ -238,8 +238,8 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     /**
      * Setter for audioTrackExtraction.
      *
-     * <p>audioTrackExtraction: Vertex API only. Whether to extract audio from video content. Only
-     * applicable to Gemini Embedding 2 models.
+     * <p>audioTrackExtraction: Gemini Enterprise Agent Platform only. Whether to extract audio from
+     * video content. Only applicable to Gemini Embedding 2 models.
      */
     @JsonProperty("audioTrackExtraction")
     public abstract Builder audioTrackExtraction(boolean audioTrackExtraction);

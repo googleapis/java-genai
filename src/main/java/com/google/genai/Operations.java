@@ -427,7 +427,8 @@ public final class Operations {
       path = Common.formatMap("{resourceName}:fetchPredictOperation", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 

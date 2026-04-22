@@ -57,7 +57,10 @@ public abstract class BatchJob extends JsonSerializable {
   @JsonProperty("startTime")
   public abstract Optional<Instant> startTime();
 
-  /** The time when the BatchJob was completed. This field is for Vertex AI only. */
+  /**
+   * The time when the BatchJob was completed. This field is for Gemini Enterprise Agent Platform
+   * only.
+   */
   @JsonProperty("endTime")
   public abstract Optional<Instant> endTime();
 
@@ -69,7 +72,7 @@ public abstract class BatchJob extends JsonSerializable {
   @JsonProperty("model")
   public abstract Optional<String> model();
 
-  /** Configuration for the input data. This field is for Vertex AI only. */
+  /** Configuration for the input data. This field is for Gemini Enterprise Agent Platform only. */
   @JsonProperty("src")
   public abstract Optional<BatchJobSource> src();
 
@@ -77,7 +80,10 @@ public abstract class BatchJob extends JsonSerializable {
   @JsonProperty("dest")
   public abstract Optional<BatchJobDestination> dest();
 
-  /** Statistics on completed and failed prediction instances. This field is for Vertex AI only. */
+  /**
+   * Statistics on completed and failed prediction instances. This field is for Gemini Enterprise
+   * Agent Platform only.
+   */
   @JsonProperty("completionStats")
   public abstract Optional<CompletionStats> completionStats();
 
@@ -243,7 +249,8 @@ public abstract class BatchJob extends JsonSerializable {
     /**
      * Setter for endTime.
      *
-     * <p>endTime: The time when the BatchJob was completed. This field is for Vertex AI only.
+     * <p>endTime: The time when the BatchJob was completed. This field is for Gemini Enterprise
+     * Agent Platform only.
      */
     @JsonProperty("endTime")
     public abstract Builder endTime(Instant endTime);
@@ -297,7 +304,8 @@ public abstract class BatchJob extends JsonSerializable {
     /**
      * Setter for src.
      *
-     * <p>src: Configuration for the input data. This field is for Vertex AI only.
+     * <p>src: Configuration for the input data. This field is for Gemini Enterprise Agent Platform
+     * only.
      */
     @JsonProperty("src")
     public abstract Builder src(BatchJobSource src);
@@ -305,7 +313,8 @@ public abstract class BatchJob extends JsonSerializable {
     /**
      * Setter for src builder.
      *
-     * <p>src: Configuration for the input data. This field is for Vertex AI only.
+     * <p>src: Configuration for the input data. This field is for Gemini Enterprise Agent Platform
+     * only.
      */
     @CanIgnoreReturnValue
     public Builder src(BatchJobSource.Builder srcBuilder) {
@@ -354,7 +363,7 @@ public abstract class BatchJob extends JsonSerializable {
      * Setter for completionStats.
      *
      * <p>completionStats: Statistics on completed and failed prediction instances. This field is
-     * for Vertex AI only.
+     * for Gemini Enterprise Agent Platform only.
      */
     @JsonProperty("completionStats")
     public abstract Builder completionStats(CompletionStats completionStats);
@@ -363,7 +372,7 @@ public abstract class BatchJob extends JsonSerializable {
      * Setter for completionStats builder.
      *
      * <p>completionStats: Statistics on completed and failed prediction instances. This field is
-     * for Vertex AI only.
+     * for Gemini Enterprise Agent Platform only.
      */
     @CanIgnoreReturnValue
     public Builder completionStats(CompletionStats.Builder completionStatsBuilder) {

@@ -36,7 +36,10 @@ public abstract class ContentEmbedding extends JsonSerializable {
   @JsonProperty("values")
   public abstract Optional<List<Float>> values();
 
-  /** Vertex API only. Statistics of the input text associated with this embedding. */
+  /**
+   * Gemini Enterprise Agent Platform only. Statistics of the input text associated with this
+   * embedding.
+   */
   @JsonProperty("statistics")
   public abstract Optional<ContentEmbeddingStatistics> statistics();
 
@@ -89,7 +92,8 @@ public abstract class ContentEmbedding extends JsonSerializable {
     /**
      * Setter for statistics.
      *
-     * <p>statistics: Vertex API only. Statistics of the input text associated with this embedding.
+     * <p>statistics: Gemini Enterprise Agent Platform only. Statistics of the input text associated
+     * with this embedding.
      */
     @JsonProperty("statistics")
     public abstract Builder statistics(ContentEmbeddingStatistics statistics);
@@ -97,7 +101,8 @@ public abstract class ContentEmbedding extends JsonSerializable {
     /**
      * Setter for statistics builder.
      *
-     * <p>statistics: Vertex API only. Statistics of the input text associated with this embedding.
+     * <p>statistics: Gemini Enterprise Agent Platform only. Statistics of the input text associated
+     * with this embedding.
      */
     @CanIgnoreReturnValue
     public Builder statistics(ContentEmbeddingStatistics.Builder statisticsBuilder) {

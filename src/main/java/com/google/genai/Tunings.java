@@ -1046,7 +1046,8 @@ public final class Tunings {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
-          "enableEnhancedCivicAnswers parameter is not supported in Vertex AI.");
+          "enableEnhancedCivicAnswers parameter is not supported in Gemini Enterprise Agent"
+              + " Platform.");
     }
 
     return toObject;
@@ -1263,7 +1264,8 @@ public final class Tunings {
       }
     }
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"examples"}))) {
-      throw new IllegalArgumentException("examples parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "examples parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -1759,7 +1761,8 @@ public final class Tunings {
       path = Common.formatMap("tuningJobs", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -1797,7 +1800,8 @@ public final class Tunings {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     ListTuningJobsResponse sdkResponse =
@@ -1909,8 +1913,8 @@ public final class Tunings {
   /**
    * Cancels a tuning job resource.
    *
-   * @param name The resource name of the tuning job. For Vertex, this is the full resource name.
-   *     For Gemini API, this is `tunedModels/{id}`.
+   * @param name The resource name of the tuning job. For Gemini Enterprise Agent Platform , this is
+   *     the full resource name. For Gemini API, this is `tunedModels/{id}`.
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
   public CancelTuningJobResponse cancel(String name, CancelTuningJobConfig config) {
@@ -1963,7 +1967,8 @@ public final class Tunings {
       path = Common.formatMap("tuningJobs", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
     body.remove("_url");
 
@@ -2001,7 +2006,8 @@ public final class Tunings {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Vertex AI client.");
+          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
+              + " as Vertex AI) client.");
     }
 
     TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);

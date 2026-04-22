@@ -559,7 +559,8 @@ public final class Caches {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException("behavior parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "behavior parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -966,15 +967,18 @@ public final class Caches {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
-      throw new IllegalArgumentException("toolCall parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "toolCall parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
-      throw new IllegalArgumentException("toolResponse parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "toolResponse parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
-      throw new IllegalArgumentException("partMetadata parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "partMetadata parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
@@ -1031,7 +1035,8 @@ public final class Caches {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}))) {
       throw new IllegalArgumentException(
-          "includeServerSideToolInvocations parameter is not supported in Vertex AI.");
+          "includeServerSideToolInvocations parameter is not supported in Gemini Enterprise Agent"
+              + " Platform.");
     }
 
     return toObject;
@@ -1144,7 +1149,8 @@ public final class Caches {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
-      throw new IllegalArgumentException("fileSearch parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "fileSearch parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
@@ -1209,7 +1215,8 @@ public final class Caches {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mcpServers"}))) {
-      throw new IllegalArgumentException("mcpServers parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "mcpServers parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;

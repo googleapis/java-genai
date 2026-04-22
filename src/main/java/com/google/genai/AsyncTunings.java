@@ -93,8 +93,8 @@ public final class AsyncTunings {
   /**
    * Asynchronously cancels a tuning job resource.
    *
-   * @param name The resource name of the tuning job. For Vertex, this is the full resource name.
-   *     For Gemini API, this is `tunedModels/{id}`.
+   * @param name The resource name of the tuning job. For Gemini Enterprise Agent Platform , this is
+   *     the full resource name. For Gemini API, this is `tunedModels/{id}`.
    * @param config A {@link CancelTuningJobConfig} for configuring the cancel request.
    */
   public CompletableFuture<CancelTuningJobResponse> cancel(

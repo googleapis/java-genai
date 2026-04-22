@@ -80,7 +80,8 @@ public final class AsyncBatches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   *     initialized in the Gemini Enterprise Agent Platform client. Or "batches/abc" using the
+   *     Gemini Developer AI client.
    * @param config A {@link GetBatchJobConfig} for configuring the get request.
    * @return A {@link BatchJob} object that contains the info of the batch job.
    */
@@ -134,7 +135,8 @@ public final class AsyncBatches {
    *
    * @param name A fully-qualified BatchJob resource name or ID. Example:
    *     "projects/.../locations/.../batchPredictionJobs/456" or "456" when project and location are
-   *     initialized in the Vertex AI client. Or "batches/abc" using the Gemini Developer AI client.
+   *     initialized in the Gemini Enterprise Agent Platform client. Or "batches/abc" using the
+   *     Gemini Developer AI client.
    * @param config A {@link DeleteBatchJobConfig} for configuring the delete request.
    */
   public CompletableFuture<DeleteResourceJob> delete(String name, DeleteBatchJobConfig config) {
@@ -196,10 +198,14 @@ public final class AsyncBatches {
       String model, BatchJobSource src, CreateBatchJobConfig config) {
     if (this.apiClient.vertexAI()) {
       if (src.inlinedRequests().isPresent()) {
-        throw new GenAiIOException("inlinedRequests is not supported for Vertex AI.");
+        throw new GenAiIOException(
+            "inlinedRequests is not supported for Gemini Enterprise Agent Platform (previously"
+                + " known as Vertex AI).");
       }
       if (src.fileName().isPresent()) {
-        throw new GenAiIOException("fileName is not supported for Vertex AI.");
+        throw new GenAiIOException(
+            "fileName is not supported for Gemini Enterprise Agent Platform (previously known as"
+                + " Vertex AI).");
       }
       int count = 0;
       if (src.gcsUri().isPresent()) {
@@ -243,7 +249,8 @@ public final class AsyncBatches {
       String model, EmbeddingsBatchJobSource src, CreateEmbeddingsBatchJobConfig config) {
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "Vertex AI does not support batches.createEmbeddings.");
+          "Gemini Enterprise Agent Platform (previously known as Vertex AI) does not support"
+              + " batches.createEmbeddings.");
     }
     return this.privateCreateEmbeddings(model, src, config);
   }

@@ -31,13 +31,13 @@ import java.util.Optional;
 @JsonDeserialize(builder = ContentEmbeddingStatistics.Builder.class)
 public abstract class ContentEmbeddingStatistics extends JsonSerializable {
   /**
-   * Vertex API only. If the input text was truncated due to having a length longer than the allowed
-   * maximum input.
+   * Gemini Enterprise Agent Platform only. If the input text was truncated due to having a length
+   * longer than the allowed maximum input.
    */
   @JsonProperty("truncated")
   public abstract Optional<Boolean> truncated();
 
-  /** Vertex API only. Number of tokens of the input text. */
+  /** Gemini Enterprise Agent Platform only. Number of tokens of the input text. */
   @JsonProperty("tokenCount")
   public abstract Optional<Float> tokenCount();
 
@@ -62,8 +62,8 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
     /**
      * Setter for truncated.
      *
-     * <p>truncated: Vertex API only. If the input text was truncated due to having a length longer
-     * than the allowed maximum input.
+     * <p>truncated: Gemini Enterprise Agent Platform only. If the input text was truncated due to
+     * having a length longer than the allowed maximum input.
      */
     @JsonProperty("truncated")
     public abstract Builder truncated(boolean truncated);
@@ -81,7 +81,7 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
     /**
      * Setter for tokenCount.
      *
-     * <p>tokenCount: Vertex API only. Number of tokens of the input text.
+     * <p>tokenCount: Gemini Enterprise Agent Platform only. Number of tokens of the input text.
      */
     @JsonProperty("tokenCount")
     public abstract Builder tokenCount(Float tokenCount);

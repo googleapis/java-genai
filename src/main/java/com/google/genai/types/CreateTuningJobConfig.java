@@ -87,11 +87,17 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("tuningMode")
   public abstract Optional<TuningMode> tuningMode();
 
-  /** Custom base model for tuning. This is only supported for OSS models in Vertex. */
+  /**
+   * Custom base model for tuning. This is only supported for OSS models in Gemini Enterprise Agent
+   * Platform.
+   */
   @JsonProperty("customBaseModel")
   public abstract Optional<String> customBaseModel();
 
-  /** The batch size hyperparameter for tuning. This is only supported for OSS models in Vertex. */
+  /**
+   * The batch size hyperparameter for tuning. This is only supported for OSS models in Gemini
+   * Enterprise Agent Platform.
+   */
   @JsonProperty("batchSize")
   public abstract Optional<Integer> batchSize();
 
@@ -454,7 +460,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
      * Setter for customBaseModel.
      *
      * <p>customBaseModel: Custom base model for tuning. This is only supported for OSS models in
-     * Vertex.
+     * Gemini Enterprise Agent Platform.
      */
     @JsonProperty("customBaseModel")
     public abstract Builder customBaseModel(String customBaseModel);
@@ -473,7 +479,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
      * Setter for batchSize.
      *
      * <p>batchSize: The batch size hyperparameter for tuning. This is only supported for OSS models
-     * in Vertex.
+     * in Gemini Enterprise Agent Platform.
      */
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Integer batchSize);

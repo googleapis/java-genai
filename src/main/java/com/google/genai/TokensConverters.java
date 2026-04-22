@@ -198,7 +198,8 @@ final class TokensConverters {
   ObjectNode createAuthTokenParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"config"}))) {
-      throw new IllegalArgumentException("config parameter is not supported in Vertex AI.");
+      throw new IllegalArgumentException(
+          "config parameter is not supported in Gemini Enterprise Agent Platform.");
     }
 
     return toObject;
