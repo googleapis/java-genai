@@ -1,0 +1,27 @@
+name: Build Examples and Javadoc
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'release-please--branches--main' || github.head_ref == 'release-please--branches--main'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+        cache: 'maven'
+    - name: Install Root
+      run: mvn -B -ntp install -DskipTests -Djacoco.skip=true -Dclirr.skip=true
+    - name: Compile Examples
+      run: mvn -B -ntp compile -f examples/pom.xml
+    - name: Generate Javadoc
+      run: mvn -B -ntp dokka:javadoc
