@@ -8957,7 +8957,7 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val callId: JsonField<String>,
-            private val result: JsonField<List<Result>>,
+            private val result: JsonField<List<JsonValue>>,
             private val type: JsonValue,
             private val signature: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -8970,7 +8970,7 @@ private constructor(
                 callId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("result")
                 @ExcludeMissing
-                result: JsonField<List<Result>> = JsonMissing.of(),
+                result: JsonField<List<JsonValue>> = JsonMissing.of(),
                 @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
                 @JsonProperty("signature")
                 @ExcludeMissing
@@ -8991,7 +8991,7 @@ private constructor(
              *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun result(): List<Result> = result.getRequired("result")
+            fun result(): List<JsonValue> = result.getRequired("result")
 
             /**
              * Expected to always return the following:
@@ -9024,7 +9024,9 @@ private constructor(
              *
              * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
              */
-            @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<List<Result>> = result
+            @JsonProperty("result")
+            @ExcludeMissing
+            fun _result(): JsonField<List<JsonValue>> = result
 
             /**
              * Returns the raw JSON value of [signature].
@@ -9066,7 +9068,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var callId: JsonField<String>? = null
-                private var result: JsonField<MutableList<Result>>? = null
+                private var result: JsonField<MutableList<JsonValue>>? = null
                 private var type: JsonValue = JsonValue.from("file_search_result")
                 private var signature: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -9092,25 +9094,25 @@ private constructor(
                  */
                 fun callId(callId: JsonField<String>) = apply { this.callId = callId }
 
-                fun result(result: List<Result>) = result(JsonField.of(result))
+                fun result(result: List<JsonValue>) = result(JsonField.of(result))
 
                 /**
                  * Sets [Builder.result] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.result] with a well-typed `List<Result>` value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * You should usually call [Builder.result] with a well-typed `List<JsonValue>`
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
                  */
-                fun result(result: JsonField<List<Result>>) = apply {
+                fun result(result: JsonField<List<JsonValue>>) = apply {
                     this.result = result.map { it.toMutableList() }
                 }
 
                 /**
-                 * Adds a single [Result] to [Builder.result].
+                 * Adds a single [JsonValue] to [Builder.result].
                  *
                  * @throws IllegalStateException if the field was previously set to a non-list.
                  */
-                fun addResult(result: Result) = apply {
+                fun addResult(result: JsonValue) = apply {
                     this.result =
                         (this.result ?: JsonField.of(mutableListOf())).also {
                             checkKnown("result", it).add(result)
@@ -9196,7 +9198,7 @@ private constructor(
                 }
 
                 callId()
-                result().forEach { it.validate() }
+                result()
                 _type().let {
                     if (it != JsonValue.from("file_search_result")) {
                         throw GeminiNextGenApiInvalidDataException(
@@ -9225,182 +9227,9 @@ private constructor(
             @JvmSynthetic
             internal fun validity(): Int =
                 (if (callId.asKnown().isPresent) 1 else 0) +
-                    (result.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                    (result.asKnown().getOrNull()?.size ?: 0) +
                     type.let { if (it == JsonValue.from("file_search_result")) 1 else 0 } +
                     (if (signature.asKnown().isPresent) 1 else 0)
-
-            /** The result of the File Search. */
-            class Result
-            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-            private constructor(
-                private val customMetadata: JsonField<List<JsonValue>>,
-                private val additionalProperties: MutableMap<String, JsonValue>,
-            ) {
-
-                @JsonCreator
-                private constructor(
-                    @JsonProperty("custom_metadata")
-                    @ExcludeMissing
-                    customMetadata: JsonField<List<JsonValue>> = JsonMissing.of()
-                ) : this(customMetadata, mutableMapOf())
-
-                /**
-                 * User provided metadata about the FileSearchResult.
-                 *
-                 * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected
-                 *   type (e.g. if the server responded with an unexpected value).
-                 */
-                fun customMetadata(): Optional<List<JsonValue>> =
-                    customMetadata.getOptional("custom_metadata")
-
-                /**
-                 * Returns the raw JSON value of [customMetadata].
-                 *
-                 * Unlike [customMetadata], this method doesn't throw if the JSON field has an
-                 * unexpected type.
-                 */
-                @JsonProperty("custom_metadata")
-                @ExcludeMissing
-                fun _customMetadata(): JsonField<List<JsonValue>> = customMetadata
-
-                @JsonAnySetter
-                private fun putAdditionalProperty(key: String, value: JsonValue) {
-                    additionalProperties.put(key, value)
-                }
-
-                @JsonAnyGetter
-                @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> =
-                    Collections.unmodifiableMap(additionalProperties)
-
-                fun toBuilder() = Builder().from(this)
-
-                companion object {
-
-                    /** Returns a mutable builder for constructing an instance of [Result]. */
-                    @JvmStatic fun builder() = Builder()
-                }
-
-                /** A builder for [Result]. */
-                class Builder internal constructor() {
-
-                    private var customMetadata: JsonField<MutableList<JsonValue>>? = null
-                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                    @JvmSynthetic
-                    internal fun from(result: Result) = apply {
-                        customMetadata = result.customMetadata.map { it.toMutableList() }
-                        additionalProperties = result.additionalProperties.toMutableMap()
-                    }
-
-                    /** User provided metadata about the FileSearchResult. */
-                    fun customMetadata(customMetadata: List<JsonValue>) =
-                        customMetadata(JsonField.of(customMetadata))
-
-                    /**
-                     * Sets [Builder.customMetadata] to an arbitrary JSON value.
-                     *
-                     * You should usually call [Builder.customMetadata] with a well-typed
-                     * `List<JsonValue>` value instead. This method is primarily for setting the
-                     * field to an undocumented or not yet supported value.
-                     */
-                    fun customMetadata(customMetadata: JsonField<List<JsonValue>>) = apply {
-                        this.customMetadata = customMetadata.map { it.toMutableList() }
-                    }
-
-                    /**
-                     * Adds a single [JsonValue] to [Builder.customMetadata].
-                     *
-                     * @throws IllegalStateException if the field was previously set to a non-list.
-                     */
-                    fun addCustomMetadata(customMetadata: JsonValue) = apply {
-                        this.customMetadata =
-                            (this.customMetadata ?: JsonField.of(mutableListOf())).also {
-                                checkKnown("customMetadata", it).add(customMetadata)
-                            }
-                    }
-
-                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                        this.additionalProperties.clear()
-                        putAllAdditionalProperties(additionalProperties)
-                    }
-
-                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        additionalProperties.put(key, value)
-                    }
-
-                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                        apply {
-                            this.additionalProperties.putAll(additionalProperties)
-                        }
-
-                    fun removeAdditionalProperty(key: String) = apply {
-                        additionalProperties.remove(key)
-                    }
-
-                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                        keys.forEach(::removeAdditionalProperty)
-                    }
-
-                    /**
-                     * Returns an immutable instance of [Result].
-                     *
-                     * Further updates to this [Builder] will not mutate the returned instance.
-                     */
-                    fun build(): Result =
-                        Result(
-                            (customMetadata ?: JsonMissing.of()).map { it.toImmutable() },
-                            additionalProperties.toMutableMap(),
-                        )
-                }
-
-                private var validated: Boolean = false
-
-                fun validate(): Result = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    customMetadata()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: GeminiNextGenApiInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic
-                internal fun validity(): Int = (customMetadata.asKnown().getOrNull()?.size ?: 0)
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is Result &&
-                        customMetadata == other.customMetadata &&
-                        additionalProperties == other.additionalProperties
-                }
-
-                private val hashCode: Int by lazy {
-                    Objects.hash(customMetadata, additionalProperties)
-                }
-
-                override fun hashCode(): Int = hashCode
-
-                override fun toString() =
-                    "Result{customMetadata=$customMetadata, additionalProperties=$additionalProperties}"
-            }
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {

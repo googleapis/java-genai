@@ -941,6 +941,17 @@ private constructor(
         fun addOutput(fileSearchResult: FileSearchResultContent) =
             addOutput(Content.ofFileSearchResult(fileSearchResult))
 
+        /**
+         * Alias for calling [addOutput] with the following:
+         * ```java
+         * FileSearchResultContent.builder()
+         *     .callId(callId)
+         *     .build()
+         * ```
+         */
+        fun addFileSearchResultOutput(callId: String) =
+            addOutput(FileSearchResultContent.builder().callId(callId).build())
+
         /** Alias for calling [addOutput] with `Content.ofGoogleMapsResult(googleMapsResult)`. */
         fun addOutput(googleMapsResult: GoogleMapsResultContent) =
             addOutput(Content.ofGoogleMapsResult(googleMapsResult))

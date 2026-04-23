@@ -266,6 +266,17 @@ private constructor(
         fun content(fileSearchResult: FileSearchResultContent) =
             content(Content.ofFileSearchResult(fileSearchResult))
 
+        /**
+         * Alias for calling [content] with the following:
+         * ```java
+         * FileSearchResultContent.builder()
+         *     .callId(callId)
+         *     .build()
+         * ```
+         */
+        fun fileSearchResultContent(callId: String) =
+            content(FileSearchResultContent.builder().callId(callId).build())
+
         /** Alias for calling [content] with `Content.ofGoogleMapsResult(googleMapsResult)`. */
         fun content(googleMapsResult: GoogleMapsResultContent) =
             content(Content.ofGoogleMapsResult(googleMapsResult))
