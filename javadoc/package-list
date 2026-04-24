@@ -25,6 +25,7 @@ $dokka.location:com.google.genai.types/AutoraterConfig.Builder///PointingToDecla
 $dokka.location:com.google.genai.types/AvatarConfig.Builder///PointingToDeclaration/com/google/genai/types/AvatarConfig.Builder.html
 $dokka.location:com.google.genai.types/BatchJob.Builder///PointingToDeclaration/com/google/genai/types/BatchJob.Builder.html
 $dokka.location:com.google.genai.types/BatchJobDestination.Builder///PointingToDeclaration/com/google/genai/types/BatchJobDestination.Builder.html
+$dokka.location:com.google.genai.types/BatchJobOutputInfo.Builder///PointingToDeclaration/com/google/genai/types/BatchJobOutputInfo.Builder.html
 $dokka.location:com.google.genai.types/BatchJobSource.Builder///PointingToDeclaration/com/google/genai/types/BatchJobSource.Builder.html
 $dokka.location:com.google.genai.types/Behavior.Known///PointingToDeclaration/com/google/genai/types/Behavior.Known.html
 $dokka.location:com.google.genai.types/BigQuerySource.Builder///PointingToDeclaration/com/google/genai/types/BigQuerySource.Builder.html

@@ -361,6 +361,14 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         </tr>
                                         
                                         <tr id="i12" class="altColor">
+                                            <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=BatchJobOutputInfo.html>BatchJobOutputInfo</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=BatchJob.html#outputInfo()>outputInfo</a>() </code>
+                                            </th>
+                                            <td class="colLast">Information further describing the output of this job.</td>
+                                        </tr>
+                                        
+                                        <tr id="i13" class="rowColor">
                                             <td class="colFirst"><code>static <a href=BatchJob.Builder.html>BatchJob.Builder</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJob.html#builder()>builder</a>() </code>
@@ -368,7 +376,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                             <td class="colLast">Instantiates a builder for BatchJob.</td>
                                         </tr>
                                         
-                                        <tr id="i13" class="rowColor">
+                                        <tr id="i14" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=BatchJob.Builder.html>BatchJob.Builder</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJob.html#toBuilder()>toBuilder</a>() </code>
@@ -376,7 +384,7 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                             <td class="colLast">Creates a builder with the same values as this instance.</td>
                                         </tr>
                                         
-                                        <tr id="i14" class="altColor">
+                                        <tr id="i15" class="rowColor">
                                             <td class="colFirst"><code>static <a href=BatchJob.html>BatchJob</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=BatchJob.html#fromJson(java.lang.String)>fromJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> jsonString) </code>
@@ -707,6 +715,29 @@ extends <a href=../JsonSerializable.html>JsonSerializable</a>
                                         <h4>completionStats</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=CompletionStats.html>CompletionStats</a>&gt; <a href=BatchJob.html#completionStats()>completionStats</a>()</pre>
                                         <div class="block"><p>Statistics on completed and failed prediction instances. This field is for Gemini Enterprise Agent Platform only.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="outputInfo()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>outputInfo</h4>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html>Optional</a>&lt;<a href=BatchJobOutputInfo.html>BatchJobOutputInfo</a>&gt; <a href=BatchJob.html#outputInfo()>outputInfo</a>()</pre>
+                                        <div class="block"><p>Information further describing the output of this job. Output only.</p></div>
 
                                         <dl>
 
