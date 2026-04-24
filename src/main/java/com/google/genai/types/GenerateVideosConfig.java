@@ -131,6 +131,10 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
   @JsonProperty("webhookConfig")
   public abstract Optional<WebhookConfig> webhookConfig();
 
+  /** Resize mode of the image input for video generation. */
+  @JsonProperty("resizeMode")
+  public abstract Optional<ImageResizeMode> resizeMode();
+
   /** Instantiates a builder for GenerateVideosConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -590,6 +594,44 @@ public abstract class GenerateVideosConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearWebhookConfig() {
       return webhookConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for resizeMode.
+     *
+     * <p>resizeMode: Resize mode of the image input for video generation.
+     */
+    @JsonProperty("resizeMode")
+    public abstract Builder resizeMode(ImageResizeMode resizeMode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resizeMode(Optional<ImageResizeMode> resizeMode);
+
+    /** Clears the value of resizeMode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResizeMode() {
+      return resizeMode(Optional.empty());
+    }
+
+    /**
+     * Setter for resizeMode given a known enum.
+     *
+     * <p>resizeMode: Resize mode of the image input for video generation.
+     */
+    @CanIgnoreReturnValue
+    public Builder resizeMode(ImageResizeMode.Known knownType) {
+      return resizeMode(new ImageResizeMode(knownType));
+    }
+
+    /**
+     * Setter for resizeMode given a string.
+     *
+     * <p>resizeMode: Resize mode of the image input for video generation.
+     */
+    @CanIgnoreReturnValue
+    public Builder resizeMode(String resizeMode) {
+      return resizeMode(new ImageResizeMode(resizeMode));
     }
 
     public abstract GenerateVideosConfig build();

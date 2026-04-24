@@ -2615,6 +2615,10 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"webhookConfig"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"resizeMode"}))) {
+      throw new IllegalArgumentException("resizeMode parameter is not supported in Gemini API.");
+    }
+
     return toObject;
   }
 
@@ -2759,6 +2763,13 @@ public final class Models {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"webhookConfig"}))) {
       throw new IllegalArgumentException(
           "webhookConfig parameter is not supported in Gemini Enterprise Agent Platform.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"resizeMode"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"parameters", "resizeMode"},
+          Common.getValueByPath(fromObject, new String[] {"resizeMode"}));
     }
 
     return toObject;
