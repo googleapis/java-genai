@@ -237,6 +237,7 @@ $dokka.location:com.google.genai.types/Image.Builder///PointingToDeclaration/co
 $dokka.location:com.google.genai.types/ImageConfig.Builder///PointingToDeclaration/com/google/genai/types/ImageConfig.Builder.html
 $dokka.location:com.google.genai.types/ImageConfigImageOutputOptions.Builder///PointingToDeclaration/com/google/genai/types/ImageConfigImageOutputOptions.Builder.html
 $dokka.location:com.google.genai.types/ImagePromptLanguage.Known///PointingToDeclaration/com/google/genai/types/ImagePromptLanguage.Known.html
+$dokka.location:com.google.genai.types/ImageResizeMode.Known///PointingToDeclaration/com/google/genai/types/ImageResizeMode.Known.html
 $dokka.location:com.google.genai.types/ImageSearch.Builder///PointingToDeclaration/com/google/genai/types/ImageSearch.Builder.html
 $dokka.location:com.google.genai.types/ImportFileConfig.Builder///PointingToDeclaration/com/google/genai/types/ImportFileConfig.Builder.html
 $dokka.location:com.google.genai.types/ImportFileOperation.Builder///PointingToDeclaration/com/google/genai/types/ImportFileOperation.Builder.html
