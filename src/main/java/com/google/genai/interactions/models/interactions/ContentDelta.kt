@@ -2011,6 +2011,7 @@ private constructor(
             private val data: JsonField<String>,
             private val mimeType: JsonField<MimeType>,
             private val rate: JsonField<Int>,
+            private val sampleRate: JsonField<Int>,
             private val uri: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -2026,8 +2027,11 @@ private constructor(
                 @ExcludeMissing
                 mimeType: JsonField<MimeType> = JsonMissing.of(),
                 @JsonProperty("rate") @ExcludeMissing rate: JsonField<Int> = JsonMissing.of(),
+                @JsonProperty("sample_rate")
+                @ExcludeMissing
+                sampleRate: JsonField<Int> = JsonMissing.of(),
                 @JsonProperty("uri") @ExcludeMissing uri: JsonField<String> = JsonMissing.of(),
-            ) : this(type, channels, data, mimeType, rate, uri, mutableMapOf())
+            ) : this(type, channels, data, mimeType, rate, sampleRate, uri, mutableMapOf())
 
             /**
              * Expected to always return the following:
@@ -2061,12 +2065,20 @@ private constructor(
             fun mimeType(): Optional<MimeType> = mimeType.getOptional("mime_type")
 
             /**
+             * Deprecated. Use sample_rate instead. The value is ignored.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            @Deprecated("deprecated") fun rate(): Optional<Int> = rate.getOptional("rate")
+
+            /**
              * The sample rate of the audio.
              *
              * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun rate(): Optional<Int> = rate.getOptional("rate")
+            fun sampleRate(): Optional<Int> = sampleRate.getOptional("sample_rate")
 
             /**
              * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
@@ -2104,7 +2116,20 @@ private constructor(
              *
              * Unlike [rate], this method doesn't throw if the JSON field has an unexpected type.
              */
-            @JsonProperty("rate") @ExcludeMissing fun _rate(): JsonField<Int> = rate
+            @Deprecated("deprecated")
+            @JsonProperty("rate")
+            @ExcludeMissing
+            fun _rate(): JsonField<Int> = rate
+
+            /**
+             * Returns the raw JSON value of [sampleRate].
+             *
+             * Unlike [sampleRate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("sample_rate")
+            @ExcludeMissing
+            fun _sampleRate(): JsonField<Int> = sampleRate
 
             /**
              * Returns the raw JSON value of [uri].
@@ -2139,6 +2164,7 @@ private constructor(
                 private var data: JsonField<String> = JsonMissing.of()
                 private var mimeType: JsonField<MimeType> = JsonMissing.of()
                 private var rate: JsonField<Int> = JsonMissing.of()
+                private var sampleRate: JsonField<Int> = JsonMissing.of()
                 private var uri: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2149,6 +2175,7 @@ private constructor(
                     data = audio.data
                     mimeType = audio.mimeType
                     rate = audio.rate
+                    sampleRate = audio.sampleRate
                     uri = audio.uri
                     additionalProperties = audio.additionalProperties.toMutableMap()
                 }
@@ -2201,8 +2228,8 @@ private constructor(
                  */
                 fun mimeType(mimeType: JsonField<MimeType>) = apply { this.mimeType = mimeType }
 
-                /** The sample rate of the audio. */
-                fun rate(rate: Int) = rate(JsonField.of(rate))
+                /** Deprecated. Use sample_rate instead. The value is ignored. */
+                @Deprecated("deprecated") fun rate(rate: Int) = rate(JsonField.of(rate))
 
                 /**
                  * Sets [Builder.rate] to an arbitrary JSON value.
@@ -2211,7 +2238,20 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
+                @Deprecated("deprecated")
                 fun rate(rate: JsonField<Int>) = apply { this.rate = rate }
+
+                /** The sample rate of the audio. */
+                fun sampleRate(sampleRate: Int) = sampleRate(JsonField.of(sampleRate))
+
+                /**
+                 * Sets [Builder.sampleRate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.sampleRate] with a well-typed [Int] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun sampleRate(sampleRate: JsonField<Int>) = apply { this.sampleRate = sampleRate }
 
                 fun uri(uri: String) = uri(JsonField.of(uri))
 
@@ -2258,6 +2298,7 @@ private constructor(
                         data,
                         mimeType,
                         rate,
+                        sampleRate,
                         uri,
                         additionalProperties.toMutableMap(),
                     )
@@ -2281,6 +2322,7 @@ private constructor(
                 data()
                 mimeType().ifPresent { it.validate() }
                 rate()
+                sampleRate()
                 uri()
                 validated = true
             }
@@ -2306,6 +2348,7 @@ private constructor(
                     (if (data.asKnown().isPresent) 1 else 0) +
                     (mimeType.asKnown().getOrNull()?.validity() ?: 0) +
                     (if (rate.asKnown().isPresent) 1 else 0) +
+                    (if (sampleRate.asKnown().isPresent) 1 else 0) +
                     (if (uri.asKnown().isPresent) 1 else 0)
 
             class MimeType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2511,18 +2554,28 @@ private constructor(
                     data == other.data &&
                     mimeType == other.mimeType &&
                     rate == other.rate &&
+                    sampleRate == other.sampleRate &&
                     uri == other.uri &&
                     additionalProperties == other.additionalProperties
             }
 
             private val hashCode: Int by lazy {
-                Objects.hash(type, channels, data, mimeType, rate, uri, additionalProperties)
+                Objects.hash(
+                    type,
+                    channels,
+                    data,
+                    mimeType,
+                    rate,
+                    sampleRate,
+                    uri,
+                    additionalProperties,
+                )
             }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Audio{type=$type, channels=$channels, data=$data, mimeType=$mimeType, rate=$rate, uri=$uri, additionalProperties=$additionalProperties}"
+                "Audio{type=$type, channels=$channels, data=$data, mimeType=$mimeType, rate=$rate, sampleRate=$sampleRate, uri=$uri, additionalProperties=$additionalProperties}"
         }
 
         class Document
