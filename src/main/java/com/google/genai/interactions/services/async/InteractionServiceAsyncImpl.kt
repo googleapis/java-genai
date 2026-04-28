@@ -19,6 +19,7 @@
 package com.google.genai.interactions.services.async
 
 import com.google.genai.interactions.core.ClientOptions
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 import com.google.genai.interactions.core.JsonValue
 import com.google.genai.interactions.core.RequestOptions
 import com.google.genai.interactions.core.checkRequired
@@ -52,6 +53,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
+@ExperimentalGenAiApi
 class InteractionServiceAsyncImpl constructor(private val clientOptions: ClientOptions) :
     InteractionServiceAsync {
 

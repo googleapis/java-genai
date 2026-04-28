@@ -16,6 +16,9 @@
 
 // File generated from our OpenAPI spec by Stainless.
 
+/**
+ * EXPERIMENTAL: Blocking services for interactions.
+ */
 package com.google.genai.interactions.services.blocking
 
 import com.google.genai.interactions.core.ClientOptions
@@ -33,8 +36,10 @@ import com.google.genai.interactions.models.interactions.InteractionGetParams
 import com.google.genai.interactions.models.interactions.InteractionSseEvent
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
+import com.google.genai.interactions.core.ExperimentalGenAiApi
 
-/** <p>The interactions service is experimental. */
+/** <b>EXPERIMENTAL:</b> The interactions service is experimental and subject to change. */
+@ExperimentalGenAiApi
 interface InteractionService {
 
     /**
@@ -52,7 +57,7 @@ interface InteractionService {
     /**
      * Creates a new interaction.
      *
-     * <p>The interactions service is experimental.
+     * <b>EXPERIMENTAL:</b> The interactions service is experimental.
      */
     fun create(params: InteractionCreateParams): Interaction = create(params, RequestOptions.none())
 
