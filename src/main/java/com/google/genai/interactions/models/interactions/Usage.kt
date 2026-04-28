@@ -40,6 +40,7 @@ class Usage
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cachedTokensByModality: JsonField<List<CachedTokensByModality>>,
+    private val groundingToolCount: JsonField<List<GroundingToolCount>>,
     private val inputTokensByModality: JsonField<List<InputTokensByModality>>,
     private val outputTokensByModality: JsonField<List<OutputTokensByModality>>,
     private val toolUseTokensByModality: JsonField<List<ToolUseTokensByModality>>,
@@ -57,6 +58,9 @@ private constructor(
         @JsonProperty("cached_tokens_by_modality")
         @ExcludeMissing
         cachedTokensByModality: JsonField<List<CachedTokensByModality>> = JsonMissing.of(),
+        @JsonProperty("grounding_tool_count")
+        @ExcludeMissing
+        groundingToolCount: JsonField<List<GroundingToolCount>> = JsonMissing.of(),
         @JsonProperty("input_tokens_by_modality")
         @ExcludeMissing
         inputTokensByModality: JsonField<List<InputTokensByModality>> = JsonMissing.of(),
@@ -86,6 +90,7 @@ private constructor(
         totalToolUseTokens: JsonField<Int> = JsonMissing.of(),
     ) : this(
         cachedTokensByModality,
+        groundingToolCount,
         inputTokensByModality,
         outputTokensByModality,
         toolUseTokensByModality,
@@ -106,6 +111,15 @@ private constructor(
      */
     fun cachedTokensByModality(): Optional<List<CachedTokensByModality>> =
         cachedTokensByModality.getOptional("cached_tokens_by_modality")
+
+    /**
+     * Grounding tool count.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun groundingToolCount(): Optional<List<GroundingToolCount>> =
+        groundingToolCount.getOptional("grounding_tool_count")
 
     /**
      * A breakdown of input token usage by modality.
@@ -192,6 +206,16 @@ private constructor(
     @JsonProperty("cached_tokens_by_modality")
     @ExcludeMissing
     fun _cachedTokensByModality(): JsonField<List<CachedTokensByModality>> = cachedTokensByModality
+
+    /**
+     * Returns the raw JSON value of [groundingToolCount].
+     *
+     * Unlike [groundingToolCount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("grounding_tool_count")
+    @ExcludeMissing
+    fun _groundingToolCount(): JsonField<List<GroundingToolCount>> = groundingToolCount
 
     /**
      * Returns the raw JSON value of [inputTokensByModality].
@@ -303,6 +327,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var cachedTokensByModality: JsonField<MutableList<CachedTokensByModality>>? = null
+        private var groundingToolCount: JsonField<MutableList<GroundingToolCount>>? = null
         private var inputTokensByModality: JsonField<MutableList<InputTokensByModality>>? = null
         private var outputTokensByModality: JsonField<MutableList<OutputTokensByModality>>? = null
         private var toolUseTokensByModality: JsonField<MutableList<ToolUseTokensByModality>>? = null
@@ -317,6 +342,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(usage: Usage) = apply {
             cachedTokensByModality = usage.cachedTokensByModality.map { it.toMutableList() }
+            groundingToolCount = usage.groundingToolCount.map { it.toMutableList() }
             inputTokensByModality = usage.inputTokensByModality.map { it.toMutableList() }
             outputTokensByModality = usage.outputTokensByModality.map { it.toMutableList() }
             toolUseTokensByModality = usage.toolUseTokensByModality.map { it.toMutableList() }
@@ -355,6 +381,33 @@ private constructor(
             this.cachedTokensByModality =
                 (this.cachedTokensByModality ?: JsonField.of(mutableListOf())).also {
                     checkKnown("cachedTokensByModality", it).add(cachedTokensByModality)
+                }
+        }
+
+        /** Grounding tool count. */
+        fun groundingToolCount(groundingToolCount: List<GroundingToolCount>) =
+            groundingToolCount(JsonField.of(groundingToolCount))
+
+        /**
+         * Sets [Builder.groundingToolCount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groundingToolCount] with a well-typed
+         * `List<GroundingToolCount>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
+        fun groundingToolCount(groundingToolCount: JsonField<List<GroundingToolCount>>) = apply {
+            this.groundingToolCount = groundingToolCount.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [GroundingToolCount] to [Builder.groundingToolCount].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addGroundingToolCount(groundingToolCount: GroundingToolCount) = apply {
+            this.groundingToolCount =
+                (this.groundingToolCount ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("groundingToolCount", it).add(groundingToolCount)
                 }
         }
 
@@ -560,6 +613,7 @@ private constructor(
         fun build(): Usage =
             Usage(
                 (cachedTokensByModality ?: JsonMissing.of()).map { it.toImmutable() },
+                (groundingToolCount ?: JsonMissing.of()).map { it.toImmutable() },
                 (inputTokensByModality ?: JsonMissing.of()).map { it.toImmutable() },
                 (outputTokensByModality ?: JsonMissing.of()).map { it.toImmutable() },
                 (toolUseTokensByModality ?: JsonMissing.of()).map { it.toImmutable() },
@@ -581,6 +635,7 @@ private constructor(
         }
 
         cachedTokensByModality().ifPresent { it.forEach { it.validate() } }
+        groundingToolCount().ifPresent { it.forEach { it.validate() } }
         inputTokensByModality().ifPresent { it.forEach { it.validate() } }
         outputTokensByModality().ifPresent { it.forEach { it.validate() } }
         toolUseTokensByModality().ifPresent { it.forEach { it.validate() } }
@@ -609,6 +664,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (cachedTokensByModality.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (groundingToolCount.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (inputTokensByModality.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (outputTokensByModality.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (toolUseTokensByModality.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -949,6 +1005,319 @@ private constructor(
 
         override fun toString() =
             "CachedTokensByModality{modality=$modality, tokens=$tokens, additionalProperties=$additionalProperties}"
+    }
+
+    /** The number of grounding tool counts. */
+    class GroundingToolCount
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val count: JsonField<Int>,
+        private val type: JsonField<Type>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("count") @ExcludeMissing count: JsonField<Int> = JsonMissing.of(),
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        ) : this(count, type, mutableMapOf())
+
+        /**
+         * The number of grounding tool counts.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun count(): Optional<Int> = count.getOptional("count")
+
+        /**
+         * The grounding tool type associated with the count.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Optional<Type> = type.getOptional("type")
+
+        /**
+         * Returns the raw JSON value of [count].
+         *
+         * Unlike [count], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("count") @ExcludeMissing fun _count(): JsonField<Int> = count
+
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [GroundingToolCount]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [GroundingToolCount]. */
+        class Builder internal constructor() {
+
+            private var count: JsonField<Int> = JsonMissing.of()
+            private var type: JsonField<Type> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(groundingToolCount: GroundingToolCount) = apply {
+                count = groundingToolCount.count
+                type = groundingToolCount.type
+                additionalProperties = groundingToolCount.additionalProperties.toMutableMap()
+            }
+
+            /** The number of grounding tool counts. */
+            fun count(count: Int) = count(JsonField.of(count))
+
+            /**
+             * Sets [Builder.count] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.count] with a well-typed [Int] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun count(count: JsonField<Int>) = apply { this.count = count }
+
+            /** The grounding tool type associated with the count. */
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [GroundingToolCount].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): GroundingToolCount =
+                GroundingToolCount(count, type, additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): GroundingToolCount = apply {
+            if (validated) {
+                return@apply
+            }
+
+            count()
+            type().ifPresent { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (count.asKnown().isPresent) 1 else 0) +
+                (type.asKnown().getOrNull()?.validity() ?: 0)
+
+        /** The grounding tool type associated with the count. */
+        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                @JvmField val GOOGLE_SEARCH = of("google_search")
+
+                @JvmField val GOOGLE_MAPS = of("google_maps")
+
+                @JvmField val RETRIEVAL = of("retrieval")
+
+                @JvmStatic fun of(value: String) = Type(JsonField.of(value))
+            }
+
+            /** An enum containing [Type]'s known values. */
+            enum class Known {
+                GOOGLE_SEARCH,
+                GOOGLE_MAPS,
+                RETRIEVAL,
+            }
+
+            /**
+             * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Type] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                GOOGLE_SEARCH,
+                GOOGLE_MAPS,
+                RETRIEVAL,
+                /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    GOOGLE_SEARCH -> Value.GOOGLE_SEARCH
+                    GOOGLE_MAPS -> Value.GOOGLE_MAPS
+                    RETRIEVAL -> Value.RETRIEVAL
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if this class instance's value is a not
+             *   a known member.
+             */
+            fun known(): Known =
+                when (this) {
+                    GOOGLE_SEARCH -> Known.GOOGLE_SEARCH
+                    GOOGLE_MAPS -> Known.GOOGLE_MAPS
+                    RETRIEVAL -> Known.RETRIEVAL
+                    else -> throw GeminiNextGenApiInvalidDataException("Unknown Type: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if this class instance's value does not
+             *   have the expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString().orElseThrow {
+                    GeminiNextGenApiInvalidDataException("Value is not a String")
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): Type = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Type && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is GroundingToolCount &&
+                count == other.count &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(count, type, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "GroundingToolCount{count=$count, type=$type, additionalProperties=$additionalProperties}"
     }
 
     /** The token count for a single response modality. */
@@ -1954,6 +2323,7 @@ private constructor(
 
         return other is Usage &&
             cachedTokensByModality == other.cachedTokensByModality &&
+            groundingToolCount == other.groundingToolCount &&
             inputTokensByModality == other.inputTokensByModality &&
             outputTokensByModality == other.outputTokensByModality &&
             toolUseTokensByModality == other.toolUseTokensByModality &&
@@ -1969,6 +2339,7 @@ private constructor(
     private val hashCode: Int by lazy {
         Objects.hash(
             cachedTokensByModality,
+            groundingToolCount,
             inputTokensByModality,
             outputTokensByModality,
             toolUseTokensByModality,
@@ -1985,5 +2356,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Usage{cachedTokensByModality=$cachedTokensByModality, inputTokensByModality=$inputTokensByModality, outputTokensByModality=$outputTokensByModality, toolUseTokensByModality=$toolUseTokensByModality, totalCachedTokens=$totalCachedTokens, totalInputTokens=$totalInputTokens, totalOutputTokens=$totalOutputTokens, totalThoughtTokens=$totalThoughtTokens, totalTokens=$totalTokens, totalToolUseTokens=$totalToolUseTokens, additionalProperties=$additionalProperties}"
+        "Usage{cachedTokensByModality=$cachedTokensByModality, groundingToolCount=$groundingToolCount, inputTokensByModality=$inputTokensByModality, outputTokensByModality=$outputTokensByModality, toolUseTokensByModality=$toolUseTokensByModality, totalCachedTokens=$totalCachedTokens, totalInputTokens=$totalInputTokens, totalOutputTokens=$totalOutputTokens, totalThoughtTokens=$totalThoughtTokens, totalTokens=$totalTokens, totalToolUseTokens=$totalToolUseTokens, additionalProperties=$additionalProperties}"
 }
