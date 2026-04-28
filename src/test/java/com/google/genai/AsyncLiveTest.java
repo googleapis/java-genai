@@ -26,8 +26,10 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.types.HttpOptions;
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -117,5 +119,26 @@ public class AsyncLiveTest {
     Map<String, String> headers = (Map<String, String>) getWebSocketHeaders.invoke(asyncLive);
 
     assertEquals("Token auth_tokens/ephemeral-token", headers.get("Authorization"));
+  }
+  @Test
+  public void testOnMessage_PopulatesSetupCompleteWithVoiceConsent() throws Exception {
+    CompletableFuture<AsyncSession> future = new CompletableFuture<>();
+    URI uri = new URI("wss://test");
+    Map<String, String> headers = new HashMap<>();
+    String setupRequest = "{}";
+
+    AsyncLive.GenAiWebSocketClient client =
+        new AsyncLive.GenAiWebSocketClient(uri, headers, setupRequest, future, apiClient);
+
+    String message =
+        "{\"setupComplete\":{\"voiceConsentSignature\":{\"signature\":\"test_sig\"}}}";
+
+    client.onMessage(message);
+
+    AsyncSession session = future.get();
+    assertTrue(session != null);
+    assertTrue(session.setupComplete() != null);
+    assertTrue(session.setupComplete().voiceConsentSignature().isPresent());
+    assertEquals("test_sig", session.setupComplete().voiceConsentSignature().get().signature().get());
   }
 }
