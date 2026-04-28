@@ -2070,7 +2070,7 @@ private constructor(
              * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
              *   (e.g. if the server responded with an unexpected value).
              */
-            fun rate(): Optional<Int> = rate.getOptional("rate")
+            @Deprecated("deprecated") fun rate(): Optional<Int> = rate.getOptional("rate")
 
             /**
              * The sample rate of the audio.
@@ -2116,7 +2116,10 @@ private constructor(
              *
              * Unlike [rate], this method doesn't throw if the JSON field has an unexpected type.
              */
-            @JsonProperty("rate") @ExcludeMissing fun _rate(): JsonField<Int> = rate
+            @Deprecated("deprecated")
+            @JsonProperty("rate")
+            @ExcludeMissing
+            fun _rate(): JsonField<Int> = rate
 
             /**
              * Returns the raw JSON value of [sampleRate].
@@ -2226,7 +2229,7 @@ private constructor(
                 fun mimeType(mimeType: JsonField<MimeType>) = apply { this.mimeType = mimeType }
 
                 /** Deprecated. Use sample_rate instead. The value is ignored. */
-                fun rate(rate: Int) = rate(JsonField.of(rate))
+                @Deprecated("deprecated") fun rate(rate: Int) = rate(JsonField.of(rate))
 
                 /**
                  * Sets [Builder.rate] to an arbitrary JSON value.
@@ -2235,6 +2238,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
+                @Deprecated("deprecated")
                 fun rate(rate: JsonField<Int>) = apply { this.rate = rate }
 
                 /** The sample rate of the audio. */
