@@ -79,6 +79,10 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   @JsonProperty("fileSearchStore")
   public abstract Optional<String> fileSearchStore();
 
+  /** Optional. Page number of the retrieved context. This field is not supported in Vertex AI. */
+  @JsonProperty("pageNumber")
+  public abstract Optional<Integer> pageNumber();
+
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -267,6 +271,25 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFileSearchStore() {
       return fileSearchStore(Optional.empty());
+    }
+
+    /**
+     * Setter for pageNumber.
+     *
+     * <p>pageNumber: Optional. Page number of the retrieved context. This field is not supported in
+     * Vertex AI.
+     */
+    @JsonProperty("pageNumber")
+    public abstract Builder pageNumber(Integer pageNumber);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pageNumber(Optional<Integer> pageNumber);
+
+    /** Clears the value of pageNumber field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPageNumber() {
+      return pageNumber(Optional.empty());
     }
 
     public abstract GroundingChunkRetrievedContext build();
