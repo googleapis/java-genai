@@ -77,6 +77,7 @@ public abstract class ApiClient implements AutoCloseable {
   HttpOptions httpOptions;
   final boolean vertexAI;
   final Optional<ClientOptions> clientOptions;
+
   final Optional<String> customBaseUrl;
   // For Google AI APIs
   final Optional<String> apiKey;
@@ -120,6 +121,7 @@ public abstract class ApiClient implements AutoCloseable {
     }
 
     this.httpClient = createHttpClient(httpOptions, clientOptions);
+
   }
 
   ApiClient(
@@ -274,6 +276,7 @@ public abstract class ApiClient implements AutoCloseable {
     }
     this.vertexAI = true;
     this.httpClient = createHttpClient(httpOptions, clientOptions);
+
   }
 
   private OkHttpClient createHttpClient(
@@ -370,6 +373,8 @@ public abstract class ApiClient implements AutoCloseable {
           });
     }
   }
+
+
 
   /** Builds a HTTP request given the http method, path, and request json string. */
   @SuppressWarnings("unchecked")
@@ -910,6 +915,7 @@ public abstract class ApiClient implements AutoCloseable {
       if (httpClient().cache() != null) {
         httpClient().cache().close();
       }
+
     } catch (IOException e) {
       throw new GenAiIOException("Failed to close the client.", e);
     }

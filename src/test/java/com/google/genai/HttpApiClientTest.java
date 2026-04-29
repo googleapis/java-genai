@@ -1758,6 +1758,7 @@ public class HttpApiClientTest {
 
     assertTrue(client.httpClient().dispatcher().executorService().isShutdown());
     assertEquals(0, client.httpClient().connectionPool().connectionCount());
+
   }
 
   @Test
