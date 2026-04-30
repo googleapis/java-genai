@@ -56,7 +56,7 @@
   "name":"com.google.api.client.http.HttpHeaders",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"setAccept","parameterTypes":["java.lang.String"] }, {"name":"setAcceptEncoding","parameterTypes":["java.lang.String"] }, {"name":"setAge","parameterTypes":["java.lang.Long"] }, {"name":"setAuthenticate","parameterTypes":["java.lang.String"] }, {"name":"setAuthorization","parameterTypes":["java.util.List"] }, {"name":"setCacheControl","parameterTypes":["java.lang.String"] }, {"name":"setContentEncoding","parameterTypes":["java.lang.String"] }, {"name":"setContentLength","parameterTypes":["java.lang.Long"] }, {"name":"setContentMD5","parameterTypes":["java.lang.String"] }, {"name":"setContentRange","parameterTypes":["java.lang.String"] }, {"name":"setContentType","parameterTypes":["java.lang.String"] }, {"name":"setCookie","parameterTypes":["java.lang.String"] }, {"name":"setDate","parameterTypes":["java.lang.String"] }, {"name":"setETag","parameterTypes":["java.lang.String"] }, {"name":"setExpires","parameterTypes":["java.lang.String"] }, {"name":"setIfMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfModifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setIfNoneMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfRange","parameterTypes":["java.lang.String"] }, {"name":"setIfUnmodifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setLastModified","parameterTypes":["java.lang.String"] }, {"name":"setLocation","parameterTypes":["java.lang.String"] }, {"name":"setMimeVersion","parameterTypes":["java.lang.String"] }, {"name":"setRange","parameterTypes":["java.lang.String"] }, {"name":"setRetryAfter","parameterTypes":["java.lang.String"] }, {"name":"setUserAgent","parameterTypes":["java.lang.String"] }]
+  "methods":[{"name":"setAccept","parameterTypes":["java.lang.String"] }, {"name":"setAcceptEncoding","parameterTypes":["java.lang.String"] }, {"name":"setAge","parameterTypes":["java.lang.Long"] }, {"name":"setAuthenticate","parameterTypes":["java.lang.String"] }, {"name":"setAuthorization","parameterTypes":["java.lang.String"] }, {"name":"setCacheControl","parameterTypes":["java.lang.String"] }, {"name":"setContentEncoding","parameterTypes":["java.lang.String"] }, {"name":"setContentLength","parameterTypes":["java.lang.Long"] }, {"name":"setContentMD5","parameterTypes":["java.lang.String"] }, {"name":"setContentRange","parameterTypes":["java.lang.String"] }, {"name":"setContentType","parameterTypes":["java.lang.String"] }, {"name":"setCookie","parameterTypes":["java.lang.String"] }, {"name":"setDate","parameterTypes":["java.lang.String"] }, {"name":"setETag","parameterTypes":["java.lang.String"] }, {"name":"setExpires","parameterTypes":["java.lang.String"] }, {"name":"setIfMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfModifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setIfNoneMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfRange","parameterTypes":["java.lang.String"] }, {"name":"setIfUnmodifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setLastModified","parameterTypes":["java.lang.String"] }, {"name":"setLocation","parameterTypes":["java.lang.String"] }, {"name":"setMimeVersion","parameterTypes":["java.lang.String"] }, {"name":"setRange","parameterTypes":["java.lang.String"] }, {"name":"setRetryAfter","parameterTypes":["java.lang.String"] }, {"name":"setUserAgent","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"com.google.api.client.json.GenericJson",
@@ -87,7 +87,7 @@
   "allDeclaredClasses":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["com.google.auth.oauth2.AccessToken"] }, {"name":"getQuotaProjectId","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":["com.google.auth.oauth2.AccessToken"] }, {"name":"getApplicationDefault","parameterTypes":[] }, {"name":"getQuotaProjectId","parameterTypes":[] }]
 },
 {
   "name":"com.google.auth.oauth2.OAuth2Credentials",
@@ -178,7 +178,7 @@
   "methods":[{"name":"apiKey","parameterTypes":[] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"credentials","parameterTypes":[] }, {"name":"customBaseUrl","parameterTypes":[] }, {"name":"defaultEnvironmentVariables","parameterTypes":[] }, {"name":"defaultHttpOptions","parameterTypes":["boolean","java.util.Optional","java.util.Optional","java.util.Optional","java.util.Optional"] }, {"name":"getApiKeyFromEnv","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"libraryVersion","parameterTypes":[] }, {"name":"location","parameterTypes":[] }, {"name":"project","parameterTypes":[] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"setDefaultBaseUrls","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"vertexAI","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiClient$MockitoMock$wQ3Qa0sS",
+  "name":"com.google.genai.ApiClient$MockitoMock$wkJuvy9M",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["java.util.Optional","java.util.Optional","java.util.Optional"] }]
@@ -192,7 +192,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"getBody","parameterTypes":[] }, {"name":"getHeaders","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiResponse$MockitoMock$3OqPMPRJ",
+  "name":"com.google.genai.ApiResponse$MockitoMock$n3Dg6834",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -319,7 +319,7 @@
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"testInitClientFromBuilder_globalLocation","parameterTypes":[] }, {"name":"testInitClientFromBuilder_globalLocationWithCustomBaseUrl","parameterTypes":[] }, {"name":"testInitClientFromBuilder_mldev","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setApiKeyInVertex","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setBothApiKeyAndProject_throwsException","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setProjectInMldev_throwsException","parameterTypes":[] }, {"name":"testInitClientFromBuilder_vertex","parameterTypes":[] }, {"name":"testInitClientFromBuilder_withCredentialsAndHttpOptions","parameterTypes":[] }, {"name":"testReplayClient_mldev","parameterTypes":[] }, {"name":"testReplayClient_vertex","parameterTypes":[] }, {"name":"testSetDefaultBaseUrls","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"conflictingFlags_throwsException","parameterTypes":[] }, {"name":"defaultIsFalse_whenNoFlagsOrEnvsAreSet","parameterTypes":[] }, {"name":"enterpriseEnvVar_isRespected","parameterTypes":[] }, {"name":"enterpriseEnvVar_takesPrecedenceOverVertexAIEnvVar","parameterTypes":[] }, {"name":"enterpriseFlag_whenSetToFalse_isRespected","parameterTypes":[] }, {"name":"enterpriseFlag_whenSetToTrue_isRespected","parameterTypes":[] }, {"name":"flags_takePrecedenceOverEnvVars","parameterTypes":[] }, {"name":"nonConflictingFlags_doesNotThrowException","parameterTypes":[] }, {"name":"testInitClientFromBuilder_globalLocation","parameterTypes":[] }, {"name":"testInitClientFromBuilder_globalLocationWithCustomBaseUrl","parameterTypes":[] }, {"name":"testInitClientFromBuilder_mldev","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setApiKeyInVertex","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setBothApiKeyAndProject_throwsException","parameterTypes":[] }, {"name":"testInitClientFromBuilder_setProjectInMldev_throwsException","parameterTypes":[] }, {"name":"testInitClientFromBuilder_vertex","parameterTypes":[] }, {"name":"testInitClientFromBuilder_withCredentialsAndHttpOptions","parameterTypes":[] }, {"name":"testReplayClient_mldev","parameterTypes":[] }, {"name":"testReplayClient_vertex","parameterTypes":[] }, {"name":"testSetDefaultBaseUrls","parameterTypes":[] }, {"name":"vertexAIEnvVar_isRespected","parameterTypes":[] }, {"name":"vertexAIFlag_whenSetToTrue_isRespected","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.CommonTest",
@@ -626,7 +626,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }]
 },
 {
-  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$ellPDQL6",
+  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$7EYOk4l6",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -641,7 +641,7 @@
   "methods":[{"name":"body","parameterTypes":[] }, {"name":"close","parameterTypes":[] }, {"name":"headers","parameterTypes":[] }, {"name":"statusCode","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.interactions.core.http.HttpResponse$MockitoMock$0GA3imeU",
+  "name":"com.google.genai.interactions.core.http.HttpResponse$MockitoMock$geZVYllA",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -776,21 +776,28 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"completionStats","parameterTypes":[] }, {"name":"createTime","parameterTypes":[] }, {"name":"dest","parameterTypes":[] }, {"name":"displayName","parameterTypes":[] }, {"name":"endTime","parameterTypes":[] }, {"name":"error","parameterTypes":[] }, {"name":"model","parameterTypes":[] }, {"name":"name","parameterTypes":[] }, {"name":"src","parameterTypes":[] }, {"name":"startTime","parameterTypes":[] }, {"name":"state","parameterTypes":[] }, {"name":"updateTime","parameterTypes":[] }]
+  "methods":[{"name":"completionStats","parameterTypes":[] }, {"name":"createTime","parameterTypes":[] }, {"name":"dest","parameterTypes":[] }, {"name":"displayName","parameterTypes":[] }, {"name":"endTime","parameterTypes":[] }, {"name":"error","parameterTypes":[] }, {"name":"model","parameterTypes":[] }, {"name":"name","parameterTypes":[] }, {"name":"outputInfo","parameterTypes":[] }, {"name":"src","parameterTypes":[] }, {"name":"startTime","parameterTypes":[] }, {"name":"state","parameterTypes":[] }, {"name":"updateTime","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_BatchJobDestination",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"bigqueryUri","parameterTypes":[] }, {"name":"fileName","parameterTypes":[] }, {"name":"format","parameterTypes":[] }, {"name":"gcsUri","parameterTypes":[] }, {"name":"inlinedEmbedContentResponses","parameterTypes":[] }, {"name":"inlinedResponses","parameterTypes":[] }]
+  "methods":[{"name":"bigqueryUri","parameterTypes":[] }, {"name":"fileName","parameterTypes":[] }, {"name":"format","parameterTypes":[] }, {"name":"gcsUri","parameterTypes":[] }, {"name":"inlinedEmbedContentResponses","parameterTypes":[] }, {"name":"inlinedResponses","parameterTypes":[] }, {"name":"vertexDataset","parameterTypes":[] }]
+},
+{
+  "name":"com.google.genai.types.AutoValue_BatchJobOutputInfo",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"bigqueryOutputTable","parameterTypes":[] }, {"name":"gcsOutputDirectory","parameterTypes":[] }, {"name":"vertexMultimodalDatasetName","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_BatchJobSource",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"bigqueryUri","parameterTypes":[] }, {"name":"fileName","parameterTypes":[] }, {"name":"format","parameterTypes":[] }, {"name":"gcsUri","parameterTypes":[] }, {"name":"inlinedRequests","parameterTypes":[] }]
+  "methods":[{"name":"bigqueryUri","parameterTypes":[] }, {"name":"fileName","parameterTypes":[] }, {"name":"format","parameterTypes":[] }, {"name":"gcsUri","parameterTypes":[] }, {"name":"inlinedRequests","parameterTypes":[] }, {"name":"vertexDatasetName","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_BleuSpec",
@@ -1245,7 +1252,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"aspectRatio","parameterTypes":[] }, {"name":"compressionQuality","parameterTypes":[] }, {"name":"durationSeconds","parameterTypes":[] }, {"name":"enhancePrompt","parameterTypes":[] }, {"name":"fps","parameterTypes":[] }, {"name":"generateAudio","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"labels","parameterTypes":[] }, {"name":"lastFrame","parameterTypes":[] }, {"name":"mask","parameterTypes":[] }, {"name":"negativePrompt","parameterTypes":[] }, {"name":"numberOfVideos","parameterTypes":[] }, {"name":"outputGcsUri","parameterTypes":[] }, {"name":"personGeneration","parameterTypes":[] }, {"name":"pubsubTopic","parameterTypes":[] }, {"name":"referenceImages","parameterTypes":[] }, {"name":"resolution","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"webhookConfig","parameterTypes":[] }]
+  "methods":[{"name":"aspectRatio","parameterTypes":[] }, {"name":"compressionQuality","parameterTypes":[] }, {"name":"durationSeconds","parameterTypes":[] }, {"name":"enhancePrompt","parameterTypes":[] }, {"name":"fps","parameterTypes":[] }, {"name":"generateAudio","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"labels","parameterTypes":[] }, {"name":"lastFrame","parameterTypes":[] }, {"name":"mask","parameterTypes":[] }, {"name":"negativePrompt","parameterTypes":[] }, {"name":"numberOfVideos","parameterTypes":[] }, {"name":"outputGcsUri","parameterTypes":[] }, {"name":"personGeneration","parameterTypes":[] }, {"name":"pubsubTopic","parameterTypes":[] }, {"name":"referenceImages","parameterTypes":[] }, {"name":"resizeMode","parameterTypes":[] }, {"name":"resolution","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"webhookConfig","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_GenerateVideosParameters",
@@ -2016,6 +2023,13 @@
   "methods":[{"name":"dataStoreSpecs","parameterTypes":[] }, {"name":"datastore","parameterTypes":[] }, {"name":"engine","parameterTypes":[] }, {"name":"filter","parameterTypes":[] }, {"name":"maxResults","parameterTypes":[] }]
 },
 {
+  "name":"com.google.genai.types.AutoValue_VertexMultimodalDatasetDestination",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"bigqueryDestination","parameterTypes":[] }, {"name":"displayName","parameterTypes":[] }]
+},
+{
   "name":"com.google.genai.types.AutoValue_VertexRagStore",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -2110,7 +2124,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"build","parameterTypes":[] }, {"name":"completionStats","parameterTypes":["com.google.genai.types.CompletionStats"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"dest","parameterTypes":["com.google.genai.types.BatchJobDestination"] }, {"name":"displayName","parameterTypes":["java.lang.String"] }, {"name":"endTime","parameterTypes":["java.time.Instant"] }, {"name":"model","parameterTypes":["java.lang.String"] }, {"name":"name","parameterTypes":["java.lang.String"] }, {"name":"src","parameterTypes":["com.google.genai.types.BatchJobSource"] }, {"name":"startTime","parameterTypes":["java.time.Instant"] }, {"name":"state","parameterTypes":["com.google.genai.types.JobState"] }, {"name":"updateTime","parameterTypes":["java.time.Instant"] }]
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"completionStats","parameterTypes":["com.google.genai.types.CompletionStats"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"dest","parameterTypes":["com.google.genai.types.BatchJobDestination"] }, {"name":"displayName","parameterTypes":["java.lang.String"] }, {"name":"endTime","parameterTypes":["java.time.Instant"] }, {"name":"model","parameterTypes":["java.lang.String"] }, {"name":"name","parameterTypes":["java.lang.String"] }, {"name":"outputInfo","parameterTypes":["com.google.genai.types.BatchJobOutputInfo"] }, {"name":"src","parameterTypes":["com.google.genai.types.BatchJobSource"] }, {"name":"startTime","parameterTypes":["java.time.Instant"] }, {"name":"state","parameterTypes":["com.google.genai.types.JobState"] }, {"name":"updateTime","parameterTypes":["java.time.Instant"] }]
 },
 {
   "name":"com.google.genai.types.BatchJobDestination",
@@ -2122,7 +2136,19 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"bigqueryUri","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"format","parameterTypes":["java.lang.String"] }, {"name":"gcsUri","parameterTypes":["java.lang.String"] }, {"name":"inlinedResponses","parameterTypes":["java.util.List"] }]
+  "methods":[{"name":"bigqueryUri","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"format","parameterTypes":["java.lang.String"] }, {"name":"gcsUri","parameterTypes":["java.lang.String"] }, {"name":"inlinedResponses","parameterTypes":["java.util.List"] }, {"name":"vertexDataset","parameterTypes":["com.google.genai.types.VertexMultimodalDatasetDestination"] }]
+},
+{
+  "name":"com.google.genai.types.BatchJobOutputInfo",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.genai.types.BatchJobOutputInfo$Builder",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"bigqueryOutputTable","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"gcsOutputDirectory","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"com.google.genai.types.BatchJobSource",
@@ -2134,7 +2160,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"bigqueryUri","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"fileName","parameterTypes":["java.lang.String"] }, {"name":"format","parameterTypes":["java.lang.String"] }, {"name":"gcsUri","parameterTypes":["java.util.List"] }, {"name":"inlinedRequests","parameterTypes":["java.util.List"] }]
+  "methods":[{"name":"bigqueryUri","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"fileName","parameterTypes":["java.lang.String"] }, {"name":"format","parameterTypes":["java.lang.String"] }, {"name":"gcsUri","parameterTypes":["java.util.List"] }, {"name":"inlinedRequests","parameterTypes":["java.util.List"] }, {"name":"vertexDatasetName","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"com.google.genai.types.Behavior",
@@ -3699,6 +3725,12 @@
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }, {"name":"toString","parameterTypes":[] }]
 },
 {
+  "name":"com.google.genai.types.ImageResizeMode",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
   "name":"com.google.genai.types.ImageSearch$Builder",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -5245,6 +5277,18 @@
   "queryAllDeclaredConstructors":true
 },
 {
+  "name":"com.google.genai.types.VertexMultimodalDatasetDestination",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.genai.types.VertexMultimodalDatasetDestination$Builder",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"bigqueryDestination","parameterTypes":["java.lang.String"] }, {"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"displayName","parameterTypes":["java.lang.String"] }]
+},
+{
   "name":"com.google.genai.types.VertexRagStore",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
@@ -5768,6 +5812,12 @@
   "name":"java.security.interfaces.ECPublicKey"
 },
 {
+  "name":"java.security.interfaces.RSAPrivateKey"
+},
+{
+  "name":"java.security.interfaces.RSAPublicKey"
+},
+{
   "name":"java.util.AbstractCollection",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
@@ -6176,7 +6226,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"okhttp3.Call$MockitoMock$wBipd5YD",
+  "name":"okhttp3.Call$MockitoMock$sAwdp3pX",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6197,7 +6247,7 @@
   "methods":[{"name":"call","parameterTypes":[] }, {"name":"connectTimeoutMillis","parameterTypes":[] }, {"name":"connection","parameterTypes":[] }, {"name":"proceed","parameterTypes":["okhttp3.Request"] }, {"name":"readTimeoutMillis","parameterTypes":[] }, {"name":"request","parameterTypes":[] }, {"name":"withConnectTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withReadTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withWriteTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"writeTimeoutMillis","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.Interceptor$Chain$MockitoMock$7ofkpSIv",
+  "name":"okhttp3.Interceptor$Chain$MockitoMock$Ymg1iwbo",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6218,7 +6268,7 @@
   "methods":[{"name":"contentLength","parameterTypes":[] }, {"name":"contentType","parameterTypes":[] }, {"name":"source","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.ResponseBody$MockitoMock$XGdG05Tf",
+  "name":"okhttp3.ResponseBody$MockitoMock$SpNPNArn",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6438,7 +6488,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$sTxifMlR",
+  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$dIV04rCm",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -6526,6 +6576,10 @@
 },
 {
   "name":"sun.security.rsa.RSASignature$SHA224withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.rsa.RSASignature$SHA256withRSA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
