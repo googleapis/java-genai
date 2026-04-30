@@ -217,9 +217,6 @@ private constructor(
         previousInteractionId.getOptional("previous_interaction_id")
 
     /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema
-     * specified in this field.
-     *
      * This arbitrary value can be deserialized into a custom type using the `convert` method:
      * ```java
      * MyClass myObject = createModelInteractionParams.responseFormat().convert(MyClass.class);
@@ -934,10 +931,6 @@ private constructor(
             this.previousInteractionId = previousInteractionId
         }
 
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema
-         * specified in this field.
-         */
         fun responseFormat(responseFormat: JsonValue) = apply {
             this.responseFormat = responseFormat
         }
