@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.52.0](https://github.com/googleapis/java-genai/compare/v1.51.0...v1.52.0) (2026-04-30)
+
+
+### Features
+
+* [Interactions] Add FileCitation.{custom_metadata,media_id,page_number} ([a09716e](https://github.com/googleapis/java-genai/commit/a09716e170ff952c7587dc8a16c06852219c725e))
+* Add `output_info` to `BatchJob` ([e337ba9](https://github.com/googleapis/java-genai/commit/e337ba96df0ce919fe90481c2324e7c5505a2101))
+* Add ImageResizeMode for GenerateVideos ([e089fcb](https://github.com/googleapis/java-genai/commit/e089fcb3d99a03cc1ecb7786b8ef58966c25ac4d))
+* Add new Gemini Deep Research agent models ([88d7019](https://github.com/googleapis/java-genai/commit/88d7019fee1be2445c070b3d2fdc23f891764fb0))
+* Add Vertex Dataset input and output options for batch jobs ([612601d](https://github.com/googleapis/java-genai/commit/612601da1c5b26f7650bc148124cb568ee52af67))
+* **interaction-api:** Add grounding tool usage breakdown to Interaction Usage. ([bc2f815](https://github.com/googleapis/java-genai/commit/bc2f815b8bd9a9a4f439ca2619fb9208fe3867bd))
+* introduce enterprise and GOOGLE_GENAI_USE_ENTERPRISE ([97adcd9](https://github.com/googleapis/java-genai/commit/97adcd91cbe9b7c13ed6dfdf476d709b99804572))
+* Replace the more ambiguous rate field with sample_rate. ([d762b6e](https://github.com/googleapis/java-genai/commit/d762b6e2fd91e11201dfc84d856fbd2a8e657951))
+
+
+### Documentation
+
+* replace Vertex AI with Gemini Enterprise Agent Platform ([84c1d43](https://github.com/googleapis/java-genai/commit/84c1d4328fd3827e26f5d1a2367435fa6ab12a35))
+* update doc string to replace `Vertex AI` with `Gemini Enterprise Agent Platform`, update method error message to replace `Vertex AI` with `Gemini Enterprise Agent Platform (previously known as Vertex AI)`, update converter error message to replace `Vertex AI` with `Gemini Enterprise Agent Platform` ([c5aefa7](https://github.com/googleapis/java-genai/commit/c5aefa754b75330d018993866d798c3dec23a19a))
+* update Gemini Enterprise Agent Platform home page url ([7b46a6f](https://github.com/googleapis/java-genai/commit/7b46a6fdd08a6a80dc2f2bfe8b194264fca2191f))
+
 ## [1.51.0](https://github.com/googleapis/java-genai/compare/v1.50.0...v1.51.0) (2026-04-16)
 
 
