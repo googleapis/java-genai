@@ -329,6 +329,14 @@ public final class <span class="typeNameLabel"><a href=FileSearchStores.html>Fil
                                             <td class="colLast">Uploads a file to the API.</td>
                                         </tr>
                                         
+                                        <tr id="i9" class="rowColor">
+                                            <td class="colFirst"><code><a href=https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html>Array</a>&lt;byte&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=FileSearchStores.html#downloadMedia(java.lang.String,com.google.genai.types.DownloadMediaConfig)>downloadMedia</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> uri, <a href=types/DownloadMediaConfig.html>DownloadMediaConfig</a> config) </code>
+                                            </th>
+                                            <td class="colLast">Downloads media using a Media ID or URI.</td>
+                                        </tr>
+                                        
                                         </tbody>
                                     </table>
                                 </div>
@@ -639,7 +647,7 @@ public final class <span class="typeNameLabel"><a href=FileSearchStores.html>Fil
                                     <!--   -->
                                 </a>
                                 <ul class=
-                                              "blockListLast"
+                                              "blockList"
                                           >
                                     <li class="blockList">
                                         <h4>uploadToFileSearchStore</h4>
@@ -668,6 +676,43 @@ public final class <span class="typeNameLabel"><a href=FileSearchStores.html>Fil
                                         
                                             <dt><span class="returnLabel">Returns:</span></dt>
                                             <dd><p>The uploaded file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="downloadMedia(java.lang.String,com.google.genai.types.DownloadMediaConfig)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockListLast"
+                                          >
+                                    <li class="blockList">
+                                        <h4>downloadMedia</h4>
+                                        <pre class="methodSignature"> <a href=https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html>Array</a>&lt;byte&gt; <a href=FileSearchStores.html#downloadMedia(java.lang.String,com.google.genai.types.DownloadMediaConfig)>downloadMedia</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> uri, <a href=types/DownloadMediaConfig.html>DownloadMediaConfig</a> config)</pre>
+                                        <div class="block"><p>Downloads media using a Media ID or URI. This method is only supported in the Gemini Developer client.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>uri</code> - The URI or Media ID of the blob.</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>config</code> - Optional configuration for the download.</dd>
+                                            
+                                            
+                                        
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>The blob data as a byte array.</p></dd>
                                         
 
                                         

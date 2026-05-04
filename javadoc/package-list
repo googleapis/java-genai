@@ -115,6 +115,7 @@ $dokka.location:com.google.genai.types/DistillationSpec.Builder///PointingToDecl
 $dokka.location:com.google.genai.types/Document.Builder///PointingToDeclaration/com/google/genai/types/Document.Builder.html
 $dokka.location:com.google.genai.types/DocumentState.Known///PointingToDeclaration/com/google/genai/types/DocumentState.Known.html
 $dokka.location:com.google.genai.types/DownloadFileConfig.Builder///PointingToDeclaration/com/google/genai/types/DownloadFileConfig.Builder.html
+$dokka.location:com.google.genai.types/DownloadMediaConfig.Builder///PointingToDeclaration/com/google/genai/types/DownloadMediaConfig.Builder.html
 $dokka.location:com.google.genai.types/DynamicRetrievalConfig.Builder///PointingToDeclaration/com/google/genai/types/DynamicRetrievalConfig.Builder.html
 $dokka.location:com.google.genai.types/DynamicRetrievalConfigMode.Known///PointingToDeclaration/com/google/genai/types/DynamicRetrievalConfigMode.Known.html
 $dokka.location:com.google.genai.types/EditImageConfig.Builder///PointingToDeclaration/com/google/genai/types/EditImageConfig.Builder.html
