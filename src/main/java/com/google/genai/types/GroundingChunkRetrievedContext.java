@@ -83,6 +83,10 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   @JsonProperty("pageNumber")
   public abstract Optional<Integer> pageNumber();
 
+  /** Optional. Media ID. This field is not supported in Vertex AI. */
+  @JsonProperty("mediaId")
+  public abstract Optional<String> mediaId();
+
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -290,6 +294,24 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPageNumber() {
       return pageNumber(Optional.empty());
+    }
+
+    /**
+     * Setter for mediaId.
+     *
+     * <p>mediaId: Optional. Media ID. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("mediaId")
+    public abstract Builder mediaId(String mediaId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mediaId(Optional<String> mediaId);
+
+    /** Clears the value of mediaId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMediaId() {
+      return mediaId(Optional.empty());
     }
 
     public abstract GroundingChunkRetrievedContext build();
