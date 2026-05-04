@@ -27,6 +27,7 @@ import com.google.genai.types.CreateFileSearchStoreConfig;
 import com.google.genai.types.CreateFileSearchStoreParameters;
 import com.google.genai.types.DeleteFileSearchStoreConfig;
 import com.google.genai.types.DeleteFileSearchStoreParameters;
+import com.google.genai.types.DownloadMediaConfig;
 import com.google.genai.types.FileSearchStore;
 import com.google.genai.types.GetFileSearchStoreConfig;
 import com.google.genai.types.GetFileSearchStoreParameters;
@@ -66,7 +67,8 @@ public final class FileSearchStores {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode createFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createFileSearchStoreConfigToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
@@ -76,15 +78,25 @@ public final class FileSearchStores {
           Common.getValueByPath(fromObject, new String[] {"displayName"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"embeddingModel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"embeddingModel"},
+          Transformers.tModel(
+              this.apiClient, Common.getValueByPath(fromObject, new String[] {"embeddingModel"})));
+    }
+
     return toObject;
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode createFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
+  ObjectNode createFileSearchStoreParametersToMldev(
+      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createFileSearchStoreConfigToMldev(
+              apiClient,
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
@@ -411,7 +423,7 @@ public final class FileSearchStores {
       throw new UnsupportedOperationException(
           "This method is only supported in the Gemini Developer client.");
     } else {
-      body = createFileSearchStoreParametersToMldev(parameterNode, null);
+      body = createFileSearchStoreParametersToMldev(this.apiClient, parameterNode, null);
       if (body.get("_url") != null) {
         path = Common.formatMap("fileSearchStores", body.get("_url"));
       } else {
@@ -1016,5 +1028,56 @@ public final class FileSearchStores {
       String fileSearchStoreName, String filePath, UploadToFileSearchStoreConfig config) {
     java.io.File file = new java.io.File(filePath);
     return uploadToFileSearchStore(fileSearchStoreName, file, config);
+  }
+
+  /**
+   * Downloads media using a Media ID or URI. This method is only supported in the Gemini Developer
+   * client.
+   *
+   * @param uri The URI or Media ID of the blob.
+   * @param config Optional configuration for the download.
+   * @return The blob data as a byte array.
+   */
+  public byte[] downloadMedia(String uri, DownloadMediaConfig config) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
+    java.util.Objects.requireNonNull(uri, "uri cannot be null");
+
+    java.net.URI parsedUri;
+    try {
+      parsedUri = new java.net.URI(uri);
+    } catch (java.net.URISyntaxException e) {
+      throw new IllegalArgumentException("Invalid uri format: " + uri, e);
+    }
+
+    String path = parsedUri.getPath();
+    if (path != null && path.startsWith("/")) {
+      path = path.substring(1);
+    }
+
+    if (path == null) {
+      throw new IllegalArgumentException("Invalid uri format (no path): " + uri);
+    }
+
+    if (!path.contains("/media/")) {
+      throw new IllegalArgumentException(
+          "Invalid uri format: " + uri + ". Expected to contain /media/");
+    }
+
+    String requestPath = path + "?alt=media";
+
+    Optional<HttpOptions> httpOptions = Optional.empty();
+    if (config != null) {
+      httpOptions = config.httpOptions();
+    }
+
+    ApiResponse response = this.apiClient.request("get", requestPath, "", httpOptions);
+    try {
+      return response.getBody().bytes();
+    } catch (IOException e) {
+      throw new GenAiIOException("Failed to read blob content.", e);
+    }
   }
 }

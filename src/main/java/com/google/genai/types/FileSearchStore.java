@@ -68,6 +68,10 @@ public abstract class FileSearchStore extends JsonSerializable {
   @JsonProperty("sizeBytes")
   public abstract Optional<Long> sizeBytes();
 
+  /** The embedding model used by the FileSearchStore. */
+  @JsonProperty("embeddingModel")
+  public abstract Optional<String> embeddingModel();
+
   /** Instantiates a builder for FileSearchStore. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -233,6 +237,24 @@ public abstract class FileSearchStore extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSizeBytes() {
       return sizeBytes(Optional.empty());
+    }
+
+    /**
+     * Setter for embeddingModel.
+     *
+     * <p>embeddingModel: The embedding model used by the FileSearchStore.
+     */
+    @JsonProperty("embeddingModel")
+    public abstract Builder embeddingModel(String embeddingModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder embeddingModel(Optional<String> embeddingModel);
+
+    /** Clears the value of embeddingModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEmbeddingModel() {
+      return embeddingModel(Optional.empty());
     }
 
     public abstract FileSearchStore build();

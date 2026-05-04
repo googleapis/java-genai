@@ -38,6 +38,13 @@ public abstract class CreateFileSearchStoreConfig extends JsonSerializable {
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
 
+  /**
+   * The embedding model to use for the FileSearchStore. Format: `models/{model}`. If not specified,
+   * the default embedding model will be used.
+   */
+  @JsonProperty("embeddingModel")
+  public abstract Optional<String> embeddingModel();
+
   /** Instantiates a builder for CreateFileSearchStoreConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -100,6 +107,25 @@ public abstract class CreateFileSearchStoreConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearDisplayName() {
       return displayName(Optional.empty());
+    }
+
+    /**
+     * Setter for embeddingModel.
+     *
+     * <p>embeddingModel: The embedding model to use for the FileSearchStore. Format:
+     * `models/{model}`. If not specified, the default embedding model will be used.
+     */
+    @JsonProperty("embeddingModel")
+    public abstract Builder embeddingModel(String embeddingModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder embeddingModel(Optional<String> embeddingModel);
+
+    /** Clears the value of embeddingModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEmbeddingModel() {
+      return embeddingModel(Optional.empty());
     }
 
     public abstract CreateFileSearchStoreConfig build();

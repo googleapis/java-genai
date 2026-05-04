@@ -25,6 +25,7 @@ import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CreateFileSearchStoreConfig;
 import com.google.genai.types.DeleteFileSearchStoreConfig;
+import com.google.genai.types.DownloadMediaConfig;
 import com.google.genai.types.FileSearchStore;
 import com.google.genai.types.GetFileSearchStoreConfig;
 import com.google.genai.types.HttpOptions;
@@ -315,5 +316,62 @@ public final class AsyncFileSearchStores {
       String fileSearchStoreName, String filePath, UploadToFileSearchStoreConfig config) {
     java.io.File file = new java.io.File(filePath);
     return uploadToFileSearchStore(fileSearchStoreName, file, config);
+  }
+
+  /**
+   * Downloads media using a Media ID or URI. This method is only supported in the Gemini Developer
+   * client.
+   *
+   * @param uri The URI or Media ID of the blob.
+   * @param config Optional configuration for the download.
+   * @return A CompletableFuture that resolves to the blob data as a byte array.
+   */
+  public CompletableFuture<byte[]> downloadMedia(String uri, DownloadMediaConfig config) {
+    if (this.apiClient.vertexAI()) {
+      CompletableFuture<byte[]> future = new CompletableFuture<>();
+      future.completeExceptionally(
+          new UnsupportedOperationException(
+              "This method is only supported in the Gemini Developer client."));
+      return future;
+    }
+    java.util.Objects.requireNonNull(uri, "uri cannot be null");
+
+    return CompletableFuture.supplyAsync(
+        () -> {
+          java.net.URI parsedUri;
+          try {
+            parsedUri = new java.net.URI(uri);
+          } catch (java.net.URISyntaxException e) {
+            throw new IllegalArgumentException("Invalid uri format: " + uri, e);
+          }
+
+          String path = parsedUri.getPath();
+          if (path != null && path.startsWith("/")) {
+            path = path.substring(1);
+          }
+
+          if (path == null) {
+            throw new IllegalArgumentException("Invalid uri format (no path): " + uri);
+          }
+
+          if (!path.contains("/media/")) {
+            throw new IllegalArgumentException(
+                "Invalid uri format: " + uri + ". Expected to contain /media/");
+          }
+
+          String requestPath = path + "?alt=media";
+
+          Optional<HttpOptions> httpOptions = Optional.empty();
+          if (config != null) {
+            httpOptions = config.httpOptions();
+          }
+
+          ApiResponse response = this.apiClient.request("get", requestPath, "", httpOptions);
+          try {
+            return response.getBody().bytes();
+          } catch (IOException e) {
+            throw new GenAiIOException("Failed to read blob content.", e);
+          }
+        });
   }
 }

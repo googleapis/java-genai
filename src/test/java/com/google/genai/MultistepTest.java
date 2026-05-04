@@ -58,6 +58,7 @@ public final class MultistepTest {
           .put("shared/files/upload_get_delete", MultistepTest::uploadGetDelete)
           .put("shared/models/generate_content_stream", MultistepTest::generateContentStream)
           .put("shared/tunings/create_get_cancel", MultistepTest::createGetCancelTunings)
+          .put("file_search_stores/multimodal_flow", MultistepTest::multimodalSearchFlow)
           .build();
 
   private static Object createDelete(Client client, Map<String, Object> parameters)
@@ -315,5 +316,122 @@ public final class MultistepTest {
       lastResponse = chunk;
     }
     return lastResponse;
+  }
+
+  private static Object multimodalSearchFlow(Client client, Map<String, Object> parameters)
+      throws Exception {
+    String displayName = (String) parameters.get("displayName");
+    String query = (String) parameters.get("query");
+    String textContent = (String) parameters.get("textContent");
+    String imageRelativePath = (String) parameters.get("imageRelativePath");
+
+    com.google.genai.types.FileSearchStore store =
+        client.fileSearchStores.create(
+            com.google.genai.types.CreateFileSearchStoreConfig.builder()
+                .displayName(displayName)
+                .embeddingModel("models/gemini-embedding-2-preview")
+                .build());
+
+    try {
+      // Upload Text
+      String textFilePath = "tests/data/test_file.txt";
+      Files.createDirectories(Paths.get(textFilePath).getParent());
+      Files.write(Paths.get(textFilePath), textContent.getBytes());
+
+      com.google.genai.types.UploadToFileSearchStoreOperation opText =
+          client.fileSearchStores.uploadToFileSearchStore(
+              store.name().get(),
+              textFilePath,
+              com.google.genai.types.UploadToFileSearchStoreConfig.builder()
+                  .mimeType("text/plain")
+                  .build());
+
+      // Upload Image
+      // Resolve path relative to google3
+      String google3Path = "";
+      String currentDir = System.getProperty("user.dir");
+      int lastIndex = currentDir.lastIndexOf("google3/");
+      if (lastIndex != -1) {
+        google3Path = currentDir.substring(0, lastIndex + "google3/".length());
+      }
+      String resolvedImagePath =
+          Paths.get(google3Path, "third_party/py/google/genai/tests/data/dog.jpg")
+              .toString();
+
+      com.google.genai.types.UploadToFileSearchStoreOperation opImage =
+          client.fileSearchStores.uploadToFileSearchStore(
+              store.name().get(),
+              resolvedImagePath,
+              com.google.genai.types.UploadToFileSearchStoreConfig.builder()
+                  .mimeType("image/png")
+                  .build());
+
+      // Wait for operations
+      while (!opText.done().filter(Boolean::booleanValue).isPresent()) {
+        Thread.sleep(1000);
+        opText = client.operations.get(opText, null);
+      }
+
+      while (!opImage.done().filter(Boolean::booleanValue).isPresent()) {
+        Thread.sleep(1000);
+        opImage = client.operations.get(opImage, null);
+      }
+
+      // Search
+      GenerateContentResponse response =
+          client.models.generateContent(
+              "gemini-2.5-flash",
+              Collections.singletonList(Content.fromParts(Part.fromText(query))),
+              com.google.genai.types.GenerateContentConfig.builder()
+                  .tools(
+                      Collections.singletonList(
+                          com.google.genai.types.Tool.builder()
+                              .fileSearch(
+                                  com.google.genai.types.FileSearch.builder()
+                                      .fileSearchStoreNames(
+                                          Collections.singletonList(store.name().get()))
+                                      .build())
+                              .build()))
+                  .build());
+
+      // Verify response has grounding metadata
+      if (!response.candidates().isPresent() || response.candidates().get().isEmpty()) {
+         throw new IllegalStateException("No candidates in response");
+      }
+      if (!response.candidates().get().get(0).groundingMetadata().isPresent()) {
+         throw new IllegalStateException("No grounding metadata in response");
+      }
+
+      // Download Media
+      String blobMediaId = null;
+      com.google.genai.types.GroundingMetadata metadata =
+          response.candidates().get().get(0).groundingMetadata().get();
+      if (metadata.groundingChunks().isPresent()) {
+        for (com.google.genai.types.GroundingChunk chunk : metadata.groundingChunks().get()) {
+          if (chunk.retrievedContext().isPresent() && chunk.retrievedContext().get().mediaId().isPresent()) {
+            blobMediaId = chunk.retrievedContext().get().mediaId().get();
+            break;
+          }
+        }
+      }
+
+      if (!client.vertexAI()) {
+        if (blobMediaId == null) {
+          throw new IllegalStateException("No mediaId found in grounding metadata to test download");
+        }
+        byte[] content = client.fileSearchStores.downloadMedia(blobMediaId, null);
+        if (content == null) {
+          throw new IllegalStateException("Downloaded content is null");
+        }
+      }
+
+    } finally {
+      client.fileSearchStores.delete(
+          store.name().get(),
+          com.google.genai.types.DeleteFileSearchStoreConfig.builder().force(true).build());
+
+      Files.deleteIfExists(Paths.get("tests/data/test_file.txt"));
+    }
+    return Collections.singletonMap("success", true);
   }
 }
