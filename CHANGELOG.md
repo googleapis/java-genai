@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.53.0](https://github.com/googleapis/java-genai/compare/v1.52.0...v1.53.0) (2026-05-05)
+
+
+### Features
+
+* [Python] Multimodal file search ([b12cd29](https://github.com/googleapis/java-genai/commit/b12cd29933be12951f159052ec519480f6559fe3))
+* Multimodal file search ([aaf0c40](https://github.com/googleapis/java-genai/commit/aaf0c40d15cc9c8a128d75c7fa71c6f9fb6ea480))
+
 ## [1.52.0](https://github.com/googleapis/java-genai/compare/v1.51.0...v1.52.0) (2026-04-30)
 
 
