@@ -26,22 +26,20 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
-import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
-import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
-/** File Search result content. */
-class FileSearchResultContent
+/** Code execution result step. */
+class CodeExecutionResultStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val callId: JsonField<String>,
+    private val result: JsonField<String>,
     private val type: JsonValue,
-    private val result: JsonField<List<JsonValue>>,
+    private val isError: JsonField<Boolean>,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -49,12 +47,11 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("call_id") @ExcludeMissing callId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("result") @ExcludeMissing result: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("result")
-        @ExcludeMissing
-        result: JsonField<List<JsonValue>> = JsonMissing.of(),
+        @JsonProperty("is_error") @ExcludeMissing isError: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(callId, type, result, signature, mutableMapOf())
+    ) : this(callId, result, type, isError, signature, mutableMapOf())
 
     /**
      * Required. ID to match the ID from the function call block.
@@ -65,9 +62,17 @@ private constructor(
     fun callId(): String = callId.getRequired("call_id")
 
     /**
+     * Required. The output of the code execution.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun result(): String = result.getRequired("result")
+
+    /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("file_search_result")
+     * JsonValue.from("code_execution_result")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -76,12 +81,12 @@ private constructor(
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
 
     /**
-     * Optional. The results of the File Search.
+     * Whether the code execution resulted in an error.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun result(): Optional<List<JsonValue>> = result.getOptional("result")
+    fun isError(): Optional<Boolean> = isError.getOptional("is_error")
 
     /**
      * A signature hash for backend validation.
@@ -103,7 +108,14 @@ private constructor(
      *
      * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<List<JsonValue>> = result
+    @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<String> = result
+
+    /**
+     * Returns the raw JSON value of [isError].
+     *
+     * Unlike [isError], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("is_error") @ExcludeMissing fun _isError(): JsonField<Boolean> = isError
 
     /**
      * Returns the raw JSON value of [signature].
@@ -127,32 +139,35 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [FileSearchResultContent].
+         * Returns a mutable builder for constructing an instance of [CodeExecutionResultStep].
          *
          * The following fields are required:
          * ```java
          * .callId()
+         * .result()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [FileSearchResultContent]. */
+    /** A builder for [CodeExecutionResultStep]. */
     class Builder internal constructor() {
 
         private var callId: JsonField<String>? = null
-        private var type: JsonValue = JsonValue.from("file_search_result")
-        private var result: JsonField<MutableList<JsonValue>>? = null
+        private var result: JsonField<String>? = null
+        private var type: JsonValue = JsonValue.from("code_execution_result")
+        private var isError: JsonField<Boolean> = JsonMissing.of()
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(fileSearchResultContent: FileSearchResultContent) = apply {
-            callId = fileSearchResultContent.callId
-            type = fileSearchResultContent.type
-            result = fileSearchResultContent.result.map { it.toMutableList() }
-            signature = fileSearchResultContent.signature
-            additionalProperties = fileSearchResultContent.additionalProperties.toMutableMap()
+        internal fun from(codeExecutionResultStep: CodeExecutionResultStep) = apply {
+            callId = codeExecutionResultStep.callId
+            result = codeExecutionResultStep.result
+            type = codeExecutionResultStep.type
+            isError = codeExecutionResultStep.isError
+            signature = codeExecutionResultStep.signature
+            additionalProperties = codeExecutionResultStep.additionalProperties.toMutableMap()
         }
 
         /** Required. ID to match the ID from the function call block. */
@@ -166,13 +181,24 @@ private constructor(
          */
         fun callId(callId: JsonField<String>) = apply { this.callId = callId }
 
+        /** Required. The output of the code execution. */
+        fun result(result: String) = result(JsonField.of(result))
+
+        /**
+         * Sets [Builder.result] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.result] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun result(result: JsonField<String>) = apply { this.result = result }
+
         /**
          * Sets the field to an arbitrary JSON value.
          *
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("file_search_result")
+         * JsonValue.from("code_execution_result")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -180,31 +206,16 @@ private constructor(
          */
         fun type(type: JsonValue) = apply { this.type = type }
 
-        /** Optional. The results of the File Search. */
-        fun result(result: List<JsonValue>) = result(JsonField.of(result))
+        /** Whether the code execution resulted in an error. */
+        fun isError(isError: Boolean) = isError(JsonField.of(isError))
 
         /**
-         * Sets [Builder.result] to an arbitrary JSON value.
+         * Sets [Builder.isError] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.result] with a well-typed `List<JsonValue>` value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.isError] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun result(result: JsonField<List<JsonValue>>) = apply {
-            this.result = result.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [JsonValue] to [Builder.result].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addResult(result: JsonValue) = apply {
-            this.result =
-                (this.result ?: JsonField.of(mutableListOf())).also {
-                    checkKnown("result", it).add(result)
-                }
-        }
+        fun isError(isError: JsonField<Boolean>) = apply { this.isError = isError }
 
         /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
@@ -238,22 +249,24 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [FileSearchResultContent].
+         * Returns an immutable instance of [CodeExecutionResultStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```java
          * .callId()
+         * .result()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): FileSearchResultContent =
-            FileSearchResultContent(
+        fun build(): CodeExecutionResultStep =
+            CodeExecutionResultStep(
                 checkRequired("callId", callId),
+                checkRequired("result", result),
                 type,
-                (result ?: JsonMissing.of()).map { it.toImmutable() },
+                isError,
                 signature,
                 additionalProperties.toMutableMap(),
             )
@@ -261,18 +274,19 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): FileSearchResultContent = apply {
+    fun validate(): CodeExecutionResultStep = apply {
         if (validated) {
             return@apply
         }
 
         callId()
+        result()
         _type().let {
-            if (it != JsonValue.from("file_search_result")) {
+            if (it != JsonValue.from("code_execution_result")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
-        result()
+        isError()
         signature()
         validated = true
     }
@@ -293,8 +307,9 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (callId.asKnown().isPresent) 1 else 0) +
-            type.let { if (it == JsonValue.from("file_search_result")) 1 else 0 } +
-            (result.asKnown().getOrNull()?.size ?: 0) +
+            (if (result.asKnown().isPresent) 1 else 0) +
+            type.let { if (it == JsonValue.from("code_execution_result")) 1 else 0 } +
+            (if (isError.asKnown().isPresent) 1 else 0) +
             (if (signature.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
@@ -302,20 +317,21 @@ private constructor(
             return true
         }
 
-        return other is FileSearchResultContent &&
+        return other is CodeExecutionResultStep &&
             callId == other.callId &&
-            type == other.type &&
             result == other.result &&
+            type == other.type &&
+            isError == other.isError &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(callId, type, result, signature, additionalProperties)
+        Objects.hash(callId, result, type, isError, signature, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FileSearchResultContent{callId=$callId, type=$type, result=$result, signature=$signature, additionalProperties=$additionalProperties}"
+        "CodeExecutionResultStep{callId=$callId, result=$result, type=$type, isError=$isError, signature=$signature, additionalProperties=$additionalProperties}"
 }

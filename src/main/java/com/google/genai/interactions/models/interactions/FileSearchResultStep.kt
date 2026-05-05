@@ -26,23 +26,18 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
-import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
-import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
-/** Google Search result content. */
-class GoogleSearchResultContent
+/** File Search result step. */
+class FileSearchResultStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val callId: JsonField<String>,
-    private val result: JsonField<List<GoogleSearchResult>>,
     private val type: JsonValue,
-    private val isError: JsonField<Boolean>,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -50,13 +45,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("call_id") @ExcludeMissing callId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("result")
-        @ExcludeMissing
-        result: JsonField<List<GoogleSearchResult>> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("is_error") @ExcludeMissing isError: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(callId, result, type, isError, signature, mutableMapOf())
+    ) : this(callId, type, signature, mutableMapOf())
 
     /**
      * Required. ID to match the ID from the function call block.
@@ -67,31 +58,15 @@ private constructor(
     fun callId(): String = callId.getRequired("call_id")
 
     /**
-     * Required. The results of the Google Search.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun result(): List<GoogleSearchResult> = result.getRequired("result")
-
-    /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("google_search_result")
+     * JsonValue.from("file_search_result")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
      * with an unexpected value).
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
-
-    /**
-     * Whether the Google Search resulted in an error.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
-     *   if the server responded with an unexpected value).
-     */
-    fun isError(): Optional<Boolean> = isError.getOptional("is_error")
 
     /**
      * A signature hash for backend validation.
@@ -107,22 +82,6 @@ private constructor(
      * Unlike [callId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("call_id") @ExcludeMissing fun _callId(): JsonField<String> = callId
-
-    /**
-     * Returns the raw JSON value of [result].
-     *
-     * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("result")
-    @ExcludeMissing
-    fun _result(): JsonField<List<GoogleSearchResult>> = result
-
-    /**
-     * Returns the raw JSON value of [isError].
-     *
-     * Unlike [isError], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("is_error") @ExcludeMissing fun _isError(): JsonField<Boolean> = isError
 
     /**
      * Returns the raw JSON value of [signature].
@@ -146,35 +105,30 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [GoogleSearchResultContent].
+         * Returns a mutable builder for constructing an instance of [FileSearchResultStep].
          *
          * The following fields are required:
          * ```java
          * .callId()
-         * .result()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [GoogleSearchResultContent]. */
+    /** A builder for [FileSearchResultStep]. */
     class Builder internal constructor() {
 
         private var callId: JsonField<String>? = null
-        private var result: JsonField<MutableList<GoogleSearchResult>>? = null
-        private var type: JsonValue = JsonValue.from("google_search_result")
-        private var isError: JsonField<Boolean> = JsonMissing.of()
+        private var type: JsonValue = JsonValue.from("file_search_result")
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(googleSearchResultContent: GoogleSearchResultContent) = apply {
-            callId = googleSearchResultContent.callId
-            result = googleSearchResultContent.result.map { it.toMutableList() }
-            type = googleSearchResultContent.type
-            isError = googleSearchResultContent.isError
-            signature = googleSearchResultContent.signature
-            additionalProperties = googleSearchResultContent.additionalProperties.toMutableMap()
+        internal fun from(fileSearchResultStep: FileSearchResultStep) = apply {
+            callId = fileSearchResultStep.callId
+            type = fileSearchResultStep.type
+            signature = fileSearchResultStep.signature
+            additionalProperties = fileSearchResultStep.additionalProperties.toMutableMap()
         }
 
         /** Required. ID to match the ID from the function call block. */
@@ -188,56 +142,19 @@ private constructor(
          */
         fun callId(callId: JsonField<String>) = apply { this.callId = callId }
 
-        /** Required. The results of the Google Search. */
-        fun result(result: List<GoogleSearchResult>) = result(JsonField.of(result))
-
-        /**
-         * Sets [Builder.result] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.result] with a well-typed `List<GoogleSearchResult>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun result(result: JsonField<List<GoogleSearchResult>>) = apply {
-            this.result = result.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [GoogleSearchResult] to [Builder.result].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addResult(result: GoogleSearchResult) = apply {
-            this.result =
-                (this.result ?: JsonField.of(mutableListOf())).also {
-                    checkKnown("result", it).add(result)
-                }
-        }
-
         /**
          * Sets the field to an arbitrary JSON value.
          *
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("google_search_result")
+         * JsonValue.from("file_search_result")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
         fun type(type: JsonValue) = apply { this.type = type }
-
-        /** Whether the Google Search resulted in an error. */
-        fun isError(isError: Boolean) = isError(JsonField.of(isError))
-
-        /**
-         * Sets [Builder.isError] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.isError] with a well-typed [Boolean] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun isError(isError: JsonField<Boolean>) = apply { this.isError = isError }
 
         /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
@@ -271,24 +188,21 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [GoogleSearchResultContent].
+         * Returns an immutable instance of [FileSearchResultStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```java
          * .callId()
-         * .result()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): GoogleSearchResultContent =
-            GoogleSearchResultContent(
+        fun build(): FileSearchResultStep =
+            FileSearchResultStep(
                 checkRequired("callId", callId),
-                checkRequired("result", result).map { it.toImmutable() },
                 type,
-                isError,
                 signature,
                 additionalProperties.toMutableMap(),
             )
@@ -296,19 +210,17 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): GoogleSearchResultContent = apply {
+    fun validate(): FileSearchResultStep = apply {
         if (validated) {
             return@apply
         }
 
         callId()
-        result().forEach { it.validate() }
         _type().let {
-            if (it != JsonValue.from("google_search_result")) {
+            if (it != JsonValue.from("file_search_result")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
-        isError()
         signature()
         validated = true
     }
@@ -329,9 +241,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (callId.asKnown().isPresent) 1 else 0) +
-            (result.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            type.let { if (it == JsonValue.from("google_search_result")) 1 else 0 } +
-            (if (isError.asKnown().isPresent) 1 else 0) +
+            type.let { if (it == JsonValue.from("file_search_result")) 1 else 0 } +
             (if (signature.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
@@ -339,21 +249,19 @@ private constructor(
             return true
         }
 
-        return other is GoogleSearchResultContent &&
+        return other is FileSearchResultStep &&
             callId == other.callId &&
-            result == other.result &&
             type == other.type &&
-            isError == other.isError &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(callId, result, type, isError, signature, additionalProperties)
+        Objects.hash(callId, type, signature, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "GoogleSearchResultContent{callId=$callId, result=$result, type=$type, isError=$isError, signature=$signature, additionalProperties=$additionalProperties}"
+        "FileSearchResultStep{callId=$callId, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
 }

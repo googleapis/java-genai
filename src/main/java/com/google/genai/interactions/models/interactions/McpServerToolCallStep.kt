@@ -34,13 +34,14 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** A function tool call content block. */
-class FunctionCallContent
+/** MCPServer tool call step. */
+class McpServerToolCallStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val arguments: JsonField<Arguments>,
     private val name: JsonField<String>,
+    private val serverName: JsonField<String>,
     private val type: JsonValue,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -53,9 +54,12 @@ private constructor(
         @ExcludeMissing
         arguments: JsonField<Arguments> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("server_name")
+        @ExcludeMissing
+        serverName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(id, arguments, name, type, signature, mutableMapOf())
+    ) : this(id, arguments, name, serverName, type, signature, mutableMapOf())
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -66,7 +70,7 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * Required. The arguments to pass to the function.
+     * Required. The JSON object of arguments for the function.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -74,7 +78,7 @@ private constructor(
     fun arguments(): Arguments = arguments.getRequired("arguments")
 
     /**
-     * Required. The name of the tool to call.
+     * Required. The name of the tool which was called.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -82,9 +86,17 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Required. The name of the used MCP server.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun serverName(): String = serverName.getRequired("server_name")
+
+    /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("function_call")
+     * JsonValue.from("mcp_server_tool_call")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -122,6 +134,13 @@ private constructor(
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
+     * Returns the raw JSON value of [serverName].
+     *
+     * Unlike [serverName], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("server_name") @ExcludeMissing fun _serverName(): JsonField<String> = serverName
+
+    /**
      * Returns the raw JSON value of [signature].
      *
      * Unlike [signature], this method doesn't throw if the JSON field has an unexpected type.
@@ -143,36 +162,39 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [FunctionCallContent].
+         * Returns a mutable builder for constructing an instance of [McpServerToolCallStep].
          *
          * The following fields are required:
          * ```java
          * .id()
          * .arguments()
          * .name()
+         * .serverName()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [FunctionCallContent]. */
+    /** A builder for [McpServerToolCallStep]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var arguments: JsonField<Arguments>? = null
         private var name: JsonField<String>? = null
-        private var type: JsonValue = JsonValue.from("function_call")
+        private var serverName: JsonField<String>? = null
+        private var type: JsonValue = JsonValue.from("mcp_server_tool_call")
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(functionCallContent: FunctionCallContent) = apply {
-            id = functionCallContent.id
-            arguments = functionCallContent.arguments
-            name = functionCallContent.name
-            type = functionCallContent.type
-            signature = functionCallContent.signature
-            additionalProperties = functionCallContent.additionalProperties.toMutableMap()
+        internal fun from(mcpServerToolCallStep: McpServerToolCallStep) = apply {
+            id = mcpServerToolCallStep.id
+            arguments = mcpServerToolCallStep.arguments
+            name = mcpServerToolCallStep.name
+            serverName = mcpServerToolCallStep.serverName
+            type = mcpServerToolCallStep.type
+            signature = mcpServerToolCallStep.signature
+            additionalProperties = mcpServerToolCallStep.additionalProperties.toMutableMap()
         }
 
         /** Required. A unique ID for this specific tool call. */
@@ -186,7 +208,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** Required. The arguments to pass to the function. */
+        /** Required. The JSON object of arguments for the function. */
         fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
 
         /**
@@ -198,7 +220,7 @@ private constructor(
          */
         fun arguments(arguments: JsonField<Arguments>) = apply { this.arguments = arguments }
 
-        /** Required. The name of the tool to call. */
+        /** Required. The name of the tool which was called. */
         fun name(name: String) = name(JsonField.of(name))
 
         /**
@@ -209,13 +231,25 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Required. The name of the used MCP server. */
+        fun serverName(serverName: String) = serverName(JsonField.of(serverName))
+
+        /**
+         * Sets [Builder.serverName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.serverName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun serverName(serverName: JsonField<String>) = apply { this.serverName = serverName }
+
         /**
          * Sets the field to an arbitrary JSON value.
          *
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("function_call")
+         * JsonValue.from("mcp_server_tool_call")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -255,7 +289,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [FunctionCallContent].
+         * Returns an immutable instance of [McpServerToolCallStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -264,15 +298,17 @@ private constructor(
          * .id()
          * .arguments()
          * .name()
+         * .serverName()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): FunctionCallContent =
-            FunctionCallContent(
+        fun build(): McpServerToolCallStep =
+            McpServerToolCallStep(
                 checkRequired("id", id),
                 checkRequired("arguments", arguments),
                 checkRequired("name", name),
+                checkRequired("serverName", serverName),
                 type,
                 signature,
                 additionalProperties.toMutableMap(),
@@ -281,7 +317,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): FunctionCallContent = apply {
+    fun validate(): McpServerToolCallStep = apply {
         if (validated) {
             return@apply
         }
@@ -289,8 +325,9 @@ private constructor(
         id()
         arguments().validate()
         name()
+        serverName()
         _type().let {
-            if (it != JsonValue.from("function_call")) {
+            if (it != JsonValue.from("mcp_server_tool_call")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
@@ -316,10 +353,11 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (arguments.asKnown().getOrNull()?.validity() ?: 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            type.let { if (it == JsonValue.from("function_call")) 1 else 0 } +
+            (if (serverName.asKnown().isPresent) 1 else 0) +
+            type.let { if (it == JsonValue.from("mcp_server_tool_call")) 1 else 0 } +
             (if (signature.asKnown().isPresent) 1 else 0)
 
-    /** Required. The arguments to pass to the function. */
+    /** Required. The JSON object of arguments for the function. */
     class Arguments
     @JsonCreator
     private constructor(
@@ -424,21 +462,22 @@ private constructor(
             return true
         }
 
-        return other is FunctionCallContent &&
+        return other is McpServerToolCallStep &&
             id == other.id &&
             arguments == other.arguments &&
             name == other.name &&
+            serverName == other.serverName &&
             type == other.type &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, arguments, name, type, signature, additionalProperties)
+        Objects.hash(id, arguments, name, serverName, type, signature, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FunctionCallContent{id=$id, arguments=$arguments, name=$name, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        "McpServerToolCallStep{id=$id, arguments=$arguments, name=$name, serverName=$serverName, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
 }

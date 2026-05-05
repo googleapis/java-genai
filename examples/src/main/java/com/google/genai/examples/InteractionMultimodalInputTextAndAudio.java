@@ -44,6 +44,7 @@ import com.google.genai.interactions.models.interactions.AudioContent;
 import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Interaction;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.interactions.models.interactions.TextContent;
 import java.util.Arrays;
 import java.util.List;
@@ -74,11 +75,11 @@ public class InteractionMultimodalInputTextAndAudio {
     Interaction interaction = client.interactions.create(params);
 
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (int i = 0; i < outputs.size(); i++) {
-                System.out.println("Output " + (i + 1) + ": " + outputs.get(i));
+            steps -> {
+              for (int i = 0; i < steps.size(); i++) {
+                System.out.println("Step " + (i + 1) + ": " + steps.get(i));
               }
             });
   }

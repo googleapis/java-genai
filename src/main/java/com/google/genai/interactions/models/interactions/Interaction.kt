@@ -61,13 +61,13 @@ private constructor(
     private val generationConfig: JsonField<GenerationConfig>,
     private val input: JsonField<Input>,
     private val model: JsonField<Model>,
-    private val outputs: JsonField<List<Content>>,
     private val previousInteractionId: JsonField<String>,
     private val responseFormat: JsonValue,
     private val responseMimeType: JsonField<String>,
     private val responseModalities: JsonField<List<ResponseModality>>,
     private val role: JsonField<String>,
     private val serviceTier: JsonField<ServiceTier>,
+    private val steps: JsonField<List<Step>>,
     private val systemInstruction: JsonField<String>,
     private val tools: JsonField<List<Tool>>,
     private val usage: JsonField<Usage>,
@@ -94,9 +94,6 @@ private constructor(
         generationConfig: JsonField<GenerationConfig> = JsonMissing.of(),
         @JsonProperty("input") @ExcludeMissing input: JsonField<Input> = JsonMissing.of(),
         @JsonProperty("model") @ExcludeMissing model: JsonField<Model> = JsonMissing.of(),
-        @JsonProperty("outputs")
-        @ExcludeMissing
-        outputs: JsonField<List<Content>> = JsonMissing.of(),
         @JsonProperty("previous_interaction_id")
         @ExcludeMissing
         previousInteractionId: JsonField<String> = JsonMissing.of(),
@@ -113,6 +110,7 @@ private constructor(
         @JsonProperty("service_tier")
         @ExcludeMissing
         serviceTier: JsonField<ServiceTier> = JsonMissing.of(),
+        @JsonProperty("steps") @ExcludeMissing steps: JsonField<List<Step>> = JsonMissing.of(),
         @JsonProperty("system_instruction")
         @ExcludeMissing
         systemInstruction: JsonField<String> = JsonMissing.of(),
@@ -131,13 +129,13 @@ private constructor(
         generationConfig,
         input,
         model,
-        outputs,
         previousInteractionId,
         responseFormat,
         responseMimeType,
         responseModalities,
         role,
         serviceTier,
+        steps,
         systemInstruction,
         tools,
         usage,
@@ -222,14 +220,6 @@ private constructor(
     fun model(): Optional<Model> = model.getOptional("model")
 
     /**
-     * Output only. Responses from the model.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
-     *   if the server responded with an unexpected value).
-     */
-    fun outputs(): Optional<List<Content>> = outputs.getOptional("outputs")
-
-    /**
      * The ID of the previous interaction, if any.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -274,7 +264,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun role(): Optional<String> = role.getOptional("role")
+    @Deprecated("deprecated") fun role(): Optional<String> = role.getOptional("role")
 
     /**
      * The service tier for the interaction.
@@ -283,6 +273,14 @@ private constructor(
      *   if the server responded with an unexpected value).
      */
     fun serviceTier(): Optional<ServiceTier> = serviceTier.getOptional("service_tier")
+
+    /**
+     * Output only. The steps that make up the interaction.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun steps(): Optional<List<Step>> = steps.getOptional("steps")
 
     /**
      * System instruction for the interaction.
@@ -385,13 +383,6 @@ private constructor(
     @JsonProperty("model") @ExcludeMissing fun _model(): JsonField<Model> = model
 
     /**
-     * Returns the raw JSON value of [outputs].
-     *
-     * Unlike [outputs], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("outputs") @ExcludeMissing fun _outputs(): JsonField<List<Content>> = outputs
-
-    /**
      * Returns the raw JSON value of [previousInteractionId].
      *
      * Unlike [previousInteractionId], this method doesn't throw if the JSON field has an unexpected
@@ -426,7 +417,10 @@ private constructor(
      *
      * Unlike [role], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("role") @ExcludeMissing fun _role(): JsonField<String> = role
+    @Deprecated("deprecated")
+    @JsonProperty("role")
+    @ExcludeMissing
+    fun _role(): JsonField<String> = role
 
     /**
      * Returns the raw JSON value of [serviceTier].
@@ -436,6 +430,13 @@ private constructor(
     @JsonProperty("service_tier")
     @ExcludeMissing
     fun _serviceTier(): JsonField<ServiceTier> = serviceTier
+
+    /**
+     * Returns the raw JSON value of [steps].
+     *
+     * Unlike [steps], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("steps") @ExcludeMissing fun _steps(): JsonField<List<Step>> = steps
 
     /**
      * Returns the raw JSON value of [systemInstruction].
@@ -510,13 +511,13 @@ private constructor(
         private var generationConfig: JsonField<GenerationConfig> = JsonMissing.of()
         private var input: JsonField<Input> = JsonMissing.of()
         private var model: JsonField<Model> = JsonMissing.of()
-        private var outputs: JsonField<MutableList<Content>>? = null
         private var previousInteractionId: JsonField<String> = JsonMissing.of()
         private var responseFormat: JsonValue = JsonMissing.of()
         private var responseMimeType: JsonField<String> = JsonMissing.of()
         private var responseModalities: JsonField<MutableList<ResponseModality>>? = null
         private var role: JsonField<String> = JsonMissing.of()
         private var serviceTier: JsonField<ServiceTier> = JsonMissing.of()
+        private var steps: JsonField<MutableList<Step>>? = null
         private var systemInstruction: JsonField<String> = JsonMissing.of()
         private var tools: JsonField<MutableList<Tool>>? = null
         private var usage: JsonField<Usage> = JsonMissing.of()
@@ -534,13 +535,13 @@ private constructor(
             generationConfig = interaction.generationConfig
             input = interaction.input
             model = interaction.model
-            outputs = interaction.outputs.map { it.toMutableList() }
             previousInteractionId = interaction.previousInteractionId
             responseFormat = interaction.responseFormat
             responseMimeType = interaction.responseMimeType
             responseModalities = interaction.responseModalities.map { it.toMutableList() }
             role = interaction.role
             serviceTier = interaction.serviceTier
+            steps = interaction.steps.map { it.toMutableList() }
             systemInstruction = interaction.systemInstruction
             tools = interaction.tools.map { it.toMutableList() }
             usage = interaction.usage
@@ -666,14 +667,14 @@ private constructor(
          */
         fun input(input: JsonField<Input>) = apply { this.input = input }
 
-        /** Alias for calling [input] with `Input.ofContentList(contentList)`. */
-        fun inputOfContentList(contentList: List<Content>) = input(Input.ofContentList(contentList))
-
         /** Alias for calling [input] with `Input.ofString(string)`. */
         fun input(string: String) = input(Input.ofString(string))
 
-        /** Alias for calling [input] with `Input.ofTurnList(turnList)`. */
-        fun inputOfTurnList(turnList: List<Turn>) = input(Input.ofTurnList(turnList))
+        /** Alias for calling [input] with `Input.ofStepList(stepList)`. */
+        fun inputOfStepList(stepList: List<Step>) = input(Input.ofStepList(stepList))
+
+        /** Alias for calling [input] with `Input.ofContentList(contentList)`. */
+        fun inputOfContentList(contentList: List<Content>) = input(Input.ofContentList(contentList))
 
         /** Alias for calling [input] with `Input.ofTextContent(textContent)`. */
         fun input(textContent: TextContent) = input(Input.ofTextContent(textContent))
@@ -690,100 +691,6 @@ private constructor(
 
         /** Alias for calling [input] with `Input.ofVideoContent(videoContent)`. */
         fun input(videoContent: VideoContent) = input(Input.ofVideoContent(videoContent))
-
-        /** Alias for calling [input] with `Input.ofThoughtContent(thoughtContent)`. */
-        fun input(thoughtContent: ThoughtContent) = input(Input.ofThoughtContent(thoughtContent))
-
-        /** Alias for calling [input] with `Input.ofFunctionCallContent(functionCallContent)`. */
-        fun input(functionCallContent: FunctionCallContent) =
-            input(Input.ofFunctionCallContent(functionCallContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofCodeExecutionCallContent(codeExecutionCallContent)`.
-         */
-        fun input(codeExecutionCallContent: CodeExecutionCallContent) =
-            input(Input.ofCodeExecutionCallContent(codeExecutionCallContent))
-
-        /**
-         * Alias for calling [input] with `Input.ofUrlContextCallContent(urlContextCallContent)`.
-         */
-        fun input(urlContextCallContent: UrlContextCallContent) =
-            input(Input.ofUrlContextCallContent(urlContextCallContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofMcpServerToolCallContent(mcpServerToolCallContent)`.
-         */
-        fun input(mcpServerToolCallContent: McpServerToolCallContent) =
-            input(Input.ofMcpServerToolCallContent(mcpServerToolCallContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofGoogleSearchCallContent(googleSearchCallContent)`.
-         */
-        fun input(googleSearchCallContent: GoogleSearchCallContent) =
-            input(Input.ofGoogleSearchCallContent(googleSearchCallContent))
-
-        /**
-         * Alias for calling [input] with `Input.ofFileSearchCallContent(fileSearchCallContent)`.
-         */
-        fun input(fileSearchCallContent: FileSearchCallContent) =
-            input(Input.ofFileSearchCallContent(fileSearchCallContent))
-
-        /**
-         * Alias for calling [input] with `Input.ofGoogleMapsCallContent(googleMapsCallContent)`.
-         */
-        fun input(googleMapsCallContent: GoogleMapsCallContent) =
-            input(Input.ofGoogleMapsCallContent(googleMapsCallContent))
-
-        /**
-         * Alias for calling [input] with `Input.ofFunctionResultContent(functionResultContent)`.
-         */
-        fun input(functionResultContent: FunctionResultContent) =
-            input(Input.ofFunctionResultContent(functionResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofCodeExecutionResultContent(codeExecutionResultContent)`.
-         */
-        fun input(codeExecutionResultContent: CodeExecutionResultContent) =
-            input(Input.ofCodeExecutionResultContent(codeExecutionResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofUrlContextResultContent(urlContextResultContent)`.
-         */
-        fun input(urlContextResultContent: UrlContextResultContent) =
-            input(Input.ofUrlContextResultContent(urlContextResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofGoogleSearchResultContent(googleSearchResultContent)`.
-         */
-        fun input(googleSearchResultContent: GoogleSearchResultContent) =
-            input(Input.ofGoogleSearchResultContent(googleSearchResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofMcpServerToolResultContent(mcpServerToolResultContent)`.
-         */
-        fun input(mcpServerToolResultContent: McpServerToolResultContent) =
-            input(Input.ofMcpServerToolResultContent(mcpServerToolResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofFileSearchResultContent(fileSearchResultContent)`.
-         */
-        fun input(fileSearchResultContent: FileSearchResultContent) =
-            input(Input.ofFileSearchResultContent(fileSearchResultContent))
-
-        /**
-         * Alias for calling [input] with
-         * `Input.ofGoogleMapsResultContent(googleMapsResultContent)`.
-         */
-        fun input(googleMapsResultContent: GoogleMapsResultContent) =
-            input(Input.ofGoogleMapsResultContent(googleMapsResultContent))
 
         /**
          * The model that will complete your prompt.\n\nSee
@@ -806,155 +713,6 @@ private constructor(
          * is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun model(value: String) = model(Model.of(value))
-
-        /** Output only. Responses from the model. */
-        fun outputs(outputs: List<Content>) = outputs(JsonField.of(outputs))
-
-        /**
-         * Sets [Builder.outputs] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.outputs] with a well-typed `List<Content>` value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun outputs(outputs: JsonField<List<Content>>) = apply {
-            this.outputs = outputs.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [Content] to [outputs].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addOutput(output: Content) = apply {
-            outputs =
-                (outputs ?: JsonField.of(mutableListOf())).also {
-                    checkKnown("outputs", it).add(output)
-                }
-        }
-
-        /** Alias for calling [addOutput] with `Content.ofText(text)`. */
-        fun addOutput(text: TextContent) = addOutput(Content.ofText(text))
-
-        /**
-         * Alias for calling [addOutput] with the following:
-         * ```java
-         * TextContent.builder()
-         *     .text(text)
-         *     .build()
-         * ```
-         */
-        fun addTextOutput(text: String) = addOutput(TextContent.builder().text(text).build())
-
-        /** Alias for calling [addOutput] with `Content.ofImage(image)`. */
-        fun addOutput(image: ImageContent) = addOutput(Content.ofImage(image))
-
-        /** Alias for calling [addOutput] with `Content.ofAudio(audio)`. */
-        fun addOutput(audio: AudioContent) = addOutput(Content.ofAudio(audio))
-
-        /** Alias for calling [addOutput] with `Content.ofDocument(document)`. */
-        fun addOutput(document: DocumentContent) = addOutput(Content.ofDocument(document))
-
-        /** Alias for calling [addOutput] with `Content.ofVideo(video)`. */
-        fun addOutput(video: VideoContent) = addOutput(Content.ofVideo(video))
-
-        /** Alias for calling [addOutput] with `Content.ofThought(thought)`. */
-        fun addOutput(thought: ThoughtContent) = addOutput(Content.ofThought(thought))
-
-        /** Alias for calling [addOutput] with `Content.ofFunctionCall(functionCall)`. */
-        fun addOutput(functionCall: FunctionCallContent) =
-            addOutput(Content.ofFunctionCall(functionCall))
-
-        /** Alias for calling [addOutput] with `Content.ofCodeExecutionCall(codeExecutionCall)`. */
-        fun addOutput(codeExecutionCall: CodeExecutionCallContent) =
-            addOutput(Content.ofCodeExecutionCall(codeExecutionCall))
-
-        /** Alias for calling [addOutput] with `Content.ofUrlContextCall(urlContextCall)`. */
-        fun addOutput(urlContextCall: UrlContextCallContent) =
-            addOutput(Content.ofUrlContextCall(urlContextCall))
-
-        /** Alias for calling [addOutput] with `Content.ofMcpServerToolCall(mcpServerToolCall)`. */
-        fun addOutput(mcpServerToolCall: McpServerToolCallContent) =
-            addOutput(Content.ofMcpServerToolCall(mcpServerToolCall))
-
-        /** Alias for calling [addOutput] with `Content.ofGoogleSearchCall(googleSearchCall)`. */
-        fun addOutput(googleSearchCall: GoogleSearchCallContent) =
-            addOutput(Content.ofGoogleSearchCall(googleSearchCall))
-
-        /** Alias for calling [addOutput] with `Content.ofFileSearchCall(fileSearchCall)`. */
-        fun addOutput(fileSearchCall: FileSearchCallContent) =
-            addOutput(Content.ofFileSearchCall(fileSearchCall))
-
-        /**
-         * Alias for calling [addOutput] with the following:
-         * ```java
-         * FileSearchCallContent.builder()
-         *     .id(id)
-         *     .build()
-         * ```
-         */
-        fun addFileSearchCallOutput(id: String) =
-            addOutput(FileSearchCallContent.builder().id(id).build())
-
-        /** Alias for calling [addOutput] with `Content.ofGoogleMapsCall(googleMapsCall)`. */
-        fun addOutput(googleMapsCall: GoogleMapsCallContent) =
-            addOutput(Content.ofGoogleMapsCall(googleMapsCall))
-
-        /**
-         * Alias for calling [addOutput] with the following:
-         * ```java
-         * GoogleMapsCallContent.builder()
-         *     .id(id)
-         *     .build()
-         * ```
-         */
-        fun addGoogleMapsCallOutput(id: String) =
-            addOutput(GoogleMapsCallContent.builder().id(id).build())
-
-        /** Alias for calling [addOutput] with `Content.ofFunctionResult(functionResult)`. */
-        fun addOutput(functionResult: FunctionResultContent) =
-            addOutput(Content.ofFunctionResult(functionResult))
-
-        /**
-         * Alias for calling [addOutput] with `Content.ofCodeExecutionResult(codeExecutionResult)`.
-         */
-        fun addOutput(codeExecutionResult: CodeExecutionResultContent) =
-            addOutput(Content.ofCodeExecutionResult(codeExecutionResult))
-
-        /** Alias for calling [addOutput] with `Content.ofUrlContextResult(urlContextResult)`. */
-        fun addOutput(urlContextResult: UrlContextResultContent) =
-            addOutput(Content.ofUrlContextResult(urlContextResult))
-
-        /**
-         * Alias for calling [addOutput] with `Content.ofGoogleSearchResult(googleSearchResult)`.
-         */
-        fun addOutput(googleSearchResult: GoogleSearchResultContent) =
-            addOutput(Content.ofGoogleSearchResult(googleSearchResult))
-
-        /**
-         * Alias for calling [addOutput] with `Content.ofMcpServerToolResult(mcpServerToolResult)`.
-         */
-        fun addOutput(mcpServerToolResult: McpServerToolResultContent) =
-            addOutput(Content.ofMcpServerToolResult(mcpServerToolResult))
-
-        /** Alias for calling [addOutput] with `Content.ofFileSearchResult(fileSearchResult)`. */
-        fun addOutput(fileSearchResult: FileSearchResultContent) =
-            addOutput(Content.ofFileSearchResult(fileSearchResult))
-
-        /**
-         * Alias for calling [addOutput] with the following:
-         * ```java
-         * FileSearchResultContent.builder()
-         *     .callId(callId)
-         *     .build()
-         * ```
-         */
-        fun addFileSearchResultOutput(callId: String) =
-            addOutput(FileSearchResultContent.builder().callId(callId).build())
-
-        /** Alias for calling [addOutput] with `Content.ofGoogleMapsResult(googleMapsResult)`. */
-        fun addOutput(googleMapsResult: GoogleMapsResultContent) =
-            addOutput(Content.ofGoogleMapsResult(googleMapsResult))
 
         /** The ID of the previous interaction, if any. */
         fun previousInteractionId(previousInteractionId: String) =
@@ -1022,7 +780,7 @@ private constructor(
         }
 
         /** Output only. The role of the interaction. */
-        fun role(role: String) = role(JsonField.of(role))
+        @Deprecated("deprecated") fun role(role: String) = role(JsonField.of(role))
 
         /**
          * Sets [Builder.role] to an arbitrary JSON value.
@@ -1030,7 +788,7 @@ private constructor(
          * You should usually call [Builder.role] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun role(role: JsonField<String>) = apply { this.role = role }
+        @Deprecated("deprecated") fun role(role: JsonField<String>) = apply { this.role = role }
 
         /** The service tier for the interaction. */
         fun serviceTier(serviceTier: ServiceTier) = serviceTier(JsonField.of(serviceTier))
@@ -1045,6 +803,125 @@ private constructor(
         fun serviceTier(serviceTier: JsonField<ServiceTier>) = apply {
             this.serviceTier = serviceTier
         }
+
+        /** Output only. The steps that make up the interaction. */
+        fun steps(steps: List<Step>) = steps(JsonField.of(steps))
+
+        /**
+         * Sets [Builder.steps] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.steps] with a well-typed `List<Step>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun steps(steps: JsonField<List<Step>>) = apply {
+            this.steps = steps.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [Step] to [steps].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addStep(step: Step) = apply {
+            steps =
+                (steps ?: JsonField.of(mutableListOf())).also { checkKnown("steps", it).add(step) }
+        }
+
+        /** Alias for calling [addStep] with `Step.ofUserInput(userInput)`. */
+        fun addStep(userInput: UserInputStep) = addStep(Step.ofUserInput(userInput))
+
+        /** Alias for calling [addStep] with `Step.ofModelOutput(modelOutput)`. */
+        fun addStep(modelOutput: ModelOutputStep) = addStep(Step.ofModelOutput(modelOutput))
+
+        /** Alias for calling [addStep] with `Step.ofThought(thought)`. */
+        fun addStep(thought: ThoughtStep) = addStep(Step.ofThought(thought))
+
+        /** Alias for calling [addStep] with `Step.ofFunctionCall(functionCall)`. */
+        fun addStep(functionCall: FunctionCallStep) = addStep(Step.ofFunctionCall(functionCall))
+
+        /** Alias for calling [addStep] with `Step.ofCodeExecutionCall(codeExecutionCall)`. */
+        fun addStep(codeExecutionCall: CodeExecutionCallStep) =
+            addStep(Step.ofCodeExecutionCall(codeExecutionCall))
+
+        /** Alias for calling [addStep] with `Step.ofUrlContextCall(urlContextCall)`. */
+        fun addStep(urlContextCall: UrlContextCallStep) =
+            addStep(Step.ofUrlContextCall(urlContextCall))
+
+        /** Alias for calling [addStep] with `Step.ofMcpServerToolCall(mcpServerToolCall)`. */
+        fun addStep(mcpServerToolCall: McpServerToolCallStep) =
+            addStep(Step.ofMcpServerToolCall(mcpServerToolCall))
+
+        /** Alias for calling [addStep] with `Step.ofGoogleSearchCall(googleSearchCall)`. */
+        fun addStep(googleSearchCall: GoogleSearchCallStep) =
+            addStep(Step.ofGoogleSearchCall(googleSearchCall))
+
+        /** Alias for calling [addStep] with `Step.ofFileSearchCall(fileSearchCall)`. */
+        fun addStep(fileSearchCall: FileSearchCallStep) =
+            addStep(Step.ofFileSearchCall(fileSearchCall))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * FileSearchCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun addFileSearchCallStep(id: String) = addStep(FileSearchCallStep.builder().id(id).build())
+
+        /** Alias for calling [addStep] with `Step.ofGoogleMapsCall(googleMapsCall)`. */
+        fun addStep(googleMapsCall: GoogleMapsCallStep) =
+            addStep(Step.ofGoogleMapsCall(googleMapsCall))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * GoogleMapsCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun addGoogleMapsCallStep(id: String) = addStep(GoogleMapsCallStep.builder().id(id).build())
+
+        /** Alias for calling [addStep] with `Step.ofFunctionResult(functionResult)`. */
+        fun addStep(functionResult: FunctionResultStep) =
+            addStep(Step.ofFunctionResult(functionResult))
+
+        /** Alias for calling [addStep] with `Step.ofCodeExecutionResult(codeExecutionResult)`. */
+        fun addStep(codeExecutionResult: CodeExecutionResultStep) =
+            addStep(Step.ofCodeExecutionResult(codeExecutionResult))
+
+        /** Alias for calling [addStep] with `Step.ofUrlContextResult(urlContextResult)`. */
+        fun addStep(urlContextResult: UrlContextResultStep) =
+            addStep(Step.ofUrlContextResult(urlContextResult))
+
+        /** Alias for calling [addStep] with `Step.ofGoogleSearchResult(googleSearchResult)`. */
+        fun addStep(googleSearchResult: GoogleSearchResultStep) =
+            addStep(Step.ofGoogleSearchResult(googleSearchResult))
+
+        /** Alias for calling [addStep] with `Step.ofMcpServerToolResult(mcpServerToolResult)`. */
+        fun addStep(mcpServerToolResult: McpServerToolResultStep) =
+            addStep(Step.ofMcpServerToolResult(mcpServerToolResult))
+
+        /** Alias for calling [addStep] with `Step.ofFileSearchResult(fileSearchResult)`. */
+        fun addStep(fileSearchResult: FileSearchResultStep) =
+            addStep(Step.ofFileSearchResult(fileSearchResult))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * FileSearchResultStep.builder()
+         *     .callId(callId)
+         *     .build()
+         * ```
+         */
+        fun addFileSearchResultStep(callId: String) =
+            addStep(FileSearchResultStep.builder().callId(callId).build())
+
+        /** Alias for calling [addStep] with `Step.ofGoogleMapsResult(googleMapsResult)`. */
+        fun addStep(googleMapsResult: GoogleMapsResultStep) =
+            addStep(Step.ofGoogleMapsResult(googleMapsResult))
 
         /** System instruction for the interaction. */
         fun systemInstruction(systemInstruction: String) =
@@ -1185,13 +1062,13 @@ private constructor(
                 generationConfig,
                 input,
                 model,
-                (outputs ?: JsonMissing.of()).map { it.toImmutable() },
                 previousInteractionId,
                 responseFormat,
                 responseMimeType,
                 (responseModalities ?: JsonMissing.of()).map { it.toImmutable() },
                 role,
                 serviceTier,
+                (steps ?: JsonMissing.of()).map { it.toImmutable() },
                 systemInstruction,
                 (tools ?: JsonMissing.of()).map { it.toImmutable() },
                 usage,
@@ -1216,12 +1093,12 @@ private constructor(
         generationConfig().ifPresent { it.validate() }
         input().ifPresent { it.validate() }
         model()
-        outputs().ifPresent { it.forEach { it.validate() } }
         previousInteractionId()
         responseMimeType()
         responseModalities().ifPresent { it.forEach { it.validate() } }
         role()
         serviceTier().ifPresent { it.validate() }
+        steps().ifPresent { it.forEach { it.validate() } }
         systemInstruction()
         tools().ifPresent { it.forEach { it.validate() } }
         usage().ifPresent { it.validate() }
@@ -1253,12 +1130,12 @@ private constructor(
             (generationConfig.asKnown().getOrNull()?.validity() ?: 0) +
             (input.asKnown().getOrNull()?.validity() ?: 0) +
             (if (model.asKnown().isPresent) 1 else 0) +
-            (outputs.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (previousInteractionId.asKnown().isPresent) 1 else 0) +
             (if (responseMimeType.asKnown().isPresent) 1 else 0) +
             (responseModalities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (role.asKnown().isPresent) 1 else 0) +
             (serviceTier.asKnown().getOrNull()?.validity() ?: 0) +
+            (steps.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (systemInstruction.asKnown().isPresent) 1 else 0) +
             (tools.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (usage.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1747,37 +1624,22 @@ private constructor(
     @JsonSerialize(using = Input.Serializer::class)
     class Input
     private constructor(
-        private val contentList: List<Content>? = null,
         private val string: String? = null,
-        private val turnList: List<Turn>? = null,
+        private val stepList: List<Step>? = null,
+        private val contentList: List<Content>? = null,
         private val textContent: TextContent? = null,
         private val imageContent: ImageContent? = null,
         private val audioContent: AudioContent? = null,
         private val documentContent: DocumentContent? = null,
         private val videoContent: VideoContent? = null,
-        private val thoughtContent: ThoughtContent? = null,
-        private val functionCallContent: FunctionCallContent? = null,
-        private val codeExecutionCallContent: CodeExecutionCallContent? = null,
-        private val urlContextCallContent: UrlContextCallContent? = null,
-        private val mcpServerToolCallContent: McpServerToolCallContent? = null,
-        private val googleSearchCallContent: GoogleSearchCallContent? = null,
-        private val fileSearchCallContent: FileSearchCallContent? = null,
-        private val googleMapsCallContent: GoogleMapsCallContent? = null,
-        private val functionResultContent: FunctionResultContent? = null,
-        private val codeExecutionResultContent: CodeExecutionResultContent? = null,
-        private val urlContextResultContent: UrlContextResultContent? = null,
-        private val googleSearchResultContent: GoogleSearchResultContent? = null,
-        private val mcpServerToolResultContent: McpServerToolResultContent? = null,
-        private val fileSearchResultContent: FileSearchResultContent? = null,
-        private val googleMapsResultContent: GoogleMapsResultContent? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun contentList(): Optional<List<Content>> = Optional.ofNullable(contentList)
-
         fun string(): Optional<String> = Optional.ofNullable(string)
 
-        fun turnList(): Optional<List<Turn>> = Optional.ofNullable(turnList)
+        fun stepList(): Optional<List<Step>> = Optional.ofNullable(stepList)
+
+        fun contentList(): Optional<List<Content>> = Optional.ofNullable(contentList)
 
         /** A text content block. */
         fun textContent(): Optional<TextContent> = Optional.ofNullable(textContent)
@@ -1794,70 +1656,11 @@ private constructor(
         /** A video content block. */
         fun videoContent(): Optional<VideoContent> = Optional.ofNullable(videoContent)
 
-        /** A thought content block. */
-        fun thoughtContent(): Optional<ThoughtContent> = Optional.ofNullable(thoughtContent)
-
-        /** A function tool call content block. */
-        fun functionCallContent(): Optional<FunctionCallContent> =
-            Optional.ofNullable(functionCallContent)
-
-        /** Code execution content. */
-        fun codeExecutionCallContent(): Optional<CodeExecutionCallContent> =
-            Optional.ofNullable(codeExecutionCallContent)
-
-        /** URL context content. */
-        fun urlContextCallContent(): Optional<UrlContextCallContent> =
-            Optional.ofNullable(urlContextCallContent)
-
-        /** MCPServer tool call content. */
-        fun mcpServerToolCallContent(): Optional<McpServerToolCallContent> =
-            Optional.ofNullable(mcpServerToolCallContent)
-
-        /** Google Search content. */
-        fun googleSearchCallContent(): Optional<GoogleSearchCallContent> =
-            Optional.ofNullable(googleSearchCallContent)
-
-        /** File Search content. */
-        fun fileSearchCallContent(): Optional<FileSearchCallContent> =
-            Optional.ofNullable(fileSearchCallContent)
-
-        /** Google Maps content. */
-        fun googleMapsCallContent(): Optional<GoogleMapsCallContent> =
-            Optional.ofNullable(googleMapsCallContent)
-
-        /** A function tool result content block. */
-        fun functionResultContent(): Optional<FunctionResultContent> =
-            Optional.ofNullable(functionResultContent)
-
-        /** Code execution result content. */
-        fun codeExecutionResultContent(): Optional<CodeExecutionResultContent> =
-            Optional.ofNullable(codeExecutionResultContent)
-
-        /** URL context result content. */
-        fun urlContextResultContent(): Optional<UrlContextResultContent> =
-            Optional.ofNullable(urlContextResultContent)
-
-        /** Google Search result content. */
-        fun googleSearchResultContent(): Optional<GoogleSearchResultContent> =
-            Optional.ofNullable(googleSearchResultContent)
-
-        /** MCPServer tool result content. */
-        fun mcpServerToolResultContent(): Optional<McpServerToolResultContent> =
-            Optional.ofNullable(mcpServerToolResultContent)
-
-        /** File Search result content. */
-        fun fileSearchResultContent(): Optional<FileSearchResultContent> =
-            Optional.ofNullable(fileSearchResultContent)
-
-        /** Google Maps result content. */
-        fun googleMapsResultContent(): Optional<GoogleMapsResultContent> =
-            Optional.ofNullable(googleMapsResultContent)
-
-        fun isContentList(): Boolean = contentList != null
-
         fun isString(): Boolean = string != null
 
-        fun isTurnList(): Boolean = turnList != null
+        fun isStepList(): Boolean = stepList != null
+
+        fun isContentList(): Boolean = contentList != null
 
         fun isTextContent(): Boolean = textContent != null
 
@@ -1869,41 +1672,11 @@ private constructor(
 
         fun isVideoContent(): Boolean = videoContent != null
 
-        fun isThoughtContent(): Boolean = thoughtContent != null
-
-        fun isFunctionCallContent(): Boolean = functionCallContent != null
-
-        fun isCodeExecutionCallContent(): Boolean = codeExecutionCallContent != null
-
-        fun isUrlContextCallContent(): Boolean = urlContextCallContent != null
-
-        fun isMcpServerToolCallContent(): Boolean = mcpServerToolCallContent != null
-
-        fun isGoogleSearchCallContent(): Boolean = googleSearchCallContent != null
-
-        fun isFileSearchCallContent(): Boolean = fileSearchCallContent != null
-
-        fun isGoogleMapsCallContent(): Boolean = googleMapsCallContent != null
-
-        fun isFunctionResultContent(): Boolean = functionResultContent != null
-
-        fun isCodeExecutionResultContent(): Boolean = codeExecutionResultContent != null
-
-        fun isUrlContextResultContent(): Boolean = urlContextResultContent != null
-
-        fun isGoogleSearchResultContent(): Boolean = googleSearchResultContent != null
-
-        fun isMcpServerToolResultContent(): Boolean = mcpServerToolResultContent != null
-
-        fun isFileSearchResultContent(): Boolean = fileSearchResultContent != null
-
-        fun isGoogleMapsResultContent(): Boolean = googleMapsResultContent != null
-
-        fun asContentList(): List<Content> = contentList.getOrThrow("contentList")
-
         fun asString(): String = string.getOrThrow("string")
 
-        fun asTurnList(): List<Turn> = turnList.getOrThrow("turnList")
+        fun asStepList(): List<Step> = stepList.getOrThrow("stepList")
+
+        fun asContentList(): List<Content> = contentList.getOrThrow("contentList")
 
         /** A text content block. */
         fun asTextContent(): TextContent = textContent.getOrThrow("textContent")
@@ -1920,105 +1693,18 @@ private constructor(
         /** A video content block. */
         fun asVideoContent(): VideoContent = videoContent.getOrThrow("videoContent")
 
-        /** A thought content block. */
-        fun asThoughtContent(): ThoughtContent = thoughtContent.getOrThrow("thoughtContent")
-
-        /** A function tool call content block. */
-        fun asFunctionCallContent(): FunctionCallContent =
-            functionCallContent.getOrThrow("functionCallContent")
-
-        /** Code execution content. */
-        fun asCodeExecutionCallContent(): CodeExecutionCallContent =
-            codeExecutionCallContent.getOrThrow("codeExecutionCallContent")
-
-        /** URL context content. */
-        fun asUrlContextCallContent(): UrlContextCallContent =
-            urlContextCallContent.getOrThrow("urlContextCallContent")
-
-        /** MCPServer tool call content. */
-        fun asMcpServerToolCallContent(): McpServerToolCallContent =
-            mcpServerToolCallContent.getOrThrow("mcpServerToolCallContent")
-
-        /** Google Search content. */
-        fun asGoogleSearchCallContent(): GoogleSearchCallContent =
-            googleSearchCallContent.getOrThrow("googleSearchCallContent")
-
-        /** File Search content. */
-        fun asFileSearchCallContent(): FileSearchCallContent =
-            fileSearchCallContent.getOrThrow("fileSearchCallContent")
-
-        /** Google Maps content. */
-        fun asGoogleMapsCallContent(): GoogleMapsCallContent =
-            googleMapsCallContent.getOrThrow("googleMapsCallContent")
-
-        /** A function tool result content block. */
-        fun asFunctionResultContent(): FunctionResultContent =
-            functionResultContent.getOrThrow("functionResultContent")
-
-        /** Code execution result content. */
-        fun asCodeExecutionResultContent(): CodeExecutionResultContent =
-            codeExecutionResultContent.getOrThrow("codeExecutionResultContent")
-
-        /** URL context result content. */
-        fun asUrlContextResultContent(): UrlContextResultContent =
-            urlContextResultContent.getOrThrow("urlContextResultContent")
-
-        /** Google Search result content. */
-        fun asGoogleSearchResultContent(): GoogleSearchResultContent =
-            googleSearchResultContent.getOrThrow("googleSearchResultContent")
-
-        /** MCPServer tool result content. */
-        fun asMcpServerToolResultContent(): McpServerToolResultContent =
-            mcpServerToolResultContent.getOrThrow("mcpServerToolResultContent")
-
-        /** File Search result content. */
-        fun asFileSearchResultContent(): FileSearchResultContent =
-            fileSearchResultContent.getOrThrow("fileSearchResultContent")
-
-        /** Google Maps result content. */
-        fun asGoogleMapsResultContent(): GoogleMapsResultContent =
-            googleMapsResultContent.getOrThrow("googleMapsResultContent")
-
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
         fun <T> accept(visitor: Visitor<T>): T =
             when {
-                contentList != null -> visitor.visitContentList(contentList)
                 string != null -> visitor.visitString(string)
-                turnList != null -> visitor.visitTurnList(turnList)
+                stepList != null -> visitor.visitStepList(stepList)
+                contentList != null -> visitor.visitContentList(contentList)
                 textContent != null -> visitor.visitTextContent(textContent)
                 imageContent != null -> visitor.visitImageContent(imageContent)
                 audioContent != null -> visitor.visitAudioContent(audioContent)
                 documentContent != null -> visitor.visitDocumentContent(documentContent)
                 videoContent != null -> visitor.visitVideoContent(videoContent)
-                thoughtContent != null -> visitor.visitThoughtContent(thoughtContent)
-                functionCallContent != null -> visitor.visitFunctionCallContent(functionCallContent)
-                codeExecutionCallContent != null ->
-                    visitor.visitCodeExecutionCallContent(codeExecutionCallContent)
-                urlContextCallContent != null ->
-                    visitor.visitUrlContextCallContent(urlContextCallContent)
-                mcpServerToolCallContent != null ->
-                    visitor.visitMcpServerToolCallContent(mcpServerToolCallContent)
-                googleSearchCallContent != null ->
-                    visitor.visitGoogleSearchCallContent(googleSearchCallContent)
-                fileSearchCallContent != null ->
-                    visitor.visitFileSearchCallContent(fileSearchCallContent)
-                googleMapsCallContent != null ->
-                    visitor.visitGoogleMapsCallContent(googleMapsCallContent)
-                functionResultContent != null ->
-                    visitor.visitFunctionResultContent(functionResultContent)
-                codeExecutionResultContent != null ->
-                    visitor.visitCodeExecutionResultContent(codeExecutionResultContent)
-                urlContextResultContent != null ->
-                    visitor.visitUrlContextResultContent(urlContextResultContent)
-                googleSearchResultContent != null ->
-                    visitor.visitGoogleSearchResultContent(googleSearchResultContent)
-                mcpServerToolResultContent != null ->
-                    visitor.visitMcpServerToolResultContent(mcpServerToolResultContent)
-                fileSearchResultContent != null ->
-                    visitor.visitFileSearchResultContent(fileSearchResultContent)
-                googleMapsResultContent != null ->
-                    visitor.visitGoogleMapsResultContent(googleMapsResultContent)
                 else -> visitor.unknown(_json)
             }
 
@@ -2031,14 +1717,14 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitContentList(contentList: List<Content>) {
-                        contentList.forEach { it.validate() }
-                    }
-
                     override fun visitString(string: String) {}
 
-                    override fun visitTurnList(turnList: List<Turn>) {
-                        turnList.forEach { it.validate() }
+                    override fun visitStepList(stepList: List<Step>) {
+                        stepList.forEach { it.validate() }
+                    }
+
+                    override fun visitContentList(contentList: List<Content>) {
+                        contentList.forEach { it.validate() }
                     }
 
                     override fun visitTextContent(textContent: TextContent) {
@@ -2059,94 +1745,6 @@ private constructor(
 
                     override fun visitVideoContent(videoContent: VideoContent) {
                         videoContent.validate()
-                    }
-
-                    override fun visitThoughtContent(thoughtContent: ThoughtContent) {
-                        thoughtContent.validate()
-                    }
-
-                    override fun visitFunctionCallContent(
-                        functionCallContent: FunctionCallContent
-                    ) {
-                        functionCallContent.validate()
-                    }
-
-                    override fun visitCodeExecutionCallContent(
-                        codeExecutionCallContent: CodeExecutionCallContent
-                    ) {
-                        codeExecutionCallContent.validate()
-                    }
-
-                    override fun visitUrlContextCallContent(
-                        urlContextCallContent: UrlContextCallContent
-                    ) {
-                        urlContextCallContent.validate()
-                    }
-
-                    override fun visitMcpServerToolCallContent(
-                        mcpServerToolCallContent: McpServerToolCallContent
-                    ) {
-                        mcpServerToolCallContent.validate()
-                    }
-
-                    override fun visitGoogleSearchCallContent(
-                        googleSearchCallContent: GoogleSearchCallContent
-                    ) {
-                        googleSearchCallContent.validate()
-                    }
-
-                    override fun visitFileSearchCallContent(
-                        fileSearchCallContent: FileSearchCallContent
-                    ) {
-                        fileSearchCallContent.validate()
-                    }
-
-                    override fun visitGoogleMapsCallContent(
-                        googleMapsCallContent: GoogleMapsCallContent
-                    ) {
-                        googleMapsCallContent.validate()
-                    }
-
-                    override fun visitFunctionResultContent(
-                        functionResultContent: FunctionResultContent
-                    ) {
-                        functionResultContent.validate()
-                    }
-
-                    override fun visitCodeExecutionResultContent(
-                        codeExecutionResultContent: CodeExecutionResultContent
-                    ) {
-                        codeExecutionResultContent.validate()
-                    }
-
-                    override fun visitUrlContextResultContent(
-                        urlContextResultContent: UrlContextResultContent
-                    ) {
-                        urlContextResultContent.validate()
-                    }
-
-                    override fun visitGoogleSearchResultContent(
-                        googleSearchResultContent: GoogleSearchResultContent
-                    ) {
-                        googleSearchResultContent.validate()
-                    }
-
-                    override fun visitMcpServerToolResultContent(
-                        mcpServerToolResultContent: McpServerToolResultContent
-                    ) {
-                        mcpServerToolResultContent.validate()
-                    }
-
-                    override fun visitFileSearchResultContent(
-                        fileSearchResultContent: FileSearchResultContent
-                    ) {
-                        fileSearchResultContent.validate()
-                    }
-
-                    override fun visitGoogleMapsResultContent(
-                        googleMapsResultContent: GoogleMapsResultContent
-                    ) {
-                        googleMapsResultContent.validate()
                     }
                 }
             )
@@ -2171,13 +1769,13 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitContentList(contentList: List<Content>) =
-                        contentList.sumOf { it.validity().toInt() }
-
                     override fun visitString(string: String) = 1
 
-                    override fun visitTurnList(turnList: List<Turn>) =
-                        turnList.sumOf { it.validity().toInt() }
+                    override fun visitStepList(stepList: List<Step>) =
+                        stepList.sumOf { it.validity().toInt() }
+
+                    override fun visitContentList(contentList: List<Content>) =
+                        contentList.sumOf { it.validity().toInt() }
 
                     override fun visitTextContent(textContent: TextContent) = textContent.validity()
 
@@ -2193,65 +1791,6 @@ private constructor(
                     override fun visitVideoContent(videoContent: VideoContent) =
                         videoContent.validity()
 
-                    override fun visitThoughtContent(thoughtContent: ThoughtContent) =
-                        thoughtContent.validity()
-
-                    override fun visitFunctionCallContent(
-                        functionCallContent: FunctionCallContent
-                    ) = functionCallContent.validity()
-
-                    override fun visitCodeExecutionCallContent(
-                        codeExecutionCallContent: CodeExecutionCallContent
-                    ) = codeExecutionCallContent.validity()
-
-                    override fun visitUrlContextCallContent(
-                        urlContextCallContent: UrlContextCallContent
-                    ) = urlContextCallContent.validity()
-
-                    override fun visitMcpServerToolCallContent(
-                        mcpServerToolCallContent: McpServerToolCallContent
-                    ) = mcpServerToolCallContent.validity()
-
-                    override fun visitGoogleSearchCallContent(
-                        googleSearchCallContent: GoogleSearchCallContent
-                    ) = googleSearchCallContent.validity()
-
-                    override fun visitFileSearchCallContent(
-                        fileSearchCallContent: FileSearchCallContent
-                    ) = fileSearchCallContent.validity()
-
-                    override fun visitGoogleMapsCallContent(
-                        googleMapsCallContent: GoogleMapsCallContent
-                    ) = googleMapsCallContent.validity()
-
-                    override fun visitFunctionResultContent(
-                        functionResultContent: FunctionResultContent
-                    ) = functionResultContent.validity()
-
-                    override fun visitCodeExecutionResultContent(
-                        codeExecutionResultContent: CodeExecutionResultContent
-                    ) = codeExecutionResultContent.validity()
-
-                    override fun visitUrlContextResultContent(
-                        urlContextResultContent: UrlContextResultContent
-                    ) = urlContextResultContent.validity()
-
-                    override fun visitGoogleSearchResultContent(
-                        googleSearchResultContent: GoogleSearchResultContent
-                    ) = googleSearchResultContent.validity()
-
-                    override fun visitMcpServerToolResultContent(
-                        mcpServerToolResultContent: McpServerToolResultContent
-                    ) = mcpServerToolResultContent.validity()
-
-                    override fun visitFileSearchResultContent(
-                        fileSearchResultContent: FileSearchResultContent
-                    ) = fileSearchResultContent.validity()
-
-                    override fun visitGoogleMapsResultContent(
-                        googleMapsResultContent: GoogleMapsResultContent
-                    ) = googleMapsResultContent.validity()
-
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -2262,110 +1801,52 @@ private constructor(
             }
 
             return other is Input &&
-                contentList == other.contentList &&
                 string == other.string &&
-                turnList == other.turnList &&
+                stepList == other.stepList &&
+                contentList == other.contentList &&
                 textContent == other.textContent &&
                 imageContent == other.imageContent &&
                 audioContent == other.audioContent &&
                 documentContent == other.documentContent &&
-                videoContent == other.videoContent &&
-                thoughtContent == other.thoughtContent &&
-                functionCallContent == other.functionCallContent &&
-                codeExecutionCallContent == other.codeExecutionCallContent &&
-                urlContextCallContent == other.urlContextCallContent &&
-                mcpServerToolCallContent == other.mcpServerToolCallContent &&
-                googleSearchCallContent == other.googleSearchCallContent &&
-                fileSearchCallContent == other.fileSearchCallContent &&
-                googleMapsCallContent == other.googleMapsCallContent &&
-                functionResultContent == other.functionResultContent &&
-                codeExecutionResultContent == other.codeExecutionResultContent &&
-                urlContextResultContent == other.urlContextResultContent &&
-                googleSearchResultContent == other.googleSearchResultContent &&
-                mcpServerToolResultContent == other.mcpServerToolResultContent &&
-                fileSearchResultContent == other.fileSearchResultContent &&
-                googleMapsResultContent == other.googleMapsResultContent
+                videoContent == other.videoContent
         }
 
         override fun hashCode(): Int =
             Objects.hash(
-                contentList,
                 string,
-                turnList,
+                stepList,
+                contentList,
                 textContent,
                 imageContent,
                 audioContent,
                 documentContent,
                 videoContent,
-                thoughtContent,
-                functionCallContent,
-                codeExecutionCallContent,
-                urlContextCallContent,
-                mcpServerToolCallContent,
-                googleSearchCallContent,
-                fileSearchCallContent,
-                googleMapsCallContent,
-                functionResultContent,
-                codeExecutionResultContent,
-                urlContextResultContent,
-                googleSearchResultContent,
-                mcpServerToolResultContent,
-                fileSearchResultContent,
-                googleMapsResultContent,
             )
 
         override fun toString(): String =
             when {
-                contentList != null -> "Input{contentList=$contentList}"
                 string != null -> "Input{string=$string}"
-                turnList != null -> "Input{turnList=$turnList}"
+                stepList != null -> "Input{stepList=$stepList}"
+                contentList != null -> "Input{contentList=$contentList}"
                 textContent != null -> "Input{textContent=$textContent}"
                 imageContent != null -> "Input{imageContent=$imageContent}"
                 audioContent != null -> "Input{audioContent=$audioContent}"
                 documentContent != null -> "Input{documentContent=$documentContent}"
                 videoContent != null -> "Input{videoContent=$videoContent}"
-                thoughtContent != null -> "Input{thoughtContent=$thoughtContent}"
-                functionCallContent != null -> "Input{functionCallContent=$functionCallContent}"
-                codeExecutionCallContent != null ->
-                    "Input{codeExecutionCallContent=$codeExecutionCallContent}"
-                urlContextCallContent != null ->
-                    "Input{urlContextCallContent=$urlContextCallContent}"
-                mcpServerToolCallContent != null ->
-                    "Input{mcpServerToolCallContent=$mcpServerToolCallContent}"
-                googleSearchCallContent != null ->
-                    "Input{googleSearchCallContent=$googleSearchCallContent}"
-                fileSearchCallContent != null ->
-                    "Input{fileSearchCallContent=$fileSearchCallContent}"
-                googleMapsCallContent != null ->
-                    "Input{googleMapsCallContent=$googleMapsCallContent}"
-                functionResultContent != null ->
-                    "Input{functionResultContent=$functionResultContent}"
-                codeExecutionResultContent != null ->
-                    "Input{codeExecutionResultContent=$codeExecutionResultContent}"
-                urlContextResultContent != null ->
-                    "Input{urlContextResultContent=$urlContextResultContent}"
-                googleSearchResultContent != null ->
-                    "Input{googleSearchResultContent=$googleSearchResultContent}"
-                mcpServerToolResultContent != null ->
-                    "Input{mcpServerToolResultContent=$mcpServerToolResultContent}"
-                fileSearchResultContent != null ->
-                    "Input{fileSearchResultContent=$fileSearchResultContent}"
-                googleMapsResultContent != null ->
-                    "Input{googleMapsResultContent=$googleMapsResultContent}"
                 _json != null -> "Input{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Input")
             }
 
         companion object {
 
-            @JvmStatic
-            fun ofContentList(contentList: List<Content>) =
-                Input(contentList = contentList.toImmutable())
-
             @JvmStatic fun ofString(string: String) = Input(string = string)
 
             @JvmStatic
-            fun ofTurnList(turnList: List<Turn>) = Input(turnList = turnList.toImmutable())
+            fun ofStepList(stepList: List<Step>) = Input(stepList = stepList.toImmutable())
+
+            @JvmStatic
+            fun ofContentList(contentList: List<Content>) =
+                Input(contentList = contentList.toImmutable())
 
             /** A text content block. */
             @JvmStatic
@@ -2387,93 +1868,16 @@ private constructor(
             /** A video content block. */
             @JvmStatic
             fun ofVideoContent(videoContent: VideoContent) = Input(videoContent = videoContent)
-
-            /** A thought content block. */
-            @JvmStatic
-            fun ofThoughtContent(thoughtContent: ThoughtContent) =
-                Input(thoughtContent = thoughtContent)
-
-            /** A function tool call content block. */
-            @JvmStatic
-            fun ofFunctionCallContent(functionCallContent: FunctionCallContent) =
-                Input(functionCallContent = functionCallContent)
-
-            /** Code execution content. */
-            @JvmStatic
-            fun ofCodeExecutionCallContent(codeExecutionCallContent: CodeExecutionCallContent) =
-                Input(codeExecutionCallContent = codeExecutionCallContent)
-
-            /** URL context content. */
-            @JvmStatic
-            fun ofUrlContextCallContent(urlContextCallContent: UrlContextCallContent) =
-                Input(urlContextCallContent = urlContextCallContent)
-
-            /** MCPServer tool call content. */
-            @JvmStatic
-            fun ofMcpServerToolCallContent(mcpServerToolCallContent: McpServerToolCallContent) =
-                Input(mcpServerToolCallContent = mcpServerToolCallContent)
-
-            /** Google Search content. */
-            @JvmStatic
-            fun ofGoogleSearchCallContent(googleSearchCallContent: GoogleSearchCallContent) =
-                Input(googleSearchCallContent = googleSearchCallContent)
-
-            /** File Search content. */
-            @JvmStatic
-            fun ofFileSearchCallContent(fileSearchCallContent: FileSearchCallContent) =
-                Input(fileSearchCallContent = fileSearchCallContent)
-
-            /** Google Maps content. */
-            @JvmStatic
-            fun ofGoogleMapsCallContent(googleMapsCallContent: GoogleMapsCallContent) =
-                Input(googleMapsCallContent = googleMapsCallContent)
-
-            /** A function tool result content block. */
-            @JvmStatic
-            fun ofFunctionResultContent(functionResultContent: FunctionResultContent) =
-                Input(functionResultContent = functionResultContent)
-
-            /** Code execution result content. */
-            @JvmStatic
-            fun ofCodeExecutionResultContent(
-                codeExecutionResultContent: CodeExecutionResultContent
-            ) = Input(codeExecutionResultContent = codeExecutionResultContent)
-
-            /** URL context result content. */
-            @JvmStatic
-            fun ofUrlContextResultContent(urlContextResultContent: UrlContextResultContent) =
-                Input(urlContextResultContent = urlContextResultContent)
-
-            /** Google Search result content. */
-            @JvmStatic
-            fun ofGoogleSearchResultContent(googleSearchResultContent: GoogleSearchResultContent) =
-                Input(googleSearchResultContent = googleSearchResultContent)
-
-            /** MCPServer tool result content. */
-            @JvmStatic
-            fun ofMcpServerToolResultContent(
-                mcpServerToolResultContent: McpServerToolResultContent
-            ) = Input(mcpServerToolResultContent = mcpServerToolResultContent)
-
-            /** File Search result content. */
-            @JvmStatic
-            fun ofFileSearchResultContent(fileSearchResultContent: FileSearchResultContent) =
-                Input(fileSearchResultContent = fileSearchResultContent)
-
-            /** Google Maps result content. */
-            @JvmStatic
-            fun ofGoogleMapsResultContent(googleMapsResultContent: GoogleMapsResultContent) =
-                Input(googleMapsResultContent = googleMapsResultContent)
         }
 
         /** An interface that defines how to map each variant of [Input] to a value of type [T]. */
         interface Visitor<out T> {
 
-            fun visitContentList(contentList: List<Content>): T
-
             fun visitString(string: String): T
 
-            fun visitTurnList(turnList: List<Turn>): T
+            fun visitStepList(stepList: List<Step>): T
+
+            fun visitContentList(contentList: List<Content>): T
 
             /** A text content block. */
             fun visitTextContent(textContent: TextContent): T
@@ -2489,57 +1893,6 @@ private constructor(
 
             /** A video content block. */
             fun visitVideoContent(videoContent: VideoContent): T
-
-            /** A thought content block. */
-            fun visitThoughtContent(thoughtContent: ThoughtContent): T
-
-            /** A function tool call content block. */
-            fun visitFunctionCallContent(functionCallContent: FunctionCallContent): T
-
-            /** Code execution content. */
-            fun visitCodeExecutionCallContent(codeExecutionCallContent: CodeExecutionCallContent): T
-
-            /** URL context content. */
-            fun visitUrlContextCallContent(urlContextCallContent: UrlContextCallContent): T
-
-            /** MCPServer tool call content. */
-            fun visitMcpServerToolCallContent(mcpServerToolCallContent: McpServerToolCallContent): T
-
-            /** Google Search content. */
-            fun visitGoogleSearchCallContent(googleSearchCallContent: GoogleSearchCallContent): T
-
-            /** File Search content. */
-            fun visitFileSearchCallContent(fileSearchCallContent: FileSearchCallContent): T
-
-            /** Google Maps content. */
-            fun visitGoogleMapsCallContent(googleMapsCallContent: GoogleMapsCallContent): T
-
-            /** A function tool result content block. */
-            fun visitFunctionResultContent(functionResultContent: FunctionResultContent): T
-
-            /** Code execution result content. */
-            fun visitCodeExecutionResultContent(
-                codeExecutionResultContent: CodeExecutionResultContent
-            ): T
-
-            /** URL context result content. */
-            fun visitUrlContextResultContent(urlContextResultContent: UrlContextResultContent): T
-
-            /** Google Search result content. */
-            fun visitGoogleSearchResultContent(
-                googleSearchResultContent: GoogleSearchResultContent
-            ): T
-
-            /** MCPServer tool result content. */
-            fun visitMcpServerToolResultContent(
-                mcpServerToolResultContent: McpServerToolResultContent
-            ): T
-
-            /** File Search result content. */
-            fun visitFileSearchResultContent(fileSearchResultContent: FileSearchResultContent): T
-
-            /** Google Maps result content. */
-            fun visitGoogleMapsResultContent(googleMapsResultContent: GoogleMapsResultContent): T
 
             /**
              * Maps an unknown variant of [Input] to a value of type [T].
@@ -2578,57 +1931,14 @@ private constructor(
                             tryDeserialize(node, jacksonTypeRef<VideoContent>())?.let {
                                 Input(videoContent = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<ThoughtContent>())?.let {
-                                Input(thoughtContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<FunctionCallContent>())?.let {
-                                Input(functionCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<CodeExecutionCallContent>())?.let {
-                                Input(codeExecutionCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<UrlContextCallContent>())?.let {
-                                Input(urlContextCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<McpServerToolCallContent>())?.let {
-                                Input(mcpServerToolCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<GoogleSearchCallContent>())?.let {
-                                Input(googleSearchCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<FileSearchCallContent>())?.let {
-                                Input(fileSearchCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<GoogleMapsCallContent>())?.let {
-                                Input(googleMapsCallContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<FunctionResultContent>())?.let {
-                                Input(functionResultContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<CodeExecutionResultContent>())
-                                ?.let { Input(codeExecutionResultContent = it, _json = json) },
-                            tryDeserialize(node, jacksonTypeRef<UrlContextResultContent>())?.let {
-                                Input(urlContextResultContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<GoogleSearchResultContent>())?.let {
-                                Input(googleSearchResultContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<McpServerToolResultContent>())
-                                ?.let { Input(mcpServerToolResultContent = it, _json = json) },
-                            tryDeserialize(node, jacksonTypeRef<FileSearchResultContent>())?.let {
-                                Input(fileSearchResultContent = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<GoogleMapsResultContent>())?.let {
-                                Input(googleMapsResultContent = it, _json = json)
-                            },
                             tryDeserialize(node, jacksonTypeRef<String>())?.let {
                                 Input(string = it, _json = json)
                             },
+                            tryDeserialize(node, jacksonTypeRef<List<Step>>())?.let {
+                                Input(stepList = it, _json = json)
+                            },
                             tryDeserialize(node, jacksonTypeRef<List<Content>>())?.let {
                                 Input(contentList = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<List<Turn>>())?.let {
-                                Input(turnList = it, _json = json)
                             },
                         )
                         .filterNotNull()
@@ -2655,43 +1965,14 @@ private constructor(
                 provider: SerializerProvider,
             ) {
                 when {
-                    value.contentList != null -> generator.writeObject(value.contentList)
                     value.string != null -> generator.writeObject(value.string)
-                    value.turnList != null -> generator.writeObject(value.turnList)
+                    value.stepList != null -> generator.writeObject(value.stepList)
+                    value.contentList != null -> generator.writeObject(value.contentList)
                     value.textContent != null -> generator.writeObject(value.textContent)
                     value.imageContent != null -> generator.writeObject(value.imageContent)
                     value.audioContent != null -> generator.writeObject(value.audioContent)
                     value.documentContent != null -> generator.writeObject(value.documentContent)
                     value.videoContent != null -> generator.writeObject(value.videoContent)
-                    value.thoughtContent != null -> generator.writeObject(value.thoughtContent)
-                    value.functionCallContent != null ->
-                        generator.writeObject(value.functionCallContent)
-                    value.codeExecutionCallContent != null ->
-                        generator.writeObject(value.codeExecutionCallContent)
-                    value.urlContextCallContent != null ->
-                        generator.writeObject(value.urlContextCallContent)
-                    value.mcpServerToolCallContent != null ->
-                        generator.writeObject(value.mcpServerToolCallContent)
-                    value.googleSearchCallContent != null ->
-                        generator.writeObject(value.googleSearchCallContent)
-                    value.fileSearchCallContent != null ->
-                        generator.writeObject(value.fileSearchCallContent)
-                    value.googleMapsCallContent != null ->
-                        generator.writeObject(value.googleMapsCallContent)
-                    value.functionResultContent != null ->
-                        generator.writeObject(value.functionResultContent)
-                    value.codeExecutionResultContent != null ->
-                        generator.writeObject(value.codeExecutionResultContent)
-                    value.urlContextResultContent != null ->
-                        generator.writeObject(value.urlContextResultContent)
-                    value.googleSearchResultContent != null ->
-                        generator.writeObject(value.googleSearchResultContent)
-                    value.mcpServerToolResultContent != null ->
-                        generator.writeObject(value.mcpServerToolResultContent)
-                    value.fileSearchResultContent != null ->
-                        generator.writeObject(value.fileSearchResultContent)
-                    value.googleMapsResultContent != null ->
-                        generator.writeObject(value.googleMapsResultContent)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Input")
                 }
@@ -3317,13 +2598,13 @@ private constructor(
             generationConfig == other.generationConfig &&
             input == other.input &&
             model == other.model &&
-            outputs == other.outputs &&
             previousInteractionId == other.previousInteractionId &&
             responseFormat == other.responseFormat &&
             responseMimeType == other.responseMimeType &&
             responseModalities == other.responseModalities &&
             role == other.role &&
             serviceTier == other.serviceTier &&
+            steps == other.steps &&
             systemInstruction == other.systemInstruction &&
             tools == other.tools &&
             usage == other.usage &&
@@ -3342,13 +2623,13 @@ private constructor(
             generationConfig,
             input,
             model,
-            outputs,
             previousInteractionId,
             responseFormat,
             responseMimeType,
             responseModalities,
             role,
             serviceTier,
+            steps,
             systemInstruction,
             tools,
             usage,
@@ -3360,5 +2641,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, outputs=$outputs, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
+        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, steps=$steps, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
 }

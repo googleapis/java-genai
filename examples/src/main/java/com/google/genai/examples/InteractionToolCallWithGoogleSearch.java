@@ -46,6 +46,7 @@ import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.interactions.models.interactions.Tool;
 
 /** An example of using the Unified Gen AI Java SDK to perform tool calling with Google Search. */
@@ -76,11 +77,23 @@ public final class InteractionToolCallWithGoogleSearch {
     System.out.println("Status: " + interaction.status());
 
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println("Output Text: " + text.text()));
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content content : contents) {
+                              content
+                                  .text()
+                                  .ifPresent(
+                                      text -> System.out.println("Output Text: " + text.text()));
+                            }
+                          });
+                }
               }
             });
   }

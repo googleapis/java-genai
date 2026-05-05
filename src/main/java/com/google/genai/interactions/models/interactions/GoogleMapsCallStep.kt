@@ -26,20 +26,22 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
+import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
+import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** Google Maps content. */
-class GoogleMapsCallContent
+/** Google Maps call step. */
+class GoogleMapsCallStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val type: JsonValue,
-    private val arguments: JsonField<GoogleMapsCallArguments>,
+    private val arguments: JsonField<Arguments>,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -50,7 +52,7 @@ private constructor(
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
         @JsonProperty("arguments")
         @ExcludeMissing
-        arguments: JsonField<GoogleMapsCallArguments> = JsonMissing.of(),
+        arguments: JsonField<Arguments> = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
     ) : this(id, type, arguments, signature, mutableMapOf())
 
@@ -79,7 +81,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun arguments(): Optional<GoogleMapsCallArguments> = arguments.getOptional("arguments")
+    fun arguments(): Optional<Arguments> = arguments.getOptional("arguments")
 
     /**
      * A signature hash for backend validation.
@@ -101,9 +103,7 @@ private constructor(
      *
      * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("arguments")
-    @ExcludeMissing
-    fun _arguments(): JsonField<GoogleMapsCallArguments> = arguments
+    @JsonProperty("arguments") @ExcludeMissing fun _arguments(): JsonField<Arguments> = arguments
 
     /**
      * Returns the raw JSON value of [signature].
@@ -127,7 +127,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [GoogleMapsCallContent].
+         * Returns a mutable builder for constructing an instance of [GoogleMapsCallStep].
          *
          * The following fields are required:
          * ```java
@@ -137,22 +137,22 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [GoogleMapsCallContent]. */
+    /** A builder for [GoogleMapsCallStep]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var type: JsonValue = JsonValue.from("google_maps_call")
-        private var arguments: JsonField<GoogleMapsCallArguments> = JsonMissing.of()
+        private var arguments: JsonField<Arguments> = JsonMissing.of()
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(googleMapsCallContent: GoogleMapsCallContent) = apply {
-            id = googleMapsCallContent.id
-            type = googleMapsCallContent.type
-            arguments = googleMapsCallContent.arguments
-            signature = googleMapsCallContent.signature
-            additionalProperties = googleMapsCallContent.additionalProperties.toMutableMap()
+        internal fun from(googleMapsCallStep: GoogleMapsCallStep) = apply {
+            id = googleMapsCallStep.id
+            type = googleMapsCallStep.type
+            arguments = googleMapsCallStep.arguments
+            signature = googleMapsCallStep.signature
+            additionalProperties = googleMapsCallStep.additionalProperties.toMutableMap()
         }
 
         /** Required. A unique ID for this specific tool call. */
@@ -181,18 +181,16 @@ private constructor(
         fun type(type: JsonValue) = apply { this.type = type }
 
         /** The arguments to pass to the Google Maps tool. */
-        fun arguments(arguments: GoogleMapsCallArguments) = arguments(JsonField.of(arguments))
+        fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
 
         /**
          * Sets [Builder.arguments] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.arguments] with a well-typed [GoogleMapsCallArguments]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.arguments] with a well-typed [Arguments] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
-        fun arguments(arguments: JsonField<GoogleMapsCallArguments>) = apply {
-            this.arguments = arguments
-        }
+        fun arguments(arguments: JsonField<Arguments>) = apply { this.arguments = arguments }
 
         /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
@@ -226,7 +224,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [GoogleMapsCallContent].
+         * Returns an immutable instance of [GoogleMapsCallStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -237,8 +235,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): GoogleMapsCallContent =
-            GoogleMapsCallContent(
+        fun build(): GoogleMapsCallStep =
+            GoogleMapsCallStep(
                 checkRequired("id", id),
                 type,
                 arguments,
@@ -249,7 +247,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): GoogleMapsCallContent = apply {
+    fun validate(): GoogleMapsCallStep = apply {
         if (validated) {
             return@apply
         }
@@ -285,12 +283,174 @@ private constructor(
             (arguments.asKnown().getOrNull()?.validity() ?: 0) +
             (if (signature.asKnown().isPresent) 1 else 0)
 
+    /** The arguments to pass to the Google Maps tool. */
+    class Arguments
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val queries: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("queries")
+            @ExcludeMissing
+            queries: JsonField<List<String>> = JsonMissing.of()
+        ) : this(queries, mutableMapOf())
+
+        /**
+         * The queries to be executed.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun queries(): Optional<List<String>> = queries.getOptional("queries")
+
+        /**
+         * Returns the raw JSON value of [queries].
+         *
+         * Unlike [queries], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("queries") @ExcludeMissing fun _queries(): JsonField<List<String>> = queries
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Arguments]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Arguments]. */
+        class Builder internal constructor() {
+
+            private var queries: JsonField<MutableList<String>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(arguments: Arguments) = apply {
+                queries = arguments.queries.map { it.toMutableList() }
+                additionalProperties = arguments.additionalProperties.toMutableMap()
+            }
+
+            /** The queries to be executed. */
+            fun queries(queries: List<String>) = queries(JsonField.of(queries))
+
+            /**
+             * Sets [Builder.queries] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.queries] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun queries(queries: JsonField<List<String>>) = apply {
+                this.queries = queries.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [queries].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addQuery(query: String) = apply {
+                queries =
+                    (queries ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("queries", it).add(query)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Arguments].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Arguments =
+                Arguments(
+                    (queries ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Arguments = apply {
+            if (validated) {
+                return@apply
+            }
+
+            queries()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = (queries.asKnown().getOrNull()?.size ?: 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Arguments &&
+                queries == other.queries &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(queries, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Arguments{queries=$queries, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return other is GoogleMapsCallContent &&
+        return other is GoogleMapsCallStep &&
             id == other.id &&
             type == other.type &&
             arguments == other.arguments &&
@@ -305,5 +465,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "GoogleMapsCallContent{id=$id, type=$type, arguments=$arguments, signature=$signature, additionalProperties=$additionalProperties}"
+        "GoogleMapsCallStep{id=$id, type=$type, arguments=$arguments, signature=$signature, additionalProperties=$additionalProperties}"
 }

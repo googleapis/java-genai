@@ -294,7 +294,7 @@ private constructor(
             delta(Delta.GoogleMapsResult.builder().callId(callId).build())
 
         /** Alias for calling [delta] with `Delta.ofTextAnnotation(textAnnotation)`. */
-        fun delta(textAnnotation: Delta.TextAnnotation) =
+        fun delta(textAnnotation: Delta.TextAnnotationDelta) =
             delta(Delta.ofTextAnnotation(textAnnotation))
 
         /**
@@ -438,7 +438,7 @@ private constructor(
         private val mcpServerToolResult: McpServerToolResult? = null,
         private val fileSearchResult: FileSearchResult? = null,
         private val googleMapsResult: GoogleMapsResult? = null,
-        private val textAnnotation: TextAnnotation? = null,
+        private val textAnnotation: TextAnnotationDelta? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -489,7 +489,7 @@ private constructor(
 
         fun googleMapsResult(): Optional<GoogleMapsResult> = Optional.ofNullable(googleMapsResult)
 
-        fun textAnnotation(): Optional<TextAnnotation> = Optional.ofNullable(textAnnotation)
+        fun textAnnotation(): Optional<TextAnnotationDelta> = Optional.ofNullable(textAnnotation)
 
         fun isText(): Boolean = text != null
 
@@ -582,7 +582,7 @@ private constructor(
 
         fun asGoogleMapsResult(): GoogleMapsResult = googleMapsResult.getOrThrow("googleMapsResult")
 
-        fun asTextAnnotation(): TextAnnotation = textAnnotation.getOrThrow("textAnnotation")
+        fun asTextAnnotation(): TextAnnotationDelta = textAnnotation.getOrThrow("textAnnotation")
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
@@ -710,7 +710,7 @@ private constructor(
                         googleMapsResult.validate()
                     }
 
-                    override fun visitTextAnnotation(textAnnotation: TextAnnotation) {
+                    override fun visitTextAnnotation(textAnnotation: TextAnnotationDelta) {
                         textAnnotation.validate()
                     }
                 }
@@ -796,7 +796,7 @@ private constructor(
                     override fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult) =
                         googleMapsResult.validity()
 
-                    override fun visitTextAnnotation(textAnnotation: TextAnnotation) =
+                    override fun visitTextAnnotation(textAnnotation: TextAnnotationDelta) =
                         textAnnotation.validity()
 
                     override fun unknown(json: JsonValue?) = 0
@@ -963,7 +963,7 @@ private constructor(
                 Delta(googleMapsResult = googleMapsResult)
 
             @JvmStatic
-            fun ofTextAnnotation(textAnnotation: TextAnnotation) =
+            fun ofTextAnnotation(textAnnotation: TextAnnotationDelta) =
                 Delta(textAnnotation = textAnnotation)
         }
 
@@ -1012,7 +1012,7 @@ private constructor(
 
             fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult): T
 
-            fun visitTextAnnotation(textAnnotation: TextAnnotation): T
+            fun visitTextAnnotation(textAnnotation: TextAnnotationDelta): T
 
             /**
              * Maps an unknown variant of [Delta] to a value of type [T].
@@ -1141,8 +1141,8 @@ private constructor(
                             Delta(googleMapsResult = it, _json = json)
                         } ?: Delta(_json = json)
                     }
-                    "text_annotation" -> {
-                        return tryDeserialize(node, jacksonTypeRef<TextAnnotation>())?.let {
+                    "text_annotation_delta" -> {
+                        return tryDeserialize(node, jacksonTypeRef<TextAnnotationDelta>())?.let {
                             Delta(textAnnotation = it, _json = json)
                         } ?: Delta(_json = json)
                     }
@@ -9608,7 +9608,7 @@ private constructor(
                 "GoogleMapsResult{callId=$callId, type=$type, result=$result, signature=$signature, additionalProperties=$additionalProperties}"
         }
 
-        class TextAnnotation
+        class TextAnnotationDelta
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val type: JsonValue,
@@ -9627,7 +9627,7 @@ private constructor(
             /**
              * Expected to always return the following:
              * ```java
-             * JsonValue.from("text_annotation")
+             * JsonValue.from("text_annotation_delta")
              * ```
              *
              * However, this method can be useful for debugging and logging (e.g. if the server
@@ -9667,22 +9667,24 @@ private constructor(
 
             companion object {
 
-                /** Returns a mutable builder for constructing an instance of [TextAnnotation]. */
+                /**
+                 * Returns a mutable builder for constructing an instance of [TextAnnotationDelta].
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
-            /** A builder for [TextAnnotation]. */
+            /** A builder for [TextAnnotationDelta]. */
             class Builder internal constructor() {
 
-                private var type: JsonValue = JsonValue.from("text_annotation")
+                private var type: JsonValue = JsonValue.from("text_annotation_delta")
                 private var annotations: JsonField<MutableList<Annotation>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
-                internal fun from(textAnnotation: TextAnnotation) = apply {
-                    type = textAnnotation.type
-                    annotations = textAnnotation.annotations.map { it.toMutableList() }
-                    additionalProperties = textAnnotation.additionalProperties.toMutableMap()
+                internal fun from(textAnnotationDelta: TextAnnotationDelta) = apply {
+                    type = textAnnotationDelta.type
+                    annotations = textAnnotationDelta.annotations.map { it.toMutableList() }
+                    additionalProperties = textAnnotationDelta.additionalProperties.toMutableMap()
                 }
 
                 /**
@@ -9691,7 +9693,7 @@ private constructor(
                  * It is usually unnecessary to call this method because the field defaults to the
                  * following:
                  * ```java
-                 * JsonValue.from("text_annotation")
+                 * JsonValue.from("text_annotation_delta")
                  * ```
                  *
                  * This method is primarily for setting the field to an undocumented or not yet
@@ -9768,12 +9770,12 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [TextAnnotation].
+                 * Returns an immutable instance of [TextAnnotationDelta].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
-                fun build(): TextAnnotation =
-                    TextAnnotation(
+                fun build(): TextAnnotationDelta =
+                    TextAnnotationDelta(
                         type,
                         (annotations ?: JsonMissing.of()).map { it.toImmutable() },
                         additionalProperties.toMutableMap(),
@@ -9782,13 +9784,13 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): TextAnnotation = apply {
+            fun validate(): TextAnnotationDelta = apply {
                 if (validated) {
                     return@apply
                 }
 
                 _type().let {
-                    if (it != JsonValue.from("text_annotation")) {
+                    if (it != JsonValue.from("text_annotation_delta")) {
                         throw GeminiNextGenApiInvalidDataException(
                             "'type' is invalid, received $it"
                         )
@@ -9814,7 +9816,7 @@ private constructor(
              */
             @JvmSynthetic
             internal fun validity(): Int =
-                type.let { if (it == JsonValue.from("text_annotation")) 1 else 0 } +
+                type.let { if (it == JsonValue.from("text_annotation_delta")) 1 else 0 } +
                     (annotations.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
 
             override fun equals(other: Any?): Boolean {
@@ -9822,7 +9824,7 @@ private constructor(
                     return true
                 }
 
-                return other is TextAnnotation &&
+                return other is TextAnnotationDelta &&
                     type == other.type &&
                     annotations == other.annotations &&
                     additionalProperties == other.additionalProperties
@@ -9835,7 +9837,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TextAnnotation{type=$type, annotations=$annotations, additionalProperties=$additionalProperties}"
+                "TextAnnotationDelta{type=$type, annotations=$annotations, additionalProperties=$additionalProperties}"
         }
     }
 

@@ -44,6 +44,7 @@ import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
+import com.google.genai.interactions.models.interactions.Step;
 
 /** An example of using the Unified Gen AI Java SDK to create an interaction. */
 public final class InteractionCreate {
@@ -77,11 +78,22 @@ public final class InteractionCreate {
 
     // Print the text outputs from the interaction.
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println("Output: " + text.text()));
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content content : contents) {
+                              content
+                                  .text()
+                                  .ifPresent(text -> System.out.println("Output: " + text.text()));
+                            }
+                          });
+                }
               }
             });
   }

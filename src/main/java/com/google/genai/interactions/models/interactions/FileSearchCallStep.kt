@@ -26,21 +26,17 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
-import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
-import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
-/** Google Maps result content. */
-class GoogleMapsResultContent
+/** File Search call step. */
+class FileSearchCallStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val callId: JsonField<String>,
-    private val result: JsonField<List<GoogleMapsResult>>,
+    private val id: JsonField<String>,
     private val type: JsonValue,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -48,34 +44,23 @@ private constructor(
 
     @JsonCreator
     private constructor(
-        @JsonProperty("call_id") @ExcludeMissing callId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("result")
-        @ExcludeMissing
-        result: JsonField<List<GoogleMapsResult>> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(callId, result, type, signature, mutableMapOf())
+    ) : this(id, type, signature, mutableMapOf())
 
     /**
-     * Required. ID to match the ID from the function call block.
+     * Required. A unique ID for this specific tool call.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun callId(): String = callId.getRequired("call_id")
-
-    /**
-     * Required. The results of the Google Maps.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun result(): List<GoogleMapsResult> = result.getRequired("result")
+    fun id(): String = id.getRequired("id")
 
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("google_maps_result")
+     * JsonValue.from("file_search_call")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -92,20 +77,11 @@ private constructor(
     fun signature(): Optional<String> = signature.getOptional("signature")
 
     /**
-     * Returns the raw JSON value of [callId].
+     * Returns the raw JSON value of [id].
      *
-     * Unlike [callId], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("call_id") @ExcludeMissing fun _callId(): JsonField<String> = callId
-
-    /**
-     * Returns the raw JSON value of [result].
-     *
-     * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("result")
-    @ExcludeMissing
-    fun _result(): JsonField<List<GoogleMapsResult>> = result
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * Returns the raw JSON value of [signature].
@@ -129,71 +105,42 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [GoogleMapsResultContent].
+         * Returns a mutable builder for constructing an instance of [FileSearchCallStep].
          *
          * The following fields are required:
          * ```java
-         * .callId()
-         * .result()
+         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [GoogleMapsResultContent]. */
+    /** A builder for [FileSearchCallStep]. */
     class Builder internal constructor() {
 
-        private var callId: JsonField<String>? = null
-        private var result: JsonField<MutableList<GoogleMapsResult>>? = null
-        private var type: JsonValue = JsonValue.from("google_maps_result")
+        private var id: JsonField<String>? = null
+        private var type: JsonValue = JsonValue.from("file_search_call")
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(googleMapsResultContent: GoogleMapsResultContent) = apply {
-            callId = googleMapsResultContent.callId
-            result = googleMapsResultContent.result.map { it.toMutableList() }
-            type = googleMapsResultContent.type
-            signature = googleMapsResultContent.signature
-            additionalProperties = googleMapsResultContent.additionalProperties.toMutableMap()
+        internal fun from(fileSearchCallStep: FileSearchCallStep) = apply {
+            id = fileSearchCallStep.id
+            type = fileSearchCallStep.type
+            signature = fileSearchCallStep.signature
+            additionalProperties = fileSearchCallStep.additionalProperties.toMutableMap()
         }
 
-        /** Required. ID to match the ID from the function call block. */
-        fun callId(callId: String) = callId(JsonField.of(callId))
+        /** Required. A unique ID for this specific tool call. */
+        fun id(id: String) = id(JsonField.of(id))
 
         /**
-         * Sets [Builder.callId] to an arbitrary JSON value.
+         * Sets [Builder.id] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.callId] with a well-typed [String] value instead. This
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun callId(callId: JsonField<String>) = apply { this.callId = callId }
-
-        /** Required. The results of the Google Maps. */
-        fun result(result: List<GoogleMapsResult>) = result(JsonField.of(result))
-
-        /**
-         * Sets [Builder.result] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.result] with a well-typed `List<GoogleMapsResult>` value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun result(result: JsonField<List<GoogleMapsResult>>) = apply {
-            this.result = result.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [GoogleMapsResult] to [Builder.result].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addResult(result: GoogleMapsResult) = apply {
-            this.result =
-                (this.result ?: JsonField.of(mutableListOf())).also {
-                    checkKnown("result", it).add(result)
-                }
-        }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
          * Sets the field to an arbitrary JSON value.
@@ -201,7 +148,7 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("google_maps_result")
+         * JsonValue.from("file_search_call")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -241,22 +188,20 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [GoogleMapsResultContent].
+         * Returns an immutable instance of [FileSearchCallStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```java
-         * .callId()
-         * .result()
+         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): GoogleMapsResultContent =
-            GoogleMapsResultContent(
-                checkRequired("callId", callId),
-                checkRequired("result", result).map { it.toImmutable() },
+        fun build(): FileSearchCallStep =
+            FileSearchCallStep(
+                checkRequired("id", id),
                 type,
                 signature,
                 additionalProperties.toMutableMap(),
@@ -265,15 +210,14 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): GoogleMapsResultContent = apply {
+    fun validate(): FileSearchCallStep = apply {
         if (validated) {
             return@apply
         }
 
-        callId()
-        result().forEach { it.validate() }
+        id()
         _type().let {
-            if (it != JsonValue.from("google_maps_result")) {
+            if (it != JsonValue.from("file_search_call")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
@@ -296,9 +240,8 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (callId.asKnown().isPresent) 1 else 0) +
-            (result.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            type.let { if (it == JsonValue.from("google_maps_result")) 1 else 0 } +
+        (if (id.asKnown().isPresent) 1 else 0) +
+            type.let { if (it == JsonValue.from("file_search_call")) 1 else 0 } +
             (if (signature.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
@@ -306,20 +249,17 @@ private constructor(
             return true
         }
 
-        return other is GoogleMapsResultContent &&
-            callId == other.callId &&
-            result == other.result &&
+        return other is FileSearchCallStep &&
+            id == other.id &&
             type == other.type &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy {
-        Objects.hash(callId, result, type, signature, additionalProperties)
-    }
+    private val hashCode: Int by lazy { Objects.hash(id, type, signature, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "GoogleMapsResultContent{callId=$callId, result=$result, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        "FileSearchCallStep{id=$id, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
 }

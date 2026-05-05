@@ -44,6 +44,7 @@ import com.google.genai.Client;
 import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Interaction;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.interactions.models.interactions.Tool;
 
 /**
@@ -81,11 +82,22 @@ public final class InteractionToolCallWithComputerUse {
 
     // Print the text outputs from the interaction.
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println("Output: " + text.text()));
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content content : contents) {
+                              content
+                                  .text()
+                                  .ifPresent(text -> System.out.println("Output: " + text.text()));
+                            }
+                          });
+                }
               }
             });
   }

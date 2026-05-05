@@ -44,8 +44,8 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** A thought content block. */
-class ThoughtContent
+/** A thought step. */
+class ThoughtStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val type: JsonValue,
@@ -75,7 +75,7 @@ private constructor(
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
 
     /**
-     * Signature to match the backend source to be part of the generation.
+     * A signature hash for backend validation.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
@@ -118,11 +118,11 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [ThoughtContent]. */
+        /** Returns a mutable builder for constructing an instance of [ThoughtStep]. */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [ThoughtContent]. */
+    /** A builder for [ThoughtStep]. */
     class Builder internal constructor() {
 
         private var type: JsonValue = JsonValue.from("thought")
@@ -131,11 +131,11 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(thoughtContent: ThoughtContent) = apply {
-            type = thoughtContent.type
-            signature = thoughtContent.signature
-            summary = thoughtContent.summary.map { it.toMutableList() }
-            additionalProperties = thoughtContent.additionalProperties.toMutableMap()
+        internal fun from(thoughtStep: ThoughtStep) = apply {
+            type = thoughtStep.type
+            signature = thoughtStep.signature
+            summary = thoughtStep.summary.map { it.toMutableList() }
+            additionalProperties = thoughtStep.additionalProperties.toMutableMap()
         }
 
         /**
@@ -152,7 +152,7 @@ private constructor(
          */
         fun type(type: JsonValue) = apply { this.type = type }
 
-        /** Signature to match the backend source to be part of the generation. */
+        /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
 
         /**
@@ -226,12 +226,12 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [ThoughtContent].
+         * Returns an immutable instance of [ThoughtStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): ThoughtContent =
-            ThoughtContent(
+        fun build(): ThoughtStep =
+            ThoughtStep(
                 type,
                 signature,
                 (summary ?: JsonMissing.of()).map { it.toImmutable() },
@@ -241,7 +241,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): ThoughtContent = apply {
+    fun validate(): ThoughtStep = apply {
         if (validated) {
             return@apply
         }
@@ -455,7 +455,7 @@ private constructor(
             return true
         }
 
-        return other is ThoughtContent &&
+        return other is ThoughtStep &&
             type == other.type &&
             signature == other.signature &&
             summary == other.summary &&
@@ -469,5 +469,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ThoughtContent{type=$type, signature=$signature, summary=$summary, additionalProperties=$additionalProperties}"
+        "ThoughtStep{type=$type, signature=$signature, summary=$summary, additionalProperties=$additionalProperties}"
 }

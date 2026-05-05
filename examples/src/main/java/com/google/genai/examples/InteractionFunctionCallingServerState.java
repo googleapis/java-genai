@@ -46,10 +46,11 @@ import com.google.genai.interactions.core.JsonValue;
 import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Function;
-import com.google.genai.interactions.models.interactions.FunctionCallContent;
-import com.google.genai.interactions.models.interactions.FunctionResultContent;
+import com.google.genai.interactions.models.interactions.FunctionCallStep;
+import com.google.genai.interactions.models.interactions.FunctionResultStep;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.interactions.models.interactions.Tool;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -122,17 +123,26 @@ public final class InteractionFunctionCallingServerState {
     String functionCallId = null;
     String functionName = null;
 
-    List<Content> outputs = response.outputs().orElse(null);
-    if (outputs != null) {
-      for (Content output : outputs) {
-        if (output.isFunctionCall()) {
-          FunctionCallContent functionCall = output.asFunctionCall();
+    List<Step> steps = response.steps().orElse(null);
+    if (steps != null) {
+      for (Step step : steps) {
+        if (step.isFunctionCall()) {
+          FunctionCallStep functionCall = step.asFunctionCall();
           functionCallId = functionCall.id();
           functionName = functionCall.name();
           System.out.println("Model requested function call: " + functionName);
           System.out.println("Arguments: " + functionCall.arguments());
-        } else if (output.text().isPresent()) {
-          System.out.println("Output Text: " + output.text().get().text());
+        } else if (step.isModelOutput()) {
+          step.asModelOutput()
+              .content()
+              .ifPresent(
+                  contents -> {
+                    for (Content output : contents) {
+                      output
+                          .text()
+                          .ifPresent(text -> System.out.println("Output Text: " + text.text()));
+                    }
+                  });
         }
       }
     }
@@ -141,31 +151,43 @@ public final class InteractionFunctionCallingServerState {
     if (functionCallId != null) {
       System.out.println("Sending function result back...");
 
-      FunctionResultContent functionResult =
-          FunctionResultContent.builder()
+      FunctionResultStep functionResult =
+          FunctionResultStep.builder()
               .callId(functionCallId)
               .name(functionName)
-              .result("Meeting scheduled successfully.")
+              .result(FunctionResultStep.Result.ofString("Meeting scheduled successfully."))
               .build();
 
       CreateModelInteractionParams followUpParams =
           CreateModelInteractionParams.builder()
               .model(Model.GEMINI_2_5_FLASH)
               .previousInteractionId(response.id())
-              .input(CreateModelInteractionParams.Input.ofFunctionResultContent(functionResult))
+              .input(
+                  CreateModelInteractionParams.Input.ofStepList(
+                      java.util.Arrays.asList(Step.ofFunctionResult(functionResult))))
               .build();
 
       Interaction followUpResponse = client.interactions.create(followUpParams);
 
       System.out.println("Final response status: " + followUpResponse.status());
       followUpResponse
-          .outputs()
+          .steps()
           .ifPresent(
-              finalOutputs -> {
-                for (Content output : finalOutputs) {
-                  output
-                      .text()
-                      .ifPresent(text -> System.out.println("Final Output: " + text.text()));
+              finalSteps -> {
+                for (Step step : finalSteps) {
+                  if (step.isModelOutput()) {
+                    step.asModelOutput()
+                        .content()
+                        .ifPresent(
+                            contents -> {
+                              for (Content output : contents) {
+                                output
+                                    .text()
+                                    .ifPresent(
+                                        text -> System.out.println("Final Output: " + text.text()));
+                              }
+                            });
+                  }
                 }
               });
     } else {

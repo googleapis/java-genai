@@ -69,7 +69,7 @@ public final class InteractionMultimodalResponseAudio {
     Interaction interaction = client.interactions.create(params);
 
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
             outputs -> {
               for (int i = 0; i < outputs.size(); i++) {

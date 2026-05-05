@@ -26,19 +26,21 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
+import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
+import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** Code execution content. */
-class CodeExecutionCallContent
+/** URL context call step. */
+class UrlContextCallStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
-    private val arguments: JsonField<CodeExecutionCallArguments>,
+    private val arguments: JsonField<Arguments>,
     private val type: JsonValue,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -49,7 +51,7 @@ private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("arguments")
         @ExcludeMissing
-        arguments: JsonField<CodeExecutionCallArguments> = JsonMissing.of(),
+        arguments: JsonField<Arguments> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
     ) : this(id, arguments, type, signature, mutableMapOf())
@@ -63,17 +65,17 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * Required. The arguments to pass to the code execution.
+     * Required. The arguments to pass to the URL context.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun arguments(): CodeExecutionCallArguments = arguments.getRequired("arguments")
+    fun arguments(): Arguments = arguments.getRequired("arguments")
 
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("code_execution_call")
+     * JsonValue.from("url_context_call")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -101,9 +103,7 @@ private constructor(
      *
      * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("arguments")
-    @ExcludeMissing
-    fun _arguments(): JsonField<CodeExecutionCallArguments> = arguments
+    @JsonProperty("arguments") @ExcludeMissing fun _arguments(): JsonField<Arguments> = arguments
 
     /**
      * Returns the raw JSON value of [signature].
@@ -127,7 +127,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [CodeExecutionCallContent].
+         * Returns a mutable builder for constructing an instance of [UrlContextCallStep].
          *
          * The following fields are required:
          * ```java
@@ -138,22 +138,22 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [CodeExecutionCallContent]. */
+    /** A builder for [UrlContextCallStep]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var arguments: JsonField<CodeExecutionCallArguments>? = null
-        private var type: JsonValue = JsonValue.from("code_execution_call")
+        private var arguments: JsonField<Arguments>? = null
+        private var type: JsonValue = JsonValue.from("url_context_call")
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(codeExecutionCallContent: CodeExecutionCallContent) = apply {
-            id = codeExecutionCallContent.id
-            arguments = codeExecutionCallContent.arguments
-            type = codeExecutionCallContent.type
-            signature = codeExecutionCallContent.signature
-            additionalProperties = codeExecutionCallContent.additionalProperties.toMutableMap()
+        internal fun from(urlContextCallStep: UrlContextCallStep) = apply {
+            id = urlContextCallStep.id
+            arguments = urlContextCallStep.arguments
+            type = urlContextCallStep.type
+            signature = urlContextCallStep.signature
+            additionalProperties = urlContextCallStep.additionalProperties.toMutableMap()
         }
 
         /** Required. A unique ID for this specific tool call. */
@@ -167,19 +167,17 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** Required. The arguments to pass to the code execution. */
-        fun arguments(arguments: CodeExecutionCallArguments) = arguments(JsonField.of(arguments))
+        /** Required. The arguments to pass to the URL context. */
+        fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
 
         /**
          * Sets [Builder.arguments] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.arguments] with a well-typed
-         * [CodeExecutionCallArguments] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
+         * You should usually call [Builder.arguments] with a well-typed [Arguments] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
-        fun arguments(arguments: JsonField<CodeExecutionCallArguments>) = apply {
-            this.arguments = arguments
-        }
+        fun arguments(arguments: JsonField<Arguments>) = apply { this.arguments = arguments }
 
         /**
          * Sets the field to an arbitrary JSON value.
@@ -187,7 +185,7 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("code_execution_call")
+         * JsonValue.from("url_context_call")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -227,7 +225,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [CodeExecutionCallContent].
+         * Returns an immutable instance of [UrlContextCallStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -239,8 +237,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): CodeExecutionCallContent =
-            CodeExecutionCallContent(
+        fun build(): UrlContextCallStep =
+            UrlContextCallStep(
                 checkRequired("id", id),
                 checkRequired("arguments", arguments),
                 type,
@@ -251,7 +249,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): CodeExecutionCallContent = apply {
+    fun validate(): UrlContextCallStep = apply {
         if (validated) {
             return@apply
         }
@@ -259,7 +257,7 @@ private constructor(
         id()
         arguments().validate()
         _type().let {
-            if (it != JsonValue.from("code_execution_call")) {
+            if (it != JsonValue.from("url_context_call")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
@@ -284,15 +282,173 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (arguments.asKnown().getOrNull()?.validity() ?: 0) +
-            type.let { if (it == JsonValue.from("code_execution_call")) 1 else 0 } +
+            type.let { if (it == JsonValue.from("url_context_call")) 1 else 0 } +
             (if (signature.asKnown().isPresent) 1 else 0)
+
+    /** Required. The arguments to pass to the URL context. */
+    class Arguments
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val urls: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("urls") @ExcludeMissing urls: JsonField<List<String>> = JsonMissing.of()
+        ) : this(urls, mutableMapOf())
+
+        /**
+         * The URLs to fetch.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun urls(): Optional<List<String>> = urls.getOptional("urls")
+
+        /**
+         * Returns the raw JSON value of [urls].
+         *
+         * Unlike [urls], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("urls") @ExcludeMissing fun _urls(): JsonField<List<String>> = urls
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Arguments]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Arguments]. */
+        class Builder internal constructor() {
+
+            private var urls: JsonField<MutableList<String>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(arguments: Arguments) = apply {
+                urls = arguments.urls.map { it.toMutableList() }
+                additionalProperties = arguments.additionalProperties.toMutableMap()
+            }
+
+            /** The URLs to fetch. */
+            fun urls(urls: List<String>) = urls(JsonField.of(urls))
+
+            /**
+             * Sets [Builder.urls] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.urls] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun urls(urls: JsonField<List<String>>) = apply {
+                this.urls = urls.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [urls].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addUrl(url: String) = apply {
+                urls =
+                    (urls ?: JsonField.of(mutableListOf())).also { checkKnown("urls", it).add(url) }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Arguments].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Arguments =
+                Arguments(
+                    (urls ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Arguments = apply {
+            if (validated) {
+                return@apply
+            }
+
+            urls()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = (urls.asKnown().getOrNull()?.size ?: 0)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Arguments &&
+                urls == other.urls &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(urls, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Arguments{urls=$urls, additionalProperties=$additionalProperties}"
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return other is CodeExecutionCallContent &&
+        return other is UrlContextCallStep &&
             id == other.id &&
             arguments == other.arguments &&
             type == other.type &&
@@ -307,5 +463,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CodeExecutionCallContent{id=$id, arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        "UrlContextCallStep{id=$id, arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
 }

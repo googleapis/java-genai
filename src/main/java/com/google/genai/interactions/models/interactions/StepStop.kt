@@ -32,63 +32,60 @@ import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-/** File Search content. */
-class FileSearchCallContent
+class StepStop
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val id: JsonField<String>,
-    private val type: JsonValue,
-    private val signature: JsonField<String>,
+    private val eventType: JsonValue,
+    private val index: JsonField<Int>,
+    private val eventId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(id, type, signature, mutableMapOf())
-
-    /**
-     * Required. A unique ID for this specific tool call.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun id(): String = id.getRequired("id")
+        @JsonProperty("event_type") @ExcludeMissing eventType: JsonValue = JsonMissing.of(),
+        @JsonProperty("index") @ExcludeMissing index: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("event_id") @ExcludeMissing eventId: JsonField<String> = JsonMissing.of(),
+    ) : this(eventType, index, eventId, mutableMapOf())
 
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("file_search_call")
+     * JsonValue.from("step.stop")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
      * with an unexpected value).
      */
-    @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+    @JsonProperty("event_type") @ExcludeMissing fun _eventType(): JsonValue = eventType
 
     /**
-     * A signature hash for backend validation.
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun index(): Int = index.getRequired("index")
+
+    /**
+     * The event_id token to be used to resume the interaction stream, from this event.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun signature(): Optional<String> = signature.getOptional("signature")
+    fun eventId(): Optional<String> = eventId.getOptional("event_id")
 
     /**
-     * Returns the raw JSON value of [id].
+     * Returns the raw JSON value of [index].
      *
-     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [index], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("index") @ExcludeMissing fun _index(): JsonField<Int> = index
 
     /**
-     * Returns the raw JSON value of [signature].
+     * Returns the raw JSON value of [eventId].
      *
-     * Unlike [signature], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [eventId], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("signature") @ExcludeMissing fun _signature(): JsonField<String> = signature
+    @JsonProperty("event_id") @ExcludeMissing fun _eventId(): JsonField<String> = eventId
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -105,42 +102,31 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [FileSearchCallContent].
+         * Returns a mutable builder for constructing an instance of [StepStop].
          *
          * The following fields are required:
          * ```java
-         * .id()
+         * .index()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [FileSearchCallContent]. */
+    /** A builder for [StepStop]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String>? = null
-        private var type: JsonValue = JsonValue.from("file_search_call")
-        private var signature: JsonField<String> = JsonMissing.of()
+        private var eventType: JsonValue = JsonValue.from("step.stop")
+        private var index: JsonField<Int>? = null
+        private var eventId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(fileSearchCallContent: FileSearchCallContent) = apply {
-            id = fileSearchCallContent.id
-            type = fileSearchCallContent.type
-            signature = fileSearchCallContent.signature
-            additionalProperties = fileSearchCallContent.additionalProperties.toMutableMap()
+        internal fun from(stepStop: StepStop) = apply {
+            eventType = stepStop.eventType
+            index = stepStop.index
+            eventId = stepStop.eventId
+            additionalProperties = stepStop.additionalProperties.toMutableMap()
         }
-
-        /** Required. A unique ID for this specific tool call. */
-        fun id(id: String) = id(JsonField.of(id))
-
-        /**
-         * Sets [Builder.id] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.id] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
          * Sets the field to an arbitrary JSON value.
@@ -148,25 +134,34 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("file_search_call")
+         * JsonValue.from("step.stop")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun type(type: JsonValue) = apply { this.type = type }
+        fun eventType(eventType: JsonValue) = apply { this.eventType = eventType }
 
-        /** A signature hash for backend validation. */
-        fun signature(signature: String) = signature(JsonField.of(signature))
+        fun index(index: Int) = index(JsonField.of(index))
 
         /**
-         * Sets [Builder.signature] to an arbitrary JSON value.
+         * Sets [Builder.index] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.signature] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.index] with a well-typed [Int] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+        fun index(index: JsonField<Int>) = apply { this.index = index }
+
+        /** The event_id token to be used to resume the interaction stream, from this event. */
+        fun eventId(eventId: String) = eventId(JsonField.of(eventId))
+
+        /**
+         * Sets [Builder.eventId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun eventId(eventId: JsonField<String>) = apply { this.eventId = eventId }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -188,40 +183,40 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [FileSearchCallContent].
+         * Returns an immutable instance of [StepStop].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```java
-         * .id()
+         * .index()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): FileSearchCallContent =
-            FileSearchCallContent(
-                checkRequired("id", id),
-                type,
-                signature,
+        fun build(): StepStop =
+            StepStop(
+                eventType,
+                checkRequired("index", index),
+                eventId,
                 additionalProperties.toMutableMap(),
             )
     }
 
     private var validated: Boolean = false
 
-    fun validate(): FileSearchCallContent = apply {
+    fun validate(): StepStop = apply {
         if (validated) {
             return@apply
         }
 
-        id()
-        _type().let {
-            if (it != JsonValue.from("file_search_call")) {
-                throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
+        _eventType().let {
+            if (it != JsonValue.from("step.stop")) {
+                throw GeminiNextGenApiInvalidDataException("'eventType' is invalid, received $it")
             }
         }
-        signature()
+        index()
+        eventId()
         validated = true
     }
 
@@ -240,26 +235,28 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (id.asKnown().isPresent) 1 else 0) +
-            type.let { if (it == JsonValue.from("file_search_call")) 1 else 0 } +
-            (if (signature.asKnown().isPresent) 1 else 0)
+        eventType.let { if (it == JsonValue.from("step.stop")) 1 else 0 } +
+            (if (index.asKnown().isPresent) 1 else 0) +
+            (if (eventId.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return other is FileSearchCallContent &&
-            id == other.id &&
-            type == other.type &&
-            signature == other.signature &&
+        return other is StepStop &&
+            eventType == other.eventType &&
+            index == other.index &&
+            eventId == other.eventId &&
             additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy { Objects.hash(id, type, signature, additionalProperties) }
+    private val hashCode: Int by lazy {
+        Objects.hash(eventType, index, eventId, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FileSearchCallContent{id=$id, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        "StepStop{eventType=$eventType, index=$index, eventId=$eventId, additionalProperties=$additionalProperties}"
 }

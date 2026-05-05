@@ -22,10 +22,12 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.genai.interactions.core.Enum
 import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
+import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
 import com.google.genai.interactions.core.toImmutable
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
@@ -34,15 +36,14 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** MCPServer tool call content. */
-class McpServerToolCallContent
+/** Google Search call step. */
+class GoogleSearchCallStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val arguments: JsonField<Arguments>,
-    private val name: JsonField<String>,
-    private val serverName: JsonField<String>,
     private val type: JsonValue,
+    private val searchType: JsonField<SearchType>,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -53,13 +54,12 @@ private constructor(
         @JsonProperty("arguments")
         @ExcludeMissing
         arguments: JsonField<Arguments> = JsonMissing.of(),
-        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("server_name")
-        @ExcludeMissing
-        serverName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+        @JsonProperty("search_type")
+        @ExcludeMissing
+        searchType: JsonField<SearchType> = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(id, arguments, name, serverName, type, signature, mutableMapOf())
+    ) : this(id, arguments, type, searchType, signature, mutableMapOf())
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -70,7 +70,7 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * Required. The JSON object of arguments for the function.
+     * Required. The arguments to pass to Google Search.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -78,31 +78,23 @@ private constructor(
     fun arguments(): Arguments = arguments.getRequired("arguments")
 
     /**
-     * Required. The name of the tool which was called.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun name(): String = name.getRequired("name")
-
-    /**
-     * Required. The name of the used MCP server.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun serverName(): String = serverName.getRequired("server_name")
-
-    /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("mcp_server_tool_call")
+     * JsonValue.from("google_search_call")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
      * with an unexpected value).
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+    /**
+     * The type of search grounding enabled.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun searchType(): Optional<SearchType> = searchType.getOptional("search_type")
 
     /**
      * A signature hash for backend validation.
@@ -127,18 +119,13 @@ private constructor(
     @JsonProperty("arguments") @ExcludeMissing fun _arguments(): JsonField<Arguments> = arguments
 
     /**
-     * Returns the raw JSON value of [name].
+     * Returns the raw JSON value of [searchType].
      *
-     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [searchType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-    /**
-     * Returns the raw JSON value of [serverName].
-     *
-     * Unlike [serverName], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("server_name") @ExcludeMissing fun _serverName(): JsonField<String> = serverName
+    @JsonProperty("search_type")
+    @ExcludeMissing
+    fun _searchType(): JsonField<SearchType> = searchType
 
     /**
      * Returns the raw JSON value of [signature].
@@ -162,39 +149,35 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [McpServerToolCallContent].
+         * Returns a mutable builder for constructing an instance of [GoogleSearchCallStep].
          *
          * The following fields are required:
          * ```java
          * .id()
          * .arguments()
-         * .name()
-         * .serverName()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [McpServerToolCallContent]. */
+    /** A builder for [GoogleSearchCallStep]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var arguments: JsonField<Arguments>? = null
-        private var name: JsonField<String>? = null
-        private var serverName: JsonField<String>? = null
-        private var type: JsonValue = JsonValue.from("mcp_server_tool_call")
+        private var type: JsonValue = JsonValue.from("google_search_call")
+        private var searchType: JsonField<SearchType> = JsonMissing.of()
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(mcpServerToolCallContent: McpServerToolCallContent) = apply {
-            id = mcpServerToolCallContent.id
-            arguments = mcpServerToolCallContent.arguments
-            name = mcpServerToolCallContent.name
-            serverName = mcpServerToolCallContent.serverName
-            type = mcpServerToolCallContent.type
-            signature = mcpServerToolCallContent.signature
-            additionalProperties = mcpServerToolCallContent.additionalProperties.toMutableMap()
+        internal fun from(googleSearchCallStep: GoogleSearchCallStep) = apply {
+            id = googleSearchCallStep.id
+            arguments = googleSearchCallStep.arguments
+            type = googleSearchCallStep.type
+            searchType = googleSearchCallStep.searchType
+            signature = googleSearchCallStep.signature
+            additionalProperties = googleSearchCallStep.additionalProperties.toMutableMap()
         }
 
         /** Required. A unique ID for this specific tool call. */
@@ -208,7 +191,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** Required. The JSON object of arguments for the function. */
+        /** Required. The arguments to pass to Google Search. */
         fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
 
         /**
@@ -220,42 +203,31 @@ private constructor(
          */
         fun arguments(arguments: JsonField<Arguments>) = apply { this.arguments = arguments }
 
-        /** Required. The name of the tool which was called. */
-        fun name(name: String) = name(JsonField.of(name))
-
-        /**
-         * Sets [Builder.name] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.name] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun name(name: JsonField<String>) = apply { this.name = name }
-
-        /** Required. The name of the used MCP server. */
-        fun serverName(serverName: String) = serverName(JsonField.of(serverName))
-
-        /**
-         * Sets [Builder.serverName] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.serverName] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun serverName(serverName: JsonField<String>) = apply { this.serverName = serverName }
-
         /**
          * Sets the field to an arbitrary JSON value.
          *
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("mcp_server_tool_call")
+         * JsonValue.from("google_search_call")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
         fun type(type: JsonValue) = apply { this.type = type }
+
+        /** The type of search grounding enabled. */
+        fun searchType(searchType: SearchType) = searchType(JsonField.of(searchType))
+
+        /**
+         * Sets [Builder.searchType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.searchType] with a well-typed [SearchType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun searchType(searchType: JsonField<SearchType>) = apply { this.searchType = searchType }
 
         /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
@@ -289,7 +261,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [McpServerToolCallContent].
+         * Returns an immutable instance of [GoogleSearchCallStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -297,19 +269,16 @@ private constructor(
          * ```java
          * .id()
          * .arguments()
-         * .name()
-         * .serverName()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): McpServerToolCallContent =
-            McpServerToolCallContent(
+        fun build(): GoogleSearchCallStep =
+            GoogleSearchCallStep(
                 checkRequired("id", id),
                 checkRequired("arguments", arguments),
-                checkRequired("name", name),
-                checkRequired("serverName", serverName),
                 type,
+                searchType,
                 signature,
                 additionalProperties.toMutableMap(),
             )
@@ -317,20 +286,19 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): McpServerToolCallContent = apply {
+    fun validate(): GoogleSearchCallStep = apply {
         if (validated) {
             return@apply
         }
 
         id()
         arguments().validate()
-        name()
-        serverName()
         _type().let {
-            if (it != JsonValue.from("mcp_server_tool_call")) {
+            if (it != JsonValue.from("google_search_call")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
+        searchType().ifPresent { it.validate() }
         signature()
         validated = true
     }
@@ -352,22 +320,49 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (arguments.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (name.asKnown().isPresent) 1 else 0) +
-            (if (serverName.asKnown().isPresent) 1 else 0) +
-            type.let { if (it == JsonValue.from("mcp_server_tool_call")) 1 else 0 } +
+            type.let { if (it == JsonValue.from("google_search_call")) 1 else 0 } +
+            (searchType.asKnown().getOrNull()?.validity() ?: 0) +
             (if (signature.asKnown().isPresent) 1 else 0)
 
-    /** Required. The JSON object of arguments for the function. */
+    /** Required. The arguments to pass to Google Search. */
     class Arguments
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val queries: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("queries")
+            @ExcludeMissing
+            queries: JsonField<List<String>> = JsonMissing.of()
+        ) : this(queries, mutableMapOf())
+
+        /**
+         * Web search queries for the following-up web search.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun queries(): Optional<List<String>> = queries.getOptional("queries")
+
+        /**
+         * Returns the raw JSON value of [queries].
+         *
+         * Unlike [queries], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("queries") @ExcludeMissing fun _queries(): JsonField<List<String>> = queries
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -380,11 +375,39 @@ private constructor(
         /** A builder for [Arguments]. */
         class Builder internal constructor() {
 
+            private var queries: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(arguments: Arguments) = apply {
+                queries = arguments.queries.map { it.toMutableList() }
                 additionalProperties = arguments.additionalProperties.toMutableMap()
+            }
+
+            /** Web search queries for the following-up web search. */
+            fun queries(queries: List<String>) = queries(JsonField.of(queries))
+
+            /**
+             * Sets [Builder.queries] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.queries] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun queries(queries: JsonField<List<String>>) = apply {
+                this.queries = queries.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [queries].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addQuery(query: String) = apply {
+                queries =
+                    (queries ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("queries", it).add(query)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -411,7 +434,11 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Arguments = Arguments(additionalProperties.toImmutable())
+            fun build(): Arguments =
+                Arguments(
+                    (queries ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -421,6 +448,7 @@ private constructor(
                 return@apply
             }
 
+            queries()
             validated = true
         }
 
@@ -438,23 +466,160 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+        @JvmSynthetic internal fun validity(): Int = (queries.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return other is Arguments && additionalProperties == other.additionalProperties
+            return other is Arguments &&
+                queries == other.queries &&
+                additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(queries, additionalProperties) }
 
         override fun hashCode(): Int = hashCode
 
-        override fun toString() = "Arguments{additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Arguments{queries=$queries, additionalProperties=$additionalProperties}"
+    }
+
+    /** The type of search grounding enabled. */
+    class SearchType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val WEB_SEARCH = of("web_search")
+
+            @JvmField val IMAGE_SEARCH = of("image_search")
+
+            @JvmField val ENTERPRISE_WEB_SEARCH = of("enterprise_web_search")
+
+            @JvmStatic fun of(value: String) = SearchType(JsonField.of(value))
+        }
+
+        /** An enum containing [SearchType]'s known values. */
+        enum class Known {
+            WEB_SEARCH,
+            IMAGE_SEARCH,
+            ENTERPRISE_WEB_SEARCH,
+        }
+
+        /**
+         * An enum containing [SearchType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [SearchType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            WEB_SEARCH,
+            IMAGE_SEARCH,
+            ENTERPRISE_WEB_SEARCH,
+            /**
+             * An enum member indicating that [SearchType] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                WEB_SEARCH -> Value.WEB_SEARCH
+                IMAGE_SEARCH -> Value.IMAGE_SEARCH
+                ENTERPRISE_WEB_SEARCH -> Value.ENTERPRISE_WEB_SEARCH
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if this class instance's value is a not a
+         *   known member.
+         */
+        fun known(): Known =
+            when (this) {
+                WEB_SEARCH -> Known.WEB_SEARCH
+                IMAGE_SEARCH -> Known.IMAGE_SEARCH
+                ENTERPRISE_WEB_SEARCH -> Known.ENTERPRISE_WEB_SEARCH
+                else -> throw GeminiNextGenApiInvalidDataException("Unknown SearchType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if this class instance's value does not have
+         *   the expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow {
+                GeminiNextGenApiInvalidDataException("Value is not a String")
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): SearchType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is SearchType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -462,22 +627,21 @@ private constructor(
             return true
         }
 
-        return other is McpServerToolCallContent &&
+        return other is GoogleSearchCallStep &&
             id == other.id &&
             arguments == other.arguments &&
-            name == other.name &&
-            serverName == other.serverName &&
             type == other.type &&
+            searchType == other.searchType &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, arguments, name, serverName, type, signature, additionalProperties)
+        Objects.hash(id, arguments, type, searchType, signature, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "McpServerToolCallContent{id=$id, arguments=$arguments, name=$name, serverName=$serverName, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        "GoogleSearchCallStep{id=$id, arguments=$arguments, type=$type, searchType=$searchType, signature=$signature, additionalProperties=$additionalProperties}"
 }

@@ -46,12 +46,14 @@ import com.google.genai.interactions.core.JsonValue;
 import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Function;
-import com.google.genai.interactions.models.interactions.FunctionCallContent;
-import com.google.genai.interactions.models.interactions.FunctionResultContent;
+import com.google.genai.interactions.models.interactions.FunctionCallStep;
+import com.google.genai.interactions.models.interactions.FunctionResultStep;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
+import com.google.genai.interactions.models.interactions.Step;
+import com.google.genai.interactions.models.interactions.TextContent;
 import com.google.genai.interactions.models.interactions.Tool;
-import com.google.genai.interactions.models.interactions.Turn;
+import com.google.genai.interactions.models.interactions.UserInputStep;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -110,20 +112,25 @@ public final class InteractionFunctionCallingClientState {
             .build();
 
     // 2. Initialize conversation history
-    List<Turn> conversationHistory = new ArrayList<>();
+    List<Step> conversationHistory = new ArrayList<>();
     conversationHistory.add(
-        Turn.builder()
-            .role("user")
-            .content(
-                "Schedule a meeting for 2025-11-01 at 10 am with Peter and Amir about the Next Gen"
-                    + " API")
-            .build());
+        Step.ofUserInput(
+            UserInputStep.builder()
+                .content(
+                    List.of(
+                        Content.ofText(
+                            TextContent.builder()
+                                .text(
+                                    "Schedule a meeting for 2025-11-01 at 10 am with Peter and Amir"
+                                        + " about the Next Gen API")
+                                .build())))
+                .build()));
 
     // 3. First turn: Model decides to call the function
     CreateModelInteractionParams params =
         CreateModelInteractionParams.builder()
             .model(Model.GEMINI_2_5_FLASH)
-            .inputOfTurnList(conversationHistory)
+            .inputOfStepList(conversationHistory)
             .tools(Arrays.asList(Tool.ofFunction(function)))
             .build();
 
@@ -132,59 +139,76 @@ public final class InteractionFunctionCallingClientState {
     String functionCallId = null;
     String functionName = null;
 
-    List<Content> outputs = response.outputs().orElse(null);
-    if (outputs != null) {
-      for (Content output : outputs) {
-        if (output.isFunctionCall()) {
-          FunctionCallContent functionCall = output.asFunctionCall();
+    List<Step> steps = response.steps().orElse(null);
+    if (steps != null) {
+      for (Step step : steps) {
+        if (step.isFunctionCall()) {
+          FunctionCallStep functionCall = step.asFunctionCall();
           functionCallId = functionCall.id();
           functionName = functionCall.name();
           System.out.println("Model requested function call: " + functionName);
           System.out.println("Arguments: " + functionCall.arguments());
-        } else if (output.text().isPresent()) {
-          System.out.println("Output Text: " + output.text().get().text());
+        } else if (step.isModelOutput()) {
+          step.asModelOutput()
+              .content()
+              .ifPresent(
+                  contents -> {
+                    for (Content output : contents) {
+                      output
+                          .text()
+                          .ifPresent(text -> System.out.println("Output Text: " + text.text()));
+                    }
+                  });
         }
       }
 
       // Add model response back to history
-      conversationHistory.add(Turn.builder().role("model").contentOfContentList(outputs).build());
+      for (Step step : steps) {
+        conversationHistory.add(step);
+      }
     }
 
     // 4. Second turn: Send the function result back to the model
     if (functionCallId != null) {
       System.out.println("Sending function result back...");
 
-      FunctionResultContent functionResult =
-          FunctionResultContent.builder()
+      FunctionResultStep functionResult =
+          FunctionResultStep.builder()
               .callId(functionCallId)
               .name(functionName)
-              .result("Meeting scheduled successfully.")
+              .result(FunctionResultStep.Result.ofString("Meeting scheduled successfully."))
               .build();
 
-      // Create a turn with function result
-      conversationHistory.add(
-          Turn.builder()
-              .role("user")
-              .contentOfContentList(Arrays.asList(Content.ofFunctionResult(functionResult)))
-              .build());
+      // Create a step with function result
+      conversationHistory.add(Step.ofFunctionResult(functionResult));
 
       CreateModelInteractionParams followUpParams =
           CreateModelInteractionParams.builder()
               .model(Model.GEMINI_2_5_FLASH)
-              .inputOfTurnList(conversationHistory)
+              .inputOfStepList(conversationHistory)
               .build();
 
       Interaction followUpResponse = client.interactions.create(followUpParams);
 
       System.out.println("Final response status: " + followUpResponse.status());
       followUpResponse
-          .outputs()
+          .steps()
           .ifPresent(
-              finalOutputs -> {
-                for (Content output : finalOutputs) {
-                  output
-                      .text()
-                      .ifPresent(text -> System.out.println("Final Output: " + text.text()));
+              finalSteps -> {
+                for (Step step : finalSteps) {
+                  if (step.isModelOutput()) {
+                    step.asModelOutput()
+                        .content()
+                        .ifPresent(
+                            contents -> {
+                              for (Content output : contents) {
+                                output
+                                    .text()
+                                    .ifPresent(
+                                        text -> System.out.println("Final Output: " + text.text()));
+                              }
+                            });
+                  }
                 }
               });
     } else {

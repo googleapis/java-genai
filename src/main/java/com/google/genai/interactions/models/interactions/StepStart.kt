@@ -33,36 +33,28 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class ContentStart
+class StepStart
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val content: JsonField<Content>,
     private val eventType: JsonValue,
     private val index: JsonField<Int>,
+    private val step: JsonField<Step>,
     private val eventId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("content") @ExcludeMissing content: JsonField<Content> = JsonMissing.of(),
         @JsonProperty("event_type") @ExcludeMissing eventType: JsonValue = JsonMissing.of(),
         @JsonProperty("index") @ExcludeMissing index: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("step") @ExcludeMissing step: JsonField<Step> = JsonMissing.of(),
         @JsonProperty("event_id") @ExcludeMissing eventId: JsonField<String> = JsonMissing.of(),
-    ) : this(content, eventType, index, eventId, mutableMapOf())
-
-    /**
-     * The content of the response.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun content(): Content = content.getRequired("content")
+    ) : this(eventType, index, step, eventId, mutableMapOf())
 
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("content.start")
+     * JsonValue.from("step.start")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -77,6 +69,14 @@ private constructor(
     fun index(): Int = index.getRequired("index")
 
     /**
+     * A step in the interaction.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun step(): Step = step.getRequired("step")
+
+    /**
      * The event_id token to be used to resume the interaction stream, from this event.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -85,18 +85,18 @@ private constructor(
     fun eventId(): Optional<String> = eventId.getOptional("event_id")
 
     /**
-     * Returns the raw JSON value of [content].
-     *
-     * Unlike [content], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("content") @ExcludeMissing fun _content(): JsonField<Content> = content
-
-    /**
      * Returns the raw JSON value of [index].
      *
      * Unlike [index], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("index") @ExcludeMissing fun _index(): JsonField<Int> = index
+
+    /**
+     * Returns the raw JSON value of [step].
+     *
+     * Unlike [step], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("step") @ExcludeMissing fun _step(): JsonField<Step> = step
 
     /**
      * Returns the raw JSON value of [eventId].
@@ -120,70 +120,34 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [ContentStart].
+         * Returns a mutable builder for constructing an instance of [StepStart].
          *
          * The following fields are required:
          * ```java
-         * .content()
          * .index()
+         * .step()
          * ```
          */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [ContentStart]. */
+    /** A builder for [StepStart]. */
     class Builder internal constructor() {
 
-        private var content: JsonField<Content>? = null
-        private var eventType: JsonValue = JsonValue.from("content.start")
+        private var eventType: JsonValue = JsonValue.from("step.start")
         private var index: JsonField<Int>? = null
+        private var step: JsonField<Step>? = null
         private var eventId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(contentStart: ContentStart) = apply {
-            content = contentStart.content
-            eventType = contentStart.eventType
-            index = contentStart.index
-            eventId = contentStart.eventId
-            additionalProperties = contentStart.additionalProperties.toMutableMap()
+        internal fun from(stepStart: StepStart) = apply {
+            eventType = stepStart.eventType
+            index = stepStart.index
+            step = stepStart.step
+            eventId = stepStart.eventId
+            additionalProperties = stepStart.additionalProperties.toMutableMap()
         }
-
-        /** The content of the response. */
-        fun content(content: Content) = content(JsonField.of(content))
-
-        /**
-         * Sets [Builder.content] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.content] with a well-typed [Content] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun content(content: JsonField<Content>) = apply { this.content = content }
-
-        /** Alias for calling [content] with `Content.ofText(text)`. */
-        fun content(text: TextContent) = content(Content.ofText(text))
-
-        /**
-         * Alias for calling [content] with the following:
-         * ```java
-         * TextContent.builder()
-         *     .text(text)
-         *     .build()
-         * ```
-         */
-        fun textContent(text: String) = content(TextContent.builder().text(text).build())
-
-        /** Alias for calling [content] with `Content.ofImage(image)`. */
-        fun content(image: ImageContent) = content(Content.ofImage(image))
-
-        /** Alias for calling [content] with `Content.ofAudio(audio)`. */
-        fun content(audio: AudioContent) = content(Content.ofAudio(audio))
-
-        /** Alias for calling [content] with `Content.ofDocument(document)`. */
-        fun content(document: DocumentContent) = content(Content.ofDocument(document))
-
-        /** Alias for calling [content] with `Content.ofVideo(video)`. */
-        fun content(video: VideoContent) = content(Content.ofVideo(video))
 
         /**
          * Sets the field to an arbitrary JSON value.
@@ -191,7 +155,7 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("content.start")
+         * JsonValue.from("step.start")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -208,6 +172,108 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun index(index: JsonField<Int>) = apply { this.index = index }
+
+        /** A step in the interaction. */
+        fun step(step: Step) = step(JsonField.of(step))
+
+        /**
+         * Sets [Builder.step] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.step] with a well-typed [Step] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun step(step: JsonField<Step>) = apply { this.step = step }
+
+        /** Alias for calling [step] with `Step.ofUserInput(userInput)`. */
+        fun step(userInput: UserInputStep) = step(Step.ofUserInput(userInput))
+
+        /** Alias for calling [step] with `Step.ofModelOutput(modelOutput)`. */
+        fun step(modelOutput: ModelOutputStep) = step(Step.ofModelOutput(modelOutput))
+
+        /** Alias for calling [step] with `Step.ofThought(thought)`. */
+        fun step(thought: ThoughtStep) = step(Step.ofThought(thought))
+
+        /** Alias for calling [step] with `Step.ofFunctionCall(functionCall)`. */
+        fun step(functionCall: FunctionCallStep) = step(Step.ofFunctionCall(functionCall))
+
+        /** Alias for calling [step] with `Step.ofCodeExecutionCall(codeExecutionCall)`. */
+        fun step(codeExecutionCall: CodeExecutionCallStep) =
+            step(Step.ofCodeExecutionCall(codeExecutionCall))
+
+        /** Alias for calling [step] with `Step.ofUrlContextCall(urlContextCall)`. */
+        fun step(urlContextCall: UrlContextCallStep) = step(Step.ofUrlContextCall(urlContextCall))
+
+        /** Alias for calling [step] with `Step.ofMcpServerToolCall(mcpServerToolCall)`. */
+        fun step(mcpServerToolCall: McpServerToolCallStep) =
+            step(Step.ofMcpServerToolCall(mcpServerToolCall))
+
+        /** Alias for calling [step] with `Step.ofGoogleSearchCall(googleSearchCall)`. */
+        fun step(googleSearchCall: GoogleSearchCallStep) =
+            step(Step.ofGoogleSearchCall(googleSearchCall))
+
+        /** Alias for calling [step] with `Step.ofFileSearchCall(fileSearchCall)`. */
+        fun step(fileSearchCall: FileSearchCallStep) = step(Step.ofFileSearchCall(fileSearchCall))
+
+        /**
+         * Alias for calling [step] with the following:
+         * ```java
+         * FileSearchCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun fileSearchCallStep(id: String) = step(FileSearchCallStep.builder().id(id).build())
+
+        /** Alias for calling [step] with `Step.ofGoogleMapsCall(googleMapsCall)`. */
+        fun step(googleMapsCall: GoogleMapsCallStep) = step(Step.ofGoogleMapsCall(googleMapsCall))
+
+        /**
+         * Alias for calling [step] with the following:
+         * ```java
+         * GoogleMapsCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun googleMapsCallStep(id: String) = step(GoogleMapsCallStep.builder().id(id).build())
+
+        /** Alias for calling [step] with `Step.ofFunctionResult(functionResult)`. */
+        fun step(functionResult: FunctionResultStep) = step(Step.ofFunctionResult(functionResult))
+
+        /** Alias for calling [step] with `Step.ofCodeExecutionResult(codeExecutionResult)`. */
+        fun step(codeExecutionResult: CodeExecutionResultStep) =
+            step(Step.ofCodeExecutionResult(codeExecutionResult))
+
+        /** Alias for calling [step] with `Step.ofUrlContextResult(urlContextResult)`. */
+        fun step(urlContextResult: UrlContextResultStep) =
+            step(Step.ofUrlContextResult(urlContextResult))
+
+        /** Alias for calling [step] with `Step.ofGoogleSearchResult(googleSearchResult)`. */
+        fun step(googleSearchResult: GoogleSearchResultStep) =
+            step(Step.ofGoogleSearchResult(googleSearchResult))
+
+        /** Alias for calling [step] with `Step.ofMcpServerToolResult(mcpServerToolResult)`. */
+        fun step(mcpServerToolResult: McpServerToolResultStep) =
+            step(Step.ofMcpServerToolResult(mcpServerToolResult))
+
+        /** Alias for calling [step] with `Step.ofFileSearchResult(fileSearchResult)`. */
+        fun step(fileSearchResult: FileSearchResultStep) =
+            step(Step.ofFileSearchResult(fileSearchResult))
+
+        /**
+         * Alias for calling [step] with the following:
+         * ```java
+         * FileSearchResultStep.builder()
+         *     .callId(callId)
+         *     .build()
+         * ```
+         */
+        fun fileSearchResultStep(callId: String) =
+            step(FileSearchResultStep.builder().callId(callId).build())
+
+        /** Alias for calling [step] with `Step.ofGoogleMapsResult(googleMapsResult)`. */
+        fun step(googleMapsResult: GoogleMapsResultStep) =
+            step(Step.ofGoogleMapsResult(googleMapsResult))
 
         /** The event_id token to be used to resume the interaction stream, from this event. */
         fun eventId(eventId: String) = eventId(JsonField.of(eventId))
@@ -240,23 +306,23 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [ContentStart].
+         * Returns an immutable instance of [StepStart].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```java
-         * .content()
          * .index()
+         * .step()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): ContentStart =
-            ContentStart(
-                checkRequired("content", content),
+        fun build(): StepStart =
+            StepStart(
                 eventType,
                 checkRequired("index", index),
+                checkRequired("step", step),
                 eventId,
                 additionalProperties.toMutableMap(),
             )
@@ -264,18 +330,18 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): ContentStart = apply {
+    fun validate(): StepStart = apply {
         if (validated) {
             return@apply
         }
 
-        content().validate()
         _eventType().let {
-            if (it != JsonValue.from("content.start")) {
+            if (it != JsonValue.from("step.start")) {
                 throw GeminiNextGenApiInvalidDataException("'eventType' is invalid, received $it")
             }
         }
         index()
+        step().validate()
         eventId()
         validated = true
     }
@@ -295,9 +361,9 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (content.asKnown().getOrNull()?.validity() ?: 0) +
-            eventType.let { if (it == JsonValue.from("content.start")) 1 else 0 } +
+        eventType.let { if (it == JsonValue.from("step.start")) 1 else 0 } +
             (if (index.asKnown().isPresent) 1 else 0) +
+            (step.asKnown().getOrNull()?.validity() ?: 0) +
             (if (eventId.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
@@ -305,20 +371,20 @@ private constructor(
             return true
         }
 
-        return other is ContentStart &&
-            content == other.content &&
+        return other is StepStart &&
             eventType == other.eventType &&
             index == other.index &&
+            step == other.step &&
             eventId == other.eventId &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(content, eventType, index, eventId, additionalProperties)
+        Objects.hash(eventType, index, step, eventId, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ContentStart{content=$content, eventType=$eventType, index=$index, eventId=$eventId, additionalProperties=$additionalProperties}"
+        "StepStart{eventType=$eventType, index=$index, step=$step, eventId=$eventId, additionalProperties=$additionalProperties}"
 }

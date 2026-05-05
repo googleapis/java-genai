@@ -47,8 +47,10 @@ import com.google.genai.interactions.core.JsonValue;
 import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Function;
+import com.google.genai.interactions.models.interactions.FunctionCallStep;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.interactions.models.interactions.Tool;
 
 /** An example of using the Unified Gen AI Java SDK to perform tool calling with functions. */
@@ -122,19 +124,28 @@ public final class InteractionToolCallWithFunctions {
     System.out.println("Status: " + interaction.status());
 
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println("Output Text: " + text.text()));
-                output
-                    .functionCall()
-                    .ifPresent(
-                        fc -> {
-                          System.out.println("Function Call: " + fc.name());
-                          System.out.println(
-                              "Arguments: " + fc.arguments()._additionalProperties());
-                        });
+            steps -> {
+              for (Step step : steps) {
+                if (step.isFunctionCall()) {
+                  FunctionCallStep fc = step.asFunctionCall();
+                  System.out.println("Function Call: " + fc.name());
+                  System.out.println("Arguments: " + fc.arguments());
+                } else if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content output : contents) {
+                              output
+                                  .text()
+                                  .ifPresent(
+                                      text ->
+                                          System.out.println("Output Text: " + text.text()));
+                            }
+                          });
+                }
               }
             });
   }

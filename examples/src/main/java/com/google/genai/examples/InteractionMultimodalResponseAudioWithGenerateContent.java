@@ -49,6 +49,7 @@ import com.google.genai.interactions.models.interactions.GenerationConfig;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
 import com.google.genai.interactions.models.interactions.SpeechConfig;
+import com.google.genai.interactions.models.interactions.Step;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import java.util.Collections;
@@ -87,12 +88,12 @@ public final class InteractionMultimodalResponseAudioWithGenerateContent {
     System.out.println("Status: " + interaction.status());
 
     interaction
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (int i = 0; i < outputs.size(); i++) {
-                Content output = outputs.get(i);
-                System.out.println("Output " + (i + 1) + ": " + output);
+            steps -> {
+              for (int i = 0; i < steps.size(); i++) {
+                Step step = steps.get(i);
+                System.out.println("Step " + (i + 1) + ": " + step);
               }
             });
 

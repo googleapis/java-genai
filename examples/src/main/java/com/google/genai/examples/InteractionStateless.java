@@ -44,7 +44,10 @@ import com.google.genai.interactions.models.interactions.Content;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.Model;
-import com.google.genai.interactions.models.interactions.Turn;
+import com.google.genai.interactions.models.interactions.ModelOutputStep;
+import com.google.genai.interactions.models.interactions.Step;
+import com.google.genai.interactions.models.interactions.TextContent;
+import com.google.genai.interactions.models.interactions.UserInputStep;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,15 +66,23 @@ public final class InteractionStateless {
       System.out.println("Using Gemini Developer API");
     }
 
-    List<Turn> conversationHistory = new ArrayList<>();
+    List<Step> conversationHistory = new ArrayList<>();
     conversationHistory.add(
-        Turn.builder().content("What are the three largest cities in Spain?").role("user").build());
+        Step.ofUserInput(
+            UserInputStep.builder()
+                .content(
+                    List.of(
+                        Content.ofText(
+                            TextContent.builder()
+                                .text("What are the three largest cities in Spain?")
+                                .build())))
+                .build()));
 
     System.out.println("User: What are the three largest cities in Spain?");
 
     CreateModelInteractionParams params1 =
         CreateModelInteractionParams.builder()
-            .inputOfTurnList(conversationHistory)
+            .inputOfStepList(conversationHistory)
             .model(Model.GEMINI_2_5_FLASH)
             .store(false)
             .build();
@@ -80,35 +91,50 @@ public final class InteractionStateless {
 
     System.out.println("Model: ");
     response1
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println(text.text()));
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content output : contents) {
+                              output.text().ifPresent(text -> System.out.println(text.text()));
+                            }
+                          });
+                }
               }
             });
 
     // Add model response to history
     response1
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              conversationHistory.add(
-                  Turn.builder().contentOfContentList(outputs).role("model").build());
+            steps -> {
+              for (Step step : steps) {
+                conversationHistory.add(step);
+              }
             });
 
     // Add next user message
     conversationHistory.add(
-        Turn.builder()
-            .content("What is the most famous landmark in the second one?")
-            .role("user")
-            .build());
+        Step.ofUserInput(
+            UserInputStep.builder()
+                .content(
+                    List.of(
+                        Content.ofText(
+                            TextContent.builder()
+                                .text("What is the most famous landmark in the second one?")
+                                .build())))
+                .build()));
 
     System.out.println("\nUser: What is the most famous landmark in the second one?");
 
     CreateModelInteractionParams params2 =
         CreateModelInteractionParams.builder()
-            .inputOfTurnList(conversationHistory)
+            .inputOfStepList(conversationHistory)
             .model(Model.GEMINI_2_5_FLASH)
             .store(false)
             .build();
@@ -117,11 +143,20 @@ public final class InteractionStateless {
 
     System.out.println("Model: ");
     response2
-        .outputs()
+        .steps()
         .ifPresent(
-            outputs -> {
-              for (Content output : outputs) {
-                output.text().ifPresent(text -> System.out.println(text.text()));
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content output : contents) {
+                              output.text().ifPresent(text -> System.out.println(text.text()));
+                            }
+                          });
+                }
               }
             });
   }

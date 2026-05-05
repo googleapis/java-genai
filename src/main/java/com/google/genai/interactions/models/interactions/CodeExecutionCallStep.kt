@@ -1,0 +1,613 @@
+/*
+* Copyright 2025 Google LLC
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+// File generated from our OpenAPI spec by Stainless.
+
+package com.google.genai.interactions.models.interactions
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.genai.interactions.core.Enum
+import com.google.genai.interactions.core.ExcludeMissing
+import com.google.genai.interactions.core.JsonField
+import com.google.genai.interactions.core.JsonMissing
+import com.google.genai.interactions.core.JsonValue
+import com.google.genai.interactions.core.checkRequired
+import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
+import java.util.Collections
+import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
+
+/** Code execution call step. */
+class CodeExecutionCallStep
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
+private constructor(
+    private val id: JsonField<String>,
+    private val arguments: JsonField<Arguments>,
+    private val type: JsonValue,
+    private val signature: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
+) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("arguments")
+        @ExcludeMissing
+        arguments: JsonField<Arguments> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+        @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
+    ) : this(id, arguments, type, signature, mutableMapOf())
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun id(): String = id.getRequired("id")
+
+    /**
+     * Required. The arguments to pass to the code execution.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun arguments(): Arguments = arguments.getRequired("arguments")
+
+    /**
+     * Expected to always return the following:
+     * ```java
+     * JsonValue.from("code_execution_call")
+     * ```
+     *
+     * However, this method can be useful for debugging and logging (e.g. if the server responded
+     * with an unexpected value).
+     */
+    @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+    /**
+     * A signature hash for backend validation.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun signature(): Optional<String> = signature.getOptional("signature")
+
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+    /**
+     * Returns the raw JSON value of [arguments].
+     *
+     * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("arguments") @ExcludeMissing fun _arguments(): JsonField<Arguments> = arguments
+
+    /**
+     * Returns the raw JSON value of [signature].
+     *
+     * Unlike [signature], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("signature") @ExcludeMissing fun _signature(): JsonField<String> = signature
+
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
+    @JsonAnyGetter
+    @ExcludeMissing
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
+
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        /**
+         * Returns a mutable builder for constructing an instance of [CodeExecutionCallStep].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .arguments()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CodeExecutionCallStep]. */
+    class Builder internal constructor() {
+
+        private var id: JsonField<String>? = null
+        private var arguments: JsonField<Arguments>? = null
+        private var type: JsonValue = JsonValue.from("code_execution_call")
+        private var signature: JsonField<String> = JsonMissing.of()
+        private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+        @JvmSynthetic
+        internal fun from(codeExecutionCallStep: CodeExecutionCallStep) = apply {
+            id = codeExecutionCallStep.id
+            arguments = codeExecutionCallStep.arguments
+            type = codeExecutionCallStep.type
+            signature = codeExecutionCallStep.signature
+            additionalProperties = codeExecutionCallStep.additionalProperties.toMutableMap()
+        }
+
+        /** Required. A unique ID for this specific tool call. */
+        fun id(id: String) = id(JsonField.of(id))
+
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /** Required. The arguments to pass to the code execution. */
+        fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
+
+        /**
+         * Sets [Builder.arguments] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.arguments] with a well-typed [Arguments] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun arguments(arguments: JsonField<Arguments>) = apply { this.arguments = arguments }
+
+        /**
+         * Sets the field to an arbitrary JSON value.
+         *
+         * It is usually unnecessary to call this method because the field defaults to the
+         * following:
+         * ```java
+         * JsonValue.from("code_execution_call")
+         * ```
+         *
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun type(type: JsonValue) = apply { this.type = type }
+
+        /** A signature hash for backend validation. */
+        fun signature(signature: String) = signature(JsonField.of(signature))
+
+        /**
+         * Sets [Builder.signature] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.signature] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
+
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
+
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
+
+        /**
+         * Returns an immutable instance of [CodeExecutionCallStep].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .arguments()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CodeExecutionCallStep =
+            CodeExecutionCallStep(
+                checkRequired("id", id),
+                checkRequired("arguments", arguments),
+                type,
+                signature,
+                additionalProperties.toMutableMap(),
+            )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CodeExecutionCallStep = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        arguments().validate()
+        _type().let {
+            if (it != JsonValue.from("code_execution_call")) {
+                throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
+            }
+        }
+        signature()
+        validated = true
+    }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: GeminiNextGenApiInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+            type.let { if (it == JsonValue.from("code_execution_call")) 1 else 0 } +
+            (if (signature.asKnown().isPresent) 1 else 0)
+
+    /** Required. The arguments to pass to the code execution. */
+    class Arguments
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val code: JsonField<String>,
+        private val language: JsonField<Language>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("language")
+            @ExcludeMissing
+            language: JsonField<Language> = JsonMissing.of(),
+        ) : this(code, language, mutableMapOf())
+
+        /**
+         * The code to be executed.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun code(): Optional<String> = code.getOptional("code")
+
+        /**
+         * Programming language of the `code`.
+         *
+         * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+         *   (e.g. if the server responded with an unexpected value).
+         */
+        fun language(): Optional<Language> = language.getOptional("language")
+
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
+
+        /**
+         * Returns the raw JSON value of [language].
+         *
+         * Unlike [language], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("language") @ExcludeMissing fun _language(): JsonField<Language> = language
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Arguments]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Arguments]. */
+        class Builder internal constructor() {
+
+            private var code: JsonField<String> = JsonMissing.of()
+            private var language: JsonField<Language> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(arguments: Arguments) = apply {
+                code = arguments.code
+                language = arguments.language
+                additionalProperties = arguments.additionalProperties.toMutableMap()
+            }
+
+            /** The code to be executed. */
+            fun code(code: String) = code(JsonField.of(code))
+
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun code(code: JsonField<String>) = apply { this.code = code }
+
+            /** Programming language of the `code`. */
+            fun language(language: Language) = language(JsonField.of(language))
+
+            /**
+             * Sets [Builder.language] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.language] with a well-typed [Language] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun language(language: JsonField<Language>) = apply { this.language = language }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Arguments].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Arguments = Arguments(code, language, additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Arguments = apply {
+            if (validated) {
+                return@apply
+            }
+
+            code()
+            language().ifPresent { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (code.asKnown().isPresent) 1 else 0) +
+                (language.asKnown().getOrNull()?.validity() ?: 0)
+
+        /** Programming language of the `code`. */
+        class Language @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                @JvmField val PYTHON = of("python")
+
+                @JvmStatic fun of(value: String) = Language(JsonField.of(value))
+            }
+
+            /** An enum containing [Language]'s known values. */
+            enum class Known {
+                PYTHON
+            }
+
+            /**
+             * An enum containing [Language]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Language] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                PYTHON,
+                /**
+                 * An enum member indicating that [Language] was instantiated with an unknown value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    PYTHON -> Value.PYTHON
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if this class instance's value is a not
+             *   a known member.
+             */
+            fun known(): Known =
+                when (this) {
+                    PYTHON -> Known.PYTHON
+                    else -> throw GeminiNextGenApiInvalidDataException("Unknown Language: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if this class instance's value does not
+             *   have the expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString().orElseThrow {
+                    GeminiNextGenApiInvalidDataException("Value is not a String")
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): Language = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Language && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Arguments &&
+                code == other.code &&
+                language == other.language &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(code, language, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Arguments{code=$code, language=$language, additionalProperties=$additionalProperties}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is CodeExecutionCallStep &&
+            id == other.id &&
+            arguments == other.arguments &&
+            type == other.type &&
+            signature == other.signature &&
+            additionalProperties == other.additionalProperties
+    }
+
+    private val hashCode: Int by lazy {
+        Objects.hash(id, arguments, type, signature, additionalProperties)
+    }
+
+    override fun hashCode(): Int = hashCode
+
+    override fun toString() =
+        "CodeExecutionCallStep{id=$id, arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+}

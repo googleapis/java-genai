@@ -45,6 +45,9 @@ private constructor(
     private val contentDelta: ContentDelta? = null,
     private val contentStop: ContentStop? = null,
     private val error: ErrorEvent? = null,
+    private val stepStart: StepStart? = null,
+    private val stepDelta: StepDelta? = null,
+    private val stepStop: StepStop? = null,
     private val _json: JsonValue? = null,
 ) {
 
@@ -62,6 +65,12 @@ private constructor(
 
     fun error(): Optional<ErrorEvent> = Optional.ofNullable(error)
 
+    fun stepStart(): Optional<StepStart> = Optional.ofNullable(stepStart)
+
+    fun stepDelta(): Optional<StepDelta> = Optional.ofNullable(stepDelta)
+
+    fun stepStop(): Optional<StepStop> = Optional.ofNullable(stepStop)
+
     fun isStart(): Boolean = start != null
 
     fun isComplete(): Boolean = complete != null
@@ -75,6 +84,12 @@ private constructor(
     fun isContentStop(): Boolean = contentStop != null
 
     fun isError(): Boolean = error != null
+
+    fun isStepStart(): Boolean = stepStart != null
+
+    fun isStepDelta(): Boolean = stepDelta != null
+
+    fun isStepStop(): Boolean = stepStop != null
 
     fun asStart(): InteractionStartEvent = start.getOrThrow("start")
 
@@ -90,6 +105,12 @@ private constructor(
 
     fun asError(): ErrorEvent = error.getOrThrow("error")
 
+    fun asStepStart(): StepStart = stepStart.getOrThrow("stepStart")
+
+    fun asStepDelta(): StepDelta = stepDelta.getOrThrow("stepDelta")
+
+    fun asStepStop(): StepStop = stepStop.getOrThrow("stepStop")
+
     fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
     fun <T> accept(visitor: Visitor<T>): T =
@@ -101,6 +122,9 @@ private constructor(
             contentDelta != null -> visitor.visitContentDelta(contentDelta)
             contentStop != null -> visitor.visitContentStop(contentStop)
             error != null -> visitor.visitError(error)
+            stepStart != null -> visitor.visitStepStart(stepStart)
+            stepDelta != null -> visitor.visitStepDelta(stepDelta)
+            stepStop != null -> visitor.visitStepStop(stepStop)
             else -> visitor.unknown(_json)
         }
 
@@ -140,6 +164,18 @@ private constructor(
                 override fun visitError(error: ErrorEvent) {
                     error.validate()
                 }
+
+                override fun visitStepStart(stepStart: StepStart) {
+                    stepStart.validate()
+                }
+
+                override fun visitStepDelta(stepDelta: StepDelta) {
+                    stepDelta.validate()
+                }
+
+                override fun visitStepStop(stepStop: StepStop) {
+                    stepStop.validate()
+                }
             }
         )
         validated = true
@@ -177,6 +213,12 @@ private constructor(
 
                 override fun visitError(error: ErrorEvent) = error.validity()
 
+                override fun visitStepStart(stepStart: StepStart) = stepStart.validity()
+
+                override fun visitStepDelta(stepDelta: StepDelta) = stepDelta.validity()
+
+                override fun visitStepStop(stepStop: StepStop) = stepStop.validity()
+
                 override fun unknown(json: JsonValue?) = 0
             }
         )
@@ -193,11 +235,25 @@ private constructor(
             contentStart == other.contentStart &&
             contentDelta == other.contentDelta &&
             contentStop == other.contentStop &&
-            error == other.error
+            error == other.error &&
+            stepStart == other.stepStart &&
+            stepDelta == other.stepDelta &&
+            stepStop == other.stepStop
     }
 
     override fun hashCode(): Int =
-        Objects.hash(start, complete, statusUpdate, contentStart, contentDelta, contentStop, error)
+        Objects.hash(
+            start,
+            complete,
+            statusUpdate,
+            contentStart,
+            contentDelta,
+            contentStop,
+            error,
+            stepStart,
+            stepDelta,
+            stepStop,
+        )
 
     override fun toString(): String =
         when {
@@ -208,6 +264,9 @@ private constructor(
             contentDelta != null -> "InteractionSseEvent{contentDelta=$contentDelta}"
             contentStop != null -> "InteractionSseEvent{contentStop=$contentStop}"
             error != null -> "InteractionSseEvent{error=$error}"
+            stepStart != null -> "InteractionSseEvent{stepStart=$stepStart}"
+            stepDelta != null -> "InteractionSseEvent{stepDelta=$stepDelta}"
+            stepStop != null -> "InteractionSseEvent{stepStop=$stepStop}"
             _json != null -> "InteractionSseEvent{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid InteractionSseEvent")
         }
@@ -236,6 +295,14 @@ private constructor(
         fun ofContentStop(contentStop: ContentStop) = InteractionSseEvent(contentStop = contentStop)
 
         @JvmStatic fun ofError(error: ErrorEvent) = InteractionSseEvent(error = error)
+
+        @JvmStatic
+        fun ofStepStart(stepStart: StepStart) = InteractionSseEvent(stepStart = stepStart)
+
+        @JvmStatic
+        fun ofStepDelta(stepDelta: StepDelta) = InteractionSseEvent(stepDelta = stepDelta)
+
+        @JvmStatic fun ofStepStop(stepStop: StepStop) = InteractionSseEvent(stepStop = stepStop)
     }
 
     /**
@@ -257,6 +324,12 @@ private constructor(
         fun visitContentStop(contentStop: ContentStop): T
 
         fun visitError(error: ErrorEvent): T
+
+        fun visitStepStart(stepStart: StepStart): T
+
+        fun visitStepDelta(stepDelta: StepDelta): T
+
+        fun visitStepStop(stepStop: StepStop): T
 
         /**
          * Maps an unknown variant of [InteractionSseEvent] to a value of type [T].
@@ -316,6 +389,21 @@ private constructor(
                         InteractionSseEvent(error = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
+                "step.start" -> {
+                    return tryDeserialize(node, jacksonTypeRef<StepStart>())?.let {
+                        InteractionSseEvent(stepStart = it, _json = json)
+                    } ?: InteractionSseEvent(_json = json)
+                }
+                "step.delta" -> {
+                    return tryDeserialize(node, jacksonTypeRef<StepDelta>())?.let {
+                        InteractionSseEvent(stepDelta = it, _json = json)
+                    } ?: InteractionSseEvent(_json = json)
+                }
+                "step.stop" -> {
+                    return tryDeserialize(node, jacksonTypeRef<StepStop>())?.let {
+                        InteractionSseEvent(stepStop = it, _json = json)
+                    } ?: InteractionSseEvent(_json = json)
+                }
             }
 
             return InteractionSseEvent(_json = json)
@@ -337,6 +425,9 @@ private constructor(
                 value.contentDelta != null -> generator.writeObject(value.contentDelta)
                 value.contentStop != null -> generator.writeObject(value.contentStop)
                 value.error != null -> generator.writeObject(value.error)
+                value.stepStart != null -> generator.writeObject(value.stepStart)
+                value.stepDelta != null -> generator.writeObject(value.stepDelta)
+                value.stepStop != null -> generator.writeObject(value.stepStop)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid InteractionSseEvent")
             }

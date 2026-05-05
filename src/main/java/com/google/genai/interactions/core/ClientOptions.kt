@@ -472,6 +472,7 @@ private constructor(
 
             val headers = Headers.builder()
             val queryParams = QueryParams.builder()
+            headers.put("Api-Revision", "2026-05-20")
             // We replace after all the default headers to allow end-users to overwrite them.
             headers.replaceAll(this.headers.build())
             queryParams.replaceAll(this.queryParams.build())

@@ -45,15 +45,15 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** MCPServer tool result content. */
-class McpServerToolResultContent
+/** Result of a function tool call. */
+class FunctionResultStep
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val callId: JsonField<String>,
     private val result: JsonField<Result>,
     private val type: JsonValue,
+    private val isError: JsonField<Boolean>,
     private val name: JsonField<String>,
-    private val serverName: JsonField<String>,
     private val signature: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -63,12 +63,10 @@ private constructor(
         @JsonProperty("call_id") @ExcludeMissing callId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("result") @ExcludeMissing result: JsonField<Result> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+        @JsonProperty("is_error") @ExcludeMissing isError: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("server_name")
-        @ExcludeMissing
-        serverName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("signature") @ExcludeMissing signature: JsonField<String> = JsonMissing.of(),
-    ) : this(callId, result, type, name, serverName, signature, mutableMapOf())
+    ) : this(callId, result, type, isError, name, signature, mutableMapOf())
 
     /**
      * Required. ID to match the ID from the function call block.
@@ -79,7 +77,7 @@ private constructor(
     fun callId(): String = callId.getRequired("call_id")
 
     /**
-     * The output from the MCP server call. Can be simple text or rich content.
+     * The result of the tool call.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -89,7 +87,7 @@ private constructor(
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("mcp_server_tool_result")
+     * JsonValue.from("function_result")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -98,20 +96,20 @@ private constructor(
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
 
     /**
-     * Name of the tool which is called for this specific tool call.
+     * Whether the tool call resulted in an error.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun isError(): Optional<Boolean> = isError.getOptional("is_error")
+
+    /**
+     * The name of the tool that was called.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
     fun name(): Optional<String> = name.getOptional("name")
-
-    /**
-     * The name of the used MCP server.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
-     *   if the server responded with an unexpected value).
-     */
-    fun serverName(): Optional<String> = serverName.getOptional("server_name")
 
     /**
      * A signature hash for backend validation.
@@ -136,18 +134,18 @@ private constructor(
     @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<Result> = result
 
     /**
+     * Returns the raw JSON value of [isError].
+     *
+     * Unlike [isError], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("is_error") @ExcludeMissing fun _isError(): JsonField<Boolean> = isError
+
+    /**
      * Returns the raw JSON value of [name].
      *
      * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-    /**
-     * Returns the raw JSON value of [serverName].
-     *
-     * Unlike [serverName], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("server_name") @ExcludeMissing fun _serverName(): JsonField<String> = serverName
 
     /**
      * Returns the raw JSON value of [signature].
@@ -171,7 +169,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [McpServerToolResultContent].
+         * Returns a mutable builder for constructing an instance of [FunctionResultStep].
          *
          * The following fields are required:
          * ```java
@@ -182,26 +180,26 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [McpServerToolResultContent]. */
+    /** A builder for [FunctionResultStep]. */
     class Builder internal constructor() {
 
         private var callId: JsonField<String>? = null
         private var result: JsonField<Result>? = null
-        private var type: JsonValue = JsonValue.from("mcp_server_tool_result")
+        private var type: JsonValue = JsonValue.from("function_result")
+        private var isError: JsonField<Boolean> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
-        private var serverName: JsonField<String> = JsonMissing.of()
         private var signature: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(mcpServerToolResultContent: McpServerToolResultContent) = apply {
-            callId = mcpServerToolResultContent.callId
-            result = mcpServerToolResultContent.result
-            type = mcpServerToolResultContent.type
-            name = mcpServerToolResultContent.name
-            serverName = mcpServerToolResultContent.serverName
-            signature = mcpServerToolResultContent.signature
-            additionalProperties = mcpServerToolResultContent.additionalProperties.toMutableMap()
+        internal fun from(functionResultStep: FunctionResultStep) = apply {
+            callId = functionResultStep.callId
+            result = functionResultStep.result
+            type = functionResultStep.type
+            isError = functionResultStep.isError
+            name = functionResultStep.name
+            signature = functionResultStep.signature
+            additionalProperties = functionResultStep.additionalProperties.toMutableMap()
         }
 
         /** Required. ID to match the ID from the function call block. */
@@ -215,7 +213,7 @@ private constructor(
          */
         fun callId(callId: JsonField<String>) = apply { this.callId = callId }
 
-        /** The output from the MCP server call. Can be simple text or rich content. */
+        /** The result of the tool call. */
         fun result(result: Result) = result(JsonField.of(result))
 
         /**
@@ -246,7 +244,7 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("mcp_server_tool_result")
+         * JsonValue.from("function_result")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -254,7 +252,18 @@ private constructor(
          */
         fun type(type: JsonValue) = apply { this.type = type }
 
-        /** Name of the tool which is called for this specific tool call. */
+        /** Whether the tool call resulted in an error. */
+        fun isError(isError: Boolean) = isError(JsonField.of(isError))
+
+        /**
+         * Sets [Builder.isError] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.isError] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun isError(isError: JsonField<Boolean>) = apply { this.isError = isError }
+
+        /** The name of the tool that was called. */
         fun name(name: String) = name(JsonField.of(name))
 
         /**
@@ -264,18 +273,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
-
-        /** The name of the used MCP server. */
-        fun serverName(serverName: String) = serverName(JsonField.of(serverName))
-
-        /**
-         * Sets [Builder.serverName] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.serverName] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun serverName(serverName: JsonField<String>) = apply { this.serverName = serverName }
 
         /** A signature hash for backend validation. */
         fun signature(signature: String) = signature(JsonField.of(signature))
@@ -309,7 +306,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [McpServerToolResultContent].
+         * Returns an immutable instance of [FunctionResultStep].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -321,13 +318,13 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): McpServerToolResultContent =
-            McpServerToolResultContent(
+        fun build(): FunctionResultStep =
+            FunctionResultStep(
                 checkRequired("callId", callId),
                 checkRequired("result", result),
                 type,
+                isError,
                 name,
-                serverName,
                 signature,
                 additionalProperties.toMutableMap(),
             )
@@ -335,7 +332,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): McpServerToolResultContent = apply {
+    fun validate(): FunctionResultStep = apply {
         if (validated) {
             return@apply
         }
@@ -343,12 +340,12 @@ private constructor(
         callId()
         result().validate()
         _type().let {
-            if (it != JsonValue.from("mcp_server_tool_result")) {
+            if (it != JsonValue.from("function_result")) {
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
+        isError()
         name()
-        serverName()
         signature()
         validated = true
     }
@@ -370,12 +367,12 @@ private constructor(
     internal fun validity(): Int =
         (if (callId.asKnown().isPresent) 1 else 0) +
             (result.asKnown().getOrNull()?.validity() ?: 0) +
-            type.let { if (it == JsonValue.from("mcp_server_tool_result")) 1 else 0 } +
+            type.let { if (it == JsonValue.from("function_result")) 1 else 0 } +
+            (if (isError.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (if (serverName.asKnown().isPresent) 1 else 0) +
             (if (signature.asKnown().isPresent) 1 else 0)
 
-    /** The output from the MCP server call. Can be simple text or rich content. */
+    /** The result of the tool call. */
     @JsonDeserialize(using = Result.Deserializer::class)
     @JsonSerialize(using = Result.Serializer::class)
     class Result
@@ -770,22 +767,22 @@ private constructor(
             return true
         }
 
-        return other is McpServerToolResultContent &&
+        return other is FunctionResultStep &&
             callId == other.callId &&
             result == other.result &&
             type == other.type &&
+            isError == other.isError &&
             name == other.name &&
-            serverName == other.serverName &&
             signature == other.signature &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(callId, result, type, name, serverName, signature, additionalProperties)
+        Objects.hash(callId, result, type, isError, name, signature, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "McpServerToolResultContent{callId=$callId, result=$result, type=$type, name=$name, serverName=$serverName, signature=$signature, additionalProperties=$additionalProperties}"
+        "FunctionResultStep{callId=$callId, result=$result, type=$type, isError=$isError, name=$name, signature=$signature, additionalProperties=$additionalProperties}"
 }
