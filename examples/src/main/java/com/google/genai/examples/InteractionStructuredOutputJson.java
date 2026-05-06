@@ -43,6 +43,7 @@ package com.google.genai.examples;
 import com.google.genai.Client;
 import com.google.genai.interactions.core.JsonValue;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
+import com.google.genai.interactions.models.interactions.CreateModelInteractionParams.ResponseFormat;
 import com.google.genai.interactions.models.interactions.Interaction;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class InteractionStructuredOutputJson {
             .model("gemini-2.5-flash")
             .input("Which are the colors of a rainbow")
             .responseMimeType("application/json")
-            .responseFormat(responseFormat)
+            .responseFormat(ResponseFormat.ofJsonValue(responseFormat))
             .build();
 
     Interaction interaction = client.interactions.create(params);
