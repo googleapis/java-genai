@@ -62,7 +62,7 @@ private constructor(
     private val input: JsonField<Input>,
     private val model: JsonField<Model>,
     private val previousInteractionId: JsonField<String>,
-    private val responseFormat: JsonValue,
+    private val responseFormat: JsonField<ResponseFormat>,
     private val responseMimeType: JsonField<String>,
     private val responseModalities: JsonField<List<ResponseModality>>,
     private val role: JsonField<String>,
@@ -99,7 +99,7 @@ private constructor(
         previousInteractionId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("response_format")
         @ExcludeMissing
-        responseFormat: JsonValue = JsonMissing.of(),
+        responseFormat: JsonField<ResponseFormat> = JsonMissing.of(),
         @JsonProperty("response_mime_type")
         @ExcludeMissing
         responseMimeType: JsonField<String> = JsonMissing.of(),
@@ -232,14 +232,10 @@ private constructor(
      * Enforces that the generated response is a JSON object that complies with the JSON schema
      * specified in this field.
      *
-     * This arbitrary value can be deserialized into a custom type using the `convert` method:
-     * ```java
-     * MyClass myObject = interaction.responseFormat().convert(MyClass.class);
-     * ```
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
      */
-    @JsonProperty("response_format")
-    @ExcludeMissing
-    fun _responseFormat(): JsonValue = responseFormat
+    fun responseFormat(): Optional<ResponseFormat> = responseFormat.getOptional("response_format")
 
     /**
      * The mime type of the response. This is required if response_format is set.
@@ -393,6 +389,15 @@ private constructor(
     fun _previousInteractionId(): JsonField<String> = previousInteractionId
 
     /**
+     * Returns the raw JSON value of [responseFormat].
+     *
+     * Unlike [responseFormat], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("response_format")
+    @ExcludeMissing
+    fun _responseFormat(): JsonField<ResponseFormat> = responseFormat
+
+    /**
      * Returns the raw JSON value of [responseMimeType].
      *
      * Unlike [responseMimeType], this method doesn't throw if the JSON field has an unexpected
@@ -512,7 +517,7 @@ private constructor(
         private var input: JsonField<Input> = JsonMissing.of()
         private var model: JsonField<Model> = JsonMissing.of()
         private var previousInteractionId: JsonField<String> = JsonMissing.of()
-        private var responseFormat: JsonValue = JsonMissing.of()
+        private var responseFormat: JsonField<ResponseFormat> = JsonMissing.of()
         private var responseMimeType: JsonField<String> = JsonMissing.of()
         private var responseModalities: JsonField<MutableList<ResponseModality>>? = null
         private var role: JsonField<String> = JsonMissing.of()
@@ -733,9 +738,42 @@ private constructor(
          * Enforces that the generated response is a JSON object that complies with the JSON schema
          * specified in this field.
          */
-        fun responseFormat(responseFormat: JsonValue) = apply {
+        fun responseFormat(responseFormat: ResponseFormat) =
+            responseFormat(JsonField.of(responseFormat))
+
+        /**
+         * Sets [Builder.responseFormat] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.responseFormat] with a well-typed [ResponseFormat] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun responseFormat(responseFormat: JsonField<ResponseFormat>) = apply {
             this.responseFormat = responseFormat
         }
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofList(list)`. */
+        fun responseFormatOfList(list: List<ResponseFormat.InnerResponseFormat>) =
+            responseFormat(ResponseFormat.ofList(list))
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofAudio(audio)`. */
+        fun responseFormat(audio: AudioResponseFormat) =
+            responseFormat(ResponseFormat.ofAudio(audio))
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofText(text)`. */
+        fun responseFormat(text: TextResponseFormat) = responseFormat(ResponseFormat.ofText(text))
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofImage(image)`. */
+        fun responseFormat(image: ImageResponseFormat) =
+            responseFormat(ResponseFormat.ofImage(image))
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofVideo(video)`. */
+        fun responseFormat(video: VideoResponseFormat) =
+            responseFormat(ResponseFormat.ofVideo(video))
+
+        /** Alias for calling [responseFormat] with `ResponseFormat.ofJsonValue(jsonValue)`. */
+        fun responseFormat(jsonValue: JsonValue) =
+            responseFormat(ResponseFormat.ofJsonValue(jsonValue))
 
         /** The mime type of the response. This is required if response_format is set. */
         fun responseMimeType(responseMimeType: String) =
@@ -1094,6 +1132,7 @@ private constructor(
         input().ifPresent { it.validate() }
         model()
         previousInteractionId()
+        responseFormat().ifPresent { it.validate() }
         responseMimeType()
         responseModalities().ifPresent { it.forEach { it.validate() } }
         role()
@@ -1131,6 +1170,7 @@ private constructor(
             (input.asKnown().getOrNull()?.validity() ?: 0) +
             (if (model.asKnown().isPresent) 1 else 0) +
             (if (previousInteractionId.asKnown().isPresent) 1 else 0) +
+            (responseFormat.asKnown().getOrNull()?.validity() ?: 0) +
             (if (responseMimeType.asKnown().isPresent) 1 else 0) +
             (responseModalities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (role.asKnown().isPresent) 1 else 0) +
@@ -1975,6 +2015,567 @@ private constructor(
                     value.videoContent != null -> generator.writeObject(value.videoContent)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Input")
+                }
+            }
+        }
+    }
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema
+     * specified in this field.
+     */
+    @JsonDeserialize(using = ResponseFormat.Deserializer::class)
+    @JsonSerialize(using = ResponseFormat.Serializer::class)
+    class ResponseFormat
+    private constructor(
+        private val list: List<InnerResponseFormat>? = null,
+        private val audio: AudioResponseFormat? = null,
+        private val text: TextResponseFormat? = null,
+        private val image: ImageResponseFormat? = null,
+        private val video: VideoResponseFormat? = null,
+        private val jsonValue: JsonValue? = null,
+        private val _json: JsonValue? = null,
+    ) {
+
+        fun list(): Optional<List<InnerResponseFormat>> = Optional.ofNullable(list)
+
+        /** Configuration for audio output format. */
+        fun audio(): Optional<AudioResponseFormat> = Optional.ofNullable(audio)
+
+        /** Configuration for text output format. */
+        fun text(): Optional<TextResponseFormat> = Optional.ofNullable(text)
+
+        /** Configuration for image output format. */
+        fun image(): Optional<ImageResponseFormat> = Optional.ofNullable(image)
+
+        /** Configuration for video output format. */
+        fun video(): Optional<VideoResponseFormat> = Optional.ofNullable(video)
+
+        fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
+
+        fun isList(): Boolean = list != null
+
+        fun isAudio(): Boolean = audio != null
+
+        fun isText(): Boolean = text != null
+
+        fun isImage(): Boolean = image != null
+
+        fun isVideo(): Boolean = video != null
+
+        fun isJsonValue(): Boolean = jsonValue != null
+
+        fun asList(): List<InnerResponseFormat> = list.getOrThrow("list")
+
+        /** Configuration for audio output format. */
+        fun asAudio(): AudioResponseFormat = audio.getOrThrow("audio")
+
+        /** Configuration for text output format. */
+        fun asText(): TextResponseFormat = text.getOrThrow("text")
+
+        /** Configuration for image output format. */
+        fun asImage(): ImageResponseFormat = image.getOrThrow("image")
+
+        /** Configuration for video output format. */
+        fun asVideo(): VideoResponseFormat = video.getOrThrow("video")
+
+        fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
+
+        fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
+
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                list != null -> visitor.visitList(list)
+                audio != null -> visitor.visitAudio(audio)
+                text != null -> visitor.visitText(text)
+                image != null -> visitor.visitImage(image)
+                video != null -> visitor.visitVideo(video)
+                jsonValue != null -> visitor.visitJsonValue(jsonValue)
+                else -> visitor.unknown(_json)
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): ResponseFormat = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitList(list: List<InnerResponseFormat>) {
+                        list.forEach { it.validate() }
+                    }
+
+                    override fun visitAudio(audio: AudioResponseFormat) {
+                        audio.validate()
+                    }
+
+                    override fun visitText(text: TextResponseFormat) {
+                        text.validate()
+                    }
+
+                    override fun visitImage(image: ImageResponseFormat) {
+                        image.validate()
+                    }
+
+                    override fun visitVideo(video: VideoResponseFormat) {
+                        video.validate()
+                    }
+
+                    override fun visitJsonValue(jsonValue: JsonValue) {}
+                }
+            )
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: GeminiNextGenApiInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitList(list: List<InnerResponseFormat>) =
+                        list.sumOf { it.validity().toInt() }
+
+                    override fun visitAudio(audio: AudioResponseFormat) = audio.validity()
+
+                    override fun visitText(text: TextResponseFormat) = text.validity()
+
+                    override fun visitImage(image: ImageResponseFormat) = image.validity()
+
+                    override fun visitVideo(video: VideoResponseFormat) = video.validity()
+
+                    override fun visitJsonValue(jsonValue: JsonValue) = 1
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ResponseFormat &&
+                list == other.list &&
+                audio == other.audio &&
+                text == other.text &&
+                image == other.image &&
+                video == other.video &&
+                jsonValue == other.jsonValue
+        }
+
+        override fun hashCode(): Int = Objects.hash(list, audio, text, image, video, jsonValue)
+
+        override fun toString(): String =
+            when {
+                list != null -> "ResponseFormat{list=$list}"
+                audio != null -> "ResponseFormat{audio=$audio}"
+                text != null -> "ResponseFormat{text=$text}"
+                image != null -> "ResponseFormat{image=$image}"
+                video != null -> "ResponseFormat{video=$video}"
+                jsonValue != null -> "ResponseFormat{jsonValue=$jsonValue}"
+                _json != null -> "ResponseFormat{_unknown=$_json}"
+                else -> throw IllegalStateException("Invalid ResponseFormat")
+            }
+
+        companion object {
+
+            @JvmStatic
+            fun ofList(list: List<InnerResponseFormat>) = ResponseFormat(list = list.toImmutable())
+
+            /** Configuration for audio output format. */
+            @JvmStatic fun ofAudio(audio: AudioResponseFormat) = ResponseFormat(audio = audio)
+
+            /** Configuration for text output format. */
+            @JvmStatic fun ofText(text: TextResponseFormat) = ResponseFormat(text = text)
+
+            /** Configuration for image output format. */
+            @JvmStatic fun ofImage(image: ImageResponseFormat) = ResponseFormat(image = image)
+
+            /** Configuration for video output format. */
+            @JvmStatic fun ofVideo(video: VideoResponseFormat) = ResponseFormat(video = video)
+
+            @JvmStatic fun ofJsonValue(jsonValue: JsonValue) = ResponseFormat(jsonValue = jsonValue)
+        }
+
+        /**
+         * An interface that defines how to map each variant of [ResponseFormat] to a value of type
+         * [T].
+         */
+        interface Visitor<out T> {
+
+            fun visitList(list: List<InnerResponseFormat>): T
+
+            /** Configuration for audio output format. */
+            fun visitAudio(audio: AudioResponseFormat): T
+
+            /** Configuration for text output format. */
+            fun visitText(text: TextResponseFormat): T
+
+            /** Configuration for image output format. */
+            fun visitImage(image: ImageResponseFormat): T
+
+            /** Configuration for video output format. */
+            fun visitVideo(video: VideoResponseFormat): T
+
+            fun visitJsonValue(jsonValue: JsonValue): T
+
+            /**
+             * Maps an unknown variant of [ResponseFormat] to a value of type [T].
+             *
+             * An instance of [ResponseFormat] can contain an unknown variant if it was deserialized
+             * from data that doesn't match any known variant. For example, if the SDK is on an
+             * older version than the API, then the API may respond with new variants that the SDK
+             * is unaware of.
+             *
+             * @throws GeminiNextGenApiInvalidDataException in the default implementation.
+             */
+            fun unknown(json: JsonValue?): T {
+                throw GeminiNextGenApiInvalidDataException("Unknown ResponseFormat: $json")
+            }
+        }
+
+        internal class Deserializer : BaseDeserializer<ResponseFormat>(ResponseFormat::class) {
+
+            override fun ObjectCodec.deserialize(node: JsonNode): ResponseFormat {
+                val json = JsonValue.fromJsonNode(node)
+
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<AudioResponseFormat>())?.let {
+                                ResponseFormat(audio = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<TextResponseFormat>())?.let {
+                                ResponseFormat(text = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
+                                ResponseFormat(image = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
+                                ResponseFormat(video = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<List<InnerResponseFormat>>())?.let {
+                                ResponseFormat(list = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                ResponseFormat(jsonValue = it, _json = json)
+                            },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants.
+                    0 -> ResponseFormat(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                }
+            }
+        }
+
+        internal class Serializer : BaseSerializer<ResponseFormat>(ResponseFormat::class) {
+
+            override fun serialize(
+                value: ResponseFormat,
+                generator: JsonGenerator,
+                provider: SerializerProvider,
+            ) {
+                when {
+                    value.list != null -> generator.writeObject(value.list)
+                    value.audio != null -> generator.writeObject(value.audio)
+                    value.text != null -> generator.writeObject(value.text)
+                    value.image != null -> generator.writeObject(value.image)
+                    value.video != null -> generator.writeObject(value.video)
+                    value.jsonValue != null -> generator.writeObject(value.jsonValue)
+                    value._json != null -> generator.writeObject(value._json)
+                    else -> throw IllegalStateException("Invalid ResponseFormat")
+                }
+            }
+        }
+
+        /** Configuration for audio output format. */
+        @JsonDeserialize(using = InnerResponseFormat.Deserializer::class)
+        @JsonSerialize(using = InnerResponseFormat.Serializer::class)
+        class InnerResponseFormat
+        private constructor(
+            private val audio: AudioResponseFormat? = null,
+            private val text: TextResponseFormat? = null,
+            private val image: ImageResponseFormat? = null,
+            private val video: VideoResponseFormat? = null,
+            private val jsonValue: JsonValue? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            /** Configuration for audio output format. */
+            fun audio(): Optional<AudioResponseFormat> = Optional.ofNullable(audio)
+
+            /** Configuration for text output format. */
+            fun text(): Optional<TextResponseFormat> = Optional.ofNullable(text)
+
+            /** Configuration for image output format. */
+            fun image(): Optional<ImageResponseFormat> = Optional.ofNullable(image)
+
+            /** Configuration for video output format. */
+            fun video(): Optional<VideoResponseFormat> = Optional.ofNullable(video)
+
+            fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
+
+            fun isAudio(): Boolean = audio != null
+
+            fun isText(): Boolean = text != null
+
+            fun isImage(): Boolean = image != null
+
+            fun isVideo(): Boolean = video != null
+
+            fun isJsonValue(): Boolean = jsonValue != null
+
+            /** Configuration for audio output format. */
+            fun asAudio(): AudioResponseFormat = audio.getOrThrow("audio")
+
+            /** Configuration for text output format. */
+            fun asText(): TextResponseFormat = text.getOrThrow("text")
+
+            /** Configuration for image output format. */
+            fun asImage(): ImageResponseFormat = image.getOrThrow("image")
+
+            /** Configuration for video output format. */
+            fun asVideo(): VideoResponseFormat = video.getOrThrow("video")
+
+            fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
+
+            fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    audio != null -> visitor.visitAudio(audio)
+                    text != null -> visitor.visitText(text)
+                    image != null -> visitor.visitImage(image)
+                    video != null -> visitor.visitVideo(video)
+                    jsonValue != null -> visitor.visitJsonValue(jsonValue)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): InnerResponseFormat = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitAudio(audio: AudioResponseFormat) {
+                            audio.validate()
+                        }
+
+                        override fun visitText(text: TextResponseFormat) {
+                            text.validate()
+                        }
+
+                        override fun visitImage(image: ImageResponseFormat) {
+                            image.validate()
+                        }
+
+                        override fun visitVideo(video: VideoResponseFormat) {
+                            video.validate()
+                        }
+
+                        override fun visitJsonValue(jsonValue: JsonValue) {}
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitAudio(audio: AudioResponseFormat) = audio.validity()
+
+                        override fun visitText(text: TextResponseFormat) = text.validity()
+
+                        override fun visitImage(image: ImageResponseFormat) = image.validity()
+
+                        override fun visitVideo(video: VideoResponseFormat) = video.validity()
+
+                        override fun visitJsonValue(jsonValue: JsonValue) = 1
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is InnerResponseFormat &&
+                    audio == other.audio &&
+                    text == other.text &&
+                    image == other.image &&
+                    video == other.video &&
+                    jsonValue == other.jsonValue
+            }
+
+            override fun hashCode(): Int = Objects.hash(audio, text, image, video, jsonValue)
+
+            override fun toString(): String =
+                when {
+                    audio != null -> "InnerResponseFormat{audio=$audio}"
+                    text != null -> "InnerResponseFormat{text=$text}"
+                    image != null -> "InnerResponseFormat{image=$image}"
+                    video != null -> "InnerResponseFormat{video=$video}"
+                    jsonValue != null -> "InnerResponseFormat{jsonValue=$jsonValue}"
+                    _json != null -> "InnerResponseFormat{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid InnerResponseFormat")
+                }
+
+            companion object {
+
+                /** Configuration for audio output format. */
+                @JvmStatic
+                fun ofAudio(audio: AudioResponseFormat) = InnerResponseFormat(audio = audio)
+
+                /** Configuration for text output format. */
+                @JvmStatic fun ofText(text: TextResponseFormat) = InnerResponseFormat(text = text)
+
+                /** Configuration for image output format. */
+                @JvmStatic
+                fun ofImage(image: ImageResponseFormat) = InnerResponseFormat(image = image)
+
+                /** Configuration for video output format. */
+                @JvmStatic
+                fun ofVideo(video: VideoResponseFormat) = InnerResponseFormat(video = video)
+
+                @JvmStatic
+                fun ofJsonValue(jsonValue: JsonValue) = InnerResponseFormat(jsonValue = jsonValue)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [InnerResponseFormat] to a value
+             * of type [T].
+             */
+            interface Visitor<out T> {
+
+                /** Configuration for audio output format. */
+                fun visitAudio(audio: AudioResponseFormat): T
+
+                /** Configuration for text output format. */
+                fun visitText(text: TextResponseFormat): T
+
+                /** Configuration for image output format. */
+                fun visitImage(image: ImageResponseFormat): T
+
+                /** Configuration for video output format. */
+                fun visitVideo(video: VideoResponseFormat): T
+
+                fun visitJsonValue(jsonValue: JsonValue): T
+
+                /**
+                 * Maps an unknown variant of [InnerResponseFormat] to a value of type [T].
+                 *
+                 * An instance of [InnerResponseFormat] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws GeminiNextGenApiInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw GeminiNextGenApiInvalidDataException("Unknown InnerResponseFormat: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<InnerResponseFormat>(InnerResponseFormat::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): InnerResponseFormat {
+                    val json = JsonValue.fromJsonNode(node)
+
+                    val bestMatches =
+                        sequenceOf(
+                                tryDeserialize(node, jacksonTypeRef<AudioResponseFormat>())?.let {
+                                    InnerResponseFormat(audio = it, _json = json)
+                                },
+                                tryDeserialize(node, jacksonTypeRef<TextResponseFormat>())?.let {
+                                    InnerResponseFormat(text = it, _json = json)
+                                },
+                                tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
+                                    InnerResponseFormat(image = it, _json = json)
+                                },
+                                tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
+                                    InnerResponseFormat(video = it, _json = json)
+                                },
+                                tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                    InnerResponseFormat(jsonValue = it, _json = json)
+                                },
+                            )
+                            .filterNotNull()
+                            .allMaxBy { it.validity() }
+                            .toList()
+                    return when (bestMatches.size) {
+                        // This can happen if what we're deserializing is completely incompatible
+                        // with all the possible variants.
+                        0 -> InnerResponseFormat(_json = json)
+                        1 -> bestMatches.single()
+                        // If there's more than one match with the highest validity, then use the
+                        // first completely valid match, or simply the first match if none are
+                        // completely valid.
+                        else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                    }
+                }
+            }
+
+            internal class Serializer :
+                BaseSerializer<InnerResponseFormat>(InnerResponseFormat::class) {
+
+                override fun serialize(
+                    value: InnerResponseFormat,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.audio != null -> generator.writeObject(value.audio)
+                        value.text != null -> generator.writeObject(value.text)
+                        value.image != null -> generator.writeObject(value.image)
+                        value.video != null -> generator.writeObject(value.video)
+                        value.jsonValue != null -> generator.writeObject(value.jsonValue)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid InnerResponseFormat")
+                    }
                 }
             }
         }
