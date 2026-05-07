@@ -72,7 +72,7 @@ private constructor(
     /**
      * Enables human-in-the-loop planning for the Deep Research agent. If set to true, the Deep
      * Research agent will provide a research plan in its response. The agent will then proceed only
-     * if the user confirms the plan in the next turn. Relevant issue: b/482352502.
+     * if the user confirms the plan in the next turn.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
@@ -179,7 +179,7 @@ private constructor(
         /**
          * Enables human-in-the-loop planning for the Deep Research agent. If set to true, the Deep
          * Research agent will provide a research plan in its response. The agent will then proceed
-         * only if the user confirms the plan in the next turn. Relevant issue: b/482352502.
+         * only if the user confirms the plan in the next turn.
          */
         fun collaborativePlanning(collaborativePlanning: Boolean) =
             collaborativePlanning(JsonField.of(collaborativePlanning))
