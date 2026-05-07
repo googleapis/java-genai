@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Builder</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai.types/GenerateVideosConfig.Builder///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../../index.html">com.google.genai.types</a><span class="delimiter">/</span><a href="../index.html">GenerateVideosConfig</a><span class="delimiter">/</span><span class="current">Builder</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">Builder</a></div><p class="paragraph">Builder for GenerateVideosConfig.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1208051678%2FConstructors%2F-1525493128" anchor-label="GenerateVideosConfig.Builder" id="-1208051678%2FConstructors%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-generate-videos-config.-builder.html"><span>Generate</span><wbr></wbr><span>Videos</span><wbr></wbr><span>Config.</span><wbr></wbr><span>Builder</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1208051678%2FConstructors%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>void <a href="-generate-videos-config.-builder.html"><span class="token function">GenerateVideosConfig.Builder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-425494012%2FFunctions%2F-1525493128" anchor-label="aspectRatio" id="-425494012%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="aspect-ratio.html"><span>aspect</span><wbr></wbr><span><span>Ratio</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-425494012%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="aspect-ratio.html"><span class="token function">aspectRatio</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> aspectRatio</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for aspectRatio.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1786591794%2FFunctions%2F-1525493128" anchor-label="build" id="-1786591794%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="build.html"><span><span>build</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1786591794%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="../index.html">GenerateVideosConfig</a> <a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1449683368%2FFunctions%2F-1525493128" anchor-label="clearAspectRatio" id="-1449683368%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-aspect-ratio.html"><span>clear</span><wbr></wbr><span>Aspect</span><wbr></wbr><span><span>Ratio</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1449683368%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-aspect-ratio.html"><span class="token function">clearAspectRatio</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of aspectRatio field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2100017046%2FFunctions%2F-1525493128" anchor-label="clearCompressionQuality" id="2100017046%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-compression-quality.html"><span>clear</span><wbr></wbr><span>Compression</span><wbr></wbr><span><span>Quality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2100017046%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-compression-quality.html"><span class="token function">clearCompressionQuality</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of compressionQuality field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1735752352%2FFunctions%2F-1525493128" anchor-label="clearDurationSeconds" id="1735752352%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-duration-seconds.html"><span>clear</span><wbr></wbr><span>Duration</span><wbr></wbr><span><span>Seconds</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1735752352%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-duration-seconds.html"><span class="token function">clearDurationSeconds</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of durationSeconds field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1693826919%2FFunctions%2F-1525493128" anchor-label="clearEnhancePrompt" id="-1693826919%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-enhance-prompt.html"><span>clear</span><wbr></wbr><span>Enhance</span><wbr></wbr><span><span>Prompt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1693826919%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-enhance-prompt.html"><span class="token function">clearEnhancePrompt</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of enhancePrompt field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1987978946%2FFunctions%2F-1525493128" anchor-label="clearFps" id="1987978946%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-fps.html"><span>clear</span><wbr></wbr><span><span>Fps</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1987978946%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-fps.html"><span class="token function">clearFps</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of fps field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1902528970%2FFunctions%2F-1525493128" anchor-label="clearGenerateAudio" id="1902528970%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-generate-audio.html"><span>clear</span><wbr></wbr><span>Generate</span><wbr></wbr><span><span>Audio</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1902528970%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-generate-audio.html"><span class="token function">clearGenerateAudio</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of generateAudio field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1994019157%2FFunctions%2F-1525493128" anchor-label="clearHttpOptions" id="1994019157%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-http-options.html"><span>clear</span><wbr></wbr><span>Http</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1994019157%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-http-options.html"><span class="token function">clearHttpOptions</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of httpOptions field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="961826320%2FFunctions%2F-1525493128" anchor-label="clearLabels" id="961826320%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-labels.html"><span>clear</span><wbr></wbr><span><span>Labels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="961826320%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-labels.html"><span class="token function">clearLabels</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of labels field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="967100532%2FFunctions%2F-1525493128" anchor-label="clearLastFrame" id="967100532%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-last-frame.html"><span>clear</span><wbr></wbr><span>Last</span><wbr></wbr><span><span>Frame</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="967100532%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-last-frame.html"><span class="token function">clearLastFrame</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of lastFrame field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1396240317%2FFunctions%2F-1525493128" anchor-label="clearMask" id="-1396240317%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-mask.html"><span>clear</span><wbr></wbr><span><span>Mask</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1396240317%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-mask.html"><span class="token function">clearMask</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of mask field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-334802090%2FFunctions%2F-1525493128" anchor-label="clearNegativePrompt" id="-334802090%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-negative-prompt.html"><span>clear</span><wbr></wbr><span>Negative</span><wbr></wbr><span><span>Prompt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-334802090%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-negative-prompt.html"><span class="token function">clearNegativePrompt</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of negativePrompt field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1449248695%2FFunctions%2F-1525493128" anchor-label="clearNumberOfVideos" id="1449248695%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-number-of-videos.html"><span>clear</span><wbr></wbr><span>Number</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>Videos</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1449248695%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-number-of-videos.html"><span class="token function">clearNumberOfVideos</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of numberOfVideos field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1300743879%2FFunctions%2F-1525493128" anchor-label="clearOutputGcsUri" id="-1300743879%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-output-gcs-uri.html"><span>clear</span><wbr></wbr><span>Output</span><wbr></wbr><span>Gcs</span><wbr></wbr><span><span>Uri</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1300743879%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-output-gcs-uri.html"><span class="token function">clearOutputGcsUri</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of outputGcsUri field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1067130622%2FFunctions%2F-1525493128" anchor-label="clearPersonGeneration" id="-1067130622%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-person-generation.html"><span>clear</span><wbr></wbr><span>Person</span><wbr></wbr><span><span>Generation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1067130622%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-person-generation.html"><span class="token function">clearPersonGeneration</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of personGeneration field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1448554047%2FFunctions%2F-1525493128" anchor-label="clearPubsubTopic" id="1448554047%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-pubsub-topic.html"><span>clear</span><wbr></wbr><span>Pubsub</span><wbr></wbr><span><span>Topic</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1448554047%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-pubsub-topic.html"><span class="token function">clearPubsubTopic</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of pubsubTopic field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-496268728%2FFunctions%2F-1525493128" anchor-label="clearReferenceImages" id="-496268728%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-reference-images.html"><span>clear</span><wbr></wbr><span>Reference</span><wbr></wbr><span><span>Images</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-496268728%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-reference-images.html"><span class="token function">clearReferenceImages</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of referenceImages field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1719978904%2FFunctions%2F-1525493128" anchor-label="clearResizeMode" id="1719978904%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-resize-mode.html"><span>clear</span><wbr></wbr><span>Resize</span><wbr></wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1719978904%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-resize-mode.html"><span class="token function">clearResizeMode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of resizeMode field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1424271101%2FFunctions%2F-1525493128" anchor-label="clearResolution" id="-1424271101%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-resolution.html"><span>clear</span><wbr></wbr><span><span>Resolution</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1424271101%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-resolution.html"><span class="token function">clearResolution</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of resolution field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="948590686%2FFunctions%2F-1525493128" anchor-label="clearSeed" id="948590686%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-seed.html"><span>clear</span><wbr></wbr><span><span>Seed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="948590686%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-seed.html"><span class="token function">clearSeed</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of seed field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1297948782%2FFunctions%2F-1525493128" anchor-label="clearWebhookConfig" id="-1297948782%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-webhook-config.html"><span>clear</span><wbr></wbr><span>Webhook</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1297948782%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="clear-webhook-config.html"><span class="token function">clearWebhookConfig</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of webhookConfig field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1072788437%2FFunctions%2F-1525493128" anchor-label="compressionQuality" id="-1072788437%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="compression-quality.html"><span>compression</span><wbr></wbr><span><span>Quality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1072788437%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="compression-quality.html"><span class="token function">compressionQuality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-compression-quality/index.html">VideoCompressionQuality</a> compressionQuality</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for compressionQuality.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="compression-quality.html"><span class="token function">compressionQuality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-compression-quality/-known/index.html">VideoCompressionQuality.Known</a> knownType</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for compressionQuality given a known enum.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="compression-quality.html"><span class="token function">compressionQuality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> compressionQuality</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for compressionQuality given a string.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1319725657%2FFunctions%2F-1525493128" anchor-label="durationSeconds" id="-1319725657%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="duration-seconds.html"><span>duration</span><wbr></wbr><span><span>Seconds</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1319725657%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="duration-seconds.html"><span class="token function">durationSeconds</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> durationSeconds</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for durationSeconds.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1070012624%2FFunctions%2F-1525493128" anchor-label="enhancePrompt" id="1070012624%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enhance-prompt.html"><span>enhance</span><wbr></wbr><span><span>Prompt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1070012624%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="enhance-prompt.html"><span class="token function">enhancePrompt</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span>boolean enhancePrompt</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for enhancePrompt.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="573841477%2FFunctions%2F-1525493128" anchor-label="fps" id="573841477%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="fps.html"><span><span>fps</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="573841477%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="fps.html"><span class="token function">fps</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> fps</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for fps.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1768388993%2FFunctions%2F-1525493128" anchor-label="generateAudio" id="-1768388993%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="generate-audio.html"><span>generate</span><wbr></wbr><span><span>Audio</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1768388993%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="generate-audio.html"><span class="token function">generateAudio</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span>boolean generateAudio</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for generateAudio.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2078847373%2FFunctions%2F-1525493128" anchor-label="httpOptions" id="2078847373%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="http-options.html"><span>http</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2078847373%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="http-options.html"><span class="token function">httpOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-http-options/index.html">HttpOptions</a> httpOptions</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for httpOptions.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="http-options.html"><span class="token function">httpOptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-http-options/-builder/index.html">HttpOptions.Builder</a> httpOptionsBuilder</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for httpOptions builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="936217709%2FFunctions%2F-1525493128" anchor-label="labels" id="936217709%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="labels.html"><span><span>labels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="936217709%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="labels.html"><span class="token function">labels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> labels</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for labels.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-671728063%2FFunctions%2F-1525493128" anchor-label="lastFrame" id="-671728063%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="last-frame.html"><span>last</span><wbr></wbr><span><span>Frame</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-671728063%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="last-frame.html"><span class="token function">lastFrame</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image/index.html">Image</a> lastFrame</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for lastFrame.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="last-frame.html"><span class="token function">lastFrame</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image/-builder/index.html">Image.Builder</a> lastFrameBuilder</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for lastFrame builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-274913319%2FFunctions%2F-1525493128" anchor-label="mask" id="-274913319%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mask.html"><span><span>mask</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-274913319%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="mask.html"><span class="token function">mask</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-generation-mask/index.html">VideoGenerationMask</a> mask</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for mask.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="mask.html"><span class="token function">mask</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-generation-mask/-builder/index.html">VideoGenerationMask.Builder</a> maskBuilder</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for mask builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1838382592%2FFunctions%2F-1525493128" anchor-label="negativePrompt" id="1838382592%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="negative-prompt.html"><span>negative</span><wbr></wbr><span><span>Prompt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1838382592%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="negative-prompt.html"><span class="token function">negativePrompt</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> negativePrompt</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for negativePrompt.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="21587378%2FFunctions%2F-1525493128" anchor-label="numberOfVideos" id="21587378%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="number-of-videos.html"><span>number</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>Videos</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="21587378%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="number-of-videos.html"><span class="token function">numberOfVideos</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> numberOfVideos</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for numberOfVideos.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="35102115%2FFunctions%2F-1525493128" anchor-label="outputGcsUri" id="35102115%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="output-gcs-uri.html"><span>output</span><wbr></wbr><span>Gcs</span><wbr></wbr><span><span>Uri</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="35102115%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="output-gcs-uri.html"><span class="token function">outputGcsUri</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> outputGcsUri</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for outputGcsUri.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-129252372%2FFunctions%2F-1525493128" anchor-label="personGeneration" id="-129252372%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="person-generation.html"><span>person</span><wbr></wbr><span><span>Generation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-129252372%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="person-generation.html"><span class="token function">personGeneration</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> personGeneration</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for personGeneration.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="815555563%2FFunctions%2F-1525493128" anchor-label="pubsubTopic" id="815555563%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pubsub-topic.html"><span>pubsub</span><wbr></wbr><span><span>Topic</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="815555563%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="pubsub-topic.html"><span class="token function">pubsubTopic</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> pubsubTopic</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for pubsubTopic.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="483458870%2FFunctions%2F-1525493128" anchor-label="referenceImages" id="483458870%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reference-images.html"><span>reference</span><wbr></wbr><span><span>Images</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="483458870%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="reference-images.html"><span class="token function">referenceImages</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../-video-generation-reference-image/index.html">VideoGenerationReferenceImage</a><span class="token operator">&gt;</span> referenceImages</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="reference-images.html"><span class="token function">referenceImages</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><a href="../../-video-generation-reference-image/index.html">VideoGenerationReferenceImage</a><span class="token operator">&gt;</span> referenceImages</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for referenceImages.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="reference-images.html"><span class="token function">referenceImages</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../-video-generation-reference-image/-builder/index.html">VideoGenerationReferenceImage.Builder</a><span class="token operator">&gt;</span> referenceImagesBuilders</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for referenceImages builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1850897837%2FFunctions%2F-1525493128" anchor-label="resizeMode" id="1850897837%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="resize-mode.html"><span>resize</span><wbr></wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1850897837%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="resize-mode.html"><span class="token function">resizeMode</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image-resize-mode/index.html">ImageResizeMode</a> resizeMode</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for resizeMode.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="resize-mode.html"><span class="token function">resizeMode</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image-resize-mode/-known/index.html">ImageResizeMode.Known</a> knownType</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for resizeMode given a known enum.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="resize-mode.html"><span class="token function">resizeMode</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> resizeMode</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for resizeMode given a string.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1826371885%2FFunctions%2F-1525493128" anchor-label="resolution" id="1826371885%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="resolution.html"><span><span>resolution</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1826371885%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="resolution.html"><span class="token function">resolution</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> resolution</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for resolution.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1712000725%2FFunctions%2F-1525493128" anchor-label="seed" id="-1712000725%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="seed.html"><span><span>seed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1712000725%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="seed.html"><span class="token function">seed</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> seed</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for seed.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-137719935%2FFunctions%2F-1525493128" anchor-label="webhookConfig" id="-137719935%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="webhook-config.html"><span>webhook</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-137719935%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="webhook-config.html"><span class="token function">webhookConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-webhook-config/index.html">WebhookConfig</a> webhookConfig</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for webhookConfig.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">GenerateVideosConfig.Builder</a> <a href="webhook-config.html"><span class="token function">webhookConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-webhook-config/-builder/index.html">WebhookConfig.Builder</a> webhookConfigBuilder</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for webhookConfig builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

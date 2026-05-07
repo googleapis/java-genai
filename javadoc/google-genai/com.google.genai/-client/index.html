@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Client</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai/Client///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../index.html">com.google.genai</a><span class="delimiter">/</span><span class="current">Client</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Client</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword">class </span><a href="index.html">Client</a><span class="token keyword"> implements </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html">AutoCloseable</a></div><p class="paragraph">Client class for GenAI. This class is thread-safe.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="177968173%2FConstructors%2F-1525493128" anchor-label="Client" id="177968173%2FConstructors%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-client.html"><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="177968173%2FConstructors%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>void <a href="-client.html"><span class="token function">Client</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Constructs a Client instance with environment variables.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-1555280455%2FClasslikes%2F-1525493128" anchor-label="Async" id="-1555280455%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-async/index.html"><span><span>Async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1555280455%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="-async/index.html">Async</a></div><div class="brief ">Async class for GenAI.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2015920006%2FClasslikes%2F-1525493128" anchor-label="Builder" id="-2015920006%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-builder/index.html"><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2015920006%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">class </span><a href="-builder/index.html">Builder</a></div><div class="brief ">Builder for <a href="index.html">Client</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-38283418%2FProperties%2F-1525493128" anchor-label="async" id="-38283418%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-38283418%2FProperties%2F-1525493128"><span><span>async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-38283418%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="-async/index.html">Client.Async</a> <a href="index.html#-38283418%2FProperties%2F-1525493128">async</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-84520682%2FProperties%2F-1525493128" anchor-label="authTokens" id="-84520682%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-84520682%2FProperties%2F-1525493128"><span>auth</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-84520682%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-tokens/index.html">Tokens</a> <a href="index.html#-84520682%2FProperties%2F-1525493128">authTokens</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-231823174%2FProperties%2F-1525493128" anchor-label="batches" id="-231823174%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-231823174%2FProperties%2F-1525493128"><span><span>batches</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-231823174%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-batches/index.html">Batches</a> <a href="index.html#-231823174%2FProperties%2F-1525493128">batches</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1965690279%2FProperties%2F-1525493128" anchor-label="caches" id="1965690279%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1965690279%2FProperties%2F-1525493128"><span><span>caches</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1965690279%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-caches/index.html">Caches</a> <a href="index.html#1965690279%2FProperties%2F-1525493128">caches</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="444940967%2FProperties%2F-1525493128" anchor-label="chats" id="444940967%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#444940967%2FProperties%2F-1525493128"><span><span>chats</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="444940967%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-chats/index.html">Chats</a> <a href="index.html#444940967%2FProperties%2F-1525493128">chats</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1125547979%2FProperties%2F-1525493128" anchor-label="files" id="1125547979%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1125547979%2FProperties%2F-1525493128"><span><span>files</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1125547979%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-files/index.html">Files</a> <a href="index.html#1125547979%2FProperties%2F-1525493128">files</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1207879074%2FProperties%2F-1525493128" anchor-label="fileSearchStores" id="1207879074%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1207879074%2FProperties%2F-1525493128"><span>file</span><wbr></wbr><span>Search</span><wbr></wbr><span><span>Stores</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1207879074%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-file-search-stores/index.html">FileSearchStores</a> <a href="index.html#1207879074%2FProperties%2F-1525493128">fileSearchStores</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2034462711%2FProperties%2F-1525493128" anchor-label="interactions" id="2034462711%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#2034462711%2FProperties%2F-1525493128"><span><span>interactions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2034462711%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../../com.google.genai.interactions.services.blocking/-interaction-service/index.html">InteractionService</a> <a href="index.html#2034462711%2FProperties%2F-1525493128">interactions</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="935822990%2FProperties%2F-1525493128" anchor-label="models" id="935822990%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#935822990%2FProperties%2F-1525493128"><span><span>models</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="935822990%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-models/index.html">Models</a> <a href="index.html#935822990%2FProperties%2F-1525493128">models</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2077460020%2FProperties%2F-1525493128" anchor-label="operations" id="-2077460020%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-2077460020%2FProperties%2F-1525493128"><span><span>operations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2077460020%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-operations/index.html">Operations</a> <a href="index.html#-2077460020%2FProperties%2F-1525493128">operations</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="857632388%2FProperties%2F-1525493128" anchor-label="tunings" id="857632388%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#857632388%2FProperties%2F-1525493128"><span><span>tunings</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="857632388%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../-tunings/index.html">Tunings</a> <a href="index.html#857632388%2FProperties%2F-1525493128">tunings</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="281019251%2FFunctions%2F-1525493128" anchor-label="apiKey" id="281019251%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="api-key.html"><span>api</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="281019251%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="api-key.html"><span class="token function">apiKey</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns the API key for Gemini API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1000637927%2FFunctions%2F-1525493128" anchor-label="builder" id="1000637927%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="builder.html"><span><span>builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1000637927%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="-builder/index.html">Client.Builder</a> <a href="builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns a <a href="-builder/index.html">Builder</a> for <a href="index.html">Client</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1744855190%2FFunctions%2F-1525493128" anchor-label="close" id="-1744855190%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="close.html"><span><span>close</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1744855190%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>void <a href="close.html"><span class="token function">close</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Closes the Client instance together with its instantiated http client.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1358660617%2FFunctions%2F-1525493128" anchor-label="enterprise" id="-1358660617%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enterprise.html"><span><span>enterprise</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1358660617%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>boolean <a href="enterprise.html"><span class="token function">enterprise</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns whether the client is using Gemini Enterprise Agent Platform.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1841543395%2FFunctions%2F-1525493128" anchor-label="location" id="1841543395%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="location.html"><span><span>location</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1841543395%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="location.html"><span class="token function">location</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns the location for Vertex AI APIs.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1562676183%2FFunctions%2F-1525493128" anchor-label="project" id="-1562676183%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="project.html"><span><span>project</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1562676183%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="project.html"><span class="token function">project</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns the project ID for Vertex AI APIs.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-456024677%2FFunctions%2F-1525493128" anchor-label="setDefaultBaseUrls" id="-456024677%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-default-base-urls.html"><span>set</span><wbr></wbr><span>Default</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Urls</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-456024677%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span>void <a href="set-default-base-urls.html"><span class="token function">setDefaultBaseUrls</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> geminiBaseUrl<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> vertexBaseUrl</span></span><span class="token punctuation">)</span></div><div class="brief ">Overrides the base URLs for the Gemini API and/or Vertex AI API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1817841580%2FFunctions%2F-1525493128" anchor-label="vertexAI" id="1817841580%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="vertex-a-i.html"><span>vertex</span><wbr></wbr><span><span>AI</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1817841580%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>boolean <a href="vertex-a-i.html"><span class="token function">vertexAI</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Returns whether the client is using Vertex AI APIs.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

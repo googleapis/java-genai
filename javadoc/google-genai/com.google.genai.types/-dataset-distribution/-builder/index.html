@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Builder</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai.types/DatasetDistribution.Builder///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../../index.html">com.google.genai.types</a><span class="delimiter">/</span><a href="../index.html">DatasetDistribution</a><span class="delimiter">/</span><span class="current">Builder</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">Builder</a></div><p class="paragraph">Builder for DatasetDistribution.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1468764366%2FConstructors%2F-1525493128" anchor-label="DatasetDistribution.Builder" id="1468764366%2FConstructors%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-dataset-distribution.-builder.html"><span>Dataset</span><wbr></wbr><span>Distribution.</span><wbr></wbr><span>Builder</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1468764366%2FConstructors%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword"></span>void <a href="-dataset-distribution.-builder.html"><span class="token function">DatasetDistribution.Builder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1715733002%2FFunctions%2F-1525493128" anchor-label="buckets" id="-1715733002%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="buckets.html"><span><span>buckets</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1715733002%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="buckets.html"><span class="token function">buckets</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../-dataset-distribution-distribution-bucket/index.html">DatasetDistributionDistributionBucket</a><span class="token operator">&gt;</span> buckets</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="buckets.html"><span class="token function">buckets</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><a href="../../-dataset-distribution-distribution-bucket/index.html">DatasetDistributionDistributionBucket</a><span class="token operator">&gt;</span> buckets</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for buckets.</div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="buckets.html"><span class="token function">buckets</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../-dataset-distribution-distribution-bucket/-builder/index.html">DatasetDistributionDistributionBucket.Builder</a><span class="token operator">&gt;</span> bucketsBuilders</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for buckets builder.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="345695241%2FFunctions%2F-1525493128" anchor-label="build" id="345695241%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="build.html"><span><span>build</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="345695241%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="../index.html">DatasetDistribution</a> <a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1695751751%2FFunctions%2F-1525493128" anchor-label="clearBuckets" id="1695751751%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-buckets.html"><span>clear</span><wbr></wbr><span><span>Buckets</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1695751751%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-buckets.html"><span class="token function">clearBuckets</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of buckets field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-782634356%2FFunctions%2F-1525493128" anchor-label="clearMax" id="-782634356%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-max.html"><span>clear</span><wbr></wbr><span><span>Max</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-782634356%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-max.html"><span class="token function">clearMax</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of max field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1258062405%2FFunctions%2F-1525493128" anchor-label="clearMean" id="1258062405%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-mean.html"><span>clear</span><wbr></wbr><span><span>Mean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1258062405%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-mean.html"><span class="token function">clearMean</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of mean field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-533554848%2FFunctions%2F-1525493128" anchor-label="clearMedian" id="-533554848%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-median.html"><span>clear</span><wbr></wbr><span><span>Median</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-533554848%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-median.html"><span class="token function">clearMedian</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of median field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1989854882%2FFunctions%2F-1525493128" anchor-label="clearMin" id="-1989854882%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-min.html"><span>clear</span><wbr></wbr><span><span>Min</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1989854882%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-min.html"><span class="token function">clearMin</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of min field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-361918587%2FFunctions%2F-1525493128" anchor-label="clearP5" id="-361918587%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-p5.html"><span>clear</span><wbr></wbr><span><span>P5</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-361918587%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-p5.html"><span class="token function">clearP5</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of p5 field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="859941220%2FFunctions%2F-1525493128" anchor-label="clearP95" id="859941220%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-p95.html"><span>clear</span><wbr></wbr><span><span>P95</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="859941220%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-p95.html"><span class="token function">clearP95</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of p95 field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-599860347%2FFunctions%2F-1525493128" anchor-label="clearSum" id="-599860347%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-sum.html"><span>clear</span><wbr></wbr><span><span>Sum</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-599860347%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="clear-sum.html"><span class="token function">clearSum</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Clears the value of sum field.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1238133902%2FFunctions%2F-1525493128" anchor-label="max" id="1238133902%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="max.html"><span><span>max</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1238133902%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="max.html"><span class="token function">max</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> max</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for max.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2987111%2FFunctions%2F-1525493128" anchor-label="mean" id="-2987111%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mean.html"><span><span>mean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2987111%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="mean.html"><span class="token function">mean</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> mean</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for mean.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1508510324%2FFunctions%2F-1525493128" anchor-label="median" id="1508510324%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="median.html"><span><span>median</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1508510324%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="median.html"><span class="token function">median</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> median</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for median.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="702795616%2FFunctions%2F-1525493128" anchor-label="min" id="702795616%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="min.html"><span><span>min</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="702795616%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="min.html"><span class="token function">min</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> min</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for min.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1976527641%2FFunctions%2F-1525493128" anchor-label="p5" id="1976527641%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="p5.html"><span><span>p5</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1976527641%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="p5.html"><span class="token function">p5</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> p5</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for p5.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-790924442%2FFunctions%2F-1525493128" anchor-label="p95" id="-790924442%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="p95.html"><span><span>p95</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-790924442%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="p95.html"><span class="token function">p95</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> p95</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for p95.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1931101063%2FFunctions%2F-1525493128" anchor-label="sum" id="1931101063%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sum.html"><span><span>sum</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1931101063%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="index.html">DatasetDistribution.Builder</a> <a href="sum.html"><span class="token function">sum</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a> sum</span></span><span class="token punctuation">)</span></div><div class="brief ">Setter for sum.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

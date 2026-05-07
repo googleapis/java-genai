@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Transformers</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai/Transformers///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../index.html">com.google.genai</a><span class="delimiter">/</span><span class="current">Transformers</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Transformers</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.api.core/InternalApi///PointingToDeclaration/"><span class="token annotation builtin">InternalApi</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword">class </span><a href="index.html">Transformers</a></div><p class="paragraph">Transformers for GenAI SDK.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-889736045%2FFunctions%2F-1525493128" anchor-label="camelToSnake" id="-889736045%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="camel-to-snake.html"><span>camel</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Snake</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-889736045%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="camel-to-snake.html"><span class="token function">camelToSnake</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> str</span></span><span class="token punctuation">)</span></div><div class="brief ">Converts a camelCase string to snake_case.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2108041835%2FFunctions%2F-1525493128" anchor-label="tAudioBlob" id="-2108041835%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-audio-blob.html"><span>t</span><wbr></wbr><span>Audio</span><wbr></wbr><span><span>Blob</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2108041835%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-blob/index.html">Blob</a> <a href="t-audio-blob.html"><span class="token function">tAudioBlob</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> blob</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a blob to an audio blob, validating its mime type.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-245548611%2FFunctions%2F-1525493128" anchor-label="tBatchJobDestination" id="-245548611%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-batch-job-destination.html"><span>t</span><wbr></wbr><span>Batch</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Destination</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-245548611%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-batch-job-destination.html"><span class="token function">tBatchJobDestination</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> dest</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1202064898%2FFunctions%2F-1525493128" anchor-label="tBatchJobName" id="1202064898%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-batch-job-name.html"><span>t</span><wbr></wbr><span>Batch</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1202064898%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-batch-job-name.html"><span class="token function">tBatchJobName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> name</span></span><span class="token punctuation">)</span></div><div class="brief ">It validates and extracts the batch job name based on the backend (Vertex AI or MLDev).</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="387649838%2FFunctions%2F-1525493128" anchor-label="tBatchJobSource" id="387649838%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-batch-job-source.html"><span>t</span><wbr></wbr><span>Batch</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="387649838%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-batch-job-source.html"><span class="token function">tBatchJobSource</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> src</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1214546161%2FFunctions%2F-1525493128" anchor-label="tBlob" id="-1214546161%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-blob.html"><span>t</span><wbr></wbr><span><span>Blob</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1214546161%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-blob/index.html">Blob</a> <a href="t-blob.html"><span class="token function">tBlob</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> blob</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1204822034%2FFunctions%2F-1525493128" anchor-label="tBlobs" id="1204822034%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-blobs.html"><span>t</span><wbr></wbr><span><span>Blobs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1204822034%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><span data-unresolved-link="com.fasterxml.jackson.databind.node/ArrayNode///PointingToDeclaration/">ArrayNode</span> <a href="t-blobs.html"><span class="token function">tBlobs</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Dummy Blobs transformer.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1604559939%2FFunctions%2F-1525493128" anchor-label="tBytes" id="-1604559939%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-bytes.html"><span>t</span><wbr></wbr><span><span>Bytes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1604559939%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-bytes.html"><span class="token function">tBytes</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Dummy bytes transformer.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-10086246%2FFunctions%2F-1525493128" anchor-label="tCachedContentName" id="-10086246%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-cached-content-name.html"><span>t</span><wbr></wbr><span>Cached</span><wbr></wbr><span>Content</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-10086246%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-cached-content-name.html"><span class="token function">tCachedContentName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms an object to a cached content name for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="783764336%2FFunctions%2F-1525493128" anchor-label="tCachesModel" id="783764336%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-caches-model.html"><span>t</span><wbr></wbr><span>Caches</span><wbr></wbr><span><span>Model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="783764336%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">static </span><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-caches-model.html"><span class="token function">tCachesModel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a model name to the correct format for the Caches API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1207990289%2FFunctions%2F-1525493128" anchor-label="tContent" id="-1207990289%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-content.html"><span>t</span><wbr></wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1207990289%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-content/index.html">Content</a> <a href="t-content.html"><span class="token function">tContent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> content</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms an object to a Content for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2105644633%2FFunctions%2F-1525493128" anchor-label="tContents" id="2105644633%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-contents.html"><span>t</span><wbr></wbr><span><span>Contents</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2105644633%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><span data-unresolved-link="com.google.common.collect/ImmutableList///PointingToDeclaration/">ImmutableList</span><span class="token operator">&lt;</span><a href="../../com.google.genai.types/-content/index.html">Content</a><span class="token operator">&gt;</span> <a href="t-contents.html"><span class="token function">tContents</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../com.google.genai.types/-content/index.html">Content</a> content</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a Content to a list of Content for the API.</div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-contents.html"><span class="token function">tContents</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">In other languages, this transformer is used for supporting union types.</div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><span data-unresolved-link="com.google.common.collect/ImmutableList///PointingToDeclaration/">ImmutableList</span><span class="token operator">&lt;</span><a href="../../com.google.genai.types/-content/index.html">Content</a><span class="token operator">&gt;</span> <a href="t-contents.html"><span class="token function">tContents</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> text</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a text string to a list of Content for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1864491394%2FFunctions%2F-1525493128" anchor-label="tContentsForEmbed" id="-1864491394%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-contents-for-embed.html"><span>t</span><wbr></wbr><span>Contents</span><wbr></wbr><span>For</span><wbr></wbr><span><span>Embed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1864491394%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">static </span><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a><span class="token operator">&gt;</span> <a href="t-contents-for-embed.html"><span class="token function">tContentsForEmbed</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms an object to a list of Content for the embedding API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="407718877%2FFunctions%2F-1525493128" anchor-label="tExtractModels" id="407718877%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-extract-models.html"><span>t</span><wbr></wbr><span>Extract</span><wbr></wbr><span><span>Models</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="407718877%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">static </span><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><span data-unresolved-link="com.fasterxml.jackson.databind/JsonNode///PointingToDeclaration/">JsonNode</span> <a href="t-extract-models.html"><span class="token function">tExtractModels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Extracts the models from the models.list response.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1206986043%2FFunctions%2F-1525493128" anchor-label="tFileName" id="-1206986043%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-file-name.html"><span>t</span><wbr></wbr><span>File</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1206986043%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">static </span><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-file-name.html"><span class="token function">tFileName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1012562992%2FFunctions%2F-1525493128" anchor-label="tImageBlob" id="1012562992%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-image-blob.html"><span>t</span><wbr></wbr><span>Image</span><wbr></wbr><span><span>Blob</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1012562992%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-blob/index.html">Blob</a> <a href="t-image-blob.html"><span class="token function">tImageBlob</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> blob</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a blob to an image blob, validating its mime type.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="877559867%2FFunctions%2F-1525493128" anchor-label="tIsVertexEmbedContentModel" id="877559867%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-is-vertex-embed-content-model.html"><span>t</span><wbr></wbr><span>Is</span><wbr></wbr><span>Vertex</span><wbr></wbr><span>Embed</span><wbr></wbr><span>Content</span><wbr></wbr><span><span>Model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="877559867%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span>boolean <a href="t-is-vertex-embed-content-model.html"><span class="token function">tIsVertexEmbedContentModel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> model</span></span><span class="token punctuation">)</span></div><div class="brief ">Checks if a given model name is a Vertex AI embed content model.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1469153096%2FFunctions%2F-1525493128" anchor-label="tJobState" id="-1469153096%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-job-state.html"><span>t</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1469153096%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-job-state.html"><span class="token function">tJobState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> state</span></span><span class="token punctuation">)</span></div><div class="brief ">Maps specific batch states to job states, otherwise returns the state as is.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="245819196%2FFunctions%2F-1525493128" anchor-label="tLiveSpeechConfig" id="245819196%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-live-speech-config.html"><span>t</span><wbr></wbr><span>Live</span><wbr></wbr><span>Speech</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="245819196%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">static </span><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><a href="../../com.google.genai.types/-speech-config/index.html">SpeechConfig</a> <a href="t-live-speech-config.html"><span class="token function">tLiveSpeechConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a SpeechConfig object for the live API, validating it.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1322461467%2FFunctions%2F-1525493128" anchor-label="tMetrics" id="-1322461467%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-metrics.html"><span>t</span><wbr></wbr><span><span>Metrics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1322461467%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><span data-unresolved-link="com.fasterxml.jackson.databind.node/ArrayNode///PointingToDeclaration/">ArrayNode</span> <a href="t-metrics.html"><span class="token function">tMetrics</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> metrics</span></span><span class="token punctuation">)</span></div><div class="brief ">Prepares the metric payload for the evaluation request.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-768485599%2FFunctions%2F-1525493128" anchor-label="tModel" id="-768485599%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-model.html"><span>t</span><wbr></wbr><span><span>Model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-768485599%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-model.html"><span class="token function">tModel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms a model name to the correct format for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1236844445%2FFunctions%2F-1525493128" anchor-label="tModelsUrl" id="1236844445%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-models-url.html"><span>t</span><wbr></wbr><span>Models</span><wbr></wbr><span><span>Url</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1236844445%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="t-models-url.html"><span class="token function">tModelsUrl</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-api-client/index.html">ApiClient</a> apiClient<span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.jspecify.annotations/Nullable///PointingToDeclaration/"><span class="token annotation builtin">Nullable</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> baseModels</span></span><span class="token punctuation">)</span></div><div class="brief ">Determines the appropriate models URL based on the API client type and whether base models are requested.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="919104451%2FFunctions%2F-1525493128" anchor-label="tRecvBatchJobDestination" id="919104451%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-recv-batch-job-destination.html"><span>t</span><wbr></wbr><span>Recv</span><wbr></wbr><span>Batch</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Destination</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="919104451%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-recv-batch-job-destination.html"><span class="token function">tRecvBatchJobDestination</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> dest</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="802276619%2FFunctions%2F-1525493128" anchor-label="tSchema" id="802276619%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-schema.html"><span>t</span><wbr></wbr><span><span>Schema</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="802276619%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-schema/index.html">Schema</a> <a href="t-schema.html"><span class="token function">tSchema</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms an object to a Schema for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-357794360%2FFunctions%2F-1525493128" anchor-label="tSpeechConfig" id="-357794360%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-speech-config.html"><span>t</span><wbr></wbr><span>Speech</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-357794360%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-speech-config/index.html">SpeechConfig</a> <a href="t-speech-config.html"><span class="token function">tSpeechConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> speechConfig</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="698514292%2FFunctions%2F-1525493128" anchor-label="tTool" id="698514292%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-tool.html"><span>t</span><wbr></wbr><span><span>Tool</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="698514292%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-tool/index.html">Tool</a> <a href="t-tool.html"><span class="token function">tTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">Transforms an object to a Tool for the API.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="380153933%2FFunctions%2F-1525493128" anchor-label="tTools" id="380153933%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-tools.html"><span>t</span><wbr></wbr><span><span>Tools</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="380153933%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> <a href="t-tools.html"><span class="token function">tTools</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div><div class="brief ">In other languages, this transformer is used for supporting union types.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1927089326%2FFunctions%2F-1525493128" anchor-label="tTuningJobStatus" id="1927089326%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="t-tuning-job-status.html"><span>t</span><wbr></wbr><span>Tuning</span><wbr></wbr><span>Job</span><wbr></wbr><span><span>Status</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1927089326%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span><a href="../../com.google.genai.types/-job-state/index.html">JobState</a> <a href="t-tuning-job-status.html"><span class="token function">tTuningJobStatus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a> origin</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2121626638%2FFunctions%2F-1525493128" anchor-label="updateJsonNode" id="2121626638%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="update-json-node.html"><span>update</span><wbr></wbr><span>Json</span><wbr></wbr><span><span>Node</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2121626638%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">static </span>void <a href="update-json-node.html"><span class="token function">updateJsonNode</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.fasterxml.jackson.databind.node/ObjectNode///PointingToDeclaration/">ObjectNode</span> currentObject<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> keyToSet<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.fasterxml.jackson.databind/JsonNode///PointingToDeclaration/">JsonNode</span> valueNode</span></span><span class="token punctuation">)</span></div><div class="brief ">Updates a JSON node with a new value, handling potential conflicts.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Builder</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai.interactions.models.interactions/Usage.Builder///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../../index.html">com.google.genai.interactions.models.interactions</a><span class="delimiter">/</span><a href="../index.html">Usage</a><span class="delimiter">/</span><span class="current">Builder</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="index.html">Builder</a></div><p class="paragraph">A builder for <a href="../index.html">Usage</a>.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-813901751%2FFunctions%2F-1525493128" anchor-label="addCachedTokensByModality" id="-813901751%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-cached-tokens-by-modality.html"><span>add</span><wbr></wbr><span>Cached</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-813901751%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="add-cached-tokens-by-modality.html"><span class="token function">addCachedTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-cached-tokens-by-modality/index.html">Usage.CachedTokensByModality</a> cachedTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-cached-tokens-by-modality/index.html">CachedTokensByModality</a> to <a href="cached-tokens-by-modality.html">Builder.cachedTokensByModality</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="428905273%2FFunctions%2F-1525493128" anchor-label="addGroundingToolCount" id="428905273%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-grounding-tool-count.html"><span>add</span><wbr></wbr><span>Grounding</span><wbr></wbr><span>Tool</span><wbr></wbr><span><span>Count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="428905273%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="add-grounding-tool-count.html"><span class="token function">addGroundingToolCount</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-grounding-tool-count/index.html">Usage.GroundingToolCount</a> groundingToolCount</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-grounding-tool-count/index.html">GroundingToolCount</a> to <a href="grounding-tool-count.html">Builder.groundingToolCount</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2090446211%2FFunctions%2F-1525493128" anchor-label="addInputTokensByModality" id="2090446211%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-input-tokens-by-modality.html"><span>add</span><wbr></wbr><span>Input</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2090446211%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="add-input-tokens-by-modality.html"><span class="token function">addInputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-input-tokens-by-modality/index.html">Usage.InputTokensByModality</a> inputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-input-tokens-by-modality/index.html">InputTokensByModality</a> to <a href="input-tokens-by-modality.html">Builder.inputTokensByModality</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="978730184%2FFunctions%2F-1525493128" anchor-label="additionalProperties" id="978730184%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="additional-properties.html"><span>additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="978730184%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="additional-properties.html"><span class="token function">additionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span><span class="token operator">&gt;</span> additionalProperties</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-584588085%2FFunctions%2F-1525493128" anchor-label="addOutputTokensByModality" id="-584588085%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-output-tokens-by-modality.html"><span>add</span><wbr></wbr><span>Output</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-584588085%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="add-output-tokens-by-modality.html"><span class="token function">addOutputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-output-tokens-by-modality/index.html">Usage.OutputTokensByModality</a> outputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-output-tokens-by-modality/index.html">OutputTokensByModality</a> to <a href="output-tokens-by-modality.html">Builder.outputTokensByModality</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1084597981%2FFunctions%2F-1525493128" anchor-label="addToolUseTokensByModality" id="-1084597981%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-tool-use-tokens-by-modality.html"><span>add</span><wbr></wbr><span>Tool</span><wbr></wbr><span>Use</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1084597981%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="add-tool-use-tokens-by-modality.html"><span class="token function">addToolUseTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-tool-use-tokens-by-modality/index.html">Usage.ToolUseTokensByModality</a> toolUseTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-tool-use-tokens-by-modality/index.html">ToolUseTokensByModality</a> to <a href="tool-use-tokens-by-modality.html">Builder.toolUseTokensByModality</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1328296855%2FFunctions%2F-1525493128" anchor-label="build" id="-1328296855%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="build.html"><span><span>build</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1328296855%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../index.html">Usage</a> <a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Returns an immutable instance of <a href="../index.html">Usage</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1850194132%2FFunctions%2F-1525493128" anchor-label="cachedTokensByModality" id="1850194132%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="cached-tokens-by-modality.html"><span>cached</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1850194132%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="cached-tokens-by-modality.html"><span class="token function">cachedTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-cached-tokens-by-modality/index.html">Usage.CachedTokensByModality</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> cachedTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="cached-tokens-by-modality.html">Builder.cachedTokensByModality</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="cached-tokens-by-modality.html"><span class="token function">cachedTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-cached-tokens-by-modality/index.html">Usage.CachedTokensByModality</a><span class="token operator">&gt;</span> cachedTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">A breakdown of cached token usage by modality.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="593199844%2FFunctions%2F-1525493128" anchor-label="groundingToolCount" id="593199844%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="grounding-tool-count.html"><span>grounding</span><wbr></wbr><span>Tool</span><wbr></wbr><span><span>Count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="593199844%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="grounding-tool-count.html"><span class="token function">groundingToolCount</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-grounding-tool-count/index.html">Usage.GroundingToolCount</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> groundingToolCount</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="grounding-tool-count.html">Builder.groundingToolCount</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="grounding-tool-count.html"><span class="token function">groundingToolCount</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-grounding-tool-count/index.html">Usage.GroundingToolCount</a><span class="token operator">&gt;</span> groundingToolCount</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Grounding tool count.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="959780438%2FFunctions%2F-1525493128" anchor-label="inputTokensByModality" id="959780438%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input-tokens-by-modality.html"><span>input</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="959780438%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="input-tokens-by-modality.html"><span class="token function">inputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-input-tokens-by-modality/index.html">Usage.InputTokensByModality</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> inputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="input-tokens-by-modality.html">Builder.inputTokensByModality</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="input-tokens-by-modality.html"><span class="token function">inputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-input-tokens-by-modality/index.html">Usage.InputTokensByModality</a><span class="token operator">&gt;</span> inputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">A breakdown of input token usage by modality.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1746311730%2FFunctions%2F-1525493128" anchor-label="outputTokensByModality" id="1746311730%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="output-tokens-by-modality.html"><span>output</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1746311730%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="output-tokens-by-modality.html"><span class="token function">outputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-output-tokens-by-modality/index.html">Usage.OutputTokensByModality</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> outputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="output-tokens-by-modality.html">Builder.outputTokensByModality</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="output-tokens-by-modality.html"><span class="token function">outputTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-output-tokens-by-modality/index.html">Usage.OutputTokensByModality</a><span class="token operator">&gt;</span> outputTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">A breakdown of output token usage by modality.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-366950850%2FFunctions%2F-1525493128" anchor-label="putAdditionalProperty" id="-366950850%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-additional-property.html"><span>put</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Property</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-366950850%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="put-additional-property.html"><span class="token function">putAdditionalProperty</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span> value</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-261863978%2FFunctions%2F-1525493128" anchor-label="putAllAdditionalProperties" id="-261863978%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-all-additional-properties.html"><span>put</span><wbr></wbr><span>All</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-261863978%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="put-all-additional-properties.html"><span class="token function">putAllAdditionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span><span class="token operator">&gt;</span> additionalProperties</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="654239361%2FFunctions%2F-1525493128" anchor-label="removeAdditionalProperty" id="654239361%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-additional-property.html"><span>remove</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Property</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="654239361%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="remove-additional-property.html"><span class="token function">removeAdditionalProperty</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="264688420%2FFunctions%2F-1525493128" anchor-label="removeAllAdditionalProperties" id="264688420%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-all-additional-properties.html"><span>remove</span><wbr></wbr><span>All</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="264688420%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="remove-all-additional-properties.html"><span class="token function">removeAllAdditionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html">Set</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> keys</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="82265900%2FFunctions%2F-1525493128" anchor-label="toolUseTokensByModality" id="82265900%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tool-use-tokens-by-modality.html"><span>tool</span><wbr></wbr><span>Use</span><wbr></wbr><span>Tokens</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="82265900%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="tool-use-tokens-by-modality.html"><span class="token function">toolUseTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-tool-use-tokens-by-modality/index.html">Usage.ToolUseTokensByModality</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> toolUseTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="tool-use-tokens-by-modality.html">Builder.toolUseTokensByModality</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="tool-use-tokens-by-modality.html"><span class="token function">toolUseTokensByModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-tool-use-tokens-by-modality/index.html">Usage.ToolUseTokensByModality</a><span class="token operator">&gt;</span> toolUseTokensByModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">A breakdown of tool-use token usage by modality.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-94112274%2FFunctions%2F-1525493128" anchor-label="totalCachedTokens" id="-94112274%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-cached-tokens.html"><span>total</span><wbr></wbr><span>Cached</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-94112274%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-cached-tokens.html"><span class="token function">totalCachedTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalCachedTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-cached-tokens.html">Builder.totalCachedTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-cached-tokens.html"><span class="token function">totalCachedTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalCachedTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Number of tokens in the cached part of the prompt (the cached content).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="770040796%2FFunctions%2F-1525493128" anchor-label="totalInputTokens" id="770040796%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-input-tokens.html"><span>total</span><wbr></wbr><span>Input</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="770040796%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-input-tokens.html"><span class="token function">totalInputTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalInputTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-input-tokens.html">Builder.totalInputTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-input-tokens.html"><span class="token function">totalInputTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalInputTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Number of tokens in the prompt (context).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1593976976%2FFunctions%2F-1525493128" anchor-label="totalOutputTokens" id="-1593976976%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-output-tokens.html"><span>total</span><wbr></wbr><span>Output</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1593976976%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-output-tokens.html"><span class="token function">totalOutputTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalOutputTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-output-tokens.html">Builder.totalOutputTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-output-tokens.html"><span class="token function">totalOutputTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalOutputTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Total number of tokens across all the generated responses.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1393637444%2FFunctions%2F-1525493128" anchor-label="totalThoughtTokens" id="-1393637444%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-thought-tokens.html"><span>total</span><wbr></wbr><span>Thought</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1393637444%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-thought-tokens.html"><span class="token function">totalThoughtTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalThoughtTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-thought-tokens.html">Builder.totalThoughtTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-thought-tokens.html"><span class="token function">totalThoughtTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalThoughtTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Number of tokens of thoughts for thinking models.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1397093326%2FFunctions%2F-1525493128" anchor-label="totalTokens" id="-1397093326%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-tokens.html"><span>total</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1397093326%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-tokens.html"><span class="token function">totalTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-tokens.html">Builder.totalTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-tokens.html"><span class="token function">totalTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Total token count for the interaction request (prompt + responses + other internal tokens).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2102475268%2FFunctions%2F-1525493128" anchor-label="totalToolUseTokens" id="-2102475268%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-tool-use-tokens.html"><span>total</span><wbr></wbr><span>Tool</span><wbr></wbr><span>Use</span><wbr></wbr><span><span>Tokens</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2102475268%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-tool-use-tokens.html"><span class="token function">totalToolUseTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a><span class="token operator">&gt;</span> totalToolUseTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="total-tool-use-tokens.html">Builder.totalToolUseTokens</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Usage.Builder</a> <a href="total-tool-use-tokens.html"><span class="token function">totalToolUseTokens</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> totalToolUseTokens</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Number of tokens present in tool-use prompt(s).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

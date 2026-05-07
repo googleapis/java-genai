@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Known</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai.interactions.models.interactions/Model.Known///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../../index.html">com.google.genai.interactions.models.interactions</a><span class="delimiter">/</span><a href="../index.html">Model</a><span class="delimiter">/</span><span class="current">Known</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Known</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">enum </span><a href="index.html">Known</a><span class="token keyword"> extends </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Model.Known</a><span class="token operator">&gt;</span></div><p class="paragraph">An enum containing <a href="../index.html">Model</a>'s known values.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="ENTRY">Entries</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="ENTRY">
+        <h2 class="">Entries</h2>
+        <div class="table"><a data-name="-1262892646%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_COMPUTER_USE_PREVIEW_10_2025" id="-1262892646%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-c-o-m-p-u-t-e-r_-u-s-e_-p-r-e-v-i-e-w_10_2025/index.html">GEMINI_2_5_COMPUTER_USE_PREVIEW_10_2025</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1262892646%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-c-o-m-p-u-t-e-r_-u-s-e_-p-r-e-v-i-e-w_10_2025/index.html">GEMINI_2_5_COMPUTER_USE_PREVIEW_10_2025</a></div><div class="brief "><p class="paragraph">An agentic capability model designed for direct interface interaction, allowing Gemini to perceive and navigate digital environments.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-658348180%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH" id="-658348180%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h/index.html">GEMINI_2_5_FLASH</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-658348180%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h/index.html">GEMINI_2_5_FLASH</a></div><div class="brief "><p class="paragraph">Our first hybrid reasoning model which supports a 1M token context window and has thinking budgets.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="466639016%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_IMAGE" id="466639016%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-i-m-a-g-e/index.html">GEMINI_2_5_FLASH_IMAGE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="466639016%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-i-m-a-g-e/index.html">GEMINI_2_5_FLASH_IMAGE</a></div><div class="brief "><p class="paragraph">Our native image generation model, optimized for speed, flexibility, and contextual understanding. Text input and output is priced the same as 2.5 Flash.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1355206537%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_LITE" id="1355206537%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-l-i-t-e/index.html">GEMINI_2_5_FLASH_LITE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1355206537%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-l-i-t-e/index.html">GEMINI_2_5_FLASH_LITE</a></div><div class="brief "><p class="paragraph">Our smallest and most cost effective model, built for at scale usage.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="602141546%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_LITE_PREVIEW_09_2025" id="602141546%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-l-i-t-e_-p-r-e-v-i-e-w_09_2025/index.html">GEMINI_2_5_FLASH_LITE_PREVIEW_09_2025</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="602141546%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-l-i-t-e_-p-r-e-v-i-e-w_09_2025/index.html">GEMINI_2_5_FLASH_LITE_PREVIEW_09_2025</a></div><div class="brief "><p class="paragraph">The latest model based on Gemini 2.5 Flash lite optimized for cost-efficiency, high throughput and high quality.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1524601394%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_NATIVE_AUDIO_PREVIEW_12_2025" id="1524601394%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-n-a-t-i-v-e_-a-u-d-i-o_-p-r-e-v-i-e-w_12_2025/index.html">GEMINI_2_5_FLASH_NATIVE_AUDIO_PREVIEW_12_2025</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1524601394%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-n-a-t-i-v-e_-a-u-d-i-o_-p-r-e-v-i-e-w_12_2025/index.html">GEMINI_2_5_FLASH_NATIVE_AUDIO_PREVIEW_12_2025</a></div><div class="brief "><p class="paragraph">Our native audio models optimized for higher quality audio outputs with better pacing, voice naturalness, verbosity, and mood.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="242312525%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_PREVIEW_09_2025" id="242312525%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-p-r-e-v-i-e-w_09_2025/index.html">GEMINI_2_5_FLASH_PREVIEW_09_2025</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="242312525%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-p-r-e-v-i-e-w_09_2025/index.html">GEMINI_2_5_FLASH_PREVIEW_09_2025</a></div><div class="brief "><p class="paragraph">The latest model based on the 2.5 Flash model. 2.5 Flash Preview is best for large scale processing, low-latency, high volume tasks that require thinking, and agentic use cases.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2028773975%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_FLASH_PREVIEW_TTS" id="-2028773975%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-p-r-e-v-i-e-w_-t-t-s/index.html">GEMINI_2_5_FLASH_PREVIEW_TTS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2028773975%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-f-l-a-s-h_-p-r-e-v-i-e-w_-t-t-s/index.html">GEMINI_2_5_FLASH_PREVIEW_TTS</a></div><div class="brief "><p class="paragraph">Our 2.5 Flash text-to-speech model optimized for powerful, low-latency controllable speech generation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-571292823%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_PRO" id="-571292823%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-p-r-o/index.html">GEMINI_2_5_PRO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-571292823%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-p-r-o/index.html">GEMINI_2_5_PRO</a></div><div class="brief "><p class="paragraph">Our state-of-the-art multipurpose model, which excels at coding and complex reasoning tasks.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1894734298%2FClasslikes%2F-1525493128" anchor-label="GEMINI_2_5_PRO_PREVIEW_TTS" id="-1894734298%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_2_5_-p-r-o_-p-r-e-v-i-e-w_-t-t-s/index.html">GEMINI_2_5_PRO_PREVIEW_TTS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1894734298%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_2_5_-p-r-o_-p-r-e-v-i-e-w_-t-t-s/index.html">GEMINI_2_5_PRO_PREVIEW_TTS</a></div><div class="brief "><p class="paragraph">Our 2.5 Pro text-to-speech audio model optimized for powerful, low-latency speech generation for more natural outputs and easier to steer prompts.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1450649568%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_FLASH_PREVIEW" id="-1450649568%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_-f-l-a-s-h_-p-r-e-v-i-e-w/index.html">GEMINI_3_FLASH_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1450649568%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_-f-l-a-s-h_-p-r-e-v-i-e-w/index.html">GEMINI_3_FLASH_PREVIEW</a></div><div class="brief "><p class="paragraph">Our most intelligent model built for speed, combining frontier intelligence with superior search and grounding.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="650767641%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_PRO_IMAGE_PREVIEW" id="650767641%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_-p-r-o_-i-m-a-g-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_PRO_IMAGE_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="650767641%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_-p-r-o_-i-m-a-g-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_PRO_IMAGE_PREVIEW</a></div><div class="brief "><p class="paragraph">State-of-the-art image generation and editing model.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1221946845%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_PRO_PREVIEW" id="1221946845%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_-p-r-o_-p-r-e-v-i-e-w/index.html">GEMINI_3_PRO_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1221946845%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_-p-r-o_-p-r-e-v-i-e-w/index.html">GEMINI_3_PRO_PREVIEW</a></div><div class="brief "><p class="paragraph">Our most intelligent model with SOTA reasoning and multimodal understanding, and powerful agentic and vibe coding capabilities.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="93361807%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_1_PRO_PREVIEW" id="93361807%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_1_-p-r-o_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_PRO_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="93361807%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_1_-p-r-o_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_PRO_PREVIEW</a></div><div class="brief "><p class="paragraph">Our latest SOTA reasoning model with unprecedented depth and nuance, and powerful multimodal understanding and coding capabilities.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1129336882%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_1_FLASH_IMAGE_PREVIEW" id="-1129336882%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-i-m-a-g-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_IMAGE_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1129336882%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-i-m-a-g-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_IMAGE_PREVIEW</a></div><div class="brief "><p class="paragraph">Pro-level visual intelligence with Flash-speed efficiency and reality-grounded generation capabilities.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-410766059%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_1_FLASH_LITE_PREVIEW" id="-410766059%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-l-i-t-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_LITE_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-410766059%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-l-i-t-e_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_LITE_PREVIEW</a></div><div class="brief "><p class="paragraph">Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and simple data processing.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-924540954%2FClasslikes%2F-1525493128" anchor-label="GEMINI_3_1_FLASH_TTS_PREVIEW" id="-924540954%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-t-t-s_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_TTS_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-924540954%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-g-e-m-i-n-i_3_1_-f-l-a-s-h_-t-t-s_-p-r-e-v-i-e-w/index.html">GEMINI_3_1_FLASH_TTS_PREVIEW</a></div><div class="brief "><p class="paragraph">Gemini 3.1 Flash TTS: Powerful, low-latency speech generation. Enjoy natural outputs, steerable prompts, and new expressive audio tags for precise narration control.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1889484996%2FClasslikes%2F-1525493128" anchor-label="LYRIA_3_CLIP_PREVIEW" id="1889484996%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-l-y-r-i-a_3_-c-l-i-p_-p-r-e-v-i-e-w/index.html">LYRIA_3_CLIP_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1889484996%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-l-y-r-i-a_3_-c-l-i-p_-p-r-e-v-i-e-w/index.html">LYRIA_3_CLIP_PREVIEW</a></div><div class="brief "><p class="paragraph">Our low-latency, music generation model optimized for high-fidelity audio clips and precise rhythmic control.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-744309517%2FClasslikes%2F-1525493128" anchor-label="LYRIA_3_PRO_PREVIEW" id="-744309517%2FClasslikes%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-l-y-r-i-a_3_-p-r-o_-p-r-e-v-i-e-w/index.html">LYRIA_3_PRO_PREVIEW</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-744309517%2FClasslikes%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><a href="-l-y-r-i-a_3_-p-r-o_-p-r-e-v-i-e-w/index.html">LYRIA_3_PRO_PREVIEW</a></div><div class="brief "><p class="paragraph">Our advanced, full-song generative model with deep compositional understanding, optimized for precise structural control and complex transitions across diverse musical styles.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1751988649%2FProperties%2F-1525493128" anchor-label="entries" id="-1751988649%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1751988649%2FProperties%2F-1525493128"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1751988649%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.enums/-enum-entries/index.html">EnumEntries</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Model.Known</a><span class="token operator">&gt;</span> <a href="index.html#-1751988649%2FProperties%2F-1525493128">entries</a></div><div class="brief "><p class="paragraph">Returns a representation of an immutable list of all enum entries, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-372974862%2FProperties%2F-1525493128" anchor-label="name" id="-372974862%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../-video-content/-resolution/-value/_-u-n-k-n-o-w-n/index.html#-372974862%2FProperties%2F-1525493128"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-372974862%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="../../-video-content/-resolution/-value/_-u-n-k-n-o-w-n/index.html#-372974862%2FProperties%2F-1525493128">name</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-739389684%2FProperties%2F-1525493128" anchor-label="ordinal" id="-739389684%2FProperties%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../-video-content/-resolution/-value/_-u-n-k-n-o-w-n/index.html#-739389684%2FProperties%2F-1525493128"><span><span>ordinal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739389684%2FProperties%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> <a href="../../-video-content/-resolution/-value/_-u-n-k-n-o-w-n/index.html#-739389684%2FProperties%2F-1525493128">ordinal</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1438756665%2FFunctions%2F-1525493128" anchor-label="getEntries" id="1438756665%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-entries.html"><span>get</span><wbr></wbr><span><span>Entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1438756665%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.enums/-enum-entries/index.html">EnumEntries</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Model.Known</a><span class="token operator">&gt;</span> <a href="get-entries.html"><span class="token function">getEntries</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">An enum containing <a href="../index.html">Model</a>'s known values.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-160835045%2FFunctions%2F-1525493128" anchor-label="getName" id="-160835045%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-160835045%2FFunctions%2F-1525493128"><span>get</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-160835045%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> <a href="index.html#-160835045%2FFunctions%2F-1525493128"><span class="token function">getName</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1221006147%2FFunctions%2F-1525493128" anchor-label="getOrdinal" id="1221006147%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1221006147%2FFunctions%2F-1525493128"><span>get</span><wbr></wbr><span><span>Ordinal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1221006147%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> <a href="index.html#1221006147%2FFunctions%2F-1525493128"><span class="token function">getOrdinal</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="264920229%2FFunctions%2F-1525493128" anchor-label="valueOf" id="264920229%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value-of.html"><span>value</span><wbr></wbr><span><span>Of</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="264920229%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">Model.Known</a> <a href="value-of.html"><span class="token function">valueOf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> value</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Returns the enum constant of this type with the specified name. The string must match exactly an identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-825164175%2FFunctions%2F-1525493128" anchor-label="values" id="-825164175%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-825164175%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">Model.Known</a><span class="token operator">&gt;</span> <a href="values.html"><span class="token function">values</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Returns an array containing the constants of this enum type, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

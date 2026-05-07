@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Builder</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    google-genai
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="google-genai::com.google.genai.interactions.models.interactions/CreateAgentInteractionParams.Builder///PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"><a href="../../../../index.html">google-genai</a><span class="delimiter">/</span><a href="../../index.html">com.google.genai.interactions.models.interactions</a><span class="delimiter">/</span><a href="../index.html">CreateAgentInteractionParams</a><span class="delimiter">/</span><span class="current">Builder</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Builder</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="index.html">Builder</a></div><p class="paragraph">A builder for <a href="../index.html">CreateAgentInteractionParams</a>.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-103732740%2FFunctions%2F-1525493128" anchor-label="addFileSearchCallStep" id="-103732740%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-file-search-call-step.html"><span>add</span><wbr></wbr><span>File</span><wbr></wbr><span>Search</span><wbr></wbr><span>Call</span><wbr></wbr><span><span>Step</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-103732740%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-file-search-call-step.html"><span class="token function">addFileSearchCallStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> id</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with the following:</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="784355899%2FFunctions%2F-1525493128" anchor-label="addFileSearchResultStep" id="784355899%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-file-search-result-step.html"><span>add</span><wbr></wbr><span>File</span><wbr></wbr><span>Search</span><wbr></wbr><span>Result</span><wbr></wbr><span><span>Step</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="784355899%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-file-search-result-step.html"><span class="token function">addFileSearchResultStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> callId</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with the following:</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-132770008%2FFunctions%2F-1525493128" anchor-label="addGoogleMapsCallStep" id="-132770008%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-google-maps-call-step.html"><span>add</span><wbr></wbr><span>Google</span><wbr></wbr><span>Maps</span><wbr></wbr><span>Call</span><wbr></wbr><span><span>Step</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-132770008%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-google-maps-call-step.html"><span class="token function">addGoogleMapsCallStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> id</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with the following:</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1297605752%2FFunctions%2F-1525493128" anchor-label="additionalProperties" id="-1297605752%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="additional-properties.html"><span>additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1297605752%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="additional-properties.html"><span class="token function">additionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span><span class="token operator">&gt;</span> additionalProperties</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-467652187%2FFunctions%2F-1525493128" anchor-label="addResponseModality" id="-467652187%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-response-modality.html"><span>add</span><wbr></wbr><span>Response</span><wbr></wbr><span><span>Modality</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-467652187%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-response-modality.html"><span class="token function">addResponseModality</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-response-modality/index.html">CreateAgentInteractionParams.ResponseModality</a> responseModality</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../-response-modality/index.html">ResponseModality</a> to <a href="response-modalities.html">responseModalities</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1622310461%2FFunctions%2F-1525493128" anchor-label="addStep" id="-1622310461%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-step.html"><span>add</span><wbr></wbr><span><span>Step</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622310461%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-code-execution-call-step/index.html">CodeExecutionCallStep</a> codeExecutionCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofCodeExecutionCall(codeExecutionCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-code-execution-result-step/index.html">CodeExecutionResultStep</a> codeExecutionResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofCodeExecutionResult(codeExecutionResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-file-search-call-step/index.html">FileSearchCallStep</a> fileSearchCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofFileSearchCall(fileSearchCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-file-search-result-step/index.html">FileSearchResultStep</a> fileSearchResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofFileSearchResult(fileSearchResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-function-call-step/index.html">FunctionCallStep</a> functionCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofFunctionCall(functionCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-function-result-step/index.html">FunctionResultStep</a> functionResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofFunctionResult(functionResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-google-maps-call-step/index.html">GoogleMapsCallStep</a> googleMapsCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofGoogleMapsCall(googleMapsCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-google-maps-result-step/index.html">GoogleMapsResultStep</a> googleMapsResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofGoogleMapsResult(googleMapsResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-google-search-call-step/index.html">GoogleSearchCallStep</a> googleSearchCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofGoogleSearchCall(googleSearchCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-google-search-result-step/index.html">GoogleSearchResultStep</a> googleSearchResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofGoogleSearchResult(googleSearchResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-mcp-server-tool-call-step/index.html">McpServerToolCallStep</a> mcpServerToolCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofMcpServerToolCall(mcpServerToolCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-mcp-server-tool-result-step/index.html">McpServerToolResultStep</a> mcpServerToolResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofMcpServerToolResult(mcpServerToolResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-model-output-step/index.html">ModelOutputStep</a> modelOutput</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofModelOutput(modelOutput)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-step/index.html">Step</a> step</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../../-step/index.html">Step</a> to <a href="steps.html">steps</a>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-thought-step/index.html">ThoughtStep</a> thought</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofThought(thought)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-url-context-call-step/index.html">UrlContextCallStep</a> urlContextCall</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofUrlContextCall(urlContextCall)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-url-context-result-step/index.html">UrlContextResultStep</a> urlContextResult</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofUrlContextResult(urlContextResult)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-step.html"><span class="token function">addStep</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-user-input-step/index.html">UserInputStep</a> userInput</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-step.html">addStep</a> with <code class="lang-kotlin">Step.ofUserInput(userInput)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="849099242%2FFunctions%2F-1525493128" anchor-label="addTool" id="849099242%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-tool.html"><span>add</span><wbr></wbr><span><span>Tool</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="849099242%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-function/index.html">Function</a> function</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofFunction(function)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/index.html">Tool</a> tool</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a single <a href="../../-tool/index.html">Tool</a> to <a href="tools.html">tools</a>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-computer-use/index.html">Tool.ComputerUse</a> computerUse</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofComputerUse(computerUse)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-file-search/index.html">Tool.FileSearch</a> fileSearch</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofFileSearch(fileSearch)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-google-maps/index.html">Tool.GoogleMaps</a> googleMaps</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofGoogleMaps(googleMaps)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-google-search/index.html">Tool.GoogleSearch</a> googleSearch</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofGoogleSearch(googleSearch)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-mcp-server/index.html">Tool.McpServer</a> mcpServer</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofMcpServer(mcpServer)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool.html"><span class="token function">addTool</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-tool/-retrieval/index.html">Tool.Retrieval</a> retrieval</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofRetrieval(retrieval)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1760905681%2FFunctions%2F-1525493128" anchor-label="addToolCodeExecution" id="1760905681%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-tool-code-execution.html"><span>add</span><wbr></wbr><span>Tool</span><wbr></wbr><span>Code</span><wbr></wbr><span><span>Execution</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1760905681%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool-code-execution.html"><span class="token function">addToolCodeExecution</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofCodeExecution()</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2093050750%2FFunctions%2F-1525493128" anchor-label="addToolUrlContext" id="2093050750%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-tool-url-context.html"><span>add</span><wbr></wbr><span>Tool</span><wbr></wbr><span>Url</span><wbr></wbr><span><span>Context</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2093050750%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="add-tool-url-context.html"><span class="token function">addToolUrlContext</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="add-tool.html">addTool</a> with <code class="lang-kotlin">Tool.ofUrlContext()</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1572390006%2FFunctions%2F-1525493128" anchor-label="agent" id="-1572390006%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="agent.html"><span><span>agent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1572390006%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent.html"><span class="token function">agent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-agent/index.html">CreateAgentInteractionParams.Agent</a><span class="token operator">&gt;</span> agent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="agent.html">Builder.agent</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent.html"><span class="token function">agent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-agent/index.html">CreateAgentInteractionParams.Agent</a> agent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The name of the <code class="lang-kotlin">Agent</code> used for generating the interaction.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent.html"><span class="token function">agent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> value</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="agent.html">agent</a> to an arbitrary <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1774996446%2FFunctions%2F-1525493128" anchor-label="agentConfig" id="1774996446%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="agent-config.html"><span>agent</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1774996446%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent-config.html"><span class="token function">agentConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-agent-config/index.html">CreateAgentInteractionParams.AgentConfig</a><span class="token operator">&gt;</span> agentConfig</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="agent-config.html">Builder.agentConfig</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent-config.html"><span class="token function">agentConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-agent-config/index.html">CreateAgentInteractionParams.AgentConfig</a> agentConfig</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configuration parameters for the agent interaction.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent-config.html"><span class="token function">agentConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-deep-research-agent-config/index.html">DeepResearchAgentConfig</a> deepResearch</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="agent-config.html">agentConfig</a> with <code class="lang-kotlin">AgentConfig.ofDeepResearch(deepResearch)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="agent-config.html"><span class="token function">agentConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-dynamic-agent-config/index.html">DynamicAgentConfig</a> dynamic</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="agent-config.html">agentConfig</a> with <code class="lang-kotlin">AgentConfig.ofDynamic(dynamic)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1275413302%2FFunctions%2F-1525493128" anchor-label="background" id="-1275413302%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="background.html"><span><span>background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1275413302%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="background.html"><span class="token function">background</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a><span class="token operator">&gt;</span> background</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="background.html">Builder.background</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="background.html"><span class="token function">background</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a> background</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Input only. Whether to run the model interaction in the background.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1741297065%2FFunctions%2F-1525493128" anchor-label="build" id="1741297065%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="build.html"><span><span>build</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1741297065%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="../index.html">CreateAgentInteractionParams</a> <a href="build.html"><span class="token function">build</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Returns an immutable instance of <a href="../index.html">CreateAgentInteractionParams</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1833903974%2FFunctions%2F-1525493128" anchor-label="created" id="-1833903974%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="created.html"><span><span>created</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1833903974%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="created.html"><span class="token function">created</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html">OffsetDateTime</a><span class="token operator">&gt;</span> created</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="created.html">Builder.created</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="created.html"><span class="token function">created</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html">OffsetDateTime</a> created</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Required. Output only. The time at which the response was created in ISO 8601 format (YYYY-MM-DDThh:mm:ssZ).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1208330422%2FFunctions%2F-1525493128" anchor-label="id" id="1208330422%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1208330422%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="id.html"><span class="token function">id</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> id</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="id.html">Builder.id</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="id.html"><span class="token function">id</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> id</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Required. Output only. A unique identifier for the interaction completion.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1281946957%2FFunctions%2F-1525493128" anchor-label="input" id="1281946957%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input.html"><span><span>input</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1281946957%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-input/index.html">CreateAgentInteractionParams.Input</a><span class="token operator">&gt;</span> input</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="input.html">Builder.input</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-audio-content/index.html">AudioContent</a> audioContent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofAudioContent(audioContent)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-input/index.html">CreateAgentInteractionParams.Input</a> input</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The input for the interaction.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-document-content/index.html">DocumentContent</a> documentContent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofDocumentContent(documentContent)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image-content/index.html">ImageContent</a> imageContent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofImageContent(imageContent)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-text-content/index.html">TextContent</a> textContent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofTextContent(textContent)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-content/index.html">VideoContent</a> videoContent</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofVideoContent(videoContent)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input.html"><span class="token function">input</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> string</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofString(string)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1024914906%2FFunctions%2F-1525493128" anchor-label="inputOfContentList" id="1024914906%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input-of-content-list.html"><span>input</span><wbr></wbr><span>Of</span><wbr></wbr><span>Content</span><wbr></wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1024914906%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input-of-content-list.html"><span class="token function">inputOfContentList</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-content/index.html">Content</a><span class="token operator">&gt;</span> contentList</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofContentList(contentList)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="56944372%2FFunctions%2F-1525493128" anchor-label="inputOfStepList" id="56944372%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="input-of-step-list.html"><span>input</span><wbr></wbr><span>Of</span><wbr></wbr><span>Step</span><wbr></wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="56944372%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="input-of-step-list.html"><span class="token function">inputOfStepList</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-step/index.html">Step</a><span class="token operator">&gt;</span> stepList</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="input.html">input</a> with <code class="lang-kotlin">Input.ofStepList(stepList)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1320618864%2FFunctions%2F-1525493128" anchor-label="previousInteractionId" id="-1320618864%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="previous-interaction-id.html"><span>previous</span><wbr></wbr><span>Interaction</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1320618864%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="previous-interaction-id.html"><span class="token function">previousInteractionId</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> previousInteractionId</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="previous-interaction-id.html">Builder.previousInteractionId</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="previous-interaction-id.html"><span class="token function">previousInteractionId</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> previousInteractionId</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The ID of the previous interaction, if any.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-883785858%2FFunctions%2F-1525493128" anchor-label="putAdditionalProperty" id="-883785858%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-additional-property.html"><span>put</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Property</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-883785858%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="put-additional-property.html"><span class="token function">putAdditionalProperty</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span> value</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2080642198%2FFunctions%2F-1525493128" anchor-label="putAllAdditionalProperties" id="2080642198%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="put-all-additional-properties.html"><span>put</span><wbr></wbr><span>All</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2080642198%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="put-all-additional-properties.html"><span class="token function">putAllAdditionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span><span class="token operator">&gt;</span> additionalProperties</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2139082815%2FFunctions%2F-1525493128" anchor-label="removeAdditionalProperty" id="-2139082815%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-additional-property.html"><span>remove</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Property</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2139082815%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="remove-additional-property.html"><span class="token function">removeAdditionalProperty</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> key</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="973148644%2FFunctions%2F-1525493128" anchor-label="removeAllAdditionalProperties" id="973148644%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-all-additional-properties.html"><span>remove</span><wbr></wbr><span>All</span><wbr></wbr><span>Additional</span><wbr></wbr><span><span>Properties</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="973148644%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="remove-all-additional-properties.html"><span class="token function">removeAllAdditionalProperties</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html">Set</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> keys</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="68800315%2FFunctions%2F-1525493128" anchor-label="responseFormat" id="68800315%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="response-format.html"><span>response</span><wbr></wbr><span><span>Format</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68800315%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-response-format/index.html">CreateAgentInteractionParams.ResponseFormat</a><span class="token operator">&gt;</span> responseFormat</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="response-format.html">Builder.responseFormat</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonValue///PointingToDeclaration/">JsonValue</span> jsonValue</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofJsonValue(jsonValue)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-audio-response-format/index.html">AudioResponseFormat</a> audio</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofAudio(audio)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-response-format/index.html">CreateAgentInteractionParams.ResponseFormat</a> responseFormat</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Enforces that the generated response is a JSON object that complies with the JSON schema specified in this field.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-image-response-format/index.html">ImageResponseFormat</a> image</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofImage(image)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-text-response-format/index.html">TextResponseFormat</a> text</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofText(text)</code>.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format.html"><span class="token function">responseFormat</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-video-response-format/index.html">VideoResponseFormat</a> video</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofVideo(video)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1168260641%2FFunctions%2F-1525493128" anchor-label="responseFormatOfList" id="1168260641%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="response-format-of-list.html"><span>response</span><wbr></wbr><span>Format</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1168260641%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-format-of-list.html"><span class="token function">responseFormatOfList</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-response-format/-inner-response-format/index.html">CreateAgentInteractionParams.ResponseFormat.InnerResponseFormat</a><span class="token operator">&gt;</span> list</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Alias for calling <a href="response-format.html">responseFormat</a> with <code class="lang-kotlin">ResponseFormat.ofList(list)</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1661174710%2FFunctions%2F-1525493128" anchor-label="responseMimeType" id="1661174710%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="response-mime-type.html"><span>response</span><wbr></wbr><span>Mime</span><wbr></wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1661174710%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-mime-type.html"><span class="token function">responseMimeType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> responseMimeType</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="response-mime-type.html">Builder.responseMimeType</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-mime-type.html"><span class="token function">responseMimeType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> responseMimeType</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The mime type of the response. This is required if response_format is set.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1397655002%2FFunctions%2F-1525493128" anchor-label="responseModalities" id="-1397655002%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="response-modalities.html"><span>response</span><wbr></wbr><span><span>Modalities</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1397655002%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-modalities.html"><span class="token function">responseModalities</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-response-modality/index.html">CreateAgentInteractionParams.ResponseModality</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> responseModalities</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="response-modalities.html">Builder.responseModalities</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="response-modalities.html"><span class="token function">responseModalities</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-response-modality/index.html">CreateAgentInteractionParams.ResponseModality</a><span class="token operator">&gt;</span> responseModalities</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The requested modalities of the response (TEXT, IMAGE, AUDIO).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="496140182%2FFunctions%2F-1525493128" anchor-label="role" id="496140182%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="role.html"><span><span>role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="496140182%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-deprecated/index.html"><span class="token annotation builtin">Deprecated</span></a><span class="token punctuation">(</span><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;deprecated&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="role.html"><span class="token function"><strike>role</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> role</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="role.html">Builder.role</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-deprecated/index.html"><span class="token annotation builtin">Deprecated</span></a><span class="token punctuation">(</span><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;deprecated&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="role.html"><span class="token function"><strike>role</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> role</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Output only. The role of the interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1222990816%2FFunctions%2F-1525493128" anchor-label="serviceTier" id="1222990816%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="service-tier.html"><span>service</span><wbr></wbr><span><span>Tier</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1222990816%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="service-tier.html"><span class="token function">serviceTier</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-service-tier/index.html">CreateAgentInteractionParams.ServiceTier</a><span class="token operator">&gt;</span> serviceTier</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="service-tier.html">Builder.serviceTier</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="service-tier.html"><span class="token function">serviceTier</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-service-tier/index.html">CreateAgentInteractionParams.ServiceTier</a> serviceTier</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">The service tier for the interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1905182240%2FFunctions%2F-1525493128" anchor-label="status" id="-1905182240%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="status.html"><span><span>status</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1905182240%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="status.html"><span class="token function">status</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-status/index.html">CreateAgentInteractionParams.Status</a><span class="token operator">&gt;</span> status</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="status.html">Builder.status</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="status.html"><span class="token function">status</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-status/index.html">CreateAgentInteractionParams.Status</a> status</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Required. Output only. The status of the interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1078528590%2FFunctions%2F-1525493128" anchor-label="steps" id="-1078528590%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="steps.html"><span><span>steps</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1078528590%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="steps.html"><span class="token function">steps</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-step/index.html">Step</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> steps</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="steps.html">Builder.steps</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="steps.html"><span class="token function">steps</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-step/index.html">Step</a><span class="token operator">&gt;</span> steps</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Output only. The steps that make up the interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-946874230%2FFunctions%2F-1525493128" anchor-label="store" id="-946874230%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="store.html"><span><span>store</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-946874230%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="store.html"><span class="token function">store</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a><span class="token operator">&gt;</span> store</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="store.html">Builder.store</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="store.html"><span class="token function">store</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a> store</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Input only. Whether to store the response and request for later retrieval.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-344872282%2FFunctions%2F-1525493128" anchor-label="stream" id="-344872282%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="stream.html"><span><span>stream</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-344872282%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="stream.html"><span class="token function">stream</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a><span class="token operator">&gt;</span> stream</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="stream.html">Builder.stream</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="stream.html"><span class="token function">stream</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a> stream</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Input only. Whether the interaction will be streamed.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-64709278%2FFunctions%2F-1525493128" anchor-label="systemInstruction" id="-64709278%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="system-instruction.html"><span>system</span><wbr></wbr><span><span>Instruction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-64709278%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="system-instruction.html"><span class="token function">systemInstruction</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a><span class="token operator">&gt;</span> systemInstruction</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="system-instruction.html">Builder.systemInstruction</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="system-instruction.html"><span class="token function">systemInstruction</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> systemInstruction</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">System instruction for the interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-349688934%2FFunctions%2F-1525493128" anchor-label="tools" id="-349688934%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="tools.html"><span><span>tools</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-349688934%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="tools.html"><span class="token function">tools</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-tool/index.html">Tool</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span> tools</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="tools.html">Builder.tools</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="tools.html"><span class="token function">tools</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-tool/index.html">Tool</a><span class="token operator">&gt;</span> tools</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">A list of tool declarations the model may call during interaction.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="688032506%2FFunctions%2F-1525493128" anchor-label="updated" id="688032506%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="updated.html"><span><span>updated</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="688032506%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="updated.html"><span class="token function">updated</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html">OffsetDateTime</a><span class="token operator">&gt;</span> updated</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="updated.html">Builder.updated</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="updated.html"><span class="token function">updated</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html">OffsetDateTime</a> updated</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Required. Output only. The time at which the response was last updated in ISO 8601 format (YYYY-MM-DDThh:mm:ssZ).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="165349254%2FFunctions%2F-1525493128" anchor-label="usage" id="165349254%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="usage.html"><span><span>usage</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="165349254%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="usage.html"><span class="token function">usage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../-usage/index.html">Usage</a><span class="token operator">&gt;</span> usage</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="usage.html">Builder.usage</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="usage.html"><span class="token function">usage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../../-usage/index.html">Usage</a> usage</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Output only. Statistics on the interaction request's token usage.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2098097692%2FFunctions%2F-1525493128" anchor-label="webhookConfig" id="2098097692%2FFunctions%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+          <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="webhook-config.html"><span>webhook</span><wbr></wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2098097692%2FFunctions%2F-1525493128"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="webhook-config.html"><span class="token function">webhookConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="com.google.genai.interactions.core/JsonField///PointingToDeclaration/">JsonField</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-webhook-config/index.html">CreateAgentInteractionParams.WebhookConfig</a><span class="token operator">&gt;</span> webhookConfig</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets <a href="webhook-config.html">Builder.webhookConfig</a> to an arbitrary JSON value.</p></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><a href="index.html">CreateAgentInteractionParams.Builder</a> <a href="webhook-config.html"><span class="token function">webhookConfig</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-webhook-config/index.html">CreateAgentInteractionParams.WebhookConfig</a> webhookConfig</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Optional. Webhook configuration for receiving notifications when the interaction completes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

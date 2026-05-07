@@ -1,176 +1,270 @@
-<!DOCTYPE HTML>
-<!-- NewPage -->
-<html lang="en"><head>
-    <title>google-genai </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="dc.created" content="2020-03-25">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-    <link rel="stylesheet" type="text/css" href="dokka-javadoc-stylesheet.css" title="Style">
-    <link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
-    <script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="jquery/jquery-migrate-3.4.0.min.js"></script>
-    <script type="text/javascript" src="jquery/jquery-ui.js"></script>
-
-    <script type="text/javascript" src="search.js"></script>
-    <script async type="text/javascript" src="module-search-index.js"></script>
-    <script async type="text/javascript" src="package-search-index.js"></script>
-    <script async type="text/javascript" src="type-search-index.js"></script>
-    <script async type="text/javascript" src="member-search-index.js"></script>
-    <script async type="text/javascript" src="tag-search-index.js"></script>
-</head><body>
-<script type="text/javascript">
-var pathtoroot = "";
-</script>
-<noscript>
-    <div>JavaScript is disabled on your browser.</div>
-</noscript><header role="banner">
-    <nav role="navigation">
-        <div class="fixedNav">
-            <!-- ========= START OF TOP NAVBAR ======= -->
-            <div class="topNav"><a id="navbar.top">
-                <!--   -->
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>google-genai</title>
+    <link href="images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async="async"></script>
+<link href="styles/style.css" rel="Stylesheet">
+<link href="styles/main.css" rel="Stylesheet">
+<link href="styles/prism.css" rel="Stylesheet">
+<link href="styles/logo-styles.css" rel="Stylesheet">
+<link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="index.html">
+                    google-genai
             </a>
-                <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter="google-genai/JVM">JVM</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id="google-genai/JVM"
+                                       data-filter="google-genai/JVM"/>
+                                <span class="checkbox--icon"></span>
+                                JVM
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    google-genai
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
                 </div>
-                <a id="navbar.top.firstrow">
-                    <!--   -->
-                </a>
-                <ul class="navList" title="Navigation">
-    <li class="navBarCell1Rev">Overview</li>
-    
-    <li>Package</li>
-    
-    <li>Class</li>
-    
-    <li><a href="overview-tree.html">Tree</a></li>
-    
-    <li><a href="deprecated.html">Deprecated</a></li>
-    <li><a href="index-files/index-1.html">Index</a></li>
-    <li>Help</li>
-</ul></div>
-            <div class="subNav">
-<ul class="navList" id="allclasses_navbar_top" style="display: block;">
-    <li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" class="ui-autocomplete-input" autocomplete="off" placeholder="Search">
-<input type="reset" id="reset" value="reset">
-</li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
+            </div>
+            <div id="main">
+<div class="main-content" id="content" pageIds="google-genai::////PointingToDeclaration//-1525493128">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>google-genai</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable="google-genai/JVM"><p class="paragraph">Java idiomatic SDK for the Gemini Developer APIs and Vertex AI APIs.</p></div></div>
+  </div>
+  <h2 class="">Packages</h2>
+  <div class="table"><a data-name="582130610%2FPackages%2F-1525493128" anchor-label="com.google.genai" id="582130610%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai/index.html">com.google.genai</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="582130610%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="582130610%2FPackages%2F-1525493128" anchor-label="com.google.genai" id="582130610%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Main package for the Google GenAI SDK.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="1887126507%2FPackages%2F-1525493128" anchor-label="com.google.genai.errors" id="1887126507%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.errors/index.html">com.google.genai.errors</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1887126507%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="1887126507%2FPackages%2F-1525493128" anchor-label="com.google.genai.errors" id="1887126507%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Error types for the Google GenAI SDK.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="-2011635300%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.errors" id="-2011635300%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.interactions.errors/index.html">com.google.genai.interactions.errors</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2011635300%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-2011635300%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.errors" id="-2011635300%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Error types for interactions.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="-1217958504%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.models.interactions" id="-1217958504%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.interactions.models.interactions/index.html">com.google.genai.interactions.models.interactions</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1217958504%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-1217958504%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.models.interactions" id="-1217958504%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Models for interactions.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="-800987939%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.services.async" id="-800987939%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.interactions.services.async/index.html">com.google.genai.interactions.services.async</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-800987939%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-800987939%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.services.async" id="-800987939%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Async services for interactions.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="2000227320%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.services.blocking" id="2000227320%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.interactions.services.blocking/index.html">com.google.genai.interactions.services.blocking</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2000227320%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="2000227320%2FPackages%2F-1525493128" anchor-label="com.google.genai.interactions.services.blocking" id="2000227320%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Blocking services for interactions.</p>
+          </span></div>
+      </div>
+    </div>
+<a data-name="-1856832259%2FPackages%2F-1525493128" anchor-label="com.google.genai.types" id="-1856832259%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+    <div class="table-row" data-filterable-current="google-genai/JVM" data-filterable-set="google-genai/JVM">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="google-genai/com.google.genai.types/index.html">com.google.genai.types</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1856832259%2FPackages%2F-1525493128"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">JVM</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-1856832259%2FPackages%2F-1525493128" anchor-label="com.google.genai.types" id="-1856832259%2FPackages%2F-1525493128" data-filterable-set="google-genai/JVM"></a>
+            <p class="paragraph">Types used in the Google GenAI SDK.</p>
+          </span></div>
+      </div>
+    </div>
+  </div>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div><!-- ========= END OF TOP NAVBAR ========= -->
-        </div>
-        <div class="navPadding">&nbsp;</div>
-        <script type="text/javascript"><!--
-        $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-        //-->
-        </script>
-    </nav>
-</header>
-<main role="main">
-    <div class="header">
-        <h1 class="title">google-genai </h1>
-    </div>
-        <div class="header">
-            <div class="subtitle">
-                <div class="block"></div>
-            </div>
-            <p>See: <a href="#overview_description">Description</a></p>
-        </div>
-    <div class="contentContainer">
-        
-            <div class="overviewSummary">
-                
-<table>
-<caption><span>Packages</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Package</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tbody>
-
-    <tr class="altColor"><th class="colFirst" scope="row"><a href=com/google/genai/package-summary.html>com.google.genai</a></th><td class="colLast"></td></tr>
-
-    <tr class="rowColor"><th class="colFirst" scope="row"><a href=com/google/genai/errors/package-summary.html>com.google.genai.errors</a></th><td class="colLast"></td></tr>
-
-    <tr class="altColor"><th class="colFirst" scope="row"><a href=com/google/genai/types/package-summary.html>com.google.genai.types</a></th><td class="colLast"></td></tr>
-</tbody>
-</table>
-
-            </div>
-        
-    </div>
-</main>
-<footer role="contentinfo">
-    <nav role="navigation">
-        <!-- ======= START OF BOTTOM NAVBAR ====== -->
-        <div class="bottomNav"><a id="navbar.bottom">
-            <!--   -->
-        </a>
-            <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a>
-            </div>
-            <a id="navbar.bottom.firstrow">
-                <!--   -->
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
             </a>
-            <ul class="navList" title="Navigation">
-    <li class="navBarCell1Rev">Overview</li>
-    
-    <li>Package</li>
-    
-    <li>Class</li>
-    
-    <li><a href="overview-tree.html">Tree</a></li>
-    
-    <li><a href="deprecated.html">Deprecated</a></li>
-    <li><a href="index-files/index-1.html">Index</a></li>
-    <li>Help</li>
-</ul></div>
-        <a id="skip.navbar.bottom">
-            <!--   -->
-        </a>
-        <div class="subNav">
-<ul class="navList" id="allclasses_navbar_top" style="display: block;">
-    <li><a href="allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div><!-- ======== END OF BOTTOM NAVBAR ======= -->
-    </nav>
-</footer><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0"
-    style="display: none;"></ul>
-<span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
