@@ -58,6 +58,8 @@
     <kotlin.version>1.9.10</kotlin.version>
     <main.java.src.dir>src/main/java</main.java.src.dir>
     <test.java.src.dir>src/test/java</test.java.src.dir>
+    <maven.javadoc.skip>false</maven.javadoc.skip>
+    <dokka.phase>none</dokka.phase>
   </properties>
 
   <distributionManagement>
@@ -379,12 +381,35 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>dokka-warning</id>
+            <phase>${dokka.phase}</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <skip>${maven.javadoc.skip}</skip>
+              <target>
+                <echo>********************************************************************************</echo>
+                <echo>WARNING: Dokka Javadoc generation is active and may take a long time (~45 mins).</echo>
+                <echo>To skip it for faster local builds, use:</echo>
+                <echo>  mvn install -Ddokka.phase=none</echo>
+                <echo>********************************************************************************</echo>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.jetbrains.dokka</groupId>
         <artifactId>dokka-maven-plugin</artifactId>
         <version>2.0.0</version>
         <executions>
           <execution>
-            <phase>prepare-package</phase>
+            <phase>${dokka.phase}</phase>
             <goals>
               <goal>javadoc</goal>
               <goal>javadocJar</goal>
@@ -393,9 +418,18 @@
         </executions>
         <configuration>
           <outputDir>${project.build.directory}/site/apidocs</outputDir>
+          <includes>
+            <include>packages.md</include>
+          </includes>
           <perPackageOptions>
+            <!-- Suppress internal client implementation (users access via Client.interactions) -->
             <packageOption>
-              <matchingRegex>com\.google\.genai\.interactions.*</matchingRegex>
+              <matchingRegex>com\.google\.genai\.interactions\.client.*</matchingRegex>
+              <suppress>true</suppress>
+            </packageOption>
+            <!-- Suppress internal core implementation -->
+            <packageOption>
+              <matchingRegex>com\.google\.genai\.interactions\.core.*</matchingRegex>
               <suppress>true</suppress>
             </packageOption>
           </perPackageOptions>
@@ -577,6 +611,18 @@
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <id>release-docs</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <dokka.phase>prepare-package</dokka.phase>
+      </properties>
+    </profile>
     <profile>
       <id>jdk8-build</id>
       <activation>
