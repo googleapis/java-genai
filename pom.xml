@@ -160,6 +160,12 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.conscrypt</groupId>
+      <artifactId>conscrypt-openjdk-uber</artifactId>
+      <version>2.5.2</version>
+      <scope>test</scope>
+    </dependency>
     <!-- jspecify -->
     <dependency>
       <groupId>org.jspecify</groupId>
@@ -671,6 +677,24 @@
                 <exclude>**/GoogleCredentialsHttpClientTest.java</exclude>
               </testExcludes>
             </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>compile</id>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <configuration>
+                  <sourceDirs>
+                    <sourceDir>${project.basedir}/src/private/java</sourceDir>
+                    <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                  </sourceDirs>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
