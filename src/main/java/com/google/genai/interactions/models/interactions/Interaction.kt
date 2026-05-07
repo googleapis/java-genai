@@ -61,6 +61,7 @@ private constructor(
     private val generationConfig: JsonField<GenerationConfig>,
     private val input: JsonField<Input>,
     private val model: JsonField<Model>,
+    private val modelArmorConfig: JsonField<ModelArmorConfig>,
     private val previousInteractionId: JsonField<String>,
     private val responseFormat: JsonField<ResponseFormat>,
     private val responseMimeType: JsonField<String>,
@@ -94,6 +95,9 @@ private constructor(
         generationConfig: JsonField<GenerationConfig> = JsonMissing.of(),
         @JsonProperty("input") @ExcludeMissing input: JsonField<Input> = JsonMissing.of(),
         @JsonProperty("model") @ExcludeMissing model: JsonField<Model> = JsonMissing.of(),
+        @JsonProperty("model_armor_config")
+        @ExcludeMissing
+        modelArmorConfig: JsonField<ModelArmorConfig> = JsonMissing.of(),
         @JsonProperty("previous_interaction_id")
         @ExcludeMissing
         previousInteractionId: JsonField<String> = JsonMissing.of(),
@@ -129,6 +133,7 @@ private constructor(
         generationConfig,
         input,
         model,
+        modelArmorConfig,
         previousInteractionId,
         responseFormat,
         responseMimeType,
@@ -218,6 +223,15 @@ private constructor(
      *   if the server responded with an unexpected value).
      */
     fun model(): Optional<Model> = model.getOptional("model")
+
+    /**
+     * Settings for prompt and response sanitization using the Model Armor service.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun modelArmorConfig(): Optional<ModelArmorConfig> =
+        modelArmorConfig.getOptional("model_armor_config")
 
     /**
      * The ID of the previous interaction, if any.
@@ -379,6 +393,16 @@ private constructor(
     @JsonProperty("model") @ExcludeMissing fun _model(): JsonField<Model> = model
 
     /**
+     * Returns the raw JSON value of [modelArmorConfig].
+     *
+     * Unlike [modelArmorConfig], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("model_armor_config")
+    @ExcludeMissing
+    fun _modelArmorConfig(): JsonField<ModelArmorConfig> = modelArmorConfig
+
+    /**
      * Returns the raw JSON value of [previousInteractionId].
      *
      * Unlike [previousInteractionId], this method doesn't throw if the JSON field has an unexpected
@@ -516,6 +540,7 @@ private constructor(
         private var generationConfig: JsonField<GenerationConfig> = JsonMissing.of()
         private var input: JsonField<Input> = JsonMissing.of()
         private var model: JsonField<Model> = JsonMissing.of()
+        private var modelArmorConfig: JsonField<ModelArmorConfig> = JsonMissing.of()
         private var previousInteractionId: JsonField<String> = JsonMissing.of()
         private var responseFormat: JsonField<ResponseFormat> = JsonMissing.of()
         private var responseMimeType: JsonField<String> = JsonMissing.of()
@@ -540,6 +565,7 @@ private constructor(
             generationConfig = interaction.generationConfig
             input = interaction.input
             model = interaction.model
+            modelArmorConfig = interaction.modelArmorConfig
             previousInteractionId = interaction.previousInteractionId
             responseFormat = interaction.responseFormat
             responseMimeType = interaction.responseMimeType
@@ -718,6 +744,21 @@ private constructor(
          * is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun model(value: String) = model(Model.of(value))
+
+        /** Settings for prompt and response sanitization using the Model Armor service. */
+        fun modelArmorConfig(modelArmorConfig: ModelArmorConfig) =
+            modelArmorConfig(JsonField.of(modelArmorConfig))
+
+        /**
+         * Sets [Builder.modelArmorConfig] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.modelArmorConfig] with a well-typed [ModelArmorConfig]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun modelArmorConfig(modelArmorConfig: JsonField<ModelArmorConfig>) = apply {
+            this.modelArmorConfig = modelArmorConfig
+        }
 
         /** The ID of the previous interaction, if any. */
         fun previousInteractionId(previousInteractionId: String) =
@@ -1100,6 +1141,7 @@ private constructor(
                 generationConfig,
                 input,
                 model,
+                modelArmorConfig,
                 previousInteractionId,
                 responseFormat,
                 responseMimeType,
@@ -1131,6 +1173,7 @@ private constructor(
         generationConfig().ifPresent { it.validate() }
         input().ifPresent { it.validate() }
         model()
+        modelArmorConfig().ifPresent { it.validate() }
         previousInteractionId()
         responseFormat().ifPresent { it.validate() }
         responseMimeType()
@@ -1169,6 +1212,7 @@ private constructor(
             (generationConfig.asKnown().getOrNull()?.validity() ?: 0) +
             (input.asKnown().getOrNull()?.validity() ?: 0) +
             (if (model.asKnown().isPresent) 1 else 0) +
+            (modelArmorConfig.asKnown().getOrNull()?.validity() ?: 0) +
             (if (previousInteractionId.asKnown().isPresent) 1 else 0) +
             (responseFormat.asKnown().getOrNull()?.validity() ?: 0) +
             (if (responseMimeType.asKnown().isPresent) 1 else 0) +
@@ -3199,6 +3243,7 @@ private constructor(
             generationConfig == other.generationConfig &&
             input == other.input &&
             model == other.model &&
+            modelArmorConfig == other.modelArmorConfig &&
             previousInteractionId == other.previousInteractionId &&
             responseFormat == other.responseFormat &&
             responseMimeType == other.responseMimeType &&
@@ -3224,6 +3269,7 @@ private constructor(
             generationConfig,
             input,
             model,
+            modelArmorConfig,
             previousInteractionId,
             responseFormat,
             responseMimeType,
@@ -3242,5 +3288,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, steps=$steps, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
+        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, modelArmorConfig=$modelArmorConfig, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, steps=$steps, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
 }
