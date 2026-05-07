@@ -34,7 +34,6 @@ import com.google.genai.interactions.models.interactions.InteractionSseEvent
 import com.google.errorprone.annotations.MustBeClosed
 import java.util.function.Consumer
 
-/** <p>The interactions service is experimental. */
 interface InteractionService {
 
     /**
@@ -49,11 +48,7 @@ interface InteractionService {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): InteractionService
 
-    /**
-     * Creates a new interaction.
-     *
-     * <p>The interactions service is experimental.
-     */
+    /** Creates a new interaction. */
     fun create(params: InteractionCreateParams): Interaction = create(params, RequestOptions.none())
 
     /** @see create */

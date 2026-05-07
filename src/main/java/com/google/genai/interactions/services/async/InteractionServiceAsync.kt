@@ -36,7 +36,6 @@ import com.google.errorprone.annotations.MustBeClosed
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-/** <p>The interactions service is experimental. */
 interface InteractionServiceAsync {
 
     /**
@@ -51,11 +50,7 @@ interface InteractionServiceAsync {
      */
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): InteractionServiceAsync
 
-    /**
-     * Creates a new interaction.
-     *
-     * <p>The interactions service is experimental.
-     */
+    /** Creates a new interaction. */
     fun create(params: InteractionCreateParams): CompletableFuture<Interaction> =
         create(params, RequestOptions.none())
 

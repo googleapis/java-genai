@@ -51,7 +51,6 @@ public final class Client implements AutoCloseable {
     public final AsyncFileSearchStores fileSearchStores;
 
     // interactions:strip_begin
-    /** The interactions service is experimental. */
     public final InteractionServiceAsync interactions;
 
     // interactions:strip_end
@@ -87,7 +86,6 @@ public final class Client implements AutoCloseable {
   public final FileSearchStores fileSearchStores;
 
   // interactions:strip_begin
-  /** The interactions service is experimental. */
   public final InteractionService interactions;
 
   // interactions:strip_end
