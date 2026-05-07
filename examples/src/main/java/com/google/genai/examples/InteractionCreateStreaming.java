@@ -77,8 +77,8 @@ public final class InteractionCreateStreaming {
         client.interactions.createStreaming(params)) {
       System.out.println("Streaming response:");
       streamResponse.stream()
-          .flatMap(event -> event.contentDelta().stream())
-          .map(contentDelta -> contentDelta.delta())
+          .flatMap(event -> event.stepDelta().stream())
+          .map(stepDelta -> stepDelta.delta())
           .flatMap(delta -> delta.text().stream())
           .map(text -> text.text())
           .forEach(System.out::print);

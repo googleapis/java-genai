@@ -88,31 +88,34 @@ public final class InteractionDeepResearch {
     try (StreamResponse<InteractionSseEvent> streamResponse =
         interactions.createStreaming(params, options)) {
       // We consume the first few events to capture the Interaction ID and see progress.
-      streamResponse.stream().limit(1).forEach(event -> {
-        if (event.isStart()) {
-          String id = event.asStart().interaction().id();
-          interactionId.set(id);
-          System.out.println("Started Interaction ID: " + id);
-        }
-        String eventType = "unknown";
-        if (event.isStart()) {
-          eventType = "interaction.start";
-        } else if (event.isComplete()) {
-          eventType = "interaction.complete";
-        } else if (event.isStatusUpdate()) {
-          eventType = "interaction.status_update";
-        } else if (event.isContentStart()) {
-          eventType = "content.start";
-        } else if (event.isContentDelta()) {
-          eventType = "content.delta";
-        } else if (event.isContentStop()) {
-          eventType = "content.stop";
-        } else if (event.isError()) {
-          eventType = "error";
-        }
+      streamResponse.stream()
+          .limit(1)
+          .forEach(
+              event -> {
+                if (event.isStart()) {
+                  String id = event.asStart().interaction().id();
+                  interactionId.set(id);
+                  System.out.println("Started Interaction ID: " + id);
+                }
+                String eventType = "unknown";
+                if (event.isStart()) {
+                  eventType = "interaction.start";
+                } else if (event.isComplete()) {
+                  eventType = "interaction.complete";
+                } else if (event.isStatusUpdate()) {
+                  eventType = "interaction.status_update";
+                } else if (event.isStepStart()) {
+                  eventType = "step.start";
+                } else if (event.isStepDelta()) {
+                  eventType = "step.delta";
+                } else if (event.isStepStop()) {
+                  eventType = "step.stop";
+                } else if (event.isError()) {
+                  eventType = "error";
+                }
 
-        System.out.println("Event type: " + eventType);
-      });
+                System.out.println("Event type: " + eventType);
+              });
     }
 
     String id = interactionId.get();
@@ -135,7 +138,7 @@ public final class InteractionDeepResearch {
                 }
 
                 event
-                    .contentDelta()
+                    .stepDelta()
                     .ifPresent(
                         delta -> {
                           delta

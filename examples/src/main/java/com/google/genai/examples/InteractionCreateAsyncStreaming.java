@@ -79,8 +79,8 @@ public final class InteractionCreateAsyncStreaming {
         .subscribe(
             event ->
                 event
-                    .contentDelta()
-                    .map(contentDelta -> contentDelta.delta())
+                    .stepDelta()
+                    .map(stepDelta -> stepDelta.delta())
                     .flatMap(delta -> delta.text())
                     .map(text -> text.text())
                     .ifPresent(System.out::print))

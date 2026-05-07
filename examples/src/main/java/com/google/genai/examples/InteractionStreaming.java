@@ -68,9 +68,9 @@ public final class InteractionStreaming {
       response.stream()
           .forEach(
               event -> {
-                if (event.isContentDelta()) {
+                if (event.isStepDelta()) {
                   event
-                      .asContentDelta()
+                      .asStepDelta()
                       .delta()
                       .text()
                       .ifPresent(
