@@ -35,7 +35,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.type.LogicalType
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.kotlinModule
 import java.io.InputStream
 import java.time.DateTimeException
 import java.time.LocalDate
@@ -47,7 +46,6 @@ import java.time.temporal.ChronoField
 
 fun jsonMapper(): JsonMapper =
     JsonMapper.builder()
-        .addModule(kotlinModule())
         .addModule(Jdk8Module())
         .addModule(JavaTimeModule())
         .addModule(

@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.Enum
@@ -619,47 +619,47 @@ private constructor(
 
                 when (type) {
                     "text" -> {
-                        return tryDeserialize(node, jacksonTypeRef<Text>())?.let {
+                        return tryDeserialize(node, object : TypeReference<Text>() {})?.let {
                             Delta(text = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "image" -> {
-                        return tryDeserialize(node, jacksonTypeRef<Image>())?.let {
+                        return tryDeserialize(node, object : TypeReference<Image>() {})?.let {
                             Delta(image = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "audio" -> {
-                        return tryDeserialize(node, jacksonTypeRef<Audio>())?.let {
+                        return tryDeserialize(node, object : TypeReference<Audio>() {})?.let {
                             Delta(audio = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "document" -> {
-                        return tryDeserialize(node, jacksonTypeRef<Document>())?.let {
+                        return tryDeserialize(node, object : TypeReference<Document>() {})?.let {
                             Delta(document = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "video" -> {
-                        return tryDeserialize(node, jacksonTypeRef<Video>())?.let {
+                        return tryDeserialize(node, object : TypeReference<Video>() {})?.let {
                             Delta(video = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "thought_summary" -> {
-                        return tryDeserialize(node, jacksonTypeRef<ThoughtSummary>())?.let {
+                        return tryDeserialize(node, object : TypeReference<ThoughtSummary>() {})?.let {
                             Delta(thoughtSummary = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "thought_signature" -> {
-                        return tryDeserialize(node, jacksonTypeRef<ThoughtSignature>())?.let {
+                        return tryDeserialize(node, object : TypeReference<ThoughtSignature>() {})?.let {
                             Delta(thoughtSignature = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "text_annotation_delta" -> {
-                        return tryDeserialize(node, jacksonTypeRef<TextAnnotationDelta>())?.let {
+                        return tryDeserialize(node, object : TypeReference<TextAnnotationDelta>() {})?.let {
                             Delta(textAnnotation = it, _json = json)
                         } ?: Delta(_json = json)
                     }
                     "arguments_delta" -> {
-                        return tryDeserialize(node, jacksonTypeRef<ArgumentsDelta>())?.let {
+                        return tryDeserialize(node, object : TypeReference<ArgumentsDelta>() {})?.let {
                             Delta(arguments = it, _json = json)
                         } ?: Delta(_json = json)
                     }
@@ -3401,12 +3401,12 @@ private constructor(
 
                         when (type) {
                             "text" -> {
-                                return tryDeserialize(node, jacksonTypeRef<TextContent>())?.let {
+                                return tryDeserialize(node, object : TypeReference<TextContent>() {})?.let {
                                     Content(text = it, _json = json)
                                 } ?: Content(_json = json)
                             }
                             "image" -> {
-                                return tryDeserialize(node, jacksonTypeRef<ImageContent>())?.let {
+                                return tryDeserialize(node, object : TypeReference<ImageContent>() {})?.let {
                                     Content(image = it, _json = json)
                                 } ?: Content(_json = json)
                             }

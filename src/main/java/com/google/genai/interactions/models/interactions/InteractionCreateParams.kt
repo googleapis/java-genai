@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.JsonValue
@@ -411,9 +411,9 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<CreateModelInteractionParams>())
+                            tryDeserialize(node, object : TypeReference<CreateModelInteractionParams>() {})
                                 ?.let { Body(createModelInteractionParams = it, _json = json) },
-                            tryDeserialize(node, jacksonTypeRef<CreateAgentInteractionParams>())
+                            tryDeserialize(node, object : TypeReference<CreateAgentInteractionParams>() {})
                                 ?.let { Body(createAgentInteractionParams = it, _json = json) },
                         )
                         .filterNotNull()
