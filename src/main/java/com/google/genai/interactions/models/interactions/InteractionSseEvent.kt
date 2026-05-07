@@ -38,8 +38,8 @@ import kotlin.jvm.optionals.getOrNull
 @JsonSerialize(using = InteractionSseEvent.Serializer::class)
 class InteractionSseEvent
 private constructor(
-    private val start: InteractionStartEvent? = null,
-    private val complete: InteractionCompleteEvent? = null,
+    private val created: InteractionCreatedEvent? = null,
+    private val completed: InteractionCompletedEvent? = null,
     private val statusUpdate: InteractionStatusUpdate? = null,
     private val error: ErrorEvent? = null,
     private val stepStart: StepStart? = null,
@@ -48,9 +48,9 @@ private constructor(
     private val _json: JsonValue? = null,
 ) {
 
-    fun start(): Optional<InteractionStartEvent> = Optional.ofNullable(start)
+    fun created(): Optional<InteractionCreatedEvent> = Optional.ofNullable(created)
 
-    fun complete(): Optional<InteractionCompleteEvent> = Optional.ofNullable(complete)
+    fun completed(): Optional<InteractionCompletedEvent> = Optional.ofNullable(completed)
 
     fun statusUpdate(): Optional<InteractionStatusUpdate> = Optional.ofNullable(statusUpdate)
 
@@ -62,9 +62,9 @@ private constructor(
 
     fun stepStop(): Optional<StepStop> = Optional.ofNullable(stepStop)
 
-    fun isStart(): Boolean = start != null
+    fun isCreated(): Boolean = created != null
 
-    fun isComplete(): Boolean = complete != null
+    fun isCompleted(): Boolean = completed != null
 
     fun isStatusUpdate(): Boolean = statusUpdate != null
 
@@ -76,9 +76,9 @@ private constructor(
 
     fun isStepStop(): Boolean = stepStop != null
 
-    fun asStart(): InteractionStartEvent = start.getOrThrow("start")
+    fun asCreated(): InteractionCreatedEvent = created.getOrThrow("created")
 
-    fun asComplete(): InteractionCompleteEvent = complete.getOrThrow("complete")
+    fun asCompleted(): InteractionCompletedEvent = completed.getOrThrow("completed")
 
     fun asStatusUpdate(): InteractionStatusUpdate = statusUpdate.getOrThrow("statusUpdate")
 
@@ -94,8 +94,8 @@ private constructor(
 
     fun <T> accept(visitor: Visitor<T>): T =
         when {
-            start != null -> visitor.visitStart(start)
-            complete != null -> visitor.visitComplete(complete)
+            created != null -> visitor.visitCreated(created)
+            completed != null -> visitor.visitCompleted(completed)
             statusUpdate != null -> visitor.visitStatusUpdate(statusUpdate)
             error != null -> visitor.visitError(error)
             stepStart != null -> visitor.visitStepStart(stepStart)
@@ -113,12 +113,12 @@ private constructor(
 
         accept(
             object : Visitor<Unit> {
-                override fun visitStart(start: InteractionStartEvent) {
-                    start.validate()
+                override fun visitCreated(created: InteractionCreatedEvent) {
+                    created.validate()
                 }
 
-                override fun visitComplete(complete: InteractionCompleteEvent) {
-                    complete.validate()
+                override fun visitCompleted(completed: InteractionCompletedEvent) {
+                    completed.validate()
                 }
 
                 override fun visitStatusUpdate(statusUpdate: InteractionStatusUpdate) {
@@ -162,9 +162,10 @@ private constructor(
     internal fun validity(): Int =
         accept(
             object : Visitor<Int> {
-                override fun visitStart(start: InteractionStartEvent) = start.validity()
+                override fun visitCreated(created: InteractionCreatedEvent) = created.validity()
 
-                override fun visitComplete(complete: InteractionCompleteEvent) = complete.validity()
+                override fun visitCompleted(completed: InteractionCompletedEvent) =
+                    completed.validity()
 
                 override fun visitStatusUpdate(statusUpdate: InteractionStatusUpdate) =
                     statusUpdate.validity()
@@ -187,8 +188,8 @@ private constructor(
         }
 
         return other is InteractionSseEvent &&
-            start == other.start &&
-            complete == other.complete &&
+            created == other.created &&
+            completed == other.completed &&
             statusUpdate == other.statusUpdate &&
             error == other.error &&
             stepStart == other.stepStart &&
@@ -197,12 +198,12 @@ private constructor(
     }
 
     override fun hashCode(): Int =
-        Objects.hash(start, complete, statusUpdate, error, stepStart, stepDelta, stepStop)
+        Objects.hash(created, completed, statusUpdate, error, stepStart, stepDelta, stepStop)
 
     override fun toString(): String =
         when {
-            start != null -> "InteractionSseEvent{start=$start}"
-            complete != null -> "InteractionSseEvent{complete=$complete}"
+            created != null -> "InteractionSseEvent{created=$created}"
+            completed != null -> "InteractionSseEvent{completed=$completed}"
             statusUpdate != null -> "InteractionSseEvent{statusUpdate=$statusUpdate}"
             error != null -> "InteractionSseEvent{error=$error}"
             stepStart != null -> "InteractionSseEvent{stepStart=$stepStart}"
@@ -214,11 +215,12 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun ofStart(start: InteractionStartEvent) = InteractionSseEvent(start = start)
+        @JvmStatic
+        fun ofCreated(created: InteractionCreatedEvent) = InteractionSseEvent(created = created)
 
         @JvmStatic
-        fun ofComplete(complete: InteractionCompleteEvent) =
-            InteractionSseEvent(complete = complete)
+        fun ofCompleted(completed: InteractionCompletedEvent) =
+            InteractionSseEvent(completed = completed)
 
         @JvmStatic
         fun ofStatusUpdate(statusUpdate: InteractionStatusUpdate) =
@@ -241,9 +243,9 @@ private constructor(
      */
     interface Visitor<out T> {
 
-        fun visitStart(start: InteractionStartEvent): T
+        fun visitCreated(created: InteractionCreatedEvent): T
 
-        fun visitComplete(complete: InteractionCompleteEvent): T
+        fun visitCompleted(completed: InteractionCompletedEvent): T
 
         fun visitStatusUpdate(statusUpdate: InteractionStatusUpdate): T
 
@@ -278,14 +280,14 @@ private constructor(
             val eventType = json.asObject().getOrNull()?.get("event_type")?.asString()?.getOrNull()
 
             when (eventType) {
-                "interaction.start" -> {
-                    return tryDeserialize(node, jacksonTypeRef<InteractionStartEvent>())?.let {
-                        InteractionSseEvent(start = it, _json = json)
+                "interaction.created" -> {
+                    return tryDeserialize(node, jacksonTypeRef<InteractionCreatedEvent>())?.let {
+                        InteractionSseEvent(created = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
-                "interaction.complete" -> {
-                    return tryDeserialize(node, jacksonTypeRef<InteractionCompleteEvent>())?.let {
-                        InteractionSseEvent(complete = it, _json = json)
+                "interaction.completed" -> {
+                    return tryDeserialize(node, jacksonTypeRef<InteractionCompletedEvent>())?.let {
+                        InteractionSseEvent(completed = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "interaction.status_update" -> {
@@ -327,8 +329,8 @@ private constructor(
             provider: SerializerProvider,
         ) {
             when {
-                value.start != null -> generator.writeObject(value.start)
-                value.complete != null -> generator.writeObject(value.complete)
+                value.created != null -> generator.writeObject(value.created)
+                value.completed != null -> generator.writeObject(value.completed)
                 value.statusUpdate != null -> generator.writeObject(value.statusUpdate)
                 value.error != null -> generator.writeObject(value.error)
                 value.stepStart != null -> generator.writeObject(value.stepStart)

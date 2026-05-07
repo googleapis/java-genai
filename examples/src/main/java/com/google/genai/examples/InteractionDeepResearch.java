@@ -92,16 +92,16 @@ public final class InteractionDeepResearch {
           .limit(1)
           .forEach(
               event -> {
-                if (event.isStart()) {
-                  String id = event.asStart().interaction().id();
+                if (event.isCreated()) {
+                  String id = event.asCreated().interaction().id();
                   interactionId.set(id);
                   System.out.println("Started Interaction ID: " + id);
                 }
                 String eventType = "unknown";
-                if (event.isStart()) {
-                  eventType = "interaction.start";
-                } else if (event.isComplete()) {
-                  eventType = "interaction.complete";
+                if (event.isCreated()) {
+                  eventType = "interaction.created";
+                } else if (event.isCompleted()) {
+                  eventType = "interaction.completed";
                 } else if (event.isStatusUpdate()) {
                   eventType = "interaction.status_update";
                 } else if (event.isStepStart()) {

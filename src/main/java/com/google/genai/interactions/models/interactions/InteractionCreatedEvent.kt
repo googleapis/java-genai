@@ -33,7 +33,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class InteractionCompleteEvent
+class InteractionCreatedEvent
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val eventType: JsonValue,
@@ -54,7 +54,7 @@ private constructor(
     /**
      * Expected to always return the following:
      * ```java
-     * JsonValue.from("interaction.complete")
+     * JsonValue.from("interaction.created")
      * ```
      *
      * However, this method can be useful for debugging and logging (e.g. if the server responded
@@ -63,8 +63,7 @@ private constructor(
     @JsonProperty("event_type") @ExcludeMissing fun _eventType(): JsonValue = eventType
 
     /**
-     * Required. The completed interaction with empty outputs to reduce the payload size. Use the
-     * preceding ContentDelta events for the actual output.
+     * The Interaction resource.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -110,7 +109,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [InteractionCompleteEvent].
+         * Returns a mutable builder for constructing an instance of [InteractionCreatedEvent].
          *
          * The following fields are required:
          * ```java
@@ -120,20 +119,20 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [InteractionCompleteEvent]. */
+    /** A builder for [InteractionCreatedEvent]. */
     class Builder internal constructor() {
 
-        private var eventType: JsonValue = JsonValue.from("interaction.complete")
+        private var eventType: JsonValue = JsonValue.from("interaction.created")
         private var interaction: JsonField<Interaction>? = null
         private var eventId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(interactionCompleteEvent: InteractionCompleteEvent) = apply {
-            eventType = interactionCompleteEvent.eventType
-            interaction = interactionCompleteEvent.interaction
-            eventId = interactionCompleteEvent.eventId
-            additionalProperties = interactionCompleteEvent.additionalProperties.toMutableMap()
+        internal fun from(interactionCreatedEvent: InteractionCreatedEvent) = apply {
+            eventType = interactionCreatedEvent.eventType
+            interaction = interactionCreatedEvent.interaction
+            eventId = interactionCreatedEvent.eventId
+            additionalProperties = interactionCreatedEvent.additionalProperties.toMutableMap()
         }
 
         /**
@@ -142,7 +141,7 @@ private constructor(
          * It is usually unnecessary to call this method because the field defaults to the
          * following:
          * ```java
-         * JsonValue.from("interaction.complete")
+         * JsonValue.from("interaction.created")
          * ```
          *
          * This method is primarily for setting the field to an undocumented or not yet supported
@@ -150,10 +149,7 @@ private constructor(
          */
         fun eventType(eventType: JsonValue) = apply { this.eventType = eventType }
 
-        /**
-         * Required. The completed interaction with empty outputs to reduce the payload size. Use
-         * the preceding ContentDelta events for the actual output.
-         */
+        /** The Interaction resource. */
         fun interaction(interaction: Interaction) = interaction(JsonField.of(interaction))
 
         /**
@@ -198,7 +194,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [InteractionCompleteEvent].
+         * Returns an immutable instance of [InteractionCreatedEvent].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -209,8 +205,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): InteractionCompleteEvent =
-            InteractionCompleteEvent(
+        fun build(): InteractionCreatedEvent =
+            InteractionCreatedEvent(
                 eventType,
                 checkRequired("interaction", interaction),
                 eventId,
@@ -220,13 +216,13 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): InteractionCompleteEvent = apply {
+    fun validate(): InteractionCreatedEvent = apply {
         if (validated) {
             return@apply
         }
 
         _eventType().let {
-            if (it != JsonValue.from("interaction.complete")) {
+            if (it != JsonValue.from("interaction.created")) {
                 throw GeminiNextGenApiInvalidDataException("'eventType' is invalid, received $it")
             }
         }
@@ -250,7 +246,7 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        eventType.let { if (it == JsonValue.from("interaction.complete")) 1 else 0 } +
+        eventType.let { if (it == JsonValue.from("interaction.created")) 1 else 0 } +
             (interaction.asKnown().getOrNull()?.validity() ?: 0) +
             (if (eventId.asKnown().isPresent) 1 else 0)
 
@@ -259,7 +255,7 @@ private constructor(
             return true
         }
 
-        return other is InteractionCompleteEvent &&
+        return other is InteractionCreatedEvent &&
             eventType == other.eventType &&
             interaction == other.interaction &&
             eventId == other.eventId &&
@@ -273,5 +269,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InteractionCompleteEvent{eventType=$eventType, interaction=$interaction, eventId=$eventId, additionalProperties=$additionalProperties}"
+        "InteractionCreatedEvent{eventType=$eventType, interaction=$interaction, eventId=$eventId, additionalProperties=$additionalProperties}"
 }
