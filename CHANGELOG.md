@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.54.0](https://github.com/googleapis/java-genai/compare/v1.53.0...v1.54.0) (2026-05-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename SSE events to interaction.created and interaction.completed
+
+### Features
+
+* add steps for interactions ([9b9d164](https://github.com/googleapis/java-genai/commit/9b9d164323abdc8767ea853fd67c0f11285ef226))
+* Deprecate legacy response_format and publish new polymorphic field. ([31e8d74](https://github.com/googleapis/java-genai/commit/31e8d74fa0bc6ba285399203a6aa78dd788bc07b))
+* Rename SSE events to interaction.created and interaction.completed ([711a503](https://github.com/googleapis/java-genai/commit/711a503d045ad96d2db4ffa7526382539f1d8d55))
+
+
+### Bug Fixes
+
+* Disambiguate responseFormat call in Java example ([131c210](https://github.com/googleapis/java-genai/commit/131c21038e69394c43145aa1a71e157e2a54f35e))
+
+
+### Documentation
+
+* Add javadoc for interactions.{services,models,errors}, switch to `mvn dokka:dokka`. ([76cb365](https://github.com/googleapis/java-genai/commit/76cb3654a29755d281520e6f08246d33cb23822e))
+
 ## [1.53.0](https://github.com/googleapis/java-genai/compare/v1.52.0...v1.53.0) (2026-05-05)
 
 
