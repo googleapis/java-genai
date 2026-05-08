@@ -421,7 +421,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = createFileSearchStoreParametersToMldev(this.apiClient, parameterNode, null);
       if (body.get("_url") != null) {
@@ -462,7 +463,8 @@ public final class FileSearchStores {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, FileSearchStore.class);
@@ -495,7 +497,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = getFileSearchStoreParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -535,7 +538,8 @@ public final class FileSearchStores {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, FileSearchStore.class);
@@ -569,7 +573,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = deleteFileSearchStoreParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -620,7 +625,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = listFileSearchStoresParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -661,7 +667,8 @@ public final class FileSearchStores {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -700,7 +707,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = uploadToFileSearchStoreParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -759,7 +767,8 @@ public final class FileSearchStores {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -803,7 +812,8 @@ public final class FileSearchStores {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = importFileParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -843,7 +853,8 @@ public final class FileSearchStores {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {

@@ -178,7 +178,8 @@ public final class Documents {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = getDocumentParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -218,7 +219,8 @@ public final class Documents {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, Document.class);
@@ -251,7 +253,8 @@ public final class Documents {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = deleteDocumentParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -304,7 +307,8 @@ public final class Documents {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = listDocumentsParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -345,7 +349,8 @@ public final class Documents {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
