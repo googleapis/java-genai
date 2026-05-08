@@ -113,7 +113,10 @@ public final class Models {
     ImmutableSet<String> invalidEnumValues = ImmutableSet.of("ALLOW_ALL");
     if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
       throw new IllegalArgumentException(
-          String.format("%s enum value is not supported in Gemini API.", enumValue));
+          String.format(
+              "%s enum value is only supported in Gemini Enterprise Agent Platform mode, not in"
+                  + " Gemini Developer API mode.",
+              enumValue));
     }
   }
 
@@ -122,7 +125,10 @@ public final class Models {
     ImmutableSet<String> invalidEnumValues = ImmutableSet.of("BLOCK_NONE");
     if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
       throw new IllegalArgumentException(
-          String.format("%s enum value is not supported in Gemini API.", enumValue));
+          String.format(
+              "%s enum value is only supported in Gemini Enterprise Agent Platform mode, not in"
+                  + " Gemini Developer API mode.",
+              enumValue));
     }
   }
 
@@ -131,7 +137,10 @@ public final class Models {
     ImmutableSet<String> invalidEnumValues = ImmutableSet.of("STYLE");
     if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
       throw new IllegalArgumentException(
-          String.format("%s enum value is not supported in Gemini API.", enumValue));
+          String.format(
+              "%s enum value is only supported in Gemini Enterprise Agent Platform mode, not in"
+                  + " Gemini Developer API mode.",
+              enumValue));
     }
   }
 
@@ -146,30 +155,40 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"apiKeyConfig"}))) {
-      throw new IllegalArgumentException("apiKeyConfig parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "apiKeyConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"authType"}))) {
-      throw new IllegalArgumentException("authType parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "authType parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"googleServiceAccountConfig"}))) {
       throw new IllegalArgumentException(
-          "googleServiceAccountConfig parameter is not supported in Gemini API.");
+          "googleServiceAccountConfig parameter is only supported in Gemini Enterprise Agent"
+              + " Platform mode, not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"httpBasicAuthConfig"}))) {
       throw new IllegalArgumentException(
-          "httpBasicAuthConfig parameter is not supported in Gemini API.");
+          "httpBasicAuthConfig parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oauthConfig"}))) {
-      throw new IllegalArgumentException("oauthConfig parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "oauthConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"oidcConfig"}))) {
-      throw new IllegalArgumentException("oidcConfig parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "oidcConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     return toObject;
@@ -186,7 +205,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
@@ -464,16 +485,20 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))) {
       throw new IllegalArgumentException(
-          "systemInstruction parameter is not supported in Gemini API.");
+          "systemInstruction parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"tools"}))) {
-      throw new IllegalArgumentException("tools parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "tools parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"generationConfig"}))) {
       throw new IllegalArgumentException(
-          "generationConfig parameter is not supported in Gemini API.");
+          "generationConfig parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -927,20 +952,27 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mimeType"}))) {
-      throw new IllegalArgumentException("mimeType parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "mimeType parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"autoTruncate"}))) {
-      throw new IllegalArgumentException("autoTruncate parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "autoTruncate parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"documentOcr"}))) {
-      throw new IllegalArgumentException("documentOcr parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "documentOcr parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTrackExtraction"}))) {
       throw new IllegalArgumentException(
-          "audioTrackExtraction parameter is not supported in Gemini API.");
+          "audioTrackExtraction parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -1292,7 +1324,9 @@ public final class Models {
   ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException("displayName parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
@@ -1336,11 +1370,15 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partialArgs"}))) {
-      throw new IllegalArgumentException("partialArgs parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "partialArgs parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"willContinue"}))) {
-      throw new IllegalArgumentException("willContinue parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "willContinue parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -1367,7 +1405,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"streamFunctionCallArguments"}))) {
       throw new IllegalArgumentException(
-          "streamFunctionCallArguments parameter is not supported in Gemini API.");
+          "streamFunctionCallArguments parameter is only supported in Gemini Enterprise Agent"
+              + " Platform mode, not in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -1421,7 +1460,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
       throw new IllegalArgumentException(
-          "behavior parameter is not supported in Gemini Enterprise Agent Platform.");
+          "behavior parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -1543,12 +1583,15 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"routingConfig"}))) {
-      throw new IllegalArgumentException("routingConfig parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "routingConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"modelSelectionConfig"}))) {
       throw new IllegalArgumentException(
-          "modelSelectionConfig parameter is not supported in Gemini API.");
+          "modelSelectionConfig parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetySettings"}) != null) {
@@ -1590,7 +1633,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
-      throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "labels parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"cachedContent"}) != null) {
@@ -1625,7 +1670,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}))) {
       throw new IllegalArgumentException(
-          "audioTimestamp parameter is not supported in Gemini API.");
+          "audioTimestamp parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}) != null) {
@@ -1655,7 +1701,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}))) {
       throw new IllegalArgumentException(
-          "modelArmorConfig parameter is not supported in Gemini API.");
+          "modelArmorConfig parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
@@ -1895,8 +1942,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
-          "enableEnhancedCivicAnswers parameter is not supported in Gemini Enterprise Agent"
-              + " Platform.");
+          "enableEnhancedCivicAnswers parameter is only supported in Gemini Developer API mode, not"
+              + " in Gemini Enterprise Agent Platform mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}) != null) {
@@ -2119,12 +2166,15 @@ public final class Models {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
-      throw new IllegalArgumentException("outputGcsUri parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "outputGcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"negativePrompt"}))) {
       throw new IllegalArgumentException(
-          "negativePrompt parameter is not supported in Gemini API.");
+          "negativePrompt parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
@@ -2149,7 +2199,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"seed"}))) {
-      throw new IllegalArgumentException("seed parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "seed parameter is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
@@ -2206,11 +2258,15 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"addWatermark"}))) {
-      throw new IllegalArgumentException("addWatermark parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "addWatermark parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
-      throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "labels parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
@@ -2221,7 +2277,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}))) {
-      throw new IllegalArgumentException("enhancePrompt parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "enhancePrompt parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -2509,11 +2567,15 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
-      throw new IllegalArgumentException("outputGcsUri parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "outputGcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fps"}))) {
-      throw new IllegalArgumentException("fps parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "fps parameter is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"durationSeconds"}) != null) {
@@ -2524,7 +2586,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"seed"}))) {
-      throw new IllegalArgumentException("seed parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "seed parameter is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
@@ -2549,7 +2613,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"pubsubTopic"}))) {
-      throw new IllegalArgumentException("pubsubTopic parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "pubsubTopic parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"negativePrompt"}) != null) {
@@ -2567,7 +2633,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"generateAudio"}))) {
-      throw new IllegalArgumentException("generateAudio parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "generateAudio parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"lastFrame"}) != null) {
@@ -2596,16 +2664,21 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mask"}))) {
-      throw new IllegalArgumentException("mask parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "mask parameter is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"compressionQuality"}))) {
       throw new IllegalArgumentException(
-          "compressionQuality parameter is not supported in Gemini API.");
+          "compressionQuality parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
-      throw new IllegalArgumentException("labels parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "labels parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"webhookConfig"}) != null) {
@@ -2616,7 +2689,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"resizeMode"}))) {
-      throw new IllegalArgumentException("resizeMode parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "resizeMode parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     return toObject;
@@ -2762,7 +2837,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"webhookConfig"}))) {
       throw new IllegalArgumentException(
-          "webhookConfig parameter is not supported in Gemini Enterprise Agent Platform.");
+          "webhookConfig parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"resizeMode"}) != null) {
@@ -3433,8 +3509,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"enableEnhancedCivicAnswers"}))) {
       throw new IllegalArgumentException(
-          "enableEnhancedCivicAnswers parameter is not supported in Gemini Enterprise Agent"
-              + " Platform.");
+          "enableEnhancedCivicAnswers parameter is only supported in Gemini Developer API mode, not"
+              + " in Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -3507,12 +3583,14 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
       throw new IllegalArgumentException(
-          "blockingConfidence parameter is not supported in Gemini API.");
+          "blockingConfidence parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"excludeDomains"}))) {
       throw new IllegalArgumentException(
-          "excludeDomains parameter is not supported in Gemini API.");
+          "excludeDomains parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -3544,28 +3622,33 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"personGeneration"}))) {
       throw new IllegalArgumentException(
-          "personGeneration parameter is not supported in Gemini API.");
+          "personGeneration parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"prominentPeople"}))) {
       throw new IllegalArgumentException(
-          "prominentPeople parameter is not supported in Gemini API.");
+          "prominentPeople parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
       throw new IllegalArgumentException(
-          "outputMimeType parameter is not supported in Gemini API.");
+          "outputMimeType parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}))) {
       throw new IllegalArgumentException(
-          "outputCompressionQuality parameter is not supported in Gemini API.");
+          "outputCompressionQuality parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
       throw new IllegalArgumentException(
-          "imageOutputOptions parameter is not supported in Gemini API.");
+          "imageOutputOptions parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -3681,7 +3764,9 @@ public final class Models {
   ObjectNode imageToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
-      throw new IllegalArgumentException("gcsUri parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "gcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"imageBytes"}) != null) {
@@ -4307,17 +4392,20 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
       throw new IllegalArgumentException(
-          "toolCall parameter is not supported in Gemini Enterprise Agent Platform.");
+          "toolCall parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
       throw new IllegalArgumentException(
-          "toolResponse parameter is not supported in Gemini Enterprise Agent Platform.");
+          "toolResponse parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
       throw new IllegalArgumentException(
-          "partMetadata parameter is not supported in Gemini Enterprise Agent Platform.");
+          "partMetadata parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -4654,7 +4742,9 @@ public final class Models {
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"method"}))) {
-      throw new IllegalArgumentException("method parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "method parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"threshold"}) != null) {
@@ -4876,8 +4966,8 @@ public final class Models {
     if (!Common.isZero(
         Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"}))) {
       throw new IllegalArgumentException(
-          "includeServerSideToolInvocations parameter is not supported in Gemini Enterprise Agent"
-              + " Platform.");
+          "includeServerSideToolInvocations parameter is only supported in Gemini Developer API"
+              + " mode, not in Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -4887,7 +4977,9 @@ public final class Models {
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
-      throw new IllegalArgumentException("retrieval parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "retrieval parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
@@ -4935,7 +5027,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
       throw new IllegalArgumentException(
-          "enterpriseWebSearch parameter is not supported in Gemini API.");
+          "enterpriseWebSearch parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
@@ -4954,7 +5047,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"parallelAiSearch"}))) {
       throw new IllegalArgumentException(
-          "parallelAiSearch parameter is not supported in Gemini API.");
+          "parallelAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"urlContext"}) != null) {
@@ -4993,7 +5087,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
       throw new IllegalArgumentException(
-          "fileSearch parameter is not supported in Gemini Enterprise Agent Platform.");
+          "fileSearch parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
@@ -5060,7 +5155,8 @@ public final class Models {
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mcpServers"}))) {
       throw new IllegalArgumentException(
-          "mcpServers parameter is not supported in Gemini Enterprise Agent Platform.");
+          "mcpServers parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -6013,8 +6109,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6052,8 +6148,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     EditImageResponse sdkResponse =
@@ -6127,8 +6223,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6166,8 +6262,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     UpscaleImageResponse sdkResponse =
@@ -6235,8 +6331,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6274,8 +6370,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
@@ -6344,8 +6440,8 @@ public final class Models {
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6383,8 +6479,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
@@ -6942,8 +7038,8 @@ public final class Models {
       path = Common.formatMap("{model}:computeTokens", body.get("_url"));
     } else {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6981,8 +7077,8 @@ public final class Models {
 
     if (!this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.");
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     ComputeTokensResponse sdkResponse =

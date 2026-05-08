@@ -53,7 +53,9 @@ public class AsyncFilesTest {
 
       // Assert
       assertEquals(
-          "This method is only supported in the Gemini Developer client.", exception.getMessage());
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.",
+          exception.getMessage());
     } else {
       File file = client.async.files.get(fileName, null).get();
 
@@ -82,7 +84,9 @@ public class AsyncFilesTest {
           exception
               .getCause()
               .getMessage()
-              .contains("This method is only supported in the Gemini Developer client."));
+              .contains(
+                  "This method is only supported in Gemini Developer API mode, not in Gemini"
+                      + " Enterprise Agent Platform mode."));
     } else {
       AsyncPager<File> pager = client.async.files.list(config).get();
 
