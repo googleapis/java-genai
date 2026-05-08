@@ -1374,60 +1374,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode functionDeclarationToVertex(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"description"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"description"},
-          Common.getValueByPath(fromObject, new String[] {"description"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"name"},
-          Common.getValueByPath(fromObject, new String[] {"name"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parameters"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parameters"},
-          Common.getValueByPath(fromObject, new String[] {"parameters"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"parametersJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"parametersJsonSchema"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"response"},
-          Common.getValueByPath(fromObject, new String[] {"response"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"behavior"}))) {
-      throw new IllegalArgumentException(
-          "behavior parameter is not supported in Gemini Enterprise Agent Platform.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -5025,16 +4971,10 @@ public final class Models {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"functionDeclarations"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(
-            functionDeclarationToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"functionDeclarations"}, result);
+      Common.setValueByPath(
+          toObject,
+          new String[] {"functionDeclarations"},
+          Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
