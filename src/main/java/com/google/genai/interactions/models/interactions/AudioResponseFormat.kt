@@ -48,10 +48,10 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("bitRate") @ExcludeMissing bitRate: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("bit_rate") @ExcludeMissing bitRate: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("delivery") @ExcludeMissing delivery: JsonField<Delivery> = JsonMissing.of(),
-        @JsonProperty("mimeType") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
-        @JsonProperty("sampleRate") @ExcludeMissing sampleRate: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("mime_type") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
+        @JsonProperty("sample_rate") @ExcludeMissing sampleRate: JsonField<Int> = JsonMissing.of(),
     ) : this(type, bitRate, delivery, mimeType, sampleRate, mutableMapOf())
 
     /**
@@ -71,7 +71,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun bitRate(): Optional<Int> = bitRate.getOptional("bitRate")
+    fun bitRate(): Optional<Int> = bitRate.getOptional("bit_rate")
 
     /**
      * The delivery mode for the audio output.
@@ -87,7 +87,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mimeType")
+    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mime_type")
 
     /**
      * Sample rate in Hz.
@@ -95,14 +95,14 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun sampleRate(): Optional<Int> = sampleRate.getOptional("sampleRate")
+    fun sampleRate(): Optional<Int> = sampleRate.getOptional("sample_rate")
 
     /**
      * Returns the raw JSON value of [bitRate].
      *
      * Unlike [bitRate], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("bitRate") @ExcludeMissing fun _bitRate(): JsonField<Int> = bitRate
+    @JsonProperty("bit_rate") @ExcludeMissing fun _bitRate(): JsonField<Int> = bitRate
 
     /**
      * Returns the raw JSON value of [delivery].
@@ -116,14 +116,14 @@ private constructor(
      *
      * Unlike [mimeType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("mimeType") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
+    @JsonProperty("mime_type") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
 
     /**
      * Returns the raw JSON value of [sampleRate].
      *
      * Unlike [sampleRate], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("sampleRate") @ExcludeMissing fun _sampleRate(): JsonField<Int> = sampleRate
+    @JsonProperty("sample_rate") @ExcludeMissing fun _sampleRate(): JsonField<Int> = sampleRate
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {

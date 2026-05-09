@@ -476,7 +476,7 @@ private constructor(
             @JsonProperty("environment")
             @ExcludeMissing
             environment: JsonField<Environment> = JsonMissing.of(),
-            @JsonProperty("excludedPredefinedFunctions")
+            @JsonProperty("excluded_predefined_functions")
             @ExcludeMissing
             excludedPredefinedFunctions: JsonField<List<String>> = JsonMissing.of(),
         ) : this(type, environment, excludedPredefinedFunctions, mutableMapOf())
@@ -507,7 +507,7 @@ private constructor(
          *   (e.g. if the server responded with an unexpected value).
          */
         fun excludedPredefinedFunctions(): Optional<List<String>> =
-            excludedPredefinedFunctions.getOptional("excludedPredefinedFunctions")
+            excludedPredefinedFunctions.getOptional("excluded_predefined_functions")
 
         /**
          * Returns the raw JSON value of [environment].
@@ -524,7 +524,7 @@ private constructor(
          * Unlike [excludedPredefinedFunctions], this method doesn't throw if the JSON field has an
          * unexpected type.
          */
-        @JsonProperty("excludedPredefinedFunctions")
+        @JsonProperty("excluded_predefined_functions")
         @ExcludeMissing
         fun _excludedPredefinedFunctions(): JsonField<List<String>> = excludedPredefinedFunctions
 

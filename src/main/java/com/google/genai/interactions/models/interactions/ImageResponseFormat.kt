@@ -48,14 +48,14 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("aspectRatio")
+        @JsonProperty("aspect_ratio")
         @ExcludeMissing
         aspectRatio: JsonField<AspectRatio> = JsonMissing.of(),
         @JsonProperty("delivery") @ExcludeMissing delivery: JsonField<Delivery> = JsonMissing.of(),
-        @JsonProperty("imageSize")
+        @JsonProperty("image_size")
         @ExcludeMissing
         imageSize: JsonField<ImageSize> = JsonMissing.of(),
-        @JsonProperty("mimeType") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
+        @JsonProperty("mime_type") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
     ) : this(type, aspectRatio, delivery, imageSize, mimeType, mutableMapOf())
 
     /**
@@ -75,7 +75,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun aspectRatio(): Optional<AspectRatio> = aspectRatio.getOptional("aspectRatio")
+    fun aspectRatio(): Optional<AspectRatio> = aspectRatio.getOptional("aspect_ratio")
 
     /**
      * The delivery mode for the image output.
@@ -91,7 +91,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun imageSize(): Optional<ImageSize> = imageSize.getOptional("imageSize")
+    fun imageSize(): Optional<ImageSize> = imageSize.getOptional("image_size")
 
     /**
      * The MIME type of the image output.
@@ -99,14 +99,14 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mimeType")
+    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mime_type")
 
     /**
      * Returns the raw JSON value of [aspectRatio].
      *
      * Unlike [aspectRatio], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("aspectRatio")
+    @JsonProperty("aspect_ratio")
     @ExcludeMissing
     fun _aspectRatio(): JsonField<AspectRatio> = aspectRatio
 
@@ -122,14 +122,14 @@ private constructor(
      *
      * Unlike [imageSize], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("imageSize") @ExcludeMissing fun _imageSize(): JsonField<ImageSize> = imageSize
+    @JsonProperty("image_size") @ExcludeMissing fun _imageSize(): JsonField<ImageSize> = imageSize
 
     /**
      * Returns the raw JSON value of [mimeType].
      *
      * Unlike [mimeType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("mimeType") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
+    @JsonProperty("mime_type") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {

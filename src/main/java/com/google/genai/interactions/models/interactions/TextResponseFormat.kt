@@ -47,7 +47,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
-        @JsonProperty("mimeType") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
+        @JsonProperty("mime_type") @ExcludeMissing mimeType: JsonField<MimeType> = JsonMissing.of(),
         @JsonProperty("schema") @ExcludeMissing schema: JsonField<Schema> = JsonMissing.of(),
     ) : this(type, mimeType, schema, mutableMapOf())
 
@@ -68,7 +68,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
-    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mimeType")
+    fun mimeType(): Optional<MimeType> = mimeType.getOptional("mime_type")
 
     /**
      * The JSON schema that the output should conform to. Only applicable when mime_type is
@@ -84,7 +84,7 @@ private constructor(
      *
      * Unlike [mimeType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("mimeType") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
+    @JsonProperty("mime_type") @ExcludeMissing fun _mimeType(): JsonField<MimeType> = mimeType
 
     /**
      * Returns the raw JSON value of [schema].
