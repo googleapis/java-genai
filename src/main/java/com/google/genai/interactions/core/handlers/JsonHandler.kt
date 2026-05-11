@@ -19,7 +19,7 @@
 package com.google.genai.interactions.core.handlers
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.http.HttpResponse
 import com.google.genai.interactions.core.http.HttpResponse.Handler
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException

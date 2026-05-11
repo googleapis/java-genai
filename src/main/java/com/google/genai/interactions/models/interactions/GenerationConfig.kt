@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.Enum
@@ -838,10 +838,10 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<ToolChoiceType>())?.let {
+                            tryDeserialize(node, object : TypeReference<ToolChoiceType>() {})?.let {
                                 ToolChoice(type = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<ToolChoiceConfig>())?.let {
+                            tryDeserialize(node, object : TypeReference<ToolChoiceConfig>() {})?.let {
                                 ToolChoice(config = it, _json = json)
                             },
                         )

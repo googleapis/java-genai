@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.Enum
@@ -387,47 +387,47 @@ private constructor(
 
             when (type) {
                 "function" -> {
-                    return tryDeserialize(node, jacksonTypeRef<Function>())?.let {
+                    return tryDeserialize(node, object : TypeReference<Function>() {})?.let {
                         Tool(function = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "code_execution" -> {
-                    return tryDeserialize(node, jacksonTypeRef<JsonValue>())
+                    return tryDeserialize(node, object : TypeReference<JsonValue>() {})
                         ?.let { Tool(codeExecution = it, _json = json) }
                         ?.takeIf { it.isValid() } ?: Tool(_json = json)
                 }
                 "url_context" -> {
-                    return tryDeserialize(node, jacksonTypeRef<JsonValue>())
+                    return tryDeserialize(node, object : TypeReference<JsonValue>() {})
                         ?.let { Tool(urlContext = it, _json = json) }
                         ?.takeIf { it.isValid() } ?: Tool(_json = json)
                 }
                 "computer_use" -> {
-                    return tryDeserialize(node, jacksonTypeRef<ComputerUse>())?.let {
+                    return tryDeserialize(node, object : TypeReference<ComputerUse>() {})?.let {
                         Tool(computerUse = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "mcp_server" -> {
-                    return tryDeserialize(node, jacksonTypeRef<McpServer>())?.let {
+                    return tryDeserialize(node, object : TypeReference<McpServer>() {})?.let {
                         Tool(mcpServer = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "google_search" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleSearch>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleSearch>() {})?.let {
                         Tool(googleSearch = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "file_search" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FileSearch>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FileSearch>() {})?.let {
                         Tool(fileSearch = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "google_maps" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleMaps>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleMaps>() {})?.let {
                         Tool(googleMaps = it, _json = json)
                     } ?: Tool(_json = json)
                 }
                 "retrieval" -> {
-                    return tryDeserialize(node, jacksonTypeRef<Retrieval>())?.let {
+                    return tryDeserialize(node, object : TypeReference<Retrieval>() {})?.let {
                         Tool(retrieval = it, _json = json)
                     } ?: Tool(_json = json)
                 }

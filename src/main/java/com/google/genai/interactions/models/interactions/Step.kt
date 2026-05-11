@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.JsonValue
@@ -611,87 +611,87 @@ private constructor(
 
             when (type) {
                 "user_input" -> {
-                    return tryDeserialize(node, jacksonTypeRef<UserInputStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<UserInputStep>() {})?.let {
                         Step(userInput = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "model_output" -> {
-                    return tryDeserialize(node, jacksonTypeRef<ModelOutputStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<ModelOutputStep>() {})?.let {
                         Step(modelOutput = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "thought" -> {
-                    return tryDeserialize(node, jacksonTypeRef<ThoughtStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<ThoughtStep>() {})?.let {
                         Step(thought = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "function_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FunctionCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FunctionCallStep>() {})?.let {
                         Step(functionCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "code_execution_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<CodeExecutionCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<CodeExecutionCallStep>() {})?.let {
                         Step(codeExecutionCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "url_context_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<UrlContextCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<UrlContextCallStep>() {})?.let {
                         Step(urlContextCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "mcp_server_tool_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<McpServerToolCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<McpServerToolCallStep>() {})?.let {
                         Step(mcpServerToolCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "google_search_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleSearchCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleSearchCallStep>() {})?.let {
                         Step(googleSearchCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "file_search_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FileSearchCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FileSearchCallStep>() {})?.let {
                         Step(fileSearchCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "google_maps_call" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleMapsCallStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleMapsCallStep>() {})?.let {
                         Step(googleMapsCall = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "function_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FunctionResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FunctionResultStep>() {})?.let {
                         Step(functionResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "code_execution_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<CodeExecutionResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<CodeExecutionResultStep>() {})?.let {
                         Step(codeExecutionResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "url_context_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<UrlContextResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<UrlContextResultStep>() {})?.let {
                         Step(urlContextResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "google_search_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleSearchResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleSearchResultStep>() {})?.let {
                         Step(googleSearchResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "mcp_server_tool_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<McpServerToolResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<McpServerToolResultStep>() {})?.let {
                         Step(mcpServerToolResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "file_search_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<FileSearchResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<FileSearchResultStep>() {})?.let {
                         Step(fileSearchResult = it, _json = json)
                     } ?: Step(_json = json)
                 }
                 "google_maps_result" -> {
-                    return tryDeserialize(node, jacksonTypeRef<GoogleMapsResultStep>())?.let {
+                    return tryDeserialize(node, object : TypeReference<GoogleMapsResultStep>() {})?.let {
                         Step(googleMapsResult = it, _json = json)
                     } ?: Step(_json = json)
                 }

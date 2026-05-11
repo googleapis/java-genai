@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.fasterxml.jackson.core.type.TypeReference
 import com.google.genai.interactions.core.BaseDeserializer
 import com.google.genai.interactions.core.BaseSerializer
 import com.google.genai.interactions.core.JsonValue
@@ -281,37 +281,37 @@ private constructor(
 
             when (eventType) {
                 "interaction.created" -> {
-                    return tryDeserialize(node, jacksonTypeRef<InteractionCreatedEvent>())?.let {
+                    return tryDeserialize(node, object : TypeReference<InteractionCreatedEvent>() {})?.let {
                         InteractionSseEvent(created = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "interaction.completed" -> {
-                    return tryDeserialize(node, jacksonTypeRef<InteractionCompletedEvent>())?.let {
+                    return tryDeserialize(node, object : TypeReference<InteractionCompletedEvent>() {})?.let {
                         InteractionSseEvent(completed = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "interaction.status_update" -> {
-                    return tryDeserialize(node, jacksonTypeRef<InteractionStatusUpdate>())?.let {
+                    return tryDeserialize(node, object : TypeReference<InteractionStatusUpdate>() {})?.let {
                         InteractionSseEvent(statusUpdate = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "error" -> {
-                    return tryDeserialize(node, jacksonTypeRef<ErrorEvent>())?.let {
+                    return tryDeserialize(node, object : TypeReference<ErrorEvent>() {})?.let {
                         InteractionSseEvent(error = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "step.start" -> {
-                    return tryDeserialize(node, jacksonTypeRef<StepStart>())?.let {
+                    return tryDeserialize(node, object : TypeReference<StepStart>() {})?.let {
                         InteractionSseEvent(stepStart = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "step.delta" -> {
-                    return tryDeserialize(node, jacksonTypeRef<StepDelta>())?.let {
+                    return tryDeserialize(node, object : TypeReference<StepDelta>() {})?.let {
                         InteractionSseEvent(stepDelta = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }
                 "step.stop" -> {
-                    return tryDeserialize(node, jacksonTypeRef<StepStop>())?.let {
+                    return tryDeserialize(node, object : TypeReference<StepStop>() {})?.let {
                         InteractionSseEvent(stepStop = it, _json = json)
                     } ?: InteractionSseEvent(_json = json)
                 }

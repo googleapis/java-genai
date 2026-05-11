@@ -108,5 +108,4 @@ private val RUNTIME_JACKSON_VERSIONS: List<Version> =
         com.fasterxml.jackson.databind.cfg.PackageVersion.VERSION,
         com.fasterxml.jackson.datatype.jdk8.PackageVersion.VERSION,
         com.fasterxml.jackson.datatype.jsr310.PackageVersion.VERSION,
-        com.fasterxml.jackson.module.kotlin.PackageVersion.VERSION,
     )
