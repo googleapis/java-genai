@@ -528,7 +528,7 @@ private constructor(
 
             @JvmField val INLINE = of("inline")
 
-            @JvmField val URI = of("uri")
+            @JvmField val URL = of("url")
 
             @JvmStatic fun of(value: String) = Delivery(JsonField.of(value))
         }
@@ -536,7 +536,7 @@ private constructor(
         /** An enum containing [Delivery]'s known values. */
         enum class Known {
             INLINE,
-            URI,
+            URL,
         }
 
         /**
@@ -550,7 +550,7 @@ private constructor(
          */
         enum class Value {
             INLINE,
-            URI,
+            URL,
             /** An enum member indicating that [Delivery] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -565,7 +565,7 @@ private constructor(
         fun value(): Value =
             when (this) {
                 INLINE -> Value.INLINE
-                URI -> Value.URI
+                URL -> Value.URL
                 else -> Value._UNKNOWN
             }
 
@@ -581,7 +581,7 @@ private constructor(
         fun known(): Known =
             when (this) {
                 INLINE -> Known.INLINE
-                URI -> Known.URI
+                URL -> Known.URL
                 else -> throw GeminiNextGenApiInvalidDataException("Unknown Delivery: $value")
             }
 

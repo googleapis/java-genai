@@ -55,7 +55,6 @@ private constructor(
     private val id: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
     private val status: JsonField<Status>,
-    private val steps: JsonField<List<Step>>,
     private val updated: JsonField<OffsetDateTime>,
     private val agent: JsonField<Agent>,
     private val agentConfig: JsonField<AgentConfig>,
@@ -68,6 +67,7 @@ private constructor(
     private val responseModalities: JsonField<List<ResponseModality>>,
     private val role: JsonField<String>,
     private val serviceTier: JsonField<ServiceTier>,
+    private val steps: JsonField<List<Step>>,
     private val systemInstruction: JsonField<String>,
     private val tools: JsonField<List<Tool>>,
     private val usage: JsonField<Usage>,
@@ -82,7 +82,6 @@ private constructor(
         @ExcludeMissing
         created: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
-        @JsonProperty("steps") @ExcludeMissing steps: JsonField<List<Step>> = JsonMissing.of(),
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -111,6 +110,7 @@ private constructor(
         @JsonProperty("service_tier")
         @ExcludeMissing
         serviceTier: JsonField<ServiceTier> = JsonMissing.of(),
+        @JsonProperty("steps") @ExcludeMissing steps: JsonField<List<Step>> = JsonMissing.of(),
         @JsonProperty("system_instruction")
         @ExcludeMissing
         systemInstruction: JsonField<String> = JsonMissing.of(),
@@ -123,7 +123,6 @@ private constructor(
         id,
         created,
         status,
-        steps,
         updated,
         agent,
         agentConfig,
@@ -136,6 +135,7 @@ private constructor(
         responseModalities,
         role,
         serviceTier,
+        steps,
         systemInstruction,
         tools,
         usage,
@@ -167,14 +167,6 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun status(): Status = status.getRequired("status")
-
-    /**
-     * Required. Output only. The steps that make up the interaction.
-     *
-     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun steps(): List<Step> = steps.getRequired("steps")
 
     /**
      * Required. Output only. The time at which the response was last updated in ISO 8601 format
@@ -279,6 +271,14 @@ private constructor(
     fun serviceTier(): Optional<ServiceTier> = serviceTier.getOptional("service_tier")
 
     /**
+     * Output only. The steps that make up the interaction.
+     *
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun steps(): Optional<List<Step>> = steps.getOptional("steps")
+
+    /**
      * System instruction for the interaction.
      *
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
@@ -330,13 +330,6 @@ private constructor(
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
-
-    /**
-     * Returns the raw JSON value of [steps].
-     *
-     * Unlike [steps], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("steps") @ExcludeMissing fun _steps(): JsonField<List<Step>> = steps
 
     /**
      * Returns the raw JSON value of [updated].
@@ -444,6 +437,13 @@ private constructor(
     fun _serviceTier(): JsonField<ServiceTier> = serviceTier
 
     /**
+     * Returns the raw JSON value of [steps].
+     *
+     * Unlike [steps], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("steps") @ExcludeMissing fun _steps(): JsonField<List<Step>> = steps
+
+    /**
      * Returns the raw JSON value of [systemInstruction].
      *
      * Unlike [systemInstruction], this method doesn't throw if the JSON field has an unexpected
@@ -498,7 +498,6 @@ private constructor(
          * .id()
          * .created()
          * .status()
-         * .steps()
          * .updated()
          * ```
          */
@@ -511,7 +510,6 @@ private constructor(
         private var id: JsonField<String>? = null
         private var created: JsonField<OffsetDateTime>? = null
         private var status: JsonField<Status>? = null
-        private var steps: JsonField<MutableList<Step>>? = null
         private var updated: JsonField<OffsetDateTime>? = null
         private var agent: JsonField<Agent> = JsonMissing.of()
         private var agentConfig: JsonField<AgentConfig> = JsonMissing.of()
@@ -524,6 +522,7 @@ private constructor(
         private var responseModalities: JsonField<MutableList<ResponseModality>>? = null
         private var role: JsonField<String> = JsonMissing.of()
         private var serviceTier: JsonField<ServiceTier> = JsonMissing.of()
+        private var steps: JsonField<MutableList<Step>>? = null
         private var systemInstruction: JsonField<String> = JsonMissing.of()
         private var tools: JsonField<MutableList<Tool>>? = null
         private var usage: JsonField<Usage> = JsonMissing.of()
@@ -535,7 +534,6 @@ private constructor(
             id = interaction.id
             created = interaction.created
             status = interaction.status
-            steps = interaction.steps.map { it.toMutableList() }
             updated = interaction.updated
             agent = interaction.agent
             agentConfig = interaction.agentConfig
@@ -548,6 +546,7 @@ private constructor(
             responseModalities = interaction.responseModalities.map { it.toMutableList() }
             role = interaction.role
             serviceTier = interaction.serviceTier
+            steps = interaction.steps.map { it.toMutableList() }
             systemInstruction = interaction.systemInstruction
             tools = interaction.tools.map { it.toMutableList() }
             usage = interaction.usage
@@ -591,125 +590,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        /** Required. Output only. The steps that make up the interaction. */
-        fun steps(steps: List<Step>) = steps(JsonField.of(steps))
-
-        /**
-         * Sets [Builder.steps] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.steps] with a well-typed `List<Step>` value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun steps(steps: JsonField<List<Step>>) = apply {
-            this.steps = steps.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [Step] to [steps].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addStep(step: Step) = apply {
-            steps =
-                (steps ?: JsonField.of(mutableListOf())).also { checkKnown("steps", it).add(step) }
-        }
-
-        /** Alias for calling [addStep] with `Step.ofUserInput(userInput)`. */
-        fun addStep(userInput: UserInputStep) = addStep(Step.ofUserInput(userInput))
-
-        /** Alias for calling [addStep] with `Step.ofModelOutput(modelOutput)`. */
-        fun addStep(modelOutput: ModelOutputStep) = addStep(Step.ofModelOutput(modelOutput))
-
-        /** Alias for calling [addStep] with `Step.ofThought(thought)`. */
-        fun addStep(thought: ThoughtStep) = addStep(Step.ofThought(thought))
-
-        /** Alias for calling [addStep] with `Step.ofFunctionCall(functionCall)`. */
-        fun addStep(functionCall: FunctionCallStep) = addStep(Step.ofFunctionCall(functionCall))
-
-        /** Alias for calling [addStep] with `Step.ofCodeExecutionCall(codeExecutionCall)`. */
-        fun addStep(codeExecutionCall: CodeExecutionCallStep) =
-            addStep(Step.ofCodeExecutionCall(codeExecutionCall))
-
-        /** Alias for calling [addStep] with `Step.ofUrlContextCall(urlContextCall)`. */
-        fun addStep(urlContextCall: UrlContextCallStep) =
-            addStep(Step.ofUrlContextCall(urlContextCall))
-
-        /** Alias for calling [addStep] with `Step.ofMcpServerToolCall(mcpServerToolCall)`. */
-        fun addStep(mcpServerToolCall: McpServerToolCallStep) =
-            addStep(Step.ofMcpServerToolCall(mcpServerToolCall))
-
-        /** Alias for calling [addStep] with `Step.ofGoogleSearchCall(googleSearchCall)`. */
-        fun addStep(googleSearchCall: GoogleSearchCallStep) =
-            addStep(Step.ofGoogleSearchCall(googleSearchCall))
-
-        /** Alias for calling [addStep] with `Step.ofFileSearchCall(fileSearchCall)`. */
-        fun addStep(fileSearchCall: FileSearchCallStep) =
-            addStep(Step.ofFileSearchCall(fileSearchCall))
-
-        /**
-         * Alias for calling [addStep] with the following:
-         * ```java
-         * FileSearchCallStep.builder()
-         *     .id(id)
-         *     .build()
-         * ```
-         */
-        fun addFileSearchCallStep(id: String) = addStep(FileSearchCallStep.builder().id(id).build())
-
-        /** Alias for calling [addStep] with `Step.ofGoogleMapsCall(googleMapsCall)`. */
-        fun addStep(googleMapsCall: GoogleMapsCallStep) =
-            addStep(Step.ofGoogleMapsCall(googleMapsCall))
-
-        /**
-         * Alias for calling [addStep] with the following:
-         * ```java
-         * GoogleMapsCallStep.builder()
-         *     .id(id)
-         *     .build()
-         * ```
-         */
-        fun addGoogleMapsCallStep(id: String) = addStep(GoogleMapsCallStep.builder().id(id).build())
-
-        /** Alias for calling [addStep] with `Step.ofFunctionResult(functionResult)`. */
-        fun addStep(functionResult: FunctionResultStep) =
-            addStep(Step.ofFunctionResult(functionResult))
-
-        /** Alias for calling [addStep] with `Step.ofCodeExecutionResult(codeExecutionResult)`. */
-        fun addStep(codeExecutionResult: CodeExecutionResultStep) =
-            addStep(Step.ofCodeExecutionResult(codeExecutionResult))
-
-        /** Alias for calling [addStep] with `Step.ofUrlContextResult(urlContextResult)`. */
-        fun addStep(urlContextResult: UrlContextResultStep) =
-            addStep(Step.ofUrlContextResult(urlContextResult))
-
-        /** Alias for calling [addStep] with `Step.ofGoogleSearchResult(googleSearchResult)`. */
-        fun addStep(googleSearchResult: GoogleSearchResultStep) =
-            addStep(Step.ofGoogleSearchResult(googleSearchResult))
-
-        /** Alias for calling [addStep] with `Step.ofMcpServerToolResult(mcpServerToolResult)`. */
-        fun addStep(mcpServerToolResult: McpServerToolResultStep) =
-            addStep(Step.ofMcpServerToolResult(mcpServerToolResult))
-
-        /** Alias for calling [addStep] with `Step.ofFileSearchResult(fileSearchResult)`. */
-        fun addStep(fileSearchResult: FileSearchResultStep) =
-            addStep(Step.ofFileSearchResult(fileSearchResult))
-
-        /**
-         * Alias for calling [addStep] with the following:
-         * ```java
-         * FileSearchResultStep.builder()
-         *     .callId(callId)
-         *     .build()
-         * ```
-         */
-        fun addFileSearchResultStep(callId: String) =
-            addStep(FileSearchResultStep.builder().callId(callId).build())
-
-        /** Alias for calling [addStep] with `Step.ofGoogleMapsResult(googleMapsResult)`. */
-        fun addStep(googleMapsResult: GoogleMapsResultStep) =
-            addStep(Step.ofGoogleMapsResult(googleMapsResult))
 
         /**
          * Required. Output only. The time at which the response was last updated in ISO 8601 format
@@ -962,6 +842,125 @@ private constructor(
             this.serviceTier = serviceTier
         }
 
+        /** Output only. The steps that make up the interaction. */
+        fun steps(steps: List<Step>) = steps(JsonField.of(steps))
+
+        /**
+         * Sets [Builder.steps] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.steps] with a well-typed `List<Step>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun steps(steps: JsonField<List<Step>>) = apply {
+            this.steps = steps.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [Step] to [steps].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addStep(step: Step) = apply {
+            steps =
+                (steps ?: JsonField.of(mutableListOf())).also { checkKnown("steps", it).add(step) }
+        }
+
+        /** Alias for calling [addStep] with `Step.ofUserInput(userInput)`. */
+        fun addStep(userInput: UserInputStep) = addStep(Step.ofUserInput(userInput))
+
+        /** Alias for calling [addStep] with `Step.ofModelOutput(modelOutput)`. */
+        fun addStep(modelOutput: ModelOutputStep) = addStep(Step.ofModelOutput(modelOutput))
+
+        /** Alias for calling [addStep] with `Step.ofThought(thought)`. */
+        fun addStep(thought: ThoughtStep) = addStep(Step.ofThought(thought))
+
+        /** Alias for calling [addStep] with `Step.ofFunctionCall(functionCall)`. */
+        fun addStep(functionCall: FunctionCallStep) = addStep(Step.ofFunctionCall(functionCall))
+
+        /** Alias for calling [addStep] with `Step.ofCodeExecutionCall(codeExecutionCall)`. */
+        fun addStep(codeExecutionCall: CodeExecutionCallStep) =
+            addStep(Step.ofCodeExecutionCall(codeExecutionCall))
+
+        /** Alias for calling [addStep] with `Step.ofUrlContextCall(urlContextCall)`. */
+        fun addStep(urlContextCall: UrlContextCallStep) =
+            addStep(Step.ofUrlContextCall(urlContextCall))
+
+        /** Alias for calling [addStep] with `Step.ofMcpServerToolCall(mcpServerToolCall)`. */
+        fun addStep(mcpServerToolCall: McpServerToolCallStep) =
+            addStep(Step.ofMcpServerToolCall(mcpServerToolCall))
+
+        /** Alias for calling [addStep] with `Step.ofGoogleSearchCall(googleSearchCall)`. */
+        fun addStep(googleSearchCall: GoogleSearchCallStep) =
+            addStep(Step.ofGoogleSearchCall(googleSearchCall))
+
+        /** Alias for calling [addStep] with `Step.ofFileSearchCall(fileSearchCall)`. */
+        fun addStep(fileSearchCall: FileSearchCallStep) =
+            addStep(Step.ofFileSearchCall(fileSearchCall))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * FileSearchCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun addFileSearchCallStep(id: String) = addStep(FileSearchCallStep.builder().id(id).build())
+
+        /** Alias for calling [addStep] with `Step.ofGoogleMapsCall(googleMapsCall)`. */
+        fun addStep(googleMapsCall: GoogleMapsCallStep) =
+            addStep(Step.ofGoogleMapsCall(googleMapsCall))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * GoogleMapsCallStep.builder()
+         *     .id(id)
+         *     .build()
+         * ```
+         */
+        fun addGoogleMapsCallStep(id: String) = addStep(GoogleMapsCallStep.builder().id(id).build())
+
+        /** Alias for calling [addStep] with `Step.ofFunctionResult(functionResult)`. */
+        fun addStep(functionResult: FunctionResultStep) =
+            addStep(Step.ofFunctionResult(functionResult))
+
+        /** Alias for calling [addStep] with `Step.ofCodeExecutionResult(codeExecutionResult)`. */
+        fun addStep(codeExecutionResult: CodeExecutionResultStep) =
+            addStep(Step.ofCodeExecutionResult(codeExecutionResult))
+
+        /** Alias for calling [addStep] with `Step.ofUrlContextResult(urlContextResult)`. */
+        fun addStep(urlContextResult: UrlContextResultStep) =
+            addStep(Step.ofUrlContextResult(urlContextResult))
+
+        /** Alias for calling [addStep] with `Step.ofGoogleSearchResult(googleSearchResult)`. */
+        fun addStep(googleSearchResult: GoogleSearchResultStep) =
+            addStep(Step.ofGoogleSearchResult(googleSearchResult))
+
+        /** Alias for calling [addStep] with `Step.ofMcpServerToolResult(mcpServerToolResult)`. */
+        fun addStep(mcpServerToolResult: McpServerToolResultStep) =
+            addStep(Step.ofMcpServerToolResult(mcpServerToolResult))
+
+        /** Alias for calling [addStep] with `Step.ofFileSearchResult(fileSearchResult)`. */
+        fun addStep(fileSearchResult: FileSearchResultStep) =
+            addStep(Step.ofFileSearchResult(fileSearchResult))
+
+        /**
+         * Alias for calling [addStep] with the following:
+         * ```java
+         * FileSearchResultStep.builder()
+         *     .callId(callId)
+         *     .build()
+         * ```
+         */
+        fun addFileSearchResultStep(callId: String) =
+            addStep(FileSearchResultStep.builder().callId(callId).build())
+
+        /** Alias for calling [addStep] with `Step.ofGoogleMapsResult(googleMapsResult)`. */
+        fun addStep(googleMapsResult: GoogleMapsResultStep) =
+            addStep(Step.ofGoogleMapsResult(googleMapsResult))
+
         /** System instruction for the interaction. */
         fun systemInstruction(systemInstruction: String) =
             systemInstruction(JsonField.of(systemInstruction))
@@ -1085,7 +1084,6 @@ private constructor(
          * .id()
          * .created()
          * .status()
-         * .steps()
          * .updated()
          * ```
          *
@@ -1096,7 +1094,6 @@ private constructor(
                 checkRequired("id", id),
                 checkRequired("created", created),
                 checkRequired("status", status),
-                checkRequired("steps", steps).map { it.toImmutable() },
                 checkRequired("updated", updated),
                 agent,
                 agentConfig,
@@ -1109,6 +1106,7 @@ private constructor(
                 (responseModalities ?: JsonMissing.of()).map { it.toImmutable() },
                 role,
                 serviceTier,
+                (steps ?: JsonMissing.of()).map { it.toImmutable() },
                 systemInstruction,
                 (tools ?: JsonMissing.of()).map { it.toImmutable() },
                 usage,
@@ -1127,7 +1125,6 @@ private constructor(
         id()
         created()
         status().validate()
-        steps().forEach { it.validate() }
         updated()
         agent()
         agentConfig().ifPresent { it.validate() }
@@ -1140,6 +1137,7 @@ private constructor(
         responseModalities().ifPresent { it.forEach { it.validate() } }
         role()
         serviceTier().ifPresent { it.validate() }
+        steps().ifPresent { it.forEach { it.validate() } }
         systemInstruction()
         tools().ifPresent { it.forEach { it.validate() } }
         usage().ifPresent { it.validate() }
@@ -1165,7 +1163,6 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (created.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
-            (steps.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (updated.asKnown().isPresent) 1 else 0) +
             (if (agent.asKnown().isPresent) 1 else 0) +
             (agentConfig.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1178,6 +1175,7 @@ private constructor(
             (responseModalities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (role.asKnown().isPresent) 1 else 0) +
             (serviceTier.asKnown().getOrNull()?.validity() ?: 0) +
+            (steps.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (systemInstruction.asKnown().isPresent) 1 else 0) +
             (tools.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (usage.asKnown().getOrNull()?.validity() ?: 0) +
@@ -3195,7 +3193,6 @@ private constructor(
             id == other.id &&
             created == other.created &&
             status == other.status &&
-            steps == other.steps &&
             updated == other.updated &&
             agent == other.agent &&
             agentConfig == other.agentConfig &&
@@ -3208,6 +3205,7 @@ private constructor(
             responseModalities == other.responseModalities &&
             role == other.role &&
             serviceTier == other.serviceTier &&
+            steps == other.steps &&
             systemInstruction == other.systemInstruction &&
             tools == other.tools &&
             usage == other.usage &&
@@ -3220,7 +3218,6 @@ private constructor(
             id,
             created,
             status,
-            steps,
             updated,
             agent,
             agentConfig,
@@ -3233,6 +3230,7 @@ private constructor(
             responseModalities,
             role,
             serviceTier,
+            steps,
             systemInstruction,
             tools,
             usage,
@@ -3244,5 +3242,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Interaction{id=$id, created=$created, status=$status, steps=$steps, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
+        "Interaction{id=$id, created=$created, status=$status, updated=$updated, agent=$agent, agentConfig=$agentConfig, generationConfig=$generationConfig, input=$input, model=$model, previousInteractionId=$previousInteractionId, responseFormat=$responseFormat, responseMimeType=$responseMimeType, responseModalities=$responseModalities, role=$role, serviceTier=$serviceTier, steps=$steps, systemInstruction=$systemInstruction, tools=$tools, usage=$usage, webhookConfig=$webhookConfig, additionalProperties=$additionalProperties}"
 }
