@@ -218,6 +218,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun responseMimeType(): Optional<String> = responseMimeType.getOptional("response_mime_type")
 
     /**
@@ -380,6 +381,7 @@ private constructor(
      * Unlike [responseMimeType], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("response_mime_type")
     @ExcludeMissing
     fun _responseMimeType(): JsonField<String> = responseMimeType
@@ -719,6 +721,7 @@ private constructor(
             responseFormat(ResponseFormat.ofJsonValue(jsonValue))
 
         /** The mime type of the response. This is required if response_format is set. */
+        @Deprecated("deprecated")
         fun responseMimeType(responseMimeType: String) =
             responseMimeType(JsonField.of(responseMimeType))
 
@@ -729,6 +732,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun responseMimeType(responseMimeType: JsonField<String>) = apply {
             this.responseMimeType = responseMimeType
         }

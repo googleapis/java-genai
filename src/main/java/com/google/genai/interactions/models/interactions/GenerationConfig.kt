@@ -111,6 +111,7 @@ private constructor(
      * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
      *   if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun imageConfig(): Optional<ImageConfig> = imageConfig.getOptional("image_config")
 
     /**
@@ -191,6 +192,7 @@ private constructor(
      *
      * Unlike [imageConfig], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("image_config")
     @ExcludeMissing
     fun _imageConfig(): JsonField<ImageConfig> = imageConfig
@@ -320,6 +322,7 @@ private constructor(
         }
 
         /** Configuration for image interaction. */
+        @Deprecated("deprecated")
         fun imageConfig(imageConfig: ImageConfig) = imageConfig(JsonField.of(imageConfig))
 
         /**
@@ -329,6 +332,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun imageConfig(imageConfig: JsonField<ImageConfig>) = apply {
             this.imageConfig = imageConfig
         }
