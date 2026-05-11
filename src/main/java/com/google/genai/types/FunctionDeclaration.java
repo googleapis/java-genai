@@ -97,8 +97,9 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   public abstract Optional<Object> responseJsonSchema();
 
   /**
-   * Optional. Specifies the function Behavior. Currently only supported by the BidiGenerateContent
-   * method. This field is not supported in Vertex AI.
+   * Optional. Specifies the function Behavior. Currently only non-blocking functions are supported.
+   * If not specified, the system keeps the current function call behavior. This field is currently
+   * only supported by the BidiGenerateContent method.
    */
   @JsonProperty("behavior")
   public abstract Optional<Behavior> behavior();
@@ -277,8 +278,9 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     /**
      * Setter for behavior.
      *
-     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
-     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only non-blocking functions
+     * are supported. If not specified, the system keeps the current function call behavior. This
+     * field is currently only supported by the BidiGenerateContent method.
      */
     @JsonProperty("behavior")
     public abstract Builder behavior(Behavior behavior);
@@ -296,8 +298,9 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     /**
      * Setter for behavior given a known enum.
      *
-     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
-     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only non-blocking functions
+     * are supported. If not specified, the system keeps the current function call behavior. This
+     * field is currently only supported by the BidiGenerateContent method.
      */
     @CanIgnoreReturnValue
     public Builder behavior(Behavior.Known knownType) {
@@ -307,8 +310,9 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     /**
      * Setter for behavior given a string.
      *
-     * <p>behavior: Optional. Specifies the function Behavior. Currently only supported by the
-     * BidiGenerateContent method. This field is not supported in Vertex AI.
+     * <p>behavior: Optional. Specifies the function Behavior. Currently only non-blocking functions
+     * are supported. If not specified, the system keeps the current function call behavior. This
+     * field is currently only supported by the BidiGenerateContent method.
      */
     @CanIgnoreReturnValue
     public Builder behavior(String behavior) {
