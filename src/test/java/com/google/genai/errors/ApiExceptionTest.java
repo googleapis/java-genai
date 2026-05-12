@@ -105,6 +105,80 @@ class ApiExceptionTest {
   }
 
   @Test
+  void testGetErrorMessage_WithDetails() {
+    String jsonBody =
+        "{  \"error\": {    \"code\": 400,    \"message\": \"Request contains an invalid"
+            + " argument.\",    \"status\": \"INVALID_ARGUMENT\",    \"details\": [      {       "
+            + " \"@type\": \"type.googleapis.com/google.rpc.DebugInfo\",        \"detail\":"
+            + " \"[ORIGINAL ERROR] generic::invalid_argument: Referencing Google Cloud Storage"
+            + " files directly is not supported.\"      }    ]  }}";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+    String message = ApiException.getErrorMessageFromResponse(response);
+    String expectedMessage =
+        "Request contains an invalid argument.\n"
+            + "Details: [ORIGINAL ERROR] generic::invalid_argument: Referencing Google Cloud"
+            + " Storage files directly is not supported.";
+    assertEquals(expectedMessage, message);
+  }
+
+  @Test
+  void testGetErrorMessage_WithDetailsNotArray() {
+    String jsonBody =
+        "{"
+            + "  \"error\": {"
+            + "    \"code\": 400,"
+            + "    \"message\": \"Invalid argument\","
+            + "    \"status\": \"INVALID_ARGUMENT\","
+            + "    \"details\": \"some string\""
+            + "  }"
+            + "}";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+    String message = ApiException.getErrorMessageFromResponse(response);
+    assertEquals("Invalid argument", message);
+  }
+
+  @Test
+  void testGetErrorMessage_WithDetailsNonObjectItem() {
+    String jsonBody =
+        "{"
+            + "  \"error\": {"
+            + "    \"code\": 400,"
+            + "    \"message\": \"Invalid argument\","
+            + "    \"status\": \"INVALID_ARGUMENT\","
+            + "    \"details\": ["
+            + "      \"string detail\","
+            + "      123"
+            + "    ]"
+            + "  }"
+            + "}";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+    String message = ApiException.getErrorMessageFromResponse(response);
+    String expectedMessage = "Invalid argument\nDetails: \"string detail\"\n123";
+    assertEquals(expectedMessage, message);
+  }
+
+  @Test
+  void testGetErrorMessage_WithDetailsNonStringDetail() {
+    String jsonBody =
+        "{"
+            + "  \"error\": {"
+            + "    \"code\": 400,"
+            + "    \"message\": \"Invalid argument\","
+            + "    \"status\": \"INVALID_ARGUMENT\","
+            + "    \"details\": ["
+            + "      {"
+            + "        \"detail\": { \"sub\": \"error\" }"
+            + "      }"
+            + "    ]"
+            + "  }"
+            + "}";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+    String message = ApiException.getErrorMessageFromResponse(response);
+    String expectedMessage = "Invalid argument\nDetails: {\"detail\":{\"sub\":\"error\"}}";
+    assertEquals(expectedMessage, message);
+  }
+
+  @Test
   void testGetErrorMessage_NoErrorNode() {
     Response response = createFakeResponse(400, "Bad", "{}");
     String message = ApiException.getErrorMessageFromResponse(response);

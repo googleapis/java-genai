@@ -144,9 +144,31 @@ public class ApiException extends BaseException {
       JsonNode errorNode = mapper.readTree(responseBodyString).get("error");
       if (errorNode != null && errorNode.isObject()) {
         JsonNode messageNode = errorNode.get("message");
-        if (messageNode != null && messageNode.isTextual()) {
-          return messageNode.asText();
+        String message = messageNode != null && messageNode.isTextual() ? messageNode.asText() : "";
+
+        JsonNode detailsNode = errorNode.get("details");
+        if (detailsNode != null && detailsNode.isArray()) {
+          StringBuilder sb = new StringBuilder();
+          for (JsonNode item : detailsNode) {
+            if (item.isObject()) {
+              JsonNode detailNode = item.get("detail");
+              if (detailNode != null && detailNode.isTextual()) {
+                sb.append(detailNode.asText()).append("\n");
+                continue;
+              }
+            }
+            if (!item.isNull()) {
+              sb.append(item.toString()).append("\n");
+            }
+          }
+          String detailsText = sb.toString().trim();
+          if (!detailsText.isEmpty()) {
+            return message.isEmpty()
+                ? "Details: " + detailsText
+                : message + "\nDetails: " + detailsText;
+          }
         }
+        return message;
       }
       return "";
     } catch (IOException ignored) {
