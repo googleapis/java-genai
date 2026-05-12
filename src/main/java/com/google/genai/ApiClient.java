@@ -404,15 +404,13 @@ public abstract class ApiClient implements AutoCloseable {
             .baseUrl(httpOptions.baseUrl())
             .apiKey(apiKey);
 
-    // BEGIN_SDK_PRIVATE_ONLY
-    // clientOptions
-    //     .flatMap(ClientOptions::streamHandlerExecutor)
-    //     .ifPresent(
-    //         streamHandlerExecutor -> {
-    //           com.google.genai.interactions.core.ClientOptions.Builder unused =
-    //               builder.streamHandlerExecutor(streamHandlerExecutor);
-    //         });
-    // END_SDK_PRIVATE_ONLY
+    clientOptions
+        .flatMap(ClientOptions::streamHandlerExecutor)
+        .ifPresent(
+            streamHandlerExecutor -> {
+              com.google.genai.interactions.core.ClientOptions.Builder unused =
+                  builder.streamHandlerExecutor(streamHandlerExecutor);
+            });
 
     httpOptions
         .apiVersion()

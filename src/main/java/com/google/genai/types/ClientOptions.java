@@ -19,12 +19,14 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
+import java.util.concurrent.Executor;
 
 /** Client options to be used in the client instantiation. */
 @AutoValue
@@ -41,6 +43,10 @@ public abstract class ClientOptions extends JsonSerializable {
   /** Proxy configuration to be used in the client. */
   @JsonProperty("proxyOptions")
   public abstract Optional<ProxyOptions> proxyOptions();
+
+  /** EXPERIMENTAL the executor to use for running async stream handler callbacks. */
+  @JsonIgnore
+  public abstract Optional<Executor> streamHandlerExecutor();
 
   /** Instantiates a builder for ClientOptions. */
   @ExcludeFromGeneratedCoverageReport
@@ -122,6 +128,25 @@ public abstract class ClientOptions extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearProxyOptions() {
       return proxyOptions(Optional.empty());
+    }
+
+    /**
+     * Setter for streamHandlerExecutor.
+     *
+     * <p>streamHandlerExecutor: EXPERIMENTAL the executor to use for running async stream handler
+     * callbacks.
+     */
+    @JsonIgnore
+    public abstract Builder streamHandlerExecutor(Executor streamHandlerExecutor);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder streamHandlerExecutor(Optional<Executor> streamHandlerExecutor);
+
+    /** Clears the value of streamHandlerExecutor field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStreamHandlerExecutor() {
+      return streamHandlerExecutor(Optional.empty());
     }
 
     public abstract ClientOptions build();
