@@ -375,6 +375,10 @@ private constructor(
         fun delta(googleMapsResult: Delta.GoogleMapsResult) =
             delta(Delta.ofGoogleMapsResult(googleMapsResult))
 
+        /** Alias for calling [delta] with `Delta.ofFunctionResult(functionResult)`. */
+        fun delta(functionResult: FunctionResultDelta) =
+            delta(Delta.ofFunctionResult(functionResult))
+
         /**
          * Sets the field to an arbitrary JSON value.
          *
@@ -515,6 +519,7 @@ private constructor(
         private val mcpServerToolResult: McpServerToolResult? = null,
         private val fileSearchResult: FileSearchResult? = null,
         private val googleMapsResult: GoogleMapsResult? = null,
+        private val functionResult: FunctionResultDelta? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -566,6 +571,8 @@ private constructor(
 
         fun googleMapsResult(): Optional<GoogleMapsResult> = Optional.ofNullable(googleMapsResult)
 
+        fun functionResult(): Optional<FunctionResultDelta> = Optional.ofNullable(functionResult)
+
         fun isText(): Boolean = text != null
 
         fun isImage(): Boolean = image != null
@@ -607,6 +614,8 @@ private constructor(
         fun isFileSearchResult(): Boolean = fileSearchResult != null
 
         fun isGoogleMapsResult(): Boolean = googleMapsResult != null
+
+        fun isFunctionResult(): Boolean = functionResult != null
 
         fun asText(): Text = text.getOrThrow("text")
 
@@ -656,6 +665,8 @@ private constructor(
 
         fun asGoogleMapsResult(): GoogleMapsResult = googleMapsResult.getOrThrow("googleMapsResult")
 
+        fun asFunctionResult(): FunctionResultDelta = functionResult.getOrThrow("functionResult")
+
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
         fun <T> accept(visitor: Visitor<T>): T =
@@ -681,6 +692,7 @@ private constructor(
                 mcpServerToolResult != null -> visitor.visitMcpServerToolResult(mcpServerToolResult)
                 fileSearchResult != null -> visitor.visitFileSearchResult(fileSearchResult)
                 googleMapsResult != null -> visitor.visitGoogleMapsResult(googleMapsResult)
+                functionResult != null -> visitor.visitFunctionResult(functionResult)
                 else -> visitor.unknown(_json)
             }
 
@@ -782,6 +794,10 @@ private constructor(
                     override fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult) {
                         googleMapsResult.validate()
                     }
+
+                    override fun visitFunctionResult(functionResult: FunctionResultDelta) {
+                        functionResult.validate()
+                    }
                 }
             )
             validated = true
@@ -865,6 +881,9 @@ private constructor(
                     override fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult) =
                         googleMapsResult.validity()
 
+                    override fun visitFunctionResult(functionResult: FunctionResultDelta) =
+                        functionResult.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -895,7 +914,8 @@ private constructor(
                 googleSearchResult == other.googleSearchResult &&
                 mcpServerToolResult == other.mcpServerToolResult &&
                 fileSearchResult == other.fileSearchResult &&
-                googleMapsResult == other.googleMapsResult
+                googleMapsResult == other.googleMapsResult &&
+                functionResult == other.functionResult
         }
 
         override fun hashCode(): Int =
@@ -921,6 +941,7 @@ private constructor(
                 mcpServerToolResult,
                 fileSearchResult,
                 googleMapsResult,
+                functionResult,
             )
 
         override fun toString(): String =
@@ -946,6 +967,7 @@ private constructor(
                 mcpServerToolResult != null -> "Delta{mcpServerToolResult=$mcpServerToolResult}"
                 fileSearchResult != null -> "Delta{fileSearchResult=$fileSearchResult}"
                 googleMapsResult != null -> "Delta{googleMapsResult=$googleMapsResult}"
+                functionResult != null -> "Delta{functionResult=$functionResult}"
                 _json != null -> "Delta{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Delta")
             }
@@ -1023,6 +1045,10 @@ private constructor(
             @JvmStatic
             fun ofGoogleMapsResult(googleMapsResult: GoogleMapsResult) =
                 Delta(googleMapsResult = googleMapsResult)
+
+            @JvmStatic
+            fun ofFunctionResult(functionResult: FunctionResultDelta) =
+                Delta(functionResult = functionResult)
         }
 
         /** An interface that defines how to map each variant of [Delta] to a value of type [T]. */
@@ -1069,6 +1095,8 @@ private constructor(
             fun visitFileSearchResult(fileSearchResult: FileSearchResult): T
 
             fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult): T
+
+            fun visitFunctionResult(functionResult: FunctionResultDelta): T
 
             /**
              * Maps an unknown variant of [Delta] to a value of type [T].
@@ -1197,6 +1225,11 @@ private constructor(
                             Delta(googleMapsResult = it, _json = json)
                         } ?: Delta(_json = json)
                     }
+                    "function_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<FunctionResultDelta>())?.let {
+                            Delta(functionResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
                 }
 
                 return Delta(_json = json)
@@ -1237,6 +1270,7 @@ private constructor(
                         generator.writeObject(value.mcpServerToolResult)
                     value.fileSearchResult != null -> generator.writeObject(value.fileSearchResult)
                     value.googleMapsResult != null -> generator.writeObject(value.googleMapsResult)
+                    value.functionResult != null -> generator.writeObject(value.functionResult)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Delta")
                 }

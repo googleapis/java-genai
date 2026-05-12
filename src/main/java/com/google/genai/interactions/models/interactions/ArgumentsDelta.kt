@@ -23,23 +23,27 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.genai.interactions.core.ExcludeMissing
+import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
 import com.google.genai.interactions.errors.GeminiNextGenApiInvalidDataException
 import java.util.Collections
 import java.util.Objects
+import java.util.Optional
 
 class ArgumentsDelta
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val type: JsonValue,
+    private val arguments: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of()
-    ) : this(type, mutableMapOf())
+        @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+        @JsonProperty("arguments") @ExcludeMissing arguments: JsonField<String> = JsonMissing.of(),
+    ) : this(type, arguments, mutableMapOf())
 
     /**
      * Expected to always return the following:
@@ -51,6 +55,19 @@ private constructor(
      * with an unexpected value).
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+    /**
+     * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type (e.g.
+     *   if the server responded with an unexpected value).
+     */
+    fun arguments(): Optional<String> = arguments.getOptional("arguments")
+
+    /**
+     * Returns the raw JSON value of [arguments].
+     *
+     * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("arguments") @ExcludeMissing fun _arguments(): JsonField<String> = arguments
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -74,11 +91,13 @@ private constructor(
     class Builder internal constructor() {
 
         private var type: JsonValue = JsonValue.from("arguments_delta")
+        private var arguments: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(argumentsDelta: ArgumentsDelta) = apply {
             type = argumentsDelta.type
+            arguments = argumentsDelta.arguments
             additionalProperties = argumentsDelta.additionalProperties.toMutableMap()
         }
 
@@ -95,6 +114,17 @@ private constructor(
          * value.
          */
         fun type(type: JsonValue) = apply { this.type = type }
+
+        fun arguments(arguments: String) = arguments(JsonField.of(arguments))
+
+        /**
+         * Sets [Builder.arguments] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.arguments] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun arguments(arguments: JsonField<String>) = apply { this.arguments = arguments }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -120,7 +150,8 @@ private constructor(
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): ArgumentsDelta = ArgumentsDelta(type, additionalProperties.toMutableMap())
+        fun build(): ArgumentsDelta =
+            ArgumentsDelta(type, arguments, additionalProperties.toMutableMap())
     }
 
     private var validated: Boolean = false
@@ -135,6 +166,7 @@ private constructor(
                 throw GeminiNextGenApiInvalidDataException("'type' is invalid, received $it")
             }
         }
+        arguments()
         validated = true
     }
 
@@ -153,7 +185,8 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        type.let { if (it == JsonValue.from("arguments_delta")) 1 else 0 }
+        type.let { if (it == JsonValue.from("arguments_delta")) 1 else 0 } +
+            (if (arguments.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -162,13 +195,14 @@ private constructor(
 
         return other is ArgumentsDelta &&
             type == other.type &&
+            arguments == other.arguments &&
             additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy { Objects.hash(type, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(type, arguments, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ArgumentsDelta{type=$type, additionalProperties=$additionalProperties}"
+        "ArgumentsDelta{type=$type, arguments=$arguments, additionalProperties=$additionalProperties}"
 }
