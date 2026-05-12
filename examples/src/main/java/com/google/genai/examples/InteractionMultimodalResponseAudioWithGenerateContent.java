@@ -87,11 +87,15 @@ public final class InteractionMultimodalResponseAudioWithGenerateContent {
     System.out.println("Interaction ID: " + interaction.id());
     System.out.println("Status: " + interaction.status());
 
-    int i = 1;
-    for (Step step : interaction.steps()) {
-      System.out.println("Step " + i + ": " + step);
-      i++;
-    }
+    interaction
+        .steps()
+        .ifPresent(
+            steps -> {
+              for (int i = 0; i < steps.size(); i++) {
+                Step step = steps.get(i);
+                System.out.println("Step " + (i + 1) + ": " + step);
+              }
+            });
 
     System.out.println("[Generate Content] Start generate content");
     GenerateContentConfig config =

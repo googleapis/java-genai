@@ -75,20 +75,25 @@ public final class InteractionGet {
     System.out.println("Status: " + retrievedInteraction.status());
 
     // Print the text outputs from the retrieved interaction.
-    for (Step step : retrievedInteraction.steps()) {
-      if (step.isModelOutput()) {
-        step.asModelOutput()
-            .content()
-            .ifPresent(
-                contents -> {
-                  for (Content content : contents) {
-                    content
-                        .text()
-                        .ifPresent(text -> System.out.println("Output: " + text.text()));
-                  }
-                });
-      }
-    }
+    retrievedInteraction
+        .steps()
+        .ifPresent(
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content content : contents) {
+                              content
+                                  .text()
+                                  .ifPresent(text -> System.out.println("Output: " + text.text()));
+                            }
+                          });
+                }
+              }
+            });
   }
 
   private InteractionGet() {}

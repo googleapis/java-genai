@@ -44,7 +44,6 @@ import com.google.genai.Client;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
 import com.google.genai.interactions.models.interactions.CreateModelInteractionParams.ResponseModality;
 import com.google.genai.interactions.models.interactions.Interaction;
-import com.google.genai.interactions.models.interactions.Step;
 import java.util.Arrays;
 
 /** Example of generating an image using the Interactions API. */
@@ -61,11 +60,14 @@ public class InteractionMultimodalResponseImage {
 
     Interaction interaction = client.interactions.create(params);
 
-    int i = 1;
-    for (Step step : interaction.steps()) {
-      System.out.println("Output " + i + ": " + step);
-      i++;
-    }
+    interaction
+        .steps()
+        .ifPresent(
+            outputs -> {
+              for (int i = 0; i < outputs.size(); i++) {
+                System.out.println("Output " + (i + 1) + ": " + outputs.get(i));
+              }
+            });
   }
 
   public static void main(String[] args) {

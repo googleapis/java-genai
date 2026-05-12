@@ -77,20 +77,25 @@ public final class InteractionCreate {
     System.out.println("Status: " + interaction.status());
 
     // Print the text outputs from the interaction.
-    for (Step step : interaction.steps()) {
-      if (step.isModelOutput()) {
-        step.asModelOutput()
-            .content()
-            .ifPresent(
-                contents -> {
-                  for (Content content : contents) {
-                    content
-                        .text()
-                        .ifPresent(text -> System.out.println("Output: " + text.text()));
-                  }
-                });
-      }
-    }
+    interaction
+        .steps()
+        .ifPresent(
+            steps -> {
+              for (Step step : steps) {
+                if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content content : contents) {
+                              content
+                                  .text()
+                                  .ifPresent(text -> System.out.println("Output: " + text.text()));
+                            }
+                          });
+                }
+              }
+            });
   }
 
   private InteractionCreate() {}

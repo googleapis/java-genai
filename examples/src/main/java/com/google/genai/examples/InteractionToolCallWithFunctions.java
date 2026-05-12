@@ -123,26 +123,31 @@ public final class InteractionToolCallWithFunctions {
     System.out.println("Interaction ID: " + interaction.id());
     System.out.println("Status: " + interaction.status());
 
-    for (Step step : interaction.steps()) {
-      if (step.isFunctionCall()) {
-        FunctionCallStep fc = step.asFunctionCall();
-        System.out.println("Function Call: " + fc.name());
-        System.out.println("Arguments: " + fc.arguments());
-      } else if (step.isModelOutput()) {
-        step.asModelOutput()
-            .content()
-            .ifPresent(
-                contents -> {
-                  for (Content output : contents) {
-                    output
-                        .text()
-                        .ifPresent(
-                            text ->
-                                System.out.println("Output Text: " + text.text()));
-                  }
-                });
-      }
-    }
+    interaction
+        .steps()
+        .ifPresent(
+            steps -> {
+              for (Step step : steps) {
+                if (step.isFunctionCall()) {
+                  FunctionCallStep fc = step.asFunctionCall();
+                  System.out.println("Function Call: " + fc.name());
+                  System.out.println("Arguments: " + fc.arguments());
+                } else if (step.isModelOutput()) {
+                  step.asModelOutput()
+                      .content()
+                      .ifPresent(
+                          contents -> {
+                            for (Content output : contents) {
+                              output
+                                  .text()
+                                  .ifPresent(
+                                      text ->
+                                          System.out.println("Output Text: " + text.text()));
+                            }
+                          });
+                }
+              }
+            });
   }
 
   private InteractionToolCallWithFunctions() {}

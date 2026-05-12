@@ -123,7 +123,7 @@ public final class InteractionFunctionCallingServerState {
     String functionCallId = null;
     String functionName = null;
 
-    List<Step> steps = response.steps();
+    List<Step> steps = response.steps().orElse(null);
     if (steps != null) {
       for (Step step : steps) {
         if (step.isFunctionCall()) {
@@ -170,21 +170,26 @@ public final class InteractionFunctionCallingServerState {
       Interaction followUpResponse = client.interactions.create(followUpParams);
 
       System.out.println("Final response status: " + followUpResponse.status());
-      for (Step step : followUpResponse.steps()) {
-        if (step.isModelOutput()) {
-          step.asModelOutput()
-              .content()
-              .ifPresent(
-                  contents -> {
-                    for (Content output : contents) {
-                      output
-                          .text()
-                          .ifPresent(
-                              text -> System.out.println("Final Output: " + text.text()));
-                    }
-                  });
-        }
-      }
+      followUpResponse
+          .steps()
+          .ifPresent(
+              finalSteps -> {
+                for (Step step : finalSteps) {
+                  if (step.isModelOutput()) {
+                    step.asModelOutput()
+                        .content()
+                        .ifPresent(
+                            contents -> {
+                              for (Content output : contents) {
+                                output
+                                    .text()
+                                    .ifPresent(
+                                        text -> System.out.println("Final Output: " + text.text()));
+                              }
+                            });
+                  }
+                }
+              });
     } else {
       System.out.println("No function call requested by the model.");
     }
