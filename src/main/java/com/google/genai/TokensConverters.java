@@ -513,6 +513,13 @@ final class TokensConverters {
       Common.setValueByPath(parentObject, new String[] {"setup", "safetySettings"}, result);
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"streamTranslationConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "generationConfig", "streamTranslationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"streamTranslationConfig"}));
+    }
+
     return toObject;
   }
 

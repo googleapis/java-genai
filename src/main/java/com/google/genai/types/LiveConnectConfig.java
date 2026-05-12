@@ -169,6 +169,10 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   @JsonProperty("safetySettings")
   public abstract Optional<List<SafetySetting>> safetySettings();
 
+  /** Config for stream translation. */
+  @JsonProperty("streamTranslationConfig")
+  public abstract Optional<StreamTranslationConfig> streamTranslationConfig();
+
   /** Instantiates a builder for LiveConnectConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -864,6 +868,37 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSafetySettings() {
       return safetySettings(Optional.empty());
+    }
+
+    /**
+     * Setter for streamTranslationConfig.
+     *
+     * <p>streamTranslationConfig: Config for stream translation.
+     */
+    @JsonProperty("streamTranslationConfig")
+    public abstract Builder streamTranslationConfig(
+        StreamTranslationConfig streamTranslationConfig);
+
+    /**
+     * Setter for streamTranslationConfig builder.
+     *
+     * <p>streamTranslationConfig: Config for stream translation.
+     */
+    @CanIgnoreReturnValue
+    public Builder streamTranslationConfig(
+        StreamTranslationConfig.Builder streamTranslationConfigBuilder) {
+      return streamTranslationConfig(streamTranslationConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder streamTranslationConfig(
+        Optional<StreamTranslationConfig> streamTranslationConfig);
+
+    /** Clears the value of streamTranslationConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStreamTranslationConfig() {
+      return streamTranslationConfig(Optional.empty());
     }
 
     public abstract LiveConnectConfig build();
