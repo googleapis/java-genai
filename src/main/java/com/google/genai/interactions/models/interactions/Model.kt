@@ -132,6 +132,12 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
          * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
          * simple data processing.
          */
+        @JvmField val GEMINI_3_1_FLASH_LITE = of("gemini-3.1-flash-lite")
+
+        /**
+         * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
+         * simple data processing.
+         */
         @JvmField val GEMINI_3_1_FLASH_LITE_PREVIEW = of("gemini-3.1-flash-lite-preview")
 
         /**
@@ -226,6 +232,11 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
          * capabilities.
          */
         GEMINI_3_1_FLASH_IMAGE_PREVIEW,
+        /**
+         * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
+         * simple data processing.
+         */
+        GEMINI_3_1_FLASH_LITE,
         /**
          * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
          * simple data processing.
@@ -331,6 +342,11 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
          * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
          * simple data processing.
          */
+        GEMINI_3_1_FLASH_LITE,
+        /**
+         * Our most cost-efficient model, optimized for high-volume agentic tasks, translation, and
+         * simple data processing.
+         */
         GEMINI_3_1_FLASH_LITE_PREVIEW,
         /**
          * Gemini 3.1 Flash TTS: Powerful, low-latency speech generation. Enjoy natural outputs,
@@ -376,6 +392,7 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
             GEMINI_3_PRO_PREVIEW -> Value.GEMINI_3_PRO_PREVIEW
             GEMINI_3_1_PRO_PREVIEW -> Value.GEMINI_3_1_PRO_PREVIEW
             GEMINI_3_1_FLASH_IMAGE_PREVIEW -> Value.GEMINI_3_1_FLASH_IMAGE_PREVIEW
+            GEMINI_3_1_FLASH_LITE -> Value.GEMINI_3_1_FLASH_LITE
             GEMINI_3_1_FLASH_LITE_PREVIEW -> Value.GEMINI_3_1_FLASH_LITE_PREVIEW
             GEMINI_3_1_FLASH_TTS_PREVIEW -> Value.GEMINI_3_1_FLASH_TTS_PREVIEW
             LYRIA_3_CLIP_PREVIEW -> Value.LYRIA_3_CLIP_PREVIEW
@@ -410,6 +427,7 @@ class Model @JsonCreator private constructor(private val value: JsonField<String
             GEMINI_3_PRO_PREVIEW -> Known.GEMINI_3_PRO_PREVIEW
             GEMINI_3_1_PRO_PREVIEW -> Known.GEMINI_3_1_PRO_PREVIEW
             GEMINI_3_1_FLASH_IMAGE_PREVIEW -> Known.GEMINI_3_1_FLASH_IMAGE_PREVIEW
+            GEMINI_3_1_FLASH_LITE -> Known.GEMINI_3_1_FLASH_LITE
             GEMINI_3_1_FLASH_LITE_PREVIEW -> Known.GEMINI_3_1_FLASH_LITE_PREVIEW
             GEMINI_3_1_FLASH_TTS_PREVIEW -> Known.GEMINI_3_1_FLASH_TTS_PREVIEW
             LYRIA_3_CLIP_PREVIEW -> Known.LYRIA_3_CLIP_PREVIEW
