@@ -90,33 +90,20 @@ public final class InteractionStateless {
     Interaction response1 = client.interactions.create(params1);
 
     System.out.println("Model: ");
-    response1
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (Step step : steps) {
-                if (step.isModelOutput()) {
-                  step.asModelOutput()
-                      .content()
-                      .ifPresent(
-                          contents -> {
-                            for (Content output : contents) {
-                              output.text().ifPresent(text -> System.out.println(text.text()));
-                            }
-                          });
-                }
-              }
-            });
-
     // Add model response to history
-    response1
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (Step step : steps) {
-                conversationHistory.add(step);
-              }
-            });
+    for (Step step : response1.steps()) {
+      if (step.isModelOutput()) {
+        step.asModelOutput()
+            .content()
+            .ifPresent(
+                contents -> {
+                  for (Content output : contents) {
+                    output.text().ifPresent(text -> System.out.println(text.text()));
+                  }
+                });
+      }
+      conversationHistory.add(step);
+    }
 
     // Add next user message
     conversationHistory.add(
@@ -142,23 +129,18 @@ public final class InteractionStateless {
     Interaction response2 = client.interactions.create(params2);
 
     System.out.println("Model: ");
-    response2
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (Step step : steps) {
-                if (step.isModelOutput()) {
-                  step.asModelOutput()
-                      .content()
-                      .ifPresent(
-                          contents -> {
-                            for (Content output : contents) {
-                              output.text().ifPresent(text -> System.out.println(text.text()));
-                            }
-                          });
-                }
-              }
-            });
+    for (Step step : response2.steps()) {
+      if (step.isModelOutput()) {
+        step.asModelOutput()
+            .content()
+            .ifPresent(
+                contents -> {
+                  for (Content output : contents) {
+                    output.text().ifPresent(text -> System.out.println(text.text()));
+                  }
+                });
+      }
+    }
   }
 
   private InteractionStateless() {}

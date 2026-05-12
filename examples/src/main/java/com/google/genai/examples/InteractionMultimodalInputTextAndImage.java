@@ -74,14 +74,10 @@ public class InteractionMultimodalInputTextAndImage {
 
     Interaction interaction = client.interactions.create(params);
 
-    interaction
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (int i = 0; i < steps.size(); i++) {
-                System.out.println("Step " + (i + 1) + ": " + steps.get(i));
-              }
-            });
+    List<Step> steps = interaction.steps();
+    for (int i = 0; i < steps.size(); i++) {
+      System.out.println("Step " + (i + 1) + ": " + steps.get(i));
+    }
   }
 
   public static void main(String[] args) {

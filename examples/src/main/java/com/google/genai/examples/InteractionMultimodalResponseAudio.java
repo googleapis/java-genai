@@ -46,6 +46,7 @@ import com.google.genai.interactions.models.interactions.CreateModelInteractionP
 import com.google.genai.interactions.models.interactions.GenerationConfig;
 import com.google.genai.interactions.models.interactions.Interaction;
 import com.google.genai.interactions.models.interactions.SpeechConfig;
+import com.google.genai.interactions.models.interactions.Step;
 import java.util.Arrays;
 
 /** Example of generating audio using the Interactions API. */
@@ -68,14 +69,11 @@ public final class InteractionMultimodalResponseAudio {
 
     Interaction interaction = client.interactions.create(params);
 
-    interaction
-        .steps()
-        .ifPresent(
-            outputs -> {
-              for (int i = 0; i < outputs.size(); i++) {
-                System.out.println("Output " + (i + 1) + ": " + outputs.get(i));
-              }
-            });
+    int i = 1;
+    for (Step step : interaction.steps()) {
+      System.out.println("Output " + i + ": " + step);
+      i++;
+    }
   }
 
   public static void main(String[] args) {

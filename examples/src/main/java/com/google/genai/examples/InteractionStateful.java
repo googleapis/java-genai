@@ -83,23 +83,18 @@ public final class InteractionStateful {
   }
 
   private static void printOutput(Interaction interaction) {
-    interaction
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (Step step : steps) {
-                if (step.isModelOutput()) {
-                  step.asModelOutput()
-                      .content()
-                      .ifPresent(
-                          contents -> {
-                            for (Content content : contents) {
-                              content.text().ifPresent(text -> System.out.println(text.text()));
-                            }
-                          });
-                }
-              }
-            });
+    for (Step step : interaction.steps()) {
+      if (step.isModelOutput()) {
+        step.asModelOutput()
+            .content()
+            .ifPresent(
+                contents -> {
+                  for (Content content : contents) {
+                    content.text().ifPresent(text -> System.out.println(text.text()));
+                  }
+                });
+      }
+    }
   }
 
   private InteractionStateful() {}

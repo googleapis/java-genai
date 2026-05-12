@@ -76,26 +76,21 @@ public final class InteractionToolCallWithGoogleSearch {
     System.out.println("Interaction ID: " + interaction.id());
     System.out.println("Status: " + interaction.status());
 
-    interaction
-        .steps()
-        .ifPresent(
-            steps -> {
-              for (Step step : steps) {
-                if (step.isModelOutput()) {
-                  step.asModelOutput()
-                      .content()
-                      .ifPresent(
-                          contents -> {
-                            for (Content content : contents) {
-                              content
-                                  .text()
-                                  .ifPresent(
-                                      text -> System.out.println("Output Text: " + text.text()));
-                            }
-                          });
-                }
-              }
-            });
+    for (Step step : interaction.steps()) {
+      if (step.isModelOutput()) {
+        step.asModelOutput()
+            .content()
+            .ifPresent(
+                contents -> {
+                  for (Content content : contents) {
+                    content
+                        .text()
+                        .ifPresent(
+                            text -> System.out.println("Output Text: " + text.text()));
+                  }
+                });
+      }
+    }
   }
 
   private InteractionToolCallWithGoogleSearch() {}
