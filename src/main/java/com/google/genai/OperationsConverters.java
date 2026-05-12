@@ -39,15 +39,21 @@ public final class OperationsConverters {
       JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"operationName"}))) {
-      throw new IllegalArgumentException("operationName parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "operationName parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"resourceName"}))) {
-      throw new IllegalArgumentException("resourceName parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "resourceName parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"config"}))) {
-      throw new IllegalArgumentException("config parameter is not supported in Gemini API.");
+      throw new IllegalArgumentException(
+          "config parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
     }
 
     return toObject;

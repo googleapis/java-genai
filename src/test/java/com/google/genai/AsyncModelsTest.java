@@ -475,8 +475,8 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.",
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.",
           exception.getMessage());
     }
   }
@@ -664,8 +664,8 @@ public class AsyncModelsTest {
                       .join());
       // Assert
       assertEquals(
-          "This method is only supported in the Gemini Enterprise Agent Platform (previously known"
-              + " as Vertex AI) client.",
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.",
           exception.getMessage());
     }
   }

@@ -250,7 +250,8 @@ public final class Files {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = listFilesParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -290,7 +291,8 @@ public final class Files {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -337,7 +339,8 @@ public final class Files {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = createFileParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -394,7 +397,8 @@ public final class Files {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -431,7 +435,8 @@ public final class Files {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = getFileParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -471,7 +476,8 @@ public final class Files {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return JsonSerializable.fromJsonNode(responseNode, File.class);
@@ -511,7 +517,8 @@ public final class Files {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = deleteFileParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -551,7 +558,8 @@ public final class Files {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
@@ -606,7 +614,8 @@ public final class Files {
     String path;
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     } else {
       body = internalRegisterFilesParametersToMldev(parameterNode, null);
       if (body.get("_url") != null) {
@@ -663,7 +672,8 @@ public final class Files {
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
-          "This method is only supported in the Gemini Developer client.");
+          "This method is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     if (!this.apiClient.vertexAI()) {
