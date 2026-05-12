@@ -12470,6 +12470,7 @@ $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearSafetySett
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearSeed/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-seed.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearSessionResumption/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-session-resumption.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearSpeechConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-speech-config.html
+$dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearStreamTranslationConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-stream-translation-config.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearSystemInstruction/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-system-instruction.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearTemperature/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-temperature.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/clearThinkingConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/clear-thinking-config.html
@@ -12508,6 +12509,8 @@ $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/sessionResumpti
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/sessionResumption/#com.google.genai.types.SessionResumptionConfig/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/session-resumption.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/speechConfig/#com.google.genai.types.SpeechConfig.Builder/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/speech-config.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/speechConfig/#com.google.genai.types.SpeechConfig/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/speech-config.html
+$dokka.location:com.google.genai.types/LiveConnectConfig.Builder/streamTranslationConfig/#com.google.genai.types.StreamTranslationConfig.Builder/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/stream-translation-config.html
+$dokka.location:com.google.genai.types/LiveConnectConfig.Builder/streamTranslationConfig/#com.google.genai.types.StreamTranslationConfig/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/stream-translation-config.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/systemInstruction/#com.google.genai.types.Content.Builder/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/system-instruction.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/systemInstruction/#com.google.genai.types.Content/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/system-instruction.html
 $dokka.location:com.google.genai.types/LiveConnectConfig.Builder/temperature/#java.lang.Float/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/-builder/temperature.html
@@ -12538,6 +12541,7 @@ $dokka.location:com.google.genai.types/LiveConnectConfig/safetySettings/#/Pointi
 $dokka.location:com.google.genai.types/LiveConnectConfig/seed/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/seed.html
 $dokka.location:com.google.genai.types/LiveConnectConfig/sessionResumption/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/session-resumption.html
 $dokka.location:com.google.genai.types/LiveConnectConfig/speechConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/speech-config.html
+$dokka.location:com.google.genai.types/LiveConnectConfig/streamTranslationConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/stream-translation-config.html
 $dokka.location:com.google.genai.types/LiveConnectConfig/systemInstruction/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/system-instruction.html
 $dokka.location:com.google.genai.types/LiveConnectConfig/temperature/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/temperature.html
 $dokka.location:com.google.genai.types/LiveConnectConfig/thinkingConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-live-connect-config/thinking-config.html
@@ -14682,6 +14686,20 @@ $dokka.location:com.google.genai.types/StartSensitivity/equals/#java.lang.Object
 $dokka.location:com.google.genai.types/StartSensitivity/hashCode/#/PointingToDeclaration/google-genai/com.google.genai.types/-start-sensitivity/hash-code.html
 $dokka.location:com.google.genai.types/StartSensitivity/knownEnum/#/PointingToDeclaration/google-genai/com.google.genai.types/-start-sensitivity/known-enum.html
 $dokka.location:com.google.genai.types/StartSensitivity/toString/#/PointingToDeclaration/google-genai/com.google.genai.types/-start-sensitivity/to-string.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder///PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/index.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/StreamTranslationConfig.Builder/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/-stream-translation-config.-builder.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/build/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/build.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/clearEchoTargetLanguage/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/clear-echo-target-language.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/clearTargetLanguageCode/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/clear-target-language-code.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/echoTargetLanguage/#boolean/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/echo-target-language.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig.Builder/targetLanguageCode/#java.lang.String/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-builder/target-language-code.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig///PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/index.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/StreamTranslationConfig/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/-stream-translation-config.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/builder/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/builder.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/echoTargetLanguage/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/echo-target-language.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/fromJson/#java.lang.String/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/from-json.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/targetLanguageCode/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/target-language-code.html
+$dokka.location:com.google.genai.types/StreamTranslationConfig/toBuilder/#/PointingToDeclaration/google-genai/com.google.genai.types/-stream-translation-config/to-builder.html
 $dokka.location:com.google.genai.types/StreamableHttpTransport.Builder///PointingToDeclaration/google-genai/com.google.genai.types/-streamable-http-transport/-builder/index.html
 $dokka.location:com.google.genai.types/StreamableHttpTransport.Builder/StreamableHttpTransport.Builder/#/PointingToDeclaration/google-genai/com.google.genai.types/-streamable-http-transport/-builder/-streamable-http-transport.-builder.html
 $dokka.location:com.google.genai.types/StreamableHttpTransport.Builder/build/#/PointingToDeclaration/google-genai/com.google.genai.types/-streamable-http-transport/-builder/build.html
