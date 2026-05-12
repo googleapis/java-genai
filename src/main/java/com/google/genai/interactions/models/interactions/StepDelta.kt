@@ -36,6 +36,7 @@ import com.google.genai.interactions.core.ExcludeMissing
 import com.google.genai.interactions.core.JsonField
 import com.google.genai.interactions.core.JsonMissing
 import com.google.genai.interactions.core.JsonValue
+import com.google.genai.interactions.core.allMaxBy
 import com.google.genai.interactions.core.checkKnown
 import com.google.genai.interactions.core.checkRequired
 import com.google.genai.interactions.core.getOrThrow
@@ -210,6 +211,170 @@ private constructor(
         /** Alias for calling [delta] with `Delta.ofArguments(arguments)`. */
         fun delta(arguments: Delta.ArgumentsDelta) = delta(Delta.ofArguments(arguments))
 
+        /** Alias for calling [delta] with `Delta.ofCodeExecutionCall(codeExecutionCall)`. */
+        fun delta(codeExecutionCall: Delta.CodeExecutionCall) =
+            delta(Delta.ofCodeExecutionCall(codeExecutionCall))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.CodeExecutionCall.builder()
+         *     .arguments(arguments)
+         *     .build()
+         * ```
+         */
+        fun codeExecutionCallDelta(arguments: CodeExecutionCallArguments) =
+            delta(Delta.CodeExecutionCall.builder().arguments(arguments).build())
+
+        /** Alias for calling [delta] with `Delta.ofUrlContextCall(urlContextCall)`. */
+        fun delta(urlContextCall: Delta.UrlContextCall) =
+            delta(Delta.ofUrlContextCall(urlContextCall))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.UrlContextCall.builder()
+         *     .arguments(arguments)
+         *     .build()
+         * ```
+         */
+        fun urlContextCallDelta(arguments: UrlContextCallArguments) =
+            delta(Delta.UrlContextCall.builder().arguments(arguments).build())
+
+        /** Alias for calling [delta] with `Delta.ofGoogleSearchCall(googleSearchCall)`. */
+        fun delta(googleSearchCall: Delta.GoogleSearchCall) =
+            delta(Delta.ofGoogleSearchCall(googleSearchCall))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.GoogleSearchCall.builder()
+         *     .arguments(arguments)
+         *     .build()
+         * ```
+         */
+        fun googleSearchCallDelta(arguments: GoogleSearchCallArguments) =
+            delta(Delta.GoogleSearchCall.builder().arguments(arguments).build())
+
+        /** Alias for calling [delta] with `Delta.ofMcpServerToolCall(mcpServerToolCall)`. */
+        fun delta(mcpServerToolCall: Delta.McpServerToolCall) =
+            delta(Delta.ofMcpServerToolCall(mcpServerToolCall))
+
+        /** Alias for calling [delta] with `Delta.ofFileSearchCall(fileSearchCall)`. */
+        fun delta(fileSearchCall: Delta.FileSearchCall) =
+            delta(Delta.ofFileSearchCall(fileSearchCall))
+
+        /** Alias for calling [delta] with `Delta.ofGoogleMapsCall(googleMapsCall)`. */
+        fun delta(googleMapsCall: Delta.GoogleMapsCall) =
+            delta(Delta.ofGoogleMapsCall(googleMapsCall))
+
+        /** Alias for calling [delta] with `Delta.ofCodeExecutionResult(codeExecutionResult)`. */
+        fun delta(codeExecutionResult: Delta.CodeExecutionResult) =
+            delta(Delta.ofCodeExecutionResult(codeExecutionResult))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.CodeExecutionResult.builder()
+         *     .result(result)
+         *     .build()
+         * ```
+         */
+        fun codeExecutionResultDelta(result: String) =
+            delta(Delta.CodeExecutionResult.builder().result(result).build())
+
+        /** Alias for calling [delta] with `Delta.ofUrlContextResult(urlContextResult)`. */
+        fun delta(urlContextResult: UrlContextResultDelta) =
+            delta(Delta.ofUrlContextResult(urlContextResult))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * UrlContextResultDelta.builder()
+         *     .result(result)
+         *     .build()
+         * ```
+         */
+        fun urlContextResultDelta(result: List<UrlContextResult>) =
+            delta(UrlContextResultDelta.builder().result(result).build())
+
+        /** Alias for calling [delta] with `Delta.ofGoogleSearchResult(googleSearchResult)`. */
+        fun delta(googleSearchResult: GoogleSearchResultDelta) =
+            delta(Delta.ofGoogleSearchResult(googleSearchResult))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * GoogleSearchResultDelta.builder()
+         *     .result(result)
+         *     .build()
+         * ```
+         */
+        fun googleSearchResultDelta(result: List<GoogleSearchResult>) =
+            delta(GoogleSearchResultDelta.builder().result(result).build())
+
+        /** Alias for calling [delta] with `Delta.ofMcpServerToolResult(mcpServerToolResult)`. */
+        fun delta(mcpServerToolResult: Delta.McpServerToolResult) =
+            delta(Delta.ofMcpServerToolResult(mcpServerToolResult))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.McpServerToolResult.builder()
+         *     .result(result)
+         *     .build()
+         * ```
+         */
+        fun mcpServerToolResultDelta(result: Delta.McpServerToolResult.Result) =
+            delta(Delta.McpServerToolResult.builder().result(result).build())
+
+        /**
+         * Alias for calling [mcpServerToolResultDelta] with
+         * `Delta.McpServerToolResult.Result.ofJsonValue(jsonValue)`.
+         */
+        fun mcpServerToolResultDelta(jsonValue: JsonValue) =
+            mcpServerToolResultDelta(Delta.McpServerToolResult.Result.ofJsonValue(jsonValue))
+
+        /**
+         * Alias for calling [mcpServerToolResultDelta] with
+         * `Delta.McpServerToolResult.Result.ofFunctionResultSubcontentList(functionResultSubcontentList)`.
+         */
+        fun mcpServerToolResultDeltaOfFunctionResultSubcontentList(
+            functionResultSubcontentList:
+                List<Delta.McpServerToolResult.Result.FunctionResultSubcontent>
+        ) =
+            mcpServerToolResultDelta(
+                Delta.McpServerToolResult.Result.ofFunctionResultSubcontentList(
+                    functionResultSubcontentList
+                )
+            )
+
+        /**
+         * Alias for calling [mcpServerToolResultDelta] with
+         * `Delta.McpServerToolResult.Result.ofString(string)`.
+         */
+        fun mcpServerToolResultDelta(string: String) =
+            mcpServerToolResultDelta(Delta.McpServerToolResult.Result.ofString(string))
+
+        /** Alias for calling [delta] with `Delta.ofFileSearchResult(fileSearchResult)`. */
+        fun delta(fileSearchResult: Delta.FileSearchResult) =
+            delta(Delta.ofFileSearchResult(fileSearchResult))
+
+        /**
+         * Alias for calling [delta] with the following:
+         * ```java
+         * Delta.FileSearchResult.builder()
+         *     .result(result)
+         *     .build()
+         * ```
+         */
+        fun fileSearchResultDelta(result: List<JsonValue>) =
+            delta(Delta.FileSearchResult.builder().result(result).build())
+
+        /** Alias for calling [delta] with `Delta.ofGoogleMapsResult(googleMapsResult)`. */
+        fun delta(googleMapsResult: Delta.GoogleMapsResult) =
+            delta(Delta.ofGoogleMapsResult(googleMapsResult))
+
         /**
          * Sets the field to an arbitrary JSON value.
          *
@@ -338,6 +503,18 @@ private constructor(
         private val thoughtSignature: ThoughtSignature? = null,
         private val textAnnotation: TextAnnotationDelta? = null,
         private val arguments: ArgumentsDelta? = null,
+        private val codeExecutionCall: CodeExecutionCall? = null,
+        private val urlContextCall: UrlContextCall? = null,
+        private val googleSearchCall: GoogleSearchCall? = null,
+        private val mcpServerToolCall: McpServerToolCall? = null,
+        private val fileSearchCall: FileSearchCall? = null,
+        private val googleMapsCall: GoogleMapsCall? = null,
+        private val codeExecutionResult: CodeExecutionResult? = null,
+        private val urlContextResult: UrlContextResultDelta? = null,
+        private val googleSearchResult: GoogleSearchResultDelta? = null,
+        private val mcpServerToolResult: McpServerToolResult? = null,
+        private val fileSearchResult: FileSearchResult? = null,
+        private val googleMapsResult: GoogleMapsResult? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -359,6 +536,36 @@ private constructor(
 
         fun arguments(): Optional<ArgumentsDelta> = Optional.ofNullable(arguments)
 
+        fun codeExecutionCall(): Optional<CodeExecutionCall> =
+            Optional.ofNullable(codeExecutionCall)
+
+        fun urlContextCall(): Optional<UrlContextCall> = Optional.ofNullable(urlContextCall)
+
+        fun googleSearchCall(): Optional<GoogleSearchCall> = Optional.ofNullable(googleSearchCall)
+
+        fun mcpServerToolCall(): Optional<McpServerToolCall> =
+            Optional.ofNullable(mcpServerToolCall)
+
+        fun fileSearchCall(): Optional<FileSearchCall> = Optional.ofNullable(fileSearchCall)
+
+        fun googleMapsCall(): Optional<GoogleMapsCall> = Optional.ofNullable(googleMapsCall)
+
+        fun codeExecutionResult(): Optional<CodeExecutionResult> =
+            Optional.ofNullable(codeExecutionResult)
+
+        fun urlContextResult(): Optional<UrlContextResultDelta> =
+            Optional.ofNullable(urlContextResult)
+
+        fun googleSearchResult(): Optional<GoogleSearchResultDelta> =
+            Optional.ofNullable(googleSearchResult)
+
+        fun mcpServerToolResult(): Optional<McpServerToolResult> =
+            Optional.ofNullable(mcpServerToolResult)
+
+        fun fileSearchResult(): Optional<FileSearchResult> = Optional.ofNullable(fileSearchResult)
+
+        fun googleMapsResult(): Optional<GoogleMapsResult> = Optional.ofNullable(googleMapsResult)
+
         fun isText(): Boolean = text != null
 
         fun isImage(): Boolean = image != null
@@ -376,6 +583,30 @@ private constructor(
         fun isTextAnnotation(): Boolean = textAnnotation != null
 
         fun isArguments(): Boolean = arguments != null
+
+        fun isCodeExecutionCall(): Boolean = codeExecutionCall != null
+
+        fun isUrlContextCall(): Boolean = urlContextCall != null
+
+        fun isGoogleSearchCall(): Boolean = googleSearchCall != null
+
+        fun isMcpServerToolCall(): Boolean = mcpServerToolCall != null
+
+        fun isFileSearchCall(): Boolean = fileSearchCall != null
+
+        fun isGoogleMapsCall(): Boolean = googleMapsCall != null
+
+        fun isCodeExecutionResult(): Boolean = codeExecutionResult != null
+
+        fun isUrlContextResult(): Boolean = urlContextResult != null
+
+        fun isGoogleSearchResult(): Boolean = googleSearchResult != null
+
+        fun isMcpServerToolResult(): Boolean = mcpServerToolResult != null
+
+        fun isFileSearchResult(): Boolean = fileSearchResult != null
+
+        fun isGoogleMapsResult(): Boolean = googleMapsResult != null
 
         fun asText(): Text = text.getOrThrow("text")
 
@@ -395,6 +626,36 @@ private constructor(
 
         fun asArguments(): ArgumentsDelta = arguments.getOrThrow("arguments")
 
+        fun asCodeExecutionCall(): CodeExecutionCall =
+            codeExecutionCall.getOrThrow("codeExecutionCall")
+
+        fun asUrlContextCall(): UrlContextCall = urlContextCall.getOrThrow("urlContextCall")
+
+        fun asGoogleSearchCall(): GoogleSearchCall = googleSearchCall.getOrThrow("googleSearchCall")
+
+        fun asMcpServerToolCall(): McpServerToolCall =
+            mcpServerToolCall.getOrThrow("mcpServerToolCall")
+
+        fun asFileSearchCall(): FileSearchCall = fileSearchCall.getOrThrow("fileSearchCall")
+
+        fun asGoogleMapsCall(): GoogleMapsCall = googleMapsCall.getOrThrow("googleMapsCall")
+
+        fun asCodeExecutionResult(): CodeExecutionResult =
+            codeExecutionResult.getOrThrow("codeExecutionResult")
+
+        fun asUrlContextResult(): UrlContextResultDelta =
+            urlContextResult.getOrThrow("urlContextResult")
+
+        fun asGoogleSearchResult(): GoogleSearchResultDelta =
+            googleSearchResult.getOrThrow("googleSearchResult")
+
+        fun asMcpServerToolResult(): McpServerToolResult =
+            mcpServerToolResult.getOrThrow("mcpServerToolResult")
+
+        fun asFileSearchResult(): FileSearchResult = fileSearchResult.getOrThrow("fileSearchResult")
+
+        fun asGoogleMapsResult(): GoogleMapsResult = googleMapsResult.getOrThrow("googleMapsResult")
+
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
         fun <T> accept(visitor: Visitor<T>): T =
@@ -408,6 +669,18 @@ private constructor(
                 thoughtSignature != null -> visitor.visitThoughtSignature(thoughtSignature)
                 textAnnotation != null -> visitor.visitTextAnnotation(textAnnotation)
                 arguments != null -> visitor.visitArguments(arguments)
+                codeExecutionCall != null -> visitor.visitCodeExecutionCall(codeExecutionCall)
+                urlContextCall != null -> visitor.visitUrlContextCall(urlContextCall)
+                googleSearchCall != null -> visitor.visitGoogleSearchCall(googleSearchCall)
+                mcpServerToolCall != null -> visitor.visitMcpServerToolCall(mcpServerToolCall)
+                fileSearchCall != null -> visitor.visitFileSearchCall(fileSearchCall)
+                googleMapsCall != null -> visitor.visitGoogleMapsCall(googleMapsCall)
+                codeExecutionResult != null -> visitor.visitCodeExecutionResult(codeExecutionResult)
+                urlContextResult != null -> visitor.visitUrlContextResult(urlContextResult)
+                googleSearchResult != null -> visitor.visitGoogleSearchResult(googleSearchResult)
+                mcpServerToolResult != null -> visitor.visitMcpServerToolResult(mcpServerToolResult)
+                fileSearchResult != null -> visitor.visitFileSearchResult(fileSearchResult)
+                googleMapsResult != null -> visitor.visitGoogleMapsResult(googleMapsResult)
                 else -> visitor.unknown(_json)
             }
 
@@ -455,6 +728,60 @@ private constructor(
                     override fun visitArguments(arguments: ArgumentsDelta) {
                         arguments.validate()
                     }
+
+                    override fun visitCodeExecutionCall(codeExecutionCall: CodeExecutionCall) {
+                        codeExecutionCall.validate()
+                    }
+
+                    override fun visitUrlContextCall(urlContextCall: UrlContextCall) {
+                        urlContextCall.validate()
+                    }
+
+                    override fun visitGoogleSearchCall(googleSearchCall: GoogleSearchCall) {
+                        googleSearchCall.validate()
+                    }
+
+                    override fun visitMcpServerToolCall(mcpServerToolCall: McpServerToolCall) {
+                        mcpServerToolCall.validate()
+                    }
+
+                    override fun visitFileSearchCall(fileSearchCall: FileSearchCall) {
+                        fileSearchCall.validate()
+                    }
+
+                    override fun visitGoogleMapsCall(googleMapsCall: GoogleMapsCall) {
+                        googleMapsCall.validate()
+                    }
+
+                    override fun visitCodeExecutionResult(
+                        codeExecutionResult: CodeExecutionResult
+                    ) {
+                        codeExecutionResult.validate()
+                    }
+
+                    override fun visitUrlContextResult(urlContextResult: UrlContextResultDelta) {
+                        urlContextResult.validate()
+                    }
+
+                    override fun visitGoogleSearchResult(
+                        googleSearchResult: GoogleSearchResultDelta
+                    ) {
+                        googleSearchResult.validate()
+                    }
+
+                    override fun visitMcpServerToolResult(
+                        mcpServerToolResult: McpServerToolResult
+                    ) {
+                        mcpServerToolResult.validate()
+                    }
+
+                    override fun visitFileSearchResult(fileSearchResult: FileSearchResult) {
+                        fileSearchResult.validate()
+                    }
+
+                    override fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult) {
+                        googleMapsResult.validate()
+                    }
                 }
             )
             validated = true
@@ -499,6 +826,45 @@ private constructor(
 
                     override fun visitArguments(arguments: ArgumentsDelta) = arguments.validity()
 
+                    override fun visitCodeExecutionCall(codeExecutionCall: CodeExecutionCall) =
+                        codeExecutionCall.validity()
+
+                    override fun visitUrlContextCall(urlContextCall: UrlContextCall) =
+                        urlContextCall.validity()
+
+                    override fun visitGoogleSearchCall(googleSearchCall: GoogleSearchCall) =
+                        googleSearchCall.validity()
+
+                    override fun visitMcpServerToolCall(mcpServerToolCall: McpServerToolCall) =
+                        mcpServerToolCall.validity()
+
+                    override fun visitFileSearchCall(fileSearchCall: FileSearchCall) =
+                        fileSearchCall.validity()
+
+                    override fun visitGoogleMapsCall(googleMapsCall: GoogleMapsCall) =
+                        googleMapsCall.validity()
+
+                    override fun visitCodeExecutionResult(
+                        codeExecutionResult: CodeExecutionResult
+                    ) = codeExecutionResult.validity()
+
+                    override fun visitUrlContextResult(urlContextResult: UrlContextResultDelta) =
+                        urlContextResult.validity()
+
+                    override fun visitGoogleSearchResult(
+                        googleSearchResult: GoogleSearchResultDelta
+                    ) = googleSearchResult.validity()
+
+                    override fun visitMcpServerToolResult(
+                        mcpServerToolResult: McpServerToolResult
+                    ) = mcpServerToolResult.validity()
+
+                    override fun visitFileSearchResult(fileSearchResult: FileSearchResult) =
+                        fileSearchResult.validity()
+
+                    override fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult) =
+                        googleMapsResult.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -517,7 +883,19 @@ private constructor(
                 thoughtSummary == other.thoughtSummary &&
                 thoughtSignature == other.thoughtSignature &&
                 textAnnotation == other.textAnnotation &&
-                arguments == other.arguments
+                arguments == other.arguments &&
+                codeExecutionCall == other.codeExecutionCall &&
+                urlContextCall == other.urlContextCall &&
+                googleSearchCall == other.googleSearchCall &&
+                mcpServerToolCall == other.mcpServerToolCall &&
+                fileSearchCall == other.fileSearchCall &&
+                googleMapsCall == other.googleMapsCall &&
+                codeExecutionResult == other.codeExecutionResult &&
+                urlContextResult == other.urlContextResult &&
+                googleSearchResult == other.googleSearchResult &&
+                mcpServerToolResult == other.mcpServerToolResult &&
+                fileSearchResult == other.fileSearchResult &&
+                googleMapsResult == other.googleMapsResult
         }
 
         override fun hashCode(): Int =
@@ -531,6 +909,18 @@ private constructor(
                 thoughtSignature,
                 textAnnotation,
                 arguments,
+                codeExecutionCall,
+                urlContextCall,
+                googleSearchCall,
+                mcpServerToolCall,
+                fileSearchCall,
+                googleMapsCall,
+                codeExecutionResult,
+                urlContextResult,
+                googleSearchResult,
+                mcpServerToolResult,
+                fileSearchResult,
+                googleMapsResult,
             )
 
         override fun toString(): String =
@@ -544,6 +934,18 @@ private constructor(
                 thoughtSignature != null -> "Delta{thoughtSignature=$thoughtSignature}"
                 textAnnotation != null -> "Delta{textAnnotation=$textAnnotation}"
                 arguments != null -> "Delta{arguments=$arguments}"
+                codeExecutionCall != null -> "Delta{codeExecutionCall=$codeExecutionCall}"
+                urlContextCall != null -> "Delta{urlContextCall=$urlContextCall}"
+                googleSearchCall != null -> "Delta{googleSearchCall=$googleSearchCall}"
+                mcpServerToolCall != null -> "Delta{mcpServerToolCall=$mcpServerToolCall}"
+                fileSearchCall != null -> "Delta{fileSearchCall=$fileSearchCall}"
+                googleMapsCall != null -> "Delta{googleMapsCall=$googleMapsCall}"
+                codeExecutionResult != null -> "Delta{codeExecutionResult=$codeExecutionResult}"
+                urlContextResult != null -> "Delta{urlContextResult=$urlContextResult}"
+                googleSearchResult != null -> "Delta{googleSearchResult=$googleSearchResult}"
+                mcpServerToolResult != null -> "Delta{mcpServerToolResult=$mcpServerToolResult}"
+                fileSearchResult != null -> "Delta{fileSearchResult=$fileSearchResult}"
+                googleMapsResult != null -> "Delta{googleMapsResult=$googleMapsResult}"
                 _json != null -> "Delta{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Delta")
             }
@@ -573,6 +975,54 @@ private constructor(
                 Delta(textAnnotation = textAnnotation)
 
             @JvmStatic fun ofArguments(arguments: ArgumentsDelta) = Delta(arguments = arguments)
+
+            @JvmStatic
+            fun ofCodeExecutionCall(codeExecutionCall: CodeExecutionCall) =
+                Delta(codeExecutionCall = codeExecutionCall)
+
+            @JvmStatic
+            fun ofUrlContextCall(urlContextCall: UrlContextCall) =
+                Delta(urlContextCall = urlContextCall)
+
+            @JvmStatic
+            fun ofGoogleSearchCall(googleSearchCall: GoogleSearchCall) =
+                Delta(googleSearchCall = googleSearchCall)
+
+            @JvmStatic
+            fun ofMcpServerToolCall(mcpServerToolCall: McpServerToolCall) =
+                Delta(mcpServerToolCall = mcpServerToolCall)
+
+            @JvmStatic
+            fun ofFileSearchCall(fileSearchCall: FileSearchCall) =
+                Delta(fileSearchCall = fileSearchCall)
+
+            @JvmStatic
+            fun ofGoogleMapsCall(googleMapsCall: GoogleMapsCall) =
+                Delta(googleMapsCall = googleMapsCall)
+
+            @JvmStatic
+            fun ofCodeExecutionResult(codeExecutionResult: CodeExecutionResult) =
+                Delta(codeExecutionResult = codeExecutionResult)
+
+            @JvmStatic
+            fun ofUrlContextResult(urlContextResult: UrlContextResultDelta) =
+                Delta(urlContextResult = urlContextResult)
+
+            @JvmStatic
+            fun ofGoogleSearchResult(googleSearchResult: GoogleSearchResultDelta) =
+                Delta(googleSearchResult = googleSearchResult)
+
+            @JvmStatic
+            fun ofMcpServerToolResult(mcpServerToolResult: McpServerToolResult) =
+                Delta(mcpServerToolResult = mcpServerToolResult)
+
+            @JvmStatic
+            fun ofFileSearchResult(fileSearchResult: FileSearchResult) =
+                Delta(fileSearchResult = fileSearchResult)
+
+            @JvmStatic
+            fun ofGoogleMapsResult(googleMapsResult: GoogleMapsResult) =
+                Delta(googleMapsResult = googleMapsResult)
         }
 
         /** An interface that defines how to map each variant of [Delta] to a value of type [T]. */
@@ -595,6 +1045,30 @@ private constructor(
             fun visitTextAnnotation(textAnnotation: TextAnnotationDelta): T
 
             fun visitArguments(arguments: ArgumentsDelta): T
+
+            fun visitCodeExecutionCall(codeExecutionCall: CodeExecutionCall): T
+
+            fun visitUrlContextCall(urlContextCall: UrlContextCall): T
+
+            fun visitGoogleSearchCall(googleSearchCall: GoogleSearchCall): T
+
+            fun visitMcpServerToolCall(mcpServerToolCall: McpServerToolCall): T
+
+            fun visitFileSearchCall(fileSearchCall: FileSearchCall): T
+
+            fun visitGoogleMapsCall(googleMapsCall: GoogleMapsCall): T
+
+            fun visitCodeExecutionResult(codeExecutionResult: CodeExecutionResult): T
+
+            fun visitUrlContextResult(urlContextResult: UrlContextResultDelta): T
+
+            fun visitGoogleSearchResult(googleSearchResult: GoogleSearchResultDelta): T
+
+            fun visitMcpServerToolResult(mcpServerToolResult: McpServerToolResult): T
+
+            fun visitFileSearchResult(fileSearchResult: FileSearchResult): T
+
+            fun visitGoogleMapsResult(googleMapsResult: GoogleMapsResult): T
 
             /**
              * Maps an unknown variant of [Delta] to a value of type [T].
@@ -663,6 +1137,66 @@ private constructor(
                             Delta(arguments = it, _json = json)
                         } ?: Delta(_json = json)
                     }
+                    "code_execution_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<CodeExecutionCall>())?.let {
+                            Delta(codeExecutionCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "url_context_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<UrlContextCall>())?.let {
+                            Delta(urlContextCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "google_search_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GoogleSearchCall>())?.let {
+                            Delta(googleSearchCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "mcp_server_tool_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<McpServerToolCall>())?.let {
+                            Delta(mcpServerToolCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "file_search_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<FileSearchCall>())?.let {
+                            Delta(fileSearchCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "google_maps_call" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GoogleMapsCall>())?.let {
+                            Delta(googleMapsCall = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "code_execution_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<CodeExecutionResult>())?.let {
+                            Delta(codeExecutionResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "url_context_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<UrlContextResultDelta>())?.let {
+                            Delta(urlContextResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "google_search_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GoogleSearchResultDelta>())
+                            ?.let { Delta(googleSearchResult = it, _json = json) }
+                            ?: Delta(_json = json)
+                    }
+                    "mcp_server_tool_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<McpServerToolResult>())?.let {
+                            Delta(mcpServerToolResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "file_search_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<FileSearchResult>())?.let {
+                            Delta(fileSearchResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
+                    "google_maps_result" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GoogleMapsResult>())?.let {
+                            Delta(googleMapsResult = it, _json = json)
+                        } ?: Delta(_json = json)
+                    }
                 }
 
                 return Delta(_json = json)
@@ -686,6 +1220,23 @@ private constructor(
                     value.thoughtSignature != null -> generator.writeObject(value.thoughtSignature)
                     value.textAnnotation != null -> generator.writeObject(value.textAnnotation)
                     value.arguments != null -> generator.writeObject(value.arguments)
+                    value.codeExecutionCall != null ->
+                        generator.writeObject(value.codeExecutionCall)
+                    value.urlContextCall != null -> generator.writeObject(value.urlContextCall)
+                    value.googleSearchCall != null -> generator.writeObject(value.googleSearchCall)
+                    value.mcpServerToolCall != null ->
+                        generator.writeObject(value.mcpServerToolCall)
+                    value.fileSearchCall != null -> generator.writeObject(value.fileSearchCall)
+                    value.googleMapsCall != null -> generator.writeObject(value.googleMapsCall)
+                    value.codeExecutionResult != null ->
+                        generator.writeObject(value.codeExecutionResult)
+                    value.urlContextResult != null -> generator.writeObject(value.urlContextResult)
+                    value.googleSearchResult != null ->
+                        generator.writeObject(value.googleSearchResult)
+                    value.mcpServerToolResult != null ->
+                        generator.writeObject(value.mcpServerToolResult)
+                    value.fileSearchResult != null -> generator.writeObject(value.fileSearchResult)
+                    value.googleMapsResult != null -> generator.writeObject(value.googleMapsResult)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Delta")
                 }
@@ -4067,6 +4618,3155 @@ private constructor(
 
             override fun toString() =
                 "ArgumentsDelta{type=$type, partialArguments=$partialArguments, additionalProperties=$additionalProperties}"
+        }
+
+        class CodeExecutionCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val arguments: JsonField<CodeExecutionCallArguments>,
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("arguments")
+                @ExcludeMissing
+                arguments: JsonField<CodeExecutionCallArguments> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(arguments, type, signature, mutableMapOf())
+
+            /**
+             * The arguments to pass to the code execution.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun arguments(): CodeExecutionCallArguments = arguments.getRequired("arguments")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("code_execution_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [arguments].
+             *
+             * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("arguments")
+            @ExcludeMissing
+            fun _arguments(): JsonField<CodeExecutionCallArguments> = arguments
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [CodeExecutionCall].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [CodeExecutionCall]. */
+            class Builder internal constructor() {
+
+                private var arguments: JsonField<CodeExecutionCallArguments>? = null
+                private var type: JsonValue = JsonValue.from("code_execution_call")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(codeExecutionCall: CodeExecutionCall) = apply {
+                    arguments = codeExecutionCall.arguments
+                    type = codeExecutionCall.type
+                    signature = codeExecutionCall.signature
+                    additionalProperties = codeExecutionCall.additionalProperties.toMutableMap()
+                }
+
+                /** The arguments to pass to the code execution. */
+                fun arguments(arguments: CodeExecutionCallArguments) =
+                    arguments(JsonField.of(arguments))
+
+                /**
+                 * Sets [Builder.arguments] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.arguments] with a well-typed
+                 * [CodeExecutionCallArguments] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun arguments(arguments: JsonField<CodeExecutionCallArguments>) = apply {
+                    this.arguments = arguments
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("code_execution_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [CodeExecutionCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): CodeExecutionCall =
+                    CodeExecutionCall(
+                        checkRequired("arguments", arguments),
+                        type,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): CodeExecutionCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                arguments().validate()
+                _type().let {
+                    if (it != JsonValue.from("code_execution_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+                    type.let { if (it == JsonValue.from("code_execution_call")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is CodeExecutionCall &&
+                    arguments == other.arguments &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(arguments, type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "CodeExecutionCall{arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class UrlContextCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val arguments: JsonField<UrlContextCallArguments>,
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("arguments")
+                @ExcludeMissing
+                arguments: JsonField<UrlContextCallArguments> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(arguments, type, signature, mutableMapOf())
+
+            /**
+             * The arguments to pass to the URL context.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun arguments(): UrlContextCallArguments = arguments.getRequired("arguments")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("url_context_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [arguments].
+             *
+             * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("arguments")
+            @ExcludeMissing
+            fun _arguments(): JsonField<UrlContextCallArguments> = arguments
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [UrlContextCall].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [UrlContextCall]. */
+            class Builder internal constructor() {
+
+                private var arguments: JsonField<UrlContextCallArguments>? = null
+                private var type: JsonValue = JsonValue.from("url_context_call")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(urlContextCall: UrlContextCall) = apply {
+                    arguments = urlContextCall.arguments
+                    type = urlContextCall.type
+                    signature = urlContextCall.signature
+                    additionalProperties = urlContextCall.additionalProperties.toMutableMap()
+                }
+
+                /** The arguments to pass to the URL context. */
+                fun arguments(arguments: UrlContextCallArguments) =
+                    arguments(JsonField.of(arguments))
+
+                /**
+                 * Sets [Builder.arguments] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.arguments] with a well-typed
+                 * [UrlContextCallArguments] value instead. This method is primarily for setting the
+                 * field to an undocumented or not yet supported value.
+                 */
+                fun arguments(arguments: JsonField<UrlContextCallArguments>) = apply {
+                    this.arguments = arguments
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("url_context_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [UrlContextCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): UrlContextCall =
+                    UrlContextCall(
+                        checkRequired("arguments", arguments),
+                        type,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UrlContextCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                arguments().validate()
+                _type().let {
+                    if (it != JsonValue.from("url_context_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+                    type.let { if (it == JsonValue.from("url_context_call")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is UrlContextCall &&
+                    arguments == other.arguments &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(arguments, type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "UrlContextCall{arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class GoogleSearchCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val arguments: JsonField<GoogleSearchCallArguments>,
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("arguments")
+                @ExcludeMissing
+                arguments: JsonField<GoogleSearchCallArguments> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(arguments, type, signature, mutableMapOf())
+
+            /**
+             * The arguments to pass to Google Search.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun arguments(): GoogleSearchCallArguments = arguments.getRequired("arguments")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("google_search_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [arguments].
+             *
+             * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("arguments")
+            @ExcludeMissing
+            fun _arguments(): JsonField<GoogleSearchCallArguments> = arguments
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [GoogleSearchCall].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [GoogleSearchCall]. */
+            class Builder internal constructor() {
+
+                private var arguments: JsonField<GoogleSearchCallArguments>? = null
+                private var type: JsonValue = JsonValue.from("google_search_call")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(googleSearchCall: GoogleSearchCall) = apply {
+                    arguments = googleSearchCall.arguments
+                    type = googleSearchCall.type
+                    signature = googleSearchCall.signature
+                    additionalProperties = googleSearchCall.additionalProperties.toMutableMap()
+                }
+
+                /** The arguments to pass to Google Search. */
+                fun arguments(arguments: GoogleSearchCallArguments) =
+                    arguments(JsonField.of(arguments))
+
+                /**
+                 * Sets [Builder.arguments] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.arguments] with a well-typed
+                 * [GoogleSearchCallArguments] value instead. This method is primarily for setting
+                 * the field to an undocumented or not yet supported value.
+                 */
+                fun arguments(arguments: JsonField<GoogleSearchCallArguments>) = apply {
+                    this.arguments = arguments
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("google_search_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [GoogleSearchCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): GoogleSearchCall =
+                    GoogleSearchCall(
+                        checkRequired("arguments", arguments),
+                        type,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): GoogleSearchCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                arguments().validate()
+                _type().let {
+                    if (it != JsonValue.from("google_search_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+                    type.let { if (it == JsonValue.from("google_search_call")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is GoogleSearchCall &&
+                    arguments == other.arguments &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(arguments, type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "GoogleSearchCall{arguments=$arguments, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class McpServerToolCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val arguments: JsonField<Arguments>,
+            private val name: JsonField<String>,
+            private val serverName: JsonField<String>,
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("arguments")
+                @ExcludeMissing
+                arguments: JsonField<Arguments> = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("server_name")
+                @ExcludeMissing
+                serverName: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(arguments, name, serverName, type, signature, mutableMapOf())
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun arguments(): Arguments = arguments.getRequired("arguments")
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun name(): String = name.getRequired("name")
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun serverName(): String = serverName.getRequired("server_name")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("mcp_server_tool_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [arguments].
+             *
+             * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("arguments")
+            @ExcludeMissing
+            fun _arguments(): JsonField<Arguments> = arguments
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [serverName].
+             *
+             * Unlike [serverName], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("server_name")
+            @ExcludeMissing
+            fun _serverName(): JsonField<String> = serverName
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [McpServerToolCall].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * .name()
+                 * .serverName()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [McpServerToolCall]. */
+            class Builder internal constructor() {
+
+                private var arguments: JsonField<Arguments>? = null
+                private var name: JsonField<String>? = null
+                private var serverName: JsonField<String>? = null
+                private var type: JsonValue = JsonValue.from("mcp_server_tool_call")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(mcpServerToolCall: McpServerToolCall) = apply {
+                    arguments = mcpServerToolCall.arguments
+                    name = mcpServerToolCall.name
+                    serverName = mcpServerToolCall.serverName
+                    type = mcpServerToolCall.type
+                    signature = mcpServerToolCall.signature
+                    additionalProperties = mcpServerToolCall.additionalProperties.toMutableMap()
+                }
+
+                fun arguments(arguments: Arguments) = arguments(JsonField.of(arguments))
+
+                /**
+                 * Sets [Builder.arguments] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.arguments] with a well-typed [Arguments] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun arguments(arguments: JsonField<Arguments>) = apply {
+                    this.arguments = arguments
+                }
+
+                fun name(name: String) = name(JsonField.of(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun serverName(serverName: String) = serverName(JsonField.of(serverName))
+
+                /**
+                 * Sets [Builder.serverName] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.serverName] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun serverName(serverName: JsonField<String>) = apply {
+                    this.serverName = serverName
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("mcp_server_tool_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [McpServerToolCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .arguments()
+                 * .name()
+                 * .serverName()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): McpServerToolCall =
+                    McpServerToolCall(
+                        checkRequired("arguments", arguments),
+                        checkRequired("name", name),
+                        checkRequired("serverName", serverName),
+                        type,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): McpServerToolCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                arguments().validate()
+                name()
+                serverName()
+                _type().let {
+                    if (it != JsonValue.from("mcp_server_tool_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+                    (if (name.asKnown().isPresent) 1 else 0) +
+                    (if (serverName.asKnown().isPresent) 1 else 0) +
+                    type.let { if (it == JsonValue.from("mcp_server_tool_call")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            class Arguments
+            @JsonCreator
+            private constructor(
+                @com.fasterxml.jackson.annotation.JsonValue
+                private val additionalProperties: Map<String, JsonValue>
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /** Returns a mutable builder for constructing an instance of [Arguments]. */
+                    @JvmStatic fun builder() = Builder()
+                }
+
+                /** A builder for [Arguments]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    @JvmSynthetic
+                    internal fun from(arguments: Arguments) = apply {
+                        additionalProperties = arguments.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Arguments].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     */
+                    fun build(): Arguments = Arguments(additionalProperties.toImmutable())
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Arguments = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: GeminiNextGenApiInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic
+                internal fun validity(): Int =
+                    additionalProperties.count { (_, value) ->
+                        !value.isNull() && !value.isMissing()
+                    }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Arguments && additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Arguments{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is McpServerToolCall &&
+                    arguments == other.arguments &&
+                    name == other.name &&
+                    serverName == other.serverName &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(arguments, name, serverName, type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "McpServerToolCall{arguments=$arguments, name=$name, serverName=$serverName, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class FileSearchCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(type, signature, mutableMapOf())
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("file_search_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [FileSearchCall]. */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [FileSearchCall]. */
+            class Builder internal constructor() {
+
+                private var type: JsonValue = JsonValue.from("file_search_call")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(fileSearchCall: FileSearchCall) = apply {
+                    type = fileSearchCall.type
+                    signature = fileSearchCall.signature
+                    additionalProperties = fileSearchCall.additionalProperties.toMutableMap()
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("file_search_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [FileSearchCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): FileSearchCall =
+                    FileSearchCall(type, signature, additionalProperties.toMutableMap())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): FileSearchCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                _type().let {
+                    if (it != JsonValue.from("file_search_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                type.let { if (it == JsonValue.from("file_search_call")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is FileSearchCall &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "FileSearchCall{type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class GoogleMapsCall
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val type: JsonValue,
+            private val arguments: JsonField<GoogleMapsCallArguments>,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("arguments")
+                @ExcludeMissing
+                arguments: JsonField<GoogleMapsCallArguments> = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(type, arguments, signature, mutableMapOf())
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("google_maps_call")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * The arguments to pass to the Google Maps tool.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun arguments(): Optional<GoogleMapsCallArguments> = arguments.getOptional("arguments")
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [arguments].
+             *
+             * Unlike [arguments], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("arguments")
+            @ExcludeMissing
+            fun _arguments(): JsonField<GoogleMapsCallArguments> = arguments
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [GoogleMapsCall]. */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [GoogleMapsCall]. */
+            class Builder internal constructor() {
+
+                private var type: JsonValue = JsonValue.from("google_maps_call")
+                private var arguments: JsonField<GoogleMapsCallArguments> = JsonMissing.of()
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(googleMapsCall: GoogleMapsCall) = apply {
+                    type = googleMapsCall.type
+                    arguments = googleMapsCall.arguments
+                    signature = googleMapsCall.signature
+                    additionalProperties = googleMapsCall.additionalProperties.toMutableMap()
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("google_maps_call")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** The arguments to pass to the Google Maps tool. */
+                fun arguments(arguments: GoogleMapsCallArguments) =
+                    arguments(JsonField.of(arguments))
+
+                /**
+                 * Sets [Builder.arguments] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.arguments] with a well-typed
+                 * [GoogleMapsCallArguments] value instead. This method is primarily for setting the
+                 * field to an undocumented or not yet supported value.
+                 */
+                fun arguments(arguments: JsonField<GoogleMapsCallArguments>) = apply {
+                    this.arguments = arguments
+                }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [GoogleMapsCall].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): GoogleMapsCall =
+                    GoogleMapsCall(type, arguments, signature, additionalProperties.toMutableMap())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): GoogleMapsCall = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                _type().let {
+                    if (it != JsonValue.from("google_maps_call")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                arguments().ifPresent { it.validate() }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                type.let { if (it == JsonValue.from("google_maps_call")) 1 else 0 } +
+                    (arguments.asKnown().getOrNull()?.validity() ?: 0) +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is GoogleMapsCall &&
+                    type == other.type &&
+                    arguments == other.arguments &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(type, arguments, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "GoogleMapsCall{type=$type, arguments=$arguments, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class CodeExecutionResult
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val result: JsonField<String>,
+            private val type: JsonValue,
+            private val isError: JsonField<Boolean>,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("is_error")
+                @ExcludeMissing
+                isError: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(result, type, isError, signature, mutableMapOf())
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun result(): String = result.getRequired("result")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("code_execution_result")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun isError(): Optional<Boolean> = isError.getOptional("is_error")
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [result].
+             *
+             * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<String> = result
+
+            /**
+             * Returns the raw JSON value of [isError].
+             *
+             * Unlike [isError], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("is_error") @ExcludeMissing fun _isError(): JsonField<Boolean> = isError
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [CodeExecutionResult].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [CodeExecutionResult]. */
+            class Builder internal constructor() {
+
+                private var result: JsonField<String>? = null
+                private var type: JsonValue = JsonValue.from("code_execution_result")
+                private var isError: JsonField<Boolean> = JsonMissing.of()
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(codeExecutionResult: CodeExecutionResult) = apply {
+                    result = codeExecutionResult.result
+                    type = codeExecutionResult.type
+                    isError = codeExecutionResult.isError
+                    signature = codeExecutionResult.signature
+                    additionalProperties = codeExecutionResult.additionalProperties.toMutableMap()
+                }
+
+                fun result(result: String) = result(JsonField.of(result))
+
+                /**
+                 * Sets [Builder.result] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.result] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun result(result: JsonField<String>) = apply { this.result = result }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("code_execution_result")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                fun isError(isError: Boolean) = isError(JsonField.of(isError))
+
+                /**
+                 * Sets [Builder.isError] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.isError] with a well-typed [Boolean] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun isError(isError: JsonField<Boolean>) = apply { this.isError = isError }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [CodeExecutionResult].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): CodeExecutionResult =
+                    CodeExecutionResult(
+                        checkRequired("result", result),
+                        type,
+                        isError,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): CodeExecutionResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                result()
+                _type().let {
+                    if (it != JsonValue.from("code_execution_result")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                isError()
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (if (result.asKnown().isPresent) 1 else 0) +
+                    type.let { if (it == JsonValue.from("code_execution_result")) 1 else 0 } +
+                    (if (isError.asKnown().isPresent) 1 else 0) +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is CodeExecutionResult &&
+                    result == other.result &&
+                    type == other.type &&
+                    isError == other.isError &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(result, type, isError, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "CodeExecutionResult{result=$result, type=$type, isError=$isError, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class McpServerToolResult
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val result: JsonField<Result>,
+            private val type: JsonValue,
+            private val name: JsonField<String>,
+            private val serverName: JsonField<String>,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<Result> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("server_name")
+                @ExcludeMissing
+                serverName: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(result, type, name, serverName, signature, mutableMapOf())
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun result(): Result = result.getRequired("result")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("mcp_server_tool_result")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun name(): Optional<String> = name.getOptional("name")
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun serverName(): Optional<String> = serverName.getOptional("server_name")
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [result].
+             *
+             * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<Result> = result
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [serverName].
+             *
+             * Unlike [serverName], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("server_name")
+            @ExcludeMissing
+            fun _serverName(): JsonField<String> = serverName
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [McpServerToolResult].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [McpServerToolResult]. */
+            class Builder internal constructor() {
+
+                private var result: JsonField<Result>? = null
+                private var type: JsonValue = JsonValue.from("mcp_server_tool_result")
+                private var name: JsonField<String> = JsonMissing.of()
+                private var serverName: JsonField<String> = JsonMissing.of()
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(mcpServerToolResult: McpServerToolResult) = apply {
+                    result = mcpServerToolResult.result
+                    type = mcpServerToolResult.type
+                    name = mcpServerToolResult.name
+                    serverName = mcpServerToolResult.serverName
+                    signature = mcpServerToolResult.signature
+                    additionalProperties = mcpServerToolResult.additionalProperties.toMutableMap()
+                }
+
+                fun result(result: Result) = result(JsonField.of(result))
+
+                /**
+                 * Sets [Builder.result] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.result] with a well-typed [Result] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun result(result: JsonField<Result>) = apply { this.result = result }
+
+                /** Alias for calling [result] with `Result.ofJsonValue(jsonValue)`. */
+                fun result(jsonValue: JsonValue) = result(Result.ofJsonValue(jsonValue))
+
+                /**
+                 * Alias for calling [result] with
+                 * `Result.ofFunctionResultSubcontentList(functionResultSubcontentList)`.
+                 */
+                fun resultOfFunctionResultSubcontentList(
+                    functionResultSubcontentList: List<Result.FunctionResultSubcontent>
+                ) = result(Result.ofFunctionResultSubcontentList(functionResultSubcontentList))
+
+                /** Alias for calling [result] with `Result.ofString(string)`. */
+                fun result(string: String) = result(Result.ofString(string))
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("mcp_server_tool_result")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                fun name(name: String) = name(JsonField.of(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun serverName(serverName: String) = serverName(JsonField.of(serverName))
+
+                /**
+                 * Sets [Builder.serverName] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.serverName] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun serverName(serverName: JsonField<String>) = apply {
+                    this.serverName = serverName
+                }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [McpServerToolResult].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): McpServerToolResult =
+                    McpServerToolResult(
+                        checkRequired("result", result),
+                        type,
+                        name,
+                        serverName,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): McpServerToolResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                result().validate()
+                _type().let {
+                    if (it != JsonValue.from("mcp_server_tool_result")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                name()
+                serverName()
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (result.asKnown().getOrNull()?.validity() ?: 0) +
+                    type.let { if (it == JsonValue.from("mcp_server_tool_result")) 1 else 0 } +
+                    (if (name.asKnown().isPresent) 1 else 0) +
+                    (if (serverName.asKnown().isPresent) 1 else 0) +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            @JsonDeserialize(using = Result.Deserializer::class)
+            @JsonSerialize(using = Result.Serializer::class)
+            class Result
+            private constructor(
+                private val jsonValue: JsonValue? = null,
+                private val functionResultSubcontentList: List<FunctionResultSubcontent>? = null,
+                private val string: String? = null,
+                private val _json: JsonValue? = null,
+            ) {
+
+                fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
+
+                fun functionResultSubcontentList(): Optional<List<FunctionResultSubcontent>> =
+                    Optional.ofNullable(functionResultSubcontentList)
+
+                fun string(): Optional<String> = Optional.ofNullable(string)
+
+                fun isJsonValue(): Boolean = jsonValue != null
+
+                fun isFunctionResultSubcontentList(): Boolean = functionResultSubcontentList != null
+
+                fun isString(): Boolean = string != null
+
+                fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
+
+                fun asFunctionResultSubcontentList(): List<FunctionResultSubcontent> =
+                    functionResultSubcontentList.getOrThrow("functionResultSubcontentList")
+
+                fun asString(): String = string.getOrThrow("string")
+
+                fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
+
+                fun <T> accept(visitor: Visitor<T>): T =
+                    when {
+                        jsonValue != null -> visitor.visitJsonValue(jsonValue)
+                        functionResultSubcontentList != null ->
+                            visitor.visitFunctionResultSubcontentList(functionResultSubcontentList)
+                        string != null -> visitor.visitString(string)
+                        else -> visitor.unknown(_json)
+                    }
+
+                private var validated: Boolean = false
+
+                fun validate(): Result = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    accept(
+                        object : Visitor<Unit> {
+                            override fun visitJsonValue(jsonValue: JsonValue) {}
+
+                            override fun visitFunctionResultSubcontentList(
+                                functionResultSubcontentList: List<FunctionResultSubcontent>
+                            ) {
+                                functionResultSubcontentList.forEach { it.validate() }
+                            }
+
+                            override fun visitString(string: String) {}
+                        }
+                    )
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: GeminiNextGenApiInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic
+                internal fun validity(): Int =
+                    accept(
+                        object : Visitor<Int> {
+                            override fun visitJsonValue(jsonValue: JsonValue) = 1
+
+                            override fun visitFunctionResultSubcontentList(
+                                functionResultSubcontentList: List<FunctionResultSubcontent>
+                            ) = functionResultSubcontentList.sumOf { it.validity().toInt() }
+
+                            override fun visitString(string: String) = 1
+
+                            override fun unknown(json: JsonValue?) = 0
+                        }
+                    )
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Result &&
+                        jsonValue == other.jsonValue &&
+                        functionResultSubcontentList == other.functionResultSubcontentList &&
+                        string == other.string
+                }
+
+                override fun hashCode(): Int =
+                    Objects.hash(jsonValue, functionResultSubcontentList, string)
+
+                override fun toString(): String =
+                    when {
+                        jsonValue != null -> "Result{jsonValue=$jsonValue}"
+                        functionResultSubcontentList != null ->
+                            "Result{functionResultSubcontentList=$functionResultSubcontentList}"
+                        string != null -> "Result{string=$string}"
+                        _json != null -> "Result{_unknown=$_json}"
+                        else -> throw IllegalStateException("Invalid Result")
+                    }
+
+                companion object {
+
+                    @JvmStatic fun ofJsonValue(jsonValue: JsonValue) = Result(jsonValue = jsonValue)
+
+                    @JvmStatic
+                    fun ofFunctionResultSubcontentList(
+                        functionResultSubcontentList: List<FunctionResultSubcontent>
+                    ) =
+                        Result(
+                            functionResultSubcontentList =
+                                functionResultSubcontentList.toImmutable()
+                        )
+
+                    @JvmStatic fun ofString(string: String) = Result(string = string)
+                }
+
+                /**
+                 * An interface that defines how to map each variant of [Result] to a value of type
+                 * [T].
+                 */
+                interface Visitor<out T> {
+
+                    fun visitJsonValue(jsonValue: JsonValue): T
+
+                    fun visitFunctionResultSubcontentList(
+                        functionResultSubcontentList: List<FunctionResultSubcontent>
+                    ): T
+
+                    fun visitString(string: String): T
+
+                    /**
+                     * Maps an unknown variant of [Result] to a value of type [T].
+                     *
+                     * An instance of [Result] can contain an unknown variant if it was deserialized
+                     * from data that doesn't match any known variant. For example, if the SDK is on
+                     * an older version than the API, then the API may respond with new variants
+                     * that the SDK is unaware of.
+                     *
+                     * @throws GeminiNextGenApiInvalidDataException in the default implementation.
+                     */
+                    fun unknown(json: JsonValue?): T {
+                        throw GeminiNextGenApiInvalidDataException("Unknown Result: $json")
+                    }
+                }
+
+                internal class Deserializer : BaseDeserializer<Result>(Result::class) {
+
+                    override fun ObjectCodec.deserialize(node: JsonNode): Result {
+                        val json = JsonValue.fromJsonNode(node)
+
+                        val bestMatches =
+                            sequenceOf(
+                                    tryDeserialize(node, jacksonTypeRef<String>())?.let {
+                                        Result(string = it, _json = json)
+                                    },
+                                    tryDeserialize(
+                                            node,
+                                            jacksonTypeRef<List<FunctionResultSubcontent>>(),
+                                        )
+                                        ?.let {
+                                            Result(functionResultSubcontentList = it, _json = json)
+                                        },
+                                    tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
+                                        Result(jsonValue = it, _json = json)
+                                    },
+                                )
+                                .filterNotNull()
+                                .allMaxBy { it.validity() }
+                                .toList()
+                        return when (bestMatches.size) {
+                            // This can happen if what we're deserializing is completely
+                            // incompatible with all the possible variants.
+                            0 -> Result(_json = json)
+                            1 -> bestMatches.single()
+                            // If there's more than one match with the highest validity, then use
+                            // the first completely valid match, or simply the first match if none
+                            // are completely valid.
+                            else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                        }
+                    }
+                }
+
+                internal class Serializer : BaseSerializer<Result>(Result::class) {
+
+                    override fun serialize(
+                        value: Result,
+                        generator: JsonGenerator,
+                        provider: SerializerProvider,
+                    ) {
+                        when {
+                            value.jsonValue != null -> generator.writeObject(value.jsonValue)
+                            value.functionResultSubcontentList != null ->
+                                generator.writeObject(value.functionResultSubcontentList)
+                            value.string != null -> generator.writeObject(value.string)
+                            value._json != null -> generator.writeObject(value._json)
+                            else -> throw IllegalStateException("Invalid Result")
+                        }
+                    }
+                }
+
+                /** A text content block. */
+                @JsonDeserialize(using = FunctionResultSubcontent.Deserializer::class)
+                @JsonSerialize(using = FunctionResultSubcontent.Serializer::class)
+                class FunctionResultSubcontent
+                private constructor(
+                    private val text: TextContent? = null,
+                    private val image: ImageContent? = null,
+                    private val _json: JsonValue? = null,
+                ) {
+
+                    /** A text content block. */
+                    fun text(): Optional<TextContent> = Optional.ofNullable(text)
+
+                    /** An image content block. */
+                    fun image(): Optional<ImageContent> = Optional.ofNullable(image)
+
+                    fun isText(): Boolean = text != null
+
+                    fun isImage(): Boolean = image != null
+
+                    /** A text content block. */
+                    fun asText(): TextContent = text.getOrThrow("text")
+
+                    /** An image content block. */
+                    fun asImage(): ImageContent = image.getOrThrow("image")
+
+                    fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
+
+                    fun <T> accept(visitor: Visitor<T>): T =
+                        when {
+                            text != null -> visitor.visitText(text)
+                            image != null -> visitor.visitImage(image)
+                            else -> visitor.unknown(_json)
+                        }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): FunctionResultSubcontent = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        accept(
+                            object : Visitor<Unit> {
+                                override fun visitText(text: TextContent) {
+                                    text.validate()
+                                }
+
+                                override fun visitImage(image: ImageContent) {
+                                    image.validate()
+                                }
+                            }
+                        )
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: GeminiNextGenApiInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    @JvmSynthetic
+                    internal fun validity(): Int =
+                        accept(
+                            object : Visitor<Int> {
+                                override fun visitText(text: TextContent) = text.validity()
+
+                                override fun visitImage(image: ImageContent) = image.validity()
+
+                                override fun unknown(json: JsonValue?) = 0
+                            }
+                        )
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is FunctionResultSubcontent &&
+                            text == other.text &&
+                            image == other.image
+                    }
+
+                    override fun hashCode(): Int = Objects.hash(text, image)
+
+                    override fun toString(): String =
+                        when {
+                            text != null -> "FunctionResultSubcontent{text=$text}"
+                            image != null -> "FunctionResultSubcontent{image=$image}"
+                            _json != null -> "FunctionResultSubcontent{_unknown=$_json}"
+                            else -> throw IllegalStateException("Invalid FunctionResultSubcontent")
+                        }
+
+                    companion object {
+
+                        /** A text content block. */
+                        @JvmStatic
+                        fun ofText(text: TextContent) = FunctionResultSubcontent(text = text)
+
+                        /** An image content block. */
+                        @JvmStatic
+                        fun ofImage(image: ImageContent) = FunctionResultSubcontent(image = image)
+                    }
+
+                    /**
+                     * An interface that defines how to map each variant of
+                     * [FunctionResultSubcontent] to a value of type [T].
+                     */
+                    interface Visitor<out T> {
+
+                        /** A text content block. */
+                        fun visitText(text: TextContent): T
+
+                        /** An image content block. */
+                        fun visitImage(image: ImageContent): T
+
+                        /**
+                         * Maps an unknown variant of [FunctionResultSubcontent] to a value of type
+                         * [T].
+                         *
+                         * An instance of [FunctionResultSubcontent] can contain an unknown variant
+                         * if it was deserialized from data that doesn't match any known variant.
+                         * For example, if the SDK is on an older version than the API, then the API
+                         * may respond with new variants that the SDK is unaware of.
+                         *
+                         * @throws GeminiNextGenApiInvalidDataException in the default
+                         *   implementation.
+                         */
+                        fun unknown(json: JsonValue?): T {
+                            throw GeminiNextGenApiInvalidDataException(
+                                "Unknown FunctionResultSubcontent: $json"
+                            )
+                        }
+                    }
+
+                    internal class Deserializer :
+                        BaseDeserializer<FunctionResultSubcontent>(
+                            FunctionResultSubcontent::class
+                        ) {
+
+                        override fun ObjectCodec.deserialize(
+                            node: JsonNode
+                        ): FunctionResultSubcontent {
+                            val json = JsonValue.fromJsonNode(node)
+                            val type =
+                                json.asObject().getOrNull()?.get("type")?.asString()?.getOrNull()
+
+                            when (type) {
+                                "text" -> {
+                                    return tryDeserialize(node, jacksonTypeRef<TextContent>())
+                                        ?.let { FunctionResultSubcontent(text = it, _json = json) }
+                                        ?: FunctionResultSubcontent(_json = json)
+                                }
+                                "image" -> {
+                                    return tryDeserialize(node, jacksonTypeRef<ImageContent>())
+                                        ?.let { FunctionResultSubcontent(image = it, _json = json) }
+                                        ?: FunctionResultSubcontent(_json = json)
+                                }
+                            }
+
+                            return FunctionResultSubcontent(_json = json)
+                        }
+                    }
+
+                    internal class Serializer :
+                        BaseSerializer<FunctionResultSubcontent>(FunctionResultSubcontent::class) {
+
+                        override fun serialize(
+                            value: FunctionResultSubcontent,
+                            generator: JsonGenerator,
+                            provider: SerializerProvider,
+                        ) {
+                            when {
+                                value.text != null -> generator.writeObject(value.text)
+                                value.image != null -> generator.writeObject(value.image)
+                                value._json != null -> generator.writeObject(value._json)
+                                else ->
+                                    throw IllegalStateException("Invalid FunctionResultSubcontent")
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is McpServerToolResult &&
+                    result == other.result &&
+                    type == other.type &&
+                    name == other.name &&
+                    serverName == other.serverName &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(result, type, name, serverName, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "McpServerToolResult{result=$result, type=$type, name=$name, serverName=$serverName, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class FileSearchResult
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val result: JsonField<List<JsonValue>>,
+            private val type: JsonValue,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<List<JsonValue>> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(result, type, signature, mutableMapOf())
+
+            /**
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   or is unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun result(): List<JsonValue> = result.getRequired("result")
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("file_search_result")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [result].
+             *
+             * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("result")
+            @ExcludeMissing
+            fun _result(): JsonField<List<JsonValue>> = result
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [FileSearchResult].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [FileSearchResult]. */
+            class Builder internal constructor() {
+
+                private var result: JsonField<MutableList<JsonValue>>? = null
+                private var type: JsonValue = JsonValue.from("file_search_result")
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(fileSearchResult: FileSearchResult) = apply {
+                    result = fileSearchResult.result.map { it.toMutableList() }
+                    type = fileSearchResult.type
+                    signature = fileSearchResult.signature
+                    additionalProperties = fileSearchResult.additionalProperties.toMutableMap()
+                }
+
+                fun result(result: List<JsonValue>) = result(JsonField.of(result))
+
+                /**
+                 * Sets [Builder.result] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.result] with a well-typed `List<JsonValue>`
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun result(result: JsonField<List<JsonValue>>) = apply {
+                    this.result = result.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [JsonValue] to [Builder.result].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addResult(result: JsonValue) = apply {
+                    this.result =
+                        (this.result ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("result", it).add(result)
+                        }
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("file_search_result")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [FileSearchResult].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .result()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): FileSearchResult =
+                    FileSearchResult(
+                        checkRequired("result", result).map { it.toImmutable() },
+                        type,
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): FileSearchResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                result()
+                _type().let {
+                    if (it != JsonValue.from("file_search_result")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (result.asKnown().getOrNull()?.size ?: 0) +
+                    type.let { if (it == JsonValue.from("file_search_result")) 1 else 0 } +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is FileSearchResult &&
+                    result == other.result &&
+                    type == other.type &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(result, type, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "FileSearchResult{result=$result, type=$type, signature=$signature, additionalProperties=$additionalProperties}"
+        }
+
+        class GoogleMapsResult
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val type: JsonValue,
+            private val result: JsonField<List<GoogleMapsResult>>,
+            private val signature: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("type") @ExcludeMissing type: JsonValue = JsonMissing.of(),
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<List<GoogleMapsResult>> = JsonMissing.of(),
+                @JsonProperty("signature")
+                @ExcludeMissing
+                signature: JsonField<String> = JsonMissing.of(),
+            ) : this(type, result, signature, mutableMapOf())
+
+            /**
+             * Expected to always return the following:
+             * ```java
+             * JsonValue.from("google_maps_result")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonValue = type
+
+            /**
+             * The results of the Google Maps.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun result(): Optional<List<GoogleMapsResult>> = result.getOptional("result")
+
+            /**
+             * A signature hash for backend validation.
+             *
+             * @throws GeminiNextGenApiInvalidDataException if the JSON field has an unexpected type
+             *   (e.g. if the server responded with an unexpected value).
+             */
+            fun signature(): Optional<String> = signature.getOptional("signature")
+
+            /**
+             * Returns the raw JSON value of [result].
+             *
+             * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("result")
+            @ExcludeMissing
+            fun _result(): JsonField<List<GoogleMapsResult>> = result
+
+            /**
+             * Returns the raw JSON value of [signature].
+             *
+             * Unlike [signature], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("signature")
+            @ExcludeMissing
+            fun _signature(): JsonField<String> = signature
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [GoogleMapsResult]. */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [GoogleMapsResult]. */
+            class Builder internal constructor() {
+
+                private var type: JsonValue = JsonValue.from("google_maps_result")
+                private var result: JsonField<MutableList<GoogleMapsResult>>? = null
+                private var signature: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(googleMapsResult: GoogleMapsResult) = apply {
+                    type = googleMapsResult.type
+                    result = googleMapsResult.result.map { it.toMutableList() }
+                    signature = googleMapsResult.signature
+                    additionalProperties = googleMapsResult.additionalProperties.toMutableMap()
+                }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```java
+                 * JsonValue.from("google_maps_result")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonValue) = apply { this.type = type }
+
+                /** The results of the Google Maps. */
+                fun result(result: List<GoogleMapsResult>) = result(JsonField.of(result))
+
+                /**
+                 * Sets [Builder.result] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.result] with a well-typed
+                 * `List<GoogleMapsResult>` value instead. This method is primarily for setting the
+                 * field to an undocumented or not yet supported value.
+                 */
+                fun result(result: JsonField<List<GoogleMapsResult>>) = apply {
+                    this.result = result.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [GoogleMapsResult] to [Builder.result].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addResult(result: GoogleMapsResult) = apply {
+                    this.result =
+                        (this.result ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("result", it).add(result)
+                        }
+                }
+
+                /** A signature hash for backend validation. */
+                fun signature(signature: String) = signature(JsonField.of(signature))
+
+                /**
+                 * Sets [Builder.signature] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.signature] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun signature(signature: JsonField<String>) = apply { this.signature = signature }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [GoogleMapsResult].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): GoogleMapsResult =
+                    GoogleMapsResult(
+                        type,
+                        (result ?: JsonMissing.of()).map { it.toImmutable() },
+                        signature,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): GoogleMapsResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                _type().let {
+                    if (it != JsonValue.from("google_maps_result")) {
+                        throw GeminiNextGenApiInvalidDataException(
+                            "'type' is invalid, received $it"
+                        )
+                    }
+                }
+                result().ifPresent { it.forEach { it.validate() } }
+                signature()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: GeminiNextGenApiInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                type.let { if (it == JsonValue.from("google_maps_result")) 1 else 0 } +
+                    (result.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                    (if (signature.asKnown().isPresent) 1 else 0)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is GoogleMapsResult &&
+                    type == other.type &&
+                    result == other.result &&
+                    signature == other.signature &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(type, result, signature, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "GoogleMapsResult{type=$type, result=$result, signature=$signature, additionalProperties=$additionalProperties}"
         }
     }
 
