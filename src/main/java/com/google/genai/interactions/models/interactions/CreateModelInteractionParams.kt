@@ -710,10 +710,6 @@ private constructor(
         fun responseFormat(image: ImageResponseFormat) =
             responseFormat(ResponseFormat.ofImage(image))
 
-        /** Alias for calling [responseFormat] with `ResponseFormat.ofVideo(video)`. */
-        fun responseFormat(video: VideoResponseFormat) =
-            responseFormat(ResponseFormat.ofVideo(video))
-
         /** Alias for calling [responseFormat] with `ResponseFormat.ofJsonValue(jsonValue)`. */
         fun responseFormat(jsonValue: JsonValue) =
             responseFormat(ResponseFormat.ofJsonValue(jsonValue))
@@ -1424,7 +1420,6 @@ private constructor(
         private val audio: AudioResponseFormat? = null,
         private val text: TextResponseFormat? = null,
         private val image: ImageResponseFormat? = null,
-        private val video: VideoResponseFormat? = null,
         private val jsonValue: JsonValue? = null,
         private val _json: JsonValue? = null,
     ) {
@@ -1440,9 +1435,6 @@ private constructor(
         /** Configuration for image output format. */
         fun image(): Optional<ImageResponseFormat> = Optional.ofNullable(image)
 
-        /** Configuration for video output format. */
-        fun video(): Optional<VideoResponseFormat> = Optional.ofNullable(video)
-
         fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
 
         fun isList(): Boolean = list != null
@@ -1452,8 +1444,6 @@ private constructor(
         fun isText(): Boolean = text != null
 
         fun isImage(): Boolean = image != null
-
-        fun isVideo(): Boolean = video != null
 
         fun isJsonValue(): Boolean = jsonValue != null
 
@@ -1468,9 +1458,6 @@ private constructor(
         /** Configuration for image output format. */
         fun asImage(): ImageResponseFormat = image.getOrThrow("image")
 
-        /** Configuration for video output format. */
-        fun asVideo(): VideoResponseFormat = video.getOrThrow("video")
-
         fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
@@ -1481,7 +1468,6 @@ private constructor(
                 audio != null -> visitor.visitAudio(audio)
                 text != null -> visitor.visitText(text)
                 image != null -> visitor.visitImage(image)
-                video != null -> visitor.visitVideo(video)
                 jsonValue != null -> visitor.visitJsonValue(jsonValue)
                 else -> visitor.unknown(_json)
             }
@@ -1509,10 +1495,6 @@ private constructor(
 
                     override fun visitImage(image: ImageResponseFormat) {
                         image.validate()
-                    }
-
-                    override fun visitVideo(video: VideoResponseFormat) {
-                        video.validate()
                     }
 
                     override fun visitJsonValue(jsonValue: JsonValue) {}
@@ -1548,8 +1530,6 @@ private constructor(
 
                     override fun visitImage(image: ImageResponseFormat) = image.validity()
 
-                    override fun visitVideo(video: VideoResponseFormat) = video.validity()
-
                     override fun visitJsonValue(jsonValue: JsonValue) = 1
 
                     override fun unknown(json: JsonValue?) = 0
@@ -1566,11 +1546,10 @@ private constructor(
                 audio == other.audio &&
                 text == other.text &&
                 image == other.image &&
-                video == other.video &&
                 jsonValue == other.jsonValue
         }
 
-        override fun hashCode(): Int = Objects.hash(list, audio, text, image, video, jsonValue)
+        override fun hashCode(): Int = Objects.hash(list, audio, text, image, jsonValue)
 
         override fun toString(): String =
             when {
@@ -1578,7 +1557,6 @@ private constructor(
                 audio != null -> "ResponseFormat{audio=$audio}"
                 text != null -> "ResponseFormat{text=$text}"
                 image != null -> "ResponseFormat{image=$image}"
-                video != null -> "ResponseFormat{video=$video}"
                 jsonValue != null -> "ResponseFormat{jsonValue=$jsonValue}"
                 _json != null -> "ResponseFormat{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid ResponseFormat")
@@ -1597,9 +1575,6 @@ private constructor(
 
             /** Configuration for image output format. */
             @JvmStatic fun ofImage(image: ImageResponseFormat) = ResponseFormat(image = image)
-
-            /** Configuration for video output format. */
-            @JvmStatic fun ofVideo(video: VideoResponseFormat) = ResponseFormat(video = video)
 
             @JvmStatic fun ofJsonValue(jsonValue: JsonValue) = ResponseFormat(jsonValue = jsonValue)
         }
@@ -1620,9 +1595,6 @@ private constructor(
 
             /** Configuration for image output format. */
             fun visitImage(image: ImageResponseFormat): T
-
-            /** Configuration for video output format. */
-            fun visitVideo(video: VideoResponseFormat): T
 
             fun visitJsonValue(jsonValue: JsonValue): T
 
@@ -1656,9 +1628,6 @@ private constructor(
                             },
                             tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
                                 ResponseFormat(image = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
-                                ResponseFormat(video = it, _json = json)
                             },
                             tryDeserialize(node, jacksonTypeRef<List<InnerResponseFormat>>())?.let {
                                 ResponseFormat(list = it, _json = json)
@@ -1695,7 +1664,6 @@ private constructor(
                     value.audio != null -> generator.writeObject(value.audio)
                     value.text != null -> generator.writeObject(value.text)
                     value.image != null -> generator.writeObject(value.image)
-                    value.video != null -> generator.writeObject(value.video)
                     value.jsonValue != null -> generator.writeObject(value.jsonValue)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid ResponseFormat")
@@ -1711,7 +1679,6 @@ private constructor(
             private val audio: AudioResponseFormat? = null,
             private val text: TextResponseFormat? = null,
             private val image: ImageResponseFormat? = null,
-            private val video: VideoResponseFormat? = null,
             private val jsonValue: JsonValue? = null,
             private val _json: JsonValue? = null,
         ) {
@@ -1725,9 +1692,6 @@ private constructor(
             /** Configuration for image output format. */
             fun image(): Optional<ImageResponseFormat> = Optional.ofNullable(image)
 
-            /** Configuration for video output format. */
-            fun video(): Optional<VideoResponseFormat> = Optional.ofNullable(video)
-
             fun jsonValue(): Optional<JsonValue> = Optional.ofNullable(jsonValue)
 
             fun isAudio(): Boolean = audio != null
@@ -1735,8 +1699,6 @@ private constructor(
             fun isText(): Boolean = text != null
 
             fun isImage(): Boolean = image != null
-
-            fun isVideo(): Boolean = video != null
 
             fun isJsonValue(): Boolean = jsonValue != null
 
@@ -1749,9 +1711,6 @@ private constructor(
             /** Configuration for image output format. */
             fun asImage(): ImageResponseFormat = image.getOrThrow("image")
 
-            /** Configuration for video output format. */
-            fun asVideo(): VideoResponseFormat = video.getOrThrow("video")
-
             fun asJsonValue(): JsonValue = jsonValue.getOrThrow("jsonValue")
 
             fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
@@ -1761,7 +1720,6 @@ private constructor(
                     audio != null -> visitor.visitAudio(audio)
                     text != null -> visitor.visitText(text)
                     image != null -> visitor.visitImage(image)
-                    video != null -> visitor.visitVideo(video)
                     jsonValue != null -> visitor.visitJsonValue(jsonValue)
                     else -> visitor.unknown(_json)
                 }
@@ -1785,10 +1743,6 @@ private constructor(
 
                         override fun visitImage(image: ImageResponseFormat) {
                             image.validate()
-                        }
-
-                        override fun visitVideo(video: VideoResponseFormat) {
-                            video.validate()
                         }
 
                         override fun visitJsonValue(jsonValue: JsonValue) {}
@@ -1821,8 +1775,6 @@ private constructor(
 
                         override fun visitImage(image: ImageResponseFormat) = image.validity()
 
-                        override fun visitVideo(video: VideoResponseFormat) = video.validity()
-
                         override fun visitJsonValue(jsonValue: JsonValue) = 1
 
                         override fun unknown(json: JsonValue?) = 0
@@ -1838,18 +1790,16 @@ private constructor(
                     audio == other.audio &&
                     text == other.text &&
                     image == other.image &&
-                    video == other.video &&
                     jsonValue == other.jsonValue
             }
 
-            override fun hashCode(): Int = Objects.hash(audio, text, image, video, jsonValue)
+            override fun hashCode(): Int = Objects.hash(audio, text, image, jsonValue)
 
             override fun toString(): String =
                 when {
                     audio != null -> "InnerResponseFormat{audio=$audio}"
                     text != null -> "InnerResponseFormat{text=$text}"
                     image != null -> "InnerResponseFormat{image=$image}"
-                    video != null -> "InnerResponseFormat{video=$video}"
                     jsonValue != null -> "InnerResponseFormat{jsonValue=$jsonValue}"
                     _json != null -> "InnerResponseFormat{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid InnerResponseFormat")
@@ -1867,10 +1817,6 @@ private constructor(
                 /** Configuration for image output format. */
                 @JvmStatic
                 fun ofImage(image: ImageResponseFormat) = InnerResponseFormat(image = image)
-
-                /** Configuration for video output format. */
-                @JvmStatic
-                fun ofVideo(video: VideoResponseFormat) = InnerResponseFormat(video = video)
 
                 @JvmStatic
                 fun ofJsonValue(jsonValue: JsonValue) = InnerResponseFormat(jsonValue = jsonValue)
@@ -1890,9 +1836,6 @@ private constructor(
 
                 /** Configuration for image output format. */
                 fun visitImage(image: ImageResponseFormat): T
-
-                /** Configuration for video output format. */
-                fun visitVideo(video: VideoResponseFormat): T
 
                 fun visitJsonValue(jsonValue: JsonValue): T
 
@@ -1928,9 +1871,6 @@ private constructor(
                                 tryDeserialize(node, jacksonTypeRef<ImageResponseFormat>())?.let {
                                     InnerResponseFormat(image = it, _json = json)
                                 },
-                                tryDeserialize(node, jacksonTypeRef<VideoResponseFormat>())?.let {
-                                    InnerResponseFormat(video = it, _json = json)
-                                },
                                 tryDeserialize(node, jacksonTypeRef<JsonValue>())?.let {
                                     InnerResponseFormat(jsonValue = it, _json = json)
                                 },
@@ -1963,7 +1903,6 @@ private constructor(
                         value.audio != null -> generator.writeObject(value.audio)
                         value.text != null -> generator.writeObject(value.text)
                         value.image != null -> generator.writeObject(value.image)
-                        value.video != null -> generator.writeObject(value.video)
                         value.jsonValue != null -> generator.writeObject(value.jsonValue)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid InnerResponseFormat")
