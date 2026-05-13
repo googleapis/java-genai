@@ -715,6 +715,36 @@ public abstract class ApiClient implements AutoCloseable {
   }
 
   /**
+   * Merges two user agent values, handling a special case for vertex-genai-modules.
+   *
+   * <p>Example:
+   * <li>val1 = google-genai-sdk/1.42.0 gl-java/22.0.2
+   * <li>val2 = vertex-genai-modules/1.2.3
+   * <li>Result: google-genai-sdk/1.42.0+vertex-genai-modules/1.2.3 gl-java/22.0.2
+   *
+   * @param val1 The first value.
+   * @param val2 The second value.
+   * @return The merged user agent value.
+   */
+  private String mergeUserAgentValues(String val1, String val2) {
+    String extensionRegex = "^vertex-genai-modules/[^ ]+.*";
+    boolean val1Matches = val1.matches(extensionRegex);
+    boolean val2Matches = val2.matches(extensionRegex);
+
+    if (val1Matches || val2Matches) {
+      String extensionHeader = val1Matches ? val1 : val2;
+      String baseHeader = val1Matches ? val2 : val1;
+
+      // Find google-genai-sdk/x.y.z in baseHeader
+      if (baseHeader.contains("google-genai-sdk/")) {
+        // $1 refers to the matched (google-genai-sdk/[^ ]+) group
+        return baseHeader.replaceFirst("(google-genai-sdk/[^ ]+)", "$1+" + extensionHeader);
+      }
+    }
+    return val1 + " " + val2;
+  }
+
+  /**
    * Merges the http options to the client's http options.
    *
    * @param httpOptionsToApply the http options to apply
@@ -752,7 +782,7 @@ public abstract class ApiClient implements AutoCloseable {
                   (val1, val2) -> {
                     if (entry.getKey().equals("user-agent")
                         || entry.getKey().equals("x-goog-api-client")) {
-                      return val1 + " " + val2;
+                      return mergeUserAgentValues(val1, val2);
                     }
                     return val2;
                   }));

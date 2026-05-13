@@ -606,6 +606,26 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testInitHttpClientExtensionsUserAgentMerge() throws Exception {
+    String vertexHeader = "vertex-genai-modules/1.2.3";
+    ImmutableMap<String, String> trackingHeaders =
+        ImmutableMap.of(
+            "x-goog-api-client", vertexHeader,
+            "user-agent", vertexHeader);
+    HttpOptions httpOptions = HttpOptions.builder().headers(trackingHeaders).build();
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.of(httpOptions), Optional.empty());
+
+    String userAgent = client.httpOptions.headers().get().get("user-agent");
+    String apiClient = client.httpOptions.headers().get().get("x-goog-api-client");
+
+    String expectedRegex = "^google-genai-sdk/[^ ]+vertex-genai-modules/1.2.3 gl-java/[^ ]+$";
+
+    assertTrue(userAgent.matches(expectedRegex), "User-Agent did not match: " + userAgent);
+    assertTrue(apiClient.matches(expectedRegex), "x-goog-api-client did not match: " + apiClient);
+  }
+
+  @Test
   public void testInitHttpClientMldev() throws Exception {
     HttpOptions httpOptions =
         HttpOptions.builder()
