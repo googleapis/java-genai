@@ -19,14 +19,8 @@ package com.google.genai;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
-// interactions:strip_begin
-import com.google.genai.interactions.services.async.InteractionServiceAsync;
-import com.google.genai.interactions.services.async.InteractionServiceAsyncImpl;
-import com.google.genai.interactions.services.blocking.InteractionService;
-import com.google.genai.interactions.services.blocking.InteractionServiceImpl;
-// interactions:strip_end
 import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.util.Optional;
@@ -50,11 +44,6 @@ public final class Client implements AutoCloseable {
     public final AsyncTunings tunings;
     public final AsyncFileSearchStores fileSearchStores;
 
-    // interactions:strip_begin
-    public final InteractionServiceAsync interactions;
-
-    // interactions:strip_end
-
     public Async(ApiClient apiClient) {
       this.models = new AsyncModels(apiClient);
       this.batches = new AsyncBatches(apiClient);
@@ -66,9 +55,6 @@ public final class Client implements AutoCloseable {
       this.authTokens = new AsyncTokens(apiClient);
       this.tunings = new AsyncTunings(apiClient);
       this.fileSearchStores = new AsyncFileSearchStores(apiClient);
-      // interactions:strip_begin
-      this.interactions = new InteractionServiceAsyncImpl(apiClient.interactionsClientOptions);
-      // interactions:strip_end
     }
   }
 
@@ -85,11 +71,6 @@ public final class Client implements AutoCloseable {
   public final Tunings tunings;
   public final FileSearchStores fileSearchStores;
 
-  // interactions:strip_begin
-  public final InteractionService interactions;
-
-  // interactions:strip_end
-
   /** Builder for {@link Client}. */
   public static class Builder {
     private Optional<String> apiKey = Optional.empty();
@@ -98,8 +79,8 @@ public final class Client implements AutoCloseable {
     private Optional<GoogleCredentials> credentials = Optional.empty();
     private Optional<ClientOptions> clientOptions = Optional.empty();
     private Optional<HttpOptions> httpOptions = Optional.empty();
-    private Optional<Boolean> enterprise = Optional.empty();
     private Optional<Boolean> vertexAI = Optional.empty();
+    private Optional<Boolean> enterprise = Optional.empty();
     private Optional<DebugConfig> debugConfig = Optional.empty();
 
     /** Builds the {@link Client} instance. */
@@ -111,8 +92,8 @@ public final class Client implements AutoCloseable {
           credentials,
           httpOptions,
           clientOptions,
-          enterprise,
           vertexAI,
+          enterprise,
           debugConfig);
     }
 
@@ -173,9 +154,7 @@ public final class Client implements AutoCloseable {
       return this;
     }
 
-    /** Sets whether to use Vertex AI APIs.
-     * When both enterprise and vertexAI are set, and they have different values, an IllegalArgumentException will be thrown.
-     */
+    /** Sets whether to use Vertex AI APIs. */
     @CanIgnoreReturnValue
     public Builder vertexAI(boolean vertexAI) {
       this.vertexAI = Optional.of(vertexAI);
@@ -208,8 +187,8 @@ public final class Client implements AutoCloseable {
         /* credentials= */ Optional.empty(),
         /* httpOptions= */ Optional.empty(),
         /* clientOptions= */ Optional.empty(),
-        /* enterprise= */ Optional.empty(),
         /* vertexAI= */ Optional.empty(),
+        /* enterprise= */ Optional.empty(),
         /* debugConfig= */ Optional.empty());
   }
 
@@ -239,8 +218,8 @@ public final class Client implements AutoCloseable {
       Optional<GoogleCredentials> credentials,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions,
-      Optional<Boolean> enterprise,
       Optional<Boolean> vertexAI,
+      Optional<Boolean> enterprise,
       Optional<DebugConfig> debugConfig) {
     checkNotNull(vertexAI, "vertexAI cannot be null");
     checkNotNull(enterprise, "enterprise cannot be null");
@@ -341,18 +320,15 @@ public final class Client implements AutoCloseable {
     authTokens = new Tokens(this.apiClient);
     tunings = new Tunings(this.apiClient);
     fileSearchStores = new FileSearchStores(this.apiClient);
-    // interactions:strip_begin
-    interactions = new InteractionServiceImpl(this.apiClient.interactionsClientOptions);
-    // interactions:strip_end
-  }
-
-  /** Returns whether the client is using Gemini Enterprise Agent Platform. */
-  public boolean enterprise() {
-    return apiClient.vertexAI();
   }
 
   /** Returns whether the client is using Vertex AI APIs. */
   public boolean vertexAI() {
+    return apiClient.vertexAI();
+  }
+
+  /** Returns whether the client is using Gemini Enterprise Agent Platform. */
+  public boolean enterprise() {
     return apiClient.vertexAI();
   }
 

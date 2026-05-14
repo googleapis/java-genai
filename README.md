@@ -3,8 +3,6 @@
 Java idiomatic SDK for the
 [Gemini Developer APIs][gemini-api-doc] and [Gemini Enterprise Agent Platform][gemini-enterprise-agent-platform-doc] APIs.
 
-**Note:** The SDK now has experimental support for the [Interactions API](#interactions-experimental).
-
 [![Maven][maven-version-image]][maven-version-link]
 [![Javadoc][javadoc-image]][javadoc-link]
 
@@ -18,7 +16,7 @@ If you're using Maven, add the following to your dependencies:
   <dependency>
     <groupId>com.google.genai</groupId>
     <artifactId>google-genai</artifactId>
-    <version>1.53.0</version>
+    <version>1.47.0</version>
   </dependency>
 </dependencies>
 ```
@@ -31,8 +29,8 @@ SDK for Java.
 
 ### Create a client
 The Google Gen AI Java SDK provides a Client class, simplifying interaction
-with both the Gemini API and Gemini Enterprise Agent Platform API. With minimal
-configuration, you can seamlessly switch between the 2 backends without rewriting
+with both the Gemini API and Vertex AI API. With minimal configuration,
+you can seamlessly switch between the 2 backends without rewriting
 your code.
 
 #### Instantiate a client that uses Gemini API
@@ -44,7 +42,7 @@ import com.google.genai.Client;
 Client client = Client.builder().apiKey("your-api-key").build();
 ```
 
-#### Instantiate a client that uses Gemini Enterprise Agent Platform API
+#### Instantiate a client that uses Vertex AI API
 
 ##### Using project and location
 
@@ -52,24 +50,24 @@ Client client = Client.builder().apiKey("your-api-key").build();
 import com.google.genai.Client;
 
 // Use Builder class for instantiation. Explicitly set the project and location,
-// and set `enterprise(true)` to use Gemini Enterprise Agent Platform backend.
+// and set `vertexAI(true)` to use Vertex AI backend.
 Client client = Client.builder()
   .project("your-project")
   .location("your-location")
-  .enterprise(true)
+  .vertexAI(true)
   .build();
 ```
 
-##### Using API key on Gemini Enterprise Agent Platform (GCP Express Mode)
+##### Using API key on Vertex AI (GCP Express Mode)
 
 ```java
 import com.google.genai.Client;
 
-// Explicitly set the `apiKey` and `enterprise(true)` to use Gemini Enterprise Agent Platform backend
+// Explicitly set the `apiKey` and `vertexAI(true)` to use Vertex AI backend
 // in express mode.
 Client client = Client.builder()
   .apiKey("your-api-key")
-  .enterprise(true)
+  .vertexAI(true)
   .build();
 ```
 
@@ -77,7 +75,7 @@ Client client = Client.builder()
 
 You can create a client by configuring the necessary environment variables.
 Configuration setup instructions depends on whether you're using the Gemini
-Developer API or the Gemini API in Gemini Enterprise Agent Platform.
+Developer API or the Gemini API in Vertex AI.
 
 **Gemini Developer API:** Set the `GOOGLE_API_KEY`. It will automatically be
 picked up by the client. Note that `GEMINI_API_KEY` is a legacy environment
@@ -88,16 +86,15 @@ variable, it's recommended to use `GOOGLE_API_KEY` only. But if both are set,
 export GOOGLE_API_KEY='your-api-key'
 ```
 
-**Gemini API on Gemini Enterprise Agent Platform:** Set `GOOGLE_GENAI_USE_ENTERPRISE`,
+**Gemini API on Vertex AI:** Set `GOOGLE_GENAI_USE_VERTEXAI`,
 `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`, or `GOOGLE_API_KEY` for
-Gemini Enterprise Agent Platform express mode. It's recommended that you set
-only project & location, or API key. But if both are set, project & location
-takes precedence.
+Vertex AI express mode. It's recommended that you set only project & location,
+or API key. But if both are set, project & location takes precedence.
 
 ```bash
-export GOOGLE_GENAI_USE_ENTERPRISE=true
+export GOOGLE_GENAI_USE_VERTEXAI=true
 
-// Set project and location for Gemini Enterprise Agent Platform authentication
+// Set project and location for Vertex AI authentication
 export GOOGLE_CLOUD_PROJECT='your-project-id'
 export GOOGLE_CLOUD_LOCATION='us-central1'
 // or API key for express mode
@@ -120,7 +117,7 @@ preview features in the APIs. The stable API endpoints can be selected by
 setting the API version to `v1`.
 
 To set the API version use `HttpOptions`. For example, to set the API version to
-`v1` for Gemini Enterprise Agent Platform:
+`v1` for Vertex AI:
 
 ```java
 import com.google.genai.Client;
@@ -129,7 +126,7 @@ import com.google.genai.types.HttpOptions;
 Client client = Client.builder()
   .project("your-project")
   .location("your-location")
-  .enterprise(true)
+  .vertexAI(true)
   .httpOptions(HttpOptions.builder().apiVersion("v1"))
   .build();
 ```
@@ -287,10 +284,10 @@ import com.google.genai.types.Part;
 
 public class GenerateContentWithImageInput {
   public static void main(String[] args) {
-    // Instantiate the client using Gemini Enterprise Agent Platform API. The client gets the project and
+    // Instantiate the client using Vertex API. The client gets the project and
     // location from the environment variables `GOOGLE_CLOUD_PROJECT` and
     // `GOOGLE_CLOUD_LOCATION`.
-    Client client = Client.builder().enterprise(true).build();
+    Client client = Client.builder().vertexAI(true).build();
 
     // Construct a multimodal content with quick constructors
     Content content =
@@ -566,7 +563,7 @@ public class CountTokens {
 ```
 
 The `computeTokens` method returns the Tokens Info that contains tokens and
-token IDs given your prompt. This method is only supported in Gemini Enterprise Agent Platform.
+token IDs given your prompt. This method is only supported in Vertex AI.
 
 ```java
 package <your package name>;
@@ -576,7 +573,7 @@ import com.google.genai.types.ComputeTokensResponse;
 
 public class ComputeTokens {
   public static void main(String[] args) {
-    Client client = Client.builder().enterprise(true).build();
+    Client client = Client.builder().vertexAI(true).build();
 
     ComputeTokensResponse response =
         client.models.computeTokens("gemini-2.5-flash", "What is your name?", null);
@@ -589,7 +586,7 @@ public class ComputeTokens {
 #### Embed Content
 
 The `embedContent` method allows you to generate embeddings for words, phrases,
-sentences, and code, as well as multimodal content like images or videos via Gemini Enterprise Agent Platform.
+sentences, and code, as well as multimodal content like images or videos via Vertex AI.
 
 ```java
 package <your package name>;
@@ -607,8 +604,8 @@ public class EmbedContent {
 
     System.out.println("Embedding response: " + response);
 
-    // Multimodal embedding with Gemini Enterprise Agent Platform
-    Client enterpriseClient = Client.builder().enterprise(true).build();
+    // Multimodal embedding with Vertex AI
+    Client vertexClient = Client.builder().vertexAI(true).build();
     EmbedContentConfig config =
         EmbedContentConfig.builder()
             .outputDimensionality(10)
@@ -617,7 +614,7 @@ public class EmbedContent {
             .build();
 
     EmbedContentResponse mmResponse =
-        enterpriseClient.models.embedContent(
+        vertexClient.models.embedContent(
             "gemini-embedding-2-exp-11-2025",
             Content.fromParts(
                 Part.fromText("Hello"),
@@ -672,7 +669,7 @@ public class GenerateImages {
 #### Upscale Image
 
 The `upscaleImage` method allows you to upscale an image. This feature is only
-supported in Gemini Enterprise Agent Platform.
+supported in Vertex AI.
 
 ```java
 package <your package name>;
@@ -684,7 +681,7 @@ import com.google.genai.types.UpscaleImageResponse;
 
 public class UpscaleImage {
   public static void main(String[] args) {
-    Client client = Client.builder().enterprise(true).build();
+    Client client = Client.builder().vertexAI(true).build();
 
     Image image = Image.fromFile("path/to/your/image");
 
@@ -715,7 +712,7 @@ The `editImage` method lets you edit an image. You can input reference images
 addition to a text prompt to guide the editing.
 
 This feature uses a different model than `generateImages` and `upscaleImage`. It
-is only supported in Gemini Enterprise Agent Platform.
+is only supported in Vertex AI.
 
 ```java
 package <your package name>;
@@ -734,7 +731,7 @@ import java.util.ArrayList;
 
 public class EditImage {
   public static void main(String[] args) {
-    Client client = Client.builder().enterprise(true).build();
+    Client client = Client.builder().vertexAI(true).build();
 
     Image image = Image.fromFile("path/to/your/image");
 
@@ -975,57 +972,6 @@ public final class FileOperations {
 }
 ```
 
-### Interactions (Experimental)
-
-The `interactions` service provides access to experimental features.
-
-> [!WARNING]
-> This service is experimental and subject to change or removal in future releases.
-
-You can access it via the client:
-```java
-client.interactions
-```
-or asynchronously:
-```java
-client.async.interactions
-```
-
-### Example: Create Interaction
-
-This example demonstrates creating a simple model interaction.
-
-```java
-import com.google.genai.Client;
-import com.google.genai.interactions.models.interactions.Content;
-import com.google.genai.interactions.models.interactions.CreateModelInteractionParams;
-import com.google.genai.interactions.models.interactions.Interaction;
-import com.google.genai.interactions.models.interactions.Model;
-
-Client client = new Client();
-
-CreateModelInteractionParams params =
-    CreateModelInteractionParams.builder()
-        .input("Why is the sky blue?")
-        .model(Model.GEMINI_2_5_FLASH)
-        .build();
-
-Interaction interaction = client.interactions.create(params);
-
-System.out.println("Interaction ID: " + interaction.id());
-System.out.println("Status: " + interaction.status());
-
-// Print the text outputs from the interaction.
-interaction.outputs().ifPresent(outputs -> {
-  for (Content output : outputs) {
-    output.text().ifPresent(text -> System.out.println("Output: " + text.text()));
-  }
-});
-```
-
-For more examples, see `interactions*` in the [examples directory](https://github.com/googleapis/java-genai/tree/main/examples/).
-
-
 
 ## Versioning
 
@@ -1040,7 +986,7 @@ The Google Gen AI Java SDK will accept contributions in the future.
 Apache 2.0 - See [LICENSE][license] for more information.
 
 [gemini-api-doc]: https://ai.google.dev/gemini-api/docs
-[gemini-enterprise-agent-platform-doc]: https://docs.cloud.google.com/gemini-enterprise-agent-platform
+[vertex-api-doc]: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview
 [maven-version-image]: https://img.shields.io/maven-central/v/com.google.genai/google-genai.svg
 [maven-version-link]: https://central.sonatype.com/artifact/com.google.genai/google-genai
 [javadoc-image]: https://img.shields.io/badge/JavaDoc-Online-green
