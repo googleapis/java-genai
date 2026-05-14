@@ -461,13 +461,24 @@ public abstract class ApiClient implements AutoCloseable {
       try {
         URI originalUri = new URI(url);
         URI baseUri = new URI(mergedHttpOptions.baseUrl().get());
+
+        String baseUriPath = baseUri.getRawPath() != null ? baseUri.getRawPath() : "";
+        String originalUriPath = originalUri.getRawPath() != null ? originalUri.getRawPath() : "";
+
+        String combinedPath;
+        if (baseUriPath.endsWith("/") && originalUriPath.startsWith("/")) {
+          combinedPath = baseUriPath + originalUriPath.substring(1);
+        } else {
+          combinedPath = baseUriPath + originalUriPath;
+        }
+
         finalUrl =
             new URI(
                     baseUri.getScheme(),
-                    baseUri.getAuthority(),
-                    originalUri.getPath(),
-                    originalUri.getQuery(),
-                    originalUri.getFragment())
+                    baseUri.getRawAuthority(),
+                    combinedPath,
+                    originalUri.getRawQuery(),
+                    originalUri.getRawFragment())
                 .toString();
       } catch (URISyntaxException e) {
         logger.warning("Failed to rewrite upload URL with base URL: " + e.getMessage());

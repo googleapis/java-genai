@@ -20,19 +20,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.HttpOptions;
-import java.lang.reflect.Field;
 import java.util.Optional;
-import okhttp3.OkHttpClient;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Test;
-
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 public class ClientTest {
   private static final String API_KEY = "api-key";
@@ -364,5 +360,56 @@ public class ClientTest {
       Client client = new Client();
       assertFalse(client.vertexAI());
     }
+  }
+
+  static class TestApiClient extends ApiClient {
+    TestApiClient(HttpOptions httpOptions) {
+      super(Optional.of("dummy-api-key"), Optional.of(httpOptions), Optional.empty());
+    }
+
+    @Override
+    public ApiResponse request(
+        String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
+      return null;
+    }
+
+    @Override
+    public ApiResponse request(
+        String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+      return null;
+    }
+
+    @Override
+    public CompletableFuture<ApiResponse> asyncRequest(
+        String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions) {
+      return null;
+    }
+
+    @Override
+    public CompletableFuture<ApiResponse> asyncRequest(
+        String httpMethod, String path, byte[] requestBytes, Optional<HttpOptions> httpOptions) {
+      return null;
+    }
+
+    @Override
+    public void close() {}
+  }
+
+  @Test
+  void testBuildRequest_preservesBaseUrlPath() throws Exception {
+    HttpOptions httpOptions =
+        HttpOptions.builder().baseUrl("http://my-proxy.company.com/api/Gemini/Proxy").build();
+    TestApiClient client = new TestApiClient(httpOptions);
+
+    okhttp3.Request request =
+        client.buildRequest(
+            "POST",
+            "https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=xxx",
+            new byte[0],
+            Optional.empty());
+
+    assertEquals(
+        "http://my-proxy.company.com/api/Gemini/Proxy/upload/v1beta/files?upload_id=xxx",
+        request.url().toString());
   }
 }
