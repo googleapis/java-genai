@@ -22,10 +22,12 @@ import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -78,7 +80,16 @@ public class HttpApiClient extends ApiClient {
   /** Executes the given HTTP request. */
   private HttpApiResponse executeRequest(Request request) {
     try {
-      return new HttpApiResponse(httpClient.newCall(request).execute());
+      OkHttpClient client = httpClient;
+      HttpOptions requestOptions = request.tag(HttpOptions.class);
+      if (requestOptions != null && requestOptions.timeout().isPresent()) {
+        client =
+            httpClient
+                .newBuilder()
+                .callTimeout(Duration.ofMillis(requestOptions.timeout().get()))
+                .build();
+      }
+      return new HttpApiResponse(client.newCall(request).execute());
     } catch (IOException e) {
       throw new GenAiIOException("Failed to execute HTTP request.", e);
     }
@@ -114,7 +125,17 @@ public class HttpApiClient extends ApiClient {
   private CompletableFuture<ApiResponse> asyncExecuteRequest(Request request) {
     CompletableFuture<ApiResponse> future = new CompletableFuture<>();
 
-    httpClient
+    OkHttpClient client = httpClient;
+    HttpOptions requestOptions = request.tag(HttpOptions.class);
+    if (requestOptions != null && requestOptions.timeout().isPresent()) {
+      client =
+          httpClient
+              .newBuilder()
+              .callTimeout(Duration.ofMillis(requestOptions.timeout().get()))
+              .build();
+    }
+
+    client
         .newCall(request)
         .enqueue(
             new Callback() {

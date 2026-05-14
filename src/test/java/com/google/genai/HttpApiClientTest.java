@@ -223,6 +223,31 @@ public class HttpApiClientTest {
   }
 
   @Test
+  public void testRequestWithHttpOptions_overrideTimeout() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.empty());
+    setMockClient(client);
+
+    okhttp3.OkHttpClient.Builder mockBuilder = Mockito.mock(okhttp3.OkHttpClient.Builder.class);
+    when(mockHttpClient.newBuilder()).thenReturn(mockBuilder);
+    when(mockBuilder.callTimeout(any(java.time.Duration.class))).thenReturn(mockBuilder);
+    when(mockBuilder.build()).thenReturn(mockHttpClient);
+
+    Optional<HttpOptions> requestOptions =
+        Optional.of(HttpOptions.builder().timeout(30000).build());
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, requestOptions);
+
+    // Assert
+    verify(mockHttpClient).newBuilder();
+    verify(mockBuilder).callTimeout(java.time.Duration.ofMillis(30000));
+    verify(mockBuilder).build();
+    verify(mockHttpClient).newCall(any(okhttp3.Request.class));
+  }
+
+  @Test
   public void testRequestWithHttpOptions_extraBody_addNewKey() throws Exception {
     // Arrange
     HttpApiClient client =

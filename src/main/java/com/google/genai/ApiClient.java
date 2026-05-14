@@ -438,6 +438,7 @@ public abstract class ApiClient implements AutoCloseable {
 
     requestHttpOptions.ifPresent(
         httpOptions -> {
+          requestBuilder.tag(HttpOptions.class, httpOptions);
           if (httpOptions.retryOptions().isPresent()) {
             requestBuilder.tag(HttpRetryOptions.class, mergedHttpOptions.retryOptions().get());
           }
