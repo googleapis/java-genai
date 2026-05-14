@@ -3,7 +3,7 @@
 Java idiomatic SDK for the
 [Gemini Developer APIs][gemini-api-doc] and [Gemini Enterprise Agent Platform][gemini-enterprise-agent-platform-doc] APIs.
 
-**Note:** The SDK now supports the [Interactions API](#interactions).
+**Note:** The SDK now has experimental support for the [Interactions API](#interactions-experimental).
 
 [![Maven][maven-version-image]][maven-version-link]
 [![Javadoc][javadoc-image]][javadoc-link]
@@ -975,9 +975,12 @@ public final class FileOperations {
 }
 ```
 
-### Interactions
+### Interactions (Experimental)
 
-The `interactions` service provides access to features for managing interactions.
+The `interactions` service provides access to experimental features.
+
+> [!WARNING]
+> This service is experimental and subject to change or removal in future releases.
 
 You can access it via the client:
 ```java
