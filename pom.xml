@@ -413,6 +413,9 @@
                   <include>com.fasterxml.jackson.module:jackson-module-kotlin</include>
                 </includes>
               </artifactSet>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
               <relocations>
                 <relocation>
                   <pattern>kotlin.</pattern>
