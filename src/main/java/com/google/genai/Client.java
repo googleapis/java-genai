@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// x
 package com.google.genai;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -227,7 +227,8 @@ public final class Client implements AutoCloseable {
 
     if (enterprise.isPresent() && vertexAI.isPresent() && !enterprise.get().equals(vertexAI.get())) {
       throw new IllegalArgumentException(
-          "enterprise and vertexAI flags have conflicting values, please set enterprise value only.");
+          "enterprise and vertexAI flags have conflicting values, please set enterprise value"
+              + " only.");
     }
 
     boolean useVertexAI;
@@ -245,7 +246,8 @@ public final class Client implements AutoCloseable {
 
       if (enterpriseEnvPresent && vertexEnvPresent && !enterpriseEnv.equalsIgnoreCase(vertexEnv)) {
         logger.warning(
-            "Warning: Both GOOGLE_GENAI_USE_ENTERPRISE and GOOGLE_GENAI_USE_VERTEXAI are set with conflicting values. The value of GOOGLE_GENAI_USE_ENTERPRISE will be used.");
+            "Warning: Both GOOGLE_GENAI_USE_ENTERPRISE and GOOGLE_GENAI_USE_VERTEXAI are set with"
+                + " conflicting values. The value of GOOGLE_GENAI_USE_ENTERPRISE will be used.");
       }
 
       if (enterpriseEnvPresent) {
