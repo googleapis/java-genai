@@ -243,6 +243,13 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("serviceTier")
   public abstract Optional<ServiceTier> serviceTier();
 
+  /**
+   * The timeout for the private inference request. e.g. '120s'. If not set, the default timeout of
+   * the corresponding `request` is used.
+   */
+  @JsonProperty("requestTtl")
+  public abstract Optional<String> requestTtl();
+
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -1143,6 +1150,25 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder serviceTier(String serviceTier) {
       return serviceTier(new ServiceTier(serviceTier));
+    }
+
+    /**
+     * Setter for requestTtl.
+     *
+     * <p>requestTtl: The timeout for the private inference request. e.g. '120s'. If not set, the
+     * default timeout of the corresponding `request` is used.
+     */
+    @JsonProperty("requestTtl")
+    public abstract Builder requestTtl(String requestTtl);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder requestTtl(Optional<String> requestTtl);
+
+    /** Clears the value of requestTtl field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRequestTtl() {
+      return requestTtl(Optional.empty());
     }
 
     public abstract GenerateContentConfig build();
