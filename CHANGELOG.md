@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.54.0](https://github.com/googleapis/java-genai/compare/v1.53.0...v1.54.0) (2026-05-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove the experimental Interactions module. This feature will be supported in the future.
+
+### Features
+
+* Add more details to the ApiResponse error message ([c429c2b](https://github.com/googleapis/java-genai/commit/c429c2b11538eee98cf3ace98c0d3c92145c001b))
+* support Blocking FunctionCall in Live API in AgentPlatform (Vertex) ([0d1cc9c](https://github.com/googleapis/java-genai/commit/0d1cc9c39b3f9f7f7d722cbafdcd478c3492f7c7))
+
+
+### Bug Fixes
+
+* Missing jackson-module-kotlin in classpath ([0849b86](https://github.com/googleapis/java-genai/commit/0849b863ff42f91e5086c4b95fb2ad2b985a6cb2))
+* request level timeout is ignored in favor of client level timeout ([c9464b5](https://github.com/googleapis/java-genai/commit/c9464b5fea4ad8f5cf50b682ecc6d79f8eb071c0))
+* request URL is incorrectly rewritten when baseUrl is configured as a proxy address ([400776d](https://github.com/googleapis/java-genai/commit/400776d150a7e0e445ea361a8b50096a936071e1))
+
+
+### Documentation
+
+* Update the README ([beb39f7](https://github.com/googleapis/java-genai/commit/beb39f79194682e1ddd355219760adeedd4c0f1a))
+
 ## [1.53.0](https://github.com/googleapis/java-genai/compare/v1.52.0...v1.53.0) (2026-05-05)
 
 
