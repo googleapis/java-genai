@@ -45,7 +45,7 @@ public abstract class BatchJobOutputInfo extends JsonSerializable {
   public abstract Optional<String> gcsOutputDirectory();
 
   /**
-   * The name of the BigQuery table created, in `predictions_<timestamp>` format, into which the
+   * The name of the BigQuery table created, in `predictions_TIMESTAMP` format, into which the
    * prediction output is written.
    */
   @JsonProperty("bigqueryOutputTable")
@@ -110,7 +110,7 @@ public abstract class BatchJobOutputInfo extends JsonSerializable {
     /**
      * Setter for bigqueryOutputTable.
      *
-     * <p>bigqueryOutputTable: The name of the BigQuery table created, in `predictions_<timestamp>`
+     * <p>bigqueryOutputTable: The name of the BigQuery table created, in `predictions_TIMESTAMP`
      * format, into which the prediction output is written.
      */
     @JsonProperty("bigqueryOutputTable")
