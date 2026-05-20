@@ -468,6 +468,7 @@
     </plugins>
   </build>
   <profiles>
+
     <profile>
       <id>jdk8-build</id>
       <activation>
