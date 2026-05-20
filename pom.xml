@@ -290,7 +290,6 @@
             <show>public</show>
             <doclint>html</doclint>
             <nohelp>true</nohelp>
-            <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
             <doctitle>Google Gen AI Java SDK</doctitle>
             <source>${maven.compiler.source}</source>
             <encoding>UTF-8</encoding>

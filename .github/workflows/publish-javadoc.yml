@@ -4,21 +4,38 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   publish:
+    name: javadoc-generation
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 1. Validate Javadoc on both PRs and main push (using quiet batch mode to keep logs clean)
+      - name: Validate Javadoc Generation 🛠️
+        run: mvn -B javadoc:javadoc
+
+      # 2. Deploy ONLY when merging/pushing to main
       - name: Deploy JavaDoc 🚀
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: MathieuSoysal/Javadoc-publisher.yml@v3.0.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           javadoc-branch: gh-pages
           java-version: 17
           target-folder: javadoc
-          project: maven
-          custom-command: mvn javadoc:javadoc
-          javadoc-source-folder: target/javadoc
