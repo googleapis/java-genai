@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.54.0](https://github.com/googleapis/java-genai/compare/v1.53.0...v1.54.0) (2026-05-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename SSE events to interaction.created and interaction.completed
+
+### Features
+
+* Add gemini-3.1-flash-lite to model options ([2803585](https://github.com/googleapis/java-genai/commit/28035855a66028ca908d291470e67443e7fc8237))
+* Add more details to the ApiResponse error message ([c429c2b](https://github.com/googleapis/java-genai/commit/c429c2b11538eee98cf3ace98c0d3c92145c001b))
+* Add parameters to video response_format. ([c94e371](https://github.com/googleapis/java-genai/commit/c94e3711c697155d18f4cc30e9b9d2fdf81781b2))
+* add steps for interactions ([9b9d164](https://github.com/googleapis/java-genai/commit/9b9d164323abdc8767ea853fd67c0f11285ef226))
+* Added missing FunctionCallResultDelta type and `arguments` field to the ArgumentDelta type ([6fa4262](https://github.com/googleapis/java-genai/commit/6fa4262a315452f824bb46dacab7e26e686ba21a))
+* Deprecate legacy response_format and publish new polymorphic field. ([31e8d74](https://github.com/googleapis/java-genai/commit/31e8d74fa0bc6ba285399203a6aa78dd788bc07b))
+* Introduce Server Side tools deltas ([67875e6](https://github.com/googleapis/java-genai/commit/67875e6602ee9d4ab388a446fd9e4ead9828d5f0))
+* Rename SSE events to interaction.created and interaction.completed ([711a503](https://github.com/googleapis/java-genai/commit/711a503d045ad96d2db4ffa7526382539f1d8d55))
+* support Blocking FunctionCall in Live API in AgentPlatform (Vertex) ([0d1cc9c](https://github.com/googleapis/java-genai/commit/0d1cc9c39b3f9f7f7d722cbafdcd478c3492f7c7))
+* support speech to speech translation in Gemini Live ([8f82c6e](https://github.com/googleapis/java-genai/commit/8f82c6e07f81c118815b3539811345f1e2da4800))
+
+
+### Bug Fixes
+
+* Disambiguate responseFormat call in Java example ([131c210](https://github.com/googleapis/java-genai/commit/131c21038e69394c43145aa1a71e157e2a54f35e))
+* Missing jackson-module-kotlin in classpath ([0849b86](https://github.com/googleapis/java-genai/commit/0849b863ff42f91e5086c4b95fb2ad2b985a6cb2))
+* request level timeout is ignored in favor of client level timeout ([c9464b5](https://github.com/googleapis/java-genai/commit/c9464b5fea4ad8f5cf50b682ecc6d79f8eb071c0))
+* request URL is incorrectly rewritten when baseUrl is configured as a proxy address ([400776d](https://github.com/googleapis/java-genai/commit/400776d150a7e0e445ea361a8b50096a936071e1))
+* Steps is not optional ([642ad10](https://github.com/googleapis/java-genai/commit/642ad10e5bd3a98c2b8a62d82281589375d030a3))
+* Update response_format field names to snake_case. ([bf838ab](https://github.com/googleapis/java-genai/commit/bf838abb96e39d9ea8ac392347f0dffcc287912b))
+
+
+### Documentation
+
+* Add javadoc for interactions.{services,models,errors}, switch to `mvn dokka:dokka`. ([76cb365](https://github.com/googleapis/java-genai/commit/76cb3654a29755d281520e6f08246d33cb23822e))
+* Update the README ([beb39f7](https://github.com/googleapis/java-genai/commit/beb39f79194682e1ddd355219760adeedd4c0f1a))
+
 ## [1.53.0](https://github.com/googleapis/java-genai/compare/v1.52.0...v1.53.0) (2026-05-05)
 
 
