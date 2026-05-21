@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.55.0](https://github.com/googleapis/java-genai/compare/v1.54.0...v1.55.0) (2026-05-21)
+
+
+### Features
+
+* add `enable_prompt_injection_detection` for Computer Use feature for the Gemini API. ([1a496a7](https://github.com/googleapis/java-genai/commit/1a496a722d19cd2d981007f969a9e5361d667962))
+* add new fields ([d4b0867](https://github.com/googleapis/java-genai/commit/d4b0867de323902cad5e8c7e4085a937f6c4aa25))
+
 ## [1.54.0](https://github.com/googleapis/java-genai/compare/v1.53.0...v1.54.0) (2026-05-20)
 
 
