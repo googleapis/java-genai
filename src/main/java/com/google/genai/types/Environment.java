@@ -32,7 +32,13 @@ public class Environment {
     ENVIRONMENT_UNSPECIFIED,
 
     /** Operates in a web browser. */
-    ENVIRONMENT_BROWSER
+    ENVIRONMENT_BROWSER,
+
+    /** Operates in a mobile environment. */
+    ENVIRONMENT_MOBILE,
+
+    /** Operates in a desktop environment. */
+    ENVIRONMENT_DESKTOP
   }
 
   private Known environmentEnum;

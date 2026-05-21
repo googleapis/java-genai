@@ -109,6 +109,19 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  void environmentVertexEnumValidate(Object enumValue) {
+    ImmutableSet<String> invalidEnumValues =
+        ImmutableSet.of("ENVIRONMENT_MOBILE", "ENVIRONMENT_DESKTOP");
+    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
+      throw new IllegalArgumentException(
+          String.format(
+              "%s enum value is only supported in Gemini Developer API mode, not in Gemini"
+                  + " Enterprise Agent Platform mode.",
+              enumValue));
+    }
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   void personGenerationMldevEnumValidate(Object enumValue) {
     ImmutableSet<String> invalidEnumValues = ImmutableSet.of("ALLOW_ALL");
     if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
@@ -385,6 +398,36 @@ public final class Models {
           toObject,
           new String[] {"tokensInfo"},
           Common.getValueByPath(fromObject, new String[] {"tokensInfo"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode computerUseToVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
+      environmentVertexEnumValidate(
+          Common.getValueByPath(fromObject, new String[] {"environment"}));
+      Common.setValueByPath(
+          toObject,
+          new String[] {"environment"},
+          Common.getValueByPath(fromObject, new String[] {"environment"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"excludedPredefinedFunctions"},
+          Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}))) {
+      throw new IllegalArgumentException(
+          "enablePromptInjectionDetection parameter is only supported in Gemini Developer API mode,"
+              + " not in Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -5088,7 +5131,11 @@ public final class Models {
       Common.setValueByPath(
           toObject,
           new String[] {"computerUse"},
-          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
+          computerUseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+              toObject,
+              rootObject));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
