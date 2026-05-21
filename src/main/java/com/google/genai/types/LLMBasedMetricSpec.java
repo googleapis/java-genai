@@ -62,6 +62,10 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
   @JsonProperty("additionalConfig")
   public abstract Optional<Map<String, Object>> additionalConfig();
 
+  /** Optional. The parser config for the metric result. */
+  @JsonProperty("resultParserConfig")
+  public abstract Optional<EvaluationParserConfig> resultParserConfig();
+
   /** Instantiates a builder for LLMBasedMetricSpec. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -238,6 +242,34 @@ public abstract class LLMBasedMetricSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAdditionalConfig() {
       return additionalConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for resultParserConfig.
+     *
+     * <p>resultParserConfig: Optional. The parser config for the metric result.
+     */
+    @JsonProperty("resultParserConfig")
+    public abstract Builder resultParserConfig(EvaluationParserConfig resultParserConfig);
+
+    /**
+     * Setter for resultParserConfig builder.
+     *
+     * <p>resultParserConfig: Optional. The parser config for the metric result.
+     */
+    @CanIgnoreReturnValue
+    public Builder resultParserConfig(EvaluationParserConfig.Builder resultParserConfigBuilder) {
+      return resultParserConfig(resultParserConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resultParserConfig(Optional<EvaluationParserConfig> resultParserConfig);
+
+    /** Clears the value of resultParserConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResultParserConfig() {
+      return resultParserConfig(Optional.empty());
     }
 
     public abstract LLMBasedMetricSpec build();

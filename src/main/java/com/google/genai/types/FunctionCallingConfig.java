@@ -34,8 +34,8 @@ import java.util.Optional;
 public abstract class FunctionCallingConfig extends JsonSerializable {
   /**
    * Optional. Function names to call. Only set when the Mode is ANY. Function names should match
-   * [FunctionDeclaration.name]. With mode set to ANY, model will predict a function call from the
-   * set of function names provided.
+   * FunctionDeclaration.name. With mode set to ANY, model will predict a function call from the set
+   * of function names provided.
    */
   @JsonProperty("allowedFunctionNames")
   public abstract Optional<List<String>> allowedFunctionNames();
@@ -47,7 +47,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
   /**
    * Optional. When set to true, arguments of a single function call will be streamed out in
    * multiple parts/contents/responses. Partial parameter results will be returned in the
-   * [FunctionCall.partial_args] field. This field is not supported in Gemini API.
+   * `FunctionCall.partial_args` field. This field is not supported in Gemini API.
    */
   @JsonProperty("streamFunctionCallArguments")
   public abstract Optional<Boolean> streamFunctionCallArguments();
@@ -74,7 +74,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
      * Setter for allowedFunctionNames.
      *
      * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
-     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
+     * Function names should match FunctionDeclaration.name. With mode set to ANY, model will
      * predict a function call from the set of function names provided.
      */
     @JsonProperty("allowedFunctionNames")
@@ -84,7 +84,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
      * Setter for allowedFunctionNames.
      *
      * <p>allowedFunctionNames: Optional. Function names to call. Only set when the Mode is ANY.
-     * Function names should match [FunctionDeclaration.name]. With mode set to ANY, model will
+     * Function names should match FunctionDeclaration.name. With mode set to ANY, model will
      * predict a function call from the set of function names provided.
      */
     @CanIgnoreReturnValue
@@ -145,7 +145,7 @@ public abstract class FunctionCallingConfig extends JsonSerializable {
      *
      * <p>streamFunctionCallArguments: Optional. When set to true, arguments of a single function
      * call will be streamed out in multiple parts/contents/responses. Partial parameter results
-     * will be returned in the [FunctionCall.partial_args] field. This field is not supported in
+     * will be returned in the `FunctionCall.partial_args` field. This field is not supported in
      * Gemini API.
      */
     @JsonProperty("streamFunctionCallArguments")

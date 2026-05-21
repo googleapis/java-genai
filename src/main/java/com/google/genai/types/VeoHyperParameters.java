@@ -43,7 +43,7 @@ public abstract class VeoHyperParameters extends JsonSerializable {
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Double> learningRateMultiplier();
 
-  /** Optional. The tuning task. Either I2V or T2V. */
+  /** The tuning task for Veo. */
   @JsonProperty("tuningTask")
   public abstract Optional<TuningTask> tuningTask();
 
@@ -54,6 +54,14 @@ public abstract class VeoHyperParameters extends JsonSerializable {
    */
   @JsonProperty("veoDataMixtureRatio")
   public abstract Optional<Double> veoDataMixtureRatio();
+
+  /** Optional. The adapter size for LoRA tuning. */
+  @JsonProperty("adapterSize")
+  public abstract Optional<AdapterSize> adapterSize();
+
+  /** The speed of the tuning job. Only supported for Veo 3.0 models. */
+  @JsonProperty("tuningSpeed")
+  public abstract Optional<TuningSpeed> tuningSpeed();
 
   /** Instantiates a builder for VeoHyperParameters. */
   @ExcludeFromGeneratedCoverageReport
@@ -113,7 +121,7 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     /**
      * Setter for tuningTask.
      *
-     * <p>tuningTask: Optional. The tuning task. Either I2V or T2V.
+     * <p>tuningTask: The tuning task for Veo.
      */
     @JsonProperty("tuningTask")
     public abstract Builder tuningTask(TuningTask tuningTask);
@@ -131,7 +139,7 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     /**
      * Setter for tuningTask given a known enum.
      *
-     * <p>tuningTask: Optional. The tuning task. Either I2V or T2V.
+     * <p>tuningTask: The tuning task for Veo.
      */
     @CanIgnoreReturnValue
     public Builder tuningTask(TuningTask.Known knownType) {
@@ -141,7 +149,7 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     /**
      * Setter for tuningTask given a string.
      *
-     * <p>tuningTask: Optional. The tuning task. Either I2V or T2V.
+     * <p>tuningTask: The tuning task for Veo.
      */
     @CanIgnoreReturnValue
     public Builder tuningTask(String tuningTask) {
@@ -166,6 +174,82 @@ public abstract class VeoHyperParameters extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearVeoDataMixtureRatio() {
       return veoDataMixtureRatio(Optional.empty());
+    }
+
+    /**
+     * Setter for adapterSize.
+     *
+     * <p>adapterSize: Optional. The adapter size for LoRA tuning.
+     */
+    @JsonProperty("adapterSize")
+    public abstract Builder adapterSize(AdapterSize adapterSize);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder adapterSize(Optional<AdapterSize> adapterSize);
+
+    /** Clears the value of adapterSize field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAdapterSize() {
+      return adapterSize(Optional.empty());
+    }
+
+    /**
+     * Setter for adapterSize given a known enum.
+     *
+     * <p>adapterSize: Optional. The adapter size for LoRA tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder adapterSize(AdapterSize.Known knownType) {
+      return adapterSize(new AdapterSize(knownType));
+    }
+
+    /**
+     * Setter for adapterSize given a string.
+     *
+     * <p>adapterSize: Optional. The adapter size for LoRA tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder adapterSize(String adapterSize) {
+      return adapterSize(new AdapterSize(adapterSize));
+    }
+
+    /**
+     * Setter for tuningSpeed.
+     *
+     * <p>tuningSpeed: The speed of the tuning job. Only supported for Veo 3.0 models.
+     */
+    @JsonProperty("tuningSpeed")
+    public abstract Builder tuningSpeed(TuningSpeed tuningSpeed);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningSpeed(Optional<TuningSpeed> tuningSpeed);
+
+    /** Clears the value of tuningSpeed field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningSpeed() {
+      return tuningSpeed(Optional.empty());
+    }
+
+    /**
+     * Setter for tuningSpeed given a known enum.
+     *
+     * <p>tuningSpeed: The speed of the tuning job. Only supported for Veo 3.0 models.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningSpeed(TuningSpeed.Known knownType) {
+      return tuningSpeed(new TuningSpeed(knownType));
+    }
+
+    /**
+     * Setter for tuningSpeed given a string.
+     *
+     * <p>tuningSpeed: The speed of the tuning job. Only supported for Veo 3.0 models.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningSpeed(String tuningSpeed) {
+      return tuningSpeed(new TuningSpeed(tuningSpeed));
     }
 
     public abstract VeoHyperParameters build();

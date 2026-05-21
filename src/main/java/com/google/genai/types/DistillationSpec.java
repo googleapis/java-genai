@@ -30,7 +30,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = DistillationSpec.Builder.class)
 public abstract class DistillationSpec extends JsonSerializable {
-  /** The GCS URI of the prompt dataset to use during distillation. */
+  /**
+   * Optional. Cloud Storage path to file containing prompt dataset for distillation. The dataset
+   * must be formatted as a JSONL file.
+   */
   @JsonProperty("promptDatasetUri")
   public abstract Optional<String> promptDatasetUri();
 
@@ -81,7 +84,10 @@ public abstract class DistillationSpec extends JsonSerializable {
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
 
-  /** Tuning mode for tuning. */
+  /**
+   * Optional. Specifies the tuning mode for distillation (sft part). This feature is only available
+   * for open source models.
+   */
   @JsonProperty("tuningMode")
   public abstract Optional<TuningMode> tuningMode();
 
@@ -106,7 +112,8 @@ public abstract class DistillationSpec extends JsonSerializable {
     /**
      * Setter for promptDatasetUri.
      *
-     * <p>promptDatasetUri: The GCS URI of the prompt dataset to use during distillation.
+     * <p>promptDatasetUri: Optional. Cloud Storage path to file containing prompt dataset for
+     * distillation. The dataset must be formatted as a JSONL file.
      */
     @JsonProperty("promptDatasetUri")
     public abstract Builder promptDatasetUri(String promptDatasetUri);
@@ -267,7 +274,8 @@ public abstract class DistillationSpec extends JsonSerializable {
     /**
      * Setter for tuningMode.
      *
-     * <p>tuningMode: Tuning mode for tuning.
+     * <p>tuningMode: Optional. Specifies the tuning mode for distillation (sft part). This feature
+     * is only available for open source models.
      */
     @JsonProperty("tuningMode")
     public abstract Builder tuningMode(TuningMode tuningMode);
@@ -285,7 +293,8 @@ public abstract class DistillationSpec extends JsonSerializable {
     /**
      * Setter for tuningMode given a known enum.
      *
-     * <p>tuningMode: Tuning mode for tuning.
+     * <p>tuningMode: Optional. Specifies the tuning mode for distillation (sft part). This feature
+     * is only available for open source models.
      */
     @CanIgnoreReturnValue
     public Builder tuningMode(TuningMode.Known knownType) {
@@ -295,7 +304,8 @@ public abstract class DistillationSpec extends JsonSerializable {
     /**
      * Setter for tuningMode given a string.
      *
-     * <p>tuningMode: Tuning mode for tuning.
+     * <p>tuningMode: Optional. Specifies the tuning mode for distillation (sft part). This feature
+     * is only available for open source models.
      */
     @CanIgnoreReturnValue
     public Builder tuningMode(String tuningMode) {

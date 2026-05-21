@@ -136,6 +136,32 @@ public final class Caches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode codeExecutionResultToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"outcome"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"outcome"},
+          Common.getValueByPath(fromObject, new String[] {"outcome"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"output"},
+          Common.getValueByPath(fromObject, new String[] {"output"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"id"}))) {
+      throw new IllegalArgumentException(
+          "id parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
@@ -439,6 +465,32 @@ public final class Caches {
           toObject,
           new String[] {"sdkHttpResponse"},
           Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode executableCodeToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"code"},
+          Common.getValueByPath(fromObject, new String[] {"code"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"language"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"language"},
+          Common.getValueByPath(fromObject, new String[] {"language"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"id"}))) {
+      throw new IllegalArgumentException(
+          "id parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
     }
 
     return toObject;
@@ -870,14 +922,20 @@ public final class Caches {
       Common.setValueByPath(
           toObject,
           new String[] {"codeExecutionResult"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
+          codeExecutionResultToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"executableCode"},
-          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
+          executableCodeToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"executableCode"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {

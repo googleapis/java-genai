@@ -668,6 +668,179 @@ public final class Tunings {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode distillationHyperParametersFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adapterSize"},
+          Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"epochCount"},
+          Common.getValueByPath(fromObject, new String[] {"epochCount"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"learningRateMultiplier"},
+          Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"generationConfig"},
+          generationConfigFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"generationConfig"})),
+              toObject,
+              rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"learningRate"},
+          Common.getValueByPath(fromObject, new String[] {"learningRate"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"batchSize"},
+          Common.getValueByPath(fromObject, new String[] {"batchSize"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode distillationSamplingSpecFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"baseTeacherModel"},
+          Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tunedTeacherModelSource"},
+          Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"hyperparameters"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"hyperparameters"},
+          distillationHyperParametersFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"hyperparameters"})),
+              toObject,
+              rootObject));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode distillationSpecFromVertex(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"baseTeacherModel"},
+          Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"hyperParameters"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"hyperParameters"},
+          distillationHyperParametersFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"hyperParameters"})),
+              toObject,
+              rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"pipelineRootDirectory"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"pipelineRootDirectory"},
+          Common.getValueByPath(fromObject, new String[] {"pipelineRootDirectory"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"studentModel"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"studentModel"},
+          Common.getValueByPath(fromObject, new String[] {"studentModel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"trainingDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"trainingDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"trainingDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tunedTeacherModelSource"},
+          Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tuningMode"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tuningMode"},
+          Common.getValueByPath(fromObject, new String[] {"tuningMode"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode evaluationConfigFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -1482,7 +1655,11 @@ public final class Tunings {
       Common.setValueByPath(
           toObject,
           new String[] {"distillationSpec"},
-          Common.getValueByPath(fromObject, new String[] {"distillationSpec"}));
+          distillationSpecFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"distillationSpec"})),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"tuningDataStats"}) != null) {
@@ -1594,18 +1771,29 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"distillationSamplingSpec"},
-          Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"tuningJobMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"tuningJobMetadata"},
           Common.getValueByPath(fromObject, new String[] {"tuningJobMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"veoLoraTuningSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"veoLoraTuningSpec"},
+          Common.getValueByPath(fromObject, new String[] {"veoLoraTuningSpec"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"distillationSamplingSpec"},
+          distillationSamplingSpecFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"})),
+              toObject,
+              rootObject));
     }
 
     return toObject;

@@ -41,6 +41,14 @@ public abstract class RagChunk extends JsonSerializable {
   @JsonProperty("text")
   public abstract Optional<String> text();
 
+  /** The ID of the chunk. */
+  @JsonProperty("chunkId")
+  public abstract Optional<String> chunkId();
+
+  /** The ID of the file that the chunk belongs to. */
+  @JsonProperty("fileId")
+  public abstract Optional<String> fileId();
+
   /** Instantiates a builder for RagChunk. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -103,6 +111,42 @@ public abstract class RagChunk extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearText() {
       return text(Optional.empty());
+    }
+
+    /**
+     * Setter for chunkId.
+     *
+     * <p>chunkId: The ID of the chunk.
+     */
+    @JsonProperty("chunkId")
+    public abstract Builder chunkId(String chunkId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder chunkId(Optional<String> chunkId);
+
+    /** Clears the value of chunkId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearChunkId() {
+      return chunkId(Optional.empty());
+    }
+
+    /**
+     * Setter for fileId.
+     *
+     * <p>fileId: The ID of the file that the chunk belongs to.
+     */
+    @JsonProperty("fileId")
+    public abstract Builder fileId(String fileId);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder fileId(Optional<String> fileId);
+
+    /** Clears the value of fileId field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFileId() {
+      return fileId(Optional.empty());
     }
 
     public abstract RagChunk build();

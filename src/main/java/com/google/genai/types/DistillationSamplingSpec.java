@@ -26,33 +26,41 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * Spec for creating a distilled dataset in Vertex Dataset. This data type is not supported in
- * Gemini API.
- */
+/** Distillation sampling spec for tuning. */
 @AutoValue
 @JsonDeserialize(builder = DistillationSamplingSpec.Builder.class)
 public abstract class DistillationSamplingSpec extends JsonSerializable {
   /**
-   * Optional. The base teacher model that is being distilled. See [Supported
+   * The base teacher model that is being distilled. See [Supported
    * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
    */
   @JsonProperty("baseTeacherModel")
   public abstract Optional<String> baseTeacherModel();
 
   /**
-   * Optional. The resource name of the Tuned teacher model. Format:
+   * The resource name of the Tuned teacher model. Format:
    * `projects/{project}/locations/{location}/models/{model}`.
    */
   @JsonProperty("tunedTeacherModelSource")
   public abstract Optional<String> tunedTeacherModelSource();
 
   /**
-   * Optional. Cloud Storage path to file containing validation dataset for distillation. The
-   * dataset must be formatted as a JSONL file.
+   * Cloud Storage path to file containing validation dataset for distillation. The dataset must be
+   * formatted as a JSONL file.
    */
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
+
+  /**
+   * Cloud Storage path to file containing prompt dataset for distillation. The dataset must be
+   * formatted as a JSONL file.
+   */
+  @JsonProperty("promptDatasetUri")
+  public abstract Optional<String> promptDatasetUri();
+
+  /** Hyperparameters for distillation tuning. */
+  @JsonProperty("hyperparameters")
+  public abstract Optional<DistillationHyperParameters> hyperparameters();
 
   /** Instantiates a builder for DistillationSamplingSpec. */
   @ExcludeFromGeneratedCoverageReport
@@ -75,7 +83,7 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     /**
      * Setter for baseTeacherModel.
      *
-     * <p>baseTeacherModel: Optional. The base teacher model that is being distilled. See [Supported
+     * <p>baseTeacherModel: The base teacher model that is being distilled. See [Supported
      * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
      */
     @JsonProperty("baseTeacherModel")
@@ -94,7 +102,7 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     /**
      * Setter for tunedTeacherModelSource.
      *
-     * <p>tunedTeacherModelSource: Optional. The resource name of the Tuned teacher model. Format:
+     * <p>tunedTeacherModelSource: The resource name of the Tuned teacher model. Format:
      * `projects/{project}/locations/{location}/models/{model}`.
      */
     @JsonProperty("tunedTeacherModelSource")
@@ -113,8 +121,8 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     /**
      * Setter for validationDatasetUri.
      *
-     * <p>validationDatasetUri: Optional. Cloud Storage path to file containing validation dataset
-     * for distillation. The dataset must be formatted as a JSONL file.
+     * <p>validationDatasetUri: Cloud Storage path to file containing validation dataset for
+     * distillation. The dataset must be formatted as a JSONL file.
      */
     @JsonProperty("validationDatasetUri")
     public abstract Builder validationDatasetUri(String validationDatasetUri);
@@ -127,6 +135,53 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearValidationDatasetUri() {
       return validationDatasetUri(Optional.empty());
+    }
+
+    /**
+     * Setter for promptDatasetUri.
+     *
+     * <p>promptDatasetUri: Cloud Storage path to file containing prompt dataset for distillation.
+     * The dataset must be formatted as a JSONL file.
+     */
+    @JsonProperty("promptDatasetUri")
+    public abstract Builder promptDatasetUri(String promptDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptDatasetUri(Optional<String> promptDatasetUri);
+
+    /** Clears the value of promptDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptDatasetUri() {
+      return promptDatasetUri(Optional.empty());
+    }
+
+    /**
+     * Setter for hyperparameters.
+     *
+     * <p>hyperparameters: Hyperparameters for distillation tuning.
+     */
+    @JsonProperty("hyperparameters")
+    public abstract Builder hyperparameters(DistillationHyperParameters hyperparameters);
+
+    /**
+     * Setter for hyperparameters builder.
+     *
+     * <p>hyperparameters: Hyperparameters for distillation tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder hyperparameters(DistillationHyperParameters.Builder hyperparametersBuilder) {
+      return hyperparameters(hyperparametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hyperparameters(Optional<DistillationHyperParameters> hyperparameters);
+
+    /** Clears the value of hyperparameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHyperparameters() {
+      return hyperparameters(Optional.empty());
     }
 
     public abstract DistillationSamplingSpec build();

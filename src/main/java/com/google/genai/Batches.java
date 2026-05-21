@@ -1027,7 +1027,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-
     if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
       Common.setValueByPath(
           parentObject,

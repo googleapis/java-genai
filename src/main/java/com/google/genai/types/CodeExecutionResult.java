@@ -26,11 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * Result of executing the `ExecutableCode`.
- *
- * <p>Generated only when the `CodeExecution` tool is used.
- */
+/** Result of executing the ExecutableCode. Generated only when the `CodeExecution` tool is used. */
 @AutoValue
 @JsonDeserialize(builder = CodeExecutionResult.Builder.class)
 public abstract class CodeExecutionResult extends JsonSerializable {
@@ -46,8 +42,8 @@ public abstract class CodeExecutionResult extends JsonSerializable {
   public abstract Optional<String> output();
 
   /**
-   * The identifier of the `ExecutableCode` part this result is for. Only populated if the
-   * corresponding `ExecutableCode` has an id.
+   * Optional. The identifier of the `ExecutableCode` part this result is for. Only populated if the
+   * corresponding `ExecutableCode` has an id. This field is not supported in Vertex AI.
    */
   @JsonProperty("id")
   public abstract Optional<String> id();
@@ -130,8 +126,9 @@ public abstract class CodeExecutionResult extends JsonSerializable {
     /**
      * Setter for id.
      *
-     * <p>id: The identifier of the `ExecutableCode` part this result is for. Only populated if the
-     * corresponding `ExecutableCode` has an id.
+     * <p>id: Optional. The identifier of the `ExecutableCode` part this result is for. Only
+     * populated if the corresponding `ExecutableCode` has an id. This field is not supported in
+     * Vertex AI.
      */
     @JsonProperty("id")
     public abstract Builder id(String id);

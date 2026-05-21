@@ -79,11 +79,18 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   @JsonProperty("fileSearchStore")
   public abstract Optional<String> fileSearchStore();
 
-  /** Optional. Page number of the retrieved context. This field is not supported in Vertex AI. */
+  /**
+   * Optional. Page number of the retrieved context, if applicable. This field is not supported in
+   * Vertex AI.
+   */
   @JsonProperty("pageNumber")
   public abstract Optional<Integer> pageNumber();
 
-  /** Optional. Media ID. This field is not supported in Vertex AI. */
+  /**
+   * Optional. The media blob resource name for multimodal file search results. Format:
+   * fileSearchStores/{file_search_store_id}/media/{blob_id}. This field is not supported in Vertex
+   * AI.
+   */
   @JsonProperty("mediaId")
   public abstract Optional<String> mediaId();
 
@@ -280,8 +287,8 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for pageNumber.
      *
-     * <p>pageNumber: Optional. Page number of the retrieved context. This field is not supported in
-     * Vertex AI.
+     * <p>pageNumber: Optional. Page number of the retrieved context, if applicable. This field is
+     * not supported in Vertex AI.
      */
     @JsonProperty("pageNumber")
     public abstract Builder pageNumber(Integer pageNumber);
@@ -299,7 +306,9 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     /**
      * Setter for mediaId.
      *
-     * <p>mediaId: Optional. Media ID. This field is not supported in Vertex AI.
+     * <p>mediaId: Optional. The media blob resource name for multimodal file search results.
+     * Format: fileSearchStores/{file_search_store_id}/media/{blob_id}. This field is not supported
+     * in Vertex AI.
      */
     @JsonProperty("mediaId")
     public abstract Builder mediaId(String mediaId);

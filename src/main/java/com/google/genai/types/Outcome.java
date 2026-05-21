@@ -31,15 +31,15 @@ public class Outcome {
     /** Unspecified status. This value should not be used. */
     OUTCOME_UNSPECIFIED,
 
-    /** Code execution completed successfully. */
+    /** Code execution completed successfully. `output` contains the stdout, if any. */
     OUTCOME_OK,
 
-    /** Code execution finished but with a failure. `stderr` should contain the reason. */
+    /** Code execution failed. `output` contains the stderr and stdout, if any. */
     OUTCOME_FAILED,
 
     /**
-     * Code execution ran for too long, and was cancelled. There may or may not be a partial output
-     * present.
+     * Code execution ran for too long, and was cancelled. There may or may not be a partial
+     * `output` present.
      */
     OUTCOME_DEADLINE_EXCEEDED
   }

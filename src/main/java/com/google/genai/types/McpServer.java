@@ -28,7 +28,7 @@ import java.util.Optional;
 
 /**
  * A MCPServer is a server that can be called by the model to perform actions. It is a server that
- * implements the MCP protocol. Next ID: 5. This data type is not supported in Vertex AI.
+ * implements the MCP protocol. Next ID: 6. This data type is not supported in Vertex AI.
  */
 @AutoValue
 @JsonDeserialize(builder = McpServer.Builder.class)

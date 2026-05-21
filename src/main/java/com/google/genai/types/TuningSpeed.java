@@ -23,43 +23,43 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The tuning task for Veo. This enum is not supported in Gemini API. */
-public class TuningTask {
+/**
+ * The speed of the tuning job. Only supported for Veo 3.0 models. This enum is not supported in
+ * Gemini API.
+ */
+public class TuningSpeed {
 
-  /** Enum representing the known values for TuningTask. */
+  /** Enum representing the known values for TuningSpeed. */
   public enum Known {
-    /** Default value. This value is unused. */
-    TUNING_TASK_UNSPECIFIED,
+    /** The default / unset value. For Veo 3.0 models, this defaults to FAST. */
+    TUNING_SPEED_UNSPECIFIED,
 
-    /** Tuning task for image to video. */
-    TUNING_TASK_I2V,
+    /** Regular tuning speed. */
+    REGULAR,
 
-    /** Tuning task for text to video. */
-    TUNING_TASK_T2V,
-
-    /** Tuning task for reference to video. */
-    TUNING_TASK_R2V
+    /** Fast tuning speed. */
+    FAST
   }
 
-  private Known tuningTaskEnum;
+  private Known tuningSpeedEnum;
   private final String value;
 
   @JsonCreator
-  public TuningTask(String value) {
+  public TuningSpeed(String value) {
     this.value = value;
-    for (Known tuningTaskEnum : Known.values()) {
-      if (Ascii.equalsIgnoreCase(tuningTaskEnum.toString(), value)) {
-        this.tuningTaskEnum = tuningTaskEnum;
+    for (Known tuningSpeedEnum : Known.values()) {
+      if (Ascii.equalsIgnoreCase(tuningSpeedEnum.toString(), value)) {
+        this.tuningSpeedEnum = tuningSpeedEnum;
         break;
       }
     }
-    if (this.tuningTaskEnum == null) {
-      this.tuningTaskEnum = Known.TUNING_TASK_UNSPECIFIED;
+    if (this.tuningSpeedEnum == null) {
+      this.tuningSpeedEnum = Known.TUNING_SPEED_UNSPECIFIED;
     }
   }
 
-  public TuningTask(Known knownValue) {
-    this.tuningTaskEnum = knownValue;
+  public TuningSpeed(Known knownValue) {
+    this.tuningSpeedEnum = knownValue;
     this.value = knownValue.toString();
   }
 
@@ -81,17 +81,17 @@ public class TuningTask {
       return false;
     }
 
-    if (!(o instanceof TuningTask)) {
+    if (!(o instanceof TuningSpeed)) {
       return false;
     }
 
-    TuningTask other = (TuningTask) o;
+    TuningSpeed other = (TuningSpeed) o;
 
-    if (this.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED
-        && other.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED) {
-      return this.tuningTaskEnum == other.tuningTaskEnum;
-    } else if (this.tuningTaskEnum == Known.TUNING_TASK_UNSPECIFIED
-        && other.tuningTaskEnum == Known.TUNING_TASK_UNSPECIFIED) {
+    if (this.tuningSpeedEnum != Known.TUNING_SPEED_UNSPECIFIED
+        && other.tuningSpeedEnum != Known.TUNING_SPEED_UNSPECIFIED) {
+      return this.tuningSpeedEnum == other.tuningSpeedEnum;
+    } else if (this.tuningSpeedEnum == Known.TUNING_SPEED_UNSPECIFIED
+        && other.tuningSpeedEnum == Known.TUNING_SPEED_UNSPECIFIED) {
       return this.value.equals(other.value);
     }
     return false;
@@ -100,8 +100,8 @@ public class TuningTask {
   @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
-    if (this.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED) {
-      return this.tuningTaskEnum.hashCode();
+    if (this.tuningSpeedEnum != Known.TUNING_SPEED_UNSPECIFIED) {
+      return this.tuningSpeedEnum.hashCode();
     } else {
       return Objects.hashCode(this.value);
     }
@@ -109,6 +109,6 @@ public class TuningTask {
 
   @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
-    return this.tuningTaskEnum;
+    return this.tuningSpeedEnum;
   }
 }

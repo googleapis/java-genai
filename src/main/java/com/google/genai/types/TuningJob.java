@@ -201,13 +201,17 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("veoTuningSpec")
   public abstract Optional<VeoTuningSpec> veoTuningSpec();
 
-  /** Optional. Spec for creating a distillation dataset. */
-  @JsonProperty("distillationSamplingSpec")
-  public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
-
   /** Output only. Tuning Job metadata. */
   @JsonProperty("tuningJobMetadata")
   public abstract Optional<TuningJobMetadata> tuningJobMetadata();
+
+  /** Tuning Spec for Veo LoRA Tuning. */
+  @JsonProperty("veoLoraTuningSpec")
+  public abstract Optional<VeoLoraTuningSpec> veoLoraTuningSpec();
+
+  /** */
+  @JsonProperty("distillationSamplingSpec")
+  public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
 
   /** Instantiates a builder for TuningJob. */
   @ExcludeFromGeneratedCoverageReport
@@ -997,37 +1001,6 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
-     * Setter for distillationSamplingSpec.
-     *
-     * <p>distillationSamplingSpec: Optional. Spec for creating a distillation dataset.
-     */
-    @JsonProperty("distillationSamplingSpec")
-    public abstract Builder distillationSamplingSpec(
-        DistillationSamplingSpec distillationSamplingSpec);
-
-    /**
-     * Setter for distillationSamplingSpec builder.
-     *
-     * <p>distillationSamplingSpec: Optional. Spec for creating a distillation dataset.
-     */
-    @CanIgnoreReturnValue
-    public Builder distillationSamplingSpec(
-        DistillationSamplingSpec.Builder distillationSamplingSpecBuilder) {
-      return distillationSamplingSpec(distillationSamplingSpecBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder distillationSamplingSpec(
-        Optional<DistillationSamplingSpec> distillationSamplingSpec);
-
-    /** Clears the value of distillationSamplingSpec field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearDistillationSamplingSpec() {
-      return distillationSamplingSpec(Optional.empty());
-    }
-
-    /**
      * Setter for tuningJobMetadata.
      *
      * <p>tuningJobMetadata: Output only. Tuning Job metadata.
@@ -1053,6 +1026,65 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTuningJobMetadata() {
       return tuningJobMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for veoLoraTuningSpec.
+     *
+     * <p>veoLoraTuningSpec: Tuning Spec for Veo LoRA Tuning.
+     */
+    @JsonProperty("veoLoraTuningSpec")
+    public abstract Builder veoLoraTuningSpec(VeoLoraTuningSpec veoLoraTuningSpec);
+
+    /**
+     * Setter for veoLoraTuningSpec builder.
+     *
+     * <p>veoLoraTuningSpec: Tuning Spec for Veo LoRA Tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder veoLoraTuningSpec(VeoLoraTuningSpec.Builder veoLoraTuningSpecBuilder) {
+      return veoLoraTuningSpec(veoLoraTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder veoLoraTuningSpec(Optional<VeoLoraTuningSpec> veoLoraTuningSpec);
+
+    /** Clears the value of veoLoraTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVeoLoraTuningSpec() {
+      return veoLoraTuningSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for distillationSamplingSpec.
+     *
+     * <p>distillationSamplingSpec:
+     */
+    @JsonProperty("distillationSamplingSpec")
+    public abstract Builder distillationSamplingSpec(
+        DistillationSamplingSpec distillationSamplingSpec);
+
+    /**
+     * Setter for distillationSamplingSpec builder.
+     *
+     * <p>distillationSamplingSpec:
+     */
+    @CanIgnoreReturnValue
+    public Builder distillationSamplingSpec(
+        DistillationSamplingSpec.Builder distillationSamplingSpecBuilder) {
+      return distillationSamplingSpec(distillationSamplingSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationSamplingSpec(
+        Optional<DistillationSamplingSpec> distillationSamplingSpec);
+
+    /** Clears the value of distillationSamplingSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationSamplingSpec() {
+      return distillationSamplingSpec(Optional.empty());
     }
 
     public abstract TuningJob build();

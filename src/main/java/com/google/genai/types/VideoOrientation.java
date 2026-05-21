@@ -23,43 +23,42 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The tuning task for Veo. This enum is not supported in Gemini API. */
-public class TuningTask {
+/**
+ * The orientation of the video. Defaults to LANDSCAPE. This enum is not supported in Gemini API.
+ */
+public class VideoOrientation {
 
-  /** Enum representing the known values for TuningTask. */
+  /** Enum representing the known values for VideoOrientation. */
   public enum Known {
-    /** Default value. This value is unused. */
-    TUNING_TASK_UNSPECIFIED,
+    /** Unspecified video orientation. Defaults to landscape. */
+    VIDEO_ORIENTATION_UNSPECIFIED,
 
-    /** Tuning task for image to video. */
-    TUNING_TASK_I2V,
+    /** Landscape orientation (e.g. 16:9, 1280x720). */
+    LANDSCAPE,
 
-    /** Tuning task for text to video. */
-    TUNING_TASK_T2V,
-
-    /** Tuning task for reference to video. */
-    TUNING_TASK_R2V
+    /** Portrait orientation (e.g. 9:16, 720x1280). */
+    PORTRAIT
   }
 
-  private Known tuningTaskEnum;
+  private Known videoOrientationEnum;
   private final String value;
 
   @JsonCreator
-  public TuningTask(String value) {
+  public VideoOrientation(String value) {
     this.value = value;
-    for (Known tuningTaskEnum : Known.values()) {
-      if (Ascii.equalsIgnoreCase(tuningTaskEnum.toString(), value)) {
-        this.tuningTaskEnum = tuningTaskEnum;
+    for (Known videoOrientationEnum : Known.values()) {
+      if (Ascii.equalsIgnoreCase(videoOrientationEnum.toString(), value)) {
+        this.videoOrientationEnum = videoOrientationEnum;
         break;
       }
     }
-    if (this.tuningTaskEnum == null) {
-      this.tuningTaskEnum = Known.TUNING_TASK_UNSPECIFIED;
+    if (this.videoOrientationEnum == null) {
+      this.videoOrientationEnum = Known.VIDEO_ORIENTATION_UNSPECIFIED;
     }
   }
 
-  public TuningTask(Known knownValue) {
-    this.tuningTaskEnum = knownValue;
+  public VideoOrientation(Known knownValue) {
+    this.videoOrientationEnum = knownValue;
     this.value = knownValue.toString();
   }
 
@@ -81,17 +80,17 @@ public class TuningTask {
       return false;
     }
 
-    if (!(o instanceof TuningTask)) {
+    if (!(o instanceof VideoOrientation)) {
       return false;
     }
 
-    TuningTask other = (TuningTask) o;
+    VideoOrientation other = (VideoOrientation) o;
 
-    if (this.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED
-        && other.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED) {
-      return this.tuningTaskEnum == other.tuningTaskEnum;
-    } else if (this.tuningTaskEnum == Known.TUNING_TASK_UNSPECIFIED
-        && other.tuningTaskEnum == Known.TUNING_TASK_UNSPECIFIED) {
+    if (this.videoOrientationEnum != Known.VIDEO_ORIENTATION_UNSPECIFIED
+        && other.videoOrientationEnum != Known.VIDEO_ORIENTATION_UNSPECIFIED) {
+      return this.videoOrientationEnum == other.videoOrientationEnum;
+    } else if (this.videoOrientationEnum == Known.VIDEO_ORIENTATION_UNSPECIFIED
+        && other.videoOrientationEnum == Known.VIDEO_ORIENTATION_UNSPECIFIED) {
       return this.value.equals(other.value);
     }
     return false;
@@ -100,8 +99,8 @@ public class TuningTask {
   @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
-    if (this.tuningTaskEnum != Known.TUNING_TASK_UNSPECIFIED) {
-      return this.tuningTaskEnum.hashCode();
+    if (this.videoOrientationEnum != Known.VIDEO_ORIENTATION_UNSPECIFIED) {
+      return this.videoOrientationEnum.hashCode();
     } else {
       return Objects.hashCode(this.value);
     }
@@ -109,6 +108,6 @@ public class TuningTask {
 
   @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
-    return this.tuningTaskEnum;
+    return this.videoOrientationEnum;
   }
 }

@@ -32,38 +32,49 @@ import java.util.Optional;
 @JsonDeserialize(builder = FileSearchStore.Builder.class)
 public abstract class FileSearchStore extends JsonSerializable {
   /**
-   * The resource name of the FileSearchStore. Example: `fileSearchStores/my-file-search-store-123`
+   * Output only. Immutable. Identifier. The `FileSearchStore` resource name. It is an ID (name
+   * excluding the "fileSearchStores/" prefix) that can contain up to 40 characters that are
+   * lowercase alphanumeric or dashes (-). It is output only. The unique name will be derived from
+   * `display_name` along with a 12 character random suffix. Example:
+   * `fileSearchStores/my-awesome-file-search-store-123a456b789c` If `display_name` is not provided,
+   * the name will be randomly generated.
    */
   @JsonProperty("name")
   public abstract Optional<String> name();
 
-  /** The human-readable display name for the FileSearchStore. */
+  /**
+   * Optional. The human-readable display name for the `FileSearchStore`. The display name must be
+   * no more than 512 characters in length, including spaces. Example: "Docs on Semantic Retriever".
+   */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
 
-  /** The Timestamp of when the FileSearchStore was created. */
+  /** Output only. The Timestamp of when the `FileSearchStore` was created. */
   @JsonProperty("createTime")
   public abstract Optional<Instant> createTime();
 
-  /** The Timestamp of when the FileSearchStore was last updated. */
+  /** Output only. The Timestamp of when the `FileSearchStore` was last updated. */
   @JsonProperty("updateTime")
   public abstract Optional<Instant> updateTime();
 
-  /** The number of documents in the FileSearchStore that are active and ready for retrieval. */
+  /**
+   * Output only. The number of documents in the `FileSearchStore` that are active and ready for
+   * retrieval.
+   */
   @JsonProperty("activeDocumentsCount")
   public abstract Optional<Long> activeDocumentsCount();
 
-  /** The number of documents in the FileSearchStore that are being processed. */
+  /** Output only. The number of documents in the `FileSearchStore` that are being processed. */
   @JsonProperty("pendingDocumentsCount")
   public abstract Optional<Long> pendingDocumentsCount();
 
-  /** The number of documents in the FileSearchStore that have failed processing. */
+  /** Output only. The number of documents in the `FileSearchStore` that have failed processing. */
   @JsonProperty("failedDocumentsCount")
   public abstract Optional<Long> failedDocumentsCount();
 
   /**
-   * The size of raw bytes ingested into the FileSearchStore. This is the total size of all the
-   * documents in the FileSearchStore.
+   * Output only. The size of raw bytes ingested into the `FileSearchStore`. This is the total size
+   * of all the documents in the `FileSearchStore`.
    */
   @JsonProperty("sizeBytes")
   public abstract Optional<Long> sizeBytes();
@@ -93,8 +104,12 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for name.
      *
-     * <p>name: The resource name of the FileSearchStore. Example:
-     * `fileSearchStores/my-file-search-store-123`
+     * <p>name: Output only. Immutable. Identifier. The `FileSearchStore` resource name. It is an ID
+     * (name excluding the "fileSearchStores/" prefix) that can contain up to 40 characters that are
+     * lowercase alphanumeric or dashes (-). It is output only. The unique name will be derived from
+     * `display_name` along with a 12 character random suffix. Example:
+     * `fileSearchStores/my-awesome-file-search-store-123a456b789c` If `display_name` is not
+     * provided, the name will be randomly generated.
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
@@ -112,7 +127,9 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for displayName.
      *
-     * <p>displayName: The human-readable display name for the FileSearchStore.
+     * <p>displayName: Optional. The human-readable display name for the `FileSearchStore`. The
+     * display name must be no more than 512 characters in length, including spaces. Example: "Docs
+     * on Semantic Retriever".
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);
@@ -130,7 +147,7 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for createTime.
      *
-     * <p>createTime: The Timestamp of when the FileSearchStore was created.
+     * <p>createTime: Output only. The Timestamp of when the `FileSearchStore` was created.
      */
     @JsonProperty("createTime")
     public abstract Builder createTime(Instant createTime);
@@ -148,7 +165,7 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for updateTime.
      *
-     * <p>updateTime: The Timestamp of when the FileSearchStore was last updated.
+     * <p>updateTime: Output only. The Timestamp of when the `FileSearchStore` was last updated.
      */
     @JsonProperty("updateTime")
     public abstract Builder updateTime(Instant updateTime);
@@ -166,8 +183,8 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for activeDocumentsCount.
      *
-     * <p>activeDocumentsCount: The number of documents in the FileSearchStore that are active and
-     * ready for retrieval.
+     * <p>activeDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
+     * are active and ready for retrieval.
      */
     @JsonProperty("activeDocumentsCount")
     public abstract Builder activeDocumentsCount(Long activeDocumentsCount);
@@ -185,8 +202,8 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for pendingDocumentsCount.
      *
-     * <p>pendingDocumentsCount: The number of documents in the FileSearchStore that are being
-     * processed.
+     * <p>pendingDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
+     * are being processed.
      */
     @JsonProperty("pendingDocumentsCount")
     public abstract Builder pendingDocumentsCount(Long pendingDocumentsCount);
@@ -204,8 +221,8 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for failedDocumentsCount.
      *
-     * <p>failedDocumentsCount: The number of documents in the FileSearchStore that have failed
-     * processing.
+     * <p>failedDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
+     * have failed processing.
      */
     @JsonProperty("failedDocumentsCount")
     public abstract Builder failedDocumentsCount(Long failedDocumentsCount);
@@ -223,8 +240,8 @@ public abstract class FileSearchStore extends JsonSerializable {
     /**
      * Setter for sizeBytes.
      *
-     * <p>sizeBytes: The size of raw bytes ingested into the FileSearchStore. This is the total size
-     * of all the documents in the FileSearchStore.
+     * <p>sizeBytes: Output only. The size of raw bytes ingested into the `FileSearchStore`. This is
+     * the total size of all the documents in the `FileSearchStore`.
      */
     @JsonProperty("sizeBytes")
     public abstract Builder sizeBytes(Long sizeBytes);

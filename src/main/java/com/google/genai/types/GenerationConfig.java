@@ -124,7 +124,7 @@ public abstract class GenerationConfig extends JsonSerializable {
    * Optional. The IANA standard MIME type of the response. The model will generate output that
    * conforms to this MIME type. Supported values include 'text/plain' (default) and
    * 'application/json'. The model needs to be prompted to output the appropriate response type,
-   * otherwise the behavior is undefined. This is a preview feature.
+   * otherwise the behavior is undefined.
    */
   @JsonProperty("responseMimeType")
   public abstract Optional<String> responseMimeType();
@@ -499,7 +499,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * <p>responseMimeType: Optional. The IANA standard MIME type of the response. The model will
      * generate output that conforms to this MIME type. Supported values include 'text/plain'
      * (default) and 'application/json'. The model needs to be prompted to output the appropriate
-     * response type, otherwise the behavior is undefined. This is a preview feature.
+     * response type, otherwise the behavior is undefined.
      */
     @JsonProperty("responseMimeType")
     public abstract Builder responseMimeType(String responseMimeType);

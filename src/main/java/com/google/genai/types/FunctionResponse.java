@@ -68,8 +68,8 @@ public abstract class FunctionResponse extends JsonSerializable {
   public abstract Optional<String> id();
 
   /**
-   * Required. The name of the function to call. Matches [FunctionDeclaration.name] and
-   * [FunctionCall.name].
+   * Required. The name of the function to call. Matches FunctionDeclaration.name and
+   * FunctionCall.name.
    */
   @JsonProperty("name")
   public abstract Optional<String> name();
@@ -231,8 +231,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for name.
      *
-     * <p>name: Required. The name of the function to call. Matches [FunctionDeclaration.name] and
-     * [FunctionCall.name].
+     * <p>name: Required. The name of the function to call. Matches FunctionDeclaration.name and
+     * FunctionCall.name.
      */
     @JsonProperty("name")
     public abstract Builder name(String name);
