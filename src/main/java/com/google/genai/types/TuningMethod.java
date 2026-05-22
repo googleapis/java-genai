@@ -37,6 +37,9 @@ public class TuningMethod {
     /** Distillation tuning. */
     DISTILLATION,
 
+    /** Reinforcement tuning. */
+    REINFORCEMENT_TUNING,
+
     TUNING_METHOD_UNSPECIFIED
   }
 

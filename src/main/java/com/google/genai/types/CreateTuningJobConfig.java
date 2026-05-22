@@ -36,8 +36,8 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   public abstract Optional<HttpOptions> httpOptions();
 
   /**
-   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or DISTILLATION). If
-   * not set, the default method (SFT) will be used.
+   * The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or DISTILLATION or
+   * REINFORCEMENT_TUNING). If not set, the default method (SFT) will be used.
    */
   @JsonProperty("method")
   public abstract Optional<TuningMethod> method();
@@ -150,6 +150,34 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("encryptionSpec")
   public abstract Optional<EncryptionSpec> encryptionSpec();
 
+  /** Reward function configuration for reinforcement tuning. Reinforcement tuning only. */
+  @JsonProperty("rewardConfig")
+  public abstract Optional<SingleReinforcementTuningRewardConfig> rewardConfig();
+
+  /**
+   * Composite reward function configuration for reinforcement tuning. Reinforcement tuning only.
+   */
+  @JsonProperty("compositeRewardConfig")
+  public abstract Optional<CompositeReinforcementTuningRewardConfig> compositeRewardConfig();
+
+  /**
+   * Number of different responses to generate per prompt during tuning. Reinforcement tuning only.
+   */
+  @JsonProperty("samplesPerPrompt")
+  public abstract Optional<Integer> samplesPerPrompt();
+
+  /** How often at steps to evaluate the tuning job during training. Reinforcement tuning only. */
+  @JsonProperty("evaluateInterval")
+  public abstract Optional<Integer> evaluateInterval();
+
+  /** How often at steps to save checkpoints during training. Reinforcement tuning only. */
+  @JsonProperty("checkpointInterval")
+  public abstract Optional<Integer> checkpointInterval();
+
+  /** The maximum number of tokens to generate per prompt. Reinforcement tuning only. */
+  @JsonProperty("maxOutputTokens")
+  public abstract Optional<Integer> maxOutputTokens();
+
   /** Instantiates a builder for CreateTuningJobConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -200,7 +228,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
      * Setter for method.
      *
      * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
-     * DISTILLATION). If not set, the default method (SFT) will be used.
+     * DISTILLATION or REINFORCEMENT_TUNING). If not set, the default method (SFT) will be used.
      */
     @JsonProperty("method")
     public abstract Builder method(TuningMethod method);
@@ -219,7 +247,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
      * Setter for method given a known enum.
      *
      * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
-     * DISTILLATION). If not set, the default method (SFT) will be used.
+     * DISTILLATION or REINFORCEMENT_TUNING). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(TuningMethod.Known knownType) {
@@ -230,7 +258,7 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
      * Setter for method given a string.
      *
      * <p>method: The method to use for tuning (SUPERVISED_FINE_TUNING or PREFERENCE_TUNING or
-     * DISTILLATION). If not set, the default method (SFT) will be used.
+     * DISTILLATION or REINFORCEMENT_TUNING). If not set, the default method (SFT) will be used.
      */
     @CanIgnoreReturnValue
     public Builder method(String method) {
@@ -684,6 +712,145 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEncryptionSpec() {
       return encryptionSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for rewardConfig.
+     *
+     * <p>rewardConfig: Reward function configuration for reinforcement tuning. Reinforcement tuning
+     * only.
+     */
+    @JsonProperty("rewardConfig")
+    public abstract Builder rewardConfig(SingleReinforcementTuningRewardConfig rewardConfig);
+
+    /**
+     * Setter for rewardConfig builder.
+     *
+     * <p>rewardConfig: Reward function configuration for reinforcement tuning. Reinforcement tuning
+     * only.
+     */
+    @CanIgnoreReturnValue
+    public Builder rewardConfig(SingleReinforcementTuningRewardConfig.Builder rewardConfigBuilder) {
+      return rewardConfig(rewardConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder rewardConfig(Optional<SingleReinforcementTuningRewardConfig> rewardConfig);
+
+    /** Clears the value of rewardConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRewardConfig() {
+      return rewardConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for compositeRewardConfig.
+     *
+     * <p>compositeRewardConfig: Composite reward function configuration for reinforcement tuning.
+     * Reinforcement tuning only.
+     */
+    @JsonProperty("compositeRewardConfig")
+    public abstract Builder compositeRewardConfig(
+        CompositeReinforcementTuningRewardConfig compositeRewardConfig);
+
+    /**
+     * Setter for compositeRewardConfig builder.
+     *
+     * <p>compositeRewardConfig: Composite reward function configuration for reinforcement tuning.
+     * Reinforcement tuning only.
+     */
+    @CanIgnoreReturnValue
+    public Builder compositeRewardConfig(
+        CompositeReinforcementTuningRewardConfig.Builder compositeRewardConfigBuilder) {
+      return compositeRewardConfig(compositeRewardConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder compositeRewardConfig(
+        Optional<CompositeReinforcementTuningRewardConfig> compositeRewardConfig);
+
+    /** Clears the value of compositeRewardConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCompositeRewardConfig() {
+      return compositeRewardConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for samplesPerPrompt.
+     *
+     * <p>samplesPerPrompt: Number of different responses to generate per prompt during tuning.
+     * Reinforcement tuning only.
+     */
+    @JsonProperty("samplesPerPrompt")
+    public abstract Builder samplesPerPrompt(Integer samplesPerPrompt);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder samplesPerPrompt(Optional<Integer> samplesPerPrompt);
+
+    /** Clears the value of samplesPerPrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSamplesPerPrompt() {
+      return samplesPerPrompt(Optional.empty());
+    }
+
+    /**
+     * Setter for evaluateInterval.
+     *
+     * <p>evaluateInterval: How often at steps to evaluate the tuning job during training.
+     * Reinforcement tuning only.
+     */
+    @JsonProperty("evaluateInterval")
+    public abstract Builder evaluateInterval(Integer evaluateInterval);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder evaluateInterval(Optional<Integer> evaluateInterval);
+
+    /** Clears the value of evaluateInterval field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEvaluateInterval() {
+      return evaluateInterval(Optional.empty());
+    }
+
+    /**
+     * Setter for checkpointInterval.
+     *
+     * <p>checkpointInterval: How often at steps to save checkpoints during training. Reinforcement
+     * tuning only.
+     */
+    @JsonProperty("checkpointInterval")
+    public abstract Builder checkpointInterval(Integer checkpointInterval);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder checkpointInterval(Optional<Integer> checkpointInterval);
+
+    /** Clears the value of checkpointInterval field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCheckpointInterval() {
+      return checkpointInterval(Optional.empty());
+    }
+
+    /**
+     * Setter for maxOutputTokens.
+     *
+     * <p>maxOutputTokens: The maximum number of tokens to generate per prompt. Reinforcement tuning
+     * only.
+     */
+    @JsonProperty("maxOutputTokens")
+    public abstract Builder maxOutputTokens(Integer maxOutputTokens);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder maxOutputTokens(Optional<Integer> maxOutputTokens);
+
+    /** Clears the value of maxOutputTokens field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMaxOutputTokens() {
+      return maxOutputTokens(Optional.empty());
     }
 
     public abstract CreateTuningJobConfig build();

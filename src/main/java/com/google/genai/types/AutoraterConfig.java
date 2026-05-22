@@ -52,6 +52,17 @@ public abstract class AutoraterConfig extends JsonSerializable {
   @JsonProperty("generationConfig")
   public abstract Optional<GenerationConfig> generationConfig();
 
+  /**
+   * Optional. Default is true. Whether to flip the candidate and baseline responses. This is only
+   * applicable to the pairwise metric. If enabled, also provide
+   * PairwiseMetricSpec.candidate_response_field_name and
+   * PairwiseMetricSpec.baseline_response_field_name. When rendering
+   * PairwiseMetricSpec.metric_prompt_template, the candidate and baseline fields will be flipped
+   * for half of the samples to reduce bias.
+   */
+  @JsonProperty("flipEnabled")
+  public abstract Optional<Boolean> flipEnabled();
+
   /** Instantiates a builder for AutoraterConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -140,6 +151,29 @@ public abstract class AutoraterConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGenerationConfig() {
       return generationConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for flipEnabled.
+     *
+     * <p>flipEnabled: Optional. Default is true. Whether to flip the candidate and baseline
+     * responses. This is only applicable to the pairwise metric. If enabled, also provide
+     * PairwiseMetricSpec.candidate_response_field_name and
+     * PairwiseMetricSpec.baseline_response_field_name. When rendering
+     * PairwiseMetricSpec.metric_prompt_template, the candidate and baseline fields will be flipped
+     * for half of the samples to reduce bias.
+     */
+    @JsonProperty("flipEnabled")
+    public abstract Builder flipEnabled(boolean flipEnabled);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder flipEnabled(Optional<Boolean> flipEnabled);
+
+    /** Clears the value of flipEnabled field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFlipEnabled() {
+      return flipEnabled(Optional.empty());
     }
 
     public abstract AutoraterConfig build();

@@ -247,6 +247,42 @@ public final class Tunings {
               + " in Gemini Developer API mode.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"rewardConfig"}))) {
+      throw new IllegalArgumentException(
+          "rewardConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"compositeRewardConfig"}))) {
+      throw new IllegalArgumentException(
+          "compositeRewardConfig parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"samplesPerPrompt"}))) {
+      throw new IllegalArgumentException(
+          "samplesPerPrompt parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"evaluateInterval"}))) {
+      throw new IllegalArgumentException(
+          "evaluateInterval parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"checkpointInterval"}))) {
+      throw new IllegalArgumentException(
+          "checkpointInterval parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"maxOutputTokens"}))) {
+      throw new IllegalArgumentException(
+          "maxOutputTokens parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
@@ -288,6 +324,17 @@ public final class Tunings {
         Common.setValueByPath(
             parentObject,
             new String[] {"distillationSpec"},
+            tuningValidationDatasetToVertex(
+                JsonSerializable.toJsonNode(
+                    Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
+                toObject,
+                rootObject));
+      }
+    } else if (discriminatorValueValidationDataset.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"validationDataset"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec"},
             tuningValidationDatasetToVertex(
                 JsonSerializable.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
@@ -336,6 +383,13 @@ public final class Tunings {
             new String[] {"distillationSpec", "hyperParameters", "epochCount"},
             Common.getValueByPath(fromObject, new String[] {"epochCount"}));
       }
+    } else if (discriminatorValueEpochCount.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "hyperParameters", "epochCount"},
+            Common.getValueByPath(fromObject, new String[] {"epochCount"}));
+      }
     }
 
     JsonNode discriminatorLearningRateMultiplier =
@@ -365,6 +419,13 @@ public final class Tunings {
         Common.setValueByPath(
             parentObject,
             new String[] {"distillationSpec", "hyperParameters", "learningRateMultiplier"},
+            Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
+      }
+    } else if (discriminatorValueLearningRateMultiplier.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "hyperParameters", "learningRateMultiplier"},
             Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
       }
     }
@@ -425,6 +486,13 @@ public final class Tunings {
             new String[] {"distillationSpec", "hyperParameters", "adapterSize"},
             Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
       }
+    } else if (discriminatorValueAdapterSize.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "hyperParameters", "adapterSize"},
+            Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+      }
     }
 
     JsonNode discriminatorTuningMode =
@@ -471,6 +539,13 @@ public final class Tunings {
         Common.setValueByPath(
             parentObject,
             new String[] {"distillationSpec", "hyperParameters", "batchSize"},
+            Common.getValueByPath(fromObject, new String[] {"batchSize"}));
+      }
+    } else if (discriminatorValueBatchSize.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "hyperParameters", "batchSize"},
             Common.getValueByPath(fromObject, new String[] {"batchSize"}));
       }
     }
@@ -584,6 +659,48 @@ public final class Tunings {
           parentObject,
           new String[] {"encryptionSpec"},
           Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"rewardConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "singleRewardConfig"},
+          Common.getValueByPath(fromObject, new String[] {"rewardConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"compositeRewardConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "compositeRewardConfig"},
+          Common.getValueByPath(fromObject, new String[] {"compositeRewardConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"samplesPerPrompt"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "hyperParameters", "samplesPerPrompt"},
+          Common.getValueByPath(fromObject, new String[] {"samplesPerPrompt"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"evaluateInterval"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "hyperParameters", "evaluateInterval"},
+          Common.getValueByPath(fromObject, new String[] {"evaluateInterval"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"checkpointInterval"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "hyperParameters", "checkpointInterval"},
+          Common.getValueByPath(fromObject, new String[] {"checkpointInterval"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"maxOutputTokens"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "hyperParameters", "maxOutputTokens"},
+          Common.getValueByPath(fromObject, new String[] {"maxOutputTokens"}));
     }
 
     return toObject;
@@ -1430,6 +1547,13 @@ public final class Tunings {
             new String[] {"distillationSpec", "promptDatasetUri"},
             Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
       }
+    } else if (discriminatorValueGcsUri.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "trainingDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"gcsUri"}));
+      }
     }
 
     JsonNode discriminatorVertexDatasetResource =
@@ -1457,6 +1581,13 @@ public final class Tunings {
         Common.setValueByPath(
             parentObject,
             new String[] {"distillationSpec", "promptDatasetUri"},
+            Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
+      }
+    } else if (discriminatorValueVertexDatasetResource.equals("REINFORCEMENT_TUNING")) {
+      if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}) != null) {
+        Common.setValueByPath(
+            parentObject,
+            new String[] {"reinforcementTuningSpec", "trainingDatasetUri"},
             Common.getValueByPath(fromObject, new String[] {"vertexDatasetResource"}));
       }
     }
