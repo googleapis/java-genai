@@ -31,13 +31,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** A function call. */
+/**
+ * A predicted FunctionCall returned from the model that contains a string representing the
+ * FunctionDeclaration.name and a structured JSON object containing the parameters and their values.
+ */
 @AutoValue
 @JsonDeserialize(builder = FunctionCall.Builder.class)
 public abstract class FunctionCall extends JsonSerializable {
   /**
-   * The unique id of the function call. If populated, the client to execute the `function_call` and
-   * return the response with the matching `id`.
+   * Optional. The unique id of the function call. If populated, the client to execute the
+   * `function_call` and return the response with the matching `id`.
    */
   @JsonProperty("id")
   public abstract Optional<String> id();
@@ -88,7 +91,7 @@ public abstract class FunctionCall extends JsonSerializable {
     /**
      * Setter for id.
      *
-     * <p>id: The unique id of the function call. If populated, the client to execute the
+     * <p>id: Optional. The unique id of the function call. If populated, the client to execute the
      * `function_call` and return the response with the matching `id`.
      */
     @JsonProperty("id")

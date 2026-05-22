@@ -27,12 +27,9 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * An object that represents a latitude/longitude pair.
- *
- * <p>This is expressed as a pair of doubles to represent degrees latitude and degrees longitude.
- * Unless specified otherwise, this object must conform to the <a
- * href="https://en.wikipedia.org/wiki/World_Geodetic_System#1984_version">WGS84 standard</a>.
- * Values must be within normalized ranges.
+ * An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to
+ * represent degrees latitude and degrees longitude. Unless specified otherwise, this object must
+ * conform to the WGS84 standard. Values must be within normalized ranges.
  */
 @AutoValue
 @JsonDeserialize(builder = LatLng.Builder.class)
@@ -41,7 +38,7 @@ public abstract class LatLng extends JsonSerializable {
   @JsonProperty("latitude")
   public abstract Optional<Double> latitude();
 
-  /** The longitude in degrees. It must be in the range [-180.0, +180.0] */
+  /** The longitude in degrees. It must be in the range [-180.0, +180.0]. */
   @JsonProperty("longitude")
   public abstract Optional<Double> longitude();
 
@@ -84,7 +81,7 @@ public abstract class LatLng extends JsonSerializable {
     /**
      * Setter for longitude.
      *
-     * <p>longitude: The longitude in degrees. It must be in the range [-180.0, +180.0]
+     * <p>longitude: The longitude in degrees. It must be in the range [-180.0, +180.0].
      */
     @JsonProperty("longitude")
     public abstract Builder longitude(Double longitude);

@@ -30,7 +30,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = RetrievalConfig.Builder.class)
 public abstract class RetrievalConfig extends JsonSerializable {
-  /** Optional. The location of the user. */
+  /** The location of the user. */
   @JsonProperty("latLng")
   public abstract Optional<LatLng> latLng();
 
@@ -59,7 +59,7 @@ public abstract class RetrievalConfig extends JsonSerializable {
     /**
      * Setter for latLng.
      *
-     * <p>latLng: Optional. The location of the user.
+     * <p>latLng: The location of the user.
      */
     @JsonProperty("latLng")
     public abstract Builder latLng(LatLng latLng);
@@ -67,7 +67,7 @@ public abstract class RetrievalConfig extends JsonSerializable {
     /**
      * Setter for latLng builder.
      *
-     * <p>latLng: Optional. The location of the user.
+     * <p>latLng: The location of the user.
      */
     @CanIgnoreReturnValue
     public Builder latLng(LatLng.Builder latLngBuilder) {
