@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.ImmutableSet;
 import com.google.genai.Common.BuiltRequest;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.CachedContent;
@@ -58,19 +57,6 @@ public final class Caches {
 
   public Caches(ApiClient apiClient) {
     this.apiClient = apiClient;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  void environmentVertexEnumValidate(Object enumValue) {
-    ImmutableSet<String> invalidEnumValues =
-        ImmutableSet.of("ENVIRONMENT_MOBILE", "ENVIRONMENT_DESKTOP");
-    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
-      throw new IllegalArgumentException(
-          String.format(
-              "%s enum value is only supported in Gemini Developer API mode, not in Gemini"
-                  + " Enterprise Agent Platform mode.",
-              enumValue));
-    }
   }
 
   @ExcludeFromGeneratedCoverageReport
@@ -170,35 +156,6 @@ public final class Caches {
       throw new IllegalArgumentException(
           "id parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
               + " Agent Platform mode.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode computerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
-      environmentVertexEnumValidate(
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
-      Common.setValueByPath(
-          toObject,
-          new String[] {"environment"},
-          Common.getValueByPath(fromObject, new String[] {"environment"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"excludedPredefinedFunctions"},
-          Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
-    }
-
-    if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}))) {
-      throw new IllegalArgumentException(
-          "enablePromptInjectionDetection parameter is only supported in Gemini Developer API mode,"
-              + " not in Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -1223,10 +1180,7 @@ public final class Caches {
       Common.setValueByPath(
           toObject,
           new String[] {"computerUse"},
-          computerUseToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
