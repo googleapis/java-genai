@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.56.0](https://github.com/googleapis/java-genai/compare/v1.55.0...v1.56.0) (2026-05-28)
+
+
+### Features
+
+* additional computer_use field support for vertex. ([94671df](https://github.com/googleapis/java-genai/commit/94671dfeafceba01e8892eb1a0dc550fd0ac8e61))
+* Support Reinforcement Tuning in GenAI SDK ([c0248fb](https://github.com/googleapis/java-genai/commit/c0248fb0c957457f9bdedc2695dd8177eaa8a514))
+
 ## [1.55.0](https://github.com/googleapis/java-genai/compare/v1.54.0...v1.55.0) (2026-05-21)
 
 
