@@ -31,31 +31,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** A function response. */
+/**
+ * The result output from a FunctionCall that contains a string representing the
+ * FunctionDeclaration.name and a structured JSON object containing any output from the function is
+ * used as context to the model. This should contain the result of a `FunctionCall` made based on
+ * model prediction.
+ */
 @AutoValue
 @JsonDeserialize(builder = FunctionResponse.Builder.class)
 public abstract class FunctionResponse extends JsonSerializable {
   /**
-   * Signals that function call continues, and more responses will be returned, turning the function
-   * call into a generator. Is only applicable to NON_BLOCKING function calls (see
-   * FunctionDeclaration.behavior for details), ignored otherwise. If false, the default, future
-   * responses will not be considered. Is only applicable to NON_BLOCKING function calls, is ignored
-   * otherwise. If set to false, future responses will not be considered. It is allowed to return
-   * empty `response` with `will_continue=False` to signal that the function call is finished.
+   * Optional. Signals that function call continues, and more responses will be returned, turning
+   * the function call into a generator. Is only applicable to NON_BLOCKING function calls, is
+   * ignored otherwise. If set to false, future responses will not be considered. It is allowed to
+   * return empty `response` with `will_continue=False` to signal that the function call is
+   * finished. This may still trigger the model generation. To avoid triggering the generation and
+   * finish the function call, additionally set `scheduling` to `SILENT`. This field is not
+   * supported in Vertex AI.
    */
   @JsonProperty("willContinue")
   public abstract Optional<Boolean> willContinue();
 
   /**
-   * Specifies how the response should be scheduled in the conversation. Only applicable to
-   * NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+   * Optional. Specifies how the response should be scheduled in the conversation. Only applicable
+   * to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
    */
   @JsonProperty("scheduling")
   public abstract Optional<FunctionResponseScheduling> scheduling();
 
   /**
-   * List of parts that constitute a function response. Each part may have a different IANA MIME
-   * type.
+   * Optional. Ordered `Parts` that constitute a function response. Parts may have different IANA
+   * MIME types.
    */
   @JsonProperty("parts")
   public abstract Optional<List<FunctionResponsePart>> parts();
@@ -103,13 +109,13 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for willContinue.
      *
-     * <p>willContinue: Signals that function call continues, and more responses will be returned,
-     * turning the function call into a generator. Is only applicable to NON_BLOCKING function calls
-     * (see FunctionDeclaration.behavior for details), ignored otherwise. If false, the default,
-     * future responses will not be considered. Is only applicable to NON_BLOCKING function calls,
-     * is ignored otherwise. If set to false, future responses will not be considered. It is allowed
-     * to return empty `response` with `will_continue=False` to signal that the function call is
-     * finished.
+     * <p>willContinue: Optional. Signals that function call continues, and more responses will be
+     * returned, turning the function call into a generator. Is only applicable to NON_BLOCKING
+     * function calls, is ignored otherwise. If set to false, future responses will not be
+     * considered. It is allowed to return empty `response` with `will_continue=False` to signal
+     * that the function call is finished. This may still trigger the model generation. To avoid
+     * triggering the generation and finish the function call, additionally set `scheduling` to
+     * `SILENT`. This field is not supported in Vertex AI.
      */
     @JsonProperty("willContinue")
     public abstract Builder willContinue(boolean willContinue);
@@ -127,8 +133,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for scheduling.
      *
-     * <p>scheduling: Specifies how the response should be scheduled in the conversation. Only
-     * applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
      */
     @JsonProperty("scheduling")
     public abstract Builder scheduling(FunctionResponseScheduling scheduling);
@@ -146,8 +152,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for scheduling given a known enum.
      *
-     * <p>scheduling: Specifies how the response should be scheduled in the conversation. Only
-     * applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
      */
     @CanIgnoreReturnValue
     public Builder scheduling(FunctionResponseScheduling.Known knownType) {
@@ -157,8 +163,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for scheduling given a string.
      *
-     * <p>scheduling: Specifies how the response should be scheduled in the conversation. Only
-     * applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
      */
     @CanIgnoreReturnValue
     public Builder scheduling(String scheduling) {
@@ -168,8 +174,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for parts.
      *
-     * <p>parts: List of parts that constitute a function response. Each part may have a different
-     * IANA MIME type.
+     * <p>parts: Optional. Ordered `Parts` that constitute a function response. Parts may have
+     * different IANA MIME types.
      */
     @JsonProperty("parts")
     public abstract Builder parts(List<FunctionResponsePart> parts);
@@ -177,8 +183,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for parts.
      *
-     * <p>parts: List of parts that constitute a function response. Each part may have a different
-     * IANA MIME type.
+     * <p>parts: Optional. Ordered `Parts` that constitute a function response. Parts may have
+     * different IANA MIME types.
      */
     @CanIgnoreReturnValue
     public Builder parts(FunctionResponsePart... parts) {
@@ -188,8 +194,8 @@ public abstract class FunctionResponse extends JsonSerializable {
     /**
      * Setter for parts builder.
      *
-     * <p>parts: List of parts that constitute a function response. Each part may have a different
-     * IANA MIME type.
+     * <p>parts: Optional. Ordered `Parts` that constitute a function response. Parts may have
+     * different IANA MIME types.
      */
     @CanIgnoreReturnValue
     public Builder parts(FunctionResponsePart.Builder... partsBuilders) {

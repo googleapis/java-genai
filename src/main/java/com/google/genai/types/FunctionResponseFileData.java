@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** URI based data for function response. */
+/** URI based data for function response. This data type is not supported in Gemini API. */
 @AutoValue
 @JsonDeserialize(builder = FunctionResponseFileData.Builder.class)
 public abstract class FunctionResponseFileData extends JsonSerializable {
@@ -39,7 +39,10 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
   public abstract Optional<String> mimeType();
 
   /**
-   * Optional. Display name of the file. Used to provide a label or filename to distinguish files.
+   * Optional. Display name of the file data. Used to provide a label or filename to distinguish
+   * file datas. This field is only returned in PromptMessage for prompt management. It is currently
+   * used in the Gemini GenerateContent calls only when server side tools (code_execution,
+   * google_search, and url_context) are enabled.
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
@@ -101,8 +104,10 @@ public abstract class FunctionResponseFileData extends JsonSerializable {
     /**
      * Setter for displayName.
      *
-     * <p>displayName: Optional. Display name of the file. Used to provide a label or filename to
-     * distinguish files.
+     * <p>displayName: Optional. Display name of the file data. Used to provide a label or filename
+     * to distinguish file datas. This field is only returned in PromptMessage for prompt
+     * management. It is currently used in the Gemini GenerateContent calls only when server side
+     * tools (code_execution, google_search, and url_context) are enabled.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);

@@ -23,7 +23,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Specifies how the response should be scheduled in the conversation. */
+/**
+ * Specifies how the response should be scheduled in the conversation. Only applicable to
+ * NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+ */
 public class FunctionResponseScheduling {
 
   /** Enum representing the known values for FunctionResponseScheduling. */

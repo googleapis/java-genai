@@ -27,9 +27,8 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Raw media bytes for function response.
- *
- * <p>Text should not be sent as raw bytes, use the FunctionResponse.response field.
+ * Raw media bytes for function response. Text should not be sent as raw bytes, use the 'text'
+ * field.
  */
 @AutoValue
 @JsonDeserialize(builder = FunctionResponseBlob.Builder.class)
@@ -38,12 +37,15 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
   @JsonProperty("mimeType")
   public abstract Optional<String> mimeType();
 
-  /** Required. Inline media bytes. */
+  /** Required. Raw bytes. */
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
 
   /**
    * Optional. Display name of the blob. Used to provide a label or filename to distinguish blobs.
+   * This field is only returned in PromptMessage for prompt management. It is currently used in the
+   * Gemini GenerateContent calls only when server side tools (code_execution, google_search, and
+   * url_context) are enabled. This field is not supported in Gemini API.
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
@@ -87,7 +89,7 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
     /**
      * Setter for data.
      *
-     * <p>data: Required. Inline media bytes.
+     * <p>data: Required. Raw bytes.
      */
     @JsonProperty("data")
     public abstract Builder data(byte[] data);
@@ -106,7 +108,10 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
      * Setter for displayName.
      *
      * <p>displayName: Optional. Display name of the blob. Used to provide a label or filename to
-     * distinguish blobs.
+     * distinguish blobs. This field is only returned in PromptMessage for prompt management. It is
+     * currently used in the Gemini GenerateContent calls only when server side tools
+     * (code_execution, google_search, and url_context) are enabled. This field is not supported in
+     * Gemini API.
      */
     @JsonProperty("displayName")
     public abstract Builder displayName(String displayName);

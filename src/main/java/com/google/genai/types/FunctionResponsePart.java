@@ -27,22 +27,20 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * A datatype containing media that is part of a `FunctionResponse` message.
- *
- * <p>A `FunctionResponsePart` consists of data which has an associated datatype. A
+ * A datatype containing media that is part of a `FunctionResponse` message. A
+ * `FunctionResponsePart` consists of data which has an associated datatype. A
  * `FunctionResponsePart` can only contain one of the accepted types in `FunctionResponsePart.data`.
- *
- * <p>A `FunctionResponsePart` must have a fixed IANA MIME type identifying the type and subtype of
- * the media if the `inline_data` field is filled with raw bytes.
+ * A `FunctionResponsePart` must have a fixed IANA MIME type identifying the type and subtype of the
+ * media if the `inline_data` field is filled with raw bytes.
  */
 @AutoValue
 @JsonDeserialize(builder = FunctionResponsePart.Builder.class)
 public abstract class FunctionResponsePart extends JsonSerializable {
-  /** Optional. Inline media bytes. */
+  /** Inline media bytes. */
   @JsonProperty("inlineData")
   public abstract Optional<FunctionResponseBlob> inlineData();
 
-  /** Optional. URI based data. */
+  /** URI based data. This field is not supported in Gemini API. */
   @JsonProperty("fileData")
   public abstract Optional<FunctionResponseFileData> fileData();
 
@@ -67,7 +65,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for inlineData.
      *
-     * <p>inlineData: Optional. Inline media bytes.
+     * <p>inlineData: Inline media bytes.
      */
     @JsonProperty("inlineData")
     public abstract Builder inlineData(FunctionResponseBlob inlineData);
@@ -75,7 +73,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for inlineData builder.
      *
-     * <p>inlineData: Optional. Inline media bytes.
+     * <p>inlineData: Inline media bytes.
      */
     @CanIgnoreReturnValue
     public Builder inlineData(FunctionResponseBlob.Builder inlineDataBuilder) {
@@ -95,7 +93,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for fileData.
      *
-     * <p>fileData: Optional. URI based data.
+     * <p>fileData: URI based data. This field is not supported in Gemini API.
      */
     @JsonProperty("fileData")
     public abstract Builder fileData(FunctionResponseFileData fileData);
@@ -103,7 +101,7 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     /**
      * Setter for fileData builder.
      *
-     * <p>fileData: Optional. URI based data.
+     * <p>fileData: URI based data. This field is not supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder fileData(FunctionResponseFileData.Builder fileDataBuilder) {
