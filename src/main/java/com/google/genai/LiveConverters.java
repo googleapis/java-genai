@@ -1183,11 +1183,11 @@ final class LiveConverters {
       Common.setValueByPath(parentObject, new String[] {"setup", "safetySettings"}, result);
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"streamTranslationConfig"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"streamingTranslationConfig"}) != null) {
       Common.setValueByPath(
           parentObject,
-          new String[] {"setup", "generationConfig", "streamTranslationConfig"},
-          Common.getValueByPath(fromObject, new String[] {"streamTranslationConfig"}));
+          new String[] {"setup", "generationConfig", "streamingTranslationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"streamingTranslationConfig"}));
     }
 
     return toObject;
@@ -1356,10 +1356,10 @@ final class LiveConverters {
     }
 
     if (!Common.isZero(
-        Common.getValueByPath(fromObject, new String[] {"streamTranslationConfig"}))) {
+        Common.getValueByPath(fromObject, new String[] {"streamingTranslationConfig"}))) {
       throw new IllegalArgumentException(
-          "streamTranslationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
+          "streamingTranslationConfig parameter is only supported in Gemini Developer API mode, not"
+              + " in Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;
