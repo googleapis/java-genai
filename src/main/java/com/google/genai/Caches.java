@@ -796,6 +796,25 @@ public final class Caches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode mcpServerToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"name"}))) {
+      throw new IllegalArgumentException(
+          "name parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
+              + " Agent Platform mode.");
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"streamableHttpTransport"}))) {
+      throw new IllegalArgumentException(
+          "streamableHttpTransport parameter is only supported in Gemini Developer API mode, not in"
+              + " Gemini Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
@@ -1245,10 +1264,16 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"mcpServers"}))) {
-      throw new IllegalArgumentException(
-          "mcpServers parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"mcpServers"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
     }
 
     return toObject;
