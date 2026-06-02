@@ -28,8 +28,8 @@ import java.util.Optional;
 
 /** Config for stream translation. */
 @AutoValue
-@JsonDeserialize(builder = StreamTranslationConfig.Builder.class)
-public abstract class StreamTranslationConfig extends JsonSerializable {
+@JsonDeserialize(builder = TranslationConfig.Builder.class)
+public abstract class TranslationConfig extends JsonSerializable {
   /**
    * If true, the model will generate audio when the target language is spoken, essentially it will
    * parrot the input. If false, we will not produce audio for the target language.
@@ -44,22 +44,22 @@ public abstract class StreamTranslationConfig extends JsonSerializable {
   @JsonProperty("targetLanguageCode")
   public abstract Optional<String> targetLanguageCode();
 
-  /** Instantiates a builder for StreamTranslationConfig. */
+  /** Instantiates a builder for TranslationConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
-    return new AutoValue_StreamTranslationConfig.Builder();
+    return new AutoValue_TranslationConfig.Builder();
   }
 
   /** Creates a builder with the same values as this instance. */
   public abstract Builder toBuilder();
 
-  /** Builder for StreamTranslationConfig. */
+  /** Builder for TranslationConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
-    /** For internal usage. Please use `StreamTranslationConfig.builder()` for instantiation. */
+    /** For internal usage. Please use `TranslationConfig.builder()` for instantiation. */
     @JsonCreator
     private static Builder create() {
-      return new AutoValue_StreamTranslationConfig.Builder();
+      return new AutoValue_TranslationConfig.Builder();
     }
 
     /**
@@ -101,12 +101,12 @@ public abstract class StreamTranslationConfig extends JsonSerializable {
       return targetLanguageCode(Optional.empty());
     }
 
-    public abstract StreamTranslationConfig build();
+    public abstract TranslationConfig build();
   }
 
-  /** Deserializes a JSON string to a StreamTranslationConfig object. */
+  /** Deserializes a JSON string to a TranslationConfig object. */
   @ExcludeFromGeneratedCoverageReport
-  public static StreamTranslationConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, StreamTranslationConfig.class);
+  public static TranslationConfig fromJson(String jsonString) {
+    return JsonSerializable.fromJsonString(jsonString, TranslationConfig.class);
   }
 }

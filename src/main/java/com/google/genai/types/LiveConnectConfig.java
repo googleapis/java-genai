@@ -169,9 +169,9 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   @JsonProperty("safetySettings")
   public abstract Optional<List<SafetySetting>> safetySettings();
 
-  /** Config for stream translation. */
-  @JsonProperty("streamTranslationConfig")
-  public abstract Optional<StreamTranslationConfig> streamTranslationConfig();
+  /** Config for translation. */
+  @JsonProperty("translationConfig")
+  public abstract Optional<TranslationConfig> translationConfig();
 
   /** Instantiates a builder for LiveConnectConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -871,34 +871,31 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     }
 
     /**
-     * Setter for streamTranslationConfig.
+     * Setter for translationConfig.
      *
-     * <p>streamTranslationConfig: Config for stream translation.
+     * <p>translationConfig: Config for translation.
      */
-    @JsonProperty("streamTranslationConfig")
-    public abstract Builder streamTranslationConfig(
-        StreamTranslationConfig streamTranslationConfig);
+    @JsonProperty("translationConfig")
+    public abstract Builder translationConfig(TranslationConfig translationConfig);
 
     /**
-     * Setter for streamTranslationConfig builder.
+     * Setter for translationConfig builder.
      *
-     * <p>streamTranslationConfig: Config for stream translation.
+     * <p>translationConfig: Config for translation.
      */
     @CanIgnoreReturnValue
-    public Builder streamTranslationConfig(
-        StreamTranslationConfig.Builder streamTranslationConfigBuilder) {
-      return streamTranslationConfig(streamTranslationConfigBuilder.build());
+    public Builder translationConfig(TranslationConfig.Builder translationConfigBuilder) {
+      return translationConfig(translationConfigBuilder.build());
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder streamTranslationConfig(
-        Optional<StreamTranslationConfig> streamTranslationConfig);
+    abstract Builder translationConfig(Optional<TranslationConfig> translationConfig);
 
-    /** Clears the value of streamTranslationConfig field. */
+    /** Clears the value of translationConfig field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearStreamTranslationConfig() {
-      return streamTranslationConfig(Optional.empty());
+    public Builder clearTranslationConfig() {
+      return translationConfig(Optional.empty());
     }
 
     public abstract LiveConnectConfig build();
