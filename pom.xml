@@ -54,6 +54,7 @@
     <junit.version>5.11.4</junit.version>
     <java-websocket.version>1.6.0</java-websocket.version>
     <okhttp.version>4.12.0</okhttp.version>
+    <kotlin.version>1.9.10</kotlin.version>
     <main.java.src.dir>src/main/java</main.java.src.dir>
     <test.java.src.dir>src/test/java</test.java.src.dir>
   </properties>
@@ -302,6 +303,18 @@
     </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>checkstyle</id>
+            <configuration>
+              <excludes>**/gaos/**/*.java</excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
@@ -455,6 +468,13 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
     </plugins>
   </build>
