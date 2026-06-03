@@ -38,6 +38,10 @@ public abstract class Transcription extends JsonSerializable {
   @JsonProperty("finished")
   public abstract Optional<Boolean> finished();
 
+  /** The BCP-47 language code of the transcription. */
+  @JsonProperty("languageCode")
+  public abstract Optional<String> languageCode();
+
   /** Instantiates a builder for Transcription. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -90,6 +94,24 @@ public abstract class Transcription extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFinished() {
       return finished(Optional.empty());
+    }
+
+    /**
+     * Setter for languageCode.
+     *
+     * <p>languageCode: The BCP-47 language code of the transcription.
+     */
+    @JsonProperty("languageCode")
+    public abstract Builder languageCode(String languageCode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder languageCode(Optional<String> languageCode);
+
+    /** Clears the value of languageCode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguageCode() {
+      return languageCode(Optional.empty());
     }
 
     public abstract Transcription build();
