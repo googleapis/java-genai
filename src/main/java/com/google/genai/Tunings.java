@@ -283,6 +283,18 @@ public final class Tunings {
               + " not in Gemini Developer API mode.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"thinkingLevel"}))) {
+      throw new IllegalArgumentException(
+          "thinkingLevel parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}))) {
+      throw new IllegalArgumentException(
+          "validationDatasetUri parameter is only supported in Gemini Enterprise Agent Platform"
+              + " mode, not in Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
@@ -701,6 +713,20 @@ public final class Tunings {
           parentObject,
           new String[] {"reinforcementTuningSpec", "hyperParameters", "maxOutputTokens"},
           Common.getValueByPath(fromObject, new String[] {"maxOutputTokens"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"thinkingLevel"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "hyperParameters", "thinkingLevel"},
+          Common.getValueByPath(fromObject, new String[] {"thinkingLevel"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"reinforcementTuningSpec", "validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
     }
 
     return toObject;
@@ -1791,6 +1817,13 @@ public final class Tunings {
                   Common.getValueByPath(fromObject, new String[] {"distillationSpec"})),
               toObject,
               rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"reinforcementTuningSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"reinforcementTuningSpec"},
+          Common.getValueByPath(fromObject, new String[] {"reinforcementTuningSpec"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"tuningDataStats"}) != null) {

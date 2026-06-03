@@ -178,6 +178,22 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("maxOutputTokens")
   public abstract Optional<Integer> maxOutputTokens();
 
+  /**
+   * Indicates the maximum thinking depth. Use with earlier models shall result in error.
+   * Reinforcement tuning only.
+   */
+  @JsonProperty("thinkingLevel")
+  public abstract Optional<ReinforcementTuningThinkingLevel> thinkingLevel();
+
+  /**
+   * Cloud Storage path to file containing validation dataset for tuning. The dataset must be
+   * formatted as a JSONL file. If no validation dataset is provided, by default the API splits 25%
+   * of the training dataset or 50 examples, whichever is larger, as the validation dataset.
+   * Reinforcement tuning only.
+   */
+  @JsonProperty("validationDatasetUri")
+  public abstract Optional<String> validationDatasetUri();
+
   /** Instantiates a builder for CreateTuningJobConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -851,6 +867,68 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMaxOutputTokens() {
       return maxOutputTokens(Optional.empty());
+    }
+
+    /**
+     * Setter for thinkingLevel.
+     *
+     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
+     * in error. Reinforcement tuning only.
+     */
+    @JsonProperty("thinkingLevel")
+    public abstract Builder thinkingLevel(ReinforcementTuningThinkingLevel thinkingLevel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thinkingLevel(Optional<ReinforcementTuningThinkingLevel> thinkingLevel);
+
+    /** Clears the value of thinkingLevel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThinkingLevel() {
+      return thinkingLevel(Optional.empty());
+    }
+
+    /**
+     * Setter for thinkingLevel given a known enum.
+     *
+     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
+     * in error. Reinforcement tuning only.
+     */
+    @CanIgnoreReturnValue
+    public Builder thinkingLevel(ReinforcementTuningThinkingLevel.Known knownType) {
+      return thinkingLevel(new ReinforcementTuningThinkingLevel(knownType));
+    }
+
+    /**
+     * Setter for thinkingLevel given a string.
+     *
+     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
+     * in error. Reinforcement tuning only.
+     */
+    @CanIgnoreReturnValue
+    public Builder thinkingLevel(String thinkingLevel) {
+      return thinkingLevel(new ReinforcementTuningThinkingLevel(thinkingLevel));
+    }
+
+    /**
+     * Setter for validationDatasetUri.
+     *
+     * <p>validationDatasetUri: Cloud Storage path to file containing validation dataset for tuning.
+     * The dataset must be formatted as a JSONL file. If no validation dataset is provided, by
+     * default the API splits 25% of the training dataset or 50 examples, whichever is larger, as
+     * the validation dataset. Reinforcement tuning only.
+     */
+    @JsonProperty("validationDatasetUri")
+    public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
     }
 
     public abstract CreateTuningJobConfig build();

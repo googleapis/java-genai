@@ -30,9 +30,33 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = SingleReinforcementTuningRewardConfig.Builder.class)
 public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializable {
-  /** */
+  /** Scores parsed responses for autorater use cases by using a model to compute the reward. */
   @JsonProperty("autoraterScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorer> autoraterScorer();
+
+  /** A unique reward name used to identify each single reinforcement tuning reward. */
+  @JsonProperty("rewardName")
+  public abstract Optional<String> rewardName();
+
+  /** Defines how to parse sample response. */
+  @JsonProperty("parseResponseConfig")
+  public abstract Optional<ReinforcementTuningParseResponseConfig> parseResponseConfig();
+
+  /** Scores parsed responses for code execution use cases. */
+  @JsonProperty("codeExecutionRewardScorer")
+  public abstract Optional<ReinforcementTuningCodeExecutionRewardScorer>
+      codeExecutionRewardScorer();
+
+  /**
+   * Scores parsed responses for simple string matching use cases against reference answer without
+   * writing python code.
+   */
+  @JsonProperty("stringMatchRewardScorer")
+  public abstract Optional<ReinforcementTuningStringMatchRewardScorer> stringMatchRewardScorer();
+
+  /** Scores parsed responses by calling a Cloud Run service. */
+  @JsonProperty("cloudRunRewardScorer")
+  public abstract Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer();
 
   /** Instantiates a builder for SingleReinforcementTuningRewardConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -58,7 +82,8 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for autoraterScorer.
      *
-     * <p>autoraterScorer:
+     * <p>autoraterScorer: Scores parsed responses for autorater use cases by using a model to
+     * compute the reward.
      */
     @JsonProperty("autoraterScorer")
     public abstract Builder autoraterScorer(ReinforcementTuningAutoraterScorer autoraterScorer);
@@ -66,7 +91,8 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for autoraterScorer builder.
      *
-     * <p>autoraterScorer:
+     * <p>autoraterScorer: Scores parsed responses for autorater use cases by using a model to
+     * compute the reward.
      */
     @CanIgnoreReturnValue
     public Builder autoraterScorer(
@@ -82,6 +108,150 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     @CanIgnoreReturnValue
     public Builder clearAutoraterScorer() {
       return autoraterScorer(Optional.empty());
+    }
+
+    /**
+     * Setter for rewardName.
+     *
+     * <p>rewardName: A unique reward name used to identify each single reinforcement tuning reward.
+     */
+    @JsonProperty("rewardName")
+    public abstract Builder rewardName(String rewardName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder rewardName(Optional<String> rewardName);
+
+    /** Clears the value of rewardName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRewardName() {
+      return rewardName(Optional.empty());
+    }
+
+    /**
+     * Setter for parseResponseConfig.
+     *
+     * <p>parseResponseConfig: Defines how to parse sample response.
+     */
+    @JsonProperty("parseResponseConfig")
+    public abstract Builder parseResponseConfig(
+        ReinforcementTuningParseResponseConfig parseResponseConfig);
+
+    /**
+     * Setter for parseResponseConfig builder.
+     *
+     * <p>parseResponseConfig: Defines how to parse sample response.
+     */
+    @CanIgnoreReturnValue
+    public Builder parseResponseConfig(
+        ReinforcementTuningParseResponseConfig.Builder parseResponseConfigBuilder) {
+      return parseResponseConfig(parseResponseConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parseResponseConfig(
+        Optional<ReinforcementTuningParseResponseConfig> parseResponseConfig);
+
+    /** Clears the value of parseResponseConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParseResponseConfig() {
+      return parseResponseConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for codeExecutionRewardScorer.
+     *
+     * <p>codeExecutionRewardScorer: Scores parsed responses for code execution use cases.
+     */
+    @JsonProperty("codeExecutionRewardScorer")
+    public abstract Builder codeExecutionRewardScorer(
+        ReinforcementTuningCodeExecutionRewardScorer codeExecutionRewardScorer);
+
+    /**
+     * Setter for codeExecutionRewardScorer builder.
+     *
+     * <p>codeExecutionRewardScorer: Scores parsed responses for code execution use cases.
+     */
+    @CanIgnoreReturnValue
+    public Builder codeExecutionRewardScorer(
+        ReinforcementTuningCodeExecutionRewardScorer.Builder codeExecutionRewardScorerBuilder) {
+      return codeExecutionRewardScorer(codeExecutionRewardScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder codeExecutionRewardScorer(
+        Optional<ReinforcementTuningCodeExecutionRewardScorer> codeExecutionRewardScorer);
+
+    /** Clears the value of codeExecutionRewardScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCodeExecutionRewardScorer() {
+      return codeExecutionRewardScorer(Optional.empty());
+    }
+
+    /**
+     * Setter for stringMatchRewardScorer.
+     *
+     * <p>stringMatchRewardScorer: Scores parsed responses for simple string matching use cases
+     * against reference answer without writing python code.
+     */
+    @JsonProperty("stringMatchRewardScorer")
+    public abstract Builder stringMatchRewardScorer(
+        ReinforcementTuningStringMatchRewardScorer stringMatchRewardScorer);
+
+    /**
+     * Setter for stringMatchRewardScorer builder.
+     *
+     * <p>stringMatchRewardScorer: Scores parsed responses for simple string matching use cases
+     * against reference answer without writing python code.
+     */
+    @CanIgnoreReturnValue
+    public Builder stringMatchRewardScorer(
+        ReinforcementTuningStringMatchRewardScorer.Builder stringMatchRewardScorerBuilder) {
+      return stringMatchRewardScorer(stringMatchRewardScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder stringMatchRewardScorer(
+        Optional<ReinforcementTuningStringMatchRewardScorer> stringMatchRewardScorer);
+
+    /** Clears the value of stringMatchRewardScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStringMatchRewardScorer() {
+      return stringMatchRewardScorer(Optional.empty());
+    }
+
+    /**
+     * Setter for cloudRunRewardScorer.
+     *
+     * <p>cloudRunRewardScorer: Scores parsed responses by calling a Cloud Run service.
+     */
+    @JsonProperty("cloudRunRewardScorer")
+    public abstract Builder cloudRunRewardScorer(
+        ReinforcementTuningCloudRunRewardScorer cloudRunRewardScorer);
+
+    /**
+     * Setter for cloudRunRewardScorer builder.
+     *
+     * <p>cloudRunRewardScorer: Scores parsed responses by calling a Cloud Run service.
+     */
+    @CanIgnoreReturnValue
+    public Builder cloudRunRewardScorer(
+        ReinforcementTuningCloudRunRewardScorer.Builder cloudRunRewardScorerBuilder) {
+      return cloudRunRewardScorer(cloudRunRewardScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cloudRunRewardScorer(
+        Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer);
+
+    /** Clears the value of cloudRunRewardScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCloudRunRewardScorer() {
+      return cloudRunRewardScorer(Optional.empty());
     }
 
     public abstract SingleReinforcementTuningRewardConfig build();

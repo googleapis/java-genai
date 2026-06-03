@@ -109,6 +109,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("distillationSpec")
   public abstract Optional<DistillationSpec> distillationSpec();
 
+  /** */
+  @JsonProperty("reinforcementTuningSpec")
+  public abstract Optional<ReinforcementTuningSpec> reinforcementTuningSpec();
+
   /** Output only. The tuning data statistics associated with this TuningJob. */
   @JsonProperty("tuningDataStats")
   public abstract Optional<TuningDataStats> tuningDataStats();
@@ -598,6 +602,37 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearDistillationSpec() {
       return distillationSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for reinforcementTuningSpec.
+     *
+     * <p>reinforcementTuningSpec:
+     */
+    @JsonProperty("reinforcementTuningSpec")
+    public abstract Builder reinforcementTuningSpec(
+        ReinforcementTuningSpec reinforcementTuningSpec);
+
+    /**
+     * Setter for reinforcementTuningSpec builder.
+     *
+     * <p>reinforcementTuningSpec:
+     */
+    @CanIgnoreReturnValue
+    public Builder reinforcementTuningSpec(
+        ReinforcementTuningSpec.Builder reinforcementTuningSpecBuilder) {
+      return reinforcementTuningSpec(reinforcementTuningSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder reinforcementTuningSpec(
+        Optional<ReinforcementTuningSpec> reinforcementTuningSpec);
+
+    /** Clears the value of reinforcementTuningSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReinforcementTuningSpec() {
+      return reinforcementTuningSpec(Optional.empty());
     }
 
     /**

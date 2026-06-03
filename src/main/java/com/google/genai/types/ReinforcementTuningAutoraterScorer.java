@@ -34,6 +34,28 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
   @JsonProperty("autoraterConfig")
   public abstract Optional<AutoraterConfig> autoraterConfig();
 
+  /**
+   * Allows substituting `prompt`, `response`, `system_instruction` and `references.reference` (each
+   * wrapped in double curly braces) into the autorater prompt.
+   */
+  @JsonProperty("autoraterPrompt")
+  public abstract Optional<String> autoraterPrompt();
+
+  /** Parses autorater returned response. */
+  @JsonProperty("autoraterResponseParseConfig")
+  public abstract Optional<ReinforcementTuningParseResponseConfig> autoraterResponseParseConfig();
+
+  /**
+   * Scores autorater responses by directly converting parsed autorater response to float reward.
+   */
+  @JsonProperty("parsedResponseConversionScorer")
+  public abstract Optional<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>
+      parsedResponseConversionScorer();
+
+  /** Scores autorater responses by using exact string match reward scorer. */
+  @JsonProperty("exactMatchScorer")
+  public abstract Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer();
+
   /** Instantiates a builder for ReinforcementTuningAutoraterScorer. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -81,6 +103,123 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     @CanIgnoreReturnValue
     public Builder clearAutoraterConfig() {
       return autoraterConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for autoraterPrompt.
+     *
+     * <p>autoraterPrompt: Allows substituting `prompt`, `response`, `system_instruction` and
+     * `references.reference` (each wrapped in double curly braces) into the autorater prompt.
+     */
+    @JsonProperty("autoraterPrompt")
+    public abstract Builder autoraterPrompt(String autoraterPrompt);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder autoraterPrompt(Optional<String> autoraterPrompt);
+
+    /** Clears the value of autoraterPrompt field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutoraterPrompt() {
+      return autoraterPrompt(Optional.empty());
+    }
+
+    /**
+     * Setter for autoraterResponseParseConfig.
+     *
+     * <p>autoraterResponseParseConfig: Parses autorater returned response.
+     */
+    @JsonProperty("autoraterResponseParseConfig")
+    public abstract Builder autoraterResponseParseConfig(
+        ReinforcementTuningParseResponseConfig autoraterResponseParseConfig);
+
+    /**
+     * Setter for autoraterResponseParseConfig builder.
+     *
+     * <p>autoraterResponseParseConfig: Parses autorater returned response.
+     */
+    @CanIgnoreReturnValue
+    public Builder autoraterResponseParseConfig(
+        ReinforcementTuningParseResponseConfig.Builder autoraterResponseParseConfigBuilder) {
+      return autoraterResponseParseConfig(autoraterResponseParseConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder autoraterResponseParseConfig(
+        Optional<ReinforcementTuningParseResponseConfig> autoraterResponseParseConfig);
+
+    /** Clears the value of autoraterResponseParseConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAutoraterResponseParseConfig() {
+      return autoraterResponseParseConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for parsedResponseConversionScorer.
+     *
+     * <p>parsedResponseConversionScorer: Scores autorater responses by directly converting parsed
+     * autorater response to float reward.
+     */
+    @JsonProperty("parsedResponseConversionScorer")
+    public abstract Builder parsedResponseConversionScorer(
+        ReinforcementTuningAutoraterScorerParsedResponseConversionScorer
+            parsedResponseConversionScorer);
+
+    /**
+     * Setter for parsedResponseConversionScorer builder.
+     *
+     * <p>parsedResponseConversionScorer: Scores autorater responses by directly converting parsed
+     * autorater response to float reward.
+     */
+    @CanIgnoreReturnValue
+    public Builder parsedResponseConversionScorer(
+        ReinforcementTuningAutoraterScorerParsedResponseConversionScorer.Builder
+            parsedResponseConversionScorerBuilder) {
+      return parsedResponseConversionScorer(parsedResponseConversionScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder parsedResponseConversionScorer(
+        Optional<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>
+            parsedResponseConversionScorer);
+
+    /** Clears the value of parsedResponseConversionScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearParsedResponseConversionScorer() {
+      return parsedResponseConversionScorer(Optional.empty());
+    }
+
+    /**
+     * Setter for exactMatchScorer.
+     *
+     * <p>exactMatchScorer: Scores autorater responses by using exact string match reward scorer.
+     */
+    @JsonProperty("exactMatchScorer")
+    public abstract Builder exactMatchScorer(
+        ReinforcementTuningAutoraterScorerExactMatchScorer exactMatchScorer);
+
+    /**
+     * Setter for exactMatchScorer builder.
+     *
+     * <p>exactMatchScorer: Scores autorater responses by using exact string match reward scorer.
+     */
+    @CanIgnoreReturnValue
+    public Builder exactMatchScorer(
+        ReinforcementTuningAutoraterScorerExactMatchScorer.Builder exactMatchScorerBuilder) {
+      return exactMatchScorer(exactMatchScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exactMatchScorer(
+        Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer);
+
+    /** Clears the value of exactMatchScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExactMatchScorer() {
+      return exactMatchScorer(Optional.empty());
     }
 
     public abstract ReinforcementTuningAutoraterScorer build();
