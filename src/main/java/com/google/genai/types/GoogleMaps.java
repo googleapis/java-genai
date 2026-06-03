@@ -38,9 +38,9 @@ public abstract class GoogleMaps extends JsonSerializable {
   public abstract Optional<AuthConfig> authConfig();
 
   /**
+   * Deprecated. The Google Maps contextual widget behavior in Grounding with Google Maps is being
+   * deprecated; this field is planned for removal and no longer has any effect once removed.
    * Optional. Whether to return a widget context token in the GroundingMetadata of the response.
-   * Developers can use the widget context token to render a Google Maps widget with geospatial
-   * context related to the places that the model references in the response.
    */
   @JsonProperty("enableWidget")
   public abstract Optional<Boolean> enableWidget();
@@ -96,9 +96,10 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for enableWidget.
      *
-     * <p>enableWidget: Optional. Whether to return a widget context token in the GroundingMetadata
-     * of the response. Developers can use the widget context token to render a Google Maps widget
-     * with geospatial context related to the places that the model references in the response.
+     * <p>enableWidget: Deprecated. The Google Maps contextual widget behavior in Grounding with
+     * Google Maps is being deprecated; this field is planned for removal and no longer has any
+     * effect once removed. Optional. Whether to return a widget context token in the
+     * GroundingMetadata of the response.
      */
     @JsonProperty("enableWidget")
     public abstract Builder enableWidget(boolean enableWidget);
