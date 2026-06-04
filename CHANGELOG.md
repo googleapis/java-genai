@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.57.0](https://github.com/googleapis/java-genai/compare/v1.56.0...v1.57.0) (2026-06-04)
+
+
+### Features
+
+* Add Agent Platform MCP support to async generate_content ([0b20c55](https://github.com/googleapis/java-genai/commit/0b20c55216d5b701ecf1758ac47df8ada591c6f8))
+* Add transcription language code. ([0d7fcfa](https://github.com/googleapis/java-genai/commit/0d7fcfacedd1612e049f4aeb02919c3460714dfb))
+* Add TranslationConfig for live translation. ([ed7efcf](https://github.com/googleapis/java-genai/commit/ed7efcffdfc27fa00c4525848c675b097c415967))
+* Support ReinforcementTuning in GenAI SDK including ValidateReward API method. ([05a7a3a](https://github.com/googleapis/java-genai/commit/05a7a3ac367ade7a3abd30c31de1767a0c191b18))
+
+
+### Documentation
+
+* A comment for field `enable_widget` in message `GoogleMaps` is changed ([c630c08](https://github.com/googleapis/java-genai/commit/c630c084a9411fa359a83fd80de77b1bb30b1db6))
+* A comment for field `google_maps_widget_context_token` in message `GroundingMetadata` is changed ([c630c08](https://github.com/googleapis/java-genai/commit/c630c084a9411fa359a83fd80de77b1bb30b1db6))
+
 ## [1.56.0](https://github.com/googleapis/java-genai/compare/v1.55.0...v1.56.0) (2026-05-28)
 
 
