@@ -35,13 +35,14 @@ import java.util.Optional;
 @JsonDeserialize(builder = UsageMetadata.Builder.class)
 public abstract class UsageMetadata extends JsonSerializable {
   /**
-   * Number of tokens in the prompt. When `cached_content` is set, this is still the total effective
-   * prompt size meaning this includes the number of tokens in the cached content.
+   * The total number of tokens in the prompt. This includes any text, images, or other media
+   * provided in the request. When `cached_content` is set, this also includes the number of tokens
+   * in the cached content.
    */
   @JsonProperty("promptTokenCount")
   public abstract Optional<Integer> promptTokenCount();
 
-  /** Number of tokens in the cached part of the prompt (the cached content). */
+  /** Output only. The number of tokens in the cached content that was used for this request. */
   @JsonProperty("cachedContentTokenCount")
   public abstract Optional<Integer> cachedContentTokenCount();
 
@@ -49,23 +50,34 @@ public abstract class UsageMetadata extends JsonSerializable {
   @JsonProperty("responseTokenCount")
   public abstract Optional<Integer> responseTokenCount();
 
-  /** Number of tokens present in tool-use prompt(s). */
+  /**
+   * Output only. The number of tokens in the results from tool executions, which are provided back
+   * to the model as input, if applicable.
+   */
   @JsonProperty("toolUsePromptTokenCount")
   public abstract Optional<Integer> toolUsePromptTokenCount();
 
-  /** Number of tokens of thoughts for thinking models. */
+  /**
+   * Output only. The number of tokens that were part of the model's generated "thoughts" output, if
+   * applicable.
+   */
   @JsonProperty("thoughtsTokenCount")
   public abstract Optional<Integer> thoughtsTokenCount();
 
-  /** Total token count for prompt, response candidates, and tool-use prompts(if present). */
+  /**
+   * The total number of tokens for the entire request. This is the sum of `prompt_token_count`,
+   * `candidates_token_count`, `tool_use_prompt_token_count`, and `thoughts_token_count`.
+   */
   @JsonProperty("totalTokenCount")
   public abstract Optional<Integer> totalTokenCount();
 
-  /** List of modalities that were processed in the request input. */
+  /** Output only. A detailed breakdown of the token count for each modality in the prompt. */
   @JsonProperty("promptTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> promptTokensDetails();
 
-  /** List of modalities that were processed in the cache input. */
+  /**
+   * Output only. A detailed breakdown of the token count for each modality in the cached content.
+   */
   @JsonProperty("cacheTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> cacheTokensDetails();
 
@@ -73,16 +85,20 @@ public abstract class UsageMetadata extends JsonSerializable {
   @JsonProperty("responseTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> responseTokensDetails();
 
-  /** List of modalities that were processed in the tool-use prompt. */
+  /**
+   * Output only. A detailed breakdown by modality of the token counts from the results of tool
+   * executions, which are provided back to the model as input.
+   */
   @JsonProperty("toolUsePromptTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> toolUsePromptTokensDetails();
 
-  /**
-   * Traffic type. This shows whether a request consumes Pay-As-You-Go or Provisioned Throughput
-   * quota.
-   */
+  /** Output only. The traffic type for this request. This field is not supported in Gemini API. */
   @JsonProperty("trafficType")
   public abstract Optional<TrafficType> trafficType();
+
+  /** Output only. Service tier of the request. This field is not supported in Vertex AI. */
+  @JsonProperty("serviceTier")
+  public abstract Optional<ServiceTier> serviceTier();
 
   /** Instantiates a builder for UsageMetadata. */
   @ExcludeFromGeneratedCoverageReport
@@ -105,9 +121,9 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for promptTokenCount.
      *
-     * <p>promptTokenCount: Number of tokens in the prompt. When `cached_content` is set, this is
-     * still the total effective prompt size meaning this includes the number of tokens in the
-     * cached content.
+     * <p>promptTokenCount: The total number of tokens in the prompt. This includes any text,
+     * images, or other media provided in the request. When `cached_content` is set, this also
+     * includes the number of tokens in the cached content.
      */
     @JsonProperty("promptTokenCount")
     public abstract Builder promptTokenCount(Integer promptTokenCount);
@@ -125,8 +141,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for cachedContentTokenCount.
      *
-     * <p>cachedContentTokenCount: Number of tokens in the cached part of the prompt (the cached
-     * content).
+     * <p>cachedContentTokenCount: Output only. The number of tokens in the cached content that was
+     * used for this request.
      */
     @JsonProperty("cachedContentTokenCount")
     public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
@@ -162,7 +178,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for toolUsePromptTokenCount.
      *
-     * <p>toolUsePromptTokenCount: Number of tokens present in tool-use prompt(s).
+     * <p>toolUsePromptTokenCount: Output only. The number of tokens in the results from tool
+     * executions, which are provided back to the model as input, if applicable.
      */
     @JsonProperty("toolUsePromptTokenCount")
     public abstract Builder toolUsePromptTokenCount(Integer toolUsePromptTokenCount);
@@ -180,7 +197,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for thoughtsTokenCount.
      *
-     * <p>thoughtsTokenCount: Number of tokens of thoughts for thinking models.
+     * <p>thoughtsTokenCount: Output only. The number of tokens that were part of the model's
+     * generated "thoughts" output, if applicable.
      */
     @JsonProperty("thoughtsTokenCount")
     public abstract Builder thoughtsTokenCount(Integer thoughtsTokenCount);
@@ -198,8 +216,9 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for totalTokenCount.
      *
-     * <p>totalTokenCount: Total token count for prompt, response candidates, and tool-use
-     * prompts(if present).
+     * <p>totalTokenCount: The total number of tokens for the entire request. This is the sum of
+     * `prompt_token_count`, `candidates_token_count`, `tool_use_prompt_token_count`, and
+     * `thoughts_token_count`.
      */
     @JsonProperty("totalTokenCount")
     public abstract Builder totalTokenCount(Integer totalTokenCount);
@@ -217,7 +236,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for promptTokensDetails.
      *
-     * <p>promptTokensDetails: List of modalities that were processed in the request input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @JsonProperty("promptTokensDetails")
     public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
@@ -225,7 +245,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for promptTokensDetails.
      *
-     * <p>promptTokensDetails: List of modalities that were processed in the request input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
@@ -235,7 +256,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for promptTokensDetails builder.
      *
-     * <p>promptTokensDetails: List of modalities that were processed in the request input.
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @CanIgnoreReturnValue
     public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
@@ -258,7 +280,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for cacheTokensDetails.
      *
-     * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @JsonProperty("cacheTokensDetails")
     public abstract Builder cacheTokensDetails(List<ModalityTokenCount> cacheTokensDetails);
@@ -266,7 +289,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for cacheTokensDetails.
      *
-     * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount... cacheTokensDetails) {
@@ -276,7 +300,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for cacheTokensDetails builder.
      *
-     * <p>cacheTokensDetails: List of modalities that were processed in the cache input.
+     * <p>cacheTokensDetails: Output only. A detailed breakdown of the token count for each modality
+     * in the cached content.
      */
     @CanIgnoreReturnValue
     public Builder cacheTokensDetails(ModalityTokenCount.Builder... cacheTokensDetailsBuilders) {
@@ -342,7 +367,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for toolUsePromptTokensDetails.
      *
-     * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @JsonProperty("toolUsePromptTokensDetails")
     public abstract Builder toolUsePromptTokensDetails(
@@ -351,7 +377,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for toolUsePromptTokensDetails.
      *
-     * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(ModalityTokenCount... toolUsePromptTokensDetails) {
@@ -361,7 +388,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for toolUsePromptTokensDetails builder.
      *
-     * <p>toolUsePromptTokensDetails: List of modalities that were processed in the tool-use prompt.
+     * <p>toolUsePromptTokensDetails: Output only. A detailed breakdown by modality of the token
+     * counts from the results of tool executions, which are provided back to the model as input.
      */
     @CanIgnoreReturnValue
     public Builder toolUsePromptTokensDetails(
@@ -386,8 +414,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for trafficType.
      *
-     * <p>trafficType: Traffic type. This shows whether a request consumes Pay-As-You-Go or
-     * Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request. This field is not supported
+     * in Gemini API.
      */
     @JsonProperty("trafficType")
     public abstract Builder trafficType(TrafficType trafficType);
@@ -405,8 +433,8 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for trafficType given a known enum.
      *
-     * <p>trafficType: Traffic type. This shows whether a request consumes Pay-As-You-Go or
-     * Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder trafficType(TrafficType.Known knownType) {
@@ -416,12 +444,53 @@ public abstract class UsageMetadata extends JsonSerializable {
     /**
      * Setter for trafficType given a string.
      *
-     * <p>trafficType: Traffic type. This shows whether a request consumes Pay-As-You-Go or
-     * Provisioned Throughput quota.
+     * <p>trafficType: Output only. The traffic type for this request. This field is not supported
+     * in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder trafficType(String trafficType) {
       return trafficType(new TrafficType(trafficType));
+    }
+
+    /**
+     * Setter for serviceTier.
+     *
+     * <p>serviceTier: Output only. Service tier of the request. This field is not supported in
+     * Vertex AI.
+     */
+    @JsonProperty("serviceTier")
+    public abstract Builder serviceTier(ServiceTier serviceTier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder serviceTier(Optional<ServiceTier> serviceTier);
+
+    /** Clears the value of serviceTier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearServiceTier() {
+      return serviceTier(Optional.empty());
+    }
+
+    /**
+     * Setter for serviceTier given a known enum.
+     *
+     * <p>serviceTier: Output only. Service tier of the request. This field is not supported in
+     * Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder serviceTier(ServiceTier.Known knownType) {
+      return serviceTier(new ServiceTier(knownType));
+    }
+
+    /**
+     * Setter for serviceTier given a string.
+     *
+     * <p>serviceTier: Output only. Service tier of the request. This field is not supported in
+     * Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder serviceTier(String serviceTier) {
+      return serviceTier(new ServiceTier(serviceTier));
     }
 
     public abstract UsageMetadata build();

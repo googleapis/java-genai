@@ -26,11 +26,17 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Represents token counting info for a single modality. */
+/**
+ * Represents a breakdown of token usage by modality. This message is used in CountTokensResponse
+ * and GenerateContentResponse.UsageMetadata to provide a detailed view of how many tokens are used
+ * by each modality (e.g., text, image, video) in a request. This is particularly useful for
+ * multimodal models, allowing you to track and manage token consumption for billing and quota
+ * purposes.
+ */
 @AutoValue
 @JsonDeserialize(builder = ModalityTokenCount.Builder.class)
 public abstract class ModalityTokenCount extends JsonSerializable {
-  /** The modality associated with this token count. */
+  /** The modality that this token count applies to. */
   @JsonProperty("modality")
   public abstract Optional<MediaModality> modality();
 
@@ -59,7 +65,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
     /**
      * Setter for modality.
      *
-     * <p>modality: The modality associated with this token count.
+     * <p>modality: The modality that this token count applies to.
      */
     @JsonProperty("modality")
     public abstract Builder modality(MediaModality modality);
@@ -77,7 +83,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
     /**
      * Setter for modality given a known enum.
      *
-     * <p>modality: The modality associated with this token count.
+     * <p>modality: The modality that this token count applies to.
      */
     @CanIgnoreReturnValue
     public Builder modality(MediaModality.Known knownType) {
@@ -87,7 +93,7 @@ public abstract class ModalityTokenCount extends JsonSerializable {
     /**
      * Setter for modality given a string.
      *
-     * <p>modality: The modality associated with this token count.
+     * <p>modality: The modality that this token count applies to.
      */
     @CanIgnoreReturnValue
     public Builder modality(String modality) {

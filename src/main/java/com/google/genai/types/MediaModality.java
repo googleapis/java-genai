@@ -23,27 +23,27 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Server content modalities. */
+/** The modality that this token count applies to. */
 public class MediaModality {
 
   /** Enum representing the known values for MediaModality. */
   public enum Known {
-    /** The modality is unspecified. */
+    /** When a modality is not specified, it is treated as `TEXT`. */
     MODALITY_UNSPECIFIED,
 
-    /** Plain text. */
+    /** The `Part` contains plain text. */
     TEXT,
 
-    /** Images. */
+    /** The `Part` contains an image. */
     IMAGE,
 
-    /** Video. */
+    /** The `Part` contains a video. */
     VIDEO,
 
-    /** Audio. */
+    /** The `Part` contains audio. */
     AUDIO,
 
-    /** Document, e.g. PDF. */
+    /** The `Part` contains a document, such as a PDF. */
     DOCUMENT,
 
     MEDIA_MODALITY_UNSPECIFIED
