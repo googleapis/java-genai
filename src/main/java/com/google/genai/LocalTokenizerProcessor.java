@@ -102,7 +102,7 @@ final class LocalTokenizerProcessor {
     text = normalize(text);
     List<Symbol> symbols = new ArrayList<>(text.length());
     for (int i = 0; i < text.length(); ) {
-      int len = uTrie.prefixLen(text.substring(i));
+      int len = uTrie.prefixLen(text, i);
       if (len > 0) {
         symbols.add(
             new Symbol(text.substring(i, i + len), true, symbols.size() - 1, symbols.size() + 1));
@@ -212,7 +212,7 @@ final class LocalTokenizerProcessor {
   }
 
   private String normalize(String text) {
-    return text.replaceAll(" ", "▁");
+    return text.replace(' ', '▁');
   }
 
   private void addNewCandidate(
@@ -244,12 +244,15 @@ final class LocalTokenizerProcessor {
   private boolean isMergeCandidateValid(List<Symbol> symbols, MergeCandidate symbol) {
     String left = symbols.get(symbol.left).text;
     String right = symbols.get(symbol.right).text;
-    return left != "" && right != "" && left.length() + right.length() == symbol.length;
+    return !left.isEmpty() && !right.isEmpty() && (left.length() + right.length() == symbol.length);
   }
 
   private int symbolToID(Symbol symbol) {
-    if (this.pieces.containsKey(symbol.text)) return this.pieces.get(symbol.text);
-    if (this.reserved.containsKey(symbol.text)) return this.reserved.get(symbol.text);
+    if (this.pieces.containsKey(symbol.text)) {
+      return this.pieces.get(symbol.text);
+    } else if (this.reserved.containsKey(symbol.text)) {
+      return this.reserved.get(symbol.text);
+    }
 
     return this.unkID;
   }
@@ -358,17 +361,18 @@ class Trie {
 
   // Inserts a word into the trie.
   public void insert(String word) {
-    int index, i;
+    int i;
     char ch;
     TrieNode node = root;
     for (i = 0; i < word.length(); i++) {
       ch = word.charAt(i);
-      index = ch - 'a';
       if (node.childreNode.get(ch) == null) {
         node.childreNode.put(ch, new TrieNode());
       }
       node = node.childreNode.get(ch);
-      if (i == word.length() - 1) node.freq++;
+      if (i == word.length() - 1) {
+        node.freq++;
+      }
     }
   }
 
@@ -380,22 +384,27 @@ class Trie {
     for (i = 0; i < word.length(); i++) {
       ch = word.charAt(i);
       node = node.childreNode.get(ch);
-      if (node == null) return false;
-      if (i == word.length() - 1 && node.freq > 0) return true;
+      if (node == null) {
+        return false;
+      } else if (i == word.length() - 1 && node.freq > 0) {
+        return true;
+      }
     }
     return false;
   }
 
-  public int prefixLen(String word) {
-    int index, i;
-    char ch;
+  public int prefixLen(String word, int offset) {
     TrieNode node = root;
     int result = 0;
-    for (i = 0; i < word.length(); i++) {
-      ch = word.charAt(i);
+    for (int i = offset; i < word.length(); i++) {
+      char ch = word.charAt(i);
       node = node.childreNode.get(ch);
-      if (node == null) break;
-      if (node.freq > 0) result = i + 1;
+      if (node == null) {
+        break;
+      }
+      if (node.freq > 0) {
+        result = i - offset + 1;
+      }
     }
     return result;
   }
@@ -410,8 +419,11 @@ class Trie {
       ch = prefix.charAt(i);
       index = ch - 'a';
       node = node.childreNode.get(ch);
-      if (node == null) return false;
-      if (i == prefix.length() - 1) return true;
+      if (node == null) {
+        return false;
+      } else if (i == prefix.length() - 1) {
+        return true;
+      }
     }
     return false;
   }
