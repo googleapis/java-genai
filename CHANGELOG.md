@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.58.0](https://github.com/googleapis/java-genai/compare/v1.57.0...v1.58.0) (2026-06-10)
+
+
+### Features
+
+* Add custom OkHttpClient support in ClientOptions ([a6913fa](https://github.com/googleapis/java-genai/commit/a6913fa9c12abc594ed3103088a1dc30c9c93447))
+* Add ServiceTier to UsageMetadata ([df1288b](https://github.com/googleapis/java-genai/commit/df1288b41fb885186781caa62321085034cac6eb))
+* Improve performance of local tokenizer ([d065597](https://github.com/googleapis/java-genai/commit/d0655970a9381a57ba6e12a82c290fb8cae86130))
+
 ## [1.57.0](https://github.com/googleapis/java-genai/compare/v1.56.0...v1.57.0) (2026-06-04)
 
 
