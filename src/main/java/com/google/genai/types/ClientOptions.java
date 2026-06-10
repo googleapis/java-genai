@@ -19,12 +19,14 @@
 package com.google.genai.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
+import okhttp3.OkHttpClient;
 
 /** Client options to be used in the client instantiation. */
 @AutoValue
@@ -41,6 +43,10 @@ public abstract class ClientOptions extends JsonSerializable {
   /** Proxy configuration to be used in the client. */
   @JsonProperty("proxyOptions")
   public abstract Optional<ProxyOptions> proxyOptions();
+
+  /** A customized HTTP client instance to use for the SDK. */
+  @JsonIgnore
+  public abstract Optional<OkHttpClient> customHttpClient();
 
   /** Instantiates a builder for ClientOptions. */
   @ExcludeFromGeneratedCoverageReport
@@ -122,6 +128,24 @@ public abstract class ClientOptions extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearProxyOptions() {
       return proxyOptions(Optional.empty());
+    }
+
+    /**
+     * Setter for customHttpClient.
+     *
+     * <p>customHttpClient: A customized HTTP client instance to use for the SDK.
+     */
+    @JsonIgnore
+    public abstract Builder customHttpClient(OkHttpClient customHttpClient);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customHttpClient(Optional<OkHttpClient> customHttpClient);
+
+    /** Clears the value of customHttpClient field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomHttpClient() {
+      return customHttpClient(Optional.empty());
     }
 
     public abstract ClientOptions build();

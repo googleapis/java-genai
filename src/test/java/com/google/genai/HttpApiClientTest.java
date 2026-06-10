@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -1757,5 +1758,38 @@ public class HttpApiClientTest {
 
     assertTrue(client.httpClient().dispatcher().executorService().isShutdown());
     assertEquals(0, client.httpClient().connectionPool().connectionCount());
+  }
+
+  @Test
+  public void testInitHttpClientWithCustomHttpClient() throws Exception {
+    // 1. Create a custom OkHttpClient with specific settings (e.g., custom timeout)
+    OkHttpClient customClient =
+        new OkHttpClient.Builder()
+            .connectTimeout(Duration.ofMillis(5000))
+            .readTimeout(Duration.ofMillis(6000))
+            .writeTimeout(Duration.ofMillis(7000))
+            .build();
+
+    ClientOptions clientOptions = ClientOptions.builder().customHttpClient(customClient).build();
+
+    // 2. Initialize the HttpApiClient with these options
+    HttpApiClient client =
+        new HttpApiClient(Optional.of(API_KEY), Optional.empty(), Optional.of(clientOptions));
+
+    // 3. Verify that the SDK's client is a clone of our custom client
+    // (It should share the same timeouts we configured)
+    assertEquals(5000, client.httpClient().connectTimeoutMillis());
+    assertEquals(6000, client.httpClient().readTimeoutMillis());
+    assertEquals(7000, client.httpClient().writeTimeoutMillis());
+
+    // 4. Verify that other options (like maxConnections) were NOT applied
+    // since we provided a custom client.
+    // The default dispatcher should have default maxRequests (64 in OkHttp)
+    assertEquals(64, client.httpClient().dispatcher().getMaxRequests());
+
+    // 5. Verify that RetryInterceptor was still applied
+    assertTrue(
+        client.httpClient().interceptors().stream()
+            .anyMatch(interceptor -> interceptor instanceof RetryInterceptor));
   }
 }

@@ -235,6 +235,34 @@ Client client = Client.builder().apiKey("your-api-key").clientOptions(clientOpti
 If `ProxyOptions` is provided with `type` set to `DIRECT`, it will enforce a
 direct connection, bypassing any system-level proxy settings.
 
+#### Custom HTTP Client
+If you need more advanced control over the HTTP client, such as adding custom interceptors, custom SSL configurations, or sharing an existing `OkHttpClient` instance across your application, you can provide your own `OkHttpClient` instance to `ClientOptions`.
+
+When a custom `OkHttpClient` is provided, the SDK will clone it (using `newBuilder()`) to retain all your custom configurations, while still automatically appending the SDK's internal `RetryInterceptor`.
+
+```java
+import com.google.genai.Client;
+import com.google.genai.types.ClientOptions;
+import okhttp3.OkHttpClient;
+import java.time.Duration;
+
+// Create your custom OkHttpClient
+OkHttpClient customHttpClient = new OkHttpClient.Builder()
+    .connectTimeout(Duration.ofSeconds(30))
+    .readTimeout(Duration.ofSeconds(30))
+    // Add your custom interceptors, SSL socket factory, etc.
+    .build();
+
+Client client = Client.builder()
+    .apiKey("your-api-key")
+    .clientOptions(
+        ClientOptions.builder()
+            .customHttpClient(customHttpClient)
+            .build()
+    )
+    .build();
+```
+
 ### Interact with models
 The Google Gen AI Java SDK allows you to access the service programmatically.
 The following code snippets are some basic usages of model inferencing.

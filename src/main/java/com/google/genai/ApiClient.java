@@ -278,31 +278,38 @@ public abstract class ApiClient implements AutoCloseable {
 
   private OkHttpClient createHttpClient(
       HttpOptions httpOptions, Optional<ClientOptions> clientOptions) {
-    OkHttpClient.Builder builder = new OkHttpClient.Builder();
-    // Remove timeouts by default (OkHttp has a default of 10 seconds)
-    builder.connectTimeout(Duration.ofMillis(0));
-    builder.readTimeout(Duration.ofMillis(0));
-    builder.writeTimeout(Duration.ofMillis(0));
+    OkHttpClient.Builder builder;
+    Optional<OkHttpClient> customClient = clientOptions.flatMap(ClientOptions::customHttpClient);
 
-    httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
+    if (customClient.isPresent()) {
+      builder = customClient.get().newBuilder();
+    } else {
+      builder = new OkHttpClient.Builder();
+      // Remove timeouts by default (OkHttp has a default of 10 seconds)
+      builder.connectTimeout(Duration.ofMillis(0));
+      builder.readTimeout(Duration.ofMillis(0));
+      builder.writeTimeout(Duration.ofMillis(0));
+
+      httpOptions.timeout().ifPresent(timeout -> builder.callTimeout(Duration.ofMillis(timeout)));
+
+      clientOptions.ifPresent(
+          options -> {
+            Dispatcher dispatcher = new Dispatcher();
+            options.maxConnections().ifPresent(dispatcher::setMaxRequests);
+            options.maxConnectionsPerHost().ifPresent(dispatcher::setMaxRequestsPerHost);
+            builder.dispatcher(dispatcher);
+            options
+                .proxyOptions()
+                .ifPresent(
+                    proxyOptions -> {
+                      applyProxyOptions(proxyOptions, builder);
+                    });
+          });
+    }
 
     HttpRetryOptions retryOptions =
         httpOptions.retryOptions().orElse(HttpRetryOptions.builder().build());
     builder.addInterceptor(new RetryInterceptor(retryOptions));
-
-    clientOptions.ifPresent(
-        options -> {
-          Dispatcher dispatcher = new Dispatcher();
-          options.maxConnections().ifPresent(dispatcher::setMaxRequests);
-          options.maxConnectionsPerHost().ifPresent(dispatcher::setMaxRequestsPerHost);
-          builder.dispatcher(dispatcher);
-          options
-              .proxyOptions()
-              .ifPresent(
-                  proxyOptions -> {
-                    applyProxyOptions(proxyOptions, builder);
-                  });
-        });
 
     return builder.build();
   }
