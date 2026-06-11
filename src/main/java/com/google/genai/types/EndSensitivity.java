@@ -28,7 +28,10 @@ public class EndSensitivity {
 
   /** Enum representing the known values for EndSensitivity. */
   public enum Known {
-    /** The default is END_SENSITIVITY_LOW. */
+    /**
+     * The default is END_SENSITIVITY_LOW for Gemini Enterprise Agent Platform and
+     * END_SENSITIVITY_HIGH for Gemini Live.
+     */
     END_SENSITIVITY_UNSPECIFIED,
 
     /** Automatic detection ends speech more often. */
