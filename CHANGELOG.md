@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.59.0](https://github.com/googleapis/java-genai/compare/v1.58.0...v1.59.0) (2026-06-12)
+
+
+### Documentation
+
+* announce Automatic Function Calling (AFC) upcoming breaking change warning ([fb2a9b4](https://github.com/googleapis/java-genai/commit/fb2a9b48a68753e628fd46957c3c680f7c95db0e))
+* Clarify Live API START/END_SENSITIVITY_HIGH/LOW defaults are different in Gemini Live and Gemini Enterprise Agent Platform Live API ([b2e8024](https://github.com/googleapis/java-genai/commit/b2e802463ca8df88383624e6024f9abb3e1584c7)), closes [#2555](https://github.com/googleapis/java-genai/issues/2555)
+* Update to latest Gemini models in the examples ([ef1fa86](https://github.com/googleapis/java-genai/commit/ef1fa868d518019d24af3501021af37c73aa8f5f))
+
 ## [1.58.0](https://github.com/googleapis/java-genai/compare/v1.57.0...v1.58.0) (2026-06-10)
 
 
