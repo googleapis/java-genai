@@ -34,6 +34,14 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
   @JsonProperty("sessionId")
   public abstract Optional<String> sessionId();
 
+  /**
+   * Signature of the verified consent audio. This is populated when the request has a
+   * ReplicatedVoiceConfig with consent_audio set, if the consent verification was successful. This
+   * may be used in a subsequent request instead of the consent_audio to verify the same consent.
+   */
+  @JsonProperty("voiceConsentSignature")
+  public abstract Optional<VoiceConsentSignature> voiceConsentSignature();
+
   /** Instantiates a builder for LiveServerSetupComplete. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -68,6 +76,41 @@ public abstract class LiveServerSetupComplete extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSessionId() {
       return sessionId(Optional.empty());
+    }
+
+    /**
+     * Setter for voiceConsentSignature.
+     *
+     * <p>voiceConsentSignature: Signature of the verified consent audio. This is populated when the
+     * request has a ReplicatedVoiceConfig with consent_audio set, if the consent verification was
+     * successful. This may be used in a subsequent request instead of the consent_audio to verify
+     * the same consent.
+     */
+    @JsonProperty("voiceConsentSignature")
+    public abstract Builder voiceConsentSignature(VoiceConsentSignature voiceConsentSignature);
+
+    /**
+     * Setter for voiceConsentSignature builder.
+     *
+     * <p>voiceConsentSignature: Signature of the verified consent audio. This is populated when the
+     * request has a ReplicatedVoiceConfig with consent_audio set, if the consent verification was
+     * successful. This may be used in a subsequent request instead of the consent_audio to verify
+     * the same consent.
+     */
+    @CanIgnoreReturnValue
+    public Builder voiceConsentSignature(
+        VoiceConsentSignature.Builder voiceConsentSignatureBuilder) {
+      return voiceConsentSignature(voiceConsentSignatureBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder voiceConsentSignature(Optional<VoiceConsentSignature> voiceConsentSignature);
+
+    /** Clears the value of voiceConsentSignature field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVoiceConsentSignature() {
+      return voiceConsentSignature(Optional.empty());
     }
 
     public abstract LiveServerSetupComplete build();
