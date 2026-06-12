@@ -6,6 +6,13 @@ Java idiomatic SDK for the
 [![Maven][maven-version-image]][maven-version-link]
 [![Javadoc][javadoc-image]][javadoc-link]
 
+> [!WARNING]
+> **Upcoming Breaking Change to Automatic Function Calling (AFC):**
+> We will introduce a breaking change to the Automatic Function Calling (AFC)
+> feature in the next major version. Specifically, users will not be able to
+> invoke AFC from direct calls to `Models.generate_content` or its stream and
+> async variants. Instead, users should invoke AFC from `Chats` modules.
+
 ## Add dependency
 
 If you're using Maven, add the following to your dependencies:
