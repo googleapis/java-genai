@@ -92,7 +92,7 @@ public final class EmbedContent {
       Content content = Content.builder().parts(Arrays.asList(textPart, imagePart)).build();
       response =
           client.models.embedContent(
-              Constants.VERTEX_MULTIMODAL_EMBEDDING_MODEL_NAME, content, null);
+              modelId, content, null);
       System.out.println("Embedding response with GCS image: " + response);
     }
   }

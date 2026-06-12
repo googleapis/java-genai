@@ -62,7 +62,7 @@ public final class GenerateContentWithHttpOptions {
     HttpOptions httpOptions =
         HttpOptions.builder()
             .apiVersion("v1")
-            .timeout(10000)
+            .timeout(30000)
             .retryOptions(HttpRetryOptions.builder().attempts(3).httpStatusCodes(408, 429, 504))
             .build();
 

@@ -98,7 +98,7 @@ public final class EmbedContentAsync {
               .build();
       Content content = Content.builder().parts(Arrays.asList(textPart, imagePart)).build();
       responseFuture =
-          client.async.models.embedContent(Constants.VERTEX_MULTIMODAL_EMBEDDING_MODEL_NAME, content, null);
+          client.async.models.embedContent(modelId, content, null);
       responseFuture
           .thenAccept(
               response ->

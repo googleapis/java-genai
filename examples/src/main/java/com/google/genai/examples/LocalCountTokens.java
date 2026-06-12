@@ -28,7 +28,7 @@ import com.google.genai.LocalTokenizer;
 /** An example of using the Unified Gen AI Java SDK to count tokens locally. */
 public class LocalCountTokens {
   public static void main(String[] args) {
-    LocalTokenizer tokenizer = new LocalTokenizer(Constants.GEMINI_MODEL_NAME);
+    LocalTokenizer tokenizer = new LocalTokenizer(Constants.GEMINI_2_5_FLASH);
     System.out.println(
         "Count for 'Hello world': " + tokenizer.countTokens("Hello world").totalTokens());
   }

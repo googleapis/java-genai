@@ -22,20 +22,22 @@ public final class Constants {
   private Constants() {}
 
   /** The name of the generative model to be used in the examples. */
-  public static final String GEMINI_MODEL_NAME = "gemini-2.5-flash";
+  public static final String GEMINI_MODEL_NAME = "gemini-3.5-flash";
 
-  /** The name of the gemini 3 model to be used in the examples. */
-  public static final String GEMINI_3_MODEL_NAME = "gemini-3-pro-preview";
+  /** The name of the gemini 2.5 flash model to be used in some examples. */
+  public static final String GEMINI_2_5_FLASH = "gemini-2.5-flash";
+
+
 
   /** The name of the live model to be used in the examples. */
   public static final String GEMINI_LIVE_MODEL_NAME = "gemini-live-2.5-flash";
 
   /** The name of the preview live model to be used in the examples. */
   public static final String GEMINI_LIVE_MODEL_NAME_PREVIEW =
-      "gemini-2.5-flash-native-audio-preview-09-2025";
+      "gemini-3.1-flash-live-preview";
 
   /** The name of the image generation model to be used in the examples. */
-  public static final String GEMINI_IMAGE_GENERATION_MODEL_NAME = "gemini-2.5-flash-image";
+  public static final String GEMINI_IMAGE_GENERATION_MODEL_NAME = "gemini-3.1-flash-image";
 
   /** The name of the Imagen generate model to be used in the examples. */
   public static final String IMAGEN_GENERATE_MODEL_NAME = "imagen-4.0-generate-001";
@@ -56,11 +58,8 @@ public final class Constants {
   public static final String VEO_MODEL_NAME = "veo-3.1-generate-preview";
 
   /** The name of the embedding model to be used in the examples. */
-  public static final String EMBEDDING_MODEL_NAME = "text-embedding-004";
+  public static final String EMBEDDING_MODEL_NAME = "gemini-embedding-2";
 
-  /** The name of the vertex multimodal embedding model to be used in the examples. */
-  public static final String VERTEX_MULTIMODAL_EMBEDDING_MODEL_NAME =
-      "gemini-embedding-2-exp-11-2025";
 
   /** The file path to be used in the files operations examples. */
   public static final String UPLOAD_FILE_PATH = "./resources/test.txt";
