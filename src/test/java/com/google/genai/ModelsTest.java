@@ -596,7 +596,7 @@ public class ModelsTest {
             .build();
     GenerateContentResponse response =
         client.models.generateContent(
-            "gemini-2.5-pro",
+            vertexAI ? "gemini-2.5-flash" : "gemini-3.5-flash",
             Content.fromParts(
                 Part.fromText("What is the weather like in New York (NY) on 02/02/2026?")),
             config);
@@ -637,7 +637,9 @@ public class ModelsTest {
             .build();
     ResponseStream<GenerateContentResponse> responseStream =
         client.models.generateContentStream(
-            "gemini-2.5-pro", "What is the weather like in New York (NY) on 02/02/2026?", config);
+            vertexAI ? "gemini-2.5-flash" : "gemini-3.5-flash",
+            "What is the weather like in New York (NY) on 02/02/2026?",
+            config);
 
     // Assert
     int chunks = 0;

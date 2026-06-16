@@ -495,7 +495,10 @@ public class AsyncModelsTest {
 
     // Act
     CompletableFuture<GenerateContentResponse> responseFuture =
-        client.async.models.generateContent(MODEL_ID, "Why is the sky blue?", config);
+        client.async.models.generateContent(
+            vertexAI ? "gemini-2.5-flash" : "gemini-2.5-flash-lite",
+            "Why is the sky blue?",
+            config);
     GenerateContentResponse response = responseFuture.join();
 
     // Assert
@@ -547,7 +550,7 @@ public class AsyncModelsTest {
     // Act
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            MODEL_ID,
+            vertexAI ? "gemini-2.5-flash" : "gemini-2.5-flash-lite",
             "What is the sum of the first 50 prime numbers? Generate and run code for the"
                 + " calculation, and make sure you get all 50.",
             config);
@@ -943,7 +946,9 @@ public class AsyncModelsTest {
             .build();
     CompletableFuture<GenerateContentResponse> responseFuture =
         client.async.models.generateContent(
-            "gemini-2.5-flash", "What is the weather like in New York on 02/02/2026?", config);
+            vertexAI ? "gemini-2.5-flash" : "gemini-3.5-flash",
+            "What is the weather like in New York on 02/02/2026?",
+            config);
     GenerateContentResponse response = responseFuture.join();
     assertNotNull(response.text());
   }

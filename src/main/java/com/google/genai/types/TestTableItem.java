@@ -74,6 +74,14 @@ public abstract class TestTableItem extends JsonSerializable {
   @JsonProperty("ignoreKeys")
   public abstract Optional<List<String>> ignoreKeys();
 
+  /** Model to use when running against Vertex. */
+  @JsonProperty("vertexModel")
+  public abstract Optional<String> vertexModel();
+
+  /** Model to use when running against MLDev. */
+  @JsonProperty("mldevModel")
+  public abstract Optional<String> mldevModel();
+
   /** Instantiates a builder for TestTableItem. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -250,6 +258,42 @@ public abstract class TestTableItem extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearIgnoreKeys() {
       return ignoreKeys(Optional.empty());
+    }
+
+    /**
+     * Setter for vertexModel.
+     *
+     * <p>vertexModel: Model to use when running against Vertex.
+     */
+    @JsonProperty("vertexModel")
+    public abstract Builder vertexModel(String vertexModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexModel(Optional<String> vertexModel);
+
+    /** Clears the value of vertexModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexModel() {
+      return vertexModel(Optional.empty());
+    }
+
+    /**
+     * Setter for mldevModel.
+     *
+     * <p>mldevModel: Model to use when running against MLDev.
+     */
+    @JsonProperty("mldevModel")
+    public abstract Builder mldevModel(String mldevModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mldevModel(Optional<String> mldevModel);
+
+    /** Clears the value of mldevModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMldevModel() {
+      return mldevModel(Optional.empty());
     }
 
     public abstract TestTableItem build();

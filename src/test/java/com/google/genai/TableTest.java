@@ -219,7 +219,7 @@ public final class TableTest {
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
     }
 
-    Map<String, Object> fromParameters = prepareParameters(testTableItem);
+    Map<String, Object> fromParameters = prepareParameters(testTableItem, vertexAI);
 
     List<DynamicTest> dynamicTests = new ArrayList<>();
     // Iterate through overloading methods and find a match.
@@ -304,7 +304,7 @@ public final class TableTest {
       return dynamicTests;
     }
 
-    Map<String, Object> fromParameters = prepareParameters(testTableItem);
+    Map<String, Object> fromParameters = prepareParameters(testTableItem, vertexAI);
 
     Optional<String> skipMsg = getSkipMessageInApiMode(testTableItem, client);
     if (skipMsg.isPresent()) {
@@ -332,10 +332,18 @@ public final class TableTest {
     return dynamicTests;
   }
 
-  @SuppressWarnings("unchecked")
-  private static Map<String, Object> prepareParameters(TestTableItem testTableItem) {
+  private static Map<String, Object> prepareParameters(TestTableItem testTableItem, boolean vertexAI) {
     Map<String, Object> fromParameters =
         (Map<String, Object>) normalizeKeys((Map<String, Object>) testTableItem.parameters().get());
+    if (vertexAI && testTableItem.vertexModel().isPresent()) {
+      if (fromParameters.containsKey("model")) {
+        fromParameters.put("model", testTableItem.vertexModel().get());
+      }
+    } else if (!vertexAI && testTableItem.mldevModel().isPresent()) {
+      if (fromParameters.containsKey("model")) {
+        fromParameters.put("model", testTableItem.mldevModel().get());
+      }
+    }
     ReplaySanitizer.sanitizeMapByPath(
         fromParameters, "image.imageBytes", new ReplayBase64Sanitizer(), false);
     ReplaySanitizer.sanitizeMapByPath(

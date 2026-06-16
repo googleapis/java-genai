@@ -221,7 +221,9 @@ public final class ReplayApiClient extends ApiClient {
         redactRequestBody(
             JsonSerializable.stringToJsonNode(requestBodyToString(actualRequest.body())));
     JsonNode replayBody =
-        JsonSerializable.toJsonNode(replayRequest.bodySegments().orElse(new ArrayList<>()).get(0));
+        redactRequestBody(
+            JsonSerializable.toJsonNode(
+                replayRequest.bodySegments().orElse(new ArrayList<>()).get(0)));
     if (!equalsIgnoreKeyCase(replayBody, actualBody)) {
       throw new AssertionError(
           String.format(
@@ -303,26 +305,31 @@ public final class ReplayApiClient extends ApiClient {
 
   /** Redact the request body to make it robust to replay files. */
   private static JsonNode redactRequestBody(JsonNode requestBody) {
-    ObjectNode redactedNode = JsonSerializable.objectMapper.createObjectNode();
-    requestBody
-        .fields()
-        .forEachRemaining(
-            entry -> {
-              if (entry.getValue().isTextual()) {
-                redactedNode.set(
-                    entry.getKey(),
-                    JsonSerializable.toJsonNode(
-                        entry
-                            .getValue()
-                            .asText()
-                            .replaceAll(
-                                "projects/[^/]+/locations/[^/]+/",
-                                "{PROJECT_AND_LOCATION_PATH}/")));
-              } else {
-                redactedNode.set(entry.getKey(), entry.getValue());
-              }
-            });
-    return redactedNode;
+    if (requestBody.isObject()) {
+      ObjectNode redactedNode = JsonSerializable.objectMapper.createObjectNode();
+      requestBody
+          .fields()
+          .forEachRemaining(
+              entry -> {
+                redactedNode.set(entry.getKey(), redactRequestBody(entry.getValue()));
+              });
+      return redactedNode;
+    } else if (requestBody.isArray()) {
+      ArrayNode redactedNode = JsonSerializable.objectMapper.createArrayNode();
+      requestBody
+          .elements()
+          .forEachRemaining(
+              element -> {
+                redactedNode.add(redactRequestBody(element));
+              });
+      return redactedNode;
+    } else if (requestBody.isTextual()) {
+      return JsonSerializable.toJsonNode(
+          requestBody
+              .asText()
+              .replaceAll("projects/[^/]+/locations/[^/]+/", "{PROJECT_AND_LOCATION_PATH}/"));
+    }
+    return requestBody;
   }
 
   /**
