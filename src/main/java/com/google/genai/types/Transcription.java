@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Audio transcription in Server Conent. */
+/** Audio transcription in Server Content. */
 @AutoValue
 @JsonDeserialize(builder = Transcription.Builder.class)
 public abstract class Transcription extends JsonSerializable {

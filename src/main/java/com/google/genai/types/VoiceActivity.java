@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.time.Duration;
 import java.util.Optional;
 
 /** Voice activity signal. */
@@ -33,6 +34,10 @@ public abstract class VoiceActivity extends JsonSerializable {
   /** The type of the voice activity signal. */
   @JsonProperty("voiceActivityType")
   public abstract Optional<VoiceActivityType> voiceActivityType();
+
+  /** The time voice activity detected in audio time, relative to the start of the audio stream. */
+  @JsonProperty("audioOffset")
+  public abstract Optional<Duration> audioOffset();
 
   /** Instantiates a builder for VoiceActivity. */
   @ExcludeFromGeneratedCoverageReport
@@ -88,6 +93,25 @@ public abstract class VoiceActivity extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder voiceActivityType(String voiceActivityType) {
       return voiceActivityType(new VoiceActivityType(voiceActivityType));
+    }
+
+    /**
+     * Setter for audioOffset.
+     *
+     * <p>audioOffset: The time voice activity detected in audio time, relative to the start of the
+     * audio stream.
+     */
+    @JsonProperty("audioOffset")
+    public abstract Builder audioOffset(Duration audioOffset);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioOffset(Optional<Duration> audioOffset);
+
+    /** Clears the value of audioOffset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioOffset() {
+      return audioOffset(Optional.empty());
     }
 
     public abstract VoiceActivity build();

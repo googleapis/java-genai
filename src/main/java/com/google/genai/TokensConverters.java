@@ -40,6 +40,27 @@ final class TokensConverters {
               + " in Gemini Developer API mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"languageAuto"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageAuto"},
+          Common.getValueByPath(fromObject, new String[] {"languageAuto"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageHints"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageHints"},
+          Common.getValueByPath(fromObject, new String[] {"languageHints"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adaptationPhrases"},
+          Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
+    }
+
     return toObject;
   }
 

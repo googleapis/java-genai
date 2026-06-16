@@ -40,6 +40,27 @@ final class LiveConverters {
               + " in Gemini Developer API mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"languageAuto"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageAuto"},
+          Common.getValueByPath(fromObject, new String[] {"languageAuto"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageHints"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageHints"},
+          Common.getValueByPath(fromObject, new String[] {"languageHints"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adaptationPhrases"},
+          Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
+    }
+
     return toObject;
   }
 
@@ -2249,6 +2270,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"type"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioOffset"},
+          Common.getValueByPath(fromObject, new String[] {"audioOffset"}));
+    }
+
     return toObject;
   }
 
@@ -2260,6 +2288,13 @@ final class LiveConverters {
           toObject,
           new String[] {"voiceActivityType"},
           Common.getValueByPath(fromObject, new String[] {"type"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioOffset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioOffset"},
+          Common.getValueByPath(fromObject, new String[] {"audioOffset"}));
     }
 
     return toObject;

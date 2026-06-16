@@ -32,13 +32,24 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = AudioTranscriptionConfig.Builder.class)
 public abstract class AudioTranscriptionConfig extends JsonSerializable {
-  /**
-   * The language codes of the audio. BCP-47 language code. If not set, the transcription will be in
-   * the language detected by the model. If set, the server will use the language code specified in
-   * the model config as a hint for the language of the audio
-   */
+  /** Deprecated: use LanguageAuto or LanguageHints instead. */
   @JsonProperty("languageCodes")
   public abstract Optional<List<String>> languageCodes();
+
+  /** The model will detect the language automatically. Do not use together with LanguageHints. */
+  @JsonProperty("languageAuto")
+  public abstract Optional<LanguageAuto> languageAuto();
+
+  /** Specifies one or more languages in the audio. Do not use together with LanguageAuto. */
+  @JsonProperty("languageHints")
+  public abstract Optional<LanguageHints> languageHints();
+
+  /**
+   * A list of phrases used for speech adaptation, which biases the ASR model to improve recognition
+   * of these specific terms.
+   */
+  @JsonProperty("adaptationPhrases")
+  public abstract Optional<List<String>> adaptationPhrases();
 
   /** Instantiates a builder for AudioTranscriptionConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -61,9 +72,7 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: The language codes of the audio. BCP-47 language code. If not set, the
-     * transcription will be in the language detected by the model. If set, the server will use the
-     * language code specified in the model config as a hint for the language of the audio
+     * <p>languageCodes: Deprecated: use LanguageAuto or LanguageHints instead.
      */
     @JsonProperty("languageCodes")
     public abstract Builder languageCodes(List<String> languageCodes);
@@ -71,9 +80,7 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: The language codes of the audio. BCP-47 language code. If not set, the
-     * transcription will be in the language detected by the model. If set, the server will use the
-     * language code specified in the model config as a hint for the language of the audio
+     * <p>languageCodes: Deprecated: use LanguageAuto or LanguageHints instead.
      */
     @CanIgnoreReturnValue
     public Builder languageCodes(String... languageCodes) {
@@ -88,6 +95,96 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearLanguageCodes() {
       return languageCodes(Optional.empty());
+    }
+
+    /**
+     * Setter for languageAuto.
+     *
+     * <p>languageAuto: The model will detect the language automatically. Do not use together with
+     * LanguageHints.
+     */
+    @JsonProperty("languageAuto")
+    public abstract Builder languageAuto(LanguageAuto languageAuto);
+
+    /**
+     * Setter for languageAuto builder.
+     *
+     * <p>languageAuto: The model will detect the language automatically. Do not use together with
+     * LanguageHints.
+     */
+    @CanIgnoreReturnValue
+    public Builder languageAuto(LanguageAuto.Builder languageAutoBuilder) {
+      return languageAuto(languageAutoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder languageAuto(Optional<LanguageAuto> languageAuto);
+
+    /** Clears the value of languageAuto field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguageAuto() {
+      return languageAuto(Optional.empty());
+    }
+
+    /**
+     * Setter for languageHints.
+     *
+     * <p>languageHints: Specifies one or more languages in the audio. Do not use together with
+     * LanguageAuto.
+     */
+    @JsonProperty("languageHints")
+    public abstract Builder languageHints(LanguageHints languageHints);
+
+    /**
+     * Setter for languageHints builder.
+     *
+     * <p>languageHints: Specifies one or more languages in the audio. Do not use together with
+     * LanguageAuto.
+     */
+    @CanIgnoreReturnValue
+    public Builder languageHints(LanguageHints.Builder languageHintsBuilder) {
+      return languageHints(languageHintsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder languageHints(Optional<LanguageHints> languageHints);
+
+    /** Clears the value of languageHints field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguageHints() {
+      return languageHints(Optional.empty());
+    }
+
+    /**
+     * Setter for adaptationPhrases.
+     *
+     * <p>adaptationPhrases: A list of phrases used for speech adaptation, which biases the ASR
+     * model to improve recognition of these specific terms.
+     */
+    @JsonProperty("adaptationPhrases")
+    public abstract Builder adaptationPhrases(List<String> adaptationPhrases);
+
+    /**
+     * Setter for adaptationPhrases.
+     *
+     * <p>adaptationPhrases: A list of phrases used for speech adaptation, which biases the ASR
+     * model to improve recognition of these specific terms.
+     */
+    @CanIgnoreReturnValue
+    public Builder adaptationPhrases(String... adaptationPhrases) {
+      return adaptationPhrases(Arrays.asList(adaptationPhrases));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder adaptationPhrases(Optional<List<String>> adaptationPhrases);
+
+    /** Clears the value of adaptationPhrases field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAdaptationPhrases() {
+      return adaptationPhrases(Optional.empty());
     }
 
     public abstract AudioTranscriptionConfig build();
