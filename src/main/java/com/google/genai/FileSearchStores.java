@@ -929,10 +929,13 @@ public final class FileSearchStores {
     HttpOptions httpOptions =
         UploadClient.buildResumableUploadHttpOptions(
             userHttpOptions, mimeTypeToUse, fileName, size);
+    if (config == null) {
+      config = UploadToFileSearchStoreConfig.builder().build();
+    }
     UploadToFileSearchStoreResumableResponse response =
         privateUploadToFileSearchStore(
             fileSearchStoreName,
-            UploadToFileSearchStoreConfig.builder()
+            config.toBuilder()
                 .httpOptions(httpOptions)
                 .shouldReturnHttpResponse(true)
                 .build());
