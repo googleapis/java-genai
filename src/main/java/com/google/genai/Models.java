@@ -6516,9 +6516,9 @@ public final class Models {
    *
    * @param model the name of the GenAI model to use for image segmentation
    * @param source a {@link com.google.genai.types.SegmentImageSource} An object containing the
-   *     source inputs (prompt, image, scribbleImmage) for image segmentation. The prompt is
-   *     required for prompt mode and semantic mode, disallowed for other modes. scribbleImage is
-   *     required for the interactive mode, disallowed for other modes.
+   *     source inputs (prompt, image, scribbleImage) for image segmentation. The prompt is required
+   *     for prompt mode and semantic mode, disallowed for other modes. scribbleImage is required
+   *     for the interactive mode, disallowed for other modes.
    * @param config a {@link com.google.genai.types.SegmentImageConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.SegmentImageResponse} instance that contains the

@@ -54,11 +54,11 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
    * <p>Presence of this index allows users to transparently reconnect and avoid issue of losing
    * some part of realtime audio input/video. If client wishes to temporarily disconnect (for
    * example as result of receiving GoAway) they can do it without losing state by buffering
-   * messages sent since last `SessionResmumptionTokenUpdate`. This field will enable them to limit
+   * messages sent since last `SessionResumptionTokenUpdate`. This field will enable them to limit
    * buffering (avoid keeping all requests in RAM).
    *
    * <p>Note: This should not be used for when resuming a session at some time later -- in those
-   * cases partial audio and video frames arelikely not needed.
+   * cases partial audio and video frames are likely not needed.
    */
   @JsonProperty("lastConsumedClientMessageIndex")
   public abstract Optional<Long> lastConsumedClientMessageIndex();
@@ -135,11 +135,11 @@ public abstract class LiveServerSessionResumptionUpdate extends JsonSerializable
      * <p>Presence of this index allows users to transparently reconnect and avoid issue of losing
      * some part of realtime audio input/video. If client wishes to temporarily disconnect (for
      * example as result of receiving GoAway) they can do it without losing state by buffering
-     * messages sent since last `SessionResmumptionTokenUpdate`. This field will enable them to
-     * limit buffering (avoid keeping all requests in RAM).
+     * messages sent since last `SessionResumptionTokenUpdate`. This field will enable them to limit
+     * buffering (avoid keeping all requests in RAM).
      *
      * <p>Note: This should not be used for when resuming a session at some time later -- in those
-     * cases partial audio and video frames arelikely not needed.
+     * cases partial audio and video frames are likely not needed.
      */
     @JsonProperty("lastConsumedClientMessageIndex")
     public abstract Builder lastConsumedClientMessageIndex(Long lastConsumedClientMessageIndex);

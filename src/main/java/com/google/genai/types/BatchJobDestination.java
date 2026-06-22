@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Config for `des` parameter. */
+/** Config for `dest` parameter. */
 @AutoValue
 @JsonDeserialize(builder = BatchJobDestination.Builder.class)
 public abstract class BatchJobDestination extends JsonSerializable {

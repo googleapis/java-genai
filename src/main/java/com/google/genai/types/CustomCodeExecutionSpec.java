@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Specificies a metric that is computed by running user-defined Python functions remotely. */
+/** Specifies a metric that is computed by running user-defined Python functions remotely. */
 @AutoValue
 @JsonDeserialize(builder = CustomCodeExecutionSpec.Builder.class)
 public abstract class CustomCodeExecutionSpec extends JsonSerializable {
