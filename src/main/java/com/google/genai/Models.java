@@ -5702,6 +5702,9 @@ public final class Models {
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
+      if (config.requestTtl().isPresent()) {
+        body.put("requestTtl", config.requestTtl().get());
+      }
     }
 
     return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
@@ -5822,6 +5825,9 @@ public final class Models {
     Optional<HttpOptions> requestHttpOptions = Optional.empty();
     if (config != null) {
       requestHttpOptions = config.httpOptions();
+      if (config.requestTtl().isPresent()) {
+        body.put("requestTtl", config.requestTtl().get());
+      }
     }
 
     return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
