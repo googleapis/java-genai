@@ -18,10 +18,13 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
@@ -48,6 +51,10 @@ public abstract class ComputerUse extends JsonSerializable {
   /** Optional. Whether enable the prompt injection detection check on computer-use request. */
   @JsonProperty("enablePromptInjectionDetection")
   public abstract Optional<Boolean> enablePromptInjectionDetection();
+
+  /** Optional. Disabled safety policies for computer use. */
+  @JsonProperty("disabledSafetyPolicies")
+  public abstract Optional<List<SafetyPolicy>> disabledSafetyPolicies();
 
   /** Instantiates a builder for ComputerUse. */
   @ExcludeFromGeneratedCoverageReport
@@ -158,6 +165,78 @@ public abstract class ComputerUse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnablePromptInjectionDetection() {
       return enablePromptInjectionDetection(Optional.empty());
+    }
+
+    /**
+     * Setter for disabledSafetyPolicies.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @JsonProperty("disabledSafetyPolicies")
+    public abstract Builder disabledSafetyPolicies(List<SafetyPolicy> disabledSafetyPolicies);
+
+    /**
+     * Setter for disabledSafetyPolicies.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @CanIgnoreReturnValue
+    public Builder disabledSafetyPolicies(SafetyPolicy... disabledSafetyPolicies) {
+      return disabledSafetyPolicies(Arrays.asList(disabledSafetyPolicies));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder disabledSafetyPolicies(Optional<List<SafetyPolicy>> disabledSafetyPolicies);
+
+    /** Clears the value of disabledSafetyPolicies field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisabledSafetyPolicies() {
+      return disabledSafetyPolicies(Optional.empty());
+    }
+
+    /**
+     * Setter for disabledSafetyPolicies given a varargs of strings.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @CanIgnoreReturnValue
+    public Builder disabledSafetyPolicies(String... disabledSafetyPolicies) {
+      return disabledSafetyPoliciesFromString(Arrays.asList(disabledSafetyPolicies));
+    }
+
+    /**
+     * Setter for disabledSafetyPolicies given a varargs of known enums.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @CanIgnoreReturnValue
+    public Builder disabledSafetyPolicies(SafetyPolicy.Known... knownTypes) {
+      return disabledSafetyPoliciesFromKnown(Arrays.asList(knownTypes));
+    }
+
+    /**
+     * Setter for disabledSafetyPolicies given a list of known enums.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @CanIgnoreReturnValue
+    public Builder disabledSafetyPoliciesFromKnown(List<SafetyPolicy.Known> knownTypes) {
+      ImmutableList<SafetyPolicy> listItems =
+          knownTypes.stream().map(SafetyPolicy::new).collect(toImmutableList());
+      return disabledSafetyPolicies(listItems);
+    }
+
+    /**
+     * Setter for disabledSafetyPolicies given a list of strings.
+     *
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     */
+    @CanIgnoreReturnValue
+    public Builder disabledSafetyPoliciesFromString(List<String> disabledSafetyPolicies) {
+      ImmutableList<SafetyPolicy> listItems =
+          disabledSafetyPolicies.stream().map(SafetyPolicy::new).collect(toImmutableList());
+      return disabledSafetyPolicies(listItems);
     }
 
     public abstract ComputerUse build();
