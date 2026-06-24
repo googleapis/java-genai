@@ -40,19 +40,22 @@ public abstract class ComputerUse extends JsonSerializable {
   public abstract Optional<Environment> environment();
 
   /**
-   * By default, predefined functions are included in the final model call. Some of them can be
-   * explicitly excluded from being automatically included. This can serve two purposes: 1. Using a
-   * more restricted / different action space. 2. Improving the definitions / instructions of
-   * predefined functions.
+   * Optional. By default, [predefined
+   * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
+   * are included in the final model call. Some of them can be explicitly excluded from being
+   * automatically included. This can serve two purposes: 1. Using a more restricted / different
+   * action space. 2. Improving the definitions / instructions of predefined functions.
    */
   @JsonProperty("excludedPredefinedFunctions")
   public abstract Optional<List<String>> excludedPredefinedFunctions();
 
-  /** Optional. Whether enable the prompt injection detection check on computer-use request. */
+  /** Optional. Enables the prompt injection detection check on computer-use request. */
   @JsonProperty("enablePromptInjectionDetection")
   public abstract Optional<Boolean> enablePromptInjectionDetection();
 
-  /** Optional. Disabled safety policies for computer use. */
+  /**
+   * Optional. Disabled safety policies for computer use. This field is not supported in Vertex AI.
+   */
   @JsonProperty("disabledSafetyPolicies")
   public abstract Optional<List<SafetyPolicy>> disabledSafetyPolicies();
 
@@ -115,10 +118,11 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for excludedPredefinedFunctions.
      *
-     * <p>excludedPredefinedFunctions: By default, predefined functions are included in the final
-     * model call. Some of them can be explicitly excluded from being automatically included. This
-     * can serve two purposes: 1. Using a more restricted / different action space. 2. Improving the
-     * definitions / instructions of predefined functions.
+     * <p>excludedPredefinedFunctions: Optional. By default, [predefined
+     * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
+     * are included in the final model call. Some of them can be explicitly excluded from being
+     * automatically included. This can serve two purposes: 1. Using a more restricted / different
+     * action space. 2. Improving the definitions / instructions of predefined functions.
      */
     @JsonProperty("excludedPredefinedFunctions")
     public abstract Builder excludedPredefinedFunctions(List<String> excludedPredefinedFunctions);
@@ -126,10 +130,11 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for excludedPredefinedFunctions.
      *
-     * <p>excludedPredefinedFunctions: By default, predefined functions are included in the final
-     * model call. Some of them can be explicitly excluded from being automatically included. This
-     * can serve two purposes: 1. Using a more restricted / different action space. 2. Improving the
-     * definitions / instructions of predefined functions.
+     * <p>excludedPredefinedFunctions: Optional. By default, [predefined
+     * functions](https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
+     * are included in the final model call. Some of them can be explicitly excluded from being
+     * automatically included. This can serve two purposes: 1. Using a more restricted / different
+     * action space. 2. Improving the definitions / instructions of predefined functions.
      */
     @CanIgnoreReturnValue
     public Builder excludedPredefinedFunctions(String... excludedPredefinedFunctions) {
@@ -150,8 +155,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for enablePromptInjectionDetection.
      *
-     * <p>enablePromptInjectionDetection: Optional. Whether enable the prompt injection detection
-     * check on computer-use request.
+     * <p>enablePromptInjectionDetection: Optional. Enables the prompt injection detection check on
+     * computer-use request.
      */
     @JsonProperty("enablePromptInjectionDetection")
     public abstract Builder enablePromptInjectionDetection(boolean enablePromptInjectionDetection);
@@ -170,7 +175,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @JsonProperty("disabledSafetyPolicies")
     public abstract Builder disabledSafetyPolicies(List<SafetyPolicy> disabledSafetyPolicies);
@@ -178,7 +184,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy... disabledSafetyPolicies) {
@@ -198,7 +205,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(String... disabledSafetyPolicies) {
@@ -208,7 +216,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a varargs of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPolicies(SafetyPolicy.Known... knownTypes) {
@@ -218,7 +227,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of known enums.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromKnown(List<SafetyPolicy.Known> knownTypes) {
@@ -230,7 +240,8 @@ public abstract class ComputerUse extends JsonSerializable {
     /**
      * Setter for disabledSafetyPolicies given a list of strings.
      *
-     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+     * <p>disabledSafetyPolicies: Optional. Disabled safety policies for computer use. This field is
+     * not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
     public Builder disabledSafetyPoliciesFromString(List<String> disabledSafetyPolicies) {

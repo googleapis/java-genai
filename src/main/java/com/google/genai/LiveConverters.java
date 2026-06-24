@@ -167,6 +167,41 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode computerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"environment"},
+          Common.getValueByPath(fromObject, new String[] {"environment"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"excludedPredefinedFunctions"},
+          Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enablePromptInjectionDetection"},
+          Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}));
+    }
+
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"disabledSafetyPolicies"}))) {
+      throw new IllegalArgumentException(
+          "disabledSafetyPolicies parameter is only supported in Gemini Developer API mode, not in"
+              + " Gemini Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
@@ -2097,7 +2132,10 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"computerUse"},
-          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
+          computerUseToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+              toObject));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {

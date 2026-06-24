@@ -23,33 +23,33 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Disabled safety policies for computer use. */
+/** SafetyPolicy */
 public class SafetyPolicy {
 
   /** Enum representing the known values for SafetyPolicy. */
   public enum Known {
-    /** Unspecified safety policy. This value should not be used. */
+    /** Unspecified safety policy. */
     SAFETY_POLICY_UNSPECIFIED,
 
-    /** Financial transactions safety policy. */
+    /** Safety policy for financial transactions. */
     FINANCIAL_TRANSACTIONS,
 
-    /** Sensitive data modification safety policy. */
+    /** Safety policy for sensitive data modification. */
     SENSITIVE_DATA_MODIFICATION,
 
-    /** Communication tool safety policy. */
+    /** Safety policy for communication tools (e.g. Gmail, Chat, Meet). */
     COMMUNICATION_TOOL,
 
-    /** Account creation safety policy. */
+    /** Safety policy for account creation. */
     ACCOUNT_CREATION,
 
-    /** Data modification safety policy. */
+    /** Safety policy for data modification. */
     DATA_MODIFICATION,
 
-    /** User consent management safety policy. */
+    /** Safety policy for user consent management. */
     USER_CONSENT_MANAGEMENT,
 
-    /** Legal terms and agreements safety policy. */
+    /** Safety policy for legal terms and agreements. */
     LEGAL_TERMS_AND_AGREEMENTS
   }
 
