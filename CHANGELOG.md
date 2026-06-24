@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.60.0](https://github.com/googleapis/java-genai/compare/v1.59.0...v1.60.0) (2026-06-24)
+
+
+### Features
+
+* Add ComputerUse.disabled_safety_policies ([d99c37a](https://github.com/googleapis/java-genai/commit/d99c37a2967f5f9e2ccd2e6b9e358c19b4ece9b2))
+
+
+### Documentation
+
+* fix typos across docstrings ([88f6e06](https://github.com/googleapis/java-genai/commit/88f6e069a97c2f6115e2e3f0cecbd8a393d026bb))
+
 ## [1.59.0](https://github.com/googleapis/java-genai/compare/v1.58.0...v1.59.0) (2026-06-17)
 
 
