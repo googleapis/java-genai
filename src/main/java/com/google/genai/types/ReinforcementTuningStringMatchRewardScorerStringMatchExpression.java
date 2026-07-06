@@ -26,20 +26,30 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Evaluates parsed response using match type against expression. */
+/**
+ * Evaluates parsed response using match type against the expression. Returns `true` if
+ * `MatchOperation(target, expression)` evaluates to `true`, and `false` otherwise. This data type
+ * is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(
     builder = ReinforcementTuningStringMatchRewardScorerStringMatchExpression.Builder.class)
 public abstract class ReinforcementTuningStringMatchRewardScorerStringMatchExpression
     extends JsonSerializable {
-  /** Match operation to use for evaluation. */
+  /** Match operation to use for evaluating rewards. */
   @JsonProperty("matchOperation")
   public abstract Optional<MatchOperation> matchOperation();
 
   /**
-   * String or regular expression to match against. Customer can also provide a references map
-   * (key/value pairs) whose value will be substituted into the expression by referencing
-   * `references.key_name` (wrapped in double curly braces).
+   * A string or a regular expression to match against for evaluating rewards. Users can also
+   * provide a references map of `{key: value}` whose `value` will be used to replace the
+   * placeholder {{references.key}} in the expression. For example, if the following `references`
+   * are defined in the training / validation dataset: ``` { "systemInstruction": ..., "contents":
+   * ..., "references": { "concise_answer": "Yes", "verbose_answer": "The answer is Yes" } } ``` and
+   * if users define the following StringMatchExpression: { "matchOperation": "REGEX_CONTAINS",
+   * "expression": ".*{{references.concise_answer}}.*" } On evaluating the reward for each sample
+   * response, this StringMatchExpression will be substituted as: ``` { "matchOperation":
+   * "REGEX_CONTAINS", "expression": ".*Yes.*" } ```
    */
   @JsonProperty("expression")
   public abstract Optional<String> expression();
@@ -70,7 +80,7 @@ public abstract class ReinforcementTuningStringMatchRewardScorerStringMatchExpre
     /**
      * Setter for matchOperation.
      *
-     * <p>matchOperation: Match operation to use for evaluation.
+     * <p>matchOperation: Match operation to use for evaluating rewards.
      */
     @JsonProperty("matchOperation")
     public abstract Builder matchOperation(MatchOperation matchOperation);
@@ -88,7 +98,7 @@ public abstract class ReinforcementTuningStringMatchRewardScorerStringMatchExpre
     /**
      * Setter for matchOperation given a known enum.
      *
-     * <p>matchOperation: Match operation to use for evaluation.
+     * <p>matchOperation: Match operation to use for evaluating rewards.
      */
     @CanIgnoreReturnValue
     public Builder matchOperation(MatchOperation.Known knownType) {
@@ -98,7 +108,7 @@ public abstract class ReinforcementTuningStringMatchRewardScorerStringMatchExpre
     /**
      * Setter for matchOperation given a string.
      *
-     * <p>matchOperation: Match operation to use for evaluation.
+     * <p>matchOperation: Match operation to use for evaluating rewards.
      */
     @CanIgnoreReturnValue
     public Builder matchOperation(String matchOperation) {
@@ -108,9 +118,15 @@ public abstract class ReinforcementTuningStringMatchRewardScorerStringMatchExpre
     /**
      * Setter for expression.
      *
-     * <p>expression: String or regular expression to match against. Customer can also provide a
-     * references map (key/value pairs) whose value will be substituted into the expression by
-     * referencing `references.key_name` (wrapped in double curly braces).
+     * <p>expression: A string or a regular expression to match against for evaluating rewards.
+     * Users can also provide a references map of `{key: value}` whose `value` will be used to
+     * replace the placeholder {{references.key}} in the expression. For example, if the following
+     * `references` are defined in the training / validation dataset: ``` { "systemInstruction":
+     * ..., "contents": ..., "references": { "concise_answer": "Yes", "verbose_answer": "The answer
+     * is Yes" } } ``` and if users define the following StringMatchExpression: { "matchOperation":
+     * "REGEX_CONTAINS", "expression": ".*{{references.concise_answer}}.*" } On evaluating the
+     * reward for each sample response, this StringMatchExpression will be substituted as: ``` {
+     * "matchOperation": "REGEX_CONTAINS", "expression": ".*Yes.*" } ```
      */
     @JsonProperty("expression")
     public abstract Builder expression(String expression);

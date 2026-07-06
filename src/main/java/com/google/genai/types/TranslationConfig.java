@@ -31,15 +31,16 @@ import java.util.Optional;
 @JsonDeserialize(builder = TranslationConfig.Builder.class)
 public abstract class TranslationConfig extends JsonSerializable {
   /**
-   * If true, the model will generate audio when the target language is spoken, essentially it will
-   * parrot the input. If false, we will not produce audio for the target language.
+   * Optional. If true, the model will generate audio when the target language is spoken,
+   * essentially it will parrot the input. If false, we will not produce audio for the target
+   * language.
    */
   @JsonProperty("echoTargetLanguage")
   public abstract Optional<Boolean> echoTargetLanguage();
 
   /**
-   * The target language for translation. Supported values are BCP-47 language codes (e.g. "en",
-   * "es", "fr").
+   * Required. The target language for translation. Supported values are BCP-47 language codes (e.g.
+   * "en", "es", "fr").
    */
   @JsonProperty("targetLanguageCode")
   public abstract Optional<String> targetLanguageCode();
@@ -65,9 +66,9 @@ public abstract class TranslationConfig extends JsonSerializable {
     /**
      * Setter for echoTargetLanguage.
      *
-     * <p>echoTargetLanguage: If true, the model will generate audio when the target language is
-     * spoken, essentially it will parrot the input. If false, we will not produce audio for the
-     * target language.
+     * <p>echoTargetLanguage: Optional. If true, the model will generate audio when the target
+     * language is spoken, essentially it will parrot the input. If false, we will not produce audio
+     * for the target language.
      */
     @JsonProperty("echoTargetLanguage")
     public abstract Builder echoTargetLanguage(boolean echoTargetLanguage);
@@ -85,8 +86,8 @@ public abstract class TranslationConfig extends JsonSerializable {
     /**
      * Setter for targetLanguageCode.
      *
-     * <p>targetLanguageCode: The target language for translation. Supported values are BCP-47
-     * language codes (e.g. "en", "es", "fr").
+     * <p>targetLanguageCode: Required. The target language for translation. Supported values are
+     * BCP-47 language codes (e.g. "en", "es", "fr").
      */
     @JsonProperty("targetLanguageCode")
     public abstract Builder targetLanguageCode(String targetLanguageCode);

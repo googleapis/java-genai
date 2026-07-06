@@ -31,7 +31,7 @@ import java.util.Optional;
  * Configuration for upscaling an image.
  *
  * <p>For more information on this configuration, refer to the `Imagen API reference documentation
- * <https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/imagen-api>`_.
+ * &lt;https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/imagen-api&gt;`_.
  */
 @AutoValue
 @JsonDeserialize(builder = UpscaleImageConfig.Builder.class)

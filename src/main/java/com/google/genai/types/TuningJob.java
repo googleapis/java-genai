@@ -109,7 +109,7 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("distillationSpec")
   public abstract Optional<DistillationSpec> distillationSpec();
 
-  /** */
+  /** Tuning Spec for Reinforcement Tuning. */
   @JsonProperty("reinforcementTuningSpec")
   public abstract Optional<ReinforcementTuningSpec> reinforcementTuningSpec();
 
@@ -607,7 +607,7 @@ public abstract class TuningJob extends JsonSerializable {
     /**
      * Setter for reinforcementTuningSpec.
      *
-     * <p>reinforcementTuningSpec:
+     * <p>reinforcementTuningSpec: Tuning Spec for Reinforcement Tuning.
      */
     @JsonProperty("reinforcementTuningSpec")
     public abstract Builder reinforcementTuningSpec(
@@ -616,7 +616,7 @@ public abstract class TuningJob extends JsonSerializable {
     /**
      * Setter for reinforcementTuningSpec builder.
      *
-     * <p>reinforcementTuningSpec:
+     * <p>reinforcementTuningSpec: Tuning Spec for Reinforcement Tuning.
      */
     @CanIgnoreReturnValue
     public Builder reinforcementTuningSpec(

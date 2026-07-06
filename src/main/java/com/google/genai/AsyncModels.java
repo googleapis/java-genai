@@ -458,7 +458,8 @@ public final class AsyncModels {
    * Asynchronously counts tokens given a GenAI model and a list of content.
    *
    * @param model the name of the GenAI model to use.
-   * @param contents a {@link List<com.google.genai.types.Content>} to send to count tokens for.
+   * @param contents a {@link List&lt;com.google.genai.types.Content&gt;} to send to count tokens
+   *     for.
    * @param config a {@link com.google.genai.types.CountTokensConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.CountTokensResponse} instance that contains tokens
@@ -493,7 +494,8 @@ public final class AsyncModels {
    * Asynchronously computes tokens given a GenAI model and a list of content.
    *
    * @param model the name of the GenAI model to use.
-   * @param contents a {@link List<com.google.genai.types.Content>} to send to compute tokens for.
+   * @param contents a {@link List&lt;com.google.genai.types.Content&gt;} to send to compute tokens
+   *     for.
    * @param config a {@link com.google.genai.types.ComputeTokensConfig} instance that specifies the
    *     optional configurations
    * @return a {@link com.google.genai.types.ComputeTokensResponse} instance that contains tokens

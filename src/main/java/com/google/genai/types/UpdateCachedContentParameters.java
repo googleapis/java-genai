@@ -27,7 +27,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** */
 @AutoValue
 @InternalApi
 @JsonDeserialize(builder = UpdateCachedContentParameters.Builder.class)

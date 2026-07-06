@@ -502,6 +502,19 @@ final class LiveConverters {
               + " in Gemini Enterprise Agent Platform mode.");
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
+      throw new IllegalArgumentException(
+          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
+              + " Gemini Enterprise Agent Platform mode.");
+    }
+
     return toObject;
   }
 
@@ -2115,6 +2128,12 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
+      throw new IllegalArgumentException(
+          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
@@ -2210,6 +2229,13 @@ final class LiveConverters {
         result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"exaAiSearch"},
+          Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}));
     }
 
     return toObject;

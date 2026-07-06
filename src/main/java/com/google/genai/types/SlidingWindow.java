@@ -38,8 +38,8 @@ import java.util.Optional;
 public abstract class SlidingWindow extends JsonSerializable {
   /**
    * Session reduction target -- how many tokens we should keep. Window shortening operation has
-   * some latency costs, so we should avoid running it on every turn. Should be < trigger_tokens. If
-   * not set, trigger_tokens/2 is assumed.
+   * some latency costs, so we should avoid running it on every turn. Should be &lt; trigger_tokens.
+   * If not set, trigger_tokens/2 is assumed.
    */
   @JsonProperty("targetTokens")
   public abstract Optional<Long> targetTokens();
@@ -67,7 +67,7 @@ public abstract class SlidingWindow extends JsonSerializable {
      *
      * <p>targetTokens: Session reduction target -- how many tokens we should keep. Window
      * shortening operation has some latency costs, so we should avoid running it on every turn.
-     * Should be < trigger_tokens. If not set, trigger_tokens/2 is assumed.
+     * Should be &lt; trigger_tokens. If not set, trigger_tokens/2 is assumed.
      */
     @JsonProperty("targetTokens")
     public abstract Builder targetTokens(Long targetTokens);

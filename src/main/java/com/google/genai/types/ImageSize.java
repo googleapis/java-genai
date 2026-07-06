@@ -23,52 +23,46 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/**
- * Specifies the function Behavior. If not specified, the system keeps the current function call
- * behavior. This field is currently only supported by the BidiGenerateContent method.
- */
-public class Behavior {
+/** The size of the image output. */
+public class ImageSize {
 
-  /** Enum representing the known values for Behavior. */
+  /** Enum representing the known values for ImageSize. */
   public enum Known {
-    /** This value is unspecified. */
-    UNSPECIFIED,
+    /** Default value. This value is unused. */
+    IMAGE_SIZE_UNSPECIFIED,
 
-    /**
-     * If set, the system will wait to receive the function response before continuing the
-     * conversation.
-     */
-    BLOCKING,
+    /** 512px image size. */
+    IMAGE_SIZE_FIVE_TWELVE,
 
-    /**
-     * If set, the system will not wait to receive the function response. Instead, it will attempt
-     * to handle function responses as they become available while maintaining the conversation
-     * between the user and the model.
-     */
-    NON_BLOCKING,
+    /** 1K image size. */
+    IMAGE_SIZE_ONE_K,
 
-    BEHAVIOR_UNSPECIFIED
+    /** 2K image size. */
+    IMAGE_SIZE_TWO_K,
+
+    /** 4K image size. */
+    IMAGE_SIZE_FOUR_K
   }
 
-  private Known behaviorEnum;
+  private Known imageSizeEnum;
   private final String value;
 
   @JsonCreator
-  public Behavior(String value) {
+  public ImageSize(String value) {
     this.value = value;
-    for (Known behaviorEnum : Known.values()) {
-      if (Ascii.equalsIgnoreCase(behaviorEnum.toString(), value)) {
-        this.behaviorEnum = behaviorEnum;
+    for (Known imageSizeEnum : Known.values()) {
+      if (Ascii.equalsIgnoreCase(imageSizeEnum.toString(), value)) {
+        this.imageSizeEnum = imageSizeEnum;
         break;
       }
     }
-    if (this.behaviorEnum == null) {
-      this.behaviorEnum = Known.BEHAVIOR_UNSPECIFIED;
+    if (this.imageSizeEnum == null) {
+      this.imageSizeEnum = Known.IMAGE_SIZE_UNSPECIFIED;
     }
   }
 
-  public Behavior(Known knownValue) {
-    this.behaviorEnum = knownValue;
+  public ImageSize(Known knownValue) {
+    this.imageSizeEnum = knownValue;
     this.value = knownValue.toString();
   }
 
@@ -90,17 +84,17 @@ public class Behavior {
       return false;
     }
 
-    if (!(o instanceof Behavior)) {
+    if (!(o instanceof ImageSize)) {
       return false;
     }
 
-    Behavior other = (Behavior) o;
+    ImageSize other = (ImageSize) o;
 
-    if (this.behaviorEnum != Known.BEHAVIOR_UNSPECIFIED
-        && other.behaviorEnum != Known.BEHAVIOR_UNSPECIFIED) {
-      return this.behaviorEnum == other.behaviorEnum;
-    } else if (this.behaviorEnum == Known.BEHAVIOR_UNSPECIFIED
-        && other.behaviorEnum == Known.BEHAVIOR_UNSPECIFIED) {
+    if (this.imageSizeEnum != Known.IMAGE_SIZE_UNSPECIFIED
+        && other.imageSizeEnum != Known.IMAGE_SIZE_UNSPECIFIED) {
+      return this.imageSizeEnum == other.imageSizeEnum;
+    } else if (this.imageSizeEnum == Known.IMAGE_SIZE_UNSPECIFIED
+        && other.imageSizeEnum == Known.IMAGE_SIZE_UNSPECIFIED) {
       return this.value.equals(other.value);
     }
     return false;
@@ -109,8 +103,8 @@ public class Behavior {
   @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
-    if (this.behaviorEnum != Known.BEHAVIOR_UNSPECIFIED) {
-      return this.behaviorEnum.hashCode();
+    if (this.imageSizeEnum != Known.IMAGE_SIZE_UNSPECIFIED) {
+      return this.imageSizeEnum.hashCode();
     } else {
       return Objects.hashCode(this.value);
     }
@@ -118,6 +112,6 @@ public class Behavior {
 
   @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
-    return this.behaviorEnum;
+    return this.imageSizeEnum;
   }
 }

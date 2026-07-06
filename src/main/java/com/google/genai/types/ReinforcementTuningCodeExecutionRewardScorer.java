@@ -26,13 +26,30 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Scores parsed responses for code execution use cases. */
+/**
+ * ReinforcementTuningCodeExecutionRewardScorer allows users to implement a function to evaluate
+ * rewards for the sample response. The function signature is as follows: ``` def evaluate(example:
+ * dict[str, Any], response: dict[str, Any]) -&gt; float: ... ``` `example` is a
+ * ReinforcementTuningExample in ProtoJSON format, (i.e., the format is the same as as one line in
+ * the training/validation dataset except that the keys must be in camel case). System instructions
+ * (i.e., `example.get("systemInstruction")`) and references (i.e., `example.get("references")`) are
+ * also included in the `example` provided that they are set in the training/validation dataset.
+ * `response` is a Content in ProtoJSON format (i.e., keys must be in camel case), which is the same
+ * as the Online Prediction response for Gemini models. Note: Reward output by the `evaluate`
+ * function is clipped to be within `[-1, 1]`, i.e., `reward = max(min(reward, 1.0), -1.0)`. This
+ * data type is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = ReinforcementTuningCodeExecutionRewardScorer.Builder.class)
 public abstract class ReinforcementTuningCodeExecutionRewardScorer extends JsonSerializable {
   /**
-   * Example python code snippet which assigns reward of 1 to answer matching user provided
-   * reference answer in per prompt references map.
+   * The python code snippet as a string for evaluating rewards. The following is an example python
+   * code snippet that returns a reward `1.0` for a parsed response matching the user-provided
+   * reference answer in per prompt references map. ``` def evaluate(example, response) -&gt; float:
+   * response_str = response.get("parts", [])0 references = example.get("references", {}) if
+   * response_str == references.get("concise_answer"): return 1.0 return -1.0 ``` Note: Reward
+   * output by the evaluate function is clipped to be within `[-1, 1]`, i.e., `reward =
+   * max(min(reward, 1.0), -1.0)`.
    */
   @JsonProperty("pythonCodeSnippet")
   public abstract Optional<String> pythonCodeSnippet();
@@ -61,8 +78,13 @@ public abstract class ReinforcementTuningCodeExecutionRewardScorer extends JsonS
     /**
      * Setter for pythonCodeSnippet.
      *
-     * <p>pythonCodeSnippet: Example python code snippet which assigns reward of 1 to answer
-     * matching user provided reference answer in per prompt references map.
+     * <p>pythonCodeSnippet: The python code snippet as a string for evaluating rewards. The
+     * following is an example python code snippet that returns a reward `1.0` for a parsed response
+     * matching the user-provided reference answer in per prompt references map. ``` def
+     * evaluate(example, response) -&gt; float: response_str = response.get("parts", [])0 references
+     * = example.get("references", {}) if response_str == references.get("concise_answer"): return
+     * 1.0 return -1.0 ``` Note: Reward output by the evaluate function is clipped to be within
+     * `[-1, 1]`, i.e., `reward = max(min(reward, 1.0), -1.0)`.
      */
     @JsonProperty("pythonCodeSnippet")
     public abstract Builder pythonCodeSnippet(String pythonCodeSnippet);

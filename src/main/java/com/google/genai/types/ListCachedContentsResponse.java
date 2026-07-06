@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** None */
+/** */
 @AutoValue
 @JsonDeserialize(builder = ListCachedContentsResponse.Builder.class)
 public abstract class ListCachedContentsResponse extends JsonSerializable {

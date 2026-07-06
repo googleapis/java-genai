@@ -26,7 +26,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** None */
+/** */
 @AutoValue
 @JsonDeserialize(builder = DeleteModelResponse.Builder.class)
 public abstract class DeleteModelResponse extends JsonSerializable {

@@ -30,21 +30,20 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ReinforcementTuningSpec.Builder.class)
 public abstract class ReinforcementTuningSpec extends JsonSerializable {
-  /** */
+  /** Composite reward function configuration for reinforcement tuning. */
   @JsonProperty("compositeRewardConfig")
   public abstract Optional<CompositeReinforcementTuningRewardConfig> compositeRewardConfig();
 
   /**
-   * Cloud Storage path to file containing training dataset for tuning. The dataset must be
+   * Cloud Storage path to the file containing training dataset for tuning. The dataset must be
    * formatted as a JSONL file.
    */
   @JsonProperty("trainingDatasetUri")
   public abstract Optional<String> trainingDatasetUri();
 
   /**
-   * Cloud Storage path to file containing validation dataset for tuning. The dataset must be
-   * formatted as a JSONL file. If no validation dataset is provided, by default the API splits 25%
-   * of the training dataset or 50 examples, whichever is larger, as the validation dataset.
+   * Cloud Storage path to the file containing validation dataset for tuning. The dataset must be
+   * formatted as a JSONL file.
    */
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
@@ -78,7 +77,7 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     /**
      * Setter for compositeRewardConfig.
      *
-     * <p>compositeRewardConfig:
+     * <p>compositeRewardConfig: Composite reward function configuration for reinforcement tuning.
      */
     @JsonProperty("compositeRewardConfig")
     public abstract Builder compositeRewardConfig(
@@ -87,7 +86,7 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     /**
      * Setter for compositeRewardConfig builder.
      *
-     * <p>compositeRewardConfig:
+     * <p>compositeRewardConfig: Composite reward function configuration for reinforcement tuning.
      */
     @CanIgnoreReturnValue
     public Builder compositeRewardConfig(
@@ -109,8 +108,8 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     /**
      * Setter for trainingDatasetUri.
      *
-     * <p>trainingDatasetUri: Cloud Storage path to file containing training dataset for tuning. The
-     * dataset must be formatted as a JSONL file.
+     * <p>trainingDatasetUri: Cloud Storage path to the file containing training dataset for tuning.
+     * The dataset must be formatted as a JSONL file.
      */
     @JsonProperty("trainingDatasetUri")
     public abstract Builder trainingDatasetUri(String trainingDatasetUri);
@@ -128,10 +127,8 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     /**
      * Setter for validationDatasetUri.
      *
-     * <p>validationDatasetUri: Cloud Storage path to file containing validation dataset for tuning.
-     * The dataset must be formatted as a JSONL file. If no validation dataset is provided, by
-     * default the API splits 25% of the training dataset or 50 examples, whichever is larger, as
-     * the validation dataset.
+     * <p>validationDatasetUri: Cloud Storage path to the file containing validation dataset for
+     * tuning. The dataset must be formatted as a JSONL file.
      */
     @JsonProperty("validationDatasetUri")
     public abstract Builder validationDatasetUri(String validationDatasetUri);

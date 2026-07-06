@@ -32,7 +32,7 @@ import java.util.Optional;
 @InternalApi
 @JsonDeserialize(builder = ReinforcementTuningHyperParameters.Builder.class)
 public abstract class ReinforcementTuningHyperParameters extends JsonSerializable {
-  /** Number of training epochs for the tuning job. */
+  /** Optional. Number of training epoches for the tuning job. */
   @JsonProperty("epochCount")
   public abstract Optional<Long> epochCount();
 
@@ -40,42 +40,55 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Float> learningRateMultiplier();
 
-  /** Adapter size for Reinforcement Tuning. */
+  /** Optional. Adapter size for Reinforcement Tuning. */
   @JsonProperty("adapterSize")
   public abstract Optional<AdapterSize> adapterSize();
 
-  /** Number of different responses to generate per prompt during tuning. */
+  /** Optional. Number of different responses to generate per prompt during tuning. */
   @JsonProperty("samplesPerPrompt")
   public abstract Optional<Integer> samplesPerPrompt();
 
   /**
-   * Batch size for the tuning job. How many prompts to process at a train step. If not set, the
-   * batch size will be determined automatically.
+   * Optional. Batch size for the tuning job. How many prompts to process at a train step. If not
+   * set, the batch size will be determined automatically.
    */
   @JsonProperty("batchSize")
   public abstract Optional<Integer> batchSize();
 
   /**
-   * How often (in steps) to evaluate the tuning job during training. If not set, evaluation will
-   * run per epoch.
+   * Optional. How often at steps to evaluate the tuning job during training. If not set, evel will
+   * be run per epoch. `total_steps = epoch_count * samples_per_prompt / total_prompts_in_dataset`
    */
   @JsonProperty("evaluateInterval")
   public abstract Optional<Integer> evaluateInterval();
 
   /**
-   * How often (in steps) to save checkpoints during training. If not set, one checkpoint per epoch
-   * will be saved.
+   * Optional. How often at steps to save checkpoints during training. If not set, one checkpoint
+   * per epoch will be set. ```total_steps = epoch_count * samples_per_prompt /
+   * total_prompts_in_dataset```
    */
   @JsonProperty("checkpointInterval")
   public abstract Optional<Integer> checkpointInterval();
 
-  /** The maximum number of tokens to generate per prompt. If not set, defaults to 32768. */
+  /** Optional. The maximum number of tokens to generate per prompt. Default to 32768. */
   @JsonProperty("maxOutputTokens")
   public abstract Optional<Integer> maxOutputTokens();
 
-  /** Indicates the maximum thinking depth. Use with earlier models shall result in error. */
+  /**
+   * Indicates the maximum thinking depth during tuning. Starting from Gemini 3.5 models, the old
+   * thinking_budget will no longer be supported and will result in a user error if set. Instead,
+   * users should use the thinking_level parameter to control the maximum thinking depth.
+   */
   @JsonProperty("thinkingLevel")
   public abstract Optional<ReinforcementTuningThinkingLevel> thinkingLevel();
+
+  /**
+   * Optional. The thinking budget for the tuning job to optimize for (Gemini 2.5 only). * -1 means
+   * dynamic thinking * 0 means no thinking * &gt; 0 means thinking budget in tokens If not set,
+   * default to -1 (dynamic thinking).
+   */
+  @JsonProperty("thinkingBudget")
+  public abstract Optional<Integer> thinkingBudget();
 
   /** Instantiates a builder for ReinforcementTuningHyperParameters. */
   @ExcludeFromGeneratedCoverageReport
@@ -101,7 +114,7 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for epochCount.
      *
-     * <p>epochCount: Number of training epochs for the tuning job.
+     * <p>epochCount: Optional. Number of training epoches for the tuning job.
      */
     @JsonProperty("epochCount")
     public abstract Builder epochCount(Long epochCount);
@@ -137,7 +150,7 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for adapterSize.
      *
-     * <p>adapterSize: Adapter size for Reinforcement Tuning.
+     * <p>adapterSize: Optional. Adapter size for Reinforcement Tuning.
      */
     @JsonProperty("adapterSize")
     public abstract Builder adapterSize(AdapterSize adapterSize);
@@ -155,7 +168,7 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for adapterSize given a known enum.
      *
-     * <p>adapterSize: Adapter size for Reinforcement Tuning.
+     * <p>adapterSize: Optional. Adapter size for Reinforcement Tuning.
      */
     @CanIgnoreReturnValue
     public Builder adapterSize(AdapterSize.Known knownType) {
@@ -165,7 +178,7 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for adapterSize given a string.
      *
-     * <p>adapterSize: Adapter size for Reinforcement Tuning.
+     * <p>adapterSize: Optional. Adapter size for Reinforcement Tuning.
      */
     @CanIgnoreReturnValue
     public Builder adapterSize(String adapterSize) {
@@ -175,7 +188,8 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for samplesPerPrompt.
      *
-     * <p>samplesPerPrompt: Number of different responses to generate per prompt during tuning.
+     * <p>samplesPerPrompt: Optional. Number of different responses to generate per prompt during
+     * tuning.
      */
     @JsonProperty("samplesPerPrompt")
     public abstract Builder samplesPerPrompt(Integer samplesPerPrompt);
@@ -193,8 +207,8 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for batchSize.
      *
-     * <p>batchSize: Batch size for the tuning job. How many prompts to process at a train step. If
-     * not set, the batch size will be determined automatically.
+     * <p>batchSize: Optional. Batch size for the tuning job. How many prompts to process at a train
+     * step. If not set, the batch size will be determined automatically.
      */
     @JsonProperty("batchSize")
     public abstract Builder batchSize(Integer batchSize);
@@ -212,8 +226,9 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for evaluateInterval.
      *
-     * <p>evaluateInterval: How often (in steps) to evaluate the tuning job during training. If not
-     * set, evaluation will run per epoch.
+     * <p>evaluateInterval: Optional. How often at steps to evaluate the tuning job during training.
+     * If not set, evel will be run per epoch. `total_steps = epoch_count * samples_per_prompt /
+     * total_prompts_in_dataset`
      */
     @JsonProperty("evaluateInterval")
     public abstract Builder evaluateInterval(Integer evaluateInterval);
@@ -231,8 +246,9 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for checkpointInterval.
      *
-     * <p>checkpointInterval: How often (in steps) to save checkpoints during training. If not set,
-     * one checkpoint per epoch will be saved.
+     * <p>checkpointInterval: Optional. How often at steps to save checkpoints during training. If
+     * not set, one checkpoint per epoch will be set. ```total_steps = epoch_count *
+     * samples_per_prompt / total_prompts_in_dataset```
      */
     @JsonProperty("checkpointInterval")
     public abstract Builder checkpointInterval(Integer checkpointInterval);
@@ -250,8 +266,8 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for maxOutputTokens.
      *
-     * <p>maxOutputTokens: The maximum number of tokens to generate per prompt. If not set, defaults
-     * to 32768.
+     * <p>maxOutputTokens: Optional. The maximum number of tokens to generate per prompt. Default to
+     * 32768.
      */
     @JsonProperty("maxOutputTokens")
     public abstract Builder maxOutputTokens(Integer maxOutputTokens);
@@ -269,8 +285,10 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for thinkingLevel.
      *
-     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
-     * in error.
+     * <p>thinkingLevel: Indicates the maximum thinking depth during tuning. Starting from Gemini
+     * 3.5 models, the old thinking_budget will no longer be supported and will result in a user
+     * error if set. Instead, users should use the thinking_level parameter to control the maximum
+     * thinking depth.
      */
     @JsonProperty("thinkingLevel")
     public abstract Builder thinkingLevel(ReinforcementTuningThinkingLevel thinkingLevel);
@@ -288,8 +306,10 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for thinkingLevel given a known enum.
      *
-     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
-     * in error.
+     * <p>thinkingLevel: Indicates the maximum thinking depth during tuning. Starting from Gemini
+     * 3.5 models, the old thinking_budget will no longer be supported and will result in a user
+     * error if set. Instead, users should use the thinking_level parameter to control the maximum
+     * thinking depth.
      */
     @CanIgnoreReturnValue
     public Builder thinkingLevel(ReinforcementTuningThinkingLevel.Known knownType) {
@@ -299,12 +319,34 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     /**
      * Setter for thinkingLevel given a string.
      *
-     * <p>thinkingLevel: Indicates the maximum thinking depth. Use with earlier models shall result
-     * in error.
+     * <p>thinkingLevel: Indicates the maximum thinking depth during tuning. Starting from Gemini
+     * 3.5 models, the old thinking_budget will no longer be supported and will result in a user
+     * error if set. Instead, users should use the thinking_level parameter to control the maximum
+     * thinking depth.
      */
     @CanIgnoreReturnValue
     public Builder thinkingLevel(String thinkingLevel) {
       return thinkingLevel(new ReinforcementTuningThinkingLevel(thinkingLevel));
+    }
+
+    /**
+     * Setter for thinkingBudget.
+     *
+     * <p>thinkingBudget: Optional. The thinking budget for the tuning job to optimize for (Gemini
+     * 2.5 only). * -1 means dynamic thinking * 0 means no thinking * &gt; 0 means thinking budget
+     * in tokens If not set, default to -1 (dynamic thinking).
+     */
+    @JsonProperty("thinkingBudget")
+    public abstract Builder thinkingBudget(Integer thinkingBudget);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thinkingBudget(Optional<Integer> thinkingBudget);
+
+    /** Clears the value of thinkingBudget field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThinkingBudget() {
+      return thinkingBudget(Optional.empty());
     }
 
     public abstract ReinforcementTuningHyperParameters build();

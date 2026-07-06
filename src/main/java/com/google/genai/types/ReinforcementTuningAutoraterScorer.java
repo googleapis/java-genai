@@ -35,24 +35,30 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
   public abstract Optional<AutoraterConfig> autoraterConfig();
 
   /**
-   * Allows substituting `prompt`, `response`, `system_instruction` and `references.reference` (each
-   * wrapped in double curly braces) into the autorater prompt.
+   * The prompt for an autorater to scorer the parsed sample response. This field supports the
+   * following placeholders that will be replaced before scoring: - {{prompt}} - {{response}} -
+   * {{system_instruction}} - {{references.key}}
    */
   @JsonProperty("autoraterPrompt")
   public abstract Optional<String> autoraterPrompt();
 
-  /** Parses autorater returned response. */
+  /**
+   * Parses autorater returned response for scoring. For example, if the autorater response has
+   * reward stored in the `2.0` block, defining a parsing response config using regex `".*(.*?)"`
+   * will return a score `"2.0"`.
+   */
   @JsonProperty("autoraterResponseParseConfig")
   public abstract Optional<ReinforcementTuningParseResponseConfig> autoraterResponseParseConfig();
 
   /**
-   * Scores autorater responses by directly converting parsed autorater response to float reward.
+   * Scores autorater responses by directly converting parsed autorater response to a float reward.
+   * Note: Reward is clipped to be within `[-1, 1]`, i.e., `reward = max(min(reward, 1.0), -1.0)`.
    */
   @JsonProperty("parsedResponseConversionScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>
       parsedResponseConversionScorer();
 
-  /** Scores autorater responses by using exact string match reward scorer. */
+  /** Scores autorater responses by using string match reward scorer. */
   @JsonProperty("exactMatchScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer();
 
@@ -108,8 +114,9 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     /**
      * Setter for autoraterPrompt.
      *
-     * <p>autoraterPrompt: Allows substituting `prompt`, `response`, `system_instruction` and
-     * `references.reference` (each wrapped in double curly braces) into the autorater prompt.
+     * <p>autoraterPrompt: The prompt for an autorater to scorer the parsed sample response. This
+     * field supports the following placeholders that will be replaced before scoring: - {{prompt}}
+     * - {{response}} - {{system_instruction}} - {{references.key}}
      */
     @JsonProperty("autoraterPrompt")
     public abstract Builder autoraterPrompt(String autoraterPrompt);
@@ -127,7 +134,9 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     /**
      * Setter for autoraterResponseParseConfig.
      *
-     * <p>autoraterResponseParseConfig: Parses autorater returned response.
+     * <p>autoraterResponseParseConfig: Parses autorater returned response for scoring. For example,
+     * if the autorater response has reward stored in the `2.0` block, defining a parsing response
+     * config using regex `".*(.*?)"` will return a score `"2.0"`.
      */
     @JsonProperty("autoraterResponseParseConfig")
     public abstract Builder autoraterResponseParseConfig(
@@ -136,7 +145,9 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     /**
      * Setter for autoraterResponseParseConfig builder.
      *
-     * <p>autoraterResponseParseConfig: Parses autorater returned response.
+     * <p>autoraterResponseParseConfig: Parses autorater returned response for scoring. For example,
+     * if the autorater response has reward stored in the `2.0` block, defining a parsing response
+     * config using regex `".*(.*?)"` will return a score `"2.0"`.
      */
     @CanIgnoreReturnValue
     public Builder autoraterResponseParseConfig(
@@ -159,7 +170,8 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
      * Setter for parsedResponseConversionScorer.
      *
      * <p>parsedResponseConversionScorer: Scores autorater responses by directly converting parsed
-     * autorater response to float reward.
+     * autorater response to a float reward. Note: Reward is clipped to be within `[-1, 1]`, i.e.,
+     * `reward = max(min(reward, 1.0), -1.0)`.
      */
     @JsonProperty("parsedResponseConversionScorer")
     public abstract Builder parsedResponseConversionScorer(
@@ -170,7 +182,8 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
      * Setter for parsedResponseConversionScorer builder.
      *
      * <p>parsedResponseConversionScorer: Scores autorater responses by directly converting parsed
-     * autorater response to float reward.
+     * autorater response to a float reward. Note: Reward is clipped to be within `[-1, 1]`, i.e.,
+     * `reward = max(min(reward, 1.0), -1.0)`.
      */
     @CanIgnoreReturnValue
     public Builder parsedResponseConversionScorer(
@@ -194,7 +207,7 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     /**
      * Setter for exactMatchScorer.
      *
-     * <p>exactMatchScorer: Scores autorater responses by using exact string match reward scorer.
+     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
      */
     @JsonProperty("exactMatchScorer")
     public abstract Builder exactMatchScorer(
@@ -203,7 +216,7 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     /**
      * Setter for exactMatchScorer builder.
      *
-     * <p>exactMatchScorer: Scores autorater responses by using exact string match reward scorer.
+     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
      */
     @CanIgnoreReturnValue
     public Builder exactMatchScorer(

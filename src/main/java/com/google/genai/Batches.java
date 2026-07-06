@@ -2116,6 +2116,12 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
+      throw new IllegalArgumentException(
+          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 

@@ -32,8 +32,8 @@ import java.util.Optional;
 public abstract class CustomCodeExecutionSpec extends JsonSerializable {
   /**
    * A string representing a user-defined function for evaluation. Expected user to define the
-   * following function, e.g.: def evaluate(instance: dict[str, Any]) -> float: Please include this
-   * function signature in the code snippet. Instance is the evaluation instance, any fields
+   * following function, e.g.: def evaluate(instance: dict[str, Any]) -&gt; float: Please include
+   * this function signature in the code snippet. Instance is the evaluation instance, any fields
    * populated in the instance are available to the function as instance[field_name].
    */
   @JsonProperty("evaluationFunction")
@@ -61,8 +61,8 @@ public abstract class CustomCodeExecutionSpec extends JsonSerializable {
      * Setter for evaluationFunction.
      *
      * <p>evaluationFunction: A string representing a user-defined function for evaluation. Expected
-     * user to define the following function, e.g.: def evaluate(instance: dict[str, Any]) -> float:
-     * Please include this function signature in the code snippet. Instance is the evaluation
+     * user to define the following function, e.g.: def evaluate(instance: dict[str, Any]) -&gt;
+     * float: Please include this function signature in the code snippet. Instance is the evaluation
      * instance, any fields populated in the instance are available to the function as
      * instance[field_name].
      */

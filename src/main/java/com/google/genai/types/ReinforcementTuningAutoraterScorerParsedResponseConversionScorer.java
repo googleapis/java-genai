@@ -24,8 +24,9 @@ import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
 /**
- * Scores responses by directly converting parsed autorater response to float reward (reward is
- * clipped to be within [-1, 1]).
+ * Scores responses by directly converting the parsed autorater response to a float reward. Note:
+ * Reward is clipped to be within `[-1, 1]`, i.e., `reward = max(min(reward, 1.0), -1.0)`. This data
+ * type is not supported in Gemini API.
  */
 @AutoValue
 @JsonDeserialize(

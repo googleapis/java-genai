@@ -32,11 +32,15 @@ import java.util.Optional;
     builder = CompositeReinforcementTuningRewardConfigWeightedRewardConfig.Builder.class)
 public abstract class CompositeReinforcementTuningRewardConfigWeightedRewardConfig
     extends JsonSerializable {
-  /** */
+  /** Single reward configuration. */
   @JsonProperty("rewardConfig")
   public abstract Optional<SingleReinforcementTuningRewardConfig> rewardConfig();
 
-  /** How much this single reward contributes to the total overall reward. */
+  /**
+   * How much this single reward contributes to the total overall reward. Total reward is a linear
+   * combination of single rewards with their corresponding weights, i.e., ``` total_reward = (
+   * weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b + ...) ```
+   */
   @JsonProperty("weight")
   public abstract Optional<Float> weight();
 
@@ -64,7 +68,7 @@ public abstract class CompositeReinforcementTuningRewardConfigWeightedRewardConf
     /**
      * Setter for rewardConfig.
      *
-     * <p>rewardConfig:
+     * <p>rewardConfig: Single reward configuration.
      */
     @JsonProperty("rewardConfig")
     public abstract Builder rewardConfig(SingleReinforcementTuningRewardConfig rewardConfig);
@@ -72,7 +76,7 @@ public abstract class CompositeReinforcementTuningRewardConfigWeightedRewardConf
     /**
      * Setter for rewardConfig builder.
      *
-     * <p>rewardConfig:
+     * <p>rewardConfig: Single reward configuration.
      */
     @CanIgnoreReturnValue
     public Builder rewardConfig(SingleReinforcementTuningRewardConfig.Builder rewardConfigBuilder) {
@@ -92,7 +96,10 @@ public abstract class CompositeReinforcementTuningRewardConfigWeightedRewardConf
     /**
      * Setter for weight.
      *
-     * <p>weight: How much this single reward contributes to the total overall reward.
+     * <p>weight: How much this single reward contributes to the total overall reward. Total reward
+     * is a linear combination of single rewards with their corresponding weights, i.e., ```
+     * total_reward = ( weight_a * reward_a + weight_b * reward_b + ... ) / (weight_a + weight_b +
+     * ...) ```
      */
     @JsonProperty("weight")
     public abstract Builder weight(Float weight);

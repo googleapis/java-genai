@@ -26,17 +26,26 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Defines how to parse sample response for reinforcement tuning. */
+/**
+ * Defines how to parse sample response config for reinforcement tuning. The parsed response (i.e.,
+ * substring) will be passed to the reward functions. For example, the input prompt might be: &gt;
+ * "Perform step-by-step thoughts first to problem A, finally output answer in the &lt;ans&gt;
+ * &lt;/ans&gt; block." The sample response from the model under tuning might look like: &gt;
+ * "&lt;ans&gt;Yes&lt;/ans&gt;" Here, users can define the following parse config: ``` {
+ * "parseType": "REGEX_EXTRACT", "regexExtractExpression": ".*(.*?)" } ``` The resulting parsed
+ * response would be `"Yes"` and will be passed to the reward functions for evaluating rewards. This
+ * data type is not supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = ReinforcementTuningParseResponseConfig.Builder.class)
 public abstract class ReinforcementTuningParseResponseConfig extends JsonSerializable {
-  /** Defines how to parse sample response. */
+  /** Defines the type for parsing sample response. */
   @JsonProperty("parseType")
   public abstract Optional<ResponseParseType> parseType();
 
   /**
-   * Defines the regex to extract the important part of sample response. This field is only used
-   * when `parse_type` is `REGEX_EXTRACT`.
+   * Defines the regex for extracting the important part of sample response. This field is only used
+   * when parse_type is ResponseParseType.REGEX_EXTRACT.
    */
   @JsonProperty("regexExtractExpression")
   public abstract Optional<String> regexExtractExpression();
@@ -65,7 +74,7 @@ public abstract class ReinforcementTuningParseResponseConfig extends JsonSeriali
     /**
      * Setter for parseType.
      *
-     * <p>parseType: Defines how to parse sample response.
+     * <p>parseType: Defines the type for parsing sample response.
      */
     @JsonProperty("parseType")
     public abstract Builder parseType(ResponseParseType parseType);
@@ -83,7 +92,7 @@ public abstract class ReinforcementTuningParseResponseConfig extends JsonSeriali
     /**
      * Setter for parseType given a known enum.
      *
-     * <p>parseType: Defines how to parse sample response.
+     * <p>parseType: Defines the type for parsing sample response.
      */
     @CanIgnoreReturnValue
     public Builder parseType(ResponseParseType.Known knownType) {
@@ -93,7 +102,7 @@ public abstract class ReinforcementTuningParseResponseConfig extends JsonSeriali
     /**
      * Setter for parseType given a string.
      *
-     * <p>parseType: Defines how to parse sample response.
+     * <p>parseType: Defines the type for parsing sample response.
      */
     @CanIgnoreReturnValue
     public Builder parseType(String parseType) {
@@ -103,8 +112,8 @@ public abstract class ReinforcementTuningParseResponseConfig extends JsonSeriali
     /**
      * Setter for regexExtractExpression.
      *
-     * <p>regexExtractExpression: Defines the regex to extract the important part of sample
-     * response. This field is only used when `parse_type` is `REGEX_EXTRACT`.
+     * <p>regexExtractExpression: Defines the regex for extracting the important part of sample
+     * response. This field is only used when parse_type is ResponseParseType.REGEX_EXTRACT.
      */
     @JsonProperty("regexExtractExpression")
     public abstract Builder regexExtractExpression(String regexExtractExpression);

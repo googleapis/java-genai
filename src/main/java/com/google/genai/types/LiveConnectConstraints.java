@@ -32,7 +32,7 @@ import java.util.Optional;
 public abstract class LiveConnectConstraints extends JsonSerializable {
   /**
    * ID of the model to configure in the ephemeral token for Live API. For a list of models, see
-   * `Gemini models <https://ai.google.dev/gemini-api/docs/models>`.
+   * `Gemini models &lt;https://ai.google.dev/gemini-api/docs/models&gt;`.
    */
   @JsonProperty("model")
   public abstract Optional<String> model();
@@ -63,7 +63,7 @@ public abstract class LiveConnectConstraints extends JsonSerializable {
      * Setter for model.
      *
      * <p>model: ID of the model to configure in the ephemeral token for Live API. For a list of
-     * models, see `Gemini models <https://ai.google.dev/gemini-api/docs/models>`.
+     * models, see `Gemini models &lt;https://ai.google.dev/gemini-api/docs/models&gt;`.
      */
     @JsonProperty("model")
     public abstract Builder model(String model);

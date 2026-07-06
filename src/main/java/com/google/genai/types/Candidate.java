@@ -74,7 +74,7 @@ public abstract class Candidate extends JsonSerializable {
 
   /**
    * Output only. The 0-based index of this candidate in the list of generated responses. This is
-   * useful for distinguishing between multiple candidates when `candidate_count` > 1.
+   * useful for distinguishing between multiple candidates when `candidate_count` &gt; 1.
    */
   @JsonProperty("index")
   public abstract Optional<Integer> index();
@@ -308,7 +308,7 @@ public abstract class Candidate extends JsonSerializable {
      *
      * <p>index: Output only. The 0-based index of this candidate in the list of generated
      * responses. This is useful for distinguishing between multiple candidates when
-     * `candidate_count` > 1.
+     * `candidate_count` &gt; 1.
      */
     @JsonProperty("index")
     public abstract Builder index(Integer index);

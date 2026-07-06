@@ -23,18 +23,23 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Defines how to parse sample response. */
+/** Defines the type for parsing sample response. This enum is not supported in Gemini API. */
 public class ResponseParseType {
 
   /** Enum representing the known values for ResponseParseType. */
   public enum Known {
-    /** Default value. This value is unused. */
+    /** Default value. Fallback to IDENTITY */
     RESPONSE_PARSE_TYPE_UNSPECIFIED,
 
-    /** Use the sample response as is. */
+    /** Returns the sample response as is. */
     IDENTITY,
 
-    /** Use regex to extract the important part of sample response. */
+    /**
+     * Uses regex to extract the important part of sample response. Similar to
+     * [GoogleSQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract)
+     * `REGEX_EXTRACT(response, regex_extract_expression)`, but different in that if there are
+     * multiple matches, the last match will be returned.
+     */
     REGEX_EXTRACT
   }
 

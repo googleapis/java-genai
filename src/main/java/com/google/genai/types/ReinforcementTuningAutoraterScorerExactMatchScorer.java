@@ -26,21 +26,33 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Scores autorater responses by using exact string match reward scorer. */
+/**
+ * Scores autorater responses by using exact string match reward scorer. This data type is not
+ * supported in Gemini API.
+ */
 @AutoValue
 @JsonDeserialize(builder = ReinforcementTuningAutoraterScorerExactMatchScorer.Builder.class)
 public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends JsonSerializable {
-  /** Assigns this reward score if parsed response string equals the expression. */
+  /** Assigns this reward score if the parsed response string equals the expression. */
   @JsonProperty("correctAnswerReward")
   public abstract Optional<Float> correctAnswerReward();
 
-  /** Assigns this reward score if parsed reward value does not equal the expression. */
+  /** Assigns this reward score if the parsed reward value does not equal the expression. */
   @JsonProperty("wrongAnswerReward")
   public abstract Optional<Float> wrongAnswerReward();
 
   /**
-   * The string expression to match against. Supports substitution in the format of
-   * `references.reference` (wrapped in double curly braces) before matching. No regex support.
+   * The string expression to match against for scoring. This field supports placeholders in the
+   * format of {{references.key}} that will be replaced before matching. Regex is not supported for
+   * this expression. For example, users can define an ExactMatchScorer as follows: {
+   * "correctAnswerReward": 1.0, "wrongAnswerReward": -1.0, "expression":
+   * "{{references.concise_answer}}" } When evaluating the reward for each parsed autorater
+   * response, if the prompt references in the training/validation dataset has the following fields:
+   * ``` { "example": ..., "references": { "concise_ansser": "Yes", "verbose_answer": "The answer is
+   * Yes" } } ``` The above ExactMatchScorer will be replaced as follows for scoring: ``` {
+   * "correctAnswerReward": 1.0, "wrongAnswerReward": -1.0, "expression": "Yes" } ``` If the
+   * *parsed* autorater response is equal to the string `"Yes"`, then the reward is `1.0`, otherwise
+   * the reward is `-1.0`.
    */
   @JsonProperty("expression")
   public abstract Optional<String> expression();
@@ -69,7 +81,7 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
     /**
      * Setter for correctAnswerReward.
      *
-     * <p>correctAnswerReward: Assigns this reward score if parsed response string equals the
+     * <p>correctAnswerReward: Assigns this reward score if the parsed response string equals the
      * expression.
      */
     @JsonProperty("correctAnswerReward")
@@ -88,7 +100,7 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
     /**
      * Setter for wrongAnswerReward.
      *
-     * <p>wrongAnswerReward: Assigns this reward score if parsed reward value does not equal the
+     * <p>wrongAnswerReward: Assigns this reward score if the parsed reward value does not equal the
      * expression.
      */
     @JsonProperty("wrongAnswerReward")
@@ -107,8 +119,17 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
     /**
      * Setter for expression.
      *
-     * <p>expression: The string expression to match against. Supports substitution in the format of
-     * `references.reference` (wrapped in double curly braces) before matching. No regex support.
+     * <p>expression: The string expression to match against for scoring. This field supports
+     * placeholders in the format of {{references.key}} that will be replaced before matching. Regex
+     * is not supported for this expression. For example, users can define an ExactMatchScorer as
+     * follows: { "correctAnswerReward": 1.0, "wrongAnswerReward": -1.0, "expression":
+     * "{{references.concise_answer}}" } When evaluating the reward for each parsed autorater
+     * response, if the prompt references in the training/validation dataset has the following
+     * fields: ``` { "example": ..., "references": { "concise_ansser": "Yes", "verbose_answer": "The
+     * answer is Yes" } } ``` The above ExactMatchScorer will be replaced as follows for scoring:
+     * ``` { "correctAnswerReward": 1.0, "wrongAnswerReward": -1.0, "expression": "Yes" } ``` If the
+     * *parsed* autorater response is equal to the string `"Yes"`, then the reward is `1.0`,
+     * otherwise the reward is `-1.0`.
      */
     @JsonProperty("expression")
     public abstract Builder expression(String expression);

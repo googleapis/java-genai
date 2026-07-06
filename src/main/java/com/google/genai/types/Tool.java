@@ -119,6 +119,14 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("mcpServers")
   public abstract Optional<List<McpServer>> mcpServers();
 
+  /**
+   * Optional. Uses Exa.ai to search for information to answer user queries. The search results will
+   * be grounded on Exa.ai and presented to the model for response generation. This field is not
+   * supported in Gemini API.
+   */
+  @JsonProperty("exaAiSearch")
+  public abstract Optional<ToolExaAiSearch> exaAiSearch();
+
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -566,6 +574,38 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMcpServers() {
       return mcpServers(Optional.empty());
+    }
+
+    /**
+     * Setter for exaAiSearch.
+     *
+     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
+     * search results will be grounded on Exa.ai and presented to the model for response generation.
+     * This field is not supported in Gemini API.
+     */
+    @JsonProperty("exaAiSearch")
+    public abstract Builder exaAiSearch(ToolExaAiSearch exaAiSearch);
+
+    /**
+     * Setter for exaAiSearch builder.
+     *
+     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
+     * search results will be grounded on Exa.ai and presented to the model for response generation.
+     * This field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder exaAiSearch(ToolExaAiSearch.Builder exaAiSearchBuilder) {
+      return exaAiSearch(exaAiSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exaAiSearch(Optional<ToolExaAiSearch> exaAiSearch);
+
+    /** Clears the value of exaAiSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExaAiSearch() {
+      return exaAiSearch(Optional.empty());
     }
 
     public abstract Tool build();
