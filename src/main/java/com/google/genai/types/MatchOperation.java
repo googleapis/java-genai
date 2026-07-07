@@ -23,25 +23,21 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Match operation to use for evaluating rewards. This enum is not supported in Gemini API. */
+/** Match operation to use for evaluation. */
 public class MatchOperation {
 
   /** Enum representing the known values for MatchOperation. */
   public enum Known {
-    /** Default value. A user error will be returned if not set. */
+    /** Default value. This value is unused. */
     MATCH_OPERATION_UNSPECIFIED,
 
-    /**
-     * Equivalent to
-     * [GoogleSQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains)
-     * `REGEX_CONTAINS(target, expression)`.
-     */
+    /** Equivalent to GoogleSQL `REGEX_CONTAINS(target, expression)`. */
     REGEX_CONTAINS,
 
-    /** The match operation returns `true` if expression is a substring of the target. */
+    /** `expression` is a substring of target. */
     PARTIAL_MATCH,
 
-    /** The match operation returns `true` expression is an exact match of the target. */
+    /** `expression` is an exact match of target. */
     EXACT_MATCH
   }
 

@@ -47,10 +47,6 @@ public abstract class TuningDataStats extends JsonSerializable {
   @JsonProperty("supervisedTuningDataStats")
   public abstract Optional<SupervisedTuningDataStats> supervisedTuningDataStats();
 
-  /** Output only. Statistics for reinforcement tuning. */
-  @JsonProperty("reinforcementTuningDataStats")
-  public abstract Optional<DatasetStats> reinforcementTuningDataStats();
-
   /** Instantiates a builder for TuningDataStats. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -160,36 +156,6 @@ public abstract class TuningDataStats extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSupervisedTuningDataStats() {
       return supervisedTuningDataStats(Optional.empty());
-    }
-
-    /**
-     * Setter for reinforcementTuningDataStats.
-     *
-     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
-     */
-    @JsonProperty("reinforcementTuningDataStats")
-    public abstract Builder reinforcementTuningDataStats(DatasetStats reinforcementTuningDataStats);
-
-    /**
-     * Setter for reinforcementTuningDataStats builder.
-     *
-     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder reinforcementTuningDataStats(
-        DatasetStats.Builder reinforcementTuningDataStatsBuilder) {
-      return reinforcementTuningDataStats(reinforcementTuningDataStatsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder reinforcementTuningDataStats(
-        Optional<DatasetStats> reinforcementTuningDataStats);
-
-    /** Clears the value of reinforcementTuningDataStats field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearReinforcementTuningDataStats() {
-      return reinforcementTuningDataStats(Optional.empty());
     }
 
     public abstract TuningDataStats build();

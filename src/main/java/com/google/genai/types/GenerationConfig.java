@@ -124,7 +124,7 @@ public abstract class GenerationConfig extends JsonSerializable {
    * Optional. The IANA standard MIME type of the response. The model will generate output that
    * conforms to this MIME type. Supported values include 'text/plain' (default) and
    * 'application/json'. The model needs to be prompted to output the appropriate response type,
-   * otherwise the behavior is undefined. Deprecated: Use `response_format` instead.
+   * otherwise the behavior is undefined.
    */
   @JsonProperty("responseMimeType")
   public abstract Optional<String> responseMimeType();
@@ -142,8 +142,7 @@ public abstract class GenerationConfig extends JsonSerializable {
    * conforms to a particular structure. This is useful for generating structured data such as JSON.
    * The schema is a subset of the [OpenAPI 3.0 schema
    * object](https://spec.openapis.org/oas/v3.0.3#schema) object. When this field is set, you must
-   * also set the `response_mime_type` to `application/json`. Deprecated: Use `response_format`
-   * instead.
+   * also set the `response_mime_type` to `application/json`.
    */
   @JsonProperty("responseSchema")
   public abstract Optional<Schema> responseSchema();
@@ -216,16 +215,6 @@ public abstract class GenerationConfig extends JsonSerializable {
    */
   @JsonProperty("enableEnhancedCivicAnswers")
   public abstract Optional<Boolean> enableEnhancedCivicAnswers();
-
-  /**
-   * Optional. New response format field for the model to configure output formatting and delivery.
-   */
-  @JsonProperty("responseFormat")
-  public abstract Optional<List<ResponseFormat>> responseFormat();
-
-  /** Optional. Config for translation. This field is not supported in Vertex AI. */
-  @JsonProperty("translationConfig")
-  public abstract Optional<TranslationConfig> translationConfig();
 
   /** Instantiates a builder for GenerationConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -510,8 +499,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * <p>responseMimeType: Optional. The IANA standard MIME type of the response. The model will
      * generate output that conforms to this MIME type. Supported values include 'text/plain'
      * (default) and 'application/json'. The model needs to be prompted to output the appropriate
-     * response type, otherwise the behavior is undefined. Deprecated: Use `response_format`
-     * instead.
+     * response type, otherwise the behavior is undefined.
      */
     @JsonProperty("responseMimeType")
     public abstract Builder responseMimeType(String responseMimeType);
@@ -617,8 +605,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * that the output conforms to a particular structure. This is useful for generating structured
      * data such as JSON. The schema is a subset of the [OpenAPI 3.0 schema
      * object](https://spec.openapis.org/oas/v3.0.3#schema) object. When this field is set, you must
-     * also set the `response_mime_type` to `application/json`. Deprecated: Use `response_format`
-     * instead.
+     * also set the `response_mime_type` to `application/json`.
      */
     @JsonProperty("responseSchema")
     public abstract Builder responseSchema(Schema responseSchema);
@@ -630,8 +617,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      * that the output conforms to a particular structure. This is useful for generating structured
      * data such as JSON. The schema is a subset of the [OpenAPI 3.0 schema
      * object](https://spec.openapis.org/oas/v3.0.3#schema) object. When this field is set, you must
-     * also set the `response_mime_type` to `application/json`. Deprecated: Use `response_format`
-     * instead.
+     * also set the `response_mime_type` to `application/json`.
      */
     @CanIgnoreReturnValue
     public Builder responseSchema(Schema.Builder responseSchemaBuilder) {
@@ -872,80 +858,6 @@ public abstract class GenerationConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnableEnhancedCivicAnswers() {
       return enableEnhancedCivicAnswers(Optional.empty());
-    }
-
-    /**
-     * Setter for responseFormat.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @JsonProperty("responseFormat")
-    public abstract Builder responseFormat(List<ResponseFormat> responseFormat);
-
-    /**
-     * Setter for responseFormat.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @CanIgnoreReturnValue
-    public Builder responseFormat(ResponseFormat... responseFormat) {
-      return responseFormat(Arrays.asList(responseFormat));
-    }
-
-    /**
-     * Setter for responseFormat builder.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @CanIgnoreReturnValue
-    public Builder responseFormat(ResponseFormat.Builder... responseFormatBuilders) {
-      return responseFormat(
-          Arrays.asList(responseFormatBuilders).stream()
-              .map(ResponseFormat.Builder::build)
-              .collect(toImmutableList()));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder responseFormat(Optional<List<ResponseFormat>> responseFormat);
-
-    /** Clears the value of responseFormat field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearResponseFormat() {
-      return responseFormat(Optional.empty());
-    }
-
-    /**
-     * Setter for translationConfig.
-     *
-     * <p>translationConfig: Optional. Config for translation. This field is not supported in Vertex
-     * AI.
-     */
-    @JsonProperty("translationConfig")
-    public abstract Builder translationConfig(TranslationConfig translationConfig);
-
-    /**
-     * Setter for translationConfig builder.
-     *
-     * <p>translationConfig: Optional. Config for translation. This field is not supported in Vertex
-     * AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder translationConfig(TranslationConfig.Builder translationConfigBuilder) {
-      return translationConfig(translationConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder translationConfig(Optional<TranslationConfig> translationConfig);
-
-    /** Clears the value of translationConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearTranslationConfig() {
-      return translationConfig(Optional.empty());
     }
 
     public abstract GenerationConfig build();

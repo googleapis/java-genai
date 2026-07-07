@@ -27,27 +27,19 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * JsonMatchExpression supports converting the parsed responses to JSON format, finding the value in
- * the JSON response that matches the key_name in the first level, and performing
- * StringMatchExpression operation on the matched JSON value. This data type is not supported in
- * Gemini API.
+ * Converts parsed responses to JSON format, finds the first-level matching key, then performs
+ * StringMatchExpression on the value.
  */
 @AutoValue
 @JsonDeserialize(
     builder = ReinforcementTuningStringMatchRewardScorerJsonMatchExpression.Builder.class)
 public abstract class ReinforcementTuningStringMatchRewardScorerJsonMatchExpression
     extends JsonSerializable {
-  /**
-   * The key name to find the value in the parsed response that's in JSON format. Only first-level
-   * key matching is supported.
-   */
+  /** Json key name to find the value to match against. */
   @JsonProperty("keyName")
   public abstract Optional<String> keyName();
 
-  /**
-   * String match expression to match against the extracted value from the JSON representation of
-   * the parsed response.
-   */
+  /** String match expression to match against the value of json key. */
   @JsonProperty("valueStringMatchExpression")
   public abstract Optional<ReinforcementTuningStringMatchRewardScorerStringMatchExpression>
       valueStringMatchExpression();
@@ -76,8 +68,7 @@ public abstract class ReinforcementTuningStringMatchRewardScorerJsonMatchExpress
     /**
      * Setter for keyName.
      *
-     * <p>keyName: The key name to find the value in the parsed response that's in JSON format. Only
-     * first-level key matching is supported.
+     * <p>keyName: Json key name to find the value to match against.
      */
     @JsonProperty("keyName")
     public abstract Builder keyName(String keyName);
@@ -95,8 +86,8 @@ public abstract class ReinforcementTuningStringMatchRewardScorerJsonMatchExpress
     /**
      * Setter for valueStringMatchExpression.
      *
-     * <p>valueStringMatchExpression: String match expression to match against the extracted value
-     * from the JSON representation of the parsed response.
+     * <p>valueStringMatchExpression: String match expression to match against the value of json
+     * key.
      */
     @JsonProperty("valueStringMatchExpression")
     public abstract Builder valueStringMatchExpression(
@@ -105,8 +96,8 @@ public abstract class ReinforcementTuningStringMatchRewardScorerJsonMatchExpress
     /**
      * Setter for valueStringMatchExpression builder.
      *
-     * <p>valueStringMatchExpression: String match expression to match against the extracted value
-     * from the JSON representation of the parsed response.
+     * <p>valueStringMatchExpression: String match expression to match against the value of json
+     * key.
      */
     @CanIgnoreReturnValue
     public Builder valueStringMatchExpression(

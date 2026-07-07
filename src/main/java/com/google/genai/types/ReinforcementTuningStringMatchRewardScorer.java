@@ -26,26 +26,20 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/**
- * ReinforcementTuningStringMatchRewardScorer is used to score parsed responses for string matching
- * use cases. For example, for math problems, users can use string match scorer to check if the
- * correct exact answer is generated. Note: Reward returned by the string match reward function is
- * clipped to be within `[-1, 1]` if wrongAnswerReward or correctAnswerReward are beyond the range,
- * i.e., `reward = max(min(reward, 1.0), -1.0)`. This data type is not supported in Gemini API.
- */
+/** Scores parsed responses for string matching use cases. */
 @AutoValue
 @JsonDeserialize(builder = ReinforcementTuningStringMatchRewardScorer.Builder.class)
 public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSerializable {
   /**
-   * Wrong answer reward is returned if the parsed response is evaluated as `false`. All wrong
-   * answers get the same reward.
+   * Wrong answer reward is returned if evaluator evaluates to `false`. All wrong answers get the
+   * same reward.
    */
   @JsonProperty("wrongAnswerReward")
   public abstract Optional<Float> wrongAnswerReward();
 
   /**
-   * Correct answer rewawrd is returned if the parsed response is evaluated as `true`. All correct
-   * answers get the same reward.
+   * Correct answer reward is returned if evaluator evaluates to `true`. All correct answers get the
+   * same reward.
    */
   @JsonProperty("correctAnswerReward")
   public abstract Optional<Float> correctAnswerReward();
@@ -84,8 +78,8 @@ public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSer
     /**
      * Setter for wrongAnswerReward.
      *
-     * <p>wrongAnswerReward: Wrong answer reward is returned if the parsed response is evaluated as
-     * `false`. All wrong answers get the same reward.
+     * <p>wrongAnswerReward: Wrong answer reward is returned if evaluator evaluates to `false`. All
+     * wrong answers get the same reward.
      */
     @JsonProperty("wrongAnswerReward")
     public abstract Builder wrongAnswerReward(Float wrongAnswerReward);
@@ -103,8 +97,8 @@ public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSer
     /**
      * Setter for correctAnswerReward.
      *
-     * <p>correctAnswerReward: Correct answer rewawrd is returned if the parsed response is
-     * evaluated as `true`. All correct answers get the same reward.
+     * <p>correctAnswerReward: Correct answer reward is returned if evaluator evaluates to `true`.
+     * All correct answers get the same reward.
      */
     @JsonProperty("correctAnswerReward")
     public abstract Builder correctAnswerReward(Float correctAnswerReward);

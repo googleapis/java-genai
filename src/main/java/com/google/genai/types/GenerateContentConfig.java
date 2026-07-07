@@ -35,7 +35,7 @@ import java.util.Optional;
  * Optional model configuration parameters.
  *
  * <p>For more information, see `Content generation parameters
- * &lt;https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters&gt;`_.
+ * <https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters>`_.
  */
 @AutoValue
 @JsonDeserialize(builder = GenerateContentConfig.Builder.class)

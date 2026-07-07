@@ -1217,12 +1217,6 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
-      throw new IllegalArgumentException(
-          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
     return toObject;
   }
 
@@ -1318,13 +1312,6 @@ public final class Caches {
         result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"exaAiSearch"},
-          Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}));
     }
 
     return toObject;

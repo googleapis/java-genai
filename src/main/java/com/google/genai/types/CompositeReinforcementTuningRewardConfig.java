@@ -34,7 +34,7 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = CompositeReinforcementTuningRewardConfig.Builder.class)
 public abstract class CompositeReinforcementTuningRewardConfig extends JsonSerializable {
-  /** List of reward function configurations with weights. */
+  /** */
   @JsonProperty("weightedRewardConfigs")
   public abstract Optional<List<CompositeReinforcementTuningRewardConfigWeightedRewardConfig>>
       weightedRewardConfigs();
@@ -63,7 +63,7 @@ public abstract class CompositeReinforcementTuningRewardConfig extends JsonSeria
     /**
      * Setter for weightedRewardConfigs.
      *
-     * <p>weightedRewardConfigs: List of reward function configurations with weights.
+     * <p>weightedRewardConfigs:
      */
     @JsonProperty("weightedRewardConfigs")
     public abstract Builder weightedRewardConfigs(
@@ -72,7 +72,7 @@ public abstract class CompositeReinforcementTuningRewardConfig extends JsonSeria
     /**
      * Setter for weightedRewardConfigs.
      *
-     * <p>weightedRewardConfigs: List of reward function configurations with weights.
+     * <p>weightedRewardConfigs:
      */
     @CanIgnoreReturnValue
     public Builder weightedRewardConfigs(
@@ -83,7 +83,7 @@ public abstract class CompositeReinforcementTuningRewardConfig extends JsonSeria
     /**
      * Setter for weightedRewardConfigs builder.
      *
-     * <p>weightedRewardConfigs: List of reward function configurations with weights.
+     * <p>weightedRewardConfigs:
      */
     @CanIgnoreReturnValue
     public Builder weightedRewardConfigs(

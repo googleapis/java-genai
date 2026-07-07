@@ -38,7 +38,7 @@ import java.util.Optional;
 public abstract class EmbedContentParametersPrivate extends JsonSerializable {
   /**
    * ID of the model to use. For a list of models, see `Google models
-   * &lt;https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models&gt;`_.
+   * <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>`_.
    */
   @JsonProperty("model")
   public abstract Optional<String> model();
@@ -83,7 +83,7 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
      * Setter for model.
      *
      * <p>model: ID of the model to use. For a list of models, see `Google models
-     * &lt;https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models&gt;`_.
+     * <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>`_.
      */
     @JsonProperty("model")
     public abstract Builder model(String model);

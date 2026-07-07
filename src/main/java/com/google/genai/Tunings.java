@@ -1219,13 +1219,6 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"topP"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseFormat"},
-          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
-    }
-
     return toObject;
   }
 
@@ -1392,19 +1385,6 @@ public final class Tunings {
       throw new IllegalArgumentException(
           "enableEnhancedCivicAnswers parameter is only supported in Gemini Developer API mode, not"
               + " in Gemini Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseFormat"},
-          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
-      throw new IllegalArgumentException(
-          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
     }
 
     return toObject;

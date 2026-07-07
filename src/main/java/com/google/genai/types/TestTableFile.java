@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** */
+/** None */
 @AutoValue
 @JsonDeserialize(builder = TestTableFile.Builder.class)
 public abstract class TestTableFile extends JsonSerializable {

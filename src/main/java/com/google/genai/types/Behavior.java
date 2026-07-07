@@ -24,8 +24,9 @@ import com.google.common.base.Ascii;
 import java.util.Objects;
 
 /**
- * Specifies the function Behavior. If not specified, the system keeps the current function call
- * behavior. This field is currently only supported by the BidiGenerateContent method.
+ * Specifies the function Behavior. Currently only non-blocking functions are supported. If not
+ * specified, the system keeps the current function call behavior. This field is currently only
+ * supported by the BidiGenerateContent method.
  */
 public class Behavior {
 

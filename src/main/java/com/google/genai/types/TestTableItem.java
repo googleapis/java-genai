@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** */
+/** None */
 @AutoValue
 @JsonDeserialize(builder = TestTableItem.Builder.class)
 public abstract class TestTableItem extends JsonSerializable {

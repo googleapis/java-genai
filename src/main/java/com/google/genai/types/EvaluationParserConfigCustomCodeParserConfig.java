@@ -37,7 +37,7 @@ public abstract class EvaluationParserConfigCustomCodeParserConfig extends JsonS
    * Required. Python function for parsing results. The function should be defined within this
    * string. The function takes a list of strings (LLM responses) and should return either a list of
    * dictionaries (for rubrics) or a single dictionary (for a metric result). Example function
-   * signature: def parse(responses: list[str]) -&gt; list[dict[str, Any]] | dict[str, Any]: When
+   * signature: def parse(responses: list[str]) -> list[dict[str, Any]] | dict[str, Any]: When
    * parsing rubrics, return a list of dictionaries, where each dictionary represents a Rubric.
    * Example for rubrics: [ { "content": {"property": {"description": "The response is factual."}},
    * "type": "FACTUALITY", "importance": "HIGH" }, { "content": {"property": {"description": "The
@@ -76,15 +76,14 @@ public abstract class EvaluationParserConfigCustomCodeParserConfig extends JsonS
      * <p>parsingFunction: Required. Python function for parsing results. The function should be
      * defined within this string. The function takes a list of strings (LLM responses) and should
      * return either a list of dictionaries (for rubrics) or a single dictionary (for a metric
-     * result). Example function signature: def parse(responses: list[str]) -&gt; list[dict[str,
-     * Any]] | dict[str, Any]: When parsing rubrics, return a list of dictionaries, where each
-     * dictionary represents a Rubric. Example for rubrics: [ { "content": {"property":
-     * {"description": "The response is factual."}}, "type": "FACTUALITY", "importance": "HIGH" }, {
-     * "content": {"property": {"description": "The response is fluent."}}, "type": "FLUENCY",
-     * "importance": "MEDIUM" } ] When parsing critique results, return a dictionary representing a
-     * MetricResult. Example for a metric result: { "score": 0.8, "explanation": "The model followed
-     * most instructions.", "rubric_verdicts": [...] } ... code for result extraction and
-     * aggregation
+     * result). Example function signature: def parse(responses: list[str]) -> list[dict[str, Any]]
+     * | dict[str, Any]: When parsing rubrics, return a list of dictionaries, where each dictionary
+     * represents a Rubric. Example for rubrics: [ { "content": {"property": {"description": "The
+     * response is factual."}}, "type": "FACTUALITY", "importance": "HIGH" }, { "content":
+     * {"property": {"description": "The response is fluent."}}, "type": "FLUENCY", "importance":
+     * "MEDIUM" } ] When parsing critique results, return a dictionary representing a MetricResult.
+     * Example for a metric result: { "score": 0.8, "explanation": "The model followed most
+     * instructions.", "rubric_verdicts": [...] } ... code for result extraction and aggregation
      */
     @JsonProperty("parsingFunction")
     public abstract Builder parsingFunction(String parsingFunction);

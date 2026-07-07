@@ -62,10 +62,10 @@ public abstract class LiveServerContent extends JsonSerializable {
   /**
    * If true, indicates that the model is done generating. When model is interrupted while
    * generating there will be no generation_complete message in interrupted turn, it will go through
-   * interrupted &gt; turn_complete. When model assumes realtime playback there will be delay
-   * between generation_complete and turn_complete that is caused by model waiting for playback to
-   * finish. If true, indicates that the model has finished generating all content. This is a signal
-   * to the client that it can stop sending messages.
+   * interrupted > turn_complete. When model assumes realtime playback there will be delay between
+   * generation_complete and turn_complete that is caused by model waiting for playback to finish.
+   * If true, indicates that the model has finished generating all content. This is a signal to the
+   * client that it can stop sending messages.
    */
   @JsonProperty("generationComplete")
   public abstract Optional<Boolean> generationComplete();
@@ -224,7 +224,7 @@ public abstract class LiveServerContent extends JsonSerializable {
      *
      * <p>generationComplete: If true, indicates that the model is done generating. When model is
      * interrupted while generating there will be no generation_complete message in interrupted
-     * turn, it will go through interrupted &gt; turn_complete. When model assumes realtime playback
+     * turn, it will go through interrupted > turn_complete. When model assumes realtime playback
      * there will be delay between generation_complete and turn_complete that is caused by model
      * waiting for playback to finish. If true, indicates that the model has finished generating all
      * content. This is a signal to the client that it can stop sending messages.

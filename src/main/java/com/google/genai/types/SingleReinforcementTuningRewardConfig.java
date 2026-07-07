@@ -34,39 +34,27 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
   @JsonProperty("autoraterScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorer> autoraterScorer();
 
-  /** A unique reward name for identifying each single reinforcement tuning reward. */
+  /** A unique reward name used to identify each single reinforcement tuning reward. */
   @JsonProperty("rewardName")
   public abstract Optional<String> rewardName();
 
-  /**
-   * Defines how to parse sample response. For example, given a sample response for evaluating the
-   * reward, users might want to extract the text only between `` and `` in the sample response, and
-   * keeps only the last one in case there are multiple such tags. To achieve such a purpose, they
-   * can define a regex `".*(.*?)"` using the
-   * ReinforcementTuningParseResponseConfig.ResponseParseType.REGEX_EXTRACT parse type.
-   */
+  /** Defines how to parse sample response. */
   @JsonProperty("parseResponseConfig")
   public abstract Optional<ReinforcementTuningParseResponseConfig> parseResponseConfig();
 
-  /**
-   * ReinforcementTuningCodeExecutionRewardScorer is used to score parsed responses for code
-   * execution use cases.
-   */
+  /** Scores parsed responses for code execution use cases. */
   @JsonProperty("codeExecutionRewardScorer")
   public abstract Optional<ReinforcementTuningCodeExecutionRewardScorer>
       codeExecutionRewardScorer();
 
   /**
-   * ReinforcementTuningStringMatchRewardScorer is used to score parsed responses for simple string
-   * matching use cases against reference answers.
+   * Scores parsed responses for simple string matching use cases against reference answer without
+   * writing python code.
    */
   @JsonProperty("stringMatchRewardScorer")
   public abstract Optional<ReinforcementTuningStringMatchRewardScorer> stringMatchRewardScorer();
 
-  /**
-   * ReinforcementTuningCloudRunRewardScorer is used to score parsed responses by calling a Cloud
-   * Run service.
-   */
+  /** Scores parsed responses by calling a Cloud Run service. */
   @JsonProperty("cloudRunRewardScorer")
   public abstract Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer();
 
@@ -125,7 +113,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for rewardName.
      *
-     * <p>rewardName: A unique reward name for identifying each single reinforcement tuning reward.
+     * <p>rewardName: A unique reward name used to identify each single reinforcement tuning reward.
      */
     @JsonProperty("rewardName")
     public abstract Builder rewardName(String rewardName);
@@ -143,11 +131,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for parseResponseConfig.
      *
-     * <p>parseResponseConfig: Defines how to parse sample response. For example, given a sample
-     * response for evaluating the reward, users might want to extract the text only between `` and
-     * `` in the sample response, and keeps only the last one in case there are multiple such tags.
-     * To achieve such a purpose, they can define a regex `".*(.*?)"` using the
-     * ReinforcementTuningParseResponseConfig.ResponseParseType.REGEX_EXTRACT parse type.
+     * <p>parseResponseConfig: Defines how to parse sample response.
      */
     @JsonProperty("parseResponseConfig")
     public abstract Builder parseResponseConfig(
@@ -156,11 +140,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for parseResponseConfig builder.
      *
-     * <p>parseResponseConfig: Defines how to parse sample response. For example, given a sample
-     * response for evaluating the reward, users might want to extract the text only between `` and
-     * `` in the sample response, and keeps only the last one in case there are multiple such tags.
-     * To achieve such a purpose, they can define a regex `".*(.*?)"` using the
-     * ReinforcementTuningParseResponseConfig.ResponseParseType.REGEX_EXTRACT parse type.
+     * <p>parseResponseConfig: Defines how to parse sample response.
      */
     @CanIgnoreReturnValue
     public Builder parseResponseConfig(
@@ -182,8 +162,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for codeExecutionRewardScorer.
      *
-     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
-     * parsed responses for code execution use cases.
+     * <p>codeExecutionRewardScorer: Scores parsed responses for code execution use cases.
      */
     @JsonProperty("codeExecutionRewardScorer")
     public abstract Builder codeExecutionRewardScorer(
@@ -192,8 +171,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for codeExecutionRewardScorer builder.
      *
-     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
-     * parsed responses for code execution use cases.
+     * <p>codeExecutionRewardScorer: Scores parsed responses for code execution use cases.
      */
     @CanIgnoreReturnValue
     public Builder codeExecutionRewardScorer(
@@ -215,8 +193,8 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for stringMatchRewardScorer.
      *
-     * <p>stringMatchRewardScorer: ReinforcementTuningStringMatchRewardScorer is used to score
-     * parsed responses for simple string matching use cases against reference answers.
+     * <p>stringMatchRewardScorer: Scores parsed responses for simple string matching use cases
+     * against reference answer without writing python code.
      */
     @JsonProperty("stringMatchRewardScorer")
     public abstract Builder stringMatchRewardScorer(
@@ -225,8 +203,8 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for stringMatchRewardScorer builder.
      *
-     * <p>stringMatchRewardScorer: ReinforcementTuningStringMatchRewardScorer is used to score
-     * parsed responses for simple string matching use cases against reference answers.
+     * <p>stringMatchRewardScorer: Scores parsed responses for simple string matching use cases
+     * against reference answer without writing python code.
      */
     @CanIgnoreReturnValue
     public Builder stringMatchRewardScorer(
@@ -248,8 +226,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for cloudRunRewardScorer.
      *
-     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
-     * responses by calling a Cloud Run service.
+     * <p>cloudRunRewardScorer: Scores parsed responses by calling a Cloud Run service.
      */
     @JsonProperty("cloudRunRewardScorer")
     public abstract Builder cloudRunRewardScorer(
@@ -258,8 +235,7 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     /**
      * Setter for cloudRunRewardScorer builder.
      *
-     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
-     * responses by calling a Cloud Run service.
+     * <p>cloudRunRewardScorer: Scores parsed responses by calling a Cloud Run service.
      */
     @CanIgnoreReturnValue
     public Builder cloudRunRewardScorer(
