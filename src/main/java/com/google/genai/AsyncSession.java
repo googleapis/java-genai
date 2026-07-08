@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.LiveClientContent;
 import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveClientToolResponse;
+import com.google.genai.types.LiveServerSetupComplete;
 import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
 import com.google.genai.types.LiveSendToolResponseParameters;
@@ -40,11 +41,17 @@ public final class AsyncSession {
 
   private final AsyncLive.GenAiWebSocketClient websocket;
   final String sessionId;
+  private final LiveServerSetupComplete setupComplete;
 
-  AsyncSession(ApiClient apiClient, AsyncLive.GenAiWebSocketClient websocket, String sessionId) {
+  AsyncSession(
+      ApiClient apiClient,
+      AsyncLive.GenAiWebSocketClient websocket,
+      String sessionId,
+      LiveServerSetupComplete setupComplete) {
     this.apiClient = apiClient;
     this.websocket = websocket;
     this.sessionId = sessionId;
+    this.setupComplete = setupComplete;
   }
 
   /**
@@ -144,5 +151,9 @@ public final class AsyncSession {
    */
   public String sessionId() {
     return sessionId;
+  }
+
+  public LiveServerSetupComplete setupComplete() {
+    return setupComplete;
   }
 }
