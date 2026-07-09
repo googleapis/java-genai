@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.61.0](https://github.com/googleapis/java-genai/compare/v1.60.0...v1.61.0) (2026-07-09)
+
+
+### Features
+
+* Add response_format and Translation_config in GenerationConfig ([e8471bf](https://github.com/googleapis/java-genai/commit/e8471bfa0ce73328e0c3beb748d7335657814547))
+* Add Tool.exa_ai_search for Gemini Enterprise API ([e8471bf](https://github.com/googleapis/java-genai/commit/e8471bfa0ce73328e0c3beb748d7335657814547))
+* voice consent signature types across all SDK languages. ([abcf4bb](https://github.com/googleapis/java-genai/commit/abcf4bb55883c6a7cb26c488c6a737c22aa40a71))
+
 ## [1.60.0](https://github.com/googleapis/java-genai/compare/v1.59.0...v1.60.0) (2026-06-24)
 
 
