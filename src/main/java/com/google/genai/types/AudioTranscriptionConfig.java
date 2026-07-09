@@ -51,6 +51,14 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   @JsonProperty("adaptationPhrases")
   public abstract Optional<List<String>> adaptationPhrases();
 
+  /** Configures word-level timestamp generation. */
+  @JsonProperty("wordTimestamp")
+  public abstract Optional<Boolean> wordTimestamp();
+
+  /** Configures speaker diarization. */
+  @JsonProperty("diarization")
+  public abstract Optional<Boolean> diarization();
+
   /** Instantiates a builder for AudioTranscriptionConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -185,6 +193,42 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAdaptationPhrases() {
       return adaptationPhrases(Optional.empty());
+    }
+
+    /**
+     * Setter for wordTimestamp.
+     *
+     * <p>wordTimestamp: Configures word-level timestamp generation.
+     */
+    @JsonProperty("wordTimestamp")
+    public abstract Builder wordTimestamp(boolean wordTimestamp);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder wordTimestamp(Optional<Boolean> wordTimestamp);
+
+    /** Clears the value of wordTimestamp field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWordTimestamp() {
+      return wordTimestamp(Optional.empty());
+    }
+
+    /**
+     * Setter for diarization.
+     *
+     * <p>diarization: Configures speaker diarization.
+     */
+    @JsonProperty("diarization")
+    public abstract Builder diarization(boolean diarization);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder diarization(Optional<Boolean> diarization);
+
+    /** Clears the value of diarization field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDiarization() {
+      return diarization(Optional.empty());
     }
 
     public abstract AudioTranscriptionConfig build();

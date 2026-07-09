@@ -61,6 +61,20 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"wordTimestamp"},
+          Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"diarization"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"diarization"},
+          Common.getValueByPath(fromObject, new String[] {"diarization"}));
+    }
+
     return toObject;
   }
 
@@ -677,6 +691,13 @@ final class TokensConverters {
           toObject,
           new String[] {"partMetadata"},
           Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
     return toObject;

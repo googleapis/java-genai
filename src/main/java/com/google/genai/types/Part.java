@@ -122,6 +122,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("partMetadata")
   public abstract Optional<Map<String, Object>> partMetadata();
 
+  /** Output only. The transcription of the audio part. */
+  @JsonProperty("audioTranscription")
+  public abstract Optional<Transcription> audioTranscription();
+
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -513,6 +517,34 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPartMetadata() {
       return partMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for audioTranscription.
+     *
+     * <p>audioTranscription: Output only. The transcription of the audio part.
+     */
+    @JsonProperty("audioTranscription")
+    public abstract Builder audioTranscription(Transcription audioTranscription);
+
+    /**
+     * Setter for audioTranscription builder.
+     *
+     * <p>audioTranscription: Output only. The transcription of the audio part.
+     */
+    @CanIgnoreReturnValue
+    public Builder audioTranscription(Transcription.Builder audioTranscriptionBuilder) {
+      return audioTranscription(audioTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTranscription(Optional<Transcription> audioTranscription);
+
+    /** Clears the value of audioTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTranscription() {
+      return audioTranscription(Optional.empty());
     }
 
     public abstract Part build();
