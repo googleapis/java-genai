@@ -18,12 +18,16 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /** Statistics of the input text associated with the result of content embedding. */
@@ -40,6 +44,13 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
   /** Gemini Enterprise Agent Platform only. Number of tokens of the input text. */
   @JsonProperty("tokenCount")
   public abstract Optional<Float> tokenCount();
+
+  /**
+   * Gemini Enterprise Agent Platform only. List of modalities and their token count for the input
+   * content.
+   */
+  @JsonProperty("tokensDetails")
+  public abstract Optional<List<ModalityTokenCount>> tokensDetails();
 
   /** Instantiates a builder for ContentEmbeddingStatistics. */
   @ExcludeFromGeneratedCoverageReport
@@ -94,6 +105,50 @@ public abstract class ContentEmbeddingStatistics extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTokenCount() {
       return tokenCount(Optional.empty());
+    }
+
+    /**
+     * Setter for tokensDetails.
+     *
+     * <p>tokensDetails: Gemini Enterprise Agent Platform only. List of modalities and their token
+     * count for the input content.
+     */
+    @JsonProperty("tokensDetails")
+    public abstract Builder tokensDetails(List<ModalityTokenCount> tokensDetails);
+
+    /**
+     * Setter for tokensDetails.
+     *
+     * <p>tokensDetails: Gemini Enterprise Agent Platform only. List of modalities and their token
+     * count for the input content.
+     */
+    @CanIgnoreReturnValue
+    public Builder tokensDetails(ModalityTokenCount... tokensDetails) {
+      return tokensDetails(Arrays.asList(tokensDetails));
+    }
+
+    /**
+     * Setter for tokensDetails builder.
+     *
+     * <p>tokensDetails: Gemini Enterprise Agent Platform only. List of modalities and their token
+     * count for the input content.
+     */
+    @CanIgnoreReturnValue
+    public Builder tokensDetails(ModalityTokenCount.Builder... tokensDetailsBuilders) {
+      return tokensDetails(
+          Arrays.asList(tokensDetailsBuilders).stream()
+              .map(ModalityTokenCount.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tokensDetails(Optional<List<ModalityTokenCount>> tokensDetails);
+
+    /** Clears the value of tokensDetails field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTokensDetails() {
+      return tokensDetails(Optional.empty());
     }
 
     public abstract ContentEmbeddingStatistics build();

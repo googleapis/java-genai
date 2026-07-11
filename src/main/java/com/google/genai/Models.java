@@ -469,6 +469,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"token_count"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"tokensDetails"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tokensDetails"},
+          Common.getValueByPath(fromObject, new String[] {"tokensDetails"}));
+    }
+
     return toObject;
   }
 
@@ -1348,6 +1355,9 @@ public final class Models {
         ObjectNode stats = JsonSerializable.objectMapper.createObjectNode();
         if (usageMetadata != null && usageMetadata.get("promptTokenCount") != null) {
           stats.set("token_count", usageMetadata.get("promptTokenCount"));
+        }
+        if (usageMetadata != null && usageMetadata.get("promptTokensDetails") != null) {
+          stats.set("tokensDetails", usageMetadata.get("promptTokensDetails"));
         }
         if (truncated != null) {
           stats.set("truncated", truncated);
