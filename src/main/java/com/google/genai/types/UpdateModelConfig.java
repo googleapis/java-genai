@@ -46,6 +46,10 @@ public abstract class UpdateModelConfig extends JsonSerializable {
   @JsonProperty("defaultCheckpointId")
   public abstract Optional<String> defaultCheckpointId();
 
+  /** */
+  @JsonProperty("updateMask")
+  public abstract Optional<String> updateMask();
+
   /** Instantiates a builder for UpdateModelConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -144,6 +148,24 @@ public abstract class UpdateModelConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearDefaultCheckpointId() {
       return defaultCheckpointId(Optional.empty());
+    }
+
+    /**
+     * Setter for updateMask.
+     *
+     * <p>updateMask:
+     */
+    @JsonProperty("updateMask")
+    public abstract Builder updateMask(String updateMask);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder updateMask(Optional<String> updateMask);
+
+    /** Clears the value of updateMask field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUpdateMask() {
+      return updateMask(Optional.empty());
     }
 
     public abstract UpdateModelConfig build();
