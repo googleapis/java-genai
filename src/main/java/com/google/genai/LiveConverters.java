@@ -967,6 +967,13 @@ final class LiveConverters {
       Common.setValueByPath(toObject, new String[] {"safetySettings"}, result);
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"historyConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"historyConfig"},
+          Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
+    }
+
     return toObject;
   }
 
@@ -1075,6 +1082,13 @@ final class LiveConverters {
           toObject,
           new String[] {"safetySettings"},
           Common.getValueByPath(fromObject, new String[] {"safetySettings"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"historyConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"historyConfig"},
+          Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
     }
 
     return toObject;

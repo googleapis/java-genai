@@ -110,6 +110,10 @@ public abstract class LiveClientSetup extends JsonSerializable {
   @JsonProperty("safetySettings")
   public abstract Optional<List<SafetySetting>> safetySettings();
 
+  /** Configures the exchange of history between the client and the server. */
+  @JsonProperty("historyConfig")
+  public abstract Optional<HistoryConfig> historyConfig();
+
   /** Instantiates a builder for LiveClientSetup. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -534,6 +538,34 @@ public abstract class LiveClientSetup extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSafetySettings() {
       return safetySettings(Optional.empty());
+    }
+
+    /**
+     * Setter for historyConfig.
+     *
+     * <p>historyConfig: Configures the exchange of history between the client and the server.
+     */
+    @JsonProperty("historyConfig")
+    public abstract Builder historyConfig(HistoryConfig historyConfig);
+
+    /**
+     * Setter for historyConfig builder.
+     *
+     * <p>historyConfig: Configures the exchange of history between the client and the server.
+     */
+    @CanIgnoreReturnValue
+    public Builder historyConfig(HistoryConfig.Builder historyConfigBuilder) {
+      return historyConfig(historyConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder historyConfig(Optional<HistoryConfig> historyConfig);
+
+    /** Clears the value of historyConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHistoryConfig() {
+      return historyConfig(Optional.empty());
     }
 
     public abstract LiveClientSetup build();
