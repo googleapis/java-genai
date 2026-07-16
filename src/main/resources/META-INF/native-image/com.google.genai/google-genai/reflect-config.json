@@ -24,9 +24,6 @@
   "name":"[Lcom.google.common.collect.ImmutableMapEntry;"
 },
 {
-  "name":"[Ljava.lang.Object;"
-},
-{
   "name":"[Ljava.lang.String;"
 },
 {
@@ -56,7 +53,7 @@
   "name":"com.google.api.client.http.HttpHeaders",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"setAccept","parameterTypes":["java.lang.String"] }, {"name":"setAcceptEncoding","parameterTypes":["java.lang.String"] }, {"name":"setAge","parameterTypes":["java.lang.Long"] }, {"name":"setAuthenticate","parameterTypes":["java.lang.String"] }, {"name":"setAuthorization","parameterTypes":["java.util.List"] }, {"name":"setCacheControl","parameterTypes":["java.lang.String"] }, {"name":"setContentEncoding","parameterTypes":["java.lang.String"] }, {"name":"setContentLength","parameterTypes":["java.lang.Long"] }, {"name":"setContentMD5","parameterTypes":["java.lang.String"] }, {"name":"setContentRange","parameterTypes":["java.lang.String"] }, {"name":"setContentType","parameterTypes":["java.lang.String"] }, {"name":"setCookie","parameterTypes":["java.lang.String"] }, {"name":"setDate","parameterTypes":["java.lang.String"] }, {"name":"setETag","parameterTypes":["java.lang.String"] }, {"name":"setExpires","parameterTypes":["java.lang.String"] }, {"name":"setIfMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfModifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setIfNoneMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfRange","parameterTypes":["java.lang.String"] }, {"name":"setIfUnmodifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setLastModified","parameterTypes":["java.lang.String"] }, {"name":"setLocation","parameterTypes":["java.lang.String"] }, {"name":"setMimeVersion","parameterTypes":["java.lang.String"] }, {"name":"setRange","parameterTypes":["java.lang.String"] }, {"name":"setRetryAfter","parameterTypes":["java.lang.String"] }, {"name":"setUserAgent","parameterTypes":["java.lang.String"] }]
+  "methods":[{"name":"setAccept","parameterTypes":["java.lang.String"] }, {"name":"setAcceptEncoding","parameterTypes":["java.lang.String"] }, {"name":"setAge","parameterTypes":["java.lang.Long"] }, {"name":"setAuthenticate","parameterTypes":["java.lang.String"] }, {"name":"setAuthorization","parameterTypes":["java.lang.String"] }, {"name":"setCacheControl","parameterTypes":["java.lang.String"] }, {"name":"setContentEncoding","parameterTypes":["java.lang.String"] }, {"name":"setContentLength","parameterTypes":["java.lang.Long"] }, {"name":"setContentMD5","parameterTypes":["java.lang.String"] }, {"name":"setContentRange","parameterTypes":["java.lang.String"] }, {"name":"setContentType","parameterTypes":["java.lang.String"] }, {"name":"setCookie","parameterTypes":["java.lang.String"] }, {"name":"setDate","parameterTypes":["java.lang.String"] }, {"name":"setETag","parameterTypes":["java.lang.String"] }, {"name":"setExpires","parameterTypes":["java.lang.String"] }, {"name":"setIfMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfModifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setIfNoneMatch","parameterTypes":["java.lang.String"] }, {"name":"setIfRange","parameterTypes":["java.lang.String"] }, {"name":"setIfUnmodifiedSince","parameterTypes":["java.lang.String"] }, {"name":"setLastModified","parameterTypes":["java.lang.String"] }, {"name":"setLocation","parameterTypes":["java.lang.String"] }, {"name":"setMimeVersion","parameterTypes":["java.lang.String"] }, {"name":"setRange","parameterTypes":["java.lang.String"] }, {"name":"setRetryAfter","parameterTypes":["java.lang.String"] }, {"name":"setUserAgent","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"com.google.api.client.json.GenericJson",
@@ -178,7 +175,7 @@
   "methods":[{"name":"apiKey","parameterTypes":[] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"asyncRequest","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"credentials","parameterTypes":[] }, {"name":"customBaseUrl","parameterTypes":[] }, {"name":"defaultEnvironmentVariables","parameterTypes":[] }, {"name":"defaultHttpOptions","parameterTypes":["boolean","java.util.Optional","java.util.Optional","java.util.Optional","java.util.Optional"] }, {"name":"getApiKeyFromEnv","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"libraryVersion","parameterTypes":[] }, {"name":"location","parameterTypes":[] }, {"name":"project","parameterTypes":[] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Optional"] }, {"name":"request","parameterTypes":["java.lang.String","java.lang.String","byte[]","java.util.Optional"] }, {"name":"setDefaultBaseUrls","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"vertexAI","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiClient$MockitoMock$1UMaCpjG",
+  "name":"com.google.genai.ApiClient$MockitoMock$a16taxJU",
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["java.util.Optional","java.util.Optional","java.util.Optional"] }]
@@ -192,7 +189,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"getBody","parameterTypes":[] }, {"name":"getHeaders","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.ApiResponse$MockitoMock$ioDDDjPL",
+  "name":"com.google.genai.ApiResponse$MockitoMock$UsXY3ADg",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -617,7 +614,7 @@
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"execute","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest"] }, {"name":"executeAsync","parameterTypes":["com.google.genai.interactions.core.http.HttpRequest","com.google.genai.interactions.core.RequestOptions"] }]
 },
 {
-  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$c5T3rBSn",
+  "name":"com.google.genai.interactions.core.http.HttpClient$MockitoMock$FOzqetM1",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -1433,13 +1430,6 @@
   "methods":[{"name":"endTime","parameterTypes":[] }, {"name":"startTime","parameterTypes":[] }]
 },
 {
-  "name":"com.google.genai.types.AutoValue_JobError",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"code","parameterTypes":[] }, {"name":"details","parameterTypes":[] }, {"name":"message","parameterTypes":[] }]
-},
-{
   "name":"com.google.genai.types.AutoValue_LatLng",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -2163,7 +2153,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"build","parameterTypes":[] }, {"name":"completionStats","parameterTypes":["com.google.genai.types.CompletionStats"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"dest","parameterTypes":["com.google.genai.types.BatchJobDestination"] }, {"name":"displayName","parameterTypes":["java.lang.String"] }, {"name":"endTime","parameterTypes":["java.time.Instant"] }, {"name":"error","parameterTypes":["com.google.genai.types.JobError"] }, {"name":"model","parameterTypes":["java.lang.String"] }, {"name":"name","parameterTypes":["java.lang.String"] }, {"name":"outputInfo","parameterTypes":["com.google.genai.types.BatchJobOutputInfo"] }, {"name":"src","parameterTypes":["com.google.genai.types.BatchJobSource"] }, {"name":"startTime","parameterTypes":["java.time.Instant"] }, {"name":"state","parameterTypes":["com.google.genai.types.JobState"] }, {"name":"updateTime","parameterTypes":["java.time.Instant"] }]
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"completionStats","parameterTypes":["com.google.genai.types.CompletionStats"] }, {"name":"create","parameterTypes":[] }, {"name":"createTime","parameterTypes":["java.time.Instant"] }, {"name":"dest","parameterTypes":["com.google.genai.types.BatchJobDestination"] }, {"name":"displayName","parameterTypes":["java.lang.String"] }, {"name":"endTime","parameterTypes":["java.time.Instant"] }, {"name":"model","parameterTypes":["java.lang.String"] }, {"name":"name","parameterTypes":["java.lang.String"] }, {"name":"outputInfo","parameterTypes":["com.google.genai.types.BatchJobOutputInfo"] }, {"name":"src","parameterTypes":["com.google.genai.types.BatchJobSource"] }, {"name":"startTime","parameterTypes":["java.time.Instant"] }, {"name":"state","parameterTypes":["com.google.genai.types.JobState"] }, {"name":"updateTime","parameterTypes":["java.time.Instant"] }]
 },
 {
   "name":"com.google.genai.types.BatchJobDestination",
@@ -2449,7 +2439,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"tokenCount","parameterTypes":["java.lang.Float"] }, {"name":"truncated","parameterTypes":["boolean"] }]
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"tokenCount","parameterTypes":["java.lang.Float"] }, {"name":"tokensDetails","parameterTypes":["java.util.List"] }, {"name":"truncated","parameterTypes":["boolean"] }]
 },
 {
   "name":"com.google.genai.types.ContentTest",
@@ -3872,16 +3862,10 @@
   "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"endTime","parameterTypes":["java.time.Instant"] }, {"name":"startTime","parameterTypes":["java.time.Instant"] }]
 },
 {
-  "name":"com.google.genai.types.JobError",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true
-},
-{
   "name":"com.google.genai.types.JobError$Builder",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"build","parameterTypes":[] }, {"name":"code","parameterTypes":["java.lang.Integer"] }, {"name":"create","parameterTypes":[] }, {"name":"message","parameterTypes":["java.lang.String"] }]
+  "queryAllDeclaredConstructors":true
 },
 {
   "name":"com.google.genai.types.JobState",
@@ -6589,7 +6573,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"okhttp3.Call$MockitoMock$RislhwIZ",
+  "name":"okhttp3.Call$MockitoMock$VtZ6NbLS",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6610,7 +6594,7 @@
   "methods":[{"name":"call","parameterTypes":[] }, {"name":"connectTimeoutMillis","parameterTypes":[] }, {"name":"connection","parameterTypes":[] }, {"name":"proceed","parameterTypes":["okhttp3.Request"] }, {"name":"readTimeoutMillis","parameterTypes":[] }, {"name":"request","parameterTypes":[] }, {"name":"withConnectTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withReadTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"withWriteTimeout","parameterTypes":["int","java.util.concurrent.TimeUnit"] }, {"name":"writeTimeoutMillis","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.Interceptor$Chain$MockitoMock$jgeEN7tT",
+  "name":"okhttp3.Interceptor$Chain$MockitoMock$WP94quT0",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6639,7 +6623,7 @@
   "methods":[{"name":"contentLength","parameterTypes":[] }, {"name":"contentType","parameterTypes":[] }, {"name":"source","parameterTypes":[] }]
 },
 {
-  "name":"okhttp3.ResponseBody$MockitoMock$lyAPDJnM",
+  "name":"okhttp3.ResponseBody$MockitoMock$YGi79Ymx",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -6859,7 +6843,7 @@
   "queryAllDeclaredConstructors":true
 },
 {
-  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$BHSiwb3D",
+  "name":"org.mockito.internal.util.reflection.InstrumentationMemberAccessor$Dispatcher$ByteBuddy$mBVuB4jo",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
