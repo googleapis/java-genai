@@ -34,6 +34,24 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = UsageMetadata.Builder.class)
 public abstract class UsageMetadata extends JsonSerializable {
+  /** Total number of tokens across all the generated response candidates. */
+  @JsonProperty("responseTokenCount")
+  public abstract Optional<Integer> responseTokenCount();
+
+  /** List of modalities that were returned in the response. */
+  @JsonProperty("responseTokensDetails")
+  public abstract Optional<List<ModalityTokenCount>> responseTokensDetails();
+
+  /**
+   * Output only. A detailed breakdown of the token count for each modality in the cached content.
+   */
+  @JsonProperty("cacheTokensDetails")
+  public abstract Optional<List<ModalityTokenCount>> cacheTokensDetails();
+
+  /** Output only. The number of tokens in the cached content that was used for this request. */
+  @JsonProperty("cachedContentTokenCount")
+  public abstract Optional<Integer> cachedContentTokenCount();
+
   /**
    * The total number of tokens in the prompt. This includes any text, images, or other media
    * provided in the request. When `cached_content` is set, this also includes the number of tokens
@@ -42,20 +60,9 @@ public abstract class UsageMetadata extends JsonSerializable {
   @JsonProperty("promptTokenCount")
   public abstract Optional<Integer> promptTokenCount();
 
-  /** Output only. The number of tokens in the cached content that was used for this request. */
-  @JsonProperty("cachedContentTokenCount")
-  public abstract Optional<Integer> cachedContentTokenCount();
-
-  /** Total number of tokens across all the generated response candidates. */
-  @JsonProperty("responseTokenCount")
-  public abstract Optional<Integer> responseTokenCount();
-
-  /**
-   * Output only. The number of tokens in the results from tool executions, which are provided back
-   * to the model as input, if applicable.
-   */
-  @JsonProperty("toolUsePromptTokenCount")
-  public abstract Optional<Integer> toolUsePromptTokenCount();
+  /** Output only. A detailed breakdown of the token count for each modality in the prompt. */
+  @JsonProperty("promptTokensDetails")
+  public abstract Optional<List<ModalityTokenCount>> promptTokensDetails();
 
   /**
    * Output only. The number of tokens that were part of the model's generated "thoughts" output, if
@@ -65,25 +72,11 @@ public abstract class UsageMetadata extends JsonSerializable {
   public abstract Optional<Integer> thoughtsTokenCount();
 
   /**
-   * The total number of tokens for the entire request. This is the sum of `prompt_token_count`,
-   * `candidates_token_count`, `tool_use_prompt_token_count`, and `thoughts_token_count`.
+   * Output only. The number of tokens in the results from tool executions, which are provided back
+   * to the model as input, if applicable.
    */
-  @JsonProperty("totalTokenCount")
-  public abstract Optional<Integer> totalTokenCount();
-
-  /** Output only. A detailed breakdown of the token count for each modality in the prompt. */
-  @JsonProperty("promptTokensDetails")
-  public abstract Optional<List<ModalityTokenCount>> promptTokensDetails();
-
-  /**
-   * Output only. A detailed breakdown of the token count for each modality in the cached content.
-   */
-  @JsonProperty("cacheTokensDetails")
-  public abstract Optional<List<ModalityTokenCount>> cacheTokensDetails();
-
-  /** List of modalities that were returned in the response. */
-  @JsonProperty("responseTokensDetails")
-  public abstract Optional<List<ModalityTokenCount>> responseTokensDetails();
+  @JsonProperty("toolUsePromptTokenCount")
+  public abstract Optional<Integer> toolUsePromptTokenCount();
 
   /**
    * Output only. A detailed breakdown by modality of the token counts from the results of tool
@@ -91,6 +84,13 @@ public abstract class UsageMetadata extends JsonSerializable {
    */
   @JsonProperty("toolUsePromptTokensDetails")
   public abstract Optional<List<ModalityTokenCount>> toolUsePromptTokensDetails();
+
+  /**
+   * The total number of tokens for the entire request. This is the sum of `prompt_token_count`,
+   * `candidates_token_count`, `tool_use_prompt_token_count`, and `thoughts_token_count`.
+   */
+  @JsonProperty("totalTokenCount")
+  public abstract Optional<Integer> totalTokenCount();
 
   /** Output only. The traffic type for this request. This field is not supported in Gemini API. */
   @JsonProperty("trafficType")
@@ -119,45 +119,6 @@ public abstract class UsageMetadata extends JsonSerializable {
     }
 
     /**
-     * Setter for promptTokenCount.
-     *
-     * <p>promptTokenCount: The total number of tokens in the prompt. This includes any text,
-     * images, or other media provided in the request. When `cached_content` is set, this also
-     * includes the number of tokens in the cached content.
-     */
-    @JsonProperty("promptTokenCount")
-    public abstract Builder promptTokenCount(Integer promptTokenCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder promptTokenCount(Optional<Integer> promptTokenCount);
-
-    /** Clears the value of promptTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearPromptTokenCount() {
-      return promptTokenCount(Optional.empty());
-    }
-
-    /**
-     * Setter for cachedContentTokenCount.
-     *
-     * <p>cachedContentTokenCount: Output only. The number of tokens in the cached content that was
-     * used for this request.
-     */
-    @JsonProperty("cachedContentTokenCount")
-    public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder cachedContentTokenCount(Optional<Integer> cachedContentTokenCount);
-
-    /** Clears the value of cachedContentTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearCachedContentTokenCount() {
-      return cachedContentTokenCount(Optional.empty());
-    }
-
-    /**
      * Setter for responseTokenCount.
      *
      * <p>responseTokenCount: Total number of tokens across all the generated response candidates.
@@ -176,105 +137,46 @@ public abstract class UsageMetadata extends JsonSerializable {
     }
 
     /**
-     * Setter for toolUsePromptTokenCount.
+     * Setter for responseTokensDetails.
      *
-     * <p>toolUsePromptTokenCount: Output only. The number of tokens in the results from tool
-     * executions, which are provided back to the model as input, if applicable.
+     * <p>responseTokensDetails: List of modalities that were returned in the response.
      */
-    @JsonProperty("toolUsePromptTokenCount")
-    public abstract Builder toolUsePromptTokenCount(Integer toolUsePromptTokenCount);
+    @JsonProperty("responseTokensDetails")
+    public abstract Builder responseTokensDetails(List<ModalityTokenCount> responseTokensDetails);
 
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder toolUsePromptTokenCount(Optional<Integer> toolUsePromptTokenCount);
-
-    /** Clears the value of toolUsePromptTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
+    /**
+     * Setter for responseTokensDetails.
+     *
+     * <p>responseTokensDetails: List of modalities that were returned in the response.
+     */
     @CanIgnoreReturnValue
-    public Builder clearToolUsePromptTokenCount() {
-      return toolUsePromptTokenCount(Optional.empty());
+    public Builder responseTokensDetails(ModalityTokenCount... responseTokensDetails) {
+      return responseTokensDetails(Arrays.asList(responseTokensDetails));
     }
 
     /**
-     * Setter for thoughtsTokenCount.
+     * Setter for responseTokensDetails builder.
      *
-     * <p>thoughtsTokenCount: Output only. The number of tokens that were part of the model's
-     * generated "thoughts" output, if applicable.
-     */
-    @JsonProperty("thoughtsTokenCount")
-    public abstract Builder thoughtsTokenCount(Integer thoughtsTokenCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder thoughtsTokenCount(Optional<Integer> thoughtsTokenCount);
-
-    /** Clears the value of thoughtsTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearThoughtsTokenCount() {
-      return thoughtsTokenCount(Optional.empty());
-    }
-
-    /**
-     * Setter for totalTokenCount.
-     *
-     * <p>totalTokenCount: The total number of tokens for the entire request. This is the sum of
-     * `prompt_token_count`, `candidates_token_count`, `tool_use_prompt_token_count`, and
-     * `thoughts_token_count`.
-     */
-    @JsonProperty("totalTokenCount")
-    public abstract Builder totalTokenCount(Integer totalTokenCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder totalTokenCount(Optional<Integer> totalTokenCount);
-
-    /** Clears the value of totalTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearTotalTokenCount() {
-      return totalTokenCount(Optional.empty());
-    }
-
-    /**
-     * Setter for promptTokensDetails.
-     *
-     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
-     * modality in the prompt.
-     */
-    @JsonProperty("promptTokensDetails")
-    public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
-
-    /**
-     * Setter for promptTokensDetails.
-     *
-     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
-     * modality in the prompt.
+     * <p>responseTokensDetails: List of modalities that were returned in the response.
      */
     @CanIgnoreReturnValue
-    public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
-      return promptTokensDetails(Arrays.asList(promptTokensDetails));
-    }
-
-    /**
-     * Setter for promptTokensDetails builder.
-     *
-     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
-     * modality in the prompt.
-     */
-    @CanIgnoreReturnValue
-    public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
-      return promptTokensDetails(
-          Arrays.asList(promptTokensDetailsBuilders).stream()
+    public Builder responseTokensDetails(
+        ModalityTokenCount.Builder... responseTokensDetailsBuilders) {
+      return responseTokensDetails(
+          Arrays.asList(responseTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder promptTokensDetails(Optional<List<ModalityTokenCount>> promptTokensDetails);
+    abstract Builder responseTokensDetails(
+        Optional<List<ModalityTokenCount>> responseTokensDetails);
 
-    /** Clears the value of promptTokensDetails field. */
+    /** Clears the value of responseTokensDetails field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearPromptTokensDetails() {
-      return promptTokensDetails(Optional.empty());
+    public Builder clearResponseTokensDetails() {
+      return responseTokensDetails(Optional.empty());
     }
 
     /**
@@ -322,46 +224,124 @@ public abstract class UsageMetadata extends JsonSerializable {
     }
 
     /**
-     * Setter for responseTokensDetails.
+     * Setter for cachedContentTokenCount.
      *
-     * <p>responseTokensDetails: List of modalities that were returned in the response.
+     * <p>cachedContentTokenCount: Output only. The number of tokens in the cached content that was
+     * used for this request.
      */
-    @JsonProperty("responseTokensDetails")
-    public abstract Builder responseTokensDetails(List<ModalityTokenCount> responseTokensDetails);
+    @JsonProperty("cachedContentTokenCount")
+    public abstract Builder cachedContentTokenCount(Integer cachedContentTokenCount);
 
-    /**
-     * Setter for responseTokensDetails.
-     *
-     * <p>responseTokensDetails: List of modalities that were returned in the response.
-     */
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder cachedContentTokenCount(Optional<Integer> cachedContentTokenCount);
+
+    /** Clears the value of cachedContentTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder responseTokensDetails(ModalityTokenCount... responseTokensDetails) {
-      return responseTokensDetails(Arrays.asList(responseTokensDetails));
+    public Builder clearCachedContentTokenCount() {
+      return cachedContentTokenCount(Optional.empty());
     }
 
     /**
-     * Setter for responseTokensDetails builder.
+     * Setter for promptTokenCount.
      *
-     * <p>responseTokensDetails: List of modalities that were returned in the response.
+     * <p>promptTokenCount: The total number of tokens in the prompt. This includes any text,
+     * images, or other media provided in the request. When `cached_content` is set, this also
+     * includes the number of tokens in the cached content.
+     */
+    @JsonProperty("promptTokenCount")
+    public abstract Builder promptTokenCount(Integer promptTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptTokenCount(Optional<Integer> promptTokenCount);
+
+    /** Clears the value of promptTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptTokenCount() {
+      return promptTokenCount(Optional.empty());
+    }
+
+    /**
+     * Setter for promptTokensDetails.
+     *
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
+     */
+    @JsonProperty("promptTokensDetails")
+    public abstract Builder promptTokensDetails(List<ModalityTokenCount> promptTokensDetails);
+
+    /**
+     * Setter for promptTokensDetails.
+     *
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
      */
     @CanIgnoreReturnValue
-    public Builder responseTokensDetails(
-        ModalityTokenCount.Builder... responseTokensDetailsBuilders) {
-      return responseTokensDetails(
-          Arrays.asList(responseTokensDetailsBuilders).stream()
+    public Builder promptTokensDetails(ModalityTokenCount... promptTokensDetails) {
+      return promptTokensDetails(Arrays.asList(promptTokensDetails));
+    }
+
+    /**
+     * Setter for promptTokensDetails builder.
+     *
+     * <p>promptTokensDetails: Output only. A detailed breakdown of the token count for each
+     * modality in the prompt.
+     */
+    @CanIgnoreReturnValue
+    public Builder promptTokensDetails(ModalityTokenCount.Builder... promptTokensDetailsBuilders) {
+      return promptTokensDetails(
+          Arrays.asList(promptTokensDetailsBuilders).stream()
               .map(ModalityTokenCount.Builder::build)
               .collect(toImmutableList()));
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder responseTokensDetails(
-        Optional<List<ModalityTokenCount>> responseTokensDetails);
+    abstract Builder promptTokensDetails(Optional<List<ModalityTokenCount>> promptTokensDetails);
 
-    /** Clears the value of responseTokensDetails field. */
+    /** Clears the value of promptTokensDetails field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearResponseTokensDetails() {
-      return responseTokensDetails(Optional.empty());
+    public Builder clearPromptTokensDetails() {
+      return promptTokensDetails(Optional.empty());
+    }
+
+    /**
+     * Setter for thoughtsTokenCount.
+     *
+     * <p>thoughtsTokenCount: Output only. The number of tokens that were part of the model's
+     * generated "thoughts" output, if applicable.
+     */
+    @JsonProperty("thoughtsTokenCount")
+    public abstract Builder thoughtsTokenCount(Integer thoughtsTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder thoughtsTokenCount(Optional<Integer> thoughtsTokenCount);
+
+    /** Clears the value of thoughtsTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearThoughtsTokenCount() {
+      return thoughtsTokenCount(Optional.empty());
+    }
+
+    /**
+     * Setter for toolUsePromptTokenCount.
+     *
+     * <p>toolUsePromptTokenCount: Output only. The number of tokens in the results from tool
+     * executions, which are provided back to the model as input, if applicable.
+     */
+    @JsonProperty("toolUsePromptTokenCount")
+    public abstract Builder toolUsePromptTokenCount(Integer toolUsePromptTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolUsePromptTokenCount(Optional<Integer> toolUsePromptTokenCount);
+
+    /** Clears the value of toolUsePromptTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolUsePromptTokenCount() {
+      return toolUsePromptTokenCount(Optional.empty());
     }
 
     /**
@@ -409,6 +389,26 @@ public abstract class UsageMetadata extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearToolUsePromptTokensDetails() {
       return toolUsePromptTokensDetails(Optional.empty());
+    }
+
+    /**
+     * Setter for totalTokenCount.
+     *
+     * <p>totalTokenCount: The total number of tokens for the entire request. This is the sum of
+     * `prompt_token_count`, `candidates_token_count`, `tool_use_prompt_token_count`, and
+     * `thoughts_token_count`.
+     */
+    @JsonProperty("totalTokenCount")
+    public abstract Builder totalTokenCount(Integer totalTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalTokenCount(Optional<Integer> totalTokenCount);
+
+    /** Clears the value of totalTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalTokenCount() {
+      return totalTokenCount(Optional.empty());
     }
 
     /**

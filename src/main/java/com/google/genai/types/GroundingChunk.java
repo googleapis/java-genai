@@ -35,10 +35,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingChunk.Builder.class)
 public abstract class GroundingChunk extends JsonSerializable {
-  /** A grounding chunk from an image search result. See the `Image` message for details. */
-  @JsonProperty("image")
-  public abstract Optional<GroundingChunkImage> image();
-
   /**
    * A `Maps` chunk is a piece of evidence that comes from Google Maps.
    *
@@ -47,6 +43,10 @@ public abstract class GroundingChunk extends JsonSerializable {
    */
   @JsonProperty("maps")
   public abstract Optional<GroundingChunkMaps> maps();
+
+  /** A grounding chunk from an image search result. See the `Image` message for details. */
+  @JsonProperty("image")
+  public abstract Optional<GroundingChunkImage> image();
 
   /**
    * A grounding chunk from a data source retrieved by a retrieval tool, such as Vertex AI Search.
@@ -81,34 +81,6 @@ public abstract class GroundingChunk extends JsonSerializable {
     }
 
     /**
-     * Setter for image.
-     *
-     * <p>image: A grounding chunk from an image search result. See the `Image` message for details.
-     */
-    @JsonProperty("image")
-    public abstract Builder image(GroundingChunkImage image);
-
-    /**
-     * Setter for image builder.
-     *
-     * <p>image: A grounding chunk from an image search result. See the `Image` message for details.
-     */
-    @CanIgnoreReturnValue
-    public Builder image(GroundingChunkImage.Builder imageBuilder) {
-      return image(imageBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder image(Optional<GroundingChunkImage> image);
-
-    /** Clears the value of image field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearImage() {
-      return image(Optional.empty());
-    }
-
-    /**
      * Setter for maps.
      *
      * <p>maps: A `Maps` chunk is a piece of evidence that comes from Google Maps.
@@ -140,6 +112,34 @@ public abstract class GroundingChunk extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMaps() {
       return maps(Optional.empty());
+    }
+
+    /**
+     * Setter for image.
+     *
+     * <p>image: A grounding chunk from an image search result. See the `Image` message for details.
+     */
+    @JsonProperty("image")
+    public abstract Builder image(GroundingChunkImage image);
+
+    /**
+     * Setter for image builder.
+     *
+     * <p>image: A grounding chunk from an image search result. See the `Image` message for details.
+     */
+    @CanIgnoreReturnValue
+    public Builder image(GroundingChunkImage.Builder imageBuilder) {
+      return image(imageBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder image(Optional<GroundingChunkImage> image);
+
+    /** Clears the value of image field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImage() {
+      return image(Optional.empty());
     }
 
     /**

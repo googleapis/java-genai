@@ -37,10 +37,6 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
   @JsonProperty("correctAnswerReward")
   public abstract Optional<Float> correctAnswerReward();
 
-  /** Assigns this reward score if the parsed reward value does not equal the expression. */
-  @JsonProperty("wrongAnswerReward")
-  public abstract Optional<Float> wrongAnswerReward();
-
   /**
    * The string expression to match against for scoring. This field supports placeholders in the
    * format of {{references.key}} that will be replaced before matching. Regex is not supported for
@@ -56,6 +52,10 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
    */
   @JsonProperty("expression")
   public abstract Optional<String> expression();
+
+  /** Assigns this reward score if the parsed reward value does not equal the expression. */
+  @JsonProperty("wrongAnswerReward")
+  public abstract Optional<Float> wrongAnswerReward();
 
   /** Instantiates a builder for ReinforcementTuningAutoraterScorerExactMatchScorer. */
   @ExcludeFromGeneratedCoverageReport
@@ -98,25 +98,6 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
     }
 
     /**
-     * Setter for wrongAnswerReward.
-     *
-     * <p>wrongAnswerReward: Assigns this reward score if the parsed reward value does not equal the
-     * expression.
-     */
-    @JsonProperty("wrongAnswerReward")
-    public abstract Builder wrongAnswerReward(Float wrongAnswerReward);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder wrongAnswerReward(Optional<Float> wrongAnswerReward);
-
-    /** Clears the value of wrongAnswerReward field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearWrongAnswerReward() {
-      return wrongAnswerReward(Optional.empty());
-    }
-
-    /**
      * Setter for expression.
      *
      * <p>expression: The string expression to match against for scoring. This field supports
@@ -142,6 +123,25 @@ public abstract class ReinforcementTuningAutoraterScorerExactMatchScorer extends
     @CanIgnoreReturnValue
     public Builder clearExpression() {
       return expression(Optional.empty());
+    }
+
+    /**
+     * Setter for wrongAnswerReward.
+     *
+     * <p>wrongAnswerReward: Assigns this reward score if the parsed reward value does not equal the
+     * expression.
+     */
+    @JsonProperty("wrongAnswerReward")
+    public abstract Builder wrongAnswerReward(Float wrongAnswerReward);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder wrongAnswerReward(Optional<Float> wrongAnswerReward);
+
+    /** Clears the value of wrongAnswerReward field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWrongAnswerReward() {
+      return wrongAnswerReward(Optional.empty());
     }
 
     public abstract ReinforcementTuningAutoraterScorerExactMatchScorer build();

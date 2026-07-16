@@ -39,18 +39,18 @@ import java.util.Optional;
 @JsonDeserialize(builder = FunctionCall.Builder.class)
 public abstract class FunctionCall extends JsonSerializable {
   /**
-   * Optional. The unique id of the function call. If populated, the client to execute the
-   * `function_call` and return the response with the matching `id`.
-   */
-  @JsonProperty("id")
-  public abstract Optional<String> id();
-
-  /**
    * Optional. The function parameters and values in JSON object format. See
    * FunctionDeclaration.parameters for parameter details.
    */
   @JsonProperty("args")
   public abstract Optional<Map<String, Object>> args();
+
+  /**
+   * Optional. The unique id of the function call. If populated, the client to execute the
+   * `function_call` and return the response with the matching `id`.
+   */
+  @JsonProperty("id")
+  public abstract Optional<String> id();
 
   /** Optional. The name of the function to call. Matches FunctionDeclaration.name. */
   @JsonProperty("name")
@@ -89,25 +89,6 @@ public abstract class FunctionCall extends JsonSerializable {
     }
 
     /**
-     * Setter for id.
-     *
-     * <p>id: Optional. The unique id of the function call. If populated, the client to execute the
-     * `function_call` and return the response with the matching `id`.
-     */
-    @JsonProperty("id")
-    public abstract Builder id(String id);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder id(Optional<String> id);
-
-    /** Clears the value of id field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearId() {
-      return id(Optional.empty());
-    }
-
-    /**
      * Setter for args.
      *
      * <p>args: Optional. The function parameters and values in JSON object format. See
@@ -124,6 +105,25 @@ public abstract class FunctionCall extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearArgs() {
       return args(Optional.empty());
+    }
+
+    /**
+     * Setter for id.
+     *
+     * <p>id: Optional. The unique id of the function call. If populated, the client to execute the
+     * `function_call` and return the response with the matching `id`.
+     */
+    @JsonProperty("id")
+    public abstract Builder id(String id);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder id(Optional<String> id);
+
+    /** Clears the value of id field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearId() {
+      return id(Optional.empty());
     }
 
     /**

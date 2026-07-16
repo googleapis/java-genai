@@ -46,6 +46,14 @@ import java.util.Optional;
 @JsonDeserialize(builder = FunctionDeclaration.Builder.class)
 public abstract class FunctionDeclaration extends JsonSerializable {
   /**
+   * Optional. Specifies the function Behavior. If not specified, the system keeps the current
+   * function call behavior. This field is currently only supported by the BidiGenerateContent
+   * method.
+   */
+  @JsonProperty("behavior")
+  public abstract Optional<Behavior> behavior();
+
+  /**
    * Optional. Description and purpose of the function. Model uses it to decide how and whether to
    * call the function.
    */
@@ -96,14 +104,6 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   @JsonProperty("responseJsonSchema")
   public abstract Optional<Object> responseJsonSchema();
 
-  /**
-   * Optional. Specifies the function Behavior. If not specified, the system keeps the current
-   * function call behavior. This field is currently only supported by the BidiGenerateContent
-   * method.
-   */
-  @JsonProperty("behavior")
-  public abstract Optional<Behavior> behavior();
-
   /** Instantiates a builder for FunctionDeclaration. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -120,6 +120,50 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FunctionDeclaration.Builder();
+    }
+
+    /**
+     * Setter for behavior.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
+     * the current function call behavior. This field is currently only supported by the
+     * BidiGenerateContent method.
+     */
+    @JsonProperty("behavior")
+    public abstract Builder behavior(Behavior behavior);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder behavior(Optional<Behavior> behavior);
+
+    /** Clears the value of behavior field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearBehavior() {
+      return behavior(Optional.empty());
+    }
+
+    /**
+     * Setter for behavior given a known enum.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
+     * the current function call behavior. This field is currently only supported by the
+     * BidiGenerateContent method.
+     */
+    @CanIgnoreReturnValue
+    public Builder behavior(Behavior.Known knownType) {
+      return behavior(new Behavior(knownType));
+    }
+
+    /**
+     * Setter for behavior given a string.
+     *
+     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
+     * the current function call behavior. This field is currently only supported by the
+     * BidiGenerateContent method.
+     */
+    @CanIgnoreReturnValue
+    public Builder behavior(String behavior) {
+      return behavior(new Behavior(behavior));
     }
 
     /**
@@ -273,50 +317,6 @@ public abstract class FunctionDeclaration extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearResponseJsonSchema() {
       return responseJsonSchema(Optional.empty());
-    }
-
-    /**
-     * Setter for behavior.
-     *
-     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
-     * the current function call behavior. This field is currently only supported by the
-     * BidiGenerateContent method.
-     */
-    @JsonProperty("behavior")
-    public abstract Builder behavior(Behavior behavior);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder behavior(Optional<Behavior> behavior);
-
-    /** Clears the value of behavior field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearBehavior() {
-      return behavior(Optional.empty());
-    }
-
-    /**
-     * Setter for behavior given a known enum.
-     *
-     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
-     * the current function call behavior. This field is currently only supported by the
-     * BidiGenerateContent method.
-     */
-    @CanIgnoreReturnValue
-    public Builder behavior(Behavior.Known knownType) {
-      return behavior(new Behavior(knownType));
-    }
-
-    /**
-     * Setter for behavior given a string.
-     *
-     * <p>behavior: Optional. Specifies the function Behavior. If not specified, the system keeps
-     * the current function call behavior. This field is currently only supported by the
-     * BidiGenerateContent method.
-     */
-    @CanIgnoreReturnValue
-    public Builder behavior(String behavior) {
-      return behavior(new Behavior(behavior));
     }
 
     public abstract FunctionDeclaration build();

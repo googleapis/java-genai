@@ -34,9 +34,20 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
   @JsonProperty("autoraterScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorer> autoraterScorer();
 
-  /** A unique reward name for identifying each single reinforcement tuning reward. */
-  @JsonProperty("rewardName")
-  public abstract Optional<String> rewardName();
+  /**
+   * ReinforcementTuningCloudRunRewardScorer is used to score parsed responses by calling a Cloud
+   * Run service.
+   */
+  @JsonProperty("cloudRunRewardScorer")
+  public abstract Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer();
+
+  /**
+   * ReinforcementTuningCodeExecutionRewardScorer is used to score parsed responses for code
+   * execution use cases.
+   */
+  @JsonProperty("codeExecutionRewardScorer")
+  public abstract Optional<ReinforcementTuningCodeExecutionRewardScorer>
+      codeExecutionRewardScorer();
 
   /**
    * Defines how to parse sample response. For example, given a sample response for evaluating the
@@ -48,13 +59,9 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
   @JsonProperty("parseResponseConfig")
   public abstract Optional<ReinforcementTuningParseResponseConfig> parseResponseConfig();
 
-  /**
-   * ReinforcementTuningCodeExecutionRewardScorer is used to score parsed responses for code
-   * execution use cases.
-   */
-  @JsonProperty("codeExecutionRewardScorer")
-  public abstract Optional<ReinforcementTuningCodeExecutionRewardScorer>
-      codeExecutionRewardScorer();
+  /** A unique reward name for identifying each single reinforcement tuning reward. */
+  @JsonProperty("rewardName")
+  public abstract Optional<String> rewardName();
 
   /**
    * ReinforcementTuningStringMatchRewardScorer is used to score parsed responses for simple string
@@ -62,13 +69,6 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
    */
   @JsonProperty("stringMatchRewardScorer")
   public abstract Optional<ReinforcementTuningStringMatchRewardScorer> stringMatchRewardScorer();
-
-  /**
-   * ReinforcementTuningCloudRunRewardScorer is used to score parsed responses by calling a Cloud
-   * Run service.
-   */
-  @JsonProperty("cloudRunRewardScorer")
-  public abstract Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer();
 
   /** Instantiates a builder for SingleReinforcementTuningRewardConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -123,21 +123,69 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     }
 
     /**
-     * Setter for rewardName.
+     * Setter for cloudRunRewardScorer.
      *
-     * <p>rewardName: A unique reward name for identifying each single reinforcement tuning reward.
+     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
+     * responses by calling a Cloud Run service.
      */
-    @JsonProperty("rewardName")
-    public abstract Builder rewardName(String rewardName);
+    @JsonProperty("cloudRunRewardScorer")
+    public abstract Builder cloudRunRewardScorer(
+        ReinforcementTuningCloudRunRewardScorer cloudRunRewardScorer);
+
+    /**
+     * Setter for cloudRunRewardScorer builder.
+     *
+     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
+     * responses by calling a Cloud Run service.
+     */
+    @CanIgnoreReturnValue
+    public Builder cloudRunRewardScorer(
+        ReinforcementTuningCloudRunRewardScorer.Builder cloudRunRewardScorerBuilder) {
+      return cloudRunRewardScorer(cloudRunRewardScorerBuilder.build());
+    }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder rewardName(Optional<String> rewardName);
+    abstract Builder cloudRunRewardScorer(
+        Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer);
 
-    /** Clears the value of rewardName field. */
+    /** Clears the value of cloudRunRewardScorer field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearRewardName() {
-      return rewardName(Optional.empty());
+    public Builder clearCloudRunRewardScorer() {
+      return cloudRunRewardScorer(Optional.empty());
+    }
+
+    /**
+     * Setter for codeExecutionRewardScorer.
+     *
+     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
+     * parsed responses for code execution use cases.
+     */
+    @JsonProperty("codeExecutionRewardScorer")
+    public abstract Builder codeExecutionRewardScorer(
+        ReinforcementTuningCodeExecutionRewardScorer codeExecutionRewardScorer);
+
+    /**
+     * Setter for codeExecutionRewardScorer builder.
+     *
+     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
+     * parsed responses for code execution use cases.
+     */
+    @CanIgnoreReturnValue
+    public Builder codeExecutionRewardScorer(
+        ReinforcementTuningCodeExecutionRewardScorer.Builder codeExecutionRewardScorerBuilder) {
+      return codeExecutionRewardScorer(codeExecutionRewardScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder codeExecutionRewardScorer(
+        Optional<ReinforcementTuningCodeExecutionRewardScorer> codeExecutionRewardScorer);
+
+    /** Clears the value of codeExecutionRewardScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCodeExecutionRewardScorer() {
+      return codeExecutionRewardScorer(Optional.empty());
     }
 
     /**
@@ -180,36 +228,21 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     }
 
     /**
-     * Setter for codeExecutionRewardScorer.
+     * Setter for rewardName.
      *
-     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
-     * parsed responses for code execution use cases.
+     * <p>rewardName: A unique reward name for identifying each single reinforcement tuning reward.
      */
-    @JsonProperty("codeExecutionRewardScorer")
-    public abstract Builder codeExecutionRewardScorer(
-        ReinforcementTuningCodeExecutionRewardScorer codeExecutionRewardScorer);
-
-    /**
-     * Setter for codeExecutionRewardScorer builder.
-     *
-     * <p>codeExecutionRewardScorer: ReinforcementTuningCodeExecutionRewardScorer is used to score
-     * parsed responses for code execution use cases.
-     */
-    @CanIgnoreReturnValue
-    public Builder codeExecutionRewardScorer(
-        ReinforcementTuningCodeExecutionRewardScorer.Builder codeExecutionRewardScorerBuilder) {
-      return codeExecutionRewardScorer(codeExecutionRewardScorerBuilder.build());
-    }
+    @JsonProperty("rewardName")
+    public abstract Builder rewardName(String rewardName);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder codeExecutionRewardScorer(
-        Optional<ReinforcementTuningCodeExecutionRewardScorer> codeExecutionRewardScorer);
+    abstract Builder rewardName(Optional<String> rewardName);
 
-    /** Clears the value of codeExecutionRewardScorer field. */
+    /** Clears the value of rewardName field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearCodeExecutionRewardScorer() {
-      return codeExecutionRewardScorer(Optional.empty());
+    public Builder clearRewardName() {
+      return rewardName(Optional.empty());
     }
 
     /**
@@ -243,39 +276,6 @@ public abstract class SingleReinforcementTuningRewardConfig extends JsonSerializ
     @CanIgnoreReturnValue
     public Builder clearStringMatchRewardScorer() {
       return stringMatchRewardScorer(Optional.empty());
-    }
-
-    /**
-     * Setter for cloudRunRewardScorer.
-     *
-     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
-     * responses by calling a Cloud Run service.
-     */
-    @JsonProperty("cloudRunRewardScorer")
-    public abstract Builder cloudRunRewardScorer(
-        ReinforcementTuningCloudRunRewardScorer cloudRunRewardScorer);
-
-    /**
-     * Setter for cloudRunRewardScorer builder.
-     *
-     * <p>cloudRunRewardScorer: ReinforcementTuningCloudRunRewardScorer is used to score parsed
-     * responses by calling a Cloud Run service.
-     */
-    @CanIgnoreReturnValue
-    public Builder cloudRunRewardScorer(
-        ReinforcementTuningCloudRunRewardScorer.Builder cloudRunRewardScorerBuilder) {
-      return cloudRunRewardScorer(cloudRunRewardScorerBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder cloudRunRewardScorer(
-        Optional<ReinforcementTuningCloudRunRewardScorer> cloudRunRewardScorer);
-
-    /** Clears the value of cloudRunRewardScorer field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearCloudRunRewardScorer() {
-      return cloudRunRewardScorer(Optional.empty());
     }
 
     public abstract SingleReinforcementTuningRewardConfig build();

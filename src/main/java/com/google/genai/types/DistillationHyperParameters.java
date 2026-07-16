@@ -32,10 +32,6 @@ import java.util.Optional;
 @InternalApi
 @JsonDeserialize(builder = DistillationHyperParameters.Builder.class)
 public abstract class DistillationHyperParameters extends JsonSerializable {
-  /** The size of the adapter. Can be 'small', 'medium', or 'large'. */
-  @JsonProperty("adapterSize")
-  public abstract Optional<AdapterSize> adapterSize();
-
   /** Number of complete passes the model makes over the entire training dataset during training. */
   @JsonProperty("epochCount")
   public abstract Optional<Long> epochCount();
@@ -44,6 +40,18 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
   @JsonProperty("learningRateMultiplier")
   public abstract Optional<Float> learningRateMultiplier();
 
+  /** The size of the adapter. Can be 'small', 'medium', or 'large'. */
+  @JsonProperty("adapterSize")
+  public abstract Optional<AdapterSize> adapterSize();
+
+  /** Batch size for tuning. This feature is only available for open source models. */
+  @JsonProperty("batchSize")
+  public abstract Optional<Integer> batchSize();
+
+  /** The learning rate for distillation tuning. */
+  @JsonProperty("learningRate")
+  public abstract Optional<Float> learningRate();
+
   /**
    * Generation config for Distillation teacher model sampling. Only the following fields are
    * supported for distillation teacher samplings: - temperature - top_p - top_k - candidate_count -
@@ -51,14 +59,6 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
    */
   @JsonProperty("generationConfig")
   public abstract Optional<GenerationConfig> generationConfig();
-
-  /** The learning rate for distillation tuning. */
-  @JsonProperty("learningRate")
-  public abstract Optional<Float> learningRate();
-
-  /** Batch size for tuning. This feature is only available for open source models. */
-  @JsonProperty("batchSize")
-  public abstract Optional<Integer> batchSize();
 
   /** Instantiates a builder for DistillationHyperParameters. */
   @ExcludeFromGeneratedCoverageReport
@@ -76,6 +76,43 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DistillationHyperParameters.Builder();
+    }
+
+    /**
+     * Setter for epochCount.
+     *
+     * <p>epochCount: Number of complete passes the model makes over the entire training dataset
+     * during training.
+     */
+    @JsonProperty("epochCount")
+    public abstract Builder epochCount(Long epochCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder epochCount(Optional<Long> epochCount);
+
+    /** Clears the value of epochCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEpochCount() {
+      return epochCount(Optional.empty());
+    }
+
+    /**
+     * Setter for learningRateMultiplier.
+     *
+     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate.
+     */
+    @JsonProperty("learningRateMultiplier")
+    public abstract Builder learningRateMultiplier(Float learningRateMultiplier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder learningRateMultiplier(Optional<Float> learningRateMultiplier);
+
+    /** Clears the value of learningRateMultiplier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLearningRateMultiplier() {
+      return learningRateMultiplier(Optional.empty());
     }
 
     /**
@@ -117,40 +154,39 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     }
 
     /**
-     * Setter for epochCount.
+     * Setter for batchSize.
      *
-     * <p>epochCount: Number of complete passes the model makes over the entire training dataset
-     * during training.
+     * <p>batchSize: Batch size for tuning. This feature is only available for open source models.
      */
-    @JsonProperty("epochCount")
-    public abstract Builder epochCount(Long epochCount);
+    @JsonProperty("batchSize")
+    public abstract Builder batchSize(Integer batchSize);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder epochCount(Optional<Long> epochCount);
+    abstract Builder batchSize(Optional<Integer> batchSize);
 
-    /** Clears the value of epochCount field. */
+    /** Clears the value of batchSize field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearEpochCount() {
-      return epochCount(Optional.empty());
+    public Builder clearBatchSize() {
+      return batchSize(Optional.empty());
     }
 
     /**
-     * Setter for learningRateMultiplier.
+     * Setter for learningRate.
      *
-     * <p>learningRateMultiplier: Multiplier for adjusting the default learning rate.
+     * <p>learningRate: The learning rate for distillation tuning.
      */
-    @JsonProperty("learningRateMultiplier")
-    public abstract Builder learningRateMultiplier(Float learningRateMultiplier);
+    @JsonProperty("learningRate")
+    public abstract Builder learningRate(Float learningRate);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder learningRateMultiplier(Optional<Float> learningRateMultiplier);
+    abstract Builder learningRate(Optional<Float> learningRate);
 
-    /** Clears the value of learningRateMultiplier field. */
+    /** Clears the value of learningRate field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearLearningRateMultiplier() {
-      return learningRateMultiplier(Optional.empty());
+    public Builder clearLearningRate() {
+      return learningRate(Optional.empty());
     }
 
     /**
@@ -183,42 +219,6 @@ public abstract class DistillationHyperParameters extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGenerationConfig() {
       return generationConfig(Optional.empty());
-    }
-
-    /**
-     * Setter for learningRate.
-     *
-     * <p>learningRate: The learning rate for distillation tuning.
-     */
-    @JsonProperty("learningRate")
-    public abstract Builder learningRate(Float learningRate);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder learningRate(Optional<Float> learningRate);
-
-    /** Clears the value of learningRate field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearLearningRate() {
-      return learningRate(Optional.empty());
-    }
-
-    /**
-     * Setter for batchSize.
-     *
-     * <p>batchSize: Batch size for tuning. This feature is only available for open source models.
-     */
-    @JsonProperty("batchSize")
-    public abstract Builder batchSize(Integer batchSize);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder batchSize(Optional<Integer> batchSize);
-
-    /** Clears the value of batchSize field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearBatchSize() {
-      return batchSize(Optional.empty());
     }
 
     public abstract DistillationHyperParameters build();

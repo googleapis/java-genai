@@ -33,10 +33,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = FunctionResponseBlob.Builder.class)
 public abstract class FunctionResponseBlob extends JsonSerializable {
-  /** Required. The IANA standard MIME type of the source data. */
-  @JsonProperty("mimeType")
-  public abstract Optional<String> mimeType();
-
   /** Required. Raw bytes. */
   @JsonProperty("data")
   public abstract Optional<byte[]> data();
@@ -49,6 +45,10 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
    */
   @JsonProperty("displayName")
   public abstract Optional<String> displayName();
+
+  /** Required. The IANA standard MIME type of the source data. */
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
 
   /** Instantiates a builder for FunctionResponseBlob. */
   @ExcludeFromGeneratedCoverageReport
@@ -66,24 +66,6 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FunctionResponseBlob.Builder();
-    }
-
-    /**
-     * Setter for mimeType.
-     *
-     * <p>mimeType: Required. The IANA standard MIME type of the source data.
-     */
-    @JsonProperty("mimeType")
-    public abstract Builder mimeType(String mimeType);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder mimeType(Optional<String> mimeType);
-
-    /** Clears the value of mimeType field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearMimeType() {
-      return mimeType(Optional.empty());
     }
 
     /**
@@ -124,6 +106,24 @@ public abstract class FunctionResponseBlob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearDisplayName() {
       return displayName(Optional.empty());
+    }
+
+    /**
+     * Setter for mimeType.
+     *
+     * <p>mimeType: Required. The IANA standard MIME type of the source data.
+     */
+    @JsonProperty("mimeType")
+    public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
     }
 
     public abstract FunctionResponseBlob build();

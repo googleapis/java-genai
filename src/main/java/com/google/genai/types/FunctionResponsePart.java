@@ -36,13 +36,13 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = FunctionResponsePart.Builder.class)
 public abstract class FunctionResponsePart extends JsonSerializable {
-  /** Inline media bytes. */
-  @JsonProperty("inlineData")
-  public abstract Optional<FunctionResponseBlob> inlineData();
-
   /** URI based data. This field is not supported in Gemini API. */
   @JsonProperty("fileData")
   public abstract Optional<FunctionResponseFileData> fileData();
+
+  /** Inline media bytes. */
+  @JsonProperty("inlineData")
+  public abstract Optional<FunctionResponseBlob> inlineData();
 
   /** Instantiates a builder for FunctionResponsePart. */
   @ExcludeFromGeneratedCoverageReport
@@ -60,34 +60,6 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FunctionResponsePart.Builder();
-    }
-
-    /**
-     * Setter for inlineData.
-     *
-     * <p>inlineData: Inline media bytes.
-     */
-    @JsonProperty("inlineData")
-    public abstract Builder inlineData(FunctionResponseBlob inlineData);
-
-    /**
-     * Setter for inlineData builder.
-     *
-     * <p>inlineData: Inline media bytes.
-     */
-    @CanIgnoreReturnValue
-    public Builder inlineData(FunctionResponseBlob.Builder inlineDataBuilder) {
-      return inlineData(inlineDataBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder inlineData(Optional<FunctionResponseBlob> inlineData);
-
-    /** Clears the value of inlineData field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearInlineData() {
-      return inlineData(Optional.empty());
     }
 
     /**
@@ -116,6 +88,34 @@ public abstract class FunctionResponsePart extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFileData() {
       return fileData(Optional.empty());
+    }
+
+    /**
+     * Setter for inlineData.
+     *
+     * <p>inlineData: Inline media bytes.
+     */
+    @JsonProperty("inlineData")
+    public abstract Builder inlineData(FunctionResponseBlob inlineData);
+
+    /**
+     * Setter for inlineData builder.
+     *
+     * <p>inlineData: Inline media bytes.
+     */
+    @CanIgnoreReturnValue
+    public Builder inlineData(FunctionResponseBlob.Builder inlineDataBuilder) {
+      return inlineData(inlineDataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder inlineData(Optional<FunctionResponseBlob> inlineData);
+
+    /** Clears the value of inlineData field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInlineData() {
+      return inlineData(Optional.empty());
     }
 
     public abstract FunctionResponsePart build();

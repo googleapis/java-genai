@@ -37,28 +37,28 @@ import java.util.Optional;
 @JsonDeserialize(builder = ReinforcementTuningStringMatchRewardScorer.Builder.class)
 public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSerializable {
   /**
-   * Wrong answer reward is returned if the parsed response is evaluated as `false`. All wrong
-   * answers get the same reward.
-   */
-  @JsonProperty("wrongAnswerReward")
-  public abstract Optional<Float> wrongAnswerReward();
-
-  /**
    * Correct answer rewawrd is returned if the parsed response is evaluated as `true`. All correct
    * answers get the same reward.
    */
   @JsonProperty("correctAnswerReward")
   public abstract Optional<Float> correctAnswerReward();
 
+  /** Uses json match expression to evaluate parsed response. */
+  @JsonProperty("jsonMatchExpression")
+  public abstract Optional<ReinforcementTuningStringMatchRewardScorerJsonMatchExpression>
+      jsonMatchExpression();
+
   /** Uses string match expression to evaluate parsed response. */
   @JsonProperty("stringMatchExpression")
   public abstract Optional<ReinforcementTuningStringMatchRewardScorerStringMatchExpression>
       stringMatchExpression();
 
-  /** Uses json match expression to evaluate parsed response. */
-  @JsonProperty("jsonMatchExpression")
-  public abstract Optional<ReinforcementTuningStringMatchRewardScorerJsonMatchExpression>
-      jsonMatchExpression();
+  /**
+   * Wrong answer reward is returned if the parsed response is evaluated as `false`. All wrong
+   * answers get the same reward.
+   */
+  @JsonProperty("wrongAnswerReward")
+  public abstract Optional<Float> wrongAnswerReward();
 
   /** Instantiates a builder for ReinforcementTuningStringMatchRewardScorer. */
   @ExcludeFromGeneratedCoverageReport
@@ -82,25 +82,6 @@ public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSer
     }
 
     /**
-     * Setter for wrongAnswerReward.
-     *
-     * <p>wrongAnswerReward: Wrong answer reward is returned if the parsed response is evaluated as
-     * `false`. All wrong answers get the same reward.
-     */
-    @JsonProperty("wrongAnswerReward")
-    public abstract Builder wrongAnswerReward(Float wrongAnswerReward);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder wrongAnswerReward(Optional<Float> wrongAnswerReward);
-
-    /** Clears the value of wrongAnswerReward field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearWrongAnswerReward() {
-      return wrongAnswerReward(Optional.empty());
-    }
-
-    /**
      * Setter for correctAnswerReward.
      *
      * <p>correctAnswerReward: Correct answer rewawrd is returned if the parsed response is
@@ -117,6 +98,39 @@ public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSer
     @CanIgnoreReturnValue
     public Builder clearCorrectAnswerReward() {
       return correctAnswerReward(Optional.empty());
+    }
+
+    /**
+     * Setter for jsonMatchExpression.
+     *
+     * <p>jsonMatchExpression: Uses json match expression to evaluate parsed response.
+     */
+    @JsonProperty("jsonMatchExpression")
+    public abstract Builder jsonMatchExpression(
+        ReinforcementTuningStringMatchRewardScorerJsonMatchExpression jsonMatchExpression);
+
+    /**
+     * Setter for jsonMatchExpression builder.
+     *
+     * <p>jsonMatchExpression: Uses json match expression to evaluate parsed response.
+     */
+    @CanIgnoreReturnValue
+    public Builder jsonMatchExpression(
+        ReinforcementTuningStringMatchRewardScorerJsonMatchExpression.Builder
+            jsonMatchExpressionBuilder) {
+      return jsonMatchExpression(jsonMatchExpressionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder jsonMatchExpression(
+        Optional<ReinforcementTuningStringMatchRewardScorerJsonMatchExpression>
+            jsonMatchExpression);
+
+    /** Clears the value of jsonMatchExpression field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearJsonMatchExpression() {
+      return jsonMatchExpression(Optional.empty());
     }
 
     /**
@@ -153,36 +167,22 @@ public abstract class ReinforcementTuningStringMatchRewardScorer extends JsonSer
     }
 
     /**
-     * Setter for jsonMatchExpression.
+     * Setter for wrongAnswerReward.
      *
-     * <p>jsonMatchExpression: Uses json match expression to evaluate parsed response.
+     * <p>wrongAnswerReward: Wrong answer reward is returned if the parsed response is evaluated as
+     * `false`. All wrong answers get the same reward.
      */
-    @JsonProperty("jsonMatchExpression")
-    public abstract Builder jsonMatchExpression(
-        ReinforcementTuningStringMatchRewardScorerJsonMatchExpression jsonMatchExpression);
-
-    /**
-     * Setter for jsonMatchExpression builder.
-     *
-     * <p>jsonMatchExpression: Uses json match expression to evaluate parsed response.
-     */
-    @CanIgnoreReturnValue
-    public Builder jsonMatchExpression(
-        ReinforcementTuningStringMatchRewardScorerJsonMatchExpression.Builder
-            jsonMatchExpressionBuilder) {
-      return jsonMatchExpression(jsonMatchExpressionBuilder.build());
-    }
+    @JsonProperty("wrongAnswerReward")
+    public abstract Builder wrongAnswerReward(Float wrongAnswerReward);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder jsonMatchExpression(
-        Optional<ReinforcementTuningStringMatchRewardScorerJsonMatchExpression>
-            jsonMatchExpression);
+    abstract Builder wrongAnswerReward(Optional<Float> wrongAnswerReward);
 
-    /** Clears the value of jsonMatchExpression field. */
+    /** Clears the value of wrongAnswerReward field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearJsonMatchExpression() {
-      return jsonMatchExpression(Optional.empty());
+    public Builder clearWrongAnswerReward() {
+      return wrongAnswerReward(Optional.empty());
     }
 
     public abstract ReinforcementTuningStringMatchRewardScorer build();

@@ -30,6 +30,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = EmbedContentConfig.Builder.class)
 public abstract class EmbedContentConfig extends JsonSerializable {
+  /** Used to override HTTP request options. */
+  @JsonProperty("httpOptions")
+  public abstract Optional<HttpOptions> httpOptions();
+
   /** Type of task for which the embedding will be used. */
   @JsonProperty("taskType")
   public abstract Optional<String> taskType();
@@ -72,10 +76,6 @@ public abstract class EmbedContentConfig extends JsonSerializable {
   @JsonProperty("audioTrackExtraction")
   public abstract Optional<Boolean> audioTrackExtraction();
 
-  /** Used to override HTTP request options. */
-  @JsonProperty("httpOptions")
-  public abstract Optional<HttpOptions> httpOptions();
-
   /** Instantiates a builder for EmbedContentConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -92,6 +92,34 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_EmbedContentConfig.Builder();
+    }
+
+    /**
+     * Setter for httpOptions.
+     *
+     * <p>httpOptions: Used to override HTTP request options.
+     */
+    @JsonProperty("httpOptions")
+    public abstract Builder httpOptions(HttpOptions httpOptions);
+
+    /**
+     * Setter for httpOptions builder.
+     *
+     * <p>httpOptions: Used to override HTTP request options.
+     */
+    @CanIgnoreReturnValue
+    public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
+      return httpOptions(httpOptionsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
+
+    /** Clears the value of httpOptions field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHttpOptions() {
+      return httpOptions(Optional.empty());
     }
 
     /**
@@ -224,34 +252,6 @@ public abstract class EmbedContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAudioTrackExtraction() {
       return audioTrackExtraction(Optional.empty());
-    }
-
-    /**
-     * Setter for httpOptions.
-     *
-     * <p>httpOptions: Used to override HTTP request options.
-     */
-    @JsonProperty("httpOptions")
-    public abstract Builder httpOptions(HttpOptions httpOptions);
-
-    /**
-     * Setter for httpOptions builder.
-     *
-     * <p>httpOptions: Used to override HTTP request options.
-     */
-    @CanIgnoreReturnValue
-    public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
-      return httpOptions(httpOptionsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder httpOptions(Optional<HttpOptions> httpOptions);
-
-    /** Clears the value of httpOptions field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearHttpOptions() {
-      return httpOptions(Optional.empty());
     }
 
     public abstract EmbedContentConfig build();

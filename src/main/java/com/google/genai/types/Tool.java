@@ -52,6 +52,21 @@ public abstract class Tool extends JsonSerializable {
   public abstract Optional<List<Method>> functions();
 
   /**
+   * Optional. Tool that allows grounding the model's response with geospatial context related to
+   * the user's query.
+   */
+  @JsonProperty("googleMaps")
+  public abstract Optional<GoogleMaps> googleMaps();
+
+  /** Optional. MCP Servers to connect to. This field is not supported in Vertex AI. */
+  @JsonProperty("mcpServers")
+  public abstract Optional<List<McpServer>> mcpServers();
+
+  /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
+  @JsonProperty("codeExecution")
+  public abstract Optional<ToolCodeExecution> codeExecution();
+
+  /**
    * Optional. Tool to support the model interacting directly with the computer. If enabled, it
    * automatically populates computer-use specific Function Declarations.
    */
@@ -59,35 +74,19 @@ public abstract class Tool extends JsonSerializable {
   public abstract Optional<ComputerUse> computerUse();
 
   /**
-   * Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic Retrieval corpora.
-   * This field is not supported in Vertex AI.
-   */
-  @JsonProperty("fileSearch")
-  public abstract Optional<FileSearch> fileSearch();
-
-  /**
-   * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
-   */
-  @JsonProperty("googleSearch")
-  public abstract Optional<GoogleSearch> googleSearch();
-
-  /**
-   * Optional. Tool that allows grounding the model's response with geospatial context related to
-   * the user's query.
-   */
-  @JsonProperty("googleMaps")
-  public abstract Optional<GoogleMaps> googleMaps();
-
-  /** Optional. CodeExecution tool type. Enables the model to execute code as part of generation. */
-  @JsonProperty("codeExecution")
-  public abstract Optional<ToolCodeExecution> codeExecution();
-
-  /**
    * Optional. Tool to support searching public web data, powered by Vertex AI Search and Sec4
    * compliance. This field is not supported in Gemini API.
    */
   @JsonProperty("enterpriseWebSearch")
   public abstract Optional<EnterpriseWebSearch> enterpriseWebSearch();
+
+  /**
+   * Optional. Uses Exa.ai to search for information to answer user queries. The search results will
+   * be grounded on Exa.ai and presented to the model for response generation. This field is not
+   * supported in Gemini API.
+   */
+  @JsonProperty("exaAiSearch")
+  public abstract Optional<ToolExaAiSearch> exaAiSearch();
 
   /**
    * Optional. Function tool type. One or more function declarations to be passed to the model along
@@ -98,6 +97,12 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("functionDeclarations")
   public abstract Optional<List<FunctionDeclaration>> functionDeclarations();
+
+  /**
+   * Optional. GoogleSearch tool type. Tool to support Google Search in Model. Powered by Google.
+   */
+  @JsonProperty("googleSearch")
+  public abstract Optional<GoogleSearch> googleSearch();
 
   /** Optional. Specialized retrieval tool that is powered by Google Search. */
   @JsonProperty("googleSearchRetrieval")
@@ -115,17 +120,12 @@ public abstract class Tool extends JsonSerializable {
   @JsonProperty("urlContext")
   public abstract Optional<UrlContext> urlContext();
 
-  /** Optional. MCP Servers to connect to. This field is not supported in Vertex AI. */
-  @JsonProperty("mcpServers")
-  public abstract Optional<List<McpServer>> mcpServers();
-
   /**
-   * Optional. Uses Exa.ai to search for information to answer user queries. The search results will
-   * be grounded on Exa.ai and presented to the model for response generation. This field is not
-   * supported in Gemini API.
+   * Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic Retrieval corpora.
+   * This field is not supported in Vertex AI.
    */
-  @JsonProperty("exaAiSearch")
-  public abstract Optional<ToolExaAiSearch> exaAiSearch();
+  @JsonProperty("fileSearch")
+  public abstract Optional<FileSearch> fileSearch();
 
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
@@ -208,96 +208,6 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for computerUse.
-     *
-     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
-     * If enabled, it automatically populates computer-use specific Function Declarations.
-     */
-    @JsonProperty("computerUse")
-    public abstract Builder computerUse(ComputerUse computerUse);
-
-    /**
-     * Setter for computerUse builder.
-     *
-     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
-     * If enabled, it automatically populates computer-use specific Function Declarations.
-     */
-    @CanIgnoreReturnValue
-    public Builder computerUse(ComputerUse.Builder computerUseBuilder) {
-      return computerUse(computerUseBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder computerUse(Optional<ComputerUse> computerUse);
-
-    /** Clears the value of computerUse field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearComputerUse() {
-      return computerUse(Optional.empty());
-    }
-
-    /**
-     * Setter for fileSearch.
-     *
-     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
-     * Retrieval corpora. This field is not supported in Vertex AI.
-     */
-    @JsonProperty("fileSearch")
-    public abstract Builder fileSearch(FileSearch fileSearch);
-
-    /**
-     * Setter for fileSearch builder.
-     *
-     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
-     * Retrieval corpora. This field is not supported in Vertex AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder fileSearch(FileSearch.Builder fileSearchBuilder) {
-      return fileSearch(fileSearchBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder fileSearch(Optional<FileSearch> fileSearch);
-
-    /** Clears the value of fileSearch field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearFileSearch() {
-      return fileSearch(Optional.empty());
-    }
-
-    /**
-     * Setter for googleSearch.
-     *
-     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
-     * Powered by Google.
-     */
-    @JsonProperty("googleSearch")
-    public abstract Builder googleSearch(GoogleSearch googleSearch);
-
-    /**
-     * Setter for googleSearch builder.
-     *
-     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
-     * Powered by Google.
-     */
-    @CanIgnoreReturnValue
-    public Builder googleSearch(GoogleSearch.Builder googleSearchBuilder) {
-      return googleSearch(googleSearchBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder googleSearch(Optional<GoogleSearch> googleSearch);
-
-    /** Clears the value of googleSearch field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearGoogleSearch() {
-      return googleSearch(Optional.empty());
-    }
-
-    /**
      * Setter for googleMaps.
      *
      * <p>googleMaps: Optional. Tool that allows grounding the model's response with geospatial
@@ -325,6 +235,47 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGoogleMaps() {
       return googleMaps(Optional.empty());
+    }
+
+    /**
+     * Setter for mcpServers.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("mcpServers")
+    public abstract Builder mcpServers(List<McpServer> mcpServers);
+
+    /**
+     * Setter for mcpServers.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mcpServers(McpServer... mcpServers) {
+      return mcpServers(Arrays.asList(mcpServers));
+    }
+
+    /**
+     * Setter for mcpServers builder.
+     *
+     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     */
+    @CanIgnoreReturnValue
+    public Builder mcpServers(McpServer.Builder... mcpServersBuilders) {
+      return mcpServers(
+          Arrays.asList(mcpServersBuilders).stream()
+              .map(McpServer.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mcpServers(Optional<List<McpServer>> mcpServers);
+
+    /** Clears the value of mcpServers field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMcpServers() {
+      return mcpServers(Optional.empty());
     }
 
     /**
@@ -358,6 +309,36 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
+     * Setter for computerUse.
+     *
+     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
+     * If enabled, it automatically populates computer-use specific Function Declarations.
+     */
+    @JsonProperty("computerUse")
+    public abstract Builder computerUse(ComputerUse computerUse);
+
+    /**
+     * Setter for computerUse builder.
+     *
+     * <p>computerUse: Optional. Tool to support the model interacting directly with the computer.
+     * If enabled, it automatically populates computer-use specific Function Declarations.
+     */
+    @CanIgnoreReturnValue
+    public Builder computerUse(ComputerUse.Builder computerUseBuilder) {
+      return computerUse(computerUseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder computerUse(Optional<ComputerUse> computerUse);
+
+    /** Clears the value of computerUse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearComputerUse() {
+      return computerUse(Optional.empty());
+    }
+
+    /**
      * Setter for enterpriseWebSearch.
      *
      * <p>enterpriseWebSearch: Optional. Tool to support searching public web data, powered by
@@ -385,6 +366,38 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnterpriseWebSearch() {
       return enterpriseWebSearch(Optional.empty());
+    }
+
+    /**
+     * Setter for exaAiSearch.
+     *
+     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
+     * search results will be grounded on Exa.ai and presented to the model for response generation.
+     * This field is not supported in Gemini API.
+     */
+    @JsonProperty("exaAiSearch")
+    public abstract Builder exaAiSearch(ToolExaAiSearch exaAiSearch);
+
+    /**
+     * Setter for exaAiSearch builder.
+     *
+     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
+     * search results will be grounded on Exa.ai and presented to the model for response generation.
+     * This field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder exaAiSearch(ToolExaAiSearch.Builder exaAiSearchBuilder) {
+      return exaAiSearch(exaAiSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exaAiSearch(Optional<ToolExaAiSearch> exaAiSearch);
+
+    /** Clears the value of exaAiSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExaAiSearch() {
+      return exaAiSearch(Optional.empty());
     }
 
     /**
@@ -442,6 +455,36 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFunctionDeclarations() {
       return functionDeclarations(Optional.empty());
+    }
+
+    /**
+     * Setter for googleSearch.
+     *
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
+     */
+    @JsonProperty("googleSearch")
+    public abstract Builder googleSearch(GoogleSearch googleSearch);
+
+    /**
+     * Setter for googleSearch builder.
+     *
+     * <p>googleSearch: Optional. GoogleSearch tool type. Tool to support Google Search in Model.
+     * Powered by Google.
+     */
+    @CanIgnoreReturnValue
+    public Builder googleSearch(GoogleSearch.Builder googleSearchBuilder) {
+      return googleSearch(googleSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder googleSearch(Optional<GoogleSearch> googleSearch);
+
+    /** Clears the value of googleSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGoogleSearch() {
+      return googleSearch(Optional.empty());
     }
 
     /**
@@ -536,76 +579,33 @@ public abstract class Tool extends JsonSerializable {
     }
 
     /**
-     * Setter for mcpServers.
+     * Setter for fileSearch.
      *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
+     * Retrieval corpora. This field is not supported in Vertex AI.
      */
-    @JsonProperty("mcpServers")
-    public abstract Builder mcpServers(List<McpServer> mcpServers);
+    @JsonProperty("fileSearch")
+    public abstract Builder fileSearch(FileSearch fileSearch);
 
     /**
-     * Setter for mcpServers.
+     * Setter for fileSearch builder.
      *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
+     * <p>fileSearch: Optional. FileSearch tool type. Tool to retrieve knowledge from Semantic
+     * Retrieval corpora. This field is not supported in Vertex AI.
      */
     @CanIgnoreReturnValue
-    public Builder mcpServers(McpServer... mcpServers) {
-      return mcpServers(Arrays.asList(mcpServers));
-    }
-
-    /**
-     * Setter for mcpServers builder.
-     *
-     * <p>mcpServers: Optional. MCP Servers to connect to. This field is not supported in Vertex AI.
-     */
-    @CanIgnoreReturnValue
-    public Builder mcpServers(McpServer.Builder... mcpServersBuilders) {
-      return mcpServers(
-          Arrays.asList(mcpServersBuilders).stream()
-              .map(McpServer.Builder::build)
-              .collect(toImmutableList()));
+    public Builder fileSearch(FileSearch.Builder fileSearchBuilder) {
+      return fileSearch(fileSearchBuilder.build());
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder mcpServers(Optional<List<McpServer>> mcpServers);
+    abstract Builder fileSearch(Optional<FileSearch> fileSearch);
 
-    /** Clears the value of mcpServers field. */
+    /** Clears the value of fileSearch field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearMcpServers() {
-      return mcpServers(Optional.empty());
-    }
-
-    /**
-     * Setter for exaAiSearch.
-     *
-     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
-     * search results will be grounded on Exa.ai and presented to the model for response generation.
-     * This field is not supported in Gemini API.
-     */
-    @JsonProperty("exaAiSearch")
-    public abstract Builder exaAiSearch(ToolExaAiSearch exaAiSearch);
-
-    /**
-     * Setter for exaAiSearch builder.
-     *
-     * <p>exaAiSearch: Optional. Uses Exa.ai to search for information to answer user queries. The
-     * search results will be grounded on Exa.ai and presented to the model for response generation.
-     * This field is not supported in Gemini API.
-     */
-    @CanIgnoreReturnValue
-    public Builder exaAiSearch(ToolExaAiSearch.Builder exaAiSearchBuilder) {
-      return exaAiSearch(exaAiSearchBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder exaAiSearch(Optional<ToolExaAiSearch> exaAiSearch);
-
-    /** Clears the value of exaAiSearch field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearExaAiSearch() {
-      return exaAiSearch(Optional.empty());
+    public Builder clearFileSearch() {
+      return fileSearch(Optional.empty());
     }
 
     public abstract Tool build();

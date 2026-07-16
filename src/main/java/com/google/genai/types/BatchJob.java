@@ -80,16 +80,16 @@ public abstract class BatchJob extends JsonSerializable {
   @JsonProperty("dest")
   public abstract Optional<BatchJobDestination> dest();
 
+  /** Information further describing the output of this job. Output only. */
+  @JsonProperty("outputInfo")
+  public abstract Optional<BatchJobOutputInfo> outputInfo();
+
   /**
    * Statistics on completed and failed prediction instances. This field is for Gemini Enterprise
    * Agent Platform only.
    */
   @JsonProperty("completionStats")
   public abstract Optional<CompletionStats> completionStats();
-
-  /** Information further describing the output of this job. Output only. */
-  @JsonProperty("outputInfo")
-  public abstract Optional<BatchJobOutputInfo> outputInfo();
 
   /** Instantiates a builder for BatchJob. */
   @ExcludeFromGeneratedCoverageReport
@@ -364,6 +364,34 @@ public abstract class BatchJob extends JsonSerializable {
     }
 
     /**
+     * Setter for outputInfo.
+     *
+     * <p>outputInfo: Information further describing the output of this job. Output only.
+     */
+    @JsonProperty("outputInfo")
+    public abstract Builder outputInfo(BatchJobOutputInfo outputInfo);
+
+    /**
+     * Setter for outputInfo builder.
+     *
+     * <p>outputInfo: Information further describing the output of this job. Output only.
+     */
+    @CanIgnoreReturnValue
+    public Builder outputInfo(BatchJobOutputInfo.Builder outputInfoBuilder) {
+      return outputInfo(outputInfoBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder outputInfo(Optional<BatchJobOutputInfo> outputInfo);
+
+    /** Clears the value of outputInfo field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearOutputInfo() {
+      return outputInfo(Optional.empty());
+    }
+
+    /**
      * Setter for completionStats.
      *
      * <p>completionStats: Statistics on completed and failed prediction instances. This field is
@@ -391,34 +419,6 @@ public abstract class BatchJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearCompletionStats() {
       return completionStats(Optional.empty());
-    }
-
-    /**
-     * Setter for outputInfo.
-     *
-     * <p>outputInfo: Information further describing the output of this job. Output only.
-     */
-    @JsonProperty("outputInfo")
-    public abstract Builder outputInfo(BatchJobOutputInfo outputInfo);
-
-    /**
-     * Setter for outputInfo builder.
-     *
-     * <p>outputInfo: Information further describing the output of this job. Output only.
-     */
-    @CanIgnoreReturnValue
-    public Builder outputInfo(BatchJobOutputInfo.Builder outputInfoBuilder) {
-      return outputInfo(outputInfoBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder outputInfo(Optional<BatchJobOutputInfo> outputInfo);
-
-    /** Clears the value of outputInfo field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearOutputInfo() {
-      return outputInfo(Optional.empty());
     }
 
     public abstract BatchJob build();

@@ -43,13 +43,13 @@ public abstract class TuningDataStats extends JsonSerializable {
   @JsonProperty("preferenceOptimizationDataStats")
   public abstract Optional<PreferenceOptimizationDataStats> preferenceOptimizationDataStats();
 
-  /** The SFT Tuning data stats. */
-  @JsonProperty("supervisedTuningDataStats")
-  public abstract Optional<SupervisedTuningDataStats> supervisedTuningDataStats();
-
   /** Output only. Statistics for reinforcement tuning. */
   @JsonProperty("reinforcementTuningDataStats")
   public abstract Optional<DatasetStats> reinforcementTuningDataStats();
+
+  /** The SFT Tuning data stats. */
+  @JsonProperty("supervisedTuningDataStats")
+  public abstract Optional<SupervisedTuningDataStats> supervisedTuningDataStats();
 
   /** Instantiates a builder for TuningDataStats. */
   @ExcludeFromGeneratedCoverageReport
@@ -132,6 +132,36 @@ public abstract class TuningDataStats extends JsonSerializable {
     }
 
     /**
+     * Setter for reinforcementTuningDataStats.
+     *
+     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
+     */
+    @JsonProperty("reinforcementTuningDataStats")
+    public abstract Builder reinforcementTuningDataStats(DatasetStats reinforcementTuningDataStats);
+
+    /**
+     * Setter for reinforcementTuningDataStats builder.
+     *
+     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder reinforcementTuningDataStats(
+        DatasetStats.Builder reinforcementTuningDataStatsBuilder) {
+      return reinforcementTuningDataStats(reinforcementTuningDataStatsBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder reinforcementTuningDataStats(
+        Optional<DatasetStats> reinforcementTuningDataStats);
+
+    /** Clears the value of reinforcementTuningDataStats field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReinforcementTuningDataStats() {
+      return reinforcementTuningDataStats(Optional.empty());
+    }
+
+    /**
      * Setter for supervisedTuningDataStats.
      *
      * <p>supervisedTuningDataStats: The SFT Tuning data stats.
@@ -160,36 +190,6 @@ public abstract class TuningDataStats extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSupervisedTuningDataStats() {
       return supervisedTuningDataStats(Optional.empty());
-    }
-
-    /**
-     * Setter for reinforcementTuningDataStats.
-     *
-     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
-     */
-    @JsonProperty("reinforcementTuningDataStats")
-    public abstract Builder reinforcementTuningDataStats(DatasetStats reinforcementTuningDataStats);
-
-    /**
-     * Setter for reinforcementTuningDataStats builder.
-     *
-     * <p>reinforcementTuningDataStats: Output only. Statistics for reinforcement tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder reinforcementTuningDataStats(
-        DatasetStats.Builder reinforcementTuningDataStatsBuilder) {
-      return reinforcementTuningDataStats(reinforcementTuningDataStatsBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder reinforcementTuningDataStats(
-        Optional<DatasetStats> reinforcementTuningDataStats);
-
-    /** Clears the value of reinforcementTuningDataStats field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearReinforcementTuningDataStats() {
-      return reinforcementTuningDataStats(Optional.empty());
     }
 
     public abstract TuningDataStats build();

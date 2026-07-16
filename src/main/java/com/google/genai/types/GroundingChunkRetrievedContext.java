@@ -80,19 +80,19 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
   public abstract Optional<String> fileSearchStore();
 
   /**
-   * Optional. Page number of the retrieved context, if applicable. This field is not supported in
-   * Vertex AI.
-   */
-  @JsonProperty("pageNumber")
-  public abstract Optional<Integer> pageNumber();
-
-  /**
    * Optional. The media blob resource name for multimodal file search results. Format:
    * fileSearchStores/{file_search_store_id}/media/{blob_id}. This field is not supported in Vertex
    * AI.
    */
   @JsonProperty("mediaId")
   public abstract Optional<String> mediaId();
+
+  /**
+   * Optional. Page number of the retrieved context, if applicable. This field is not supported in
+   * Vertex AI.
+   */
+  @JsonProperty("pageNumber")
+  public abstract Optional<Integer> pageNumber();
 
   /** Instantiates a builder for GroundingChunkRetrievedContext. */
   @ExcludeFromGeneratedCoverageReport
@@ -285,25 +285,6 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     }
 
     /**
-     * Setter for pageNumber.
-     *
-     * <p>pageNumber: Optional. Page number of the retrieved context, if applicable. This field is
-     * not supported in Vertex AI.
-     */
-    @JsonProperty("pageNumber")
-    public abstract Builder pageNumber(Integer pageNumber);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder pageNumber(Optional<Integer> pageNumber);
-
-    /** Clears the value of pageNumber field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearPageNumber() {
-      return pageNumber(Optional.empty());
-    }
-
-    /**
      * Setter for mediaId.
      *
      * <p>mediaId: Optional. The media blob resource name for multimodal file search results.
@@ -321,6 +302,25 @@ public abstract class GroundingChunkRetrievedContext extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMediaId() {
       return mediaId(Optional.empty());
+    }
+
+    /**
+     * Setter for pageNumber.
+     *
+     * <p>pageNumber: Optional. Page number of the retrieved context, if applicable. This field is
+     * not supported in Vertex AI.
+     */
+    @JsonProperty("pageNumber")
+    public abstract Builder pageNumber(Integer pageNumber);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder pageNumber(Optional<Integer> pageNumber);
+
+    /** Clears the value of pageNumber field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPageNumber() {
+      return pageNumber(Optional.empty());
     }
 
     public abstract GroundingChunkRetrievedContext build();

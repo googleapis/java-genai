@@ -35,14 +35,6 @@ import java.util.Optional;
 @JsonDeserialize(builder = GroundingMetadata.Builder.class)
 public abstract class GroundingMetadata extends JsonSerializable {
   /**
-   * Optional. The image search queries that were used to generate the content. This field is
-   * populated only when the grounding source is Google Search with the Image Search search_type
-   * enabled.
-   */
-  @JsonProperty("imageSearchQueries")
-  public abstract Optional<List<String>> imageSearchQueries();
-
-  /**
    * A list of supporting references retrieved from the grounding source. This field is populated
    * when the grounding source is Google Search, Vertex AI Search, or Google Maps.
    */
@@ -73,6 +65,14 @@ public abstract class GroundingMetadata extends JsonSerializable {
    */
   @JsonProperty("googleMapsWidgetContextToken")
   public abstract Optional<String> googleMapsWidgetContextToken();
+
+  /**
+   * Optional. The image search queries that were used to generate the content. This field is
+   * populated only when the grounding source is Google Search with the Image Search search_type
+   * enabled.
+   */
+  @JsonProperty("imageSearchQueries")
+  public abstract Optional<List<String>> imageSearchQueries();
 
   /**
    * Optional. The queries that were executed by the retrieval tools. This field is populated only
@@ -106,38 +106,6 @@ public abstract class GroundingMetadata extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_GroundingMetadata.Builder();
-    }
-
-    /**
-     * Setter for imageSearchQueries.
-     *
-     * <p>imageSearchQueries: Optional. The image search queries that were used to generate the
-     * content. This field is populated only when the grounding source is Google Search with the
-     * Image Search search_type enabled.
-     */
-    @JsonProperty("imageSearchQueries")
-    public abstract Builder imageSearchQueries(List<String> imageSearchQueries);
-
-    /**
-     * Setter for imageSearchQueries.
-     *
-     * <p>imageSearchQueries: Optional. The image search queries that were used to generate the
-     * content. This field is populated only when the grounding source is Google Search with the
-     * Image Search search_type enabled.
-     */
-    @CanIgnoreReturnValue
-    public Builder imageSearchQueries(String... imageSearchQueries) {
-      return imageSearchQueries(Arrays.asList(imageSearchQueries));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder imageSearchQueries(Optional<List<String>> imageSearchQueries);
-
-    /** Clears the value of imageSearchQueries field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearImageSearchQueries() {
-      return imageSearchQueries(Optional.empty());
     }
 
     /**
@@ -332,6 +300,38 @@ public abstract class GroundingMetadata extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGoogleMapsWidgetContextToken() {
       return googleMapsWidgetContextToken(Optional.empty());
+    }
+
+    /**
+     * Setter for imageSearchQueries.
+     *
+     * <p>imageSearchQueries: Optional. The image search queries that were used to generate the
+     * content. This field is populated only when the grounding source is Google Search with the
+     * Image Search search_type enabled.
+     */
+    @JsonProperty("imageSearchQueries")
+    public abstract Builder imageSearchQueries(List<String> imageSearchQueries);
+
+    /**
+     * Setter for imageSearchQueries.
+     *
+     * <p>imageSearchQueries: Optional. The image search queries that were used to generate the
+     * content. This field is populated only when the grounding source is Google Search with the
+     * Image Search search_type enabled.
+     */
+    @CanIgnoreReturnValue
+    public Builder imageSearchQueries(String... imageSearchQueries) {
+      return imageSearchQueries(Arrays.asList(imageSearchQueries));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageSearchQueries(Optional<List<String>> imageSearchQueries);
+
+    /** Clears the value of imageSearchQueries field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageSearchQueries() {
+      return imageSearchQueries(Optional.empty());
     }
 
     /**

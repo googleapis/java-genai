@@ -77,6 +77,10 @@ public abstract class LiveServerContent extends JsonSerializable {
   @JsonProperty("inputTranscription")
   public abstract Optional<Transcription> inputTranscription();
 
+  /** Low latency transcription updated while the user is speaking. */
+  @JsonProperty("interimInputTranscription")
+  public abstract Optional<Transcription> interimInputTranscription();
+
   /**
    * Output transcription. The transcription is independent to the model turn which means it doesn’t
    * imply any ordering between transcription and model turn.
@@ -98,10 +102,6 @@ public abstract class LiveServerContent extends JsonSerializable {
    */
   @JsonProperty("waitingForInput")
   public abstract Optional<Boolean> waitingForInput();
-
-  /** Low latency transcription updated while the user is speaking. */
-  @JsonProperty("interimInputTranscription")
-  public abstract Optional<Transcription> interimInputTranscription();
 
   /** Instantiates a builder for LiveServerContent. */
   @ExcludeFromGeneratedCoverageReport
@@ -273,6 +273,35 @@ public abstract class LiveServerContent extends JsonSerializable {
     }
 
     /**
+     * Setter for interimInputTranscription.
+     *
+     * <p>interimInputTranscription: Low latency transcription updated while the user is speaking.
+     */
+    @JsonProperty("interimInputTranscription")
+    public abstract Builder interimInputTranscription(Transcription interimInputTranscription);
+
+    /**
+     * Setter for interimInputTranscription builder.
+     *
+     * <p>interimInputTranscription: Low latency transcription updated while the user is speaking.
+     */
+    @CanIgnoreReturnValue
+    public Builder interimInputTranscription(
+        Transcription.Builder interimInputTranscriptionBuilder) {
+      return interimInputTranscription(interimInputTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder interimInputTranscription(Optional<Transcription> interimInputTranscription);
+
+    /** Clears the value of interimInputTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInterimInputTranscription() {
+      return interimInputTranscription(Optional.empty());
+    }
+
+    /**
      * Setter for outputTranscription.
      *
      * <p>outputTranscription: Output transcription. The transcription is independent to the model
@@ -385,35 +414,6 @@ public abstract class LiveServerContent extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearWaitingForInput() {
       return waitingForInput(Optional.empty());
-    }
-
-    /**
-     * Setter for interimInputTranscription.
-     *
-     * <p>interimInputTranscription: Low latency transcription updated while the user is speaking.
-     */
-    @JsonProperty("interimInputTranscription")
-    public abstract Builder interimInputTranscription(Transcription interimInputTranscription);
-
-    /**
-     * Setter for interimInputTranscription builder.
-     *
-     * <p>interimInputTranscription: Low latency transcription updated while the user is speaking.
-     */
-    @CanIgnoreReturnValue
-    public Builder interimInputTranscription(
-        Transcription.Builder interimInputTranscriptionBuilder) {
-      return interimInputTranscription(interimInputTranscriptionBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder interimInputTranscription(Optional<Transcription> interimInputTranscription);
-
-    /** Clears the value of interimInputTranscription field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearInterimInputTranscription() {
-      return interimInputTranscription(Optional.empty());
     }
 
     public abstract LiveServerContent build();

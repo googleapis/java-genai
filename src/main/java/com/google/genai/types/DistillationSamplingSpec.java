@@ -31,6 +31,20 @@ import java.util.Optional;
 @JsonDeserialize(builder = DistillationSamplingSpec.Builder.class)
 public abstract class DistillationSamplingSpec extends JsonSerializable {
   /**
+   * Cloud Storage path to file containing prompt dataset for distillation. The dataset must be
+   * formatted as a JSONL file.
+   */
+  @JsonProperty("promptDatasetUri")
+  public abstract Optional<String> promptDatasetUri();
+
+  /**
+   * Cloud Storage path to file containing validation dataset for distillation. The dataset must be
+   * formatted as a JSONL file.
+   */
+  @JsonProperty("validationDatasetUri")
+  public abstract Optional<String> validationDatasetUri();
+
+  /**
    * The base teacher model that is being distilled. See [Supported
    * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
    */
@@ -43,20 +57,6 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
    */
   @JsonProperty("tunedTeacherModelSource")
   public abstract Optional<String> tunedTeacherModelSource();
-
-  /**
-   * Cloud Storage path to file containing validation dataset for distillation. The dataset must be
-   * formatted as a JSONL file.
-   */
-  @JsonProperty("validationDatasetUri")
-  public abstract Optional<String> validationDatasetUri();
-
-  /**
-   * Cloud Storage path to file containing prompt dataset for distillation. The dataset must be
-   * formatted as a JSONL file.
-   */
-  @JsonProperty("promptDatasetUri")
-  public abstract Optional<String> promptDatasetUri();
 
   /** Hyperparameters for distillation tuning. */
   @JsonProperty("hyperparameters")
@@ -78,6 +78,44 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DistillationSamplingSpec.Builder();
+    }
+
+    /**
+     * Setter for promptDatasetUri.
+     *
+     * <p>promptDatasetUri: Cloud Storage path to file containing prompt dataset for distillation.
+     * The dataset must be formatted as a JSONL file.
+     */
+    @JsonProperty("promptDatasetUri")
+    public abstract Builder promptDatasetUri(String promptDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptDatasetUri(Optional<String> promptDatasetUri);
+
+    /** Clears the value of promptDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptDatasetUri() {
+      return promptDatasetUri(Optional.empty());
+    }
+
+    /**
+     * Setter for validationDatasetUri.
+     *
+     * <p>validationDatasetUri: Cloud Storage path to file containing validation dataset for
+     * distillation. The dataset must be formatted as a JSONL file.
+     */
+    @JsonProperty("validationDatasetUri")
+    public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
     }
 
     /**
@@ -116,44 +154,6 @@ public abstract class DistillationSamplingSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTunedTeacherModelSource() {
       return tunedTeacherModelSource(Optional.empty());
-    }
-
-    /**
-     * Setter for validationDatasetUri.
-     *
-     * <p>validationDatasetUri: Cloud Storage path to file containing validation dataset for
-     * distillation. The dataset must be formatted as a JSONL file.
-     */
-    @JsonProperty("validationDatasetUri")
-    public abstract Builder validationDatasetUri(String validationDatasetUri);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
-
-    /** Clears the value of validationDatasetUri field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearValidationDatasetUri() {
-      return validationDatasetUri(Optional.empty());
-    }
-
-    /**
-     * Setter for promptDatasetUri.
-     *
-     * <p>promptDatasetUri: Cloud Storage path to file containing prompt dataset for distillation.
-     * The dataset must be formatted as a JSONL file.
-     */
-    @JsonProperty("promptDatasetUri")
-    public abstract Builder promptDatasetUri(String promptDatasetUri);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder promptDatasetUri(Optional<String> promptDatasetUri);
-
-    /** Clears the value of promptDatasetUri field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearPromptDatasetUri() {
-      return promptDatasetUri(Optional.empty());
     }
 
     /**

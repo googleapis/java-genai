@@ -65,6 +65,60 @@ public final class Batches {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode audioTranscriptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"languageCodes"}))) {
+      throw new IllegalArgumentException(
+          "languageCodes parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageAuto"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageAuto"},
+          Common.getValueByPath(fromObject, new String[] {"languageAuto"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageHints"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageHints"},
+          Common.getValueByPath(fromObject, new String[] {"languageHints"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"customVocabulary"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"customVocabulary"},
+          Common.getValueByPath(fromObject, new String[] {"customVocabulary"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adaptationPhrases"},
+          Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"wordTimestamp"},
+          Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"diarization"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"diarization"},
+          Common.getValueByPath(fromObject, new String[] {"diarization"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
@@ -218,6 +272,16 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDataset"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexMultimodalDatasetDestination"},
+          vertexMultimodalDatasetDestinationToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"vertexDataset"})),
+              toObject));
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
       throw new IllegalArgumentException(
           "fileName parameter is only supported in Gemini Developer API mode, not in Gemini"
@@ -235,16 +299,6 @@ public final class Batches {
       throw new IllegalArgumentException(
           "inlinedEmbedContentResponses parameter is only supported in Gemini Developer API mode,"
               + " not in Gemini Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"vertexDataset"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"vertexMultimodalDatasetDestination"},
-          vertexMultimodalDatasetDestinationToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"vertexDataset"})),
-              toObject));
     }
 
     return toObject;
@@ -404,18 +458,18 @@ public final class Batches {
               toObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"completionStats"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"completionStats"},
-          Common.getValueByPath(fromObject, new String[] {"completionStats"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"outputInfo"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"outputInfo"},
           Common.getValueByPath(fromObject, new String[] {"outputInfo"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"completionStats"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"completionStats"},
+          Common.getValueByPath(fromObject, new String[] {"completionStats"}));
     }
 
     return toObject;
@@ -480,6 +534,12 @@ public final class Batches {
               + " Gemini Developer API mode.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}))) {
+      throw new IllegalArgumentException(
+          "vertexDatasetName parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -497,12 +557,6 @@ public final class Batches {
         result.add(inlinedRequestToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"requests", "requests"}, result);
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}))) {
-      throw new IllegalArgumentException(
-          "vertexDatasetName parameter is only supported in Gemini Enterprise Agent Platform mode,"
-              + " not in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -532,6 +586,13 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"bigqueryUri"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"vertexMultimodalDatasetSource", "datasetName"},
+          Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}));
+    }
+
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileName"}))) {
       throw new IllegalArgumentException(
           "fileName parameter is only supported in Gemini Developer API mode, not in Gemini"
@@ -542,13 +603,6 @@ public final class Batches {
       throw new IllegalArgumentException(
           "inlinedRequests parameter is only supported in Gemini Developer API mode, not in Gemini"
               + " Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"vertexMultimodalDatasetSource", "datasetName"},
-          Common.getValueByPath(fromObject, new String[] {"vertexDatasetName"}));
     }
 
     return toObject;
@@ -1027,6 +1081,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1129,16 +1184,16 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"args"},
           Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -1194,6 +1249,13 @@ public final class Batches {
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"serviceTier"},
+          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
+    }
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
@@ -1400,6 +1462,16 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          audioTranscriptionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"})),
+              toObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"imageConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1421,13 +1493,6 @@ public final class Batches {
       throw new IllegalArgumentException(
           "modelArmorConfig parameter is only supported in Gemini Enterprise Agent Platform mode,"
               + " not in Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"serviceTier"},
-          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
     }
 
     return toObject;
@@ -1549,13 +1614,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"searchTypes"},
-          Common.getValueByPath(fromObject, new String[] {"searchTypes"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
       throw new IllegalArgumentException(
           "blockingConfidence parameter is only supported in Gemini Enterprise Agent Platform mode,"
@@ -1566,6 +1624,13 @@ public final class Batches {
       throw new IllegalArgumentException(
           "excludeDomains parameter is only supported in Gemini Enterprise Agent Platform mode, not"
               + " in Gemini Developer API mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"searchTypes"},
+          Common.getValueByPath(fromObject, new String[] {"searchTypes"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -1601,12 +1666,6 @@ public final class Batches {
               + " not in Gemini Developer API mode.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"prominentPeople"}))) {
-      throw new IllegalArgumentException(
-          "prominentPeople parameter is only supported in Gemini Enterprise Agent Platform mode,"
-              + " not in Gemini Developer API mode.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
       throw new IllegalArgumentException(
           "outputMimeType parameter is only supported in Gemini Enterprise Agent Platform mode, not"
@@ -1623,6 +1682,12 @@ public final class Batches {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
       throw new IllegalArgumentException(
           "imageOutputOptions parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"prominentPeople"}))) {
+      throw new IllegalArgumentException(
+          "prominentPeople parameter is only supported in Gemini Enterprise Agent Platform mode,"
               + " not in Gemini Developer API mode.");
     }
 
@@ -1866,6 +1931,27 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1945,20 +2031,6 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolCall"},
-          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolResponse"},
-          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1998,13 +2070,6 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2013,6 +2078,13 @@ public final class Batches {
               JsonSerializable.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"})
@@ -2035,30 +2107,6 @@ public final class Batches {
               + " Gemini Developer API mode.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"computerUse"},
-          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileSearch"},
-          Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2069,11 +2117,25 @@ public final class Batches {
               toObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mcpServers"},
+          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
@@ -2082,11 +2144,27 @@ public final class Batches {
               + " mode, not in Gemini Developer API mode.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
+      throw new IllegalArgumentException(
+          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"functionDeclarations"},
           Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
@@ -2109,17 +2187,11 @@ public final class Batches {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"fileSearch"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mcpServers"},
-          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
-      throw new IllegalArgumentException(
-          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
+          new String[] {"fileSearch"},
+          Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
     }
 
     return toObject;

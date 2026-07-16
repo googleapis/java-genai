@@ -95,6 +95,10 @@ public abstract class LiveClientSetup extends JsonSerializable {
   @JsonProperty("proactivity")
   public abstract Optional<ProactivityConfig> proactivity();
 
+  /** Configures the exchange of history between the client and the server. */
+  @JsonProperty("historyConfig")
+  public abstract Optional<HistoryConfig> historyConfig();
+
   /**
    * Configures the explicit VAD signal. If enabled, the client will send vad_signal to indicate the
    * start and end of speech. This allows the server to process the audio more efficiently.
@@ -109,10 +113,6 @@ public abstract class LiveClientSetup extends JsonSerializable {
   /** Safety settings in the request to block unsafe content in the response. */
   @JsonProperty("safetySettings")
   public abstract Optional<List<SafetySetting>> safetySettings();
-
-  /** Configures the exchange of history between the client and the server. */
-  @JsonProperty("historyConfig")
-  public abstract Optional<HistoryConfig> historyConfig();
 
   /** Instantiates a builder for LiveClientSetup. */
   @ExcludeFromGeneratedCoverageReport
@@ -452,6 +452,34 @@ public abstract class LiveClientSetup extends JsonSerializable {
     }
 
     /**
+     * Setter for historyConfig.
+     *
+     * <p>historyConfig: Configures the exchange of history between the client and the server.
+     */
+    @JsonProperty("historyConfig")
+    public abstract Builder historyConfig(HistoryConfig historyConfig);
+
+    /**
+     * Setter for historyConfig builder.
+     *
+     * <p>historyConfig: Configures the exchange of history between the client and the server.
+     */
+    @CanIgnoreReturnValue
+    public Builder historyConfig(HistoryConfig.Builder historyConfigBuilder) {
+      return historyConfig(historyConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder historyConfig(Optional<HistoryConfig> historyConfig);
+
+    /** Clears the value of historyConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHistoryConfig() {
+      return historyConfig(Optional.empty());
+    }
+
+    /**
      * Setter for explicitVadSignal.
      *
      * <p>explicitVadSignal: Configures the explicit VAD signal. If enabled, the client will send
@@ -538,34 +566,6 @@ public abstract class LiveClientSetup extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSafetySettings() {
       return safetySettings(Optional.empty());
-    }
-
-    /**
-     * Setter for historyConfig.
-     *
-     * <p>historyConfig: Configures the exchange of history between the client and the server.
-     */
-    @JsonProperty("historyConfig")
-    public abstract Builder historyConfig(HistoryConfig historyConfig);
-
-    /**
-     * Setter for historyConfig builder.
-     *
-     * <p>historyConfig: Configures the exchange of history between the client and the server.
-     */
-    @CanIgnoreReturnValue
-    public Builder historyConfig(HistoryConfig.Builder historyConfigBuilder) {
-      return historyConfig(historyConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder historyConfig(Optional<HistoryConfig> historyConfig);
-
-    /** Clears the value of historyConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearHistoryConfig() {
-      return historyConfig(Optional.empty());
     }
 
     public abstract LiveClientSetup build();

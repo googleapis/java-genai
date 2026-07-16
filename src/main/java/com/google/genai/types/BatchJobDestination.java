@@ -47,6 +47,13 @@ public abstract class BatchJobDestination extends JsonSerializable {
   public abstract Optional<String> bigqueryUri();
 
   /**
+   * This field is experimental and may change in future versions. The Vertex AI dataset
+   * destination.
+   */
+  @JsonProperty("vertexDataset")
+  public abstract Optional<VertexMultimodalDatasetDestination> vertexDataset();
+
+  /**
    * The Gemini Developer API's file resource name of the output data (e.g. "files/12345"). The file
    * will be a JSONL file with a single response per line. The responses will be
    * GenerateContentResponse messages formatted as JSON. The responses will be written in the same
@@ -68,13 +75,6 @@ public abstract class BatchJobDestination extends JsonSerializable {
    */
   @JsonProperty("inlinedEmbedContentResponses")
   public abstract Optional<List<InlinedEmbedContentResponse>> inlinedEmbedContentResponses();
-
-  /**
-   * This field is experimental and may change in future versions. The Vertex AI dataset
-   * destination.
-   */
-  @JsonProperty("vertexDataset")
-  public abstract Optional<VertexMultimodalDatasetDestination> vertexDataset();
 
   /** Instantiates a builder for BatchJobDestination. */
   @ExcludeFromGeneratedCoverageReport
@@ -147,6 +147,36 @@ public abstract class BatchJobDestination extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearBigqueryUri() {
       return bigqueryUri(Optional.empty());
+    }
+
+    /**
+     * Setter for vertexDataset.
+     *
+     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
+     * dataset destination.
+     */
+    @JsonProperty("vertexDataset")
+    public abstract Builder vertexDataset(VertexMultimodalDatasetDestination vertexDataset);
+
+    /**
+     * Setter for vertexDataset builder.
+     *
+     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
+     * dataset destination.
+     */
+    @CanIgnoreReturnValue
+    public Builder vertexDataset(VertexMultimodalDatasetDestination.Builder vertexDatasetBuilder) {
+      return vertexDataset(vertexDatasetBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDataset(Optional<VertexMultimodalDatasetDestination> vertexDataset);
+
+    /** Clears the value of vertexDataset field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDataset() {
+      return vertexDataset(Optional.empty());
     }
 
     /**
@@ -263,36 +293,6 @@ public abstract class BatchJobDestination extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearInlinedEmbedContentResponses() {
       return inlinedEmbedContentResponses(Optional.empty());
-    }
-
-    /**
-     * Setter for vertexDataset.
-     *
-     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
-     * dataset destination.
-     */
-    @JsonProperty("vertexDataset")
-    public abstract Builder vertexDataset(VertexMultimodalDatasetDestination vertexDataset);
-
-    /**
-     * Setter for vertexDataset builder.
-     *
-     * <p>vertexDataset: This field is experimental and may change in future versions. The Vertex AI
-     * dataset destination.
-     */
-    @CanIgnoreReturnValue
-    public Builder vertexDataset(VertexMultimodalDatasetDestination.Builder vertexDatasetBuilder) {
-      return vertexDataset(vertexDatasetBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder vertexDataset(Optional<VertexMultimodalDatasetDestination> vertexDataset);
-
-    /** Clears the value of vertexDataset field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVertexDataset() {
-      return vertexDataset(Optional.empty());
     }
 
     public abstract BatchJobDestination build();
