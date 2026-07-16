@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.62.0](https://github.com/googleapis/java-genai/compare/v1.61.0...v1.62.0) (2026-07-16)
+
+
+### Features
+
+* Add history config. ([d105c2a](https://github.com/googleapis/java-genai/commit/d105c2a65af238a2fdae572254270bc5816a08e9))
+* Populate per-modality prompt token count in embedding responses for gemini-embedding-2 ([4893b4a](https://github.com/googleapis/java-genai/commit/4893b4a688c8d8f4c8be0a55bd67beda2718c33a))
+
 ## [1.61.0](https://github.com/googleapis/java-genai/compare/v1.60.0...v1.61.0) (2026-07-09)
 
 
