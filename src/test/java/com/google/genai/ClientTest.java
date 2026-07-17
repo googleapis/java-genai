@@ -150,7 +150,7 @@ public class ClientTest {
             () -> Client.builder().vertexAI(false).project(PROJECT).build());
 
     // Assert
-    assertEquals("Gemini API do not support project/location.", exception.getMessage());
+    assertEquals("Gemini API does not support project/location.", exception.getMessage());
   }
 
   @Test
@@ -162,9 +162,21 @@ public class ClientTest {
             () -> Client.builder().apiKey(API_KEY).project(PROJECT).build());
 
     // Assert
-    assertEquals(
-        "Project/location and API key are mutually exclusive in the client initializer.",
-        exception.getMessage());
+    assertEquals("Gemini API does not support project/location.", exception.getMessage());
+  }
+
+  @Test
+  public void testInitClientFromBuilder_setApiKeyAndProjectAndLocationInVertex_success() {
+    // Act
+    Client client =
+        Client.builder().apiKey(API_KEY).project(PROJECT).location(LOCATION).vertexAI(true).build();
+
+    // Assert
+    assertEquals(API_KEY, client.apiKey());
+    assertEquals(PROJECT, client.project());
+    assertEquals(LOCATION, client.location());
+    assertTrue(client.vertexAI());
+    assertEquals("https://location-aiplatform.googleapis.com", client.baseUrl().orElse(null));
   }
 
   @Test
