@@ -54,6 +54,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"languageHints"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"customVocabulary"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"customVocabulary"},
+          Common.getValueByPath(fromObject, new String[] {"customVocabulary"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
       Common.setValueByPath(
           toObject,

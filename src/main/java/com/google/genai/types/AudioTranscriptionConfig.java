@@ -45,8 +45,15 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   public abstract Optional<LanguageHints> languageHints();
 
   /**
-   * A list of phrases used for speech adaptation, which biases the ASR model to improve recognition
-   * of these specific terms.
+   * A list of custom vocabulary phrases, which biases the ASR model to improve recognition of these
+   * specific terms.
+   */
+  @JsonProperty("customVocabulary")
+  public abstract Optional<List<String>> customVocabulary();
+
+  /**
+   * Deprecated. A list of phrases used for speech adaptation, which biases the ASR model to improve
+   * recognition of these specific terms.
    */
   @JsonProperty("adaptationPhrases")
   public abstract Optional<List<String>> adaptationPhrases();
@@ -158,10 +165,40 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for customVocabulary.
+     *
+     * <p>customVocabulary: A list of custom vocabulary phrases, which biases the ASR model to
+     * improve recognition of these specific terms.
+     */
+    @JsonProperty("customVocabulary")
+    public abstract Builder customVocabulary(List<String> customVocabulary);
+
+    /**
+     * Setter for customVocabulary.
+     *
+     * <p>customVocabulary: A list of custom vocabulary phrases, which biases the ASR model to
+     * improve recognition of these specific terms.
+     */
+    @CanIgnoreReturnValue
+    public Builder customVocabulary(String... customVocabulary) {
+      return customVocabulary(Arrays.asList(customVocabulary));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder customVocabulary(Optional<List<String>> customVocabulary);
+
+    /** Clears the value of customVocabulary field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCustomVocabulary() {
+      return customVocabulary(Optional.empty());
+    }
+
+    /**
      * Setter for adaptationPhrases.
      *
-     * <p>adaptationPhrases: A list of phrases used for speech adaptation, which biases the ASR
-     * model to improve recognition of these specific terms.
+     * <p>adaptationPhrases: Deprecated. A list of phrases used for speech adaptation, which biases
+     * the ASR model to improve recognition of these specific terms.
      */
     @JsonProperty("adaptationPhrases")
     public abstract Builder adaptationPhrases(List<String> adaptationPhrases);
@@ -169,8 +206,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for adaptationPhrases.
      *
-     * <p>adaptationPhrases: A list of phrases used for speech adaptation, which biases the ASR
-     * model to improve recognition of these specific terms.
+     * <p>adaptationPhrases: Deprecated. A list of phrases used for speech adaptation, which biases
+     * the ASR model to improve recognition of these specific terms.
      */
     @CanIgnoreReturnValue
     public Builder adaptationPhrases(String... adaptationPhrases) {
