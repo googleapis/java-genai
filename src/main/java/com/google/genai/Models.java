@@ -5442,6 +5442,12 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"defaultCheckpointId"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"updateMask"}))) {
+      throw new IllegalArgumentException(
+          "updateMask parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 
@@ -5469,6 +5475,13 @@ public final class Models {
           parentObject,
           new String[] {"defaultCheckpointId"},
           Common.getValueByPath(fromObject, new String[] {"defaultCheckpointId"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"updateMask"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"_query", "updateMask"},
+          Common.getValueByPath(fromObject, new String[] {"updateMask"}));
     }
 
     return toObject;
