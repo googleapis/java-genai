@@ -80,6 +80,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
@@ -568,6 +569,10 @@ public final class AsyncModels {
   }
 
   private static final Logger logger = Logger.getLogger(AsyncModels.class.getName());
+  private static final AtomicBoolean loggedGenerateImagesWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedEditImageWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedGenerateVideosVideoWarning = new AtomicBoolean(false);
+  private static final AtomicBoolean loggedGenerateVideosWarning = new AtomicBoolean(false);
 
   /**
    * Asynchronously counts tokens given a GenAI model and a text string.
@@ -832,9 +837,19 @@ public final class AsyncModels {
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateImagesResponse} instance that contains the
    *     generated images.
+   * @deprecated Use {@link #generateContent(String, Content)} instead.
    */
+  @Deprecated
   public CompletableFuture<GenerateImagesResponse> generateImages(
       String model, String prompt, GenerateImagesConfig config) {
+    if (loggedGenerateImagesWarning.compareAndSet(false, true)) {
+      logger.warning(
+          "The generateImages method is deprecated and will be removed in the next major release"
+              + " (not before Jan. 1 2027). Please use the generateContent method with image models"
+              + " instead. See https://ai.google.dev/gemini-api/docs/deprecations#imagen-models and"
+              + " https:/"
+              + "/docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/image-generation#generate-images");
+    }
     return privateGenerateImages(model, prompt, config)
         .thenApply(models::postProcessGenerateImagesResponse);
   }
@@ -855,9 +870,18 @@ public final class AsyncModels {
    *     optional configurations
    * @return a {@link com.google.genai.types.EditImageResponse} instance that contains the edited
    *     image.
+   * @deprecated Use {@link #generateContent(String, Content)} instead.
    */
+  @Deprecated
   public CompletableFuture<EditImageResponse> editImage(
       String model, String prompt, List<ReferenceImage> referenceImages, EditImageConfig config) {
+    if (loggedEditImageWarning.compareAndSet(false, true)) {
+      logger.warning(
+          "The editImage method is deprecated and will be removed in the next major release (not"
+              + " before Jan. 1 2027). Please use the generateContent method with image models"
+              + " instead. See https:/"
+              + "/docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/gemini-edit-images#edit-an-image");
+    }
     List<ReferenceImageAPI> referenceImagesAPI = new ArrayList<>();
     for (ReferenceImage referenceImage : referenceImages) {
       referenceImagesAPI.add(referenceImage.toReferenceImageAPI());
@@ -917,9 +941,18 @@ public final class AsyncModels {
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
    *     generated videos.
+   * @deprecated Use {@link #generateVideos(String, GenerateVideosSource, GenerateVideosConfig)}
+   *     instead.
    */
+  @Deprecated
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, String prompt, Image image, Video video, GenerateVideosConfig config) {
+    if (loggedGenerateVideosVideoWarning.compareAndSet(false, true)) {
+      logger.warning(
+          "The generateVideos (with prompt, image, video) method is deprecated and will be removed"
+              + " in the next major release (not before 2026-07-31). Please use"
+              + " generateVideos(String, GenerateVideosSource, GenerateVideosConfig) instead.");
+    }
     return privateGenerateVideos(model, prompt, image, models.preProcessVideo(video), null, config);
   }
 
@@ -935,9 +968,18 @@ public final class AsyncModels {
    *     optional configurations
    * @return a {@link com.google.genai.types.GenerateVideosOperation} instance that contains the
    *     generated videos.
+   * @deprecated Use {@link #generateVideos(String, GenerateVideosSource, GenerateVideosConfig)}
+   *     instead.
    */
+  @Deprecated
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, String prompt, Image image, GenerateVideosConfig config) {
+    if (loggedGenerateVideosWarning.compareAndSet(false, true)) {
+      logger.warning(
+          "The generateVideos (with prompt, image) method is deprecated and will be removed in the"
+              + " next major release (not before 2026-07-31). Please use generateVideos(String,"
+              + " GenerateVideosSource, GenerateVideosConfig) instead.");
+    }
     return generateVideos(model, prompt, image, null, config);
   }
 
