@@ -28,11 +28,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Provides hints to the model about possible languages present in the audio. */
+/** Deprecated: Use AudioTranscriptionConfig.language_codes instead. */
 @AutoValue
 @JsonDeserialize(builder = LanguageHints.Builder.class)
 public abstract class LanguageHints extends JsonSerializable {
-  /** BCP-47 language codes. At least one must be specified. */
+  /** Deprecated. BCP-47 language codes. */
   @JsonProperty("languageCodes")
   public abstract Optional<List<String>> languageCodes();
 
@@ -57,7 +57,7 @@ public abstract class LanguageHints extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: BCP-47 language codes. At least one must be specified.
+     * <p>languageCodes: Deprecated. BCP-47 language codes.
      */
     @JsonProperty("languageCodes")
     public abstract Builder languageCodes(List<String> languageCodes);
@@ -65,7 +65,7 @@ public abstract class LanguageHints extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: BCP-47 language codes. At least one must be specified.
+     * <p>languageCodes: Deprecated. BCP-47 language codes.
      */
     @CanIgnoreReturnValue
     public Builder languageCodes(String... languageCodes) {
