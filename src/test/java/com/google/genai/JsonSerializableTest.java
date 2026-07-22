@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.genai.errors.GenAiIOException;
+import java.time.Duration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -130,5 +131,54 @@ class JsonSerializableTest {
               JsonSerializable.setMaxReadLength(-100);
             });
     assertEquals("Invalid JSON max read length: -100", ex2.getMessage());
+  }
+
+  /** A helper class with a Duration field, exercising CustomDurationDeserializer. */
+  static class DurationPayload extends JsonSerializable {
+    @JsonProperty("timeout")
+    public Duration timeout;
+  }
+
+  @Test
+  void fromJsonString_duration_parsesWholeSeconds() {
+    DurationPayload payload =
+        DurationPayload.fromJsonString("{\"timeout\":\"7s\"}", DurationPayload.class);
+
+    assertEquals(Duration.ofSeconds(7), payload.timeout);
+  }
+
+  @Test
+  void fromJsonString_duration_parsesFractionalSeconds() {
+    // proto3 JSON encodes google.protobuf.Duration with fractional seconds
+    // (e.g. "7.280s", up to 9 fractional digits); the Live API streams these.
+    DurationPayload payload =
+        DurationPayload.fromJsonString("{\"timeout\":\"7.280s\"}", DurationPayload.class);
+
+    assertEquals(Duration.ofSeconds(7, 280_000_000L), payload.timeout);
+  }
+
+  @Test
+  void fromJsonString_duration_keepsNanosecondPrecision() {
+    DurationPayload payload =
+        DurationPayload.fromJsonString("{\"timeout\":\"0.000000001s\"}", DurationPayload.class);
+
+    assertEquals(Duration.ofNanos(1), payload.timeout);
+  }
+
+  @Test
+  void fromJsonString_duration_parsesNegativeFractionalSeconds() {
+    DurationPayload payload =
+        DurationPayload.fromJsonString("{\"timeout\":\"-1.5s\"}", DurationPayload.class);
+
+    assertEquals(Duration.ofMillis(-1500), payload.timeout);
+  }
+
+  @Test
+  void fromJsonString_duration_rejectsNonNumericValue() {
+    assertThrows(
+        GenAiIOException.class,
+        () -> {
+          DurationPayload.fromJsonString("{\"timeout\":\"abcs\"}", DurationPayload.class);
+        });
   }
 }
