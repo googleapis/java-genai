@@ -227,7 +227,8 @@ public final class Client implements AutoCloseable {
 
     if (enterprise.isPresent() && vertexAI.isPresent() && !enterprise.get().equals(vertexAI.get())) {
       throw new IllegalArgumentException(
-          "enterprise and vertexAI flags have conflicting values, please set enterprise value only.");
+          "enterprise and vertexAI flags have conflicting values, please set enterprise value"
+              + " only.");
     }
 
     boolean useVertexAI;
@@ -245,7 +246,8 @@ public final class Client implements AutoCloseable {
 
       if (enterpriseEnvPresent && vertexEnvPresent && !enterpriseEnv.equalsIgnoreCase(vertexEnv)) {
         logger.warning(
-            "Warning: Both GOOGLE_GENAI_USE_ENTERPRISE and GOOGLE_GENAI_USE_VERTEXAI are set with conflicting values. The value of GOOGLE_GENAI_USE_ENTERPRISE will be used.");
+            "Warning: Both GOOGLE_GENAI_USE_ENTERPRISE and GOOGLE_GENAI_USE_VERTEXAI are set with"
+                + " conflicting values. The value of GOOGLE_GENAI_USE_ENTERPRISE will be used.");
       }
 
       if (enterpriseEnvPresent) {
@@ -257,14 +259,8 @@ public final class Client implements AutoCloseable {
       }
     }
 
-    if (project.isPresent() || location.isPresent()) {
-      if (apiKey.isPresent()) {
-        throw new IllegalArgumentException(
-            "Project/location and API key are mutually exclusive in the client initializer.");
-      }
-      if (!useVertexAI) {
-        throw new IllegalArgumentException("Gemini API do not support project/location.");
-      }
+    if ((project.isPresent() || location.isPresent()) && !useVertexAI) {
+      throw new IllegalArgumentException("Gemini API does not support project/location.");
     }
 
     this.debugConfig = debugConfig.orElse(new DebugConfig());
