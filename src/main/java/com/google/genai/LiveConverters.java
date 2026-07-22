@@ -68,6 +68,20 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"wordTimestamp"},
+          Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"diarization"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"diarization"},
+          Common.getValueByPath(fromObject, new String[] {"diarization"}));
+    }
+
     return toObject;
   }
 
@@ -523,6 +537,13 @@ final class LiveConverters {
       throw new IllegalArgumentException(
           "translationConfig parameter is only supported in Gemini Developer API mode, not in"
               + " Gemini Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
     }
 
     return toObject;
@@ -1928,6 +1949,13 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
+    }
+
     return toObject;
   }
 
@@ -2033,6 +2061,13 @@ final class LiveConverters {
       throw new IllegalArgumentException(
           "partMetadata parameter is only supported in Gemini Developer API mode, not in Gemini"
               + " Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
     return toObject;

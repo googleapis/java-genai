@@ -959,6 +959,13 @@ public final class Caches {
           Common.getValueByPath(fromObject, new String[] {"partMetadata"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
+    }
+
     return toObject;
   }
 
@@ -1064,6 +1071,13 @@ public final class Caches {
       throw new IllegalArgumentException(
           "partMetadata parameter is only supported in Gemini Developer API mode, not in Gemini"
               + " Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
     return toObject;
