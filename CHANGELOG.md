@@ -5,7 +5,7 @@
 
 ### Features
 
-* A new field `custom_vocabulary` is added to message `.google.cloud.aiplatform.v1beta1.BidiGenerateContentSetup` ([701d070](https://github.com/googleapis/java-genai/commit/701d0706a0d6ffea88ba1d9b88406970789ef1f9))
+* A new field `customVocabulary` is added to message `com.google.genai.types.AudioTranscriptionConfig` ([701d070](https://github.com/googleapis/java-genai/commit/701d0706a0d6ffea88ba1d9b88406970789ef1f9))
 
 
 ### Bug Fixes
