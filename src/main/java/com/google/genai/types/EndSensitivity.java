@@ -23,15 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** End of speech sensitivity. */
+/** Determines how likely detected speech is ended. This enum is not supported in Vertex AI. */
 public class EndSensitivity {
 
   /** Enum representing the known values for EndSensitivity. */
   public enum Known {
-    /**
-     * The default is END_SENSITIVITY_LOW for Gemini Enterprise Agent Platform and
-     * END_SENSITIVITY_HIGH for Gemini Live.
-     */
+    /** The default is END_SENSITIVITY_HIGH. */
     END_SENSITIVITY_UNSPECIFIED,
 
     /** Automatic detection ends speech more often. */

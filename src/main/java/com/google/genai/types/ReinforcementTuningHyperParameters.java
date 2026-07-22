@@ -90,6 +90,10 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
   @JsonProperty("thinkingBudget")
   public abstract Optional<Integer> thinkingBudget();
 
+  /** Optional. Number of steps for the tuning job (mutually exclusive with epoch_count). */
+  @JsonProperty("stepCount")
+  public abstract Optional<Long> stepCount();
+
   /** Instantiates a builder for ReinforcementTuningHyperParameters. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -347,6 +351,25 @@ public abstract class ReinforcementTuningHyperParameters extends JsonSerializabl
     @CanIgnoreReturnValue
     public Builder clearThinkingBudget() {
       return thinkingBudget(Optional.empty());
+    }
+
+    /**
+     * Setter for stepCount.
+     *
+     * <p>stepCount: Optional. Number of steps for the tuning job (mutually exclusive with
+     * epoch_count).
+     */
+    @JsonProperty("stepCount")
+    public abstract Builder stepCount(Long stepCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder stepCount(Optional<Long> stepCount);
+
+    /** Clears the value of stepCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearStepCount() {
+      return stepCount(Optional.empty());
     }
 
     public abstract ReinforcementTuningHyperParameters build();

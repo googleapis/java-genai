@@ -51,6 +51,9 @@ public class HarmCategory {
      */
     HARM_CATEGORY_CIVIC_INTEGRITY,
 
+    /** Prompts designed to bypass safety filters. */
+    HARM_CATEGORY_JAILBREAK,
+
     /** Images that contain hate speech. This enum value is not supported in Gemini API. */
     HARM_CATEGORY_IMAGE_HATE,
 
@@ -64,12 +67,7 @@ public class HarmCategory {
      * Images that contain sexually explicit content. This enum value is not supported in Gemini
      * API.
      */
-    HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT,
-
-    /**
-     * Prompts designed to bypass safety filters. This enum value is not supported in Gemini API.
-     */
-    HARM_CATEGORY_JAILBREAK
+    HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT
   }
 
   private Known harmCategoryEnum;

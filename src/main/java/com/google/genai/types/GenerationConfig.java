@@ -65,7 +65,7 @@ public abstract class GenerationConfig extends JsonSerializable {
   /**
    * Optional. If enabled, the model will detect emotions and adapt its responses accordingly. For
    * example, if the model detects that the user is frustrated, it may provide a more empathetic
-   * response. This field is not supported in Gemini API.
+   * response.
    */
   @JsonProperty("enableAffectiveDialog")
   public abstract Optional<Boolean> enableAffectiveDialog();
@@ -338,7 +338,7 @@ public abstract class GenerationConfig extends JsonSerializable {
      *
      * <p>enableAffectiveDialog: Optional. If enabled, the model will detect emotions and adapt its
      * responses accordingly. For example, if the model detects that the user is frustrated, it may
-     * provide a more empathetic response. This field is not supported in Gemini API.
+     * provide a more empathetic response.
      */
     @JsonProperty("enableAffectiveDialog")
     public abstract Builder enableAffectiveDialog(boolean enableAffectiveDialog);

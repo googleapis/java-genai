@@ -23,7 +23,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
-/** Indicates the language of the audio should be automatically detected. */
+/**
+ * Indicates the language of the audio should be automatically detected. This data type is not
+ * supported in Vertex AI.
+ */
 @AutoValue
 @JsonDeserialize(builder = LanguageAuto.Builder.class)
 public abstract class LanguageAuto extends JsonSerializable {

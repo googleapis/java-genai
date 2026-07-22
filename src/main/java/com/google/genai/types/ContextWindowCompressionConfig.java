@@ -27,17 +27,23 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Enables context window compression -- mechanism managing model context window so it does not
- * exceed given length.
+ * Enables context window compression — a mechanism for managing the model's context window so that
+ * it does not exceed a given length. This data type is not supported in Vertex AI.
  */
 @AutoValue
 @JsonDeserialize(builder = ContextWindowCompressionConfig.Builder.class)
 public abstract class ContextWindowCompressionConfig extends JsonSerializable {
-  /** Number of tokens (before running turn) that triggers context window compression mechanism. */
+  /**
+   * The number of tokens (before running a turn) required to trigger a context window compression.
+   * This can be used to balance quality against latency as shorter context windows may result in
+   * faster model responses. However, any compression operation will cause a temporary latency
+   * increase, so they should not be triggered frequently. If not set, the default is 80% of the
+   * model's context window limit. This leaves 20% for the next user request/model response.
+   */
   @JsonProperty("triggerTokens")
   public abstract Optional<Long> triggerTokens();
 
-  /** Sliding window compression mechanism. */
+  /** A sliding-window mechanism. */
   @JsonProperty("slidingWindow")
   public abstract Optional<SlidingWindow> slidingWindow();
 
@@ -64,8 +70,12 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
     /**
      * Setter for triggerTokens.
      *
-     * <p>triggerTokens: Number of tokens (before running turn) that triggers context window
-     * compression mechanism.
+     * <p>triggerTokens: The number of tokens (before running a turn) required to trigger a context
+     * window compression. This can be used to balance quality against latency as shorter context
+     * windows may result in faster model responses. However, any compression operation will cause a
+     * temporary latency increase, so they should not be triggered frequently. If not set, the
+     * default is 80% of the model's context window limit. This leaves 20% for the next user
+     * request/model response.
      */
     @JsonProperty("triggerTokens")
     public abstract Builder triggerTokens(Long triggerTokens);
@@ -83,7 +93,7 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
     /**
      * Setter for slidingWindow.
      *
-     * <p>slidingWindow: Sliding window compression mechanism.
+     * <p>slidingWindow: A sliding-window mechanism.
      */
     @JsonProperty("slidingWindow")
     public abstract Builder slidingWindow(SlidingWindow slidingWindow);
@@ -91,7 +101,7 @@ public abstract class ContextWindowCompressionConfig extends JsonSerializable {
     /**
      * Setter for slidingWindow builder.
      *
-     * <p>slidingWindow: Sliding window compression mechanism.
+     * <p>slidingWindow: A sliding-window mechanism.
      */
     @CanIgnoreReturnValue
     public Builder slidingWindow(SlidingWindow.Builder slidingWindowBuilder) {
