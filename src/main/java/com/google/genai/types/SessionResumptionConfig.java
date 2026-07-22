@@ -36,9 +36,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = SessionResumptionConfig.Builder.class)
 public abstract class SessionResumptionConfig extends JsonSerializable {
   /**
-   * Session resumption handle of previous session (session to restore).
-   *
-   * <p>If not present new session will be started.
+   * The handle of a previous session. If not present then a new session is created. Session handles
+   * come from `SessionResumptionUpdate.token` values in previous connections.
    */
   @JsonProperty("handle")
   public abstract Optional<String> handle();
@@ -71,9 +70,8 @@ public abstract class SessionResumptionConfig extends JsonSerializable {
     /**
      * Setter for handle.
      *
-     * <p>handle: Session resumption handle of previous session (session to restore).
-     *
-     * <p>If not present new session will be started.
+     * <p>handle: The handle of a previous session. If not present then a new session is created.
+     * Session handles come from `SessionResumptionUpdate.token` values in previous connections.
      */
     @JsonProperty("handle")
     public abstract Builder handle(String handle);

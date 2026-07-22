@@ -26,15 +26,19 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Configuration for history exchange between client and server. */
+/**
+ * History configuration. This message is included in the session configuration as
+ * `BidiGenerateContentSetup.history_config`. Configures the exchange of history messages. This data
+ * type is not supported in Vertex AI.
+ */
 @AutoValue
 @JsonDeserialize(builder = HistoryConfig.Builder.class)
 public abstract class HistoryConfig extends JsonSerializable {
   /**
-   * If true, after sending `setup_complete`, the server will wait and at first process
+   * Optional. If true, after sending `setup_complete`, the server will wait and at first process
    * `client_content` messages until `turn_complete` is `true`. This initial history will not
-   * trigger a model call and may end with model content. After `turn_complete` is `true`, the
-   * client can start the realtime conversation via `realtime_input`.
+   * trigger a model call and may end with role `MODEL`. After `turn_complete` is `true`, the client
+   * can start the realtime conversation via `realtime_input`.
    */
   @JsonProperty("initialHistoryInClientContent")
   public abstract Optional<Boolean> initialHistoryInClientContent();
@@ -60,10 +64,10 @@ public abstract class HistoryConfig extends JsonSerializable {
     /**
      * Setter for initialHistoryInClientContent.
      *
-     * <p>initialHistoryInClientContent: If true, after sending `setup_complete`, the server will
-     * wait and at first process `client_content` messages until `turn_complete` is `true`. This
-     * initial history will not trigger a model call and may end with model content. After
-     * `turn_complete` is `true`, the client can start the realtime conversation via
+     * <p>initialHistoryInClientContent: Optional. If true, after sending `setup_complete`, the
+     * server will wait and at first process `client_content` messages until `turn_complete` is
+     * `true`. This initial history will not trigger a model call and may end with role `MODEL`.
+     * After `turn_complete` is `true`, the client can start the realtime conversation via
      * `realtime_input`.
      */
     @JsonProperty("initialHistoryInClientContent")

@@ -23,15 +23,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Start of speech sensitivity. */
+/** Determines how likely speech is to be detected. This enum is not supported in Vertex AI. */
 public class StartSensitivity {
 
   /** Enum representing the known values for StartSensitivity. */
   public enum Known {
-    /**
-     * The default is START_SENSITIVITY_LOW for Gemini Enterprise Agent Platform and
-     * START_SENSITIVITY_HIGH for Gemini Live.
-     */
+    /** The default is START_SENSITIVITY_HIGH. */
     START_SENSITIVITY_UNSPECIFIED,
 
     /** Automatic detection will detect the start of speech more often. */
