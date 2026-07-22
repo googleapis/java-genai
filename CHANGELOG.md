@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.63.0](https://github.com/googleapis/java-genai/compare/v1.62.0...v1.63.0) (2026-07-22)
+
+
+### Features
+
+* A new field `custom_vocabulary` is added to message `.google.cloud.aiplatform.v1beta1.BidiGenerateContentSetup` ([701d070](https://github.com/googleapis/java-genai/commit/701d0706a0d6ffea88ba1d9b88406970789ef1f9))
+
+
+### Bug Fixes
+
+* add deprecation warnings to Imagen generate_images, edit_images, generate_videos (if using prompt/text/image args), LiveConnectConfig.GenerationConfig which will be removed in the next major version ([fadd4ce](https://github.com/googleapis/java-genai/commit/fadd4ce9d5a9070d318f645b041041c993d6cc43))
+
 ## [1.62.0](https://github.com/googleapis/java-genai/compare/v1.61.0...v1.62.0) (2026-07-16)
 
 
