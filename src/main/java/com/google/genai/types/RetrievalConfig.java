@@ -30,13 +30,13 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = RetrievalConfig.Builder.class)
 public abstract class RetrievalConfig extends JsonSerializable {
-  /** The location of the user. */
-  @JsonProperty("latLng")
-  public abstract Optional<LatLng> latLng();
-
   /** The language code of the user. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
+
+  /** The location of the user. */
+  @JsonProperty("latLng")
+  public abstract Optional<LatLng> latLng();
 
   /** Instantiates a builder for RetrievalConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -54,6 +54,24 @@ public abstract class RetrievalConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_RetrievalConfig.Builder();
+    }
+
+    /**
+     * Setter for languageCode.
+     *
+     * <p>languageCode: The language code of the user.
+     */
+    @JsonProperty("languageCode")
+    public abstract Builder languageCode(String languageCode);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder languageCode(Optional<String> languageCode);
+
+    /** Clears the value of languageCode field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearLanguageCode() {
+      return languageCode(Optional.empty());
     }
 
     /**
@@ -82,24 +100,6 @@ public abstract class RetrievalConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearLatLng() {
       return latLng(Optional.empty());
-    }
-
-    /**
-     * Setter for languageCode.
-     *
-     * <p>languageCode: The language code of the user.
-     */
-    @JsonProperty("languageCode")
-    public abstract Builder languageCode(String languageCode);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder languageCode(Optional<String> languageCode);
-
-    /** Clears the value of languageCode field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearLanguageCode() {
-      return languageCode(Optional.empty());
     }
 
     public abstract RetrievalConfig build();

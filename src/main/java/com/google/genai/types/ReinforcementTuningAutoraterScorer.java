@@ -50,6 +50,10 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
   @JsonProperty("autoraterResponseParseConfig")
   public abstract Optional<ReinforcementTuningParseResponseConfig> autoraterResponseParseConfig();
 
+  /** Scores autorater responses by using string match reward scorer. */
+  @JsonProperty("exactMatchScorer")
+  public abstract Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer();
+
   /**
    * Scores autorater responses by directly converting parsed autorater response to a float reward.
    * Note: Reward is clipped to be within `[-1, 1]`, i.e., `reward = max(min(reward, 1.0), -1.0)`.
@@ -57,10 +61,6 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
   @JsonProperty("parsedResponseConversionScorer")
   public abstract Optional<ReinforcementTuningAutoraterScorerParsedResponseConversionScorer>
       parsedResponseConversionScorer();
-
-  /** Scores autorater responses by using string match reward scorer. */
-  @JsonProperty("exactMatchScorer")
-  public abstract Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer();
 
   /** Instantiates a builder for ReinforcementTuningAutoraterScorer. */
   @ExcludeFromGeneratedCoverageReport
@@ -167,6 +167,37 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     }
 
     /**
+     * Setter for exactMatchScorer.
+     *
+     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
+     */
+    @JsonProperty("exactMatchScorer")
+    public abstract Builder exactMatchScorer(
+        ReinforcementTuningAutoraterScorerExactMatchScorer exactMatchScorer);
+
+    /**
+     * Setter for exactMatchScorer builder.
+     *
+     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
+     */
+    @CanIgnoreReturnValue
+    public Builder exactMatchScorer(
+        ReinforcementTuningAutoraterScorerExactMatchScorer.Builder exactMatchScorerBuilder) {
+      return exactMatchScorer(exactMatchScorerBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder exactMatchScorer(
+        Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer);
+
+    /** Clears the value of exactMatchScorer field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExactMatchScorer() {
+      return exactMatchScorer(Optional.empty());
+    }
+
+    /**
      * Setter for parsedResponseConversionScorer.
      *
      * <p>parsedResponseConversionScorer: Scores autorater responses by directly converting parsed
@@ -202,37 +233,6 @@ public abstract class ReinforcementTuningAutoraterScorer extends JsonSerializabl
     @CanIgnoreReturnValue
     public Builder clearParsedResponseConversionScorer() {
       return parsedResponseConversionScorer(Optional.empty());
-    }
-
-    /**
-     * Setter for exactMatchScorer.
-     *
-     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
-     */
-    @JsonProperty("exactMatchScorer")
-    public abstract Builder exactMatchScorer(
-        ReinforcementTuningAutoraterScorerExactMatchScorer exactMatchScorer);
-
-    /**
-     * Setter for exactMatchScorer builder.
-     *
-     * <p>exactMatchScorer: Scores autorater responses by using string match reward scorer.
-     */
-    @CanIgnoreReturnValue
-    public Builder exactMatchScorer(
-        ReinforcementTuningAutoraterScorerExactMatchScorer.Builder exactMatchScorerBuilder) {
-      return exactMatchScorer(exactMatchScorerBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder exactMatchScorer(
-        Optional<ReinforcementTuningAutoraterScorerExactMatchScorer> exactMatchScorer);
-
-    /** Clears the value of exactMatchScorer field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearExactMatchScorer() {
-      return exactMatchScorer(Optional.empty());
     }
 
     public abstract ReinforcementTuningAutoraterScorer build();

@@ -31,13 +31,6 @@ import java.util.Optional;
 @JsonDeserialize(builder = DistillationSpec.Builder.class)
 public abstract class DistillationSpec extends JsonSerializable {
   /**
-   * Optional. Cloud Storage path to file containing prompt dataset for distillation. The dataset
-   * must be formatted as a JSONL file.
-   */
-  @JsonProperty("promptDatasetUri")
-  public abstract Optional<String> promptDatasetUri();
-
-  /**
    * The base teacher model that is being distilled. See [Supported
    * models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
    */
@@ -55,6 +48,13 @@ public abstract class DistillationSpec extends JsonSerializable {
    */
   @JsonProperty("pipelineRootDirectory")
   public abstract Optional<String> pipelineRootDirectory();
+
+  /**
+   * Optional. Cloud Storage path to file containing prompt dataset for distillation. The dataset
+   * must be formatted as a JSONL file.
+   */
+  @JsonProperty("promptDatasetUri")
+  public abstract Optional<String> promptDatasetUri();
 
   /**
    * The student model that is being tuned, e.g., "google/gemma-2b-1.1-it". Deprecated. Use
@@ -78,18 +78,18 @@ public abstract class DistillationSpec extends JsonSerializable {
   public abstract Optional<String> tunedTeacherModelSource();
 
   /**
-   * Optional. Cloud Storage path to file containing validation dataset for tuning. The dataset must
-   * be formatted as a JSONL file.
-   */
-  @JsonProperty("validationDatasetUri")
-  public abstract Optional<String> validationDatasetUri();
-
-  /**
    * Optional. Specifies the tuning mode for distillation (sft part). This feature is only available
    * for open source models.
    */
   @JsonProperty("tuningMode")
   public abstract Optional<TuningMode> tuningMode();
+
+  /**
+   * Optional. Cloud Storage path to file containing validation dataset for tuning. The dataset must
+   * be formatted as a JSONL file.
+   */
+  @JsonProperty("validationDatasetUri")
+  public abstract Optional<String> validationDatasetUri();
 
   /** Instantiates a builder for DistillationSpec. */
   @ExcludeFromGeneratedCoverageReport
@@ -107,25 +107,6 @@ public abstract class DistillationSpec extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DistillationSpec.Builder();
-    }
-
-    /**
-     * Setter for promptDatasetUri.
-     *
-     * <p>promptDatasetUri: Optional. Cloud Storage path to file containing prompt dataset for
-     * distillation. The dataset must be formatted as a JSONL file.
-     */
-    @JsonProperty("promptDatasetUri")
-    public abstract Builder promptDatasetUri(String promptDatasetUri);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder promptDatasetUri(Optional<String> promptDatasetUri);
-
-    /** Clears the value of promptDatasetUri field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearPromptDatasetUri() {
-      return promptDatasetUri(Optional.empty());
     }
 
     /**
@@ -196,6 +177,25 @@ public abstract class DistillationSpec extends JsonSerializable {
     }
 
     /**
+     * Setter for promptDatasetUri.
+     *
+     * <p>promptDatasetUri: Optional. Cloud Storage path to file containing prompt dataset for
+     * distillation. The dataset must be formatted as a JSONL file.
+     */
+    @JsonProperty("promptDatasetUri")
+    public abstract Builder promptDatasetUri(String promptDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder promptDatasetUri(Optional<String> promptDatasetUri);
+
+    /** Clears the value of promptDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearPromptDatasetUri() {
+      return promptDatasetUri(Optional.empty());
+    }
+
+    /**
      * Setter for studentModel.
      *
      * <p>studentModel: The student model that is being tuned, e.g., "google/gemma-2b-1.1-it".
@@ -253,25 +253,6 @@ public abstract class DistillationSpec extends JsonSerializable {
     }
 
     /**
-     * Setter for validationDatasetUri.
-     *
-     * <p>validationDatasetUri: Optional. Cloud Storage path to file containing validation dataset
-     * for tuning. The dataset must be formatted as a JSONL file.
-     */
-    @JsonProperty("validationDatasetUri")
-    public abstract Builder validationDatasetUri(String validationDatasetUri);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
-
-    /** Clears the value of validationDatasetUri field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearValidationDatasetUri() {
-      return validationDatasetUri(Optional.empty());
-    }
-
-    /**
      * Setter for tuningMode.
      *
      * <p>tuningMode: Optional. Specifies the tuning mode for distillation (sft part). This feature
@@ -310,6 +291,25 @@ public abstract class DistillationSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder tuningMode(String tuningMode) {
       return tuningMode(new TuningMode(tuningMode));
+    }
+
+    /**
+     * Setter for validationDatasetUri.
+     *
+     * <p>validationDatasetUri: Optional. Cloud Storage path to file containing validation dataset
+     * for tuning. The dataset must be formatted as a JSONL file.
+     */
+    @JsonProperty("validationDatasetUri")
+    public abstract Builder validationDatasetUri(String validationDatasetUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder validationDatasetUri(Optional<String> validationDatasetUri);
+
+    /** Clears the value of validationDatasetUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearValidationDatasetUri() {
+      return validationDatasetUri(Optional.empty());
     }
 
     public abstract DistillationSpec build();

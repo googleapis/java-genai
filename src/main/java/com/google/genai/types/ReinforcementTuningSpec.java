@@ -34,6 +34,14 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
   @JsonProperty("compositeRewardConfig")
   public abstract Optional<CompositeReinforcementTuningRewardConfig> compositeRewardConfig();
 
+  /** Single reward function configuration for reinforcement tuning. */
+  @JsonProperty("singleRewardConfig")
+  public abstract Optional<SingleReinforcementTuningRewardConfig> singleRewardConfig();
+
+  /** Additional hyper-parameters to use during tuning. */
+  @JsonProperty("hyperParameters")
+  public abstract Optional<ReinforcementTuningHyperParameters> hyperParameters();
+
   /**
    * Cloud Storage path to the file containing training dataset for tuning. The dataset must be
    * formatted as a JSONL file.
@@ -47,14 +55,6 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
    */
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
-
-  /** Additional hyper-parameters to use during tuning. */
-  @JsonProperty("hyperParameters")
-  public abstract Optional<ReinforcementTuningHyperParameters> hyperParameters();
-
-  /** Single reward function configuration for reinforcement tuning. */
-  @JsonProperty("singleRewardConfig")
-  public abstract Optional<SingleReinforcementTuningRewardConfig> singleRewardConfig();
 
   /** Instantiates a builder for ReinforcementTuningSpec. */
   @ExcludeFromGeneratedCoverageReport
@@ -106,6 +106,66 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     }
 
     /**
+     * Setter for singleRewardConfig.
+     *
+     * <p>singleRewardConfig: Single reward function configuration for reinforcement tuning.
+     */
+    @JsonProperty("singleRewardConfig")
+    public abstract Builder singleRewardConfig(
+        SingleReinforcementTuningRewardConfig singleRewardConfig);
+
+    /**
+     * Setter for singleRewardConfig builder.
+     *
+     * <p>singleRewardConfig: Single reward function configuration for reinforcement tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder singleRewardConfig(
+        SingleReinforcementTuningRewardConfig.Builder singleRewardConfigBuilder) {
+      return singleRewardConfig(singleRewardConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder singleRewardConfig(
+        Optional<SingleReinforcementTuningRewardConfig> singleRewardConfig);
+
+    /** Clears the value of singleRewardConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSingleRewardConfig() {
+      return singleRewardConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for hyperParameters.
+     *
+     * <p>hyperParameters: Additional hyper-parameters to use during tuning.
+     */
+    @JsonProperty("hyperParameters")
+    public abstract Builder hyperParameters(ReinforcementTuningHyperParameters hyperParameters);
+
+    /**
+     * Setter for hyperParameters builder.
+     *
+     * <p>hyperParameters: Additional hyper-parameters to use during tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder hyperParameters(
+        ReinforcementTuningHyperParameters.Builder hyperParametersBuilder) {
+      return hyperParameters(hyperParametersBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder hyperParameters(Optional<ReinforcementTuningHyperParameters> hyperParameters);
+
+    /** Clears the value of hyperParameters field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearHyperParameters() {
+      return hyperParameters(Optional.empty());
+    }
+
+    /**
      * Setter for trainingDatasetUri.
      *
      * <p>trainingDatasetUri: Cloud Storage path to the file containing training dataset for tuning.
@@ -141,66 +201,6 @@ public abstract class ReinforcementTuningSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearValidationDatasetUri() {
       return validationDatasetUri(Optional.empty());
-    }
-
-    /**
-     * Setter for hyperParameters.
-     *
-     * <p>hyperParameters: Additional hyper-parameters to use during tuning.
-     */
-    @JsonProperty("hyperParameters")
-    public abstract Builder hyperParameters(ReinforcementTuningHyperParameters hyperParameters);
-
-    /**
-     * Setter for hyperParameters builder.
-     *
-     * <p>hyperParameters: Additional hyper-parameters to use during tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder hyperParameters(
-        ReinforcementTuningHyperParameters.Builder hyperParametersBuilder) {
-      return hyperParameters(hyperParametersBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder hyperParameters(Optional<ReinforcementTuningHyperParameters> hyperParameters);
-
-    /** Clears the value of hyperParameters field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearHyperParameters() {
-      return hyperParameters(Optional.empty());
-    }
-
-    /**
-     * Setter for singleRewardConfig.
-     *
-     * <p>singleRewardConfig: Single reward function configuration for reinforcement tuning.
-     */
-    @JsonProperty("singleRewardConfig")
-    public abstract Builder singleRewardConfig(
-        SingleReinforcementTuningRewardConfig singleRewardConfig);
-
-    /**
-     * Setter for singleRewardConfig builder.
-     *
-     * <p>singleRewardConfig: Single reward function configuration for reinforcement tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder singleRewardConfig(
-        SingleReinforcementTuningRewardConfig.Builder singleRewardConfigBuilder) {
-      return singleRewardConfig(singleRewardConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder singleRewardConfig(
-        Optional<SingleReinforcementTuningRewardConfig> singleRewardConfig);
-
-    /** Clears the value of singleRewardConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearSingleRewardConfig() {
-      return singleRewardConfig(Optional.empty());
     }
 
     public abstract ReinforcementTuningSpec build();

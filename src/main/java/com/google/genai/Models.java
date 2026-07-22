@@ -146,6 +146,61 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode audioTranscriptionConfigToMldev(
+      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"languageCodes"}))) {
+      throw new IllegalArgumentException(
+          "languageCodes parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageAuto"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageAuto"},
+          Common.getValueByPath(fromObject, new String[] {"languageAuto"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageHints"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageHints"},
+          Common.getValueByPath(fromObject, new String[] {"languageHints"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"customVocabulary"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"customVocabulary"},
+          Common.getValueByPath(fromObject, new String[] {"customVocabulary"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adaptationPhrases"},
+          Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"wordTimestamp"},
+          Common.getValueByPath(fromObject, new String[] {"wordTimestamp"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"diarization"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"diarization"},
+          Common.getValueByPath(fromObject, new String[] {"diarization"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
@@ -395,6 +450,14 @@ public final class Models {
   ObjectNode computerUseToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"})
+        != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"enablePromptInjectionDetection"},
+          Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -407,14 +470,6 @@ public final class Models {
           toObject,
           new String[] {"excludedPredefinedFunctions"},
           Common.getValueByPath(fromObject, new String[] {"excludedPredefinedFunctions"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"enablePromptInjectionDetection"},
-          Common.getValueByPath(fromObject, new String[] {"enablePromptInjectionDetection"}));
     }
 
     if (!Common.isZero(
@@ -1000,6 +1055,7 @@ public final class Models {
   ObjectNode embedContentConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+
     if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1450,16 +1506,16 @@ public final class Models {
   ObjectNode functionCallToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"args"},
           Common.getValueByPath(fromObject, new String[] {"args"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
+      Common.setValueByPath(
+          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
@@ -1516,6 +1572,13 @@ public final class Models {
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"serviceTier"},
+          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
+    }
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
@@ -1726,6 +1789,17 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          audioTranscriptionConfigToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"})),
+              toObject,
+              rootObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"imageConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1750,13 +1824,6 @@ public final class Models {
               + " not in Gemini Developer API mode.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"serviceTier"},
-          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
-    }
-
     return toObject;
   }
 
@@ -1764,6 +1831,13 @@ public final class Models {
   ObjectNode generateContentConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+
+    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"serviceTier"},
+          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
+    }
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
@@ -1977,6 +2051,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"thinkingConfig"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"imageConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2000,13 +2081,6 @@ public final class Models {
           parentObject,
           new String[] {"modelArmorConfig"},
           Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"serviceTier"},
-          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
     }
 
     return toObject;
@@ -3415,6 +3489,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3469,6 +3550,13 @@ public final class Models {
           toObject,
           new String[] {"presencePenalty"},
           Common.getValueByPath(fromObject, new String[] {"presencePenalty"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"responseLogprobs"}) != null) {
@@ -3566,13 +3654,6 @@ public final class Models {
               + " in Gemini Enterprise Agent Platform mode.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseFormat"},
-          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
       throw new IllegalArgumentException(
           "translationConfig parameter is only supported in Gemini Developer API mode, not in"
@@ -3640,13 +3721,6 @@ public final class Models {
   ObjectNode googleSearchToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"searchTypes"},
-          Common.getValueByPath(fromObject, new String[] {"searchTypes"}));
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"blockingConfidence"}))) {
       throw new IllegalArgumentException(
           "blockingConfidence parameter is only supported in Gemini Enterprise Agent Platform mode,"
@@ -3657,6 +3731,13 @@ public final class Models {
       throw new IllegalArgumentException(
           "excludeDomains parameter is only supported in Gemini Enterprise Agent Platform mode, not"
               + " in Gemini Developer API mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"searchTypes"},
+          Common.getValueByPath(fromObject, new String[] {"searchTypes"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}) != null) {
@@ -3692,12 +3773,6 @@ public final class Models {
               + " not in Gemini Developer API mode.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"prominentPeople"}))) {
-      throw new IllegalArgumentException(
-          "prominentPeople parameter is only supported in Gemini Enterprise Agent Platform mode,"
-              + " not in Gemini Developer API mode.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputMimeType"}))) {
       throw new IllegalArgumentException(
           "outputMimeType parameter is only supported in Gemini Enterprise Agent Platform mode, not"
@@ -3714,6 +3789,12 @@ public final class Models {
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}))) {
       throw new IllegalArgumentException(
           "imageOutputOptions parameter is only supported in Gemini Enterprise Agent Platform mode,"
+              + " not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"prominentPeople"}))) {
+      throw new IllegalArgumentException(
+          "prominentPeople parameter is only supported in Gemini Enterprise Agent Platform mode,"
               + " not in Gemini Developer API mode.");
     }
 
@@ -3745,13 +3826,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"prominentPeople"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"prominentPeople"},
-          Common.getValueByPath(fromObject, new String[] {"prominentPeople"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3771,6 +3845,13 @@ public final class Models {
           toObject,
           new String[] {"imageOutputOptions"},
           Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"prominentPeople"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"prominentPeople"},
+          Common.getValueByPath(fromObject, new String[] {"prominentPeople"}));
     }
 
     return toObject;
@@ -4309,6 +4390,27 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolCall"},
+          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"toolResponse"},
+          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4391,20 +4493,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"toolCall"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolCall"},
-          Common.getValueByPath(fromObject, new String[] {"toolCall"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"toolResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"toolResponse"},
-          Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"partMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4423,6 +4511,25 @@ public final class Models {
           toObject,
           new String[] {"mediaResolution"},
           Common.getValueByPath(fromObject, new String[] {"mediaResolution"}));
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
+      throw new IllegalArgumentException(
+          "toolCall parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
+      throw new IllegalArgumentException(
+          "toolResponse parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscription"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscription"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}) != null) {
@@ -4501,18 +4608,6 @@ public final class Models {
           toObject,
           new String[] {"videoMetadata"},
           Common.getValueByPath(fromObject, new String[] {"videoMetadata"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolCall"}))) {
-      throw new IllegalArgumentException(
-          "toolCall parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"toolResponse"}))) {
-      throw new IllegalArgumentException(
-          "toolResponse parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"partMetadata"}))) {
@@ -5124,13 +5219,6 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5140,6 +5228,13 @@ public final class Models {
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject,
               rootObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"includeServerSideToolInvocations"})
@@ -5156,18 +5251,18 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"retrievalConfig"},
-          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"functionCallingConfig"},
           Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"retrievalConfig"},
+          Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}));
     }
 
     if (!Common.isZero(
@@ -5189,31 +5284,6 @@ public final class Models {
               + " Gemini Developer API mode.");
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"computerUse"},
-          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileSearch"},
-          Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
-              toObject,
-              rootObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5225,11 +5295,25 @@ public final class Models {
               rootObject));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mcpServers"},
+          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"codeExecution"},
           Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"computerUse"},
+          Common.getValueByPath(fromObject, new String[] {"computerUse"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}))) {
@@ -5238,11 +5322,28 @@ public final class Models {
               + " mode, not in Gemini Developer API mode.");
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
+      throw new IllegalArgumentException(
+          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
+              + " Gemini Developer API mode.");
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"functionDeclarations"},
           Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          googleSearchToMldev(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              toObject,
+              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
@@ -5265,17 +5366,11 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"fileSearch"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"mcpServers"},
-          Common.getValueByPath(fromObject, new String[] {"mcpServers"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}))) {
-      throw new IllegalArgumentException(
-          "exaAiSearch parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
+          new String[] {"fileSearch"},
+          Common.getValueByPath(fromObject, new String[] {"fileSearch"}));
     }
 
     return toObject;
@@ -5291,6 +5386,32 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"retrieval"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleMaps"},
+          Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
+      ArrayNode keyArray =
+          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"mcpServers"});
+      ObjectMapper objectMapper = new ObjectMapper();
+      ArrayNode result = objectMapper.createArrayNode();
+
+      for (JsonNode item : keyArray) {
+        result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+      }
+      Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"codeExecution"},
+          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"computerUse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5302,33 +5423,6 @@ public final class Models {
               rootObject));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
-      throw new IllegalArgumentException(
-          "fileSearch parameter is only supported in Gemini Developer API mode, not in Gemini"
-              + " Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleSearch"},
-          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"googleMaps"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"googleMaps"},
-          Common.getValueByPath(fromObject, new String[] {"googleMaps"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"codeExecution"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"codeExecution"},
-          Common.getValueByPath(fromObject, new String[] {"codeExecution"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5336,11 +5430,25 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"enterpriseWebSearch"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"exaAiSearch"},
+          Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"functionDeclarations"},
           Common.getValueByPath(fromObject, new String[] {"functionDeclarations"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"googleSearch"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"googleSearch"},
+          Common.getValueByPath(fromObject, new String[] {"googleSearch"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"googleSearchRetrieval"}) != null) {
@@ -5364,23 +5472,10 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"urlContext"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"mcpServers"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"mcpServers"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"exaAiSearch"},
-          Common.getValueByPath(fromObject, new String[] {"exaAiSearch"}));
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"fileSearch"}))) {
+      throw new IllegalArgumentException(
+          "fileSearch parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;

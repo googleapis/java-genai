@@ -34,6 +34,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = DatasetStats.Builder.class)
 public abstract class DatasetStats extends JsonSerializable {
+  /** Output only. Dataset distributions for the number of contents per example. */
+  @JsonProperty("contentsPerExampleDistribution")
+  public abstract Optional<DatasetDistribution> contentsPerExampleDistribution();
+
   /** Output only. A partial sample of the indices (starting from 1) of the dropped examples. */
   @JsonProperty("droppedExampleIndices")
   public abstract Optional<List<Long>> droppedExampleIndices();
@@ -45,9 +49,20 @@ public abstract class DatasetStats extends JsonSerializable {
   @JsonProperty("droppedExampleReasons")
   public abstract Optional<List<String>> droppedExampleReasons();
 
+  /**
+   * Output only. Sample user dataset examples in the training dataset uri for Reinforcement Tuning.
+   */
+  @JsonProperty("reinforcementTuningUserDatasetExamples")
+  public abstract Optional<ReinforcementTuningUserDatasetExamples>
+      reinforcementTuningUserDatasetExamples();
+
   /** Output only. Number of billable characters in the tuning dataset. */
   @JsonProperty("totalBillableCharacterCount")
   public abstract Optional<Long> totalBillableCharacterCount();
+
+  /** Output only. Number of billable tokens in the tuning dataset. */
+  @JsonProperty("totalBillableTokenCount")
+  public abstract Optional<Long> totalBillableTokenCount();
 
   /** Output only. Number of tuning characters in the tuning dataset. */
   @JsonProperty("totalTuningCharacterCount")
@@ -77,21 +92,6 @@ public abstract class DatasetStats extends JsonSerializable {
   @JsonProperty("userOutputTokenDistribution")
   public abstract Optional<DatasetDistribution> userOutputTokenDistribution();
 
-  /** Output only. Dataset distributions for the number of contents per example. */
-  @JsonProperty("contentsPerExampleDistribution")
-  public abstract Optional<DatasetDistribution> contentsPerExampleDistribution();
-
-  /**
-   * Output only. Sample user dataset examples in the training dataset uri for Reinforcement Tuning.
-   */
-  @JsonProperty("reinforcementTuningUserDatasetExamples")
-  public abstract Optional<ReinforcementTuningUserDatasetExamples>
-      reinforcementTuningUserDatasetExamples();
-
-  /** Output only. Number of billable tokens in the tuning dataset. */
-  @JsonProperty("totalBillableTokenCount")
-  public abstract Optional<Long> totalBillableTokenCount();
-
   /** Instantiates a builder for DatasetStats. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -108,6 +108,39 @@ public abstract class DatasetStats extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_DatasetStats.Builder();
+    }
+
+    /**
+     * Setter for contentsPerExampleDistribution.
+     *
+     * <p>contentsPerExampleDistribution: Output only. Dataset distributions for the number of
+     * contents per example.
+     */
+    @JsonProperty("contentsPerExampleDistribution")
+    public abstract Builder contentsPerExampleDistribution(
+        DatasetDistribution contentsPerExampleDistribution);
+
+    /**
+     * Setter for contentsPerExampleDistribution builder.
+     *
+     * <p>contentsPerExampleDistribution: Output only. Dataset distributions for the number of
+     * contents per example.
+     */
+    @CanIgnoreReturnValue
+    public Builder contentsPerExampleDistribution(
+        DatasetDistribution.Builder contentsPerExampleDistributionBuilder) {
+      return contentsPerExampleDistribution(contentsPerExampleDistributionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder contentsPerExampleDistribution(
+        Optional<DatasetDistribution> contentsPerExampleDistribution);
+
+    /** Clears the value of contentsPerExampleDistribution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearContentsPerExampleDistribution() {
+      return contentsPerExampleDistribution(Optional.empty());
     }
 
     /**
@@ -171,6 +204,41 @@ public abstract class DatasetStats extends JsonSerializable {
     }
 
     /**
+     * Setter for reinforcementTuningUserDatasetExamples.
+     *
+     * <p>reinforcementTuningUserDatasetExamples: Output only. Sample user dataset examples in the
+     * training dataset uri for Reinforcement Tuning.
+     */
+    @JsonProperty("reinforcementTuningUserDatasetExamples")
+    public abstract Builder reinforcementTuningUserDatasetExamples(
+        ReinforcementTuningUserDatasetExamples reinforcementTuningUserDatasetExamples);
+
+    /**
+     * Setter for reinforcementTuningUserDatasetExamples builder.
+     *
+     * <p>reinforcementTuningUserDatasetExamples: Output only. Sample user dataset examples in the
+     * training dataset uri for Reinforcement Tuning.
+     */
+    @CanIgnoreReturnValue
+    public Builder reinforcementTuningUserDatasetExamples(
+        ReinforcementTuningUserDatasetExamples.Builder
+            reinforcementTuningUserDatasetExamplesBuilder) {
+      return reinforcementTuningUserDatasetExamples(
+          reinforcementTuningUserDatasetExamplesBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder reinforcementTuningUserDatasetExamples(
+        Optional<ReinforcementTuningUserDatasetExamples> reinforcementTuningUserDatasetExamples);
+
+    /** Clears the value of reinforcementTuningUserDatasetExamples field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearReinforcementTuningUserDatasetExamples() {
+      return reinforcementTuningUserDatasetExamples(Optional.empty());
+    }
+
+    /**
      * Setter for totalBillableCharacterCount.
      *
      * <p>totalBillableCharacterCount: Output only. Number of billable characters in the tuning
@@ -187,6 +255,24 @@ public abstract class DatasetStats extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTotalBillableCharacterCount() {
       return totalBillableCharacterCount(Optional.empty());
+    }
+
+    /**
+     * Setter for totalBillableTokenCount.
+     *
+     * <p>totalBillableTokenCount: Output only. Number of billable tokens in the tuning dataset.
+     */
+    @JsonProperty("totalBillableTokenCount")
+    public abstract Builder totalBillableTokenCount(Long totalBillableTokenCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder totalBillableTokenCount(Optional<Long> totalBillableTokenCount);
+
+    /** Clears the value of totalBillableTokenCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTotalBillableTokenCount() {
+      return totalBillableTokenCount(Optional.empty());
     }
 
     /**
@@ -379,92 +465,6 @@ public abstract class DatasetStats extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearUserOutputTokenDistribution() {
       return userOutputTokenDistribution(Optional.empty());
-    }
-
-    /**
-     * Setter for contentsPerExampleDistribution.
-     *
-     * <p>contentsPerExampleDistribution: Output only. Dataset distributions for the number of
-     * contents per example.
-     */
-    @JsonProperty("contentsPerExampleDistribution")
-    public abstract Builder contentsPerExampleDistribution(
-        DatasetDistribution contentsPerExampleDistribution);
-
-    /**
-     * Setter for contentsPerExampleDistribution builder.
-     *
-     * <p>contentsPerExampleDistribution: Output only. Dataset distributions for the number of
-     * contents per example.
-     */
-    @CanIgnoreReturnValue
-    public Builder contentsPerExampleDistribution(
-        DatasetDistribution.Builder contentsPerExampleDistributionBuilder) {
-      return contentsPerExampleDistribution(contentsPerExampleDistributionBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder contentsPerExampleDistribution(
-        Optional<DatasetDistribution> contentsPerExampleDistribution);
-
-    /** Clears the value of contentsPerExampleDistribution field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearContentsPerExampleDistribution() {
-      return contentsPerExampleDistribution(Optional.empty());
-    }
-
-    /**
-     * Setter for reinforcementTuningUserDatasetExamples.
-     *
-     * <p>reinforcementTuningUserDatasetExamples: Output only. Sample user dataset examples in the
-     * training dataset uri for Reinforcement Tuning.
-     */
-    @JsonProperty("reinforcementTuningUserDatasetExamples")
-    public abstract Builder reinforcementTuningUserDatasetExamples(
-        ReinforcementTuningUserDatasetExamples reinforcementTuningUserDatasetExamples);
-
-    /**
-     * Setter for reinforcementTuningUserDatasetExamples builder.
-     *
-     * <p>reinforcementTuningUserDatasetExamples: Output only. Sample user dataset examples in the
-     * training dataset uri for Reinforcement Tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder reinforcementTuningUserDatasetExamples(
-        ReinforcementTuningUserDatasetExamples.Builder
-            reinforcementTuningUserDatasetExamplesBuilder) {
-      return reinforcementTuningUserDatasetExamples(
-          reinforcementTuningUserDatasetExamplesBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder reinforcementTuningUserDatasetExamples(
-        Optional<ReinforcementTuningUserDatasetExamples> reinforcementTuningUserDatasetExamples);
-
-    /** Clears the value of reinforcementTuningUserDatasetExamples field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearReinforcementTuningUserDatasetExamples() {
-      return reinforcementTuningUserDatasetExamples(Optional.empty());
-    }
-
-    /**
-     * Setter for totalBillableTokenCount.
-     *
-     * <p>totalBillableTokenCount: Output only. Number of billable tokens in the tuning dataset.
-     */
-    @JsonProperty("totalBillableTokenCount")
-    public abstract Builder totalBillableTokenCount(Long totalBillableTokenCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder totalBillableTokenCount(Optional<Long> totalBillableTokenCount);
-
-    /** Clears the value of totalBillableTokenCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearTotalBillableTokenCount() {
-      return totalBillableTokenCount(Optional.empty());
     }
 
     public abstract DatasetStats build();

@@ -142,14 +142,6 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
   @JsonProperty("outputUri")
   public abstract Optional<String> outputUri();
 
-  /**
-   * The encryption spec of the tuning job. Customer-managed encryption key options for a TuningJob.
-   * If this is set, then all resources created by the TuningJob will be encrypted with provided
-   * encryption key.
-   */
-  @JsonProperty("encryptionSpec")
-  public abstract Optional<EncryptionSpec> encryptionSpec();
-
   /** Reward function configuration for reinforcement tuning. Reinforcement tuning only. */
   @JsonProperty("rewardConfig")
   public abstract Optional<SingleReinforcementTuningRewardConfig> rewardConfig();
@@ -193,6 +185,14 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
    */
   @JsonProperty("validationDatasetUri")
   public abstract Optional<String> validationDatasetUri();
+
+  /**
+   * The encryption spec of the tuning job. Customer-managed encryption key options for a TuningJob.
+   * If this is set, then all resources created by the TuningJob will be encrypted with provided
+   * encryption key.
+   */
+  @JsonProperty("encryptionSpec")
+  public abstract Optional<EncryptionSpec> encryptionSpec();
 
   /** Instantiates a builder for CreateTuningJobConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -699,38 +699,6 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     }
 
     /**
-     * Setter for encryptionSpec.
-     *
-     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
-     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
-     * encrypted with provided encryption key.
-     */
-    @JsonProperty("encryptionSpec")
-    public abstract Builder encryptionSpec(EncryptionSpec encryptionSpec);
-
-    /**
-     * Setter for encryptionSpec builder.
-     *
-     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
-     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
-     * encrypted with provided encryption key.
-     */
-    @CanIgnoreReturnValue
-    public Builder encryptionSpec(EncryptionSpec.Builder encryptionSpecBuilder) {
-      return encryptionSpec(encryptionSpecBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder encryptionSpec(Optional<EncryptionSpec> encryptionSpec);
-
-    /** Clears the value of encryptionSpec field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearEncryptionSpec() {
-      return encryptionSpec(Optional.empty());
-    }
-
-    /**
      * Setter for rewardConfig.
      *
      * <p>rewardConfig: Reward function configuration for reinforcement tuning. Reinforcement tuning
@@ -929,6 +897,38 @@ public abstract class CreateTuningJobConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearValidationDatasetUri() {
       return validationDatasetUri(Optional.empty());
+    }
+
+    /**
+     * Setter for encryptionSpec.
+     *
+     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
+     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
+     * encrypted with provided encryption key.
+     */
+    @JsonProperty("encryptionSpec")
+    public abstract Builder encryptionSpec(EncryptionSpec encryptionSpec);
+
+    /**
+     * Setter for encryptionSpec builder.
+     *
+     * <p>encryptionSpec: The encryption spec of the tuning job. Customer-managed encryption key
+     * options for a TuningJob. If this is set, then all resources created by the TuningJob will be
+     * encrypted with provided encryption key.
+     */
+    @CanIgnoreReturnValue
+    public Builder encryptionSpec(EncryptionSpec.Builder encryptionSpecBuilder) {
+      return encryptionSpec(encryptionSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder encryptionSpec(Optional<EncryptionSpec> encryptionSpec);
+
+    /** Clears the value of encryptionSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEncryptionSpec() {
+      return encryptionSpec(Optional.empty());
     }
 
     public abstract CreateTuningJobConfig build();

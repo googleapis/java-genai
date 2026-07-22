@@ -48,6 +48,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("shouldReturnHttpResponse")
   public abstract Optional<Boolean> shouldReturnHttpResponse();
 
+  /** The service tier to use for the request. For example, ServiceTier.FLEX. */
+  @JsonProperty("serviceTier")
+  public abstract Optional<ServiceTier> serviceTier();
+
   /**
    * Instructions for the model to steer it toward better performance. For example, "Answer as
    * concisely as possible" or "Don't use technical terms in your response".
@@ -221,6 +225,10 @@ public abstract class GenerateContentConfig extends JsonSerializable {
   @JsonProperty("thinkingConfig")
   public abstract Optional<ThinkingConfig> thinkingConfig();
 
+  /** Optional. Configuration for audio transcription (speech recognition). */
+  @JsonProperty("audioTranscriptionConfig")
+  public abstract Optional<AudioTranscriptionConfig> audioTranscriptionConfig();
+
   /** The image generation configuration. */
   @JsonProperty("imageConfig")
   public abstract Optional<ImageConfig> imageConfig();
@@ -238,10 +246,6 @@ public abstract class GenerateContentConfig extends JsonSerializable {
    */
   @JsonProperty("modelArmorConfig")
   public abstract Optional<ModelArmorConfig> modelArmorConfig();
-
-  /** The service tier to use for the request. For example, ServiceTier.FLEX. */
-  @JsonProperty("serviceTier")
-  public abstract Optional<ServiceTier> serviceTier();
 
   /** Instantiates a builder for GenerateContentConfig. */
   @ExcludeFromGeneratedCoverageReport
@@ -306,6 +310,44 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearShouldReturnHttpResponse() {
       return shouldReturnHttpResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for serviceTier.
+     *
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
+     */
+    @JsonProperty("serviceTier")
+    public abstract Builder serviceTier(ServiceTier serviceTier);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder serviceTier(Optional<ServiceTier> serviceTier);
+
+    /** Clears the value of serviceTier field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearServiceTier() {
+      return serviceTier(Optional.empty());
+    }
+
+    /**
+     * Setter for serviceTier given a known enum.
+     *
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
+     */
+    @CanIgnoreReturnValue
+    public Builder serviceTier(ServiceTier.Known knownType) {
+      return serviceTier(new ServiceTier(knownType));
+    }
+
+    /**
+     * Setter for serviceTier given a string.
+     *
+     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
+     */
+    @CanIgnoreReturnValue
+    public Builder serviceTier(String serviceTier) {
+      return serviceTier(new ServiceTier(serviceTier));
     }
 
     /**
@@ -1031,6 +1073,39 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     }
 
     /**
+     * Setter for audioTranscriptionConfig.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @JsonProperty("audioTranscriptionConfig")
+    public abstract Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig audioTranscriptionConfig);
+
+    /**
+     * Setter for audioTranscriptionConfig builder.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @CanIgnoreReturnValue
+    public Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig.Builder audioTranscriptionConfigBuilder) {
+      return audioTranscriptionConfig(audioTranscriptionConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTranscriptionConfig(
+        Optional<AudioTranscriptionConfig> audioTranscriptionConfig);
+
+    /** Clears the value of audioTranscriptionConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTranscriptionConfig() {
+      return audioTranscriptionConfig(Optional.empty());
+    }
+
+    /**
      * Setter for imageConfig.
      *
      * <p>imageConfig: The image generation configuration.
@@ -1105,44 +1180,6 @@ public abstract class GenerateContentConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearModelArmorConfig() {
       return modelArmorConfig(Optional.empty());
-    }
-
-    /**
-     * Setter for serviceTier.
-     *
-     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
-     */
-    @JsonProperty("serviceTier")
-    public abstract Builder serviceTier(ServiceTier serviceTier);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder serviceTier(Optional<ServiceTier> serviceTier);
-
-    /** Clears the value of serviceTier field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearServiceTier() {
-      return serviceTier(Optional.empty());
-    }
-
-    /**
-     * Setter for serviceTier given a known enum.
-     *
-     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
-     */
-    @CanIgnoreReturnValue
-    public Builder serviceTier(ServiceTier.Known knownType) {
-      return serviceTier(new ServiceTier(knownType));
-    }
-
-    /**
-     * Setter for serviceTier given a string.
-     *
-     * <p>serviceTier: The service tier to use for the request. For example, ServiceTier.FLEX.
-     */
-    @CanIgnoreReturnValue
-    public Builder serviceTier(String serviceTier) {
-      return serviceTier(new ServiceTier(serviceTier));
     }
 
     public abstract GenerateContentConfig build();

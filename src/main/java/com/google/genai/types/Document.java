@@ -35,6 +35,28 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = Document.Builder.class)
 public abstract class Document extends JsonSerializable {
+  /** Output only. The Timestamp of when the `Document` was created. */
+  @JsonProperty("createTime")
+  public abstract Optional<Instant> createTime();
+
+  /**
+   * Optional. User provided custom metadata stored as key-value pairs used for querying. A
+   * `Document` can have a maximum of 20 `CustomMetadata`.
+   */
+  @JsonProperty("customMetadata")
+  public abstract Optional<List<CustomMetadata>> customMetadata();
+
+  /**
+   * Optional. The human-readable display name for the `Document`. The display name must be no more
+   * than 512 characters in length, including spaces. Example: "Semantic Retriever Documentation".
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
+  /** Output only. The mime type of the Document. */
+  @JsonProperty("mimeType")
+  public abstract Optional<String> mimeType();
+
   /**
    * Immutable. Identifier. The `Document` resource name. The ID (name excluding the
    * "fileSearchStores/&#42;/documents/" prefix) can contain up to 40 characters that are lowercase
@@ -46,35 +68,13 @@ public abstract class Document extends JsonSerializable {
   @JsonProperty("name")
   public abstract Optional<String> name();
 
-  /**
-   * Optional. The human-readable display name for the `Document`. The display name must be no more
-   * than 512 characters in length, including spaces. Example: "Semantic Retriever Documentation".
-   */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
-  /** Output only. Current state of the `Document`. */
-  @JsonProperty("state")
-  public abstract Optional<DocumentState> state();
-
   /** Output only. The size of raw bytes ingested into the Document. */
   @JsonProperty("sizeBytes")
   public abstract Optional<Long> sizeBytes();
 
-  /** Output only. The mime type of the Document. */
-  @JsonProperty("mimeType")
-  public abstract Optional<String> mimeType();
-
-  /** Output only. The Timestamp of when the `Document` was created. */
-  @JsonProperty("createTime")
-  public abstract Optional<Instant> createTime();
-
-  /**
-   * Optional. User provided custom metadata stored as key-value pairs used for querying. A
-   * `Document` can have a maximum of 20 `CustomMetadata`.
-   */
-  @JsonProperty("customMetadata")
-  public abstract Optional<List<CustomMetadata>> customMetadata();
+  /** Output only. Current state of the `Document`. */
+  @JsonProperty("state")
+  public abstract Optional<DocumentState> state();
 
   /** Output only. The Timestamp of when the `Document` was last updated. */
   @JsonProperty("updateTime")
@@ -96,123 +96,6 @@ public abstract class Document extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_Document.Builder();
-    }
-
-    /**
-     * Setter for name.
-     *
-     * <p>name: Immutable. Identifier. The `Document` resource name. The ID (name excluding the
-     * "fileSearchStores/&#42;/documents/" prefix) can contain up to 40 characters that are
-     * lowercase alphanumeric or dashes (-). The ID cannot start or end with a dash. If the name is
-     * empty on create, a unique name will be derived from `display_name` along with a 12 character
-     * random suffix. Example:
-     * `fileSearchStores/{file_search_store_id}/documents/my-awesome-doc-123a456b789c`
-     */
-    @JsonProperty("name")
-    public abstract Builder name(String name);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder name(Optional<String> name);
-
-    /** Clears the value of name field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearName() {
-      return name(Optional.empty());
-    }
-
-    /**
-     * Setter for displayName.
-     *
-     * <p>displayName: Optional. The human-readable display name for the `Document`. The display
-     * name must be no more than 512 characters in length, including spaces. Example: "Semantic
-     * Retriever Documentation".
-     */
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder displayName(Optional<String> displayName);
-
-    /** Clears the value of displayName field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearDisplayName() {
-      return displayName(Optional.empty());
-    }
-
-    /**
-     * Setter for state.
-     *
-     * <p>state: Output only. Current state of the `Document`.
-     */
-    @JsonProperty("state")
-    public abstract Builder state(DocumentState state);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder state(Optional<DocumentState> state);
-
-    /** Clears the value of state field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearState() {
-      return state(Optional.empty());
-    }
-
-    /**
-     * Setter for state given a known enum.
-     *
-     * <p>state: Output only. Current state of the `Document`.
-     */
-    @CanIgnoreReturnValue
-    public Builder state(DocumentState.Known knownType) {
-      return state(new DocumentState(knownType));
-    }
-
-    /**
-     * Setter for state given a string.
-     *
-     * <p>state: Output only. Current state of the `Document`.
-     */
-    @CanIgnoreReturnValue
-    public Builder state(String state) {
-      return state(new DocumentState(state));
-    }
-
-    /**
-     * Setter for sizeBytes.
-     *
-     * <p>sizeBytes: Output only. The size of raw bytes ingested into the Document.
-     */
-    @JsonProperty("sizeBytes")
-    public abstract Builder sizeBytes(Long sizeBytes);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder sizeBytes(Optional<Long> sizeBytes);
-
-    /** Clears the value of sizeBytes field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearSizeBytes() {
-      return sizeBytes(Optional.empty());
-    }
-
-    /**
-     * Setter for mimeType.
-     *
-     * <p>mimeType: Output only. The mime type of the Document.
-     */
-    @JsonProperty("mimeType")
-    public abstract Builder mimeType(String mimeType);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder mimeType(Optional<String> mimeType);
-
-    /** Clears the value of mimeType field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearMimeType() {
-      return mimeType(Optional.empty());
     }
 
     /**
@@ -275,6 +158,123 @@ public abstract class Document extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearCustomMetadata() {
       return customMetadata(Optional.empty());
+    }
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. The human-readable display name for the `Document`. The display
+     * name must be no more than 512 characters in length, including spaces. Example: "Semantic
+     * Retriever Documentation".
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
+    /**
+     * Setter for mimeType.
+     *
+     * <p>mimeType: Output only. The mime type of the Document.
+     */
+    @JsonProperty("mimeType")
+    public abstract Builder mimeType(String mimeType);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mimeType(Optional<String> mimeType);
+
+    /** Clears the value of mimeType field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMimeType() {
+      return mimeType(Optional.empty());
+    }
+
+    /**
+     * Setter for name.
+     *
+     * <p>name: Immutable. Identifier. The `Document` resource name. The ID (name excluding the
+     * "fileSearchStores/&#42;/documents/" prefix) can contain up to 40 characters that are
+     * lowercase alphanumeric or dashes (-). The ID cannot start or end with a dash. If the name is
+     * empty on create, a unique name will be derived from `display_name` along with a 12 character
+     * random suffix. Example:
+     * `fileSearchStores/{file_search_store_id}/documents/my-awesome-doc-123a456b789c`
+     */
+    @JsonProperty("name")
+    public abstract Builder name(String name);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder name(Optional<String> name);
+
+    /** Clears the value of name field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearName() {
+      return name(Optional.empty());
+    }
+
+    /**
+     * Setter for sizeBytes.
+     *
+     * <p>sizeBytes: Output only. The size of raw bytes ingested into the Document.
+     */
+    @JsonProperty("sizeBytes")
+    public abstract Builder sizeBytes(Long sizeBytes);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sizeBytes(Optional<Long> sizeBytes);
+
+    /** Clears the value of sizeBytes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSizeBytes() {
+      return sizeBytes(Optional.empty());
+    }
+
+    /**
+     * Setter for state.
+     *
+     * <p>state: Output only. Current state of the `Document`.
+     */
+    @JsonProperty("state")
+    public abstract Builder state(DocumentState state);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder state(Optional<DocumentState> state);
+
+    /** Clears the value of state field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearState() {
+      return state(Optional.empty());
+    }
+
+    /**
+     * Setter for state given a known enum.
+     *
+     * <p>state: Output only. Current state of the `Document`.
+     */
+    @CanIgnoreReturnValue
+    public Builder state(DocumentState.Known knownType) {
+      return state(new DocumentState(knownType));
+    }
+
+    /**
+     * Setter for state given a string.
+     *
+     * <p>state: Output only. Current state of the `Document`.
+     */
+    @CanIgnoreReturnValue
+    public Builder state(String state) {
+      return state(new DocumentState(state));
     }
 
     /**

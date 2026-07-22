@@ -46,6 +46,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("responseJsonSchema")
   public abstract Optional<Object> responseJsonSchema();
 
+  /** Optional. Configuration for audio transcription (speech recognition). */
+  @JsonProperty("audioTranscriptionConfig")
+  public abstract Optional<AudioTranscriptionConfig> audioTranscriptionConfig();
+
   /**
    * Optional. If enabled, audio timestamps will be included in the request to the model. This can
    * be useful for synchronizing audio with other modalities in the response. This field is not
@@ -110,6 +114,12 @@ public abstract class GenerationConfig extends JsonSerializable {
    */
   @JsonProperty("presencePenalty")
   public abstract Optional<Float> presencePenalty();
+
+  /**
+   * Optional. New response format field for the model to configure output formatting and delivery.
+   */
+  @JsonProperty("responseFormat")
+  public abstract Optional<List<ResponseFormat>> responseFormat();
 
   /**
    * Optional. If set to true, the log probabilities of the output tokens are returned. Log
@@ -217,12 +227,6 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("enableEnhancedCivicAnswers")
   public abstract Optional<Boolean> enableEnhancedCivicAnswers();
 
-  /**
-   * Optional. New response format field for the model to configure output formatting and delivery.
-   */
-  @JsonProperty("responseFormat")
-  public abstract Optional<List<ResponseFormat>> responseFormat();
-
   /** Optional. Config for translation. This field is not supported in Vertex AI. */
   @JsonProperty("translationConfig")
   public abstract Optional<TranslationConfig> translationConfig();
@@ -290,6 +294,39 @@ public abstract class GenerationConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearResponseJsonSchema() {
       return responseJsonSchema(Optional.empty());
+    }
+
+    /**
+     * Setter for audioTranscriptionConfig.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @JsonProperty("audioTranscriptionConfig")
+    public abstract Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig audioTranscriptionConfig);
+
+    /**
+     * Setter for audioTranscriptionConfig builder.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @CanIgnoreReturnValue
+    public Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig.Builder audioTranscriptionConfigBuilder) {
+      return audioTranscriptionConfig(audioTranscriptionConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTranscriptionConfig(
+        Optional<AudioTranscriptionConfig> audioTranscriptionConfig);
+
+    /** Clears the value of audioTranscriptionConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTranscriptionConfig() {
+      return audioTranscriptionConfig(Optional.empty());
     }
 
     /**
@@ -481,6 +518,50 @@ public abstract class GenerationConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPresencePenalty() {
       return presencePenalty(Optional.empty());
+    }
+
+    /**
+     * Setter for responseFormat.
+     *
+     * <p>responseFormat: Optional. New response format field for the model to configure output
+     * formatting and delivery.
+     */
+    @JsonProperty("responseFormat")
+    public abstract Builder responseFormat(List<ResponseFormat> responseFormat);
+
+    /**
+     * Setter for responseFormat.
+     *
+     * <p>responseFormat: Optional. New response format field for the model to configure output
+     * formatting and delivery.
+     */
+    @CanIgnoreReturnValue
+    public Builder responseFormat(ResponseFormat... responseFormat) {
+      return responseFormat(Arrays.asList(responseFormat));
+    }
+
+    /**
+     * Setter for responseFormat builder.
+     *
+     * <p>responseFormat: Optional. New response format field for the model to configure output
+     * formatting and delivery.
+     */
+    @CanIgnoreReturnValue
+    public Builder responseFormat(ResponseFormat.Builder... responseFormatBuilders) {
+      return responseFormat(
+          Arrays.asList(responseFormatBuilders).stream()
+              .map(ResponseFormat.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder responseFormat(Optional<List<ResponseFormat>> responseFormat);
+
+    /** Clears the value of responseFormat field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResponseFormat() {
+      return responseFormat(Optional.empty());
     }
 
     /**
@@ -872,50 +953,6 @@ public abstract class GenerationConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnableEnhancedCivicAnswers() {
       return enableEnhancedCivicAnswers(Optional.empty());
-    }
-
-    /**
-     * Setter for responseFormat.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @JsonProperty("responseFormat")
-    public abstract Builder responseFormat(List<ResponseFormat> responseFormat);
-
-    /**
-     * Setter for responseFormat.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @CanIgnoreReturnValue
-    public Builder responseFormat(ResponseFormat... responseFormat) {
-      return responseFormat(Arrays.asList(responseFormat));
-    }
-
-    /**
-     * Setter for responseFormat builder.
-     *
-     * <p>responseFormat: Optional. New response format field for the model to configure output
-     * formatting and delivery.
-     */
-    @CanIgnoreReturnValue
-    public Builder responseFormat(ResponseFormat.Builder... responseFormatBuilders) {
-      return responseFormat(
-          Arrays.asList(responseFormatBuilders).stream()
-              .map(ResponseFormat.Builder::build)
-              .collect(toImmutableList()));
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder responseFormat(Optional<List<ResponseFormat>> responseFormat);
-
-    /** Clears the value of responseFormat field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearResponseFormat() {
-      return responseFormat(Optional.empty());
     }
 
     /**

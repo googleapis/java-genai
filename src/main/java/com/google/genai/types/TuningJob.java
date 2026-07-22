@@ -105,6 +105,10 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("preferenceOptimizationSpec")
   public abstract Optional<PreferenceOptimizationSpec> preferenceOptimizationSpec();
 
+  /** */
+  @JsonProperty("distillationSamplingSpec")
+  public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
+
   /** Tuning Spec for Distillation. */
   @JsonProperty("distillationSpec")
   public abstract Optional<DistillationSpec> distillationSpec();
@@ -197,25 +201,21 @@ public abstract class TuningJob extends JsonSerializable {
   @JsonProperty("tunedModelDisplayName")
   public abstract Optional<String> tunedModelDisplayName();
 
-  /** Output only. The detail state of the tuning job (while the overall `JobState` is running). */
-  @JsonProperty("tuningJobState")
-  public abstract Optional<TuningJobState> tuningJobState();
-
-  /** Tuning Spec for Veo Tuning. */
-  @JsonProperty("veoTuningSpec")
-  public abstract Optional<VeoTuningSpec> veoTuningSpec();
-
   /** Output only. Tuning Job metadata. */
   @JsonProperty("tuningJobMetadata")
   public abstract Optional<TuningJobMetadata> tuningJobMetadata();
+
+  /** Output only. The detail state of the tuning job (while the overall `JobState` is running). */
+  @JsonProperty("tuningJobState")
+  public abstract Optional<TuningJobState> tuningJobState();
 
   /** Tuning Spec for Veo LoRA Tuning. */
   @JsonProperty("veoLoraTuningSpec")
   public abstract Optional<VeoLoraTuningSpec> veoLoraTuningSpec();
 
-  /** */
-  @JsonProperty("distillationSamplingSpec")
-  public abstract Optional<DistillationSamplingSpec> distillationSamplingSpec();
+  /** Tuning Spec for Veo Tuning. */
+  @JsonProperty("veoTuningSpec")
+  public abstract Optional<VeoTuningSpec> veoTuningSpec();
 
   /** Instantiates a builder for TuningJob. */
   @ExcludeFromGeneratedCoverageReport
@@ -574,6 +574,37 @@ public abstract class TuningJob extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPreferenceOptimizationSpec() {
       return preferenceOptimizationSpec(Optional.empty());
+    }
+
+    /**
+     * Setter for distillationSamplingSpec.
+     *
+     * <p>distillationSamplingSpec:
+     */
+    @JsonProperty("distillationSamplingSpec")
+    public abstract Builder distillationSamplingSpec(
+        DistillationSamplingSpec distillationSamplingSpec);
+
+    /**
+     * Setter for distillationSamplingSpec builder.
+     *
+     * <p>distillationSamplingSpec:
+     */
+    @CanIgnoreReturnValue
+    public Builder distillationSamplingSpec(
+        DistillationSamplingSpec.Builder distillationSamplingSpecBuilder) {
+      return distillationSamplingSpec(distillationSamplingSpecBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder distillationSamplingSpec(
+        Optional<DistillationSamplingSpec> distillationSamplingSpec);
+
+    /** Clears the value of distillationSamplingSpec field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDistillationSamplingSpec() {
+      return distillationSamplingSpec(Optional.empty());
     }
 
     /**
@@ -967,6 +998,34 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
+     * Setter for tuningJobMetadata.
+     *
+     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
+     */
+    @JsonProperty("tuningJobMetadata")
+    public abstract Builder tuningJobMetadata(TuningJobMetadata tuningJobMetadata);
+
+    /**
+     * Setter for tuningJobMetadata builder.
+     *
+     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
+     */
+    @CanIgnoreReturnValue
+    public Builder tuningJobMetadata(TuningJobMetadata.Builder tuningJobMetadataBuilder) {
+      return tuningJobMetadata(tuningJobMetadataBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tuningJobMetadata(Optional<TuningJobMetadata> tuningJobMetadata);
+
+    /** Clears the value of tuningJobMetadata field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTuningJobMetadata() {
+      return tuningJobMetadata(Optional.empty());
+    }
+
+    /**
      * Setter for tuningJobState.
      *
      * <p>tuningJobState: Output only. The detail state of the tuning job (while the overall
@@ -1008,62 +1067,6 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
-     * Setter for veoTuningSpec.
-     *
-     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
-     */
-    @JsonProperty("veoTuningSpec")
-    public abstract Builder veoTuningSpec(VeoTuningSpec veoTuningSpec);
-
-    /**
-     * Setter for veoTuningSpec builder.
-     *
-     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
-     */
-    @CanIgnoreReturnValue
-    public Builder veoTuningSpec(VeoTuningSpec.Builder veoTuningSpecBuilder) {
-      return veoTuningSpec(veoTuningSpecBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder veoTuningSpec(Optional<VeoTuningSpec> veoTuningSpec);
-
-    /** Clears the value of veoTuningSpec field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVeoTuningSpec() {
-      return veoTuningSpec(Optional.empty());
-    }
-
-    /**
-     * Setter for tuningJobMetadata.
-     *
-     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
-     */
-    @JsonProperty("tuningJobMetadata")
-    public abstract Builder tuningJobMetadata(TuningJobMetadata tuningJobMetadata);
-
-    /**
-     * Setter for tuningJobMetadata builder.
-     *
-     * <p>tuningJobMetadata: Output only. Tuning Job metadata.
-     */
-    @CanIgnoreReturnValue
-    public Builder tuningJobMetadata(TuningJobMetadata.Builder tuningJobMetadataBuilder) {
-      return tuningJobMetadata(tuningJobMetadataBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder tuningJobMetadata(Optional<TuningJobMetadata> tuningJobMetadata);
-
-    /** Clears the value of tuningJobMetadata field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearTuningJobMetadata() {
-      return tuningJobMetadata(Optional.empty());
-    }
-
-    /**
      * Setter for veoLoraTuningSpec.
      *
      * <p>veoLoraTuningSpec: Tuning Spec for Veo LoRA Tuning.
@@ -1092,34 +1095,31 @@ public abstract class TuningJob extends JsonSerializable {
     }
 
     /**
-     * Setter for distillationSamplingSpec.
+     * Setter for veoTuningSpec.
      *
-     * <p>distillationSamplingSpec:
+     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
      */
-    @JsonProperty("distillationSamplingSpec")
-    public abstract Builder distillationSamplingSpec(
-        DistillationSamplingSpec distillationSamplingSpec);
+    @JsonProperty("veoTuningSpec")
+    public abstract Builder veoTuningSpec(VeoTuningSpec veoTuningSpec);
 
     /**
-     * Setter for distillationSamplingSpec builder.
+     * Setter for veoTuningSpec builder.
      *
-     * <p>distillationSamplingSpec:
+     * <p>veoTuningSpec: Tuning Spec for Veo Tuning.
      */
     @CanIgnoreReturnValue
-    public Builder distillationSamplingSpec(
-        DistillationSamplingSpec.Builder distillationSamplingSpecBuilder) {
-      return distillationSamplingSpec(distillationSamplingSpecBuilder.build());
+    public Builder veoTuningSpec(VeoTuningSpec.Builder veoTuningSpecBuilder) {
+      return veoTuningSpec(veoTuningSpecBuilder.build());
     }
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder distillationSamplingSpec(
-        Optional<DistillationSamplingSpec> distillationSamplingSpec);
+    abstract Builder veoTuningSpec(Optional<VeoTuningSpec> veoTuningSpec);
 
-    /** Clears the value of distillationSamplingSpec field. */
+    /** Clears the value of veoTuningSpec field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearDistillationSamplingSpec() {
-      return distillationSamplingSpec(Optional.empty());
+    public Builder clearVeoTuningSpec() {
+      return veoTuningSpec(Optional.empty());
     }
 
     public abstract TuningJob build();

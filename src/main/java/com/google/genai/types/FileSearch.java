@@ -43,13 +43,13 @@ public abstract class FileSearch extends JsonSerializable {
   @JsonProperty("fileSearchStoreNames")
   public abstract Optional<List<String>> fileSearchStoreNames();
 
-  /** Optional. The number of semantic retrieval chunks to retrieve. */
-  @JsonProperty("topK")
-  public abstract Optional<Integer> topK();
-
   /** Optional. Metadata filter to apply to the semantic retrieval documents and chunks. */
   @JsonProperty("metadataFilter")
   public abstract Optional<String> metadataFilter();
+
+  /** Optional. The number of semantic retrieval chunks to retrieve. */
+  @JsonProperty("topK")
+  public abstract Optional<Integer> topK();
 
   /** Instantiates a builder for FileSearch. */
   @ExcludeFromGeneratedCoverageReport
@@ -100,24 +100,6 @@ public abstract class FileSearch extends JsonSerializable {
     }
 
     /**
-     * Setter for topK.
-     *
-     * <p>topK: Optional. The number of semantic retrieval chunks to retrieve.
-     */
-    @JsonProperty("topK")
-    public abstract Builder topK(Integer topK);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder topK(Optional<Integer> topK);
-
-    /** Clears the value of topK field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearTopK() {
-      return topK(Optional.empty());
-    }
-
-    /**
      * Setter for metadataFilter.
      *
      * <p>metadataFilter: Optional. Metadata filter to apply to the semantic retrieval documents and
@@ -134,6 +116,24 @@ public abstract class FileSearch extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMetadataFilter() {
       return metadataFilter(Optional.empty());
+    }
+
+    /**
+     * Setter for topK.
+     *
+     * <p>topK: Optional. The number of semantic retrieval chunks to retrieve.
+     */
+    @JsonProperty("topK")
+    public abstract Builder topK(Integer topK);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder topK(Optional<Integer> topK);
+
+    /** Clears the value of topK field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTopK() {
+      return topK(Optional.empty());
     }
 
     public abstract FileSearch build();

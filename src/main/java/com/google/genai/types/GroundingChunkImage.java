@@ -34,21 +34,21 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GroundingChunkImage.Builder.class)
 public abstract class GroundingChunkImage extends JsonSerializable {
-  /** The URI of the image search result page. */
-  @JsonProperty("sourceUri")
-  public abstract Optional<String> sourceUri();
+  /** The domain of the image search result page. */
+  @JsonProperty("domain")
+  public abstract Optional<String> domain();
 
   /** The URI of the image. */
   @JsonProperty("imageUri")
   public abstract Optional<String> imageUri();
 
+  /** The URI of the image search result page. */
+  @JsonProperty("sourceUri")
+  public abstract Optional<String> sourceUri();
+
   /** The title of the image search result page. */
   @JsonProperty("title")
   public abstract Optional<String> title();
-
-  /** The domain of the image search result page. */
-  @JsonProperty("domain")
-  public abstract Optional<String> domain();
 
   /** Instantiates a builder for GroundingChunkImage. */
   @ExcludeFromGeneratedCoverageReport
@@ -69,21 +69,21 @@ public abstract class GroundingChunkImage extends JsonSerializable {
     }
 
     /**
-     * Setter for sourceUri.
+     * Setter for domain.
      *
-     * <p>sourceUri: The URI of the image search result page.
+     * <p>domain: The domain of the image search result page.
      */
-    @JsonProperty("sourceUri")
-    public abstract Builder sourceUri(String sourceUri);
+    @JsonProperty("domain")
+    public abstract Builder domain(String domain);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder sourceUri(Optional<String> sourceUri);
+    abstract Builder domain(Optional<String> domain);
 
-    /** Clears the value of sourceUri field. */
+    /** Clears the value of domain field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearSourceUri() {
-      return sourceUri(Optional.empty());
+    public Builder clearDomain() {
+      return domain(Optional.empty());
     }
 
     /**
@@ -105,6 +105,24 @@ public abstract class GroundingChunkImage extends JsonSerializable {
     }
 
     /**
+     * Setter for sourceUri.
+     *
+     * <p>sourceUri: The URI of the image search result page.
+     */
+    @JsonProperty("sourceUri")
+    public abstract Builder sourceUri(String sourceUri);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder sourceUri(Optional<String> sourceUri);
+
+    /** Clears the value of sourceUri field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSourceUri() {
+      return sourceUri(Optional.empty());
+    }
+
+    /**
      * Setter for title.
      *
      * <p>title: The title of the image search result page.
@@ -120,24 +138,6 @@ public abstract class GroundingChunkImage extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTitle() {
       return title(Optional.empty());
-    }
-
-    /**
-     * Setter for domain.
-     *
-     * <p>domain: The domain of the image search result page.
-     */
-    @JsonProperty("domain")
-    public abstract Builder domain(String domain);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder domain(Optional<String> domain);
-
-    /** Clears the value of domain field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearDomain() {
-      return domain(Optional.empty());
     }
 
     public abstract GroundingChunkImage build();

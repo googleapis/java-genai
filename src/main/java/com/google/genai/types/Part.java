@@ -40,6 +40,24 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("mediaResolution")
   public abstract Optional<PartMediaResolution> mediaResolution();
 
+  /**
+   * Server-side tool call. This field is populated when the model predicts a tool invocation that
+   * should be executed on the server. The client is expected to echo this message back to the API.
+   */
+  @JsonProperty("toolCall")
+  public abstract Optional<ToolCall> toolCall();
+
+  /**
+   * The output from a server-side ToolCall execution. This field is populated by the client with
+   * the results of executing the corresponding ToolCall.
+   */
+  @JsonProperty("toolResponse")
+  public abstract Optional<ToolResponse> toolResponse();
+
+  /** Output only. The transcription of the audio part. */
+  @JsonProperty("audioTranscription")
+  public abstract Optional<Transcription> audioTranscription();
+
   /** Optional. The result of executing the ExecutableCode. */
   @JsonProperty("codeExecutionResult")
   public abstract Optional<CodeExecutionResult> codeExecutionResult();
@@ -100,20 +118,6 @@ public abstract class Part extends JsonSerializable {
   public abstract Optional<VideoMetadata> videoMetadata();
 
   /**
-   * Server-side tool call. This field is populated when the model predicts a tool invocation that
-   * should be executed on the server. The client is expected to echo this message back to the API.
-   */
-  @JsonProperty("toolCall")
-  public abstract Optional<ToolCall> toolCall();
-
-  /**
-   * The output from a server-side ToolCall execution. This field is populated by the client with
-   * the results of executing the corresponding ToolCall.
-   */
-  @JsonProperty("toolResponse")
-  public abstract Optional<ToolResponse> toolResponse();
-
-  /**
    * Custom metadata associated with the Part. Agents using genai.Part as content representation may
    * need to keep track of the additional information. For example it can be name of a file/source
    * from which the Part originates or a way to multiplex multiple Part streams. This field is not
@@ -166,6 +170,96 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearMediaResolution() {
       return mediaResolution(Optional.empty());
+    }
+
+    /**
+     * Setter for toolCall.
+     *
+     * <p>toolCall: Server-side tool call. This field is populated when the model predicts a tool
+     * invocation that should be executed on the server. The client is expected to echo this message
+     * back to the API.
+     */
+    @JsonProperty("toolCall")
+    public abstract Builder toolCall(ToolCall toolCall);
+
+    /**
+     * Setter for toolCall builder.
+     *
+     * <p>toolCall: Server-side tool call. This field is populated when the model predicts a tool
+     * invocation that should be executed on the server. The client is expected to echo this message
+     * back to the API.
+     */
+    @CanIgnoreReturnValue
+    public Builder toolCall(ToolCall.Builder toolCallBuilder) {
+      return toolCall(toolCallBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolCall(Optional<ToolCall> toolCall);
+
+    /** Clears the value of toolCall field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolCall() {
+      return toolCall(Optional.empty());
+    }
+
+    /**
+     * Setter for toolResponse.
+     *
+     * <p>toolResponse: The output from a server-side ToolCall execution. This field is populated by
+     * the client with the results of executing the corresponding ToolCall.
+     */
+    @JsonProperty("toolResponse")
+    public abstract Builder toolResponse(ToolResponse toolResponse);
+
+    /**
+     * Setter for toolResponse builder.
+     *
+     * <p>toolResponse: The output from a server-side ToolCall execution. This field is populated by
+     * the client with the results of executing the corresponding ToolCall.
+     */
+    @CanIgnoreReturnValue
+    public Builder toolResponse(ToolResponse.Builder toolResponseBuilder) {
+      return toolResponse(toolResponseBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder toolResponse(Optional<ToolResponse> toolResponse);
+
+    /** Clears the value of toolResponse field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearToolResponse() {
+      return toolResponse(Optional.empty());
+    }
+
+    /**
+     * Setter for audioTranscription.
+     *
+     * <p>audioTranscription: Output only. The transcription of the audio part.
+     */
+    @JsonProperty("audioTranscription")
+    public abstract Builder audioTranscription(Transcription audioTranscription);
+
+    /**
+     * Setter for audioTranscription builder.
+     *
+     * <p>audioTranscription: Output only. The transcription of the audio part.
+     */
+    @CanIgnoreReturnValue
+    public Builder audioTranscription(Transcription.Builder audioTranscriptionBuilder) {
+      return audioTranscription(audioTranscriptionBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTranscription(Optional<Transcription> audioTranscription);
+
+    /** Clears the value of audioTranscription field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTranscription() {
+      return audioTranscription(Optional.empty());
     }
 
     /**
@@ -430,68 +524,6 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearVideoMetadata() {
       return videoMetadata(Optional.empty());
-    }
-
-    /**
-     * Setter for toolCall.
-     *
-     * <p>toolCall: Server-side tool call. This field is populated when the model predicts a tool
-     * invocation that should be executed on the server. The client is expected to echo this message
-     * back to the API.
-     */
-    @JsonProperty("toolCall")
-    public abstract Builder toolCall(ToolCall toolCall);
-
-    /**
-     * Setter for toolCall builder.
-     *
-     * <p>toolCall: Server-side tool call. This field is populated when the model predicts a tool
-     * invocation that should be executed on the server. The client is expected to echo this message
-     * back to the API.
-     */
-    @CanIgnoreReturnValue
-    public Builder toolCall(ToolCall.Builder toolCallBuilder) {
-      return toolCall(toolCallBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder toolCall(Optional<ToolCall> toolCall);
-
-    /** Clears the value of toolCall field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearToolCall() {
-      return toolCall(Optional.empty());
-    }
-
-    /**
-     * Setter for toolResponse.
-     *
-     * <p>toolResponse: The output from a server-side ToolCall execution. This field is populated by
-     * the client with the results of executing the corresponding ToolCall.
-     */
-    @JsonProperty("toolResponse")
-    public abstract Builder toolResponse(ToolResponse toolResponse);
-
-    /**
-     * Setter for toolResponse builder.
-     *
-     * <p>toolResponse: The output from a server-side ToolCall execution. This field is populated by
-     * the client with the results of executing the corresponding ToolCall.
-     */
-    @CanIgnoreReturnValue
-    public Builder toolResponse(ToolResponse.Builder toolResponseBuilder) {
-      return toolResponse(toolResponseBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder toolResponse(Optional<ToolResponse> toolResponse);
-
-    /** Clears the value of toolResponse field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearToolResponse() {
-      return toolResponse(Optional.empty());
     }
 
     /**

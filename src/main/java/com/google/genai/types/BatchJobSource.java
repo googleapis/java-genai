@@ -46,6 +46,13 @@ public abstract class BatchJobSource extends JsonSerializable {
   @JsonProperty("bigqueryUri")
   public abstract Optional<String> bigqueryUri();
 
+  /**
+   * This field is experimental and may change in future versions. The Vertex AI dataset resource
+   * name to use as input. Must be of type multimodal.
+   */
+  @JsonProperty("vertexDatasetName")
+  public abstract Optional<String> vertexDatasetName();
+
   /** The Gemini Developer API's file resource name of the input data (e.g. "files/12345"). */
   @JsonProperty("fileName")
   public abstract Optional<String> fileName();
@@ -53,13 +60,6 @@ public abstract class BatchJobSource extends JsonSerializable {
   /** The Gemini Developer API's inlined input data to run batch job. */
   @JsonProperty("inlinedRequests")
   public abstract Optional<List<InlinedRequest>> inlinedRequests();
-
-  /**
-   * This field is experimental and may change in future versions. The Vertex AI dataset resource
-   * name to use as input. Must be of type multimodal.
-   */
-  @JsonProperty("vertexDatasetName")
-  public abstract Optional<String> vertexDatasetName();
 
   /** Instantiates a builder for BatchJobSource. */
   @ExcludeFromGeneratedCoverageReport
@@ -145,6 +145,25 @@ public abstract class BatchJobSource extends JsonSerializable {
     }
 
     /**
+     * Setter for vertexDatasetName.
+     *
+     * <p>vertexDatasetName: This field is experimental and may change in future versions. The
+     * Vertex AI dataset resource name to use as input. Must be of type multimodal.
+     */
+    @JsonProperty("vertexDatasetName")
+    public abstract Builder vertexDatasetName(String vertexDatasetName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexDatasetName(Optional<String> vertexDatasetName);
+
+    /** Clears the value of vertexDatasetName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexDatasetName() {
+      return vertexDatasetName(Optional.empty());
+    }
+
+    /**
      * Setter for fileName.
      *
      * <p>fileName: The Gemini Developer API's file resource name of the input data (e.g.
@@ -202,25 +221,6 @@ public abstract class BatchJobSource extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearInlinedRequests() {
       return inlinedRequests(Optional.empty());
-    }
-
-    /**
-     * Setter for vertexDatasetName.
-     *
-     * <p>vertexDatasetName: This field is experimental and may change in future versions. The
-     * Vertex AI dataset resource name to use as input. Must be of type multimodal.
-     */
-    @JsonProperty("vertexDatasetName")
-    public abstract Builder vertexDatasetName(String vertexDatasetName);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder vertexDatasetName(Optional<String> vertexDatasetName);
-
-    /** Clears the value of vertexDatasetName field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVertexDatasetName() {
-      return vertexDatasetName(Optional.empty());
     }
 
     public abstract BatchJobSource build();

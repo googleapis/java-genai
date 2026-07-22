@@ -32,10 +32,6 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = GoogleSearch.Builder.class)
 public abstract class GoogleSearch extends JsonSerializable {
-  /** Optional. The set of search types to enable. If not set, web search is enabled by default. */
-  @JsonProperty("searchTypes")
-  public abstract Optional<SearchTypes> searchTypes();
-
   /**
    * Optional. Sites with confidence level chosen & above this value will be blocked from the search
    * results. This field is not supported in Gemini API.
@@ -49,6 +45,10 @@ public abstract class GoogleSearch extends JsonSerializable {
    */
   @JsonProperty("excludeDomains")
   public abstract Optional<List<String>> excludeDomains();
+
+  /** Optional. The set of search types to enable. If not set, web search is enabled by default. */
+  @JsonProperty("searchTypes")
+  public abstract Optional<SearchTypes> searchTypes();
 
   /**
    * Optional. Filter search results to a specific time range. If customers set a start time, they
@@ -73,36 +73,6 @@ public abstract class GoogleSearch extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_GoogleSearch.Builder();
-    }
-
-    /**
-     * Setter for searchTypes.
-     *
-     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
-     * enabled by default.
-     */
-    @JsonProperty("searchTypes")
-    public abstract Builder searchTypes(SearchTypes searchTypes);
-
-    /**
-     * Setter for searchTypes builder.
-     *
-     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
-     * enabled by default.
-     */
-    @CanIgnoreReturnValue
-    public Builder searchTypes(SearchTypes.Builder searchTypesBuilder) {
-      return searchTypes(searchTypesBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder searchTypes(Optional<SearchTypes> searchTypes);
-
-    /** Clears the value of searchTypes field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearSearchTypes() {
-      return searchTypes(Optional.empty());
     }
 
     /**
@@ -176,6 +146,36 @@ public abstract class GoogleSearch extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExcludeDomains() {
       return excludeDomains(Optional.empty());
+    }
+
+    /**
+     * Setter for searchTypes.
+     *
+     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
+     * enabled by default.
+     */
+    @JsonProperty("searchTypes")
+    public abstract Builder searchTypes(SearchTypes searchTypes);
+
+    /**
+     * Setter for searchTypes builder.
+     *
+     * <p>searchTypes: Optional. The set of search types to enable. If not set, web search is
+     * enabled by default.
+     */
+    @CanIgnoreReturnValue
+    public Builder searchTypes(SearchTypes.Builder searchTypesBuilder) {
+      return searchTypes(searchTypesBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder searchTypes(Optional<SearchTypes> searchTypes);
+
+    /** Clears the value of searchTypes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSearchTypes() {
+      return searchTypes(Optional.empty());
     }
 
     /**

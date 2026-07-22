@@ -31,6 +31,32 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = FileSearchStore.Builder.class)
 public abstract class FileSearchStore extends JsonSerializable {
+  /** The embedding model used by the FileSearchStore. */
+  @JsonProperty("embeddingModel")
+  public abstract Optional<String> embeddingModel();
+
+  /**
+   * Output only. The number of documents in the `FileSearchStore` that are active and ready for
+   * retrieval.
+   */
+  @JsonProperty("activeDocumentsCount")
+  public abstract Optional<Long> activeDocumentsCount();
+
+  /** Output only. The Timestamp of when the `FileSearchStore` was created. */
+  @JsonProperty("createTime")
+  public abstract Optional<Instant> createTime();
+
+  /**
+   * Optional. The human-readable display name for the `FileSearchStore`. The display name must be
+   * no more than 512 characters in length, including spaces. Example: "Docs on Semantic Retriever".
+   */
+  @JsonProperty("displayName")
+  public abstract Optional<String> displayName();
+
+  /** Output only. The number of documents in the `FileSearchStore` that have failed processing. */
+  @JsonProperty("failedDocumentsCount")
+  public abstract Optional<Long> failedDocumentsCount();
+
   /**
    * Output only. Immutable. Identifier. The `FileSearchStore` resource name. It is an ID (name
    * excluding the "fileSearchStores/" prefix) that can contain up to 40 characters that are
@@ -42,35 +68,9 @@ public abstract class FileSearchStore extends JsonSerializable {
   @JsonProperty("name")
   public abstract Optional<String> name();
 
-  /**
-   * Optional. The human-readable display name for the `FileSearchStore`. The display name must be
-   * no more than 512 characters in length, including spaces. Example: "Docs on Semantic Retriever".
-   */
-  @JsonProperty("displayName")
-  public abstract Optional<String> displayName();
-
-  /** Output only. The Timestamp of when the `FileSearchStore` was created. */
-  @JsonProperty("createTime")
-  public abstract Optional<Instant> createTime();
-
-  /** Output only. The Timestamp of when the `FileSearchStore` was last updated. */
-  @JsonProperty("updateTime")
-  public abstract Optional<Instant> updateTime();
-
-  /**
-   * Output only. The number of documents in the `FileSearchStore` that are active and ready for
-   * retrieval.
-   */
-  @JsonProperty("activeDocumentsCount")
-  public abstract Optional<Long> activeDocumentsCount();
-
   /** Output only. The number of documents in the `FileSearchStore` that are being processed. */
   @JsonProperty("pendingDocumentsCount")
   public abstract Optional<Long> pendingDocumentsCount();
-
-  /** Output only. The number of documents in the `FileSearchStore` that have failed processing. */
-  @JsonProperty("failedDocumentsCount")
-  public abstract Optional<Long> failedDocumentsCount();
 
   /**
    * Output only. The size of raw bytes ingested into the `FileSearchStore`. This is the total size
@@ -79,9 +79,9 @@ public abstract class FileSearchStore extends JsonSerializable {
   @JsonProperty("sizeBytes")
   public abstract Optional<Long> sizeBytes();
 
-  /** The embedding model used by the FileSearchStore. */
-  @JsonProperty("embeddingModel")
-  public abstract Optional<String> embeddingModel();
+  /** Output only. The Timestamp of when the `FileSearchStore` was last updated. */
+  @JsonProperty("updateTime")
+  public abstract Optional<Instant> updateTime();
 
   /** Instantiates a builder for FileSearchStore. */
   @ExcludeFromGeneratedCoverageReport
@@ -99,6 +99,100 @@ public abstract class FileSearchStore extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_FileSearchStore.Builder();
+    }
+
+    /**
+     * Setter for embeddingModel.
+     *
+     * <p>embeddingModel: The embedding model used by the FileSearchStore.
+     */
+    @JsonProperty("embeddingModel")
+    public abstract Builder embeddingModel(String embeddingModel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder embeddingModel(Optional<String> embeddingModel);
+
+    /** Clears the value of embeddingModel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEmbeddingModel() {
+      return embeddingModel(Optional.empty());
+    }
+
+    /**
+     * Setter for activeDocumentsCount.
+     *
+     * <p>activeDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
+     * are active and ready for retrieval.
+     */
+    @JsonProperty("activeDocumentsCount")
+    public abstract Builder activeDocumentsCount(Long activeDocumentsCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder activeDocumentsCount(Optional<Long> activeDocumentsCount);
+
+    /** Clears the value of activeDocumentsCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearActiveDocumentsCount() {
+      return activeDocumentsCount(Optional.empty());
+    }
+
+    /**
+     * Setter for createTime.
+     *
+     * <p>createTime: Output only. The Timestamp of when the `FileSearchStore` was created.
+     */
+    @JsonProperty("createTime")
+    public abstract Builder createTime(Instant createTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder createTime(Optional<Instant> createTime);
+
+    /** Clears the value of createTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCreateTime() {
+      return createTime(Optional.empty());
+    }
+
+    /**
+     * Setter for displayName.
+     *
+     * <p>displayName: Optional. The human-readable display name for the `FileSearchStore`. The
+     * display name must be no more than 512 characters in length, including spaces. Example: "Docs
+     * on Semantic Retriever".
+     */
+    @JsonProperty("displayName")
+    public abstract Builder displayName(String displayName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder displayName(Optional<String> displayName);
+
+    /** Clears the value of displayName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearDisplayName() {
+      return displayName(Optional.empty());
+    }
+
+    /**
+     * Setter for failedDocumentsCount.
+     *
+     * <p>failedDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
+     * have failed processing.
+     */
+    @JsonProperty("failedDocumentsCount")
+    public abstract Builder failedDocumentsCount(Long failedDocumentsCount);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder failedDocumentsCount(Optional<Long> failedDocumentsCount);
+
+    /** Clears the value of failedDocumentsCount field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFailedDocumentsCount() {
+      return failedDocumentsCount(Optional.empty());
     }
 
     /**
@@ -125,81 +219,6 @@ public abstract class FileSearchStore extends JsonSerializable {
     }
 
     /**
-     * Setter for displayName.
-     *
-     * <p>displayName: Optional. The human-readable display name for the `FileSearchStore`. The
-     * display name must be no more than 512 characters in length, including spaces. Example: "Docs
-     * on Semantic Retriever".
-     */
-    @JsonProperty("displayName")
-    public abstract Builder displayName(String displayName);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder displayName(Optional<String> displayName);
-
-    /** Clears the value of displayName field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearDisplayName() {
-      return displayName(Optional.empty());
-    }
-
-    /**
-     * Setter for createTime.
-     *
-     * <p>createTime: Output only. The Timestamp of when the `FileSearchStore` was created.
-     */
-    @JsonProperty("createTime")
-    public abstract Builder createTime(Instant createTime);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder createTime(Optional<Instant> createTime);
-
-    /** Clears the value of createTime field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearCreateTime() {
-      return createTime(Optional.empty());
-    }
-
-    /**
-     * Setter for updateTime.
-     *
-     * <p>updateTime: Output only. The Timestamp of when the `FileSearchStore` was last updated.
-     */
-    @JsonProperty("updateTime")
-    public abstract Builder updateTime(Instant updateTime);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder updateTime(Optional<Instant> updateTime);
-
-    /** Clears the value of updateTime field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearUpdateTime() {
-      return updateTime(Optional.empty());
-    }
-
-    /**
-     * Setter for activeDocumentsCount.
-     *
-     * <p>activeDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
-     * are active and ready for retrieval.
-     */
-    @JsonProperty("activeDocumentsCount")
-    public abstract Builder activeDocumentsCount(Long activeDocumentsCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder activeDocumentsCount(Optional<Long> activeDocumentsCount);
-
-    /** Clears the value of activeDocumentsCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearActiveDocumentsCount() {
-      return activeDocumentsCount(Optional.empty());
-    }
-
-    /**
      * Setter for pendingDocumentsCount.
      *
      * <p>pendingDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
@@ -216,25 +235,6 @@ public abstract class FileSearchStore extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearPendingDocumentsCount() {
       return pendingDocumentsCount(Optional.empty());
-    }
-
-    /**
-     * Setter for failedDocumentsCount.
-     *
-     * <p>failedDocumentsCount: Output only. The number of documents in the `FileSearchStore` that
-     * have failed processing.
-     */
-    @JsonProperty("failedDocumentsCount")
-    public abstract Builder failedDocumentsCount(Long failedDocumentsCount);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder failedDocumentsCount(Optional<Long> failedDocumentsCount);
-
-    /** Clears the value of failedDocumentsCount field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearFailedDocumentsCount() {
-      return failedDocumentsCount(Optional.empty());
     }
 
     /**
@@ -257,21 +257,21 @@ public abstract class FileSearchStore extends JsonSerializable {
     }
 
     /**
-     * Setter for embeddingModel.
+     * Setter for updateTime.
      *
-     * <p>embeddingModel: The embedding model used by the FileSearchStore.
+     * <p>updateTime: Output only. The Timestamp of when the `FileSearchStore` was last updated.
      */
-    @JsonProperty("embeddingModel")
-    public abstract Builder embeddingModel(String embeddingModel);
+    @JsonProperty("updateTime")
+    public abstract Builder updateTime(Instant updateTime);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder embeddingModel(Optional<String> embeddingModel);
+    abstract Builder updateTime(Optional<Instant> updateTime);
 
-    /** Clears the value of embeddingModel field. */
+    /** Clears the value of updateTime field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearEmbeddingModel() {
-      return embeddingModel(Optional.empty());
+    public Builder clearUpdateTime() {
+      return updateTime(Optional.empty());
     }
 
     public abstract FileSearchStore build();

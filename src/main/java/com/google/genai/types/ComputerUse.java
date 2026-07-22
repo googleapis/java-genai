@@ -35,6 +35,10 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ComputerUse.Builder.class)
 public abstract class ComputerUse extends JsonSerializable {
+  /** Optional. Enables the prompt injection detection check on computer-use request. */
+  @JsonProperty("enablePromptInjectionDetection")
+  public abstract Optional<Boolean> enablePromptInjectionDetection();
+
   /** Required. The environment being operated. */
   @JsonProperty("environment")
   public abstract Optional<Environment> environment();
@@ -48,10 +52,6 @@ public abstract class ComputerUse extends JsonSerializable {
    */
   @JsonProperty("excludedPredefinedFunctions")
   public abstract Optional<List<String>> excludedPredefinedFunctions();
-
-  /** Optional. Enables the prompt injection detection check on computer-use request. */
-  @JsonProperty("enablePromptInjectionDetection")
-  public abstract Optional<Boolean> enablePromptInjectionDetection();
 
   /**
    * Optional. Disabled safety policies for computer use. This field is not supported in Vertex AI.
@@ -75,6 +75,26 @@ public abstract class ComputerUse extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_ComputerUse.Builder();
+    }
+
+    /**
+     * Setter for enablePromptInjectionDetection.
+     *
+     * <p>enablePromptInjectionDetection: Optional. Enables the prompt injection detection check on
+     * computer-use request.
+     */
+    @JsonProperty("enablePromptInjectionDetection")
+    public abstract Builder enablePromptInjectionDetection(boolean enablePromptInjectionDetection);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enablePromptInjectionDetection(
+        Optional<Boolean> enablePromptInjectionDetection);
+
+    /** Clears the value of enablePromptInjectionDetection field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnablePromptInjectionDetection() {
+      return enablePromptInjectionDetection(Optional.empty());
     }
 
     /**
@@ -150,26 +170,6 @@ public abstract class ComputerUse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExcludedPredefinedFunctions() {
       return excludedPredefinedFunctions(Optional.empty());
-    }
-
-    /**
-     * Setter for enablePromptInjectionDetection.
-     *
-     * <p>enablePromptInjectionDetection: Optional. Enables the prompt injection detection check on
-     * computer-use request.
-     */
-    @JsonProperty("enablePromptInjectionDetection")
-    public abstract Builder enablePromptInjectionDetection(boolean enablePromptInjectionDetection);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder enablePromptInjectionDetection(
-        Optional<Boolean> enablePromptInjectionDetection);
-
-    /** Clears the value of enablePromptInjectionDetection field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearEnablePromptInjectionDetection() {
-      return enablePromptInjectionDetection(Optional.empty());
     }
 
     /**

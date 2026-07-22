@@ -241,12 +241,6 @@ public final class Tunings {
               + " Gemini Developer API mode.");
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}))) {
-      throw new IllegalArgumentException(
-          "encryptionSpec parameter is only supported in Gemini Enterprise Agent Platform mode, not"
-              + " in Gemini Developer API mode.");
-    }
-
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"rewardConfig"}))) {
       throw new IllegalArgumentException(
           "rewardConfig parameter is only supported in Gemini Enterprise Agent Platform mode, not"
@@ -293,6 +287,12 @@ public final class Tunings {
       throw new IllegalArgumentException(
           "validationDatasetUri parameter is only supported in Gemini Enterprise Agent Platform"
               + " mode, not in Gemini Developer API mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}))) {
+      throw new IllegalArgumentException(
+          "encryptionSpec parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
     }
 
     return toObject;
@@ -666,13 +666,6 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"outputUri"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"encryptionSpec"},
-          Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"rewardConfig"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -727,6 +720,13 @@ public final class Tunings {
           parentObject,
           new String[] {"reinforcementTuningSpec", "validationDatasetUri"},
           Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"encryptionSpec"},
+          Common.getValueByPath(fromObject, new String[] {"encryptionSpec"}));
     }
 
     return toObject;
@@ -814,13 +814,6 @@ public final class Tunings {
   ObjectNode distillationHyperParametersFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"adapterSize"},
-          Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"epochCount"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -835,6 +828,27 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"learningRateMultiplier"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adapterSize"},
+          Common.getValueByPath(fromObject, new String[] {"adapterSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"batchSize"},
+          Common.getValueByPath(fromObject, new String[] {"batchSize"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"learningRate"},
+          Common.getValueByPath(fromObject, new String[] {"learningRate"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"generationConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -846,20 +860,6 @@ public final class Tunings {
               rootObject));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"learningRate"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"learningRate"},
-          Common.getValueByPath(fromObject, new String[] {"learningRate"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"batchSize"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"batchSize"},
-          Common.getValueByPath(fromObject, new String[] {"batchSize"}));
-    }
-
     return toObject;
   }
 
@@ -867,6 +867,20 @@ public final class Tunings {
   ObjectNode distillationSamplingSpecFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -879,20 +893,6 @@ public final class Tunings {
           toObject,
           new String[] {"tunedTeacherModelSource"},
           Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"validationDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"promptDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"hyperparameters"}) != null) {
@@ -913,13 +913,6 @@ public final class Tunings {
   ObjectNode distillationSpecFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"promptDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -945,6 +938,13 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"pipelineRootDirectory"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"promptDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"studentModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -966,18 +966,18 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"tunedTeacherModelSource"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"validationDatasetUri"},
-          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"tuningMode"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"tuningMode"},
           Common.getValueByPath(fromObject, new String[] {"tuningMode"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"validationDatasetUri"},
+          Common.getValueByPath(fromObject, new String[] {"validationDatasetUri"}));
     }
 
     return toObject;
@@ -1079,6 +1079,13 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1133,6 +1140,13 @@ public final class Tunings {
           toObject,
           new String[] {"presencePenalty"},
           Common.getValueByPath(fromObject, new String[] {"presencePenalty"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"responseLogprobs"}) != null) {
@@ -1219,13 +1233,6 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"topP"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseFormat"},
-          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
-    }
-
     return toObject;
   }
 
@@ -1245,6 +1252,13 @@ public final class Tunings {
           toObject,
           new String[] {"responseJsonSchema"},
           Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"audioTranscriptionConfig"},
+          Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioTimestamp"}) != null) {
@@ -1301,6 +1315,13 @@ public final class Tunings {
           toObject,
           new String[] {"presencePenalty"},
           Common.getValueByPath(fromObject, new String[] {"presencePenalty"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"responseFormat"},
+          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"responseLogprobs"}) != null) {
@@ -1396,13 +1417,6 @@ public final class Tunings {
       throw new IllegalArgumentException(
           "enableEnhancedCivicAnswers parameter is only supported in Gemini Developer API mode, not"
               + " in Gemini Enterprise Agent Platform mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"responseFormat"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"responseFormat"},
-          Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
@@ -1946,6 +1960,17 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"preferenceOptimizationSpec"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"distillationSamplingSpec"},
+          distillationSamplingSpecFromVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"})),
+              toObject,
+              rootObject));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"distillationSpec"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2059,25 +2084,18 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"tunedModelDisplayName"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"tuningJobState"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"tuningJobState"},
-          Common.getValueByPath(fromObject, new String[] {"tuningJobState"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"veoTuningSpec"},
-          Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"tuningJobMetadata"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"tuningJobMetadata"},
           Common.getValueByPath(fromObject, new String[] {"tuningJobMetadata"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"tuningJobState"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"tuningJobState"},
+          Common.getValueByPath(fromObject, new String[] {"tuningJobState"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"veoLoraTuningSpec"}) != null) {
@@ -2087,15 +2105,11 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"veoLoraTuningSpec"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"}) != null) {
+    if (Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}) != null) {
       Common.setValueByPath(
           toObject,
-          new String[] {"distillationSamplingSpec"},
-          distillationSamplingSpecFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"})),
-              toObject,
-              rootObject));
+          new String[] {"veoTuningSpec"},
+          Common.getValueByPath(fromObject, new String[] {"veoTuningSpec"}));
     }
 
     return toObject;

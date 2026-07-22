@@ -31,13 +31,6 @@ import java.util.Optional;
 @JsonDeserialize(builder = BatchJobOutputInfo.Builder.class)
 public abstract class BatchJobOutputInfo extends JsonSerializable {
   /**
-   * This field is experimental and may change in future versions. The Vertex AI dataset name
-   * containing the output data.
-   */
-  @JsonProperty("vertexMultimodalDatasetName")
-  public abstract Optional<String> vertexMultimodalDatasetName();
-
-  /**
    * The full path of the Cloud Storage directory created, into which the prediction output is
    * written.
    */
@@ -50,6 +43,13 @@ public abstract class BatchJobOutputInfo extends JsonSerializable {
    */
   @JsonProperty("bigqueryOutputTable")
   public abstract Optional<String> bigqueryOutputTable();
+
+  /**
+   * This field is experimental and may change in future versions. The Vertex AI dataset name
+   * containing the output data.
+   */
+  @JsonProperty("vertexMultimodalDatasetName")
+  public abstract Optional<String> vertexMultimodalDatasetName();
 
   /** Instantiates a builder for BatchJobOutputInfo. */
   @ExcludeFromGeneratedCoverageReport
@@ -67,25 +67,6 @@ public abstract class BatchJobOutputInfo extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_BatchJobOutputInfo.Builder();
-    }
-
-    /**
-     * Setter for vertexMultimodalDatasetName.
-     *
-     * <p>vertexMultimodalDatasetName: This field is experimental and may change in future versions.
-     * The Vertex AI dataset name containing the output data.
-     */
-    @JsonProperty("vertexMultimodalDatasetName")
-    public abstract Builder vertexMultimodalDatasetName(String vertexMultimodalDatasetName);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder vertexMultimodalDatasetName(Optional<String> vertexMultimodalDatasetName);
-
-    /** Clears the value of vertexMultimodalDatasetName field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVertexMultimodalDatasetName() {
-      return vertexMultimodalDatasetName(Optional.empty());
     }
 
     /**
@@ -124,6 +105,25 @@ public abstract class BatchJobOutputInfo extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearBigqueryOutputTable() {
       return bigqueryOutputTable(Optional.empty());
+    }
+
+    /**
+     * Setter for vertexMultimodalDatasetName.
+     *
+     * <p>vertexMultimodalDatasetName: This field is experimental and may change in future versions.
+     * The Vertex AI dataset name containing the output data.
+     */
+    @JsonProperty("vertexMultimodalDatasetName")
+    public abstract Builder vertexMultimodalDatasetName(String vertexMultimodalDatasetName);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder vertexMultimodalDatasetName(Optional<String> vertexMultimodalDatasetName);
+
+    /** Clears the value of vertexMultimodalDatasetName field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearVertexMultimodalDatasetName() {
+      return vertexMultimodalDatasetName(Optional.empty());
     }
 
     public abstract BatchJobOutputInfo build();

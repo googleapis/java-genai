@@ -30,13 +30,13 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = SearchTypes.Builder.class)
 public abstract class SearchTypes extends JsonSerializable {
-  /** Optional. Setting this field enables web search. Only text results are returned. */
-  @JsonProperty("webSearch")
-  public abstract Optional<WebSearch> webSearch();
-
   /** Optional. Setting this field enables image search. Image bytes are returned. */
   @JsonProperty("imageSearch")
   public abstract Optional<ImageSearch> imageSearch();
+
+  /** Optional. Setting this field enables web search. Only text results are returned. */
+  @JsonProperty("webSearch")
+  public abstract Optional<WebSearch> webSearch();
 
   /** Instantiates a builder for SearchTypes. */
   @ExcludeFromGeneratedCoverageReport
@@ -54,6 +54,34 @@ public abstract class SearchTypes extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_SearchTypes.Builder();
+    }
+
+    /**
+     * Setter for imageSearch.
+     *
+     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
+     */
+    @JsonProperty("imageSearch")
+    public abstract Builder imageSearch(ImageSearch imageSearch);
+
+    /**
+     * Setter for imageSearch builder.
+     *
+     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
+     */
+    @CanIgnoreReturnValue
+    public Builder imageSearch(ImageSearch.Builder imageSearchBuilder) {
+      return imageSearch(imageSearchBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder imageSearch(Optional<ImageSearch> imageSearch);
+
+    /** Clears the value of imageSearch field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearImageSearch() {
+      return imageSearch(Optional.empty());
     }
 
     /**
@@ -84,34 +112,6 @@ public abstract class SearchTypes extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearWebSearch() {
       return webSearch(Optional.empty());
-    }
-
-    /**
-     * Setter for imageSearch.
-     *
-     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
-     */
-    @JsonProperty("imageSearch")
-    public abstract Builder imageSearch(ImageSearch imageSearch);
-
-    /**
-     * Setter for imageSearch builder.
-     *
-     * <p>imageSearch: Optional. Setting this field enables image search. Image bytes are returned.
-     */
-    @CanIgnoreReturnValue
-    public Builder imageSearch(ImageSearch.Builder imageSearchBuilder) {
-      return imageSearch(imageSearchBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder imageSearch(Optional<ImageSearch> imageSearch);
-
-    /** Clears the value of imageSearch field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearImageSearch() {
-      return imageSearch(Optional.empty());
     }
 
     public abstract SearchTypes build();

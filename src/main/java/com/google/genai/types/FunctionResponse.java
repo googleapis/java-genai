@@ -41,32 +41,6 @@ import java.util.Optional;
 @JsonDeserialize(builder = FunctionResponse.Builder.class)
 public abstract class FunctionResponse extends JsonSerializable {
   /**
-   * Optional. Signals that function call continues, and more responses will be returned, turning
-   * the function call into a generator. Is only applicable to NON_BLOCKING function calls, is
-   * ignored otherwise. If set to false, future responses will not be considered. It is allowed to
-   * return empty `response` with `will_continue=False` to signal that the function call is
-   * finished. This may still trigger the model generation. To avoid triggering the generation and
-   * finish the function call, additionally set `scheduling` to `SILENT`. This field is not
-   * supported in Vertex AI.
-   */
-  @JsonProperty("willContinue")
-  public abstract Optional<Boolean> willContinue();
-
-  /**
-   * Optional. Specifies how the response should be scheduled in the conversation. Only applicable
-   * to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
-   */
-  @JsonProperty("scheduling")
-  public abstract Optional<FunctionResponseScheduling> scheduling();
-
-  /**
-   * Optional. Ordered `Parts` that constitute a function response. Parts may have different IANA
-   * MIME types.
-   */
-  @JsonProperty("parts")
-  public abstract Optional<List<FunctionResponsePart>> parts();
-
-  /**
    * Optional. The id of the function call this response is for. Populated by the client to match
    * the corresponding function call `id`.
    */
@@ -81,12 +55,38 @@ public abstract class FunctionResponse extends JsonSerializable {
   public abstract Optional<String> name();
 
   /**
+   * Optional. Ordered `Parts` that constitute a function response. Parts may have different IANA
+   * MIME types.
+   */
+  @JsonProperty("parts")
+  public abstract Optional<List<FunctionResponsePart>> parts();
+
+  /**
    * Required. The function response in JSON object format. Use "output" key to specify function
    * output and "error" key to specify error details (if any). If "output" and "error" keys are not
    * specified, then whole "response" is treated as function output.
    */
   @JsonProperty("response")
   public abstract Optional<Map<String, Object>> response();
+
+  /**
+   * Optional. Specifies how the response should be scheduled in the conversation. Only applicable
+   * to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+   */
+  @JsonProperty("scheduling")
+  public abstract Optional<FunctionResponseScheduling> scheduling();
+
+  /**
+   * Optional. Signals that function call continues, and more responses will be returned, turning
+   * the function call into a generator. Is only applicable to NON_BLOCKING function calls, is
+   * ignored otherwise. If set to false, future responses will not be considered. It is allowed to
+   * return empty `response` with `will_continue=False` to signal that the function call is
+   * finished. This may still trigger the model generation. To avoid triggering the generation and
+   * finish the function call, additionally set `scheduling` to `SILENT`. This field is not
+   * supported in Vertex AI.
+   */
+  @JsonProperty("willContinue")
+  public abstract Optional<Boolean> willContinue();
 
   /** Instantiates a builder for FunctionResponse. */
   @ExcludeFromGeneratedCoverageReport
@@ -107,68 +107,41 @@ public abstract class FunctionResponse extends JsonSerializable {
     }
 
     /**
-     * Setter for willContinue.
+     * Setter for id.
      *
-     * <p>willContinue: Optional. Signals that function call continues, and more responses will be
-     * returned, turning the function call into a generator. Is only applicable to NON_BLOCKING
-     * function calls, is ignored otherwise. If set to false, future responses will not be
-     * considered. It is allowed to return empty `response` with `will_continue=False` to signal
-     * that the function call is finished. This may still trigger the model generation. To avoid
-     * triggering the generation and finish the function call, additionally set `scheduling` to
-     * `SILENT`. This field is not supported in Vertex AI.
+     * <p>id: Optional. The id of the function call this response is for. Populated by the client to
+     * match the corresponding function call `id`.
      */
-    @JsonProperty("willContinue")
-    public abstract Builder willContinue(boolean willContinue);
+    @JsonProperty("id")
+    public abstract Builder id(String id);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder willContinue(Optional<Boolean> willContinue);
+    abstract Builder id(Optional<String> id);
 
-    /** Clears the value of willContinue field. */
+    /** Clears the value of id field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearWillContinue() {
-      return willContinue(Optional.empty());
+    public Builder clearId() {
+      return id(Optional.empty());
     }
 
     /**
-     * Setter for scheduling.
+     * Setter for name.
      *
-     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
-     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     * <p>name: Required. The name of the function to call. Matches FunctionDeclaration.name and
+     * FunctionCall.name.
      */
-    @JsonProperty("scheduling")
-    public abstract Builder scheduling(FunctionResponseScheduling scheduling);
+    @JsonProperty("name")
+    public abstract Builder name(String name);
 
     @ExcludeFromGeneratedCoverageReport
-    abstract Builder scheduling(Optional<FunctionResponseScheduling> scheduling);
+    abstract Builder name(Optional<String> name);
 
-    /** Clears the value of scheduling field. */
+    /** Clears the value of name field. */
     @ExcludeFromGeneratedCoverageReport
     @CanIgnoreReturnValue
-    public Builder clearScheduling() {
-      return scheduling(Optional.empty());
-    }
-
-    /**
-     * Setter for scheduling given a known enum.
-     *
-     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
-     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
-     */
-    @CanIgnoreReturnValue
-    public Builder scheduling(FunctionResponseScheduling.Known knownType) {
-      return scheduling(new FunctionResponseScheduling(knownType));
-    }
-
-    /**
-     * Setter for scheduling given a string.
-     *
-     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
-     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
-     */
-    @CanIgnoreReturnValue
-    public Builder scheduling(String scheduling) {
-      return scheduling(new FunctionResponseScheduling(scheduling));
+    public Builder clearName() {
+      return name(Optional.empty());
     }
 
     /**
@@ -216,44 +189,6 @@ public abstract class FunctionResponse extends JsonSerializable {
     }
 
     /**
-     * Setter for id.
-     *
-     * <p>id: Optional. The id of the function call this response is for. Populated by the client to
-     * match the corresponding function call `id`.
-     */
-    @JsonProperty("id")
-    public abstract Builder id(String id);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder id(Optional<String> id);
-
-    /** Clears the value of id field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearId() {
-      return id(Optional.empty());
-    }
-
-    /**
-     * Setter for name.
-     *
-     * <p>name: Required. The name of the function to call. Matches FunctionDeclaration.name and
-     * FunctionCall.name.
-     */
-    @JsonProperty("name")
-    public abstract Builder name(String name);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder name(Optional<String> name);
-
-    /** Clears the value of name field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearName() {
-      return name(Optional.empty());
-    }
-
-    /**
      * Setter for response.
      *
      * <p>response: Required. The function response in JSON object format. Use "output" key to
@@ -271,6 +206,71 @@ public abstract class FunctionResponse extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearResponse() {
       return response(Optional.empty());
+    }
+
+    /**
+     * Setter for scheduling.
+     *
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     */
+    @JsonProperty("scheduling")
+    public abstract Builder scheduling(FunctionResponseScheduling scheduling);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder scheduling(Optional<FunctionResponseScheduling> scheduling);
+
+    /** Clears the value of scheduling field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearScheduling() {
+      return scheduling(Optional.empty());
+    }
+
+    /**
+     * Setter for scheduling given a known enum.
+     *
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     */
+    @CanIgnoreReturnValue
+    public Builder scheduling(FunctionResponseScheduling.Known knownType) {
+      return scheduling(new FunctionResponseScheduling(knownType));
+    }
+
+    /**
+     * Setter for scheduling given a string.
+     *
+     * <p>scheduling: Optional. Specifies how the response should be scheduled in the conversation.
+     * Only applicable to NON_BLOCKING function calls, is ignored otherwise. Defaults to WHEN_IDLE.
+     */
+    @CanIgnoreReturnValue
+    public Builder scheduling(String scheduling) {
+      return scheduling(new FunctionResponseScheduling(scheduling));
+    }
+
+    /**
+     * Setter for willContinue.
+     *
+     * <p>willContinue: Optional. Signals that function call continues, and more responses will be
+     * returned, turning the function call into a generator. Is only applicable to NON_BLOCKING
+     * function calls, is ignored otherwise. If set to false, future responses will not be
+     * considered. It is allowed to return empty `response` with `will_continue=False` to signal
+     * that the function call is finished. This may still trigger the model generation. To avoid
+     * triggering the generation and finish the function call, additionally set `scheduling` to
+     * `SILENT`. This field is not supported in Vertex AI.
+     */
+    @JsonProperty("willContinue")
+    public abstract Builder willContinue(boolean willContinue);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder willContinue(Optional<Boolean> willContinue);
+
+    /** Clears the value of willContinue field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWillContinue() {
+      return willContinue(Optional.empty());
     }
 
     public abstract FunctionResponse build();

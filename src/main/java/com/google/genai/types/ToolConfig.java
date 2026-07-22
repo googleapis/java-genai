@@ -30,13 +30,13 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = ToolConfig.Builder.class)
 public abstract class ToolConfig extends JsonSerializable {
-  /** Optional. Retrieval config. */
-  @JsonProperty("retrievalConfig")
-  public abstract Optional<RetrievalConfig> retrievalConfig();
-
   /** Optional. Function calling config. */
   @JsonProperty("functionCallingConfig")
   public abstract Optional<FunctionCallingConfig> functionCallingConfig();
+
+  /** Optional. Retrieval config. */
+  @JsonProperty("retrievalConfig")
+  public abstract Optional<RetrievalConfig> retrievalConfig();
 
   /**
    * Optional. If true, the API response will include the server-side tool calls and responses
@@ -62,34 +62,6 @@ public abstract class ToolConfig extends JsonSerializable {
     @JsonCreator
     private static Builder create() {
       return new AutoValue_ToolConfig.Builder();
-    }
-
-    /**
-     * Setter for retrievalConfig.
-     *
-     * <p>retrievalConfig: Optional. Retrieval config.
-     */
-    @JsonProperty("retrievalConfig")
-    public abstract Builder retrievalConfig(RetrievalConfig retrievalConfig);
-
-    /**
-     * Setter for retrievalConfig builder.
-     *
-     * <p>retrievalConfig: Optional. Retrieval config.
-     */
-    @CanIgnoreReturnValue
-    public Builder retrievalConfig(RetrievalConfig.Builder retrievalConfigBuilder) {
-      return retrievalConfig(retrievalConfigBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder retrievalConfig(Optional<RetrievalConfig> retrievalConfig);
-
-    /** Clears the value of retrievalConfig field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearRetrievalConfig() {
-      return retrievalConfig(Optional.empty());
     }
 
     /**
@@ -119,6 +91,34 @@ public abstract class ToolConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearFunctionCallingConfig() {
       return functionCallingConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for retrievalConfig.
+     *
+     * <p>retrievalConfig: Optional. Retrieval config.
+     */
+    @JsonProperty("retrievalConfig")
+    public abstract Builder retrievalConfig(RetrievalConfig retrievalConfig);
+
+    /**
+     * Setter for retrievalConfig builder.
+     *
+     * <p>retrievalConfig: Optional. Retrieval config.
+     */
+    @CanIgnoreReturnValue
+    public Builder retrievalConfig(RetrievalConfig.Builder retrievalConfigBuilder) {
+      return retrievalConfig(retrievalConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder retrievalConfig(Optional<RetrievalConfig> retrievalConfig);
+
+    /** Clears the value of retrievalConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearRetrievalConfig() {
+      return retrievalConfig(Optional.empty());
     }
 
     /**
