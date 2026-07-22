@@ -311,11 +311,6 @@ final class LiveConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
-      Common.setValueByPath(
-          toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"args"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1863,10 +1858,13 @@ final class LiveConverters {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+      JsonNode functionResponseNode =
+          JsonSerializable.toJsonNode(
+              Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+      if (functionResponseNode instanceof ObjectNode) {
+        ((ObjectNode) functionResponseNode).remove("id");
+      }
+      Common.setValueByPath(toObject, new String[] {"functionResponse"}, functionResponseNode);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
@@ -1976,10 +1974,13 @@ final class LiveConverters {
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"functionResponse"},
-          Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+      JsonNode functionResponseNode =
+          JsonSerializable.toJsonNode(
+              Common.getValueByPath(fromObject, new String[] {"functionResponse"}));
+      if (functionResponseNode instanceof ObjectNode) {
+        ((ObjectNode) functionResponseNode).remove("id");
+      }
+      Common.setValueByPath(toObject, new String[] {"functionResponse"}, functionResponseNode);
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inlineData"}) != null) {
