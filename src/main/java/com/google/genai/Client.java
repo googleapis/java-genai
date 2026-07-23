@@ -315,11 +315,13 @@ public final class Client implements AutoCloseable {
     caches = new Caches(apiClient);
     operations = new Operations(this.apiClient);
     chats = new Chats(this.apiClient);
+    
     async = new Async(this.apiClient);
     files = new Files(this.apiClient);
     authTokens = new Tokens(this.apiClient);
     tunings = new Tunings(this.apiClient);
     fileSearchStores = new FileSearchStores(this.apiClient);
+
   }
 
   /** Returns whether the client is using Vertex AI APIs. */
