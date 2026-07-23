@@ -32,15 +32,24 @@ import java.util.Optional;
 @AutoValue
 @JsonDeserialize(builder = AudioTranscriptionConfig.Builder.class)
 public abstract class AudioTranscriptionConfig extends JsonSerializable {
-  /** Deprecated: use LanguageAuto or LanguageHints instead. */
+  /**
+   * BCP-47 language codes providing hints about the languages present in the audio. If omitted or
+   * empty, defaults to automatic language detection.
+   */
   @JsonProperty("languageCodes")
   public abstract Optional<List<String>> languageCodes();
 
-  /** The model will detect the language automatically. Do not use together with LanguageHints. */
+  /**
+   * Deprecated: Auto-detection is now the default when language_codes is omitted. This field will
+   * be removed in a future version.
+   */
   @JsonProperty("languageAuto")
   public abstract Optional<LanguageAuto> languageAuto();
 
-  /** Specifies one or more languages in the audio. Do not use together with LanguageAuto. */
+  /**
+   * Deprecated: Use top-level language_codes instead. This field will be removed in a future
+   * version.
+   */
   @JsonProperty("languageHints")
   public abstract Optional<LanguageHints> languageHints();
 
@@ -79,7 +88,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: Deprecated: use LanguageAuto or LanguageHints instead.
+     * <p>languageCodes: BCP-47 language codes providing hints about the languages present in the
+     * audio. If omitted or empty, defaults to automatic language detection.
      */
     @JsonProperty("languageCodes")
     public abstract Builder languageCodes(List<String> languageCodes);
@@ -87,7 +97,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: Deprecated: use LanguageAuto or LanguageHints instead.
+     * <p>languageCodes: BCP-47 language codes providing hints about the languages present in the
+     * audio. If omitted or empty, defaults to automatic language detection.
      */
     @CanIgnoreReturnValue
     public Builder languageCodes(String... languageCodes) {
@@ -107,8 +118,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageAuto.
      *
-     * <p>languageAuto: The model will detect the language automatically. Do not use together with
-     * LanguageHints.
+     * <p>languageAuto: Deprecated: Auto-detection is now the default when language_codes is
+     * omitted. This field will be removed in a future version.
      */
     @JsonProperty("languageAuto")
     public abstract Builder languageAuto(LanguageAuto languageAuto);
@@ -116,8 +127,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageAuto builder.
      *
-     * <p>languageAuto: The model will detect the language automatically. Do not use together with
-     * LanguageHints.
+     * <p>languageAuto: Deprecated: Auto-detection is now the default when language_codes is
+     * omitted. This field will be removed in a future version.
      */
     @CanIgnoreReturnValue
     public Builder languageAuto(LanguageAuto.Builder languageAutoBuilder) {
@@ -137,8 +148,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageHints.
      *
-     * <p>languageHints: Specifies one or more languages in the audio. Do not use together with
-     * LanguageAuto.
+     * <p>languageHints: Deprecated: Use top-level language_codes instead. This field will be
+     * removed in a future version.
      */
     @JsonProperty("languageHints")
     public abstract Builder languageHints(LanguageHints languageHints);
@@ -146,8 +157,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageHints builder.
      *
-     * <p>languageHints: Specifies one or more languages in the audio. Do not use together with
-     * LanguageAuto.
+     * <p>languageHints: Deprecated: Use top-level language_codes instead. This field will be
+     * removed in a future version.
      */
     @CanIgnoreReturnValue
     public Builder languageHints(LanguageHints.Builder languageHintsBuilder) {
