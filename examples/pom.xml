@@ -80,4 +80,27 @@
       <version>2.0.17</version>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>google3-local</id>
+      <activation>
+        <file>
+          <exists>${project.basedir}/../src/main/java/com/google/genai/interactions/core/http/HttpClient.kt</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>com/google/genai/examples/Interaction*</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
