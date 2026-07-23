@@ -149,6 +149,44 @@ public class HttpApiClientTest {
     assertNotNull(body);
     final Buffer buffer = new Buffer();
     body.writeTo(buffer);
+    assertEquals("application/json; charset=utf-8", body.contentType().toString());
+  }
+
+  @Test
+  public void testRequestPostMethodWithVertexExpressMode() throws Exception {
+    // Arrange
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of(API_KEY),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+    setMockClient(client);
+
+    // Act
+    client.request("POST", TEST_PATH, TEST_REQUEST_JSON, Optional.empty());
+
+    // Assert
+    ArgumentCaptor<Request> requestCaptor = ArgumentCaptor.forClass(Request.class);
+    verify(mockHttpClient).newCall(requestCaptor.capture());
+    Request capturedRequest = requestCaptor.getValue();
+
+    assertEquals("POST", capturedRequest.method());
+    assertEquals(
+        String.format(
+            "https://%s-aiplatform.googleapis.com/v1beta1/projects/%s/locations/%s/%s",
+            LOCATION, PROJECT, LOCATION, TEST_PATH),
+        capturedRequest.url().toString());
+    assertNotNull(capturedRequest.header("x-goog-api-key"));
+    assertEquals(API_KEY, capturedRequest.header("x-goog-api-key"));
+    assertNull(capturedRequest.header("Authorization"));
+
+    RequestBody body = capturedRequest.body();
+    assertNotNull(body);
+    final Buffer buffer = new Buffer();
+    body.writeTo(buffer);
     assertEquals(TEST_REQUEST_JSON, buffer.readUtf8());
     assertEquals("application/json; charset=utf-8", body.contentType().toString());
   }
@@ -797,24 +835,19 @@ public class HttpApiClientTest {
   }
 
   @Test
-  public void testInitHttpClientVertexWithProjectLocationAndApiKey_throwsException()
-      throws Exception {
-    // Explicit proj/location and API key are not allowed.
-    IllegalArgumentException exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () ->
-                new HttpApiClient(
-                    Optional.of(API_KEY),
-                    Optional.of(PROJECT),
-                    Optional.of(LOCATION),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty()));
-    assertEquals(
-        "For Vertex AI APIs, project and API key are mutually exclusive in the client initializer."
-            + " Please provide only one of them.",
-        exception.getMessage());
+  public void testInitHttpClientVertexWithProjectLocationAndApiKey_success() throws Exception {
+    HttpApiClient client =
+        new HttpApiClient(
+            Optional.of(API_KEY),
+            Optional.of(PROJECT),
+            Optional.of(LOCATION),
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty());
+    assertEquals(API_KEY, client.apiKey());
+    assertEquals(PROJECT, client.project());
+    assertEquals(LOCATION, client.location());
+    assertTrue(client.vertexAI());
   }
 
   @Test
