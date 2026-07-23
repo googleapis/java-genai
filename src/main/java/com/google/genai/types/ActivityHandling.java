@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The different ways of handling user activity. */
+/** Defines what effect activity has. This enum is not supported in Vertex AI. */
 public class ActivityHandling {
 
   /** Enum representing the known values for ActivityHandling. */

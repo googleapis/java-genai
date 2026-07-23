@@ -54,6 +54,24 @@ public abstract class ToolParallelAiSearch extends JsonSerializable {
   @JsonProperty("customConfigs")
   public abstract Optional<Map<String, Object>> customConfigs();
 
+  /**
+   * Optional. Deprecated: Use `enable_zero_data_retention` instead. Instructs Vertex Grounding to
+   * use Parallel's Zero Data Retention Marketplace product. If this value is "false" or omitted,
+   * the Parallel Web Search for Grounding standard subscription will be used. If this value is
+   * "true", the Parallel Web Search for Grounding - ZDR subscription will be used.
+   */
+  @JsonProperty("enableDataRetention")
+  public abstract Optional<Boolean> enableDataRetention();
+
+  /**
+   * Optional. Instructs Vertex Grounding to use Parallel's Zero Data Retention Marketplace product.
+   * If this value is "false" or omitted, the Parallel Web Search for Grounding standard
+   * subscription will be used. If this value is "true", the Parallel Web Search for Grounding - ZDR
+   * subscription will be used.
+   */
+  @JsonProperty("enableZeroDataRetention")
+  public abstract Optional<Boolean> enableZeroDataRetention();
+
   /** Instantiates a builder for ToolParallelAiSearch. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -115,6 +133,49 @@ public abstract class ToolParallelAiSearch extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearCustomConfigs() {
       return customConfigs(Optional.empty());
+    }
+
+    /**
+     * Setter for enableDataRetention.
+     *
+     * <p>enableDataRetention: Optional. Deprecated: Use `enable_zero_data_retention` instead.
+     * Instructs Vertex Grounding to use Parallel's Zero Data Retention Marketplace product. If this
+     * value is "false" or omitted, the Parallel Web Search for Grounding standard subscription will
+     * be used. If this value is "true", the Parallel Web Search for Grounding - ZDR subscription
+     * will be used.
+     */
+    @JsonProperty("enableDataRetention")
+    public abstract Builder enableDataRetention(boolean enableDataRetention);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enableDataRetention(Optional<Boolean> enableDataRetention);
+
+    /** Clears the value of enableDataRetention field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnableDataRetention() {
+      return enableDataRetention(Optional.empty());
+    }
+
+    /**
+     * Setter for enableZeroDataRetention.
+     *
+     * <p>enableZeroDataRetention: Optional. Instructs Vertex Grounding to use Parallel's Zero Data
+     * Retention Marketplace product. If this value is "false" or omitted, the Parallel Web Search
+     * for Grounding standard subscription will be used. If this value is "true", the Parallel Web
+     * Search for Grounding - ZDR subscription will be used.
+     */
+    @JsonProperty("enableZeroDataRetention")
+    public abstract Builder enableZeroDataRetention(boolean enableZeroDataRetention);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder enableZeroDataRetention(Optional<Boolean> enableZeroDataRetention);
+
+    /** Clears the value of enableZeroDataRetention field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearEnableZeroDataRetention() {
+      return enableZeroDataRetention(Optional.empty());
     }
 
     public abstract ToolParallelAiSearch build();

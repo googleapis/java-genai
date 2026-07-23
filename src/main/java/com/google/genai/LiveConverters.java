@@ -72,6 +72,50 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode audioTranscriptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (Common.getValueByPath(fromObject, new String[] {"languageCodes"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageCodes"},
+          Common.getValueByPath(fromObject, new String[] {"languageCodes"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageAuto"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageAuto"},
+          Common.getValueByPath(fromObject, new String[] {"languageAuto"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"languageHints"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"languageHints"},
+          languageHintsToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"languageHints"})),
+              toObject));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"customVocabulary"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"customVocabulary"},
+          Common.getValueByPath(fromObject, new String[] {"customVocabulary"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"adaptationPhrases"},
+          Common.getValueByPath(fromObject, new String[] {"adaptationPhrases"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
@@ -251,6 +295,24 @@ final class LiveConverters {
           toObject,
           new String[] {"role"},
           Common.getValueByPath(fromObject, new String[] {"role"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode contextWindowCompressionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"triggerTokens"}))) {
+      throw new IllegalArgumentException(
+          "triggerTokens parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"slidingWindow"}))) {
+      throw new IllegalArgumentException(
+          "slidingWindow parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -578,6 +640,31 @@ final class LiveConverters {
           toObject,
           new String[] {"timeRangeFilter"},
           Common.getValueByPath(fromObject, new String[] {"timeRangeFilter"}));
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode historyConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"initialHistoryInClientContent"}))) {
+      throw new IllegalArgumentException(
+          "initialHistoryInClientContent parameter is only supported in Gemini Developer API mode,"
+              + " not in Gemini Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode languageHintsToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"languageCodes"}))) {
+      throw new IllegalArgumentException(
+          "languageCodes parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
     }
 
     return toObject;
@@ -1032,35 +1119,50 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"realtimeInputConfig"},
-          Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}));
+          realtimeInputConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"sessionResumption"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"sessionResumption"},
-          Common.getValueByPath(fromObject, new String[] {"sessionResumption"}));
+          sessionResumptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"contextWindowCompression"},
-          Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}));
+          contextWindowCompressionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"inputAudioTranscription"},
-          Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}));
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"outputAudioTranscription"},
-          Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}));
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
@@ -1095,7 +1197,10 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"historyConfig"},
-          Common.getValueByPath(fromObject, new String[] {"historyConfig"}));
+          historyConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"historyConfig"})),
+              toObject));
     }
 
     return toObject;
@@ -1392,35 +1497,50 @@ final class LiveConverters {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "sessionResumption"},
-          Common.getValueByPath(fromObject, new String[] {"sessionResumption"}));
+          sessionResumptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "inputAudioTranscription"},
-          Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"}));
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"inputAudioTranscription"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "outputAudioTranscription"},
-          Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"}));
+          audioTranscriptionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"outputAudioTranscription"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "realtimeInputConfig"},
-          Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"}));
+          realtimeInputConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"realtimeInputConfig"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"setup", "contextWindowCompression"},
-          Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"}));
+          contextWindowCompressionConfigToVertex(
+              JsonSerializable.toJsonNode(
+                  Common.getValueByPath(fromObject, new String[] {"contextWindowCompression"})),
+              toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"proactivity"}) != null) {
@@ -2039,6 +2159,31 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
+  ObjectNode realtimeInputConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(
+        Common.getValueByPath(fromObject, new String[] {"automaticActivityDetection"}))) {
+      throw new IllegalArgumentException(
+          "automaticActivityDetection parameter is only supported in Gemini Developer API mode, not"
+              + " in Gemini Enterprise Agent Platform mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"activityHandling"}))) {
+      throw new IllegalArgumentException(
+          "activityHandling parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"turnCoverage"}))) {
+      throw new IllegalArgumentException(
+          "turnCoverage parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
   ObjectNode replicatedVoiceConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
@@ -2110,6 +2255,25 @@ final class LiveConverters {
       throw new IllegalArgumentException(
           "transparent parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
               + " Gemini Developer API mode.");
+    }
+
+    return toObject;
+  }
+
+  @ExcludeFromGeneratedCoverageReport
+  ObjectNode sessionResumptionConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
+    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"handle"}))) {
+      throw new IllegalArgumentException(
+          "handle parameter is only supported in Gemini Developer API mode, not in Gemini"
+              + " Enterprise Agent Platform mode.");
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"transparent"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"transparent"},
+          Common.getValueByPath(fromObject, new String[] {"transparent"}));
     }
 
     return toObject;
