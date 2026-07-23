@@ -163,18 +163,6 @@ public abstract class ApiClient implements AutoCloseable {
         customHttpOptions.flatMap(HttpOptions::baseUrl).map(url -> url.replaceAll("/$", ""));
 
     // Validate constructor arguments combinations.
-    if (hasProject && hasApiKey) {
-      throw new IllegalArgumentException(
-          "For Vertex AI APIs, project and API key are mutually exclusive in the client"
-              + " initializer. Please provide only one of them.");
-    }
-
-    if (hasLocation && hasApiKey) {
-      throw new IllegalArgumentException(
-          "For Vertex AI APIs, location and API key are mutually exclusive in the client"
-              + " initializer. Please provide only one of them.");
-    }
-
     if (hasCredentials && hasApiKey) {
       throw new IllegalArgumentException(
           "For Vertex AI APIs, API key cannot be set together with credentials. Please provide"
@@ -189,20 +177,24 @@ public abstract class ApiClient implements AutoCloseable {
               + " key from the environment variable.");
       apiKeyValue = null;
     }
-    if (hasApiKey && (hasEnvProjectValue || hasEnvLocationValue)) {
+    if (hasApiKey && !hasProject && !hasLocation && (hasEnvProjectValue || hasEnvLocationValue)) {
       // Explicit API key takes precedence over implicit project/location.
       logger.warning(
           "Warning: The user provided Vertex AI API key will take precedence over the"
               + " project/location from the environment variables.");
       projectValue = null;
       locationValue = null;
-    } else if ((hasProject || hasLocation) && hasEnvApiKeyValue) {
+    } else if ((hasProject || hasLocation) && !hasApiKey && hasEnvApiKeyValue) {
       // Explicit project/location takes precedence over implicit API key.
       logger.warning(
           "Warning: The user provided project/location will take precedence over the API key from"
               + " the environment variable.");
       apiKeyValue = null;
-    } else if ((hasEnvProjectValue || hasEnvLocationValue) && hasEnvApiKeyValue) {
+    } else if (!hasProject
+        && !hasLocation
+        && !hasApiKey
+        && (hasEnvProjectValue || hasEnvLocationValue)
+        && hasEnvApiKeyValue) {
       // Implicit project/location takes precedence over implicit API key.
       logger.warning(
           "Warning: The project/location from the environment variables will take precedence over"
@@ -233,7 +225,7 @@ public abstract class ApiClient implements AutoCloseable {
       initHttpOptionsBuilder.baseUrl(customBaseUrl.get());
       projectValue = null;
       locationValue = null;
-    } else if (apiKeyValue != null
+    } else if ((apiKeyValue != null && locationValue == null && !customBaseUrl.isPresent())
         || (locationValue != null
             && locationValue.equals("global")
             && !customBaseUrl.isPresent())) {
@@ -253,9 +245,9 @@ public abstract class ApiClient implements AutoCloseable {
     this.location = Optional.ofNullable(locationValue);
     this.customBaseUrl = customBaseUrl;
 
-    // Only set credentials if using project/location.
+    // Only set credentials if using project/location and no API key is provided.
     this.credentials =
-        !this.project.isPresent()
+        (!this.project.isPresent() || this.apiKey.isPresent())
             ? Optional.empty()
             : Optional.of(credentials.orElseGet(() -> defaultCredentials()));
 
@@ -794,10 +786,10 @@ public abstract class ApiClient implements AutoCloseable {
         && httpOptions.baseUrlResourceScope().get().knownEnum() == Known.COLLECTION) {
       return false;
     }
-    if (this.apiKey.isPresent()) {
+    if (!this.vertexAI) {
       return false;
     }
-    if (!this.vertexAI) {
+    if (!this.project.isPresent() || !this.location.isPresent()) {
       return false;
     }
     if (path.startsWith("projects/")) {
