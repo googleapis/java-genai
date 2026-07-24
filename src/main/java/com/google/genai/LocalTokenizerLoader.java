@@ -129,9 +129,20 @@ final class LocalTokenizerLoader {
   private static final Map<String, ModelProto> modelProtoCache = new ConcurrentHashMap<>();
   private static final Map<String, LocalTokenizerProcessor> localTokenizerProcessorCache =
       new ConcurrentHashMap<>();
-  private static OkHttpClient httpClient = new OkHttpClient();
+  // Non-null only when replaced by tests.
+  private static OkHttpClient httpClient;
 
   private LocalTokenizerLoader() {}
+
+  private static final class HttpClientHolder {
+    private static final OkHttpClient INSTANCE = new OkHttpClient();
+
+    private HttpClientHolder() {}
+  }
+
+  private static OkHttpClient getHttpClient() {
+    return httpClient != null ? httpClient : HttpClientHolder.INSTANCE;
+  }
 
   /** Gets the tokenizer name for the given model name. */
   public static String getTokenizerName(String modelName) {
@@ -240,7 +251,7 @@ final class LocalTokenizerLoader {
 
   private static byte[] loadFromUrl(String fileUrl, String expectedHash) throws IOException {
     Request request = new Request.Builder().url(fileUrl).build();
-    try (Response response = httpClient.newCall(request).execute()) {
+    try (Response response = getHttpClient().newCall(request).execute()) {
       if (response == null) {
         throw new GenAiIOException("HTTP request failed: response is null");
       }
