@@ -37,7 +37,7 @@ import java.util.Optional;
  * 
  * <p>Configuration for audio output format.
  */
-public class AudioResponseFormat {
+public class AudioResponseFormat implements ResponseFormat {
     /**
      * Bit rate in bits per second (bps). Only applicable for compressed formats
      * (MP3, Opus).
@@ -118,8 +118,9 @@ public class AudioResponseFormat {
         return Optional.ofNullable(this.sampleRate);
     }
 
-    public Optional<String> type() {
-        return Optional.ofNullable(this.type);
+    @Override
+    public String type() {
+        return Utils.discriminatorToString(type);
     }
 
     public static Builder builder() {

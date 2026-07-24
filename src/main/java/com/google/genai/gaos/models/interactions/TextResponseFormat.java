@@ -38,7 +38,7 @@ import java.util.Optional;
  * 
  * <p>Configuration for text output format.
  */
-public class TextResponseFormat {
+public class TextResponseFormat implements ResponseFormat {
     /**
      * The MIME type of the text output.
      */
@@ -100,8 +100,9 @@ public class TextResponseFormat {
         return Optional.ofNullable(this.schema);
     }
 
-    public Optional<String> type() {
-        return Optional.ofNullable(this.type);
+    @Override
+    public String type() {
+        return Utils.discriminatorToString(type);
     }
 
     public static Builder builder() {

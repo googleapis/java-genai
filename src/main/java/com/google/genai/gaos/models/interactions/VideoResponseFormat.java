@@ -36,7 +36,7 @@ import java.util.Optional;
  * 
  * <p>Configuration for video output format.
  */
-public class VideoResponseFormat {
+public class VideoResponseFormat implements ResponseFormat {
     /**
      * The aspect ratio for the video output.
      */
@@ -133,8 +133,9 @@ public class VideoResponseFormat {
         return Optional.ofNullable(this.resolution);
     }
 
-    public Optional<String> type() {
-        return Optional.ofNullable(this.type);
+    @Override
+    public String type() {
+        return Utils.discriminatorToString(type);
     }
 
     public static Builder builder() {

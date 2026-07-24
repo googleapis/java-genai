@@ -36,7 +36,7 @@ import java.util.Optional;
  * 
  * <p>Configuration for image output format.
  */
-public class ImageResponseFormat {
+public class ImageResponseFormat implements ResponseFormat {
     /**
      * The aspect ratio for the image output.
      */
@@ -115,8 +115,9 @@ public class ImageResponseFormat {
         return Optional.ofNullable(this.mimeType);
     }
 
-    public Optional<String> type() {
-        return Optional.ofNullable(this.type);
+    @Override
+    public String type() {
+        return Utils.discriminatorToString(type);
     }
 
     public static Builder builder() {
