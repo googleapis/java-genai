@@ -2400,6 +2400,22 @@
     "queryAllDeclaredConstructors": true
   },
   {
+    "name": "com.google.genai.types.AutoValue_HistoryConfig",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
+    "name": "com.google.genai.types.AutoValue_HistoryConfig$Builder",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true
+  },
+  {
     "name": "com.google.genai.types.AutoValue_HttpOptions",
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true,

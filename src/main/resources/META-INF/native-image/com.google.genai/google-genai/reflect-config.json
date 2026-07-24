@@ -1384,6 +1384,13 @@
   "methods":[{"name":"dynamicRetrievalConfig","parameterTypes":[] }]
 },
 {
+  "name":"com.google.genai.types.AutoValue_HistoryConfig",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"initialHistoryInClientContent","parameterTypes":[] }]
+},
+{
   "name":"com.google.genai.types.AutoValue_HttpOptions",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -1598,7 +1605,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"avatarConfig","parameterTypes":[] }, {"name":"contextWindowCompression","parameterTypes":[] }, {"name":"enableAffectiveDialog","parameterTypes":[] }, {"name":"explicitVadSignal","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"inputAudioTranscription","parameterTypes":[] }, {"name":"maxOutputTokens","parameterTypes":[] }, {"name":"mediaResolution","parameterTypes":[] }, {"name":"outputAudioTranscription","parameterTypes":[] }, {"name":"proactivity","parameterTypes":[] }, {"name":"realtimeInputConfig","parameterTypes":[] }, {"name":"responseModalities","parameterTypes":[] }, {"name":"safetySettings","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"sessionResumption","parameterTypes":[] }, {"name":"speechConfig","parameterTypes":[] }, {"name":"systemInstruction","parameterTypes":[] }, {"name":"temperature","parameterTypes":[] }, {"name":"thinkingConfig","parameterTypes":[] }, {"name":"tools","parameterTypes":[] }, {"name":"topK","parameterTypes":[] }, {"name":"topP","parameterTypes":[] }, {"name":"translationConfig","parameterTypes":[] }]
+  "methods":[{"name":"avatarConfig","parameterTypes":[] }, {"name":"contextWindowCompression","parameterTypes":[] }, {"name":"enableAffectiveDialog","parameterTypes":[] }, {"name":"explicitVadSignal","parameterTypes":[] }, {"name":"historyConfig","parameterTypes":[] }, {"name":"httpOptions","parameterTypes":[] }, {"name":"inputAudioTranscription","parameterTypes":[] }, {"name":"maxOutputTokens","parameterTypes":[] }, {"name":"mediaResolution","parameterTypes":[] }, {"name":"outputAudioTranscription","parameterTypes":[] }, {"name":"proactivity","parameterTypes":[] }, {"name":"realtimeInputConfig","parameterTypes":[] }, {"name":"responseModalities","parameterTypes":[] }, {"name":"safetySettings","parameterTypes":[] }, {"name":"seed","parameterTypes":[] }, {"name":"sessionResumption","parameterTypes":[] }, {"name":"speechConfig","parameterTypes":[] }, {"name":"systemInstruction","parameterTypes":[] }, {"name":"temperature","parameterTypes":[] }, {"name":"thinkingConfig","parameterTypes":[] }, {"name":"tools","parameterTypes":[] }, {"name":"topK","parameterTypes":[] }, {"name":"topP","parameterTypes":[] }, {"name":"translationConfig","parameterTypes":[] }]
 },
 {
   "name":"com.google.genai.types.AutoValue_LiveConnectConstraints",
@@ -3726,6 +3733,18 @@
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
 },
 {
+  "name":"com.google.genai.types.HistoryConfig",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.genai.types.HistoryConfig$Builder",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"initialHistoryInClientContent","parameterTypes":["boolean"] }]
+},
+{
   "name":"com.google.genai.types.HttpElementLocation",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -4137,7 +4156,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"responseModalities","parameterTypes":["java.util.List"] }, {"name":"temperature","parameterTypes":["java.lang.Float"] }, {"name":"translationConfig","parameterTypes":["com.google.genai.types.TranslationConfig"] }]
+  "methods":[{"name":"build","parameterTypes":[] }, {"name":"create","parameterTypes":[] }, {"name":"historyConfig","parameterTypes":["com.google.genai.types.HistoryConfig"] }, {"name":"responseModalities","parameterTypes":["java.util.List"] }, {"name":"temperature","parameterTypes":["java.lang.Float"] }, {"name":"translationConfig","parameterTypes":["com.google.genai.types.TranslationConfig"] }]
 },
 {
   "name":"com.google.genai.types.LiveConnectConstraints",

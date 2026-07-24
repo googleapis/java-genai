@@ -274,6 +274,35 @@ Client client = Client.builder()
 The Google Gen AI Java SDK allows you to access the service programmatically.
 The following code snippets are some basic usages of model inferencing.
 
+#### Seed Live API conversation history
+
+Gemini 3.1 Live sessions can accept conversation history through client content
+messages before realtime input begins. Enable initial history processing when
+connecting:
+
+```java
+import com.google.genai.Client;
+import com.google.genai.types.HistoryConfig;
+import com.google.genai.types.LiveConnectConfig;
+import com.google.genai.types.Modality;
+
+Client client = new Client();
+
+LiveConnectConfig config =
+    LiveConnectConfig.builder()
+        .responseModalities(Modality.Known.AUDIO)
+        .historyConfig(
+            HistoryConfig.builder()
+                .initialHistoryInClientContent(true))
+        .build();
+
+client.async.live.connect("gemini-3.1-flash-live-preview", config);
+```
+
+After the session connects, use `sendClientContent` to send the initial history
+and finish it with `turnComplete(true)`. Use `sendRealtimeInput` for subsequent
+conversation input.
+
 #### Generate Content
 Use `generateContent` method for the most basic content generation.
 

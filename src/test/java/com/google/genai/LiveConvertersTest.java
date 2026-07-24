@@ -22,6 +22,7 @@ import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.Blob;
+import com.google.genai.types.HistoryConfig;
 import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
@@ -188,5 +189,45 @@ public class LiveConvertersTest {
                 JsonSerializable.objectMapper
                     .createObjectNode()) // Code that should throw the exception
         );
+  }
+
+  @Test
+  public void testLiveConnectConfig_HistoryConfig_mldev() {
+    final LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .historyConfig(HistoryConfig.builder().initialHistoryInClientContent(true))
+            .build();
+    final ObjectNode transformed = JsonSerializable.objectMapper.createObjectNode();
+
+    new LiveConverters(GEMINI_API_CLIENT)
+        .liveConnectConfigToMldev(JsonSerializable.toJsonNode(config), transformed);
+
+    assertEquals(
+        true,
+        transformed
+            .get("setup")
+            .get("historyConfig")
+            .get("initialHistoryInClientContent")
+            .asBoolean());
+  }
+
+  @Test
+  public void testLiveConnectConfig_HistoryConfig_vertex() {
+    final LiveConnectConfig config =
+        LiveConnectConfig.builder()
+            .historyConfig(HistoryConfig.builder().initialHistoryInClientContent(true))
+            .build();
+    final ObjectNode transformed = JsonSerializable.objectMapper.createObjectNode();
+
+    new LiveConverters(VERTEX_AI_CLIENT)
+        .liveConnectConfigToVertex(JsonSerializable.toJsonNode(config), transformed);
+
+    assertEquals(
+        true,
+        transformed
+            .get("setup")
+            .get("historyConfig")
+            .get("initialHistoryInClientContent")
+            .asBoolean());
   }
 }
