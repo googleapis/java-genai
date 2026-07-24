@@ -350,6 +350,13 @@ public final class TableTest {
 
   private static void handleException(
       Throwable cause, TestTableItem testTableItem, Client client, String testName) {
+    if (client.clientMode().equals("api") && cause instanceof com.google.genai.errors.ApiException) {
+      if (((com.google.genai.errors.ApiException) cause).code() == 429) {
+        org.junit.jupiter.api.Assumptions.assumeTrue(
+            false, "Resource Exhausted (429). Skipping test instead of failing: " + cause.getMessage());
+        return;
+      }
+    }
     Optional<String> exceptionIfMldev = testTableItem.exceptionIfMldev();
     Optional<String> exceptionIfVertex = testTableItem.exceptionIfVertex();
     if (exceptionIfMldev.isPresent() && !client.vertexAI()) {
