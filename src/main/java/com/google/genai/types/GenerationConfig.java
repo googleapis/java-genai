@@ -227,6 +227,10 @@ public abstract class GenerationConfig extends JsonSerializable {
   @JsonProperty("translationConfig")
   public abstract Optional<TranslationConfig> translationConfig();
 
+  /** Optional. Configuration for audio transcription (speech recognition). */
+  @JsonProperty("audioTranscriptionConfig")
+  public abstract Optional<AudioTranscriptionConfig> audioTranscriptionConfig();
+
   /** Instantiates a builder for GenerationConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -946,6 +950,39 @@ public abstract class GenerationConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTranslationConfig() {
       return translationConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for audioTranscriptionConfig.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @JsonProperty("audioTranscriptionConfig")
+    public abstract Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig audioTranscriptionConfig);
+
+    /**
+     * Setter for audioTranscriptionConfig builder.
+     *
+     * <p>audioTranscriptionConfig: Optional. Configuration for audio transcription (speech
+     * recognition).
+     */
+    @CanIgnoreReturnValue
+    public Builder audioTranscriptionConfig(
+        AudioTranscriptionConfig.Builder audioTranscriptionConfigBuilder) {
+      return audioTranscriptionConfig(audioTranscriptionConfigBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder audioTranscriptionConfig(
+        Optional<AudioTranscriptionConfig> audioTranscriptionConfig);
+
+    /** Clears the value of audioTranscriptionConfig field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearAudioTranscriptionConfig() {
+      return audioTranscriptionConfig(Optional.empty());
     }
 
     public abstract GenerationConfig build();

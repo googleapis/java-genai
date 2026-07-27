@@ -18,12 +18,16 @@
 
 package com.google.genai.types;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /** Audio transcription in Server Content. */
@@ -41,6 +45,14 @@ public abstract class Transcription extends JsonSerializable {
   /** The BCP-47 language code of the transcription. */
   @JsonProperty("languageCode")
   public abstract Optional<String> languageCode();
+
+  /** A label identifying the speaker of this audio segment (e.g. "spk_1", "spk_2"). */
+  @JsonProperty("speakerLabel")
+  public abstract Optional<String> speakerLabel();
+
+  /** Detailed word-level transcriptions and timing details. */
+  @JsonProperty("words")
+  public abstract Optional<List<WordInfo>> words();
 
   /** Instantiates a builder for Transcription. */
   @ExcludeFromGeneratedCoverageReport
@@ -112,6 +124,66 @@ public abstract class Transcription extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearLanguageCode() {
       return languageCode(Optional.empty());
+    }
+
+    /**
+     * Setter for speakerLabel.
+     *
+     * <p>speakerLabel: A label identifying the speaker of this audio segment (e.g. "spk_1",
+     * "spk_2").
+     */
+    @JsonProperty("speakerLabel")
+    public abstract Builder speakerLabel(String speakerLabel);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder speakerLabel(Optional<String> speakerLabel);
+
+    /** Clears the value of speakerLabel field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSpeakerLabel() {
+      return speakerLabel(Optional.empty());
+    }
+
+    /**
+     * Setter for words.
+     *
+     * <p>words: Detailed word-level transcriptions and timing details.
+     */
+    @JsonProperty("words")
+    public abstract Builder words(List<WordInfo> words);
+
+    /**
+     * Setter for words.
+     *
+     * <p>words: Detailed word-level transcriptions and timing details.
+     */
+    @CanIgnoreReturnValue
+    public Builder words(WordInfo... words) {
+      return words(Arrays.asList(words));
+    }
+
+    /**
+     * Setter for words builder.
+     *
+     * <p>words: Detailed word-level transcriptions and timing details.
+     */
+    @CanIgnoreReturnValue
+    public Builder words(WordInfo.Builder... wordsBuilders) {
+      return words(
+          Arrays.asList(wordsBuilders).stream()
+              .map(WordInfo.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder words(Optional<List<WordInfo>> words);
+
+    /** Clears the value of words field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearWords() {
+      return words(Optional.empty());
     }
 
     public abstract Transcription build();
