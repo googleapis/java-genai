@@ -47,6 +47,16 @@ public final class TableTest {
 
   private static Collection<DynamicTest> createTableTests(String path, boolean vertexAI)
       throws IOException {
+    if (vertexAI && "api".equals(System.getenv("GOOGLE_GENAI_CLIENT_MODE"))) {
+      String runVertexInApiMode = System.getenv("GOOGLE_GENAI_RUN_VERTEX_IN_API_MODE");
+      if (runVertexInApiMode == null || runVertexInApiMode.isEmpty()) {
+        return Collections.singletonList(
+            DynamicTest.dynamicTest(
+                "Skipping Vertex AI tests in API mode (no GCP credentials configured) for " + path,
+                () -> {}));
+      }
+    }
+
     String suffix = vertexAI ? "vertex" : "mldev";
 
     // Reads JSON.
