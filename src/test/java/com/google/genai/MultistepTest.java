@@ -159,32 +159,18 @@ public final class MultistepTest {
     if (client.vertexAI()) {
       cache = client.caches.create(model, config);
     } else {
-      String filePath = "tests/data/google.png";
-      boolean createdFile = false;
-      try {
-        // Temp test artifact creation.
-        if (!Files.exists(Paths.get(filePath))) {
-          Files.createDirectories(Paths.get(filePath).getParent());
-          Files.write(Paths.get(filePath), "fake content".getBytes());
-          createdFile = true;
-        }
+      String filePath = "src/test/resources/google.png";
 
-        File file = client.files.upload(filePath, null);
-        List<Part> parts = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-          parts.add(Part.fromUri(file.uri().get(), file.mimeType().get()));
-        }
-        CreateCachedContentConfig mldevConfig =
-            CreateCachedContentConfig.builder()
-                .contents(Collections.singletonList(Content.fromParts(parts.toArray(new Part[0]))))
-                .build();
-        cache = client.caches.create(model, mldevConfig);
-      } finally {
-        // Temp test artifact cleanup.
-        if (createdFile) {
-          Files.deleteIfExists(Paths.get(filePath));
-        }
+      File file = client.files.upload(filePath, null);
+      List<Part> parts = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+        parts.add(Part.fromUri(file.uri().get(), file.mimeType().get()));
       }
+      CreateCachedContentConfig mldevConfig =
+          CreateCachedContentConfig.builder()
+              .contents(Collections.singletonList(Content.fromParts(parts.toArray(new Part[0]))))
+              .build();
+      cache = client.caches.create(model, mldevConfig);
     }
     CachedContent gotCache = client.caches.get(cache.name().get(), null);
     return client.caches.delete(gotCache.name().get(), null);
@@ -203,32 +189,18 @@ public final class MultistepTest {
     if (client.vertexAI()) {
       cache = client.caches.create(model, config);
     } else {
-      String filePath = "tests/data/google.png";
-      boolean createdFile = false;
-      try {
-        // Temp test artifact creation.
-        if (!Files.exists(Paths.get(filePath))) {
-          Files.createDirectories(Paths.get(filePath).getParent());
-          Files.write(Paths.get(filePath), "fake content".getBytes());
-          createdFile = true;
-        }
+      String filePath = "src/test/resources/google.png";
 
-        File file = client.files.upload(filePath, null);
-        List<Part> parts = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-          parts.add(Part.fromUri(file.uri().get(), file.mimeType().get()));
-        }
-        CreateCachedContentConfig mldevConfig =
-            CreateCachedContentConfig.builder()
-                .contents(Collections.singletonList(Content.fromParts(parts.toArray(new Part[0]))))
-                .build();
-        cache = client.caches.create(model, mldevConfig);
-      } finally {
-        // Temp test artifact cleanup.
-        if (createdFile) {
-          Files.deleteIfExists(Paths.get(filePath));
-        }
+      File file = client.files.upload(filePath, null);
+      List<Part> parts = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+        parts.add(Part.fromUri(file.uri().get(), file.mimeType().get()));
       }
+      CreateCachedContentConfig mldevConfig =
+          CreateCachedContentConfig.builder()
+              .contents(Collections.singletonList(Content.fromParts(parts.toArray(new Part[0]))))
+              .build();
+      cache = client.caches.create(model, mldevConfig);
     }
     CachedContent updatedCache =
         client.caches.update(
@@ -262,6 +234,9 @@ public final class MultistepTest {
   private static Object uploadGetDelete(Client client, Map<String, Object> parameters)
       throws Exception {
     String filePath = (String) parameters.get("filePath");
+    if (filePath != null && filePath.contains("google.png")) {
+        filePath = "src/test/resources/google.png";
+    }
     boolean createdFile = false;
     try {
       // Temp test artifact creation.
@@ -276,7 +251,7 @@ public final class MultistepTest {
       return client.files.delete(gotFile.name().get(), null);
     } finally {
       // Temp test artifact cleanup.
-      if (createdFile && filePath.endsWith("google.png")) {
+      if (createdFile) {
         Files.deleteIfExists(Paths.get(filePath));
       }
     }
@@ -347,16 +322,7 @@ public final class MultistepTest {
                   .build());
 
       // Upload Image
-      // Resolve path relative to google3
-      String google3Path = "";
-      String currentDir = System.getProperty("user.dir");
-      int lastIndex = currentDir.lastIndexOf("google3/");
-      if (lastIndex != -1) {
-        google3Path = currentDir.substring(0, lastIndex + "google3/".length());
-      }
-      String resolvedImagePath =
-          Paths.get(google3Path, "third_party/py/google/genai/tests/data/dog.jpg")
-              .toString();
+      String resolvedImagePath = "src/test/resources/logo.jpg";
 
       com.google.genai.types.UploadToFileSearchStoreOperation opImage =
           client.fileSearchStores.uploadToFileSearchStore(
