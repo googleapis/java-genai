@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.genai.JsonSerializable;
 
-/** Indicates the language of the audio should be automatically detected. */
+/** Deprecated: Language auto-detection is now the default when language_codes is omitted. */
 @AutoValue
 @JsonDeserialize(builder = LanguageAuto.Builder.class)
 public abstract class LanguageAuto extends JsonSerializable {
