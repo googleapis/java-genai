@@ -26,37 +26,37 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
-/** Configures automatic detection of activity. */
+/** Configures automatic detection of activity. This data type is not supported in Vertex AI. */
 @AutoValue
 @JsonDeserialize(builder = AutomaticActivityDetection.Builder.class)
 public abstract class AutomaticActivityDetection extends JsonSerializable {
   /**
-   * If enabled, detected voice and text input count as activity. If disabled, the client must send
-   * activity signals.
+   * Optional. If enabled (the default), detected voice and text input count as activity. If
+   * disabled, the client must send activity signals.
    */
   @JsonProperty("disabled")
   public abstract Optional<Boolean> disabled();
 
-  /** Determines how likely speech is to be detected. */
+  /** Optional. Determines how likely speech is to be detected. */
   @JsonProperty("startOfSpeechSensitivity")
   public abstract Optional<StartSensitivity> startOfSpeechSensitivity();
 
-  /** Determines how likely detected speech is ended. */
+  /** Optional. Determines how likely detected speech is ended. */
   @JsonProperty("endOfSpeechSensitivity")
   public abstract Optional<EndSensitivity> endOfSpeechSensitivity();
 
   /**
-   * The required duration of detected speech before start-of-speech is committed. The lower this
-   * value the more sensitive the start-of-speech detection is and the shorter speech can be
+   * Optional. The required duration of detected speech before start-of-speech is committed. The
+   * lower this value, the more sensitive the start-of-speech detection is and shorter speech can be
    * recognized. However, this also increases the probability of false positives.
    */
   @JsonProperty("prefixPaddingMs")
   public abstract Optional<Integer> prefixPaddingMs();
 
   /**
-   * The required duration of detected non-speech (e.g. silence) before end-of-speech is committed.
-   * The larger this value, the longer speech gaps can be without interrupting the user's activity
-   * but this will increase the model's latency.
+   * Optional. The required duration of detected non-speech (e.g. silence) before end-of-speech is
+   * committed. The larger this value, the longer speech gaps can be without interrupting the user's
+   * activity but this will increase the model's latency.
    */
   @JsonProperty("silenceDurationMs")
   public abstract Optional<Integer> silenceDurationMs();
@@ -82,8 +82,8 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for disabled.
      *
-     * <p>disabled: If enabled, detected voice and text input count as activity. If disabled, the
-     * client must send activity signals.
+     * <p>disabled: Optional. If enabled (the default), detected voice and text input count as
+     * activity. If disabled, the client must send activity signals.
      */
     @JsonProperty("disabled")
     public abstract Builder disabled(boolean disabled);
@@ -101,7 +101,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for startOfSpeechSensitivity.
      *
-     * <p>startOfSpeechSensitivity: Determines how likely speech is to be detected.
+     * <p>startOfSpeechSensitivity: Optional. Determines how likely speech is to be detected.
      */
     @JsonProperty("startOfSpeechSensitivity")
     public abstract Builder startOfSpeechSensitivity(StartSensitivity startOfSpeechSensitivity);
@@ -119,7 +119,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for startOfSpeechSensitivity given a known enum.
      *
-     * <p>startOfSpeechSensitivity: Determines how likely speech is to be detected.
+     * <p>startOfSpeechSensitivity: Optional. Determines how likely speech is to be detected.
      */
     @CanIgnoreReturnValue
     public Builder startOfSpeechSensitivity(StartSensitivity.Known knownType) {
@@ -129,7 +129,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for startOfSpeechSensitivity given a string.
      *
-     * <p>startOfSpeechSensitivity: Determines how likely speech is to be detected.
+     * <p>startOfSpeechSensitivity: Optional. Determines how likely speech is to be detected.
      */
     @CanIgnoreReturnValue
     public Builder startOfSpeechSensitivity(String startOfSpeechSensitivity) {
@@ -139,7 +139,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for endOfSpeechSensitivity.
      *
-     * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
+     * <p>endOfSpeechSensitivity: Optional. Determines how likely detected speech is ended.
      */
     @JsonProperty("endOfSpeechSensitivity")
     public abstract Builder endOfSpeechSensitivity(EndSensitivity endOfSpeechSensitivity);
@@ -157,7 +157,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for endOfSpeechSensitivity given a known enum.
      *
-     * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
+     * <p>endOfSpeechSensitivity: Optional. Determines how likely detected speech is ended.
      */
     @CanIgnoreReturnValue
     public Builder endOfSpeechSensitivity(EndSensitivity.Known knownType) {
@@ -167,7 +167,7 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for endOfSpeechSensitivity given a string.
      *
-     * <p>endOfSpeechSensitivity: Determines how likely detected speech is ended.
+     * <p>endOfSpeechSensitivity: Optional. Determines how likely detected speech is ended.
      */
     @CanIgnoreReturnValue
     public Builder endOfSpeechSensitivity(String endOfSpeechSensitivity) {
@@ -177,8 +177,8 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for prefixPaddingMs.
      *
-     * <p>prefixPaddingMs: The required duration of detected speech before start-of-speech is
-     * committed. The lower this value the more sensitive the start-of-speech detection is and the
+     * <p>prefixPaddingMs: Optional. The required duration of detected speech before start-of-speech
+     * is committed. The lower this value, the more sensitive the start-of-speech detection is and
      * shorter speech can be recognized. However, this also increases the probability of false
      * positives.
      */
@@ -198,9 +198,9 @@ public abstract class AutomaticActivityDetection extends JsonSerializable {
     /**
      * Setter for silenceDurationMs.
      *
-     * <p>silenceDurationMs: The required duration of detected non-speech (e.g. silence) before
-     * end-of-speech is committed. The larger this value, the longer speech gaps can be without
-     * interrupting the user's activity but this will increase the model's latency.
+     * <p>silenceDurationMs: Optional. The required duration of detected non-speech (e.g. silence)
+     * before end-of-speech is committed. The larger this value, the longer speech gaps can be
+     * without interrupting the user's activity but this will increase the model's latency.
      */
     @JsonProperty("silenceDurationMs")
     public abstract Builder silenceDurationMs(Integer silenceDurationMs);

@@ -27,25 +27,24 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Marks the end of user activity.
- *
- * <p>This can only be sent if automatic (i.e. server-side) activity detection is disabled.
+ * Configures the realtime input behavior in `BidiGenerateContent`. This data type is not supported
+ * in Vertex AI.
  */
 @AutoValue
 @JsonDeserialize(builder = RealtimeInputConfig.Builder.class)
 public abstract class RealtimeInputConfig extends JsonSerializable {
   /**
-   * If not set, automatic activity detection is enabled by default. If automatic voice detection is
-   * disabled, the client must send activity signals.
+   * Optional. If not set, automatic activity detection is enabled by default. If automatic voice
+   * detection is disabled, the client must send activity signals.
    */
   @JsonProperty("automaticActivityDetection")
   public abstract Optional<AutomaticActivityDetection> automaticActivityDetection();
 
-  /** Defines what effect activity has. */
+  /** Optional. Defines what effect activity has. */
   @JsonProperty("activityHandling")
   public abstract Optional<ActivityHandling> activityHandling();
 
-  /** Defines which input is included in the user's turn. */
+  /** Optional. Defines which input is included in the user's turn. */
   @JsonProperty("turnCoverage")
   public abstract Optional<TurnCoverage> turnCoverage();
 
@@ -70,8 +69,8 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for automaticActivityDetection.
      *
-     * <p>automaticActivityDetection: If not set, automatic activity detection is enabled by
-     * default. If automatic voice detection is disabled, the client must send activity signals.
+     * <p>automaticActivityDetection: Optional. If not set, automatic activity detection is enabled
+     * by default. If automatic voice detection is disabled, the client must send activity signals.
      */
     @JsonProperty("automaticActivityDetection")
     public abstract Builder automaticActivityDetection(
@@ -80,8 +79,8 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for automaticActivityDetection builder.
      *
-     * <p>automaticActivityDetection: If not set, automatic activity detection is enabled by
-     * default. If automatic voice detection is disabled, the client must send activity signals.
+     * <p>automaticActivityDetection: Optional. If not set, automatic activity detection is enabled
+     * by default. If automatic voice detection is disabled, the client must send activity signals.
      */
     @CanIgnoreReturnValue
     public Builder automaticActivityDetection(
@@ -103,7 +102,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for activityHandling.
      *
-     * <p>activityHandling: Defines what effect activity has.
+     * <p>activityHandling: Optional. Defines what effect activity has.
      */
     @JsonProperty("activityHandling")
     public abstract Builder activityHandling(ActivityHandling activityHandling);
@@ -121,7 +120,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for activityHandling given a known enum.
      *
-     * <p>activityHandling: Defines what effect activity has.
+     * <p>activityHandling: Optional. Defines what effect activity has.
      */
     @CanIgnoreReturnValue
     public Builder activityHandling(ActivityHandling.Known knownType) {
@@ -131,7 +130,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for activityHandling given a string.
      *
-     * <p>activityHandling: Defines what effect activity has.
+     * <p>activityHandling: Optional. Defines what effect activity has.
      */
     @CanIgnoreReturnValue
     public Builder activityHandling(String activityHandling) {
@@ -141,7 +140,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for turnCoverage.
      *
-     * <p>turnCoverage: Defines which input is included in the user's turn.
+     * <p>turnCoverage: Optional. Defines which input is included in the user's turn.
      */
     @JsonProperty("turnCoverage")
     public abstract Builder turnCoverage(TurnCoverage turnCoverage);
@@ -159,7 +158,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for turnCoverage given a known enum.
      *
-     * <p>turnCoverage: Defines which input is included in the user's turn.
+     * <p>turnCoverage: Optional. Defines which input is included in the user's turn.
      */
     @CanIgnoreReturnValue
     public Builder turnCoverage(TurnCoverage.Known knownType) {
@@ -169,7 +168,7 @@ public abstract class RealtimeInputConfig extends JsonSerializable {
     /**
      * Setter for turnCoverage given a string.
      *
-     * <p>turnCoverage: Defines which input is included in the user's turn.
+     * <p>turnCoverage: Optional. Defines which input is included in the user's turn.
      */
     @CanIgnoreReturnValue
     public Builder turnCoverage(String turnCoverage) {

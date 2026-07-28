@@ -27,19 +27,18 @@ import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
 /**
- * Context window will be truncated by keeping only suffix of it.
- *
- * <p>Context window will always be cut at start of USER role turn. System instructions and
- * `BidiGenerateContentSetup.prefix_turns` will not be subject to the sliding window mechanism, they
- * will always stay at the beginning of context window.
+ * The SlidingWindow method operates by discarding content at the beginning of the context window.
+ * The resulting context will always begin at the start of a USER role turn. System instructions and
+ * any `BidiGenerateContentSetup.prefix_turns` will always remain at the beginning of the result.
+ * This data type is not supported in Vertex AI.
  */
 @AutoValue
 @JsonDeserialize(builder = SlidingWindow.Builder.class)
 public abstract class SlidingWindow extends JsonSerializable {
   /**
-   * Session reduction target -- how many tokens we should keep. Window shortening operation has
-   * some latency costs, so we should avoid running it on every turn. Should be &lt; trigger_tokens.
-   * If not set, trigger_tokens/2 is assumed.
+   * The target number of tokens to keep. The default value is trigger_tokens/2. Discarding parts of
+   * the context window causes a temporary latency increase so this value should be calibrated to
+   * avoid frequent compression operations.
    */
   @JsonProperty("targetTokens")
   public abstract Optional<Long> targetTokens();
@@ -65,9 +64,9 @@ public abstract class SlidingWindow extends JsonSerializable {
     /**
      * Setter for targetTokens.
      *
-     * <p>targetTokens: Session reduction target -- how many tokens we should keep. Window
-     * shortening operation has some latency costs, so we should avoid running it on every turn.
-     * Should be &lt; trigger_tokens. If not set, trigger_tokens/2 is assumed.
+     * <p>targetTokens: The target number of tokens to keep. The default value is trigger_tokens/2.
+     * Discarding parts of the context window causes a temporary latency increase so this value
+     * should be calibrated to avoid frequent compression operations.
      */
     @JsonProperty("targetTokens")
     public abstract Builder targetTokens(Long targetTokens);
