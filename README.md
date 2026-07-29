@@ -7,11 +7,20 @@ Java idiomatic SDK for the
 [![Javadoc][javadoc-image]][javadoc-link]
 
 > [!WARNING]
-> **Upcoming Breaking Change to Automatic Function Calling (AFC):**
-> We will introduce a breaking change to the Automatic Function Calling (AFC)
-> feature in the next major version. Specifically, users will not be able to
+> **Updates to Automatic Function Calling (AFC) in upcoming SDK version:**
+> We are changing AFC behavior in the next major version.
+> Specifically, users will not be able to
 > invoke AFC from direct calls to `Models.generate_content` or its stream and
 > async variants. Instead, users should invoke AFC from `Chats` modules.
+>
+> | Methods/fields to be removed | migration guide |
+> | --- | --- |
+> | `prompt`/`text`/`image` arguments in `Models.generate_videos` (and async variants) | Use `source` argument instead |
+>
+> **Upcoming Change to Java 17 Support:**
+> Starting from SDK version 2.0.0, Java version 17 or later is required.
+>
+> To avoid unexpected updates, pin the SDK version to `< 2.0.0`.
 
 ## Add dependency
 
@@ -23,7 +32,7 @@ If you're using Maven, add the following to your dependencies:
   <dependency>
     <groupId>com.google.genai</groupId>
     <artifactId>google-genai</artifactId>
-    <version>1.64.0</version>
+    <version>1.63.0</version>
   </dependency>
 </dependencies>
 ```

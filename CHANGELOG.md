@@ -1,14 +1,5 @@
 # Changelog
 
-## [1.64.0](https://github.com/googleapis/java-genai/compare/v1.63.0...v1.64.0) (2026-07-29)
-
-
-### Features
-
-* [GenerateContentConfig] Add GenerationConfig.audio_transcription_config and Part.audio_transcription. ([19c39fc](https://github.com/googleapis/java-genai/commit/19c39fc2f01ecca870e7ddc0940c6fc8ce2cbabd))
-* Add flat `language_codes` field to `AudioTranscriptionConfig`. ([b0712f6](https://github.com/googleapis/java-genai/commit/b0712f63d8d91427e5c92c50162265757bff4b33))
-* Allow api key + proj/location for enterprise mode ([f7b6408](https://github.com/googleapis/java-genai/commit/f7b6408fdf606ecc8464bcff04d18f6b0e419662))
-
 ## [1.63.0](https://github.com/googleapis/java-genai/compare/v1.62.0...v1.63.0) (2026-07-22)
 
 
