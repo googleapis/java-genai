@@ -16,7 +16,6 @@
 
 package com.google.genai;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -29,18 +28,17 @@ import com.google.genai.types.LiveServerSetupComplete;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okio.ByteString;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -73,15 +71,19 @@ public class AsyncLive {
     }
     CompletableFuture<AsyncSession> future = new CompletableFuture<>();
 
-    GenAiWebSocketClient websocket =
+    GenAiWebSocketClient listener =
         new GenAiWebSocketClient(
-            getWebSocketUri(),
-            getWebSocketHeaders(),
             getSetupRequest(model, config),
             future,
             apiClient);
 
-    websocket.connect();
+    Request.Builder requestBuilder = new Request.Builder()
+        .url(getWebSocketUri().toString());
+    getWebSocketHeaders().forEach(requestBuilder::addHeader);
+    Request request = requestBuilder.build();
+
+    WebSocket webSocket = apiClient.httpClient().newWebSocket(request, listener);
+    listener.setWebSocket(webSocket);
 
     return future;
   }
@@ -212,61 +214,76 @@ public class AsyncLive {
     return JsonSerializable.toJsonString(body);
   }
 
-  static class GenAiWebSocketClient extends WebSocketClient {
+  static class GenAiWebSocketClient extends WebSocketListener {
     private final String setupRequest;
     private final CompletableFuture<AsyncSession> sessionFuture;
     private final ApiClient apiClient;
     private Consumer<LiveServerMessage> messageCallback;
+    private @Nullable WebSocket webSocket;
 
     public GenAiWebSocketClient(
-        URI uri,
-        Map<String, String> headers,
         String setupRequest,
         CompletableFuture<AsyncSession> sessionFuture,
         ApiClient apiClient) {
-      super(uri, headers);
       this.setupRequest = setupRequest;
       this.sessionFuture = sessionFuture;
       this.messageCallback = null;
       this.apiClient = apiClient;
     }
 
+    public void setWebSocket(WebSocket webSocket) {
+      this.webSocket = webSocket;
+    }
+
     public void setMessageCallback(Consumer<LiveServerMessage> messageCallback) {
       this.messageCallback = messageCallback;
     }
 
-    @Override
-    public void onOpen(ServerHandshake handshake) {
-      send(setupRequest);
+    public void send(String text) {
+      if (webSocket == null) {
+        throw new IllegalStateException("WebSocket is not connected.");
+      }
+      if (!webSocket.send(text)) {
+        throw new IllegalStateException("Failed to send message: WebSocket is closed or queue is full.");
+      }
     }
 
-    @Override
-    public void onMessage(String message) {
-      handleIncomingMessage(message);
-    }
-
-    @Override
-    public void onMessage(ByteBuffer message) {
-      try {
-        CharsetDecoder decoder = UTF_8.newDecoder();
-        CharBuffer charBuffer = decoder.decode(message);
-        handleIncomingMessage(charBuffer.toString());
-
-      } catch (CharacterCodingException e) {
-        throw new IllegalStateException("Invalid UTF-8 message received from the live session.", e);
+    public void close() {
+      if (webSocket != null) {
+        webSocket.close(1000, "Client closed connection");
       }
     }
 
     @Override
-    public void onError(Exception ex) {
-      logger.log(Level.SEVERE, "Error during live session", ex);
+    public void onOpen(WebSocket webSocket, Response response) {
+      webSocket.send(setupRequest);
+    }
+
+    @Override
+    public void onMessage(WebSocket webSocket, String text) {
+      handleIncomingMessage(text);
+    }
+
+    @Override
+    public void onMessage(WebSocket webSocket, ByteString bytes) {
+      handleIncomingMessage(bytes.utf8());
+    }
+
+    @Override
+    public void onClosing(WebSocket webSocket, int code, String reason) {
+      webSocket.close(1000, null);
+      logger.log(
+          Level.INFO,
+          "Live session closing with code: {0} and reason: {1}",
+          new Object[] {code, reason});
       if (!sessionFuture.isDone()) {
-        sessionFuture.completeExceptionally(ex);
+        sessionFuture.completeExceptionally(
+            new GenAiIOException("WebSocket closed unexpectedly: " + reason));
       }
     }
 
     @Override
-    public void onClose(int code, String reason, boolean remote) {
+    public void onClosed(WebSocket webSocket, int code, String reason) {
       logger.log(
           Level.INFO,
           "Live session closed with code: {0} and reason: {1}",
@@ -274,6 +291,14 @@ public class AsyncLive {
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(
             new GenAiIOException("WebSocket closed unexpectedly: " + reason));
+      }
+    }
+
+    @Override
+    public void onFailure(WebSocket webSocket, Throwable t, @Nullable Response response) {
+      logger.log(Level.SEVERE, "Error during live session", t);
+      if (!sessionFuture.isDone()) {
+        sessionFuture.completeExceptionally(t);
       }
     }
 
