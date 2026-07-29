@@ -3654,6 +3654,12 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"enableWidget"}));
     }
 
+    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"groundingTypes"}))) {
+      throw new IllegalArgumentException(
+          "groundingTypes parameter is only supported in Gemini Enterprise Agent Platform mode, not"
+              + " in Gemini Developer API mode.");
+    }
+
     return toObject;
   }
 

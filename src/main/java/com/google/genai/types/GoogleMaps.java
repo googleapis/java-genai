@@ -45,6 +45,13 @@ public abstract class GoogleMaps extends JsonSerializable {
   @JsonProperty("enableWidget")
   public abstract Optional<Boolean> enableWidget();
 
+  /**
+   * Optional. Specifies the types of Google Maps grounding to enable. This field is not supported
+   * in Gemini API.
+   */
+  @JsonProperty("groundingTypes")
+  public abstract Optional<GoogleMapsGroundingTypes> groundingTypes();
+
   /** Instantiates a builder for GoogleMaps. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -112,6 +119,36 @@ public abstract class GoogleMaps extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEnableWidget() {
       return enableWidget(Optional.empty());
+    }
+
+    /**
+     * Setter for groundingTypes.
+     *
+     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. This
+     * field is not supported in Gemini API.
+     */
+    @JsonProperty("groundingTypes")
+    public abstract Builder groundingTypes(GoogleMapsGroundingTypes groundingTypes);
+
+    /**
+     * Setter for groundingTypes builder.
+     *
+     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. This
+     * field is not supported in Gemini API.
+     */
+    @CanIgnoreReturnValue
+    public Builder groundingTypes(GoogleMapsGroundingTypes.Builder groundingTypesBuilder) {
+      return groundingTypes(groundingTypesBuilder.build());
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder groundingTypes(Optional<GoogleMapsGroundingTypes> groundingTypes);
+
+    /** Clears the value of groundingTypes field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearGroundingTypes() {
+      return groundingTypes(Optional.empty());
     }
 
     public abstract GoogleMaps build();
