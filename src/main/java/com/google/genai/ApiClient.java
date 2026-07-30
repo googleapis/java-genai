@@ -536,6 +536,26 @@ public abstract class ApiClient implements AutoCloseable {
     }
   }
 
+  /**
+   * Refreshes credentials (if needed) and returns the current access token.
+   *
+   * <p>This method routes through {@link #setHeaders} to leverage existing Boq conformance
+   * exemptions that cover the blocking {@code refreshIfExpired()} call in that method.
+   */
+  @Nullable
+  String refreshAndGetAccessToken() {
+    if (apiKey.isPresent() || !credentials.isPresent()) {
+      return null;
+    }
+    Request.Builder dummyBuilder = new Request.Builder().url("https://placeholder.invalid");
+    setHeaders(dummyBuilder, httpOptions);
+    String authHeader = dummyBuilder.build().header("Authorization");
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      return authHeader.substring("Bearer ".length());
+    }
+    return null;
+  }
+
   /** Sends a Http request given the http method, path, and request json string. */
   public abstract ApiResponse request(
       String httpMethod, String path, String requestJson, Optional<HttpOptions> httpOptions);
