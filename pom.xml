@@ -52,7 +52,6 @@
     <auto-value.version>1.11.0</auto-value.version>
     <jackson.version>2.17.2</jackson.version>
     <junit.version>5.11.4</junit.version>
-    <java-websocket.version>1.6.0</java-websocket.version>
     <okhttp.version>4.12.0</okhttp.version>
     <main.java.src.dir>src/main/java</main.java.src.dir>
     <test.java.src.dir>src/test/java</test.java.src.dir>
@@ -111,11 +110,6 @@
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>${jackson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.java-websocket</groupId>
-      <artifactId>Java-WebSocket</artifactId>
-      <version>${java-websocket.version}</version>
     </dependency>
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>

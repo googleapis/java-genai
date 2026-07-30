@@ -16,8 +16,6 @@
 
 package com.google.genai;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -29,18 +27,17 @@ import com.google.genai.types.LiveServerSetupComplete;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okio.ByteString;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -212,11 +209,14 @@ public class AsyncLive {
     return JsonSerializable.toJsonString(body);
   }
 
-  static class GenAiWebSocketClient extends WebSocketClient {
+  static class GenAiWebSocketClient extends WebSocketListener {
+    private final URI uri;
+    private final Map<String, String> headers;
     private final String setupRequest;
     private final CompletableFuture<AsyncSession> sessionFuture;
     private final ApiClient apiClient;
     private Consumer<LiveServerMessage> messageCallback;
+    private WebSocket webSocket;
 
     public GenAiWebSocketClient(
         URI uri,
@@ -224,11 +224,35 @@ public class AsyncLive {
         String setupRequest,
         CompletableFuture<AsyncSession> sessionFuture,
         ApiClient apiClient) {
-      super(uri, headers);
+      this.uri = uri;
+      this.headers = headers;
       this.setupRequest = setupRequest;
       this.sessionFuture = sessionFuture;
       this.messageCallback = null;
       this.apiClient = apiClient;
+    }
+
+    public void connect() {
+      Request.Builder requestBuilder = new Request.Builder().url(uri.toString());
+      if (headers != null) {
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+          requestBuilder.addHeader(header.getKey(), header.getValue());
+        }
+      }
+      Request request = requestBuilder.build();
+      this.webSocket = apiClient.httpClient().newWebSocket(request, this);
+    }
+
+    public void send(String text) {
+      if (webSocket != null) {
+        webSocket.send(text);
+      }
+    }
+
+    public void close() {
+      if (webSocket != null) {
+        webSocket.close(1000, "Client closing");
+      }
     }
 
     public void setMessageCallback(Consumer<LiveServerMessage> messageCallback) {
@@ -236,37 +260,35 @@ public class AsyncLive {
     }
 
     @Override
-    public void onOpen(ServerHandshake handshake) {
-      send(setupRequest);
+    public void onOpen(WebSocket webSocket, Response response) {
+      this.webSocket = webSocket;
+      webSocket.send(setupRequest);
     }
 
     @Override
-    public void onMessage(String message) {
-      handleIncomingMessage(message);
+    public void onMessage(WebSocket webSocket, String text) {
+      handleIncomingMessage(text);
     }
 
     @Override
-    public void onMessage(ByteBuffer message) {
-      try {
-        CharsetDecoder decoder = UTF_8.newDecoder();
-        CharBuffer charBuffer = decoder.decode(message);
-        handleIncomingMessage(charBuffer.toString());
+    public void onMessage(WebSocket webSocket, ByteString bytes) {
+      handleIncomingMessage(bytes.utf8());
+    }
 
-      } catch (CharacterCodingException e) {
-        throw new IllegalStateException("Invalid UTF-8 message received from the live session.", e);
-      }
+    public void onMessage(String text) {
+      handleIncomingMessage(text);
     }
 
     @Override
-    public void onError(Exception ex) {
-      logger.log(Level.SEVERE, "Error during live session", ex);
-      if (!sessionFuture.isDone()) {
-        sessionFuture.completeExceptionally(ex);
-      }
+    public void onClosing(WebSocket webSocket, int code, String reason) {
+      logger.log(
+          Level.INFO,
+          "Live session closing with code: {0} and reason: {1}",
+          new Object[] {code, reason});
     }
 
     @Override
-    public void onClose(int code, String reason, boolean remote) {
+    public void onClosed(WebSocket webSocket, int code, String reason) {
       logger.log(
           Level.INFO,
           "Live session closed with code: {0} and reason: {1}",
@@ -274,6 +296,14 @@ public class AsyncLive {
       if (!sessionFuture.isDone()) {
         sessionFuture.completeExceptionally(
             new GenAiIOException("WebSocket closed unexpectedly: " + reason));
+      }
+    }
+
+    @Override
+    public void onFailure(WebSocket webSocket, Throwable t, @Nullable Response response) {
+      logger.log(Level.SEVERE, "Error during live session", t);
+      if (!sessionFuture.isDone()) {
+        sessionFuture.completeExceptionally(t);
       }
     }
 
