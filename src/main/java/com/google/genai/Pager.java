@@ -33,7 +33,7 @@ public class Pager<T extends JsonSerializable> extends BasePager<T> implements I
   /** Constructs a Pager. */
   Pager(
       PagedItem pagedItem,
-      Function<JsonSerializable, Object> request,
+      Function<Object, Object> request,
       ObjectNode requestConfig,
       JsonNode response) {
     super(pagedItem, requestConfig);
@@ -83,10 +83,10 @@ public class Pager<T extends JsonSerializable> extends BasePager<T> implements I
 
   /** Iterator for the Pager. */
   private class PagerIterator implements Iterator<T> {
-    private final Function<JsonSerializable, Object> request;
+    private final Function<Object, Object> request;
     private int currentIndex;
 
-    PagerIterator(Function<JsonSerializable, Object> request) {
+    PagerIterator(Function<Object, Object> request) {
       this.request = request;
       this.currentIndex = 0;
     }
@@ -98,9 +98,8 @@ public class Pager<T extends JsonSerializable> extends BasePager<T> implements I
 
       try {
         initNewPage(
-            JsonSerializable.toJsonNode(
-                request.apply(
-                    JsonSerializable.fromJsonNode(requestConfig, pagedItem.requestConfigClass()))));
+            Common.toJsonNode(
+                request.apply(Common.fromJsonNode(requestConfig, pagedItem.requestConfigClass()))));
         this.currentIndex = 0;
       } catch (Exception e) {
         throw new GenAiIOException("Failed to fetch the next page. " + e.getMessage());

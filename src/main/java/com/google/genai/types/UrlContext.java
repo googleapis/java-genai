@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /** Tool to support URL context. */
@@ -51,6 +52,6 @@ public abstract class UrlContext extends JsonSerializable {
   /** Deserializes a JSON string to a UrlContext object. */
   @ExcludeFromGeneratedCoverageReport
   public static UrlContext fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, UrlContext.class);
+    return Common.fromJsonString(jsonString, UrlContext.class);
   }
 }

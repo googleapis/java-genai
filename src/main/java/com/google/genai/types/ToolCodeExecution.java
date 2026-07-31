@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /**
@@ -55,6 +56,6 @@ public abstract class ToolCodeExecution extends JsonSerializable {
   /** Deserializes a JSON string to a ToolCodeExecution object. */
   @ExcludeFromGeneratedCoverageReport
   public static ToolCodeExecution fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ToolCodeExecution.class);
+    return Common.fromJsonString(jsonString, ToolCodeExecution.class);
   }
 }

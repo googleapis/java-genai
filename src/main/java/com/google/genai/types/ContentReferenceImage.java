@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -136,7 +137,7 @@ public abstract class ContentReferenceImage extends JsonSerializable implements 
   /** Deserializes a JSON string to a ContentReferenceImage object. */
   @ExcludeFromGeneratedCoverageReport
   public static ContentReferenceImage fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ContentReferenceImage.class);
+    return Common.fromJsonString(jsonString, ContentReferenceImage.class);
   }
 
   @Override

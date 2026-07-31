@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -256,6 +257,6 @@ public abstract class ComputerUse extends JsonSerializable {
   /** Deserializes a JSON string to a ComputerUse object. */
   @ExcludeFromGeneratedCoverageReport
   public static ComputerUse fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ComputerUse.class);
+    return Common.fromJsonString(jsonString, ComputerUse.class);
   }
 }

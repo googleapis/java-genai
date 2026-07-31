@@ -29,13 +29,13 @@ import java.util.function.Function;
 /** AsyncPager class for handling paginated results asynchronously. */
 public class AsyncPager<T extends JsonSerializable> extends BasePager<T> {
 
-  private final Function<JsonSerializable, CompletableFuture<JsonNode>> asyncRequest;
+  private final Function<Object, CompletableFuture<JsonNode>> asyncRequest;
   private final CompletableFuture<Void> initializationFuture;
 
   /** Constructs an AsyncPager. */
   AsyncPager(
       BasePager.PagedItem pagedItem,
-      Function<JsonSerializable, CompletableFuture<JsonNode>> asyncRequest,
+      Function<Object, CompletableFuture<JsonNode>> asyncRequest,
       ObjectNode requestConfig,
       CompletableFuture<JsonNode> responseFuture) {
     super(pagedItem, requestConfig);
@@ -67,9 +67,7 @@ public class AsyncPager<T extends JsonSerializable> extends BasePager<T> {
               }
               try {
                 return asyncRequest
-                    .apply(
-                        JsonSerializable.fromJsonNode(
-                            requestConfig, pagedItem.requestConfigClass()))
+                    .apply(Common.fromJsonNode(requestConfig, pagedItem.requestConfigClass()))
                     .thenApply(
                         response -> {
                           initNewPage((JsonNode) response);

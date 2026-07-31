@@ -69,7 +69,7 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileSearchStoreConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -92,13 +92,12 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileSearchStoreParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createFileSearchStoreConfigToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -107,7 +106,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"force"}) != null) {
       Common.setValueByPath(
@@ -121,7 +120,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -132,8 +131,7 @@ public final class FileSearchStores {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           deleteFileSearchStoreConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -142,7 +140,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getFileSearchStoreParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -155,7 +153,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"customMetadata"}) != null) {
       Common.setValueByPath(
@@ -176,7 +174,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -210,8 +208,7 @@ public final class FileSearchStores {
           toObject,
           new String[] {"response"},
           importFileResponseFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"response"})),
               toObject));
     }
 
@@ -220,7 +217,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fileSearchStoreName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -238,8 +235,7 @@ public final class FileSearchStores {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           importFileConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -248,7 +244,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode importFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -275,7 +271,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -296,12 +292,11 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listFileSearchStoresConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -310,7 +305,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFileSearchStoresResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -337,7 +332,7 @@ public final class FileSearchStores {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
@@ -373,7 +368,7 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fileSearchStoreName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -384,8 +379,7 @@ public final class FileSearchStores {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           uploadToFileSearchStoreConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -395,7 +389,7 @@ public final class FileSearchStores {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode uploadToFileSearchStoreResumableResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -415,7 +409,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -445,7 +439,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -459,7 +453,7 @@ public final class FileSearchStores {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -467,7 +461,7 @@ public final class FileSearchStores {
               + " Agent Platform mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, FileSearchStore.class);
+    return Common.fromJsonNode(responseNode, FileSearchStore.class);
   }
 
   public FileSearchStore create(CreateFileSearchStoreConfig config) {
@@ -491,7 +485,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -521,7 +515,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -534,7 +528,7 @@ public final class FileSearchStores {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -542,7 +536,7 @@ public final class FileSearchStores {
               + " Agent Platform mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, FileSearchStore.class);
+    return Common.fromJsonNode(responseNode, FileSearchStore.class);
   }
 
   public FileSearchStore get(String name, GetFileSearchStoreConfig config) {
@@ -567,7 +561,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -597,7 +591,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   public void delete(String name, DeleteFileSearchStoreConfig config) {
@@ -619,7 +613,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -649,7 +643,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -663,7 +657,7 @@ public final class FileSearchStores {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -675,7 +669,7 @@ public final class FileSearchStores {
       responseNode = listFileSearchStoresResponseFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, ListFileSearchStoresResponse.class);
+    return Common.fromJsonNode(responseNode, ListFileSearchStoresResponse.class);
   }
 
   ListFileSearchStoresResponse privateList(ListFileSearchStoresConfig config) {
@@ -701,7 +695,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -733,7 +727,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -763,7 +757,7 @@ public final class FileSearchStores {
           .build();
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -775,8 +769,7 @@ public final class FileSearchStores {
       responseNode = uploadToFileSearchStoreResumableResponseFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(
-        responseNode, UploadToFileSearchStoreResumableResponse.class);
+    return Common.fromJsonNode(responseNode, UploadToFileSearchStoreResumableResponse.class);
   }
 
   UploadToFileSearchStoreResumableResponse privateUploadToFileSearchStore(
@@ -806,7 +799,7 @@ public final class FileSearchStores {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -836,7 +829,7 @@ public final class FileSearchStores {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -849,7 +842,7 @@ public final class FileSearchStores {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -861,7 +854,7 @@ public final class FileSearchStores {
       responseNode = importFileOperationFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, ImportFileOperation.class);
+    return Common.fromJsonNode(responseNode, ImportFileOperation.class);
   }
 
   public ImportFileOperation importFile(
@@ -887,7 +880,7 @@ public final class FileSearchStores {
     if (config == null) {
       config = ListFileSearchStoresConfig.builder().build();
     }
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListFileSearchStoresConfig)) {
             throw new GenAiIOException(
@@ -899,8 +892,8 @@ public final class FileSearchStores {
     return new Pager<>(
         Pager.PagedItem.FILE_SEARCH_STORES,
         request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
+        (ObjectNode) Common.toJsonNode(config),
+        Common.toJsonNode(privateList(config)));
   }
 
   static UploadToFileSearchStoreOperation operationFromResponse(ResponseBody responseBody) {

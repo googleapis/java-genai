@@ -78,7 +78,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"file"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -91,7 +91,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -104,7 +104,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -117,7 +117,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteFileResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -130,7 +130,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getFileParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -143,7 +143,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode internalRegisterFilesParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uris"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -156,7 +156,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -177,12 +177,11 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listFilesConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -191,7 +190,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listFilesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -218,7 +217,7 @@ public final class Files {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode registerFilesResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -244,7 +243,7 @@ public final class Files {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -274,7 +273,7 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -287,7 +286,7 @@ public final class Files {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -299,8 +298,7 @@ public final class Files {
       responseNode = listFilesResponseFromMldev(responseNode, null);
     }
 
-    ListFilesResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, ListFilesResponse.class);
+    ListFilesResponse sdkResponse = Common.fromJsonNode(responseNode, ListFilesResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -333,7 +331,7 @@ public final class Files {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -363,7 +361,7 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -393,7 +391,7 @@ public final class Files {
           .build();
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -405,7 +403,7 @@ public final class Files {
       responseNode = createFileResponseFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, CreateFileResponse.class);
+    return Common.fromJsonNode(responseNode, CreateFileResponse.class);
   }
 
   CreateFileResponse privateCreate(File file, CreateFileConfig config) {
@@ -429,7 +427,7 @@ public final class Files {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -459,7 +457,7 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -472,7 +470,7 @@ public final class Files {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -480,7 +478,7 @@ public final class Files {
               + " Agent Platform mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, File.class);
+    return Common.fromJsonNode(responseNode, File.class);
   }
 
   /**
@@ -511,7 +509,7 @@ public final class Files {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -541,7 +539,7 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -554,7 +552,7 @@ public final class Files {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -566,8 +564,7 @@ public final class Files {
       responseNode = deleteFileResponseFromMldev(responseNode, null);
     }
 
-    DeleteFileResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, DeleteFileResponse.class);
+    DeleteFileResponse sdkResponse = Common.fromJsonNode(responseNode, DeleteFileResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -608,7 +605,7 @@ public final class Files {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -638,7 +635,7 @@ public final class Files {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -668,7 +665,7 @@ public final class Files {
           .build();
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -680,7 +677,7 @@ public final class Files {
       responseNode = registerFilesResponseFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, RegisterFilesResponse.class);
+    return Common.fromJsonNode(responseNode, RegisterFilesResponse.class);
   }
 
   RegisterFilesResponse privateRegisterFiles(List<String> uris, RegisterFilesConfig config) {
@@ -705,7 +702,7 @@ public final class Files {
     if (config == null) {
       config = ListFilesConfig.builder().build();
     }
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListFilesConfig)) {
             throw new GenAiIOException(
@@ -717,8 +714,8 @@ public final class Files {
     return new Pager<>(
         Pager.PagedItem.FILES,
         request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
+        (ObjectNode) Common.toJsonNode(config),
+        Common.toJsonNode(privateList(config)));
   }
 
   /**

@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -178,7 +179,7 @@ public abstract class GenerateImagesResponse extends JsonSerializable {
   /** Deserializes a JSON string to a GenerateImagesResponse object. */
   @ExcludeFromGeneratedCoverageReport
   public static GenerateImagesResponse fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateImagesResponse.class);
+    return Common.fromJsonString(jsonString, GenerateImagesResponse.class);
   }
 
   /**

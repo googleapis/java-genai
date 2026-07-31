@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -110,6 +111,6 @@ public abstract class UpdateModelParameters extends JsonSerializable {
   /** Deserializes a JSON string to a UpdateModelParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static UpdateModelParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, UpdateModelParameters.class);
+    return Common.fromJsonString(jsonString, UpdateModelParameters.class);
   }
 }

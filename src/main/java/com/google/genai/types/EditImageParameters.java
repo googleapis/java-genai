@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -166,6 +167,6 @@ public abstract class EditImageParameters extends JsonSerializable {
   /** Deserializes a JSON string to a EditImageParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static EditImageParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, EditImageParameters.class);
+    return Common.fromJsonString(jsonString, EditImageParameters.class);
   }
 }

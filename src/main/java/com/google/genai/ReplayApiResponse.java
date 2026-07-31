@@ -53,7 +53,7 @@ public final class ReplayApiResponse extends ApiResponse {
         byte[] doubleNewline = "\n\n".getBytes(StandardCharsets.UTF_8);
         for (JsonNode segment : bodySegments) {
           outputStream.write(dataPrefix);
-          outputStream.write(JsonSerializable.objectMapper.writeValueAsBytes(segment));
+          outputStream.write(Common.objectMapper.writeValueAsBytes(segment));
           outputStream.write(doubleNewline);
         }
         this.body =
@@ -65,8 +65,7 @@ public final class ReplayApiResponse extends ApiResponse {
       // For unary response
       this.body =
           ResponseBody.create(
-              JsonSerializable.toJsonString(bodySegments.get(0)),
-              MediaType.parse("application/json"));
+              Common.toJsonString(bodySegments.get(0)), MediaType.parse("application/json"));
     }
   }
 

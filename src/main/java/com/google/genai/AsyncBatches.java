@@ -167,7 +167,7 @@ public final class AsyncBatches {
       config = ListBatchJobsConfig.builder().build();
     }
     ListBatchJobsConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListBatchJobsConfig)) {
             throw new GenAiIOException(
@@ -175,14 +175,14 @@ public final class AsyncBatches {
                     + requestConfig.getClass().getName());
           }
           return this.privateList((ListBatchJobsConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+              .thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<BatchJob>(
                 Pager.PagedItem.BATCH_JOBS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 

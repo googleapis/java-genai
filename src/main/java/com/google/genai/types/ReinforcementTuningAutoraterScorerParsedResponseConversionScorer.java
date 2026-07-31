@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /**
@@ -68,7 +69,7 @@ public abstract class ReinforcementTuningAutoraterScorerParsedResponseConversion
   @ExcludeFromGeneratedCoverageReport
   public static ReinforcementTuningAutoraterScorerParsedResponseConversionScorer fromJson(
       String jsonString) {
-    return JsonSerializable.fromJsonString(
+    return Common.fromJsonString(
         jsonString, ReinforcementTuningAutoraterScorerParsedResponseConversionScorer.class);
   }
 }

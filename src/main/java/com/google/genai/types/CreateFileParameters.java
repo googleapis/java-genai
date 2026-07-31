@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -128,6 +129,6 @@ public abstract class CreateFileParameters extends JsonSerializable {
   /** Deserializes a JSON string to a CreateFileParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static CreateFileParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, CreateFileParameters.class);
+    return Common.fromJsonString(jsonString, CreateFileParameters.class);
   }
 }

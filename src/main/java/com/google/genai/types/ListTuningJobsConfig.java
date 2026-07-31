@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -152,6 +153,6 @@ public abstract class ListTuningJobsConfig extends JsonSerializable {
   /** Deserializes a JSON string to a ListTuningJobsConfig object. */
   @ExcludeFromGeneratedCoverageReport
   public static ListTuningJobsConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ListTuningJobsConfig.class);
+    return Common.fromJsonString(jsonString, ListTuningJobsConfig.class);
   }
 }

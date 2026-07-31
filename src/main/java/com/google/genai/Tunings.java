@@ -60,7 +60,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -74,7 +74,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -88,7 +88,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -102,7 +102,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelTuningJobResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -116,7 +116,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"validationDataset"}))) {
       throw new IllegalArgumentException(
@@ -301,7 +301,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     JsonNode discriminatorValidationDataset =
         (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
@@ -315,7 +315,7 @@ public final class Tunings {
             parentObject,
             new String[] {"supervisedTuningSpec"},
             tuningValidationDatasetToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
                 toObject,
                 rootObject));
@@ -326,7 +326,7 @@ public final class Tunings {
             parentObject,
             new String[] {"preferenceOptimizationSpec"},
             tuningValidationDatasetToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
                 toObject,
                 rootObject));
@@ -337,7 +337,7 @@ public final class Tunings {
             parentObject,
             new String[] {"distillationSpec"},
             tuningValidationDatasetToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
                 toObject,
                 rootObject));
@@ -348,7 +348,7 @@ public final class Tunings {
             parentObject,
             new String[] {"reinforcementTuningSpec"},
             tuningValidationDatasetToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"validationDataset"})),
                 toObject,
                 rootObject));
@@ -596,7 +596,7 @@ public final class Tunings {
             parentObject,
             new String[] {"supervisedTuningSpec", "evaluationConfig"},
             evaluationConfigToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"evaluationConfig"})),
                 toObject,
                 rootObject));
@@ -607,7 +607,7 @@ public final class Tunings {
             parentObject,
             new String[] {"preferenceOptimizationSpec", "evaluationConfig"},
             evaluationConfigToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"evaluationConfig"})),
                 toObject,
                 rootObject));
@@ -618,7 +618,7 @@ public final class Tunings {
             parentObject,
             new String[] {"distillationSpec", "evaluationConfig"},
             evaluationConfigToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Common.getValueByPath(fromObject, new String[] {"evaluationConfig"})),
                 toObject,
                 rootObject));
@@ -735,7 +735,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -753,7 +753,7 @@ public final class Tunings {
     if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
       JsonNode unused =
           tuningDatasetToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
               toObject,
               rootObject);
@@ -762,8 +762,7 @@ public final class Tunings {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createTuningJobConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -774,7 +773,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createTuningJobParametersPrivateToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -792,7 +791,7 @@ public final class Tunings {
     if (Common.getValueByPath(fromObject, new String[] {"trainingDataset"}) != null) {
       JsonNode unused =
           tuningDatasetToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"trainingDataset"})),
               toObject,
               rootObject);
@@ -801,8 +800,7 @@ public final class Tunings {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createTuningJobConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -813,7 +811,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode distillationHyperParametersFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"adapterSize"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -840,7 +838,7 @@ public final class Tunings {
           toObject,
           new String[] {"generationConfig"},
           generationConfigFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"generationConfig"})),
               toObject,
               rootObject));
@@ -866,7 +864,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode distillationSamplingSpecFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"baseTeacherModel"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -900,7 +898,7 @@ public final class Tunings {
           toObject,
           new String[] {"hyperparameters"},
           distillationHyperParametersFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"hyperparameters"})),
               toObject,
               rootObject));
@@ -912,7 +910,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode distillationSpecFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"promptDatasetUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -932,7 +930,7 @@ public final class Tunings {
           toObject,
           new String[] {"hyperParameters"},
           distillationHyperParametersFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"hyperParameters"})),
               toObject,
               rootObject));
@@ -986,7 +984,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode evaluationConfigFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"metrics"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1013,7 +1011,7 @@ public final class Tunings {
           toObject,
           new String[] {"inferenceGenerationConfig"},
           generationConfigFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"inferenceGenerationConfig"})),
               toObject,
               rootObject));
@@ -1025,7 +1023,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode evaluationConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"metrics"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1052,7 +1050,7 @@ public final class Tunings {
           toObject,
           new String[] {"inferenceGenerationConfig"},
           generationConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"inferenceGenerationConfig"})),
               toObject,
               rootObject));
@@ -1064,7 +1062,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generationConfigFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"modelConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1239,7 +1237,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generationConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"modelSelectionConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1357,8 +1355,7 @@ public final class Tunings {
           toObject,
           new String[] {"speechConfig"},
           speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
               toObject,
               rootObject));
     }
@@ -1431,7 +1428,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getTuningJobParametersToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1445,7 +1442,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getTuningJobParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1459,7 +1456,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -1488,12 +1485,11 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsParametersToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listTuningJobsConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -1504,7 +1500,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listTuningJobsResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1526,7 +1522,7 @@ public final class Tunings {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(tuningJobFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(tuningJobFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"tuningJobs"}, result);
     }
@@ -1537,7 +1533,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode multiSpeakerVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
@@ -1545,8 +1541,7 @@ public final class Tunings {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            speakerVoiceConfigToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(speakerVoiceConfigToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
     }
@@ -1557,7 +1552,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode replicatedVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1590,7 +1585,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speakerVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1603,8 +1598,7 @@ public final class Tunings {
           toObject,
           new String[] {"voiceConfig"},
           voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
               toObject,
               rootObject));
     }
@@ -1615,14 +1609,13 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speechConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"voiceConfig"},
           voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
               toObject,
               rootObject));
     }
@@ -1639,7 +1632,7 @@ public final class Tunings {
           toObject,
           new String[] {"multiSpeakerVoiceConfig"},
           multiSpeakerVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
               toObject,
               rootObject));
@@ -1651,7 +1644,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tunedModelFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1672,7 +1665,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
       throw new IllegalArgumentException(
           "gcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -1698,7 +1691,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningDatasetToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     JsonNode discriminatorGcsUri =
         (JsonNode) Common.getValueByPath(rootObject, new String[] {"config", "method"});
@@ -1780,7 +1773,7 @@ public final class Tunings {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningJobFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1849,8 +1842,7 @@ public final class Tunings {
           toObject,
           new String[] {"tunedModel"},
           tunedModelFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -1861,7 +1853,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningJobFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1965,7 +1957,7 @@ public final class Tunings {
           toObject,
           new String[] {"distillationSpec"},
           distillationSpecFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"distillationSpec"})),
               toObject,
               rootObject));
@@ -2004,7 +1996,7 @@ public final class Tunings {
           toObject,
           new String[] {"evaluationConfig"},
           evaluationConfigFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"evaluationConfig"})),
               toObject,
               rootObject));
@@ -2106,7 +2098,7 @@ public final class Tunings {
           toObject,
           new String[] {"distillationSamplingSpec"},
           distillationSamplingSpecFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"distillationSamplingSpec"})),
               toObject,
               rootObject));
@@ -2118,7 +2110,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningOperationFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2160,7 +2152,7 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tuningValidationDatasetToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2181,13 +2173,13 @@ public final class Tunings {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode voiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"replicatedVoiceConfig"},
           replicatedVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"})),
               toObject,
               rootObject));
@@ -2214,7 +2206,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2243,7 +2235,7 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2257,7 +2249,7 @@ public final class Tunings {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = tuningJobFromVertex(responseNode, null, parameterNode);
@@ -2267,7 +2259,7 @@ public final class Tunings {
       responseNode = tuningJobFromMldev(responseNode, null, parameterNode);
     }
 
-    TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
+    TuningJob sdkResponse = Common.fromJsonNode(responseNode, TuningJob.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2288,7 +2280,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateGet(name, config);
 
     try (ApiResponse response =
@@ -2306,7 +2298,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2332,7 +2324,7 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2346,7 +2338,7 @@ public final class Tunings {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = listTuningJobsResponseFromVertex(responseNode, null, parameterNode);
@@ -2359,7 +2351,7 @@ public final class Tunings {
     }
 
     ListTuningJobsResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, ListTuningJobsResponse.class);
+        Common.fromJsonNode(responseNode, ListTuningJobsResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2377,7 +2369,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateList(config);
 
     try (ApiResponse response =
@@ -2398,7 +2390,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2427,7 +2419,7 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2441,7 +2433,7 @@ public final class Tunings {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = cancelTuningJobResponseFromVertex(responseNode, null, parameterNode);
@@ -2452,7 +2444,7 @@ public final class Tunings {
     }
 
     CancelTuningJobResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, CancelTuningJobResponse.class);
+        Common.fromJsonNode(responseNode, CancelTuningJobResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2480,7 +2472,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForCancel(name, config);
 
     try (ApiResponse response =
@@ -2512,7 +2504,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2538,7 +2530,7 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2552,7 +2544,7 @@ public final class Tunings {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = tuningJobFromVertex(responseNode, null, parameterNode);
@@ -2564,7 +2556,7 @@ public final class Tunings {
               + " Developer API mode.");
     }
 
-    TuningJob sdkResponse = JsonSerializable.fromJsonNode(responseNode, TuningJob.class);
+    TuningJob sdkResponse = Common.fromJsonNode(responseNode, TuningJob.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2596,7 +2588,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
 
@@ -2629,7 +2621,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2659,7 +2651,7 @@ public final class Tunings {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2673,7 +2665,7 @@ public final class Tunings {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -2685,8 +2677,7 @@ public final class Tunings {
       responseNode = tuningOperationFromMldev(responseNode, null, parameterNode);
     }
 
-    TuningOperation sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, TuningOperation.class);
+    TuningOperation sdkResponse = Common.fromJsonNode(responseNode, TuningOperation.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2718,7 +2709,7 @@ public final class Tunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
 
@@ -2741,7 +2732,7 @@ public final class Tunings {
     if (config == null) {
       config = ListTuningJobsConfig.builder().build();
     }
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListTuningJobsConfig)) {
             throw new GenAiIOException(
@@ -2753,8 +2744,8 @@ public final class Tunings {
     return new Pager<>(
         Pager.PagedItem.TUNING_JOBS,
         request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
+        (ObjectNode) Common.toJsonNode(config),
+        Common.toJsonNode(privateList(config)));
   }
 
   /**

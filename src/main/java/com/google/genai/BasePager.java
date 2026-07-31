@@ -113,13 +113,13 @@ abstract class BasePager<T extends JsonSerializable> {
     } else {
       List<T> page = new ArrayList<>();
       for (JsonNode responseItem : responseList) {
-        page.add((T) JsonSerializable.fromJsonNode(responseItem, pagedItem.itemClass()));
+        page.add((T) Common.fromJsonNode(responseItem, pagedItem.itemClass()));
       }
       this.page = ImmutableList.copyOf(page);
     }
     try {
       this.sdkHttpResponse =
-          JsonSerializable.fromJsonNode(response.get("sdkHttpResponse"), HttpResponse.class);
+          Common.fromJsonNode(response.get("sdkHttpResponse"), HttpResponse.class);
     } catch (GenAiIOException e) {
       this.sdkHttpResponse = null;
     }

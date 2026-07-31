@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -218,6 +219,6 @@ public abstract class HttpRetryOptions extends JsonSerializable {
   /** Deserializes a JSON string to a HttpRetryOptions object. */
   @ExcludeFromGeneratedCoverageReport
   public static HttpRetryOptions fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, HttpRetryOptions.class);
+    return Common.fromJsonString(jsonString, HttpRetryOptions.class);
   }
 }

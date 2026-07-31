@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -239,6 +240,6 @@ public abstract class EmbedContentParametersPrivate extends JsonSerializable {
   /** Deserializes a JSON string to a EmbedContentParametersPrivate object. */
   @ExcludeFromGeneratedCoverageReport
   public static EmbedContentParametersPrivate fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, EmbedContentParametersPrivate.class);
+    return Common.fromJsonString(jsonString, EmbedContentParametersPrivate.class);
   }
 }

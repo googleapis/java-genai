@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -171,6 +172,6 @@ public abstract class PreferenceOptimizationHyperParameters extends JsonSerializ
   /** Deserializes a JSON string to a PreferenceOptimizationHyperParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static PreferenceOptimizationHyperParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, PreferenceOptimizationHyperParameters.class);
+    return Common.fromJsonString(jsonString, PreferenceOptimizationHyperParameters.class);
   }
 }

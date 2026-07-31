@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -131,6 +132,6 @@ public abstract class Blob extends JsonSerializable {
   /** Deserializes a JSON string to a Blob object. */
   @ExcludeFromGeneratedCoverageReport
   public static Blob fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Blob.class);
+    return Common.fromJsonString(jsonString, Blob.class);
   }
 }

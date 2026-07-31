@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,7 +138,7 @@ public abstract class Content extends JsonSerializable {
   /** Deserializes a JSON string to a Content object. */
   @ExcludeFromGeneratedCoverageReport
   public static Content fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Content.class);
+    return Common.fromJsonString(jsonString, Content.class);
   }
 
   private static final Logger logger = Logger.getLogger(Content.class.getName());

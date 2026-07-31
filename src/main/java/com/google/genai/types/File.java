@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
 import java.util.Map;
@@ -433,6 +434,6 @@ public abstract class File extends JsonSerializable {
   /** Deserializes a JSON string to a File object. */
   @ExcludeFromGeneratedCoverageReport
   public static File fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, File.class);
+    return Common.fromJsonString(jsonString, File.class);
   }
 }

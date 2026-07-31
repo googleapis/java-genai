@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -145,6 +146,6 @@ public abstract class CreateEmbeddingsBatchJobParameters extends JsonSerializabl
   /** Deserializes a JSON string to a CreateEmbeddingsBatchJobParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static CreateEmbeddingsBatchJobParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, CreateEmbeddingsBatchJobParameters.class);
+    return Common.fromJsonString(jsonString, CreateEmbeddingsBatchJobParameters.class);
   }
 }

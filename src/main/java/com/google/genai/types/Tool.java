@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -614,6 +615,6 @@ public abstract class Tool extends JsonSerializable {
   /** Deserializes a JSON string to a Tool object. */
   @ExcludeFromGeneratedCoverageReport
   public static Tool fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Tool.class);
+    return Common.fromJsonString(jsonString, Tool.class);
   }
 }

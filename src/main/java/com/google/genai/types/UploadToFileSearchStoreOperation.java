@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.genai.JsonSerializable;
+import com.google.genai.Common;
 import com.google.genai.OperationsConverters;
 import java.util.Map;
 import java.util.Optional;
@@ -45,7 +45,7 @@ public abstract class UploadToFileSearchStoreOperation
     OperationsConverters converter = new OperationsConverters(null);
     JsonNode response;
     response = converter.uploadToFileSearchStoreOperationFromMldev(apiResponse, null);
-    return JsonSerializable.fromJsonNode(response, UploadToFileSearchStoreOperation.class);
+    return Common.fromJsonNode(response, UploadToFileSearchStoreOperation.class);
   }
 
   /** Instantiates a builder for UploadToFileSearchStoreOperation. */
@@ -183,6 +183,6 @@ public abstract class UploadToFileSearchStoreOperation
   /** Deserializes a JSON string to a UploadToFileSearchStoreOperation object. */
   @ExcludeFromGeneratedCoverageReport
   public static UploadToFileSearchStoreOperation fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, UploadToFileSearchStoreOperation.class);
+    return Common.fromJsonString(jsonString, UploadToFileSearchStoreOperation.class);
   }
 }

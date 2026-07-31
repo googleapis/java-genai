@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -126,6 +127,6 @@ public abstract class VoiceConfig extends JsonSerializable {
   /** Deserializes a JSON string to a VoiceConfig object. */
   @ExcludeFromGeneratedCoverageReport
   public static VoiceConfig fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, VoiceConfig.class);
+    return Common.fromJsonString(jsonString, VoiceConfig.class);
   }
 }

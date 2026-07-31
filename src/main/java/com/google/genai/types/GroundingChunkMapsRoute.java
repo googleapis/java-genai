@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.util.Optional;
@@ -125,6 +126,6 @@ public abstract class GroundingChunkMapsRoute extends JsonSerializable {
   /** Deserializes a JSON string to a GroundingChunkMapsRoute object. */
   @ExcludeFromGeneratedCoverageReport
   public static GroundingChunkMapsRoute fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GroundingChunkMapsRoute.class);
+    return Common.fromJsonString(jsonString, GroundingChunkMapsRoute.class);
   }
 }

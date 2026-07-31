@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.time.Duration;
 import java.util.Optional;
@@ -120,6 +121,6 @@ public abstract class VoiceActivity extends JsonSerializable {
   /** Deserializes a JSON string to a VoiceActivity object. */
   @ExcludeFromGeneratedCoverageReport
   public static VoiceActivity fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, VoiceActivity.class);
+    return Common.fromJsonString(jsonString, VoiceActivity.class);
   }
 }

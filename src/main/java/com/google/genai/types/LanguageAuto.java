@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /** Deprecated: Language auto-detection is now the default when language_codes is omitted. */
@@ -51,6 +52,6 @@ public abstract class LanguageAuto extends JsonSerializable {
   /** Deserializes a JSON string to a LanguageAuto object. */
   @ExcludeFromGeneratedCoverageReport
   public static LanguageAuto fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, LanguageAuto.class);
+    return Common.fromJsonString(jsonString, LanguageAuto.class);
   }
 }

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -134,6 +135,6 @@ public abstract class FetchPredictOperationParameters extends JsonSerializable {
   /** Deserializes a JSON string to a FetchPredictOperationParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static FetchPredictOperationParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FetchPredictOperationParameters.class);
+    return Common.fromJsonString(jsonString, FetchPredictOperationParameters.class);
   }
 }

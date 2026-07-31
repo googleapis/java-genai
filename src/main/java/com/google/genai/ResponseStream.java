@@ -116,7 +116,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
       String currentJson = nextJson;
       nextJson = readNextJson();
       try {
-        JsonNode currentJsonNode = JsonSerializable.stringToJsonNode(currentJson);
+        JsonNode currentJsonNode = Common.stringToJsonNode(currentJson);
 
         if (currentJsonNode.isObject() && currentJsonNode.has("error")) {
           int extractedCode = 500;
@@ -124,18 +124,18 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
           if (errorNode.has("code") && errorNode.get("code").isInt()) {
             extractedCode = errorNode.get("code").asInt();
           }
-          ArrayNode arrayNode = JsonSerializable.objectMapper.createArrayNode();
+          ArrayNode arrayNode = Common.objectMapper.createArrayNode();
           arrayNode.add(currentJsonNode);
           ApiException.throwFromErrorNode(arrayNode, extractedCode);
         }
 
         if (responseHeaders != null && currentJsonNode.isObject()) {
           ObjectNode rootNode = (ObjectNode) currentJsonNode;
-          ObjectNode headersNode = JsonSerializable.objectMapper.createObjectNode();
+          ObjectNode headersNode = Common.objectMapper.createObjectNode();
           for (String headerName : responseHeaders.names()) {
             headersNode.put(headerName, responseHeaders.get(headerName));
           }
-          ObjectNode sdkHttpResponseNode = JsonSerializable.objectMapper.createObjectNode();
+          ObjectNode sdkHttpResponseNode = Common.objectMapper.createObjectNode();
           sdkHttpResponseNode.set("headers", headersNode);
           rootNode.set("sdkHttpResponse", sdkHttpResponseNode);
           currentJsonNode = rootNode;
@@ -147,7 +147,7 @@ public class ResponseStream<T extends JsonSerializable> implements Iterable<T>, 
           currentJsonNode = (JsonNode) converter.invoke(obj, currentJsonNode, null);
         }
 
-        T response = JsonSerializable.fromJsonNode(currentJsonNode, clazz);
+        T response = Common.fromJsonNode(currentJsonNode, clazz);
         if (recordingHistory) {
           history.add(response);
         }

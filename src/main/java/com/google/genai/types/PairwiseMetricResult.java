@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -150,6 +151,6 @@ public abstract class PairwiseMetricResult extends JsonSerializable {
   /** Deserializes a JSON string to a PairwiseMetricResult object. */
   @ExcludeFromGeneratedCoverageReport
   public static PairwiseMetricResult fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, PairwiseMetricResult.class);
+    return Common.fromJsonString(jsonString, PairwiseMetricResult.class);
   }
 }
