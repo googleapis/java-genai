@@ -55,6 +55,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -92,6 +93,11 @@ public class HttpApiClientTest {
       GoogleCredentials.newBuilder()
           .setAccessToken(AccessToken.newBuilder().setTokenValue("").build())
           .build();
+
+  @AfterEach
+  public void tearDown() {
+    Client.setDefaultBaseUrls(Optional.empty(), Optional.empty());
+  }
 
   @Mock OkHttpClient mockHttpClient;
   @Mock Call mockCall;
@@ -1417,7 +1423,12 @@ public class HttpApiClientTest {
     HttpOptions httpOptions =
         HttpOptions.builder().baseUrl("https://custom-base-url.googleapis.com/").build();
     Client client =
-        Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .httpOptions(httpOptions)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -1431,7 +1442,12 @@ public class HttpApiClientTest {
     Client.setDefaultBaseUrls(
         Optional.of("https://gemini-base-url.googleapis.com/"), Optional.empty());
     Client client =
-        Client.builder().apiKey(API_KEY).vertexAI(false).httpOptions(httpOptions).build();
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .httpOptions(httpOptions)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -1441,7 +1457,12 @@ public class HttpApiClientTest {
   public void testClientInitializationWithBaseUrlFromSetBaseUrls() throws Exception {
     Client.setDefaultBaseUrls(
         Optional.of("https://custom-base-url.googleapis.com/"), Optional.empty());
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -1457,7 +1478,12 @@ public class HttpApiClientTest {
         .thenReturn(ImmutableMap.of("geminiBaseUrl", "https://gemini-base-url.googleapis.com/"));
     Client.setDefaultBaseUrls(
         Optional.of("https://custom-base-url.googleapis.com/"), Optional.empty());
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -1479,6 +1505,7 @@ public class HttpApiClientTest {
             .location(LOCATION)
             .credentials(CREDENTIALS)
             .vertexAI(true)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .build();
 
     assertTrue(client.baseUrl().isPresent());
@@ -1493,7 +1520,12 @@ public class HttpApiClientTest {
     mockedStaticApiClient
         .when(ApiClient::defaultEnvironmentVariables)
         .thenReturn(ImmutableMap.of("geminiBaseUrl", "https://custom-base-url.googleapis.com/"));
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    Client client =
+        Client.builder()
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .build();
 
     assertTrue(client.baseUrl().isPresent());
     assertEquals(client.baseUrl().get(), "https://custom-base-url.googleapis.com/");
@@ -1511,6 +1543,7 @@ public class HttpApiClientTest {
             .location(LOCATION)
             .credentials(CREDENTIALS)
             .vertexAI(true)
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .build();
 
     assertTrue(client.baseUrl().isPresent());

@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -44,6 +46,13 @@ import org.mockito.Mockito;
 
 /** Sample class to prototype GenAI SDK functionalities. */
 public final class TableTest {
+  private static final ScheduledExecutorService sharedScheduler =
+      Executors.newSingleThreadScheduledExecutor(
+          r -> {
+            Thread t = new Thread(r, "test-table-retry-scheduler");
+            t.setDaemon(true);
+            return t;
+          });
 
   private static Collection<DynamicTest> createTableTests(String path, boolean vertexAI)
       throws IOException {
@@ -360,10 +369,12 @@ public final class TableTest {
 
   private static void handleException(
       Throwable cause, TestTableItem testTableItem, Client client, String testName) {
-    if (client.clientMode().equals("api") && cause instanceof com.google.genai.errors.ApiException) {
+    if (client.clientMode().equals("api")
+        && cause instanceof com.google.genai.errors.ApiException) {
       if (((com.google.genai.errors.ApiException) cause).code() == 429) {
         org.junit.jupiter.api.Assumptions.assumeTrue(
-            false, "Resource Exhausted (429). Skipping test instead of failing: " + cause.getMessage());
+            false,
+            "Resource Exhausted (429). Skipping test instead of failing: " + cause.getMessage());
         return;
       }
     }
@@ -372,7 +383,8 @@ public final class TableTest {
     if (exceptionIfMldev.isPresent() && !client.vertexAI()) {
       verifyExceptionMatch(testName, cause, exceptionIfMldev.get(), "Gemini API");
     } else if (exceptionIfVertex.isPresent() && client.vertexAI()) {
-      verifyExceptionMatch(testName, cause, exceptionIfVertex.get(), "Gemini Enterprise Agent Platform");
+      verifyExceptionMatch(
+          testName, cause, exceptionIfVertex.get(), "Gemini Enterprise Agent Platform");
     } else {
       fail(String.format("'%s' failed: %s", testName, cause));
     }
@@ -482,12 +494,21 @@ public final class TableTest {
                   .put("location", "location")
                   .build());
 
-      Client client = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig).build();
+      Client client =
+          Client.builder()
+              .vertexAI(vertexAI)
+              .debugConfig(debugConfig)
+              .asyncRetryScheduler(sharedScheduler)
+              .build();
       mockedStaticApiClient.close();
       return client;
     }
 
-    return Client.builder().vertexAI(vertexAI).debugConfig(debugConfig).build();
+    return Client.builder()
+        .vertexAI(vertexAI)
+        .debugConfig(debugConfig)
+        .asyncRetryScheduler(sharedScheduler)
+        .build();
   }
 
   private static Object normalizeKeys(Object data) {
