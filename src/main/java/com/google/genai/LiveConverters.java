@@ -108,32 +108,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode codeExecutionResultToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"outcome"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"outcome"},
-          Common.getValueByPath(fromObject, new String[] {"outcome"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"output"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"output"},
-          Common.getValueByPath(fromObject, new String[] {"output"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"id"}))) {
-      throw new IllegalArgumentException(
-          "id parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
-              + " Agent Platform mode.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode computerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
@@ -211,32 +185,6 @@ final class LiveConverters {
           toObject,
           new String[] {"role"},
           Common.getValueByPath(fromObject, new String[] {"role"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode executableCodeToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"code"},
-          Common.getValueByPath(fromObject, new String[] {"code"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"language"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"language"},
-          Common.getValueByPath(fromObject, new String[] {"language"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"id"}))) {
-      throw new IllegalArgumentException(
-          "id parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
-              + " Agent Platform mode.");
     }
 
     return toObject;
@@ -1914,20 +1862,14 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"codeExecutionResult"},
-          codeExecutionResultToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"executableCode"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"executableCode"},
-          executableCodeToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"executableCode"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"executableCode"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"fileData"}) != null) {
