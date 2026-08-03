@@ -26,7 +26,7 @@ import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.ListTriggerExecutionsRequest;
 import com.google.genai.gaos.models.operations.ListTriggerExecutionsResponse;
 import com.google.genai.gaos.utils.AsyncRetries;
@@ -220,18 +220,18 @@ public class ListTriggerExecutions {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
@@ -307,18 +307,18 @@ public class ListTriggerExecutions {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

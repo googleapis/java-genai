@@ -35,7 +35,7 @@ import java.lang.Throwable;
 import java.util.Optional;
 
 @SuppressWarnings("serial")
-public class CancelInteractionByIdClientError extends GenAiException {
+public class CancelInteractionByIdClientError extends GaosClientException {
 
     @Nullable
     private final Data data;

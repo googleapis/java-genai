@@ -26,9 +26,9 @@ import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.errors.GetInteractionByIdClientError;
 import com.google.genai.gaos.models.errors.GetInteractionByIdServerError;
-import com.google.genai.gaos.models.errors.SDKException;
 import com.google.genai.gaos.models.interactions.Interaction;
 import com.google.genai.gaos.models.operations.GetInteractionByIdRequest;
 import com.google.genai.gaos.models.operations.GetInteractionByIdResponse;
@@ -227,24 +227,24 @@ public class GetInteractionById {
                     Utils.setSseSentinel(res, "[DONE]");
                     return res;
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw GetInteractionByIdClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw GetInteractionByIdServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
@@ -324,24 +324,24 @@ public class GetInteractionById {
                     Utils.setSseSentinel(res, "[DONE]");
                     return res;
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw GetInteractionByIdClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw GetInteractionByIdServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

@@ -629,6 +629,15 @@ public final class Client implements AutoCloseable {
   @Override
   public void close() {
     apiClient.close();
+    // android:strip_begin
+    try {
+      // apiClient.close() already tears down the shared OkHttp dispatcher/pool; gaosClient.close()
+      // is called for lifecycle completeness in case it manages other internal resources.
+      gaosClient.close();
+    } catch (Exception e) {
+      // ignore
+    }
+    // android:strip_end
   }
 
   /**

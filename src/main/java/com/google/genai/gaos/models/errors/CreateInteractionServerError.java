@@ -35,7 +35,7 @@ import java.lang.Throwable;
 import java.util.Optional;
 
 @SuppressWarnings("serial")
-public class CreateInteractionServerError extends GenAiException {
+public class CreateInteractionServerError extends GaosServerException {
 
     @Nullable
     private final Data data;

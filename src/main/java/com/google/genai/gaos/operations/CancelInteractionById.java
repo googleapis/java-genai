@@ -28,7 +28,7 @@ import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.errors.CancelInteractionByIdClientError;
 import com.google.genai.gaos.models.errors.CancelInteractionByIdServerError;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.interactions.Interaction;
 import com.google.genai.gaos.models.operations.CancelInteractionByIdRequest;
 import com.google.genai.gaos.models.operations.CancelInteractionByIdResponse;
@@ -218,24 +218,24 @@ public class CancelInteractionById {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withInteraction(Utils.unmarshal(response, new TypeReference<Interaction>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CancelInteractionByIdClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CancelInteractionByIdServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
@@ -311,24 +311,24 @@ public class CancelInteractionById {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withInteraction(Utils.unmarshal(response, new TypeReference<Interaction>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CancelInteractionByIdClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CancelInteractionByIdServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }
