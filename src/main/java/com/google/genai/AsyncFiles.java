@@ -172,7 +172,7 @@ public final class AsyncFiles {
   /**
    * Asynchronously registers Google Cloud Storage files for use with the API.
    *
-   * @param credentials The Google Cloud credentials to use for registering the files.
+   * @param credentials The credentials to use for registering the files.
    * @param uris The list of GCS URIs to register.
    * @param config Optional configuration for the registration request.
    * @return A future that resolves to the response containing the registered files.
@@ -189,8 +189,9 @@ public final class AsyncFiles {
     checkNotNull(credentials, "credentials cannot be null");
     checkNotNull(uris, "uris cannot be null");
 
+    TokenProvider tokenProvider = new GoogleCredentialsTokenProvider(credentials);
     return CompletableFuture.supplyAsync(
-            () -> files.internalPrepareRegisterFilesConfig(credentials, config))
+            () -> files.internalPrepareRegisterFilesConfig(tokenProvider, config))
         .thenCompose(updatedConfig -> privateRegisterFiles(uris, updatedConfig));
   }
 

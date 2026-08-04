@@ -21,11 +21,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.InternalApi;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.genai.errors.GenAiIOException;
+
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.HttpRetryOptions;
@@ -84,7 +84,7 @@ public abstract class ApiClient implements AutoCloseable {
   // For Vertex AI APIs
   final Optional<String> project;
   final Optional<String> location;
-  final Optional<GoogleCredentials> credentials;
+  final Optional<TokenProvider> tokenProvider;
 
   /** Constructs an ApiClient for Google AI APIs. */
   protected ApiClient(
@@ -106,7 +106,7 @@ public abstract class ApiClient implements AutoCloseable {
 
     this.project = Optional.empty();
     this.location = Optional.empty();
-    this.credentials = Optional.empty();
+    this.tokenProvider = Optional.empty();
     this.vertexAI = false;
     this.clientOptions = clientOptions;
     this.customBaseUrl =
@@ -128,13 +128,13 @@ public abstract class ApiClient implements AutoCloseable {
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,
-      Optional<GoogleCredentials> credentials,
+      Optional<TokenProvider> tokenProvider,
       Optional<HttpOptions> customHttpOptions,
       Optional<ClientOptions> clientOptions) {
     checkNotNull(apiKey, "API Key cannot be null");
     checkNotNull(project, "project cannot be null");
     checkNotNull(location, "location cannot be null");
-    checkNotNull(credentials, "credentials cannot be null");
+    checkNotNull(tokenProvider, "tokenProvider cannot be null");
     checkNotNull(customHttpOptions, "customHttpOptions cannot be null");
     checkNotNull(clientOptions, "clientOptions cannot be null");
 
@@ -157,7 +157,7 @@ public abstract class ApiClient implements AutoCloseable {
 
     // Constructor arguments.
     boolean hasApiKey = apiKey != null && apiKey.isPresent();
-    boolean hasCredentials = credentials != null && credentials.isPresent();
+    boolean hasTokenProvider = tokenProvider != null && tokenProvider.isPresent();
     boolean hasProject = project != null && project.isPresent();
     boolean hasLocation = location != null && location.isPresent();
 
@@ -165,17 +165,17 @@ public abstract class ApiClient implements AutoCloseable {
         customHttpOptions.flatMap(HttpOptions::baseUrl).map(url -> url.replaceAll("/$", ""));
 
     // Validate constructor arguments combinations.
-    if (hasCredentials && hasApiKey) {
+    if (hasTokenProvider && hasApiKey) {
       throw new IllegalArgumentException(
-          "For Vertex AI APIs, API key cannot be set together with credentials. Please provide"
+          "For Vertex AI APIs, API key cannot be set together with credentials/tokenProvider. Please provide"
               + " only one of them.");
     }
 
     // Handle when to use Vertex AI in express mode (api key).
     // Explicit initializer arguments are already validated above.
-    if (hasCredentials && hasEnvApiKeyValue) {
+    if (hasTokenProvider && hasEnvApiKeyValue) {
       logger.warning(
-          "Warning: The user provided Google Cloud credentials will take precedence over the API"
+          "Warning: The user provided Google Cloud credentials/tokenProvider will take precedence over the API"
               + " key from the environment variable.");
       apiKeyValue = null;
     }
@@ -247,11 +247,11 @@ public abstract class ApiClient implements AutoCloseable {
     this.location = Optional.ofNullable(locationValue);
     this.customBaseUrl = customBaseUrl;
 
-    // Only set credentials if using project/location and no API key is provided.
-    this.credentials =
+    // Only set tokenProvider if using project/location and no API key is provided.
+    this.tokenProvider =
         (!this.project.isPresent() || this.apiKey.isPresent())
             ? Optional.empty()
-            : Optional.of(credentials.orElseGet(() -> defaultCredentials()));
+            : tokenProvider;
 
     this.clientOptions = clientOptions;
 
@@ -518,21 +518,21 @@ public abstract class ApiClient implements AutoCloseable {
     if (apiKey.isPresent()) {
       // Sets API key for Gemini Developer API or Vertex AI Express mode
       request.header("x-goog-api-key", apiKey.get());
-    } else if (credentials.isPresent()) {
-      GoogleCredentials cred = credentials.get();
+    } else if (tokenProvider.isPresent()) {
+      TokenProvider provider = tokenProvider.get();
+      String accessToken;
       try {
-        cred.refreshIfExpired();
+        accessToken = provider.getToken();
       } catch (IOException e) {
-        throw new GenAiIOException("Failed to refresh credentials.", e);
+        throw new GenAiIOException("Failed to get token from tokenProvider.", e);
       }
-      String accessToken = cred.getAccessToken().getTokenValue();
       request.header("Authorization", "Bearer " + accessToken);
 
-      if (cred.getQuotaProjectId() != null) {
-        request.header("x-goog-user-project", cred.getQuotaProjectId());
+      if (provider.getQuotaProjectId().isPresent()) {
+        request.header("x-goog-user-project", provider.getQuotaProjectId().get());
       }
     } else if (!customBaseUrl.isPresent()) {
-      throw new IllegalStateException("credentials is required");
+      throw new IllegalStateException("credentials/tokenProvider is required");
     }
   }
 
@@ -596,9 +596,9 @@ public abstract class ApiClient implements AutoCloseable {
     return httpClient;
   }
 
-  /** Returns the GoogleCredentials for Vertex AI APIs. */
-  public @Nullable GoogleCredentials credentials() {
-    return credentials.orElse(null);
+  /** Returns the TokenProvider for Vertex AI APIs. */
+  public Optional<TokenProvider> tokenProvider() {
+    return tokenProvider;
   }
 
   /** Returns the HTTP options for API calls. */
@@ -808,16 +808,6 @@ public abstract class ApiClient implements AutoCloseable {
     return true;
   }
 
-  GoogleCredentials defaultCredentials() {
-    try {
-      return GoogleCredentials.getApplicationDefault()
-          .createScoped("https://www.googleapis.com/auth/cloud-platform");
-    } catch (IOException e) {
-      throw new GenAiIOException(
-          "Failed to get application default credentials, please explicitly provide credentials.",
-          e);
-    }
-  }
 
   /** Returns the API key from defaultEnvironmentVariables. */
   static String getApiKeyFromEnv() {

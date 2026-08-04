@@ -17,7 +17,6 @@
 package com.google.genai;
 
 import com.google.api.core.InternalApi;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
@@ -48,10 +47,10 @@ public class HttpApiClient extends ApiClient {
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,
-      Optional<GoogleCredentials> credentials,
+      Optional<TokenProvider> tokenProvider,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions) {
-    super(apiKey, project, location, credentials, httpOptions, clientOptions);
+    super(apiKey, project, location, tokenProvider, httpOptions, clientOptions);
   }
 
   /**

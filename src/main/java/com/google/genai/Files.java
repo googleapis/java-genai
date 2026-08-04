@@ -724,7 +724,7 @@ public final class Files {
   /**
    * Registers Google Cloud Storage files for use with the API.
    *
-   * @param credentials The Google Cloud credentials to use for registering the files.
+   * @param credentials The credentials to use for registering the files.
    * @param uris The list of GCS URIs to register.
    * @param config Optional configuration for the registration request.
    * @return The response containing the registered files.
@@ -738,7 +738,8 @@ public final class Files {
     checkNotNull(credentials, "credentials cannot be null");
     checkNotNull(uris, "uris cannot be null");
 
-    RegisterFilesConfig updatedConfig = internalPrepareRegisterFilesConfig(credentials, config);
+    TokenProvider tokenProvider = new GoogleCredentialsTokenProvider(credentials);
+    RegisterFilesConfig updatedConfig = internalPrepareRegisterFilesConfig(tokenProvider, config);
 
     return privateRegisterFiles(uris, updatedConfig);
   }
@@ -747,34 +748,31 @@ public final class Files {
    * Prepares the configuration for the registerFiles request, including adding authorization
    * headers from the provided credentials.
    *
-   * @param credentials The Google Cloud credentials to use.
+   * @param tokenProvider The token provider to use.
    * @param config Optional configuration to start with.
    * @return The updated configuration with authorization headers.
    */
   RegisterFilesConfig internalPrepareRegisterFilesConfig(
-      GoogleCredentials credentials, RegisterFilesConfig config) {
-    checkNotNull(credentials, "credentials cannot be null");
+      TokenProvider tokenProvider, RegisterFilesConfig config) {
+    checkNotNull(tokenProvider, "tokenProvider cannot be null");
 
     RegisterFilesConfig configToUse = config;
     if (configToUse == null) {
       configToUse = RegisterFilesConfig.builder().build();
     }
 
+    String accessToken;
     try {
-      credentials.refreshIfExpired();
+      accessToken = tokenProvider.getToken();
     } catch (IOException | IllegalStateException e) {
-      throw new GenAiIOException("Failed to refresh credentials.", e);
+      throw new GenAiIOException("Failed to get token from tokenProvider.", e);
     }
-    if (credentials.getAccessToken() == null) {
-      throw new GenAiIOException("Failed to get access token from credentials.");
-    }
-    String accessToken = credentials.getAccessToken().getTokenValue();
 
     HttpOptions httpOptions = configToUse.httpOptions().orElse(HttpOptions.builder().build());
     Map<String, String> headers = new HashMap<>(httpOptions.headers().orElse(ImmutableMap.of()));
     headers.put("Authorization", "Bearer " + accessToken);
-    if (credentials.getQuotaProjectId() != null) {
-      headers.put("x-goog-user-project", credentials.getQuotaProjectId());
+    if (tokenProvider.getQuotaProjectId().isPresent()) {
+      headers.put("x-goog-user-project", tokenProvider.getQuotaProjectId().get());
     }
 
     return configToUse.toBuilder()

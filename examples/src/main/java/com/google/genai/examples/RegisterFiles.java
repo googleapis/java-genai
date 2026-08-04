@@ -52,7 +52,8 @@ public final class RegisterFiles {
 
     List<String> uris = Arrays.asList("gs://tensorflow_docs/image.jpg");
 
-    RegisterFilesResponse response = client.files.registerFiles(credentials, uris, null);
+    RegisterFilesResponse response =
+        client.files.registerFiles(credentials, uris, null);
 
     List<File> files =
         response.files().orElseThrow(() -> new RuntimeException("No files returned"));

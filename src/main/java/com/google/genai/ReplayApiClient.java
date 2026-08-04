@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.api.core.InternalApi;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.ClientOptions;
@@ -84,13 +83,13 @@ public final class ReplayApiClient extends ApiClient {
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,
-      Optional<GoogleCredentials> credentials,
+      Optional<TokenProvider> tokenProvider,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions,
       String replaysDirectory,
       String replayId,
       String clientMode) {
-    super(apiKey, project, location, credentials, httpOptions, clientOptions);
+    super(apiKey, project, location, tokenProvider, httpOptions, clientOptions);
     checkNotNull(replaysDirectory, "replaysDirectory cannot be null");
     checkNotNull(replayId, "replayId cannot be null");
     checkNotNull(clientMode, "clientMode cannot be null");

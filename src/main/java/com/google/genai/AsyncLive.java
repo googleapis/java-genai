@@ -18,7 +18,6 @@ package com.google.genai;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.LiveConnectConfig;
 import com.google.genai.types.LiveConnectParameters;
@@ -144,16 +143,15 @@ public class AsyncLive {
     apiClient.httpOptions().headers().ifPresent(headers::putAll);
 
     if (apiClient.vertexAI()) {
-      if (apiClient.credentials() != null) {
+      if (apiClient.tokenProvider().isPresent()) {
         try {
-          GoogleCredentials credentials = apiClient.credentials();
-          credentials.refreshIfExpired();
-          headers.put("Authorization", "Bearer " + credentials.getAccessToken().getTokenValue());
-          if (credentials.getQuotaProjectId() != null) {
-            headers.put("x-goog-user-project", credentials.getQuotaProjectId());
+          TokenProvider provider = apiClient.tokenProvider().get();
+          headers.put("Authorization", "Bearer " + provider.getToken());
+          if (provider.getQuotaProjectId().isPresent()) {
+            headers.put("x-goog-user-project", provider.getQuotaProjectId().get());
           }
         } catch (IOException e) {
-          throw new GenAiIOException("Failed to refresh credentials for Vertex AI.", e);
+          throw new GenAiIOException("Failed to get token from tokenProvider for Vertex AI.", e);
         }
       } else if (apiClient.apiKey() != null) {
         headers.put("x-goog-api-key", apiClient.apiKey());

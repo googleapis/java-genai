@@ -21,9 +21,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.gaos.AsyncGenAI;
+import com.google.genai.gaos.GenAI;
+import com.google.genai.gaos.SecuritySource;
+import com.google.genai.gaos.utils.HasSecurity;
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Logger;
 
 /** Client class for GenAI. This class is thread-safe. */
@@ -43,7 +49,9 @@ public final class Client implements AutoCloseable {
     public final AsyncTokens authTokens;
     public final AsyncTunings tunings;
     public final AsyncFileSearchStores fileSearchStores;
-
+    public final com.google.genai.gaos.AsyncInteractions interactions;
+    public final com.google.genai.gaos.AsyncAgents agents;
+    public final com.google.genai.gaos.AsyncWebhooks webhooks;
 
     public Async(ApiClient apiClient) {
       this.models = new AsyncModels(apiClient);
@@ -56,7 +64,10 @@ public final class Client implements AutoCloseable {
       this.authTokens = new AsyncTokens(apiClient);
       this.tunings = new AsyncTunings(apiClient);
       this.fileSearchStores = new AsyncFileSearchStores(apiClient);
-
+      AsyncGenAI asyncGaos = Client.this.gaosClient.async();
+      this.interactions = asyncGaos.interactions();
+      this.agents = asyncGaos.agents();
+      this.webhooks = asyncGaos.webhooks();
     }
   }
 
@@ -72,32 +83,70 @@ public final class Client implements AutoCloseable {
   public final Tokens authTokens;
   public final Tunings tunings;
   public final FileSearchStores fileSearchStores;
-
+  private final GenAI gaosClient;
+  public final com.google.genai.gaos.Interactions interactions;
+  public final com.google.genai.gaos.Agents agents;
+  public final com.google.genai.gaos.Webhooks webhooks;
 
   /** Builder for {@link Client}. */
   public static class Builder {
     private Optional<String> apiKey = Optional.empty();
     private Optional<String> project = Optional.empty();
     private Optional<String> location = Optional.empty();
-    private Optional<GoogleCredentials> credentials = Optional.empty();
+    private Optional<TokenProvider> tokenProvider = Optional.empty();
     private Optional<ClientOptions> clientOptions = Optional.empty();
     private Optional<HttpOptions> httpOptions = Optional.empty();
     private Optional<Boolean> vertexAI = Optional.empty();
     private Optional<Boolean> enterprise = Optional.empty();
     private Optional<DebugConfig> debugConfig = Optional.empty();
+    private Optional<ScheduledExecutorService> asyncRetryScheduler = Optional.empty();
+
+    /** Sets the {@link ScheduledExecutorService} for async retries in GAOS. */
+    @CanIgnoreReturnValue
+    public Builder asyncRetryScheduler(ScheduledExecutorService asyncRetryScheduler) {
+      checkNotNull(asyncRetryScheduler, "asyncRetryScheduler cannot be null");
+      this.asyncRetryScheduler = Optional.of(asyncRetryScheduler);
+      return this;
+    }
 
     /** Builds the {@link Client} instance. */
     public Client build() {
+      Optional<TokenProvider> effectiveTokenProvider = tokenProvider;
+      if (!apiKey.isPresent() && !tokenProvider.isPresent()) {
+        // We only try to default to ADC if they seem to want to use Vertex AI.
+        // If they don't specify project/location, they might be using Gemini API with API key from env,
+        // which is checked in Client constructor.
+        // But if they want to use Vertex AI, they must have project/location or it will be read from env.
+        // Actually, ApiClient constructor reads project/location from env.
+        // So we might need to check env here too to decide if we default to ADC.
+        ImmutableMap<String, String> envVars = ApiClient.defaultEnvironmentVariables();
+        boolean hasProject = project.isPresent() || envVars.get("project") != null;
+        boolean hasLocation = location.isPresent() || envVars.get("location") != null;
+        boolean hasApiKey = apiKey.isPresent() || ApiClient.getApiKeyFromEnv() != null;
+        
+        // If they have project/location and NO API key, they probably want Vertex AI with ADC.
+        if (hasProject && !hasApiKey) {
+          try {
+            effectiveTokenProvider = Optional.of(new GoogleCredentialsTokenProvider(
+                GoogleCredentials.getApplicationDefault()
+                    .createScoped("https://www.googleapis.com/auth/cloud-platform")));
+          } catch (IOException e) {
+            throw new RuntimeException("Failed to load default credentials.", e);
+          }
+        }
+      }
+
       return new Client(
           apiKey,
           project,
           location,
-          credentials,
+          effectiveTokenProvider,
           httpOptions,
           clientOptions,
           vertexAI,
           enterprise,
-          debugConfig);
+          debugConfig,
+          asyncRetryScheduler);
     }
 
     /** Sets the API key for Gemini API. */
@@ -128,7 +177,15 @@ public final class Client implements AutoCloseable {
     @CanIgnoreReturnValue
     public Builder credentials(GoogleCredentials credentials) {
       checkNotNull(credentials, "credentials cannot be null");
-      this.credentials = Optional.of(credentials);
+      this.tokenProvider = Optional.of(new GoogleCredentialsTokenProvider(credentials));
+      return this;
+    }
+
+    /** Sets the {@link TokenProvider} for Vertex AI APIs. */
+    @CanIgnoreReturnValue
+    public Builder tokenProvider(TokenProvider tokenProvider) {
+      checkNotNull(tokenProvider, "tokenProvider cannot be null");
+      this.tokenProvider = Optional.of(tokenProvider);
       return this;
     }
 
@@ -187,12 +244,13 @@ public final class Client implements AutoCloseable {
         /* apiKey= */ Optional.empty(),
         /* project= */ Optional.empty(),
         /* location= */ Optional.empty(),
-        /* credentials= */ Optional.empty(),
+        /* tokenProvider= */ Optional.empty(),
         /* httpOptions= */ Optional.empty(),
         /* clientOptions= */ Optional.empty(),
         /* vertexAI= */ Optional.empty(),
         /* enterprise= */ Optional.empty(),
-        /* debugConfig= */ Optional.empty());
+        /* debugConfig= */ Optional.empty(),
+        /* asyncRetryScheduler= */ Optional.empty());
   }
 
   /**
@@ -218,12 +276,13 @@ public final class Client implements AutoCloseable {
       Optional<String> apiKey,
       Optional<String> project,
       Optional<String> location,
-      Optional<GoogleCredentials> credentials,
+      Optional<TokenProvider> tokenProvider,
       Optional<HttpOptions> httpOptions,
       Optional<ClientOptions> clientOptions,
       Optional<Boolean> vertexAI,
       Optional<Boolean> enterprise,
-      Optional<DebugConfig> debugConfig) {
+      Optional<DebugConfig> debugConfig,
+      Optional<ScheduledExecutorService> asyncRetryScheduler) {
     checkNotNull(vertexAI, "vertexAI cannot be null");
     checkNotNull(enterprise, "enterprise cannot be null");
     checkNotNull(debugConfig, "debugConfig cannot be null");
@@ -266,6 +325,7 @@ public final class Client implements AutoCloseable {
       throw new IllegalArgumentException("Gemini API does not support project/location.");
     }
 
+
     this.debugConfig = debugConfig.orElse(new DebugConfig());
     if (this.debugConfig.clientMode().equals("replay")) {
       if (!useVertexAI) {
@@ -283,7 +343,7 @@ public final class Client implements AutoCloseable {
                 /* apiKey= */ apiKey,
                 /* project= */ project,
                 /* location= */ location,
-                /* credentials= */ credentials,
+                /* tokenProvider= */ tokenProvider,
                 /* httpOptions= */ httpOptions,
                 /* clientOptions= */ clientOptions,
                 this.debugConfig.replaysDirectory(),
@@ -303,7 +363,7 @@ public final class Client implements AutoCloseable {
                 /* apiKey= */ apiKey,
                 /* project= */ project,
                 /* location= */ location,
-                /* credentials= */ credentials,
+                /* tokenProvider= */ tokenProvider,
                 /* httpOptions= */ httpOptions,
                 /* clientOptions= */ clientOptions);
       }
@@ -314,6 +374,80 @@ public final class Client implements AutoCloseable {
     caches = new Caches(apiClient);
     operations = new Operations(this.apiClient);
     chats = new Chats(this.apiClient);
+
+    GenAI.Builder gaosBuilder = GenAI.builder();
+    Optional<String> baseUrlOpt = this.apiClient.httpOptions().baseUrl();
+    Optional<String> apiVersionOpt = this.apiClient.httpOptions().apiVersion();
+    if (this.apiClient.vertexAI()
+        && this.apiClient.project() != null
+        && this.apiClient.location() != null) {
+      String apiVersion = apiVersionOpt.orElse("v1beta1");
+      String vertexLocation = this.apiClient.location();
+      String vertexProject = this.apiClient.project();
+      String host = baseUrlOpt.orElse("https://" + vertexLocation + "-aiplatform.googleapis.com");
+      if (host.endsWith("/")) {
+        host = host.substring(0, host.length() - 1);
+      }
+      String customBaseUrl = host + "/" + apiVersion + "/projects/" + vertexProject + "/locations";
+      gaosBuilder.serverURL(customBaseUrl);
+      gaosBuilder.apiVersion(vertexLocation);
+    } else {
+      baseUrlOpt.ifPresent(gaosBuilder::serverURL);
+      apiVersionOpt.ifPresent(gaosBuilder::apiVersion);
+    }
+    if (apiClient.tokenProvider().isPresent() && apiClient.tokenProvider().get().getQuotaProjectId().isPresent()) {
+      gaosBuilder.userProject(apiClient.tokenProvider().get().getQuotaProjectId().get());
+    }
+    gaosBuilder.securitySource(
+        new SecuritySource() {
+          @Override
+          public HasSecurity getSecurity() {
+            com.google.genai.gaos.models.shared.Security.Builder builder =
+                com.google.genai.gaos.models.shared.Security.builder();
+            if (apiClient.apiKey() != null) {
+              builder.apiKey(apiClient.apiKey());
+            } else if (apiClient.tokenProvider().isPresent()) {
+              TokenProvider provider = apiClient.tokenProvider().get();
+              try {
+                builder.accessToken(provider.getToken());
+              } catch (Exception e) {
+                throw new RuntimeException("Failed to get token for GAOS client", e);
+              }
+            }
+            java.util.Map<String, String> headersMap = new java.util.HashMap<>();
+            apiClient.httpOptions().headers().ifPresent(headersMap::putAll);
+            // Api-Revision is injected by GoogleGenAIAuthHook (gaos before-request hook).
+            String ua = headersMap.get("user-agent");
+            if (ua != null) {
+              headersMap.put(
+                  "user-agent",
+                  ua.replaceAll("google-genai-sdk/1\\.[0-9]+\\.[0-9]+", "google-genai-sdk/2.0.0"));
+            } else {
+              headersMap.put(
+                  "user-agent",
+                  "google-genai-sdk/2.0.0 gl-java/" + System.getProperty("java.version"));
+            }
+            String xgac = headersMap.get("x-goog-api-client");
+            if (xgac != null) {
+              headersMap.put(
+                  "x-goog-api-client",
+                  xgac.replaceAll(
+                      "google-genai-sdk/1\\.[0-9]+\\.[0-9]+", "google-genai-sdk/2.0.0"));
+            } else {
+              headersMap.put(
+                  "x-goog-api-client",
+                  "google-genai-sdk/2.0.0 gl-java/" + System.getProperty("java.version"));
+            }
+            builder.defaultHeaders(headersMap);
+            return builder.build();
+          }
+        });
+    asyncRetryScheduler.ifPresent(gaosBuilder::asyncRetryScheduler);
+    this.gaosClient = gaosBuilder.build();
+    this.interactions = gaosClient.interactions();
+    this.agents = gaosClient.agents();
+    this.webhooks = gaosClient.webhooks();
+
     async = new Async(this.apiClient);
     files = new Files(this.apiClient);
     authTokens = new Tokens(this.apiClient);
