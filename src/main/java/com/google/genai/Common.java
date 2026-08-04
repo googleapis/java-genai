@@ -16,211 +16,26 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.StreamReadConstraints;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.api.core.InternalApi;
-import com.google.common.base.Strings;
 import com.google.genai.errors.GenAiIOException;
 import com.google.genai.types.HttpOptions;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.StringJoiner;
-import java.util.logging.Logger;
 import org.jspecify.annotations.Nullable;
 
-/**
- * Common utility methods for the GenAI SDK.
- *
- * <p>All utility methods in this class are for internal use only and are subject to change without
- * notice.
- */
+/** Common utility methods for the GenAI SDK. */
 @InternalApi
 public final class Common {
-
-  @InternalApi public static final ObjectMapper objectMapper = new ObjectMapper();
-  private static final Logger logger = Logger.getLogger(Common.class.getName());
-
-  /**
-   * System property to override the default max JSON string length (20MB) in read constraints.
-   * E.g., if you want to change the limit to 100MB, you can set it via
-   * `-Dgenai.json.maxReadLength=100000000`.
-   */
-  public static final String MAX_READ_LENGTH_PROPERTY = "genai.json.maxReadLength";
-
-  /** Custom Jackson serializer for {@link Duration} to output "Xs" format. */
-  @SuppressWarnings("JavaDurationGetSecondsToToSeconds")
-  public static class CustomDurationSerializer extends JsonSerializer<Duration> {
-    public CustomDurationSerializer() {}
-
-    @Override
-    public void serialize(
-        Duration duration, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-        throws IOException {
-      if (duration == null) {
-        jsonGenerator.writeNull();
-      } else {
-        jsonGenerator.writeString(duration.getSeconds() + "s");
-      }
-    }
-  }
-
-  /** Custom Jackson deserializer for {@link Duration} to parse "Xs" format. */
-  public static class CustomDurationDeserializer extends JsonDeserializer<Duration> {
-    public CustomDurationDeserializer() {}
-
-    @Override
-    public @Nullable Duration deserialize(JsonParser p, DeserializationContext ctxt)
-        throws IOException {
-      String value = p.getValueAsString();
-
-      if (Strings.isNullOrEmpty(value)) {
-        return null;
-      }
-      if (value.endsWith("s")) {
-        String secondsPart = value.substring(0, value.length() - 1);
-        try {
-          long seconds = Long.parseLong(secondsPart);
-          return Duration.ofSeconds(seconds);
-        } catch (NumberFormatException e) {
-          JsonMappingException exception =
-              ctxt.weirdStringException(
-                  value,
-                  Duration.class,
-                  "Cannot parse duration from string: " + value + ". Expected format 'Xs'.");
-          exception.initCause(e);
-          throw exception;
-        }
-      } else {
-        throw ctxt.weirdStringException(
-            value, Duration.class, "Expected duration in format 'Xs', but got: " + value);
-      }
-    }
-  }
-
-  /** Configures the stream read constraints for the JSON parser. */
-  private static void configureStreamReadConstraints(int maxReadLength) {
-    if (maxReadLength <= 0) {
-      throw new IllegalArgumentException("Invalid JSON max read length: " + maxReadLength);
-    }
-    logger.info("Setting Jackson max read length to " + maxReadLength);
-
-    StreamReadConstraints streamReadConstraints =
-        StreamReadConstraints.builder().maxStringLength(maxReadLength).build();
-
-    objectMapper.getFactory().setStreamReadConstraints(streamReadConstraints);
-  }
-
-  static {
-    // Configure default stream read constraints.
-    int maxReadLength = 20000000; // 20MB
-    String maxReadLengthString = System.getProperty(MAX_READ_LENGTH_PROPERTY);
-    if (maxReadLengthString != null) {
-      try {
-        maxReadLength = Integer.parseInt(maxReadLengthString);
-      } catch (NumberFormatException e) {
-        logger.warning(
-            "Invalid JSON max read length in property "
-                + MAX_READ_LENGTH_PROPERTY
-                + ": "
-                + maxReadLengthString
-                + ". Using default value: "
-                + maxReadLength);
-      }
-    }
-    configureStreamReadConstraints(maxReadLength);
-
-    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-    objectMapper.registerModule(new Jdk8Module());
-    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-    SimpleModule durationModule = new SimpleModule();
-    durationModule.addSerializer(Duration.class, new CustomDurationSerializer());
-    durationModule.addDeserializer(Duration.class, new CustomDurationDeserializer());
-
-    objectMapper.registerModule(new JavaTimeModule());
-    objectMapper.registerModule(durationModule);
-  }
-
-  /** Sets the maximum allowed string length for Jackson JSON parsing. */
-  public static void setMaxReadLength(int maxReadLength) {
-    configureStreamReadConstraints(maxReadLength);
-  }
-
-  /** Returns the shared {@link ObjectMapper} instance used by the SDK. */
-  public static ObjectMapper objectMapper() {
-    return objectMapper;
-  }
-
-  /** Serializes the given object into a JSON string. */
-  public static String toJsonString(Object object) {
-    try {
-      return objectMapper.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to serialize the object to JSON.", e);
-    }
-  }
-
-  /** Serializes the given object into a Jackson {@link JsonNode}. */
-  public static JsonNode toJsonNode(Object object) {
-    return objectMapper.valueToTree(object);
-  }
-
-  /** Deserializes the given JSON string into an instance of {@code clazz}. */
-  public static <T> T fromJsonString(String jsonString, Class<T> clazz) {
-    try {
-      return objectMapper.readValue(jsonString, clazz);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to deserialize the JSON string.", e);
-    }
-  }
-
-  /** Deserializes the given Jackson {@link JsonNode} into an instance of {@code clazz}. */
-  public static <T> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
-    try {
-      return objectMapper.treeToValue(jsonNode, clazz);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to deserialize the JSON node.", e);
-    }
-  }
-
-  /** Parses the given JSON string into a Jackson {@link JsonNode}. */
-  public static JsonNode stringToJsonNode(String string) {
-    try {
-      return objectMapper.readTree(string);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to parse the JSON string.", e);
-    }
-  }
 
   private Common() {}
 
@@ -321,40 +136,8 @@ public final class Common {
       ObjectNode sourceNode = (ObjectNode) value;
       currentObject.setAll(sourceNode);
     } else {
-      JsonNode valueNode = toJsonNode(value);
-      updateJsonNode(currentObject, keyToSet, valueNode);
-    }
-  }
-
-  /** Updates an ObjectNode with a key and value, merging objects or avoiding empty overwrites. */
-  public static void updateJsonNode(ObjectNode currentObject, String keyToSet, JsonNode valueNode) {
-    JsonNode existingData = currentObject.get(keyToSet);
-
-    if (existingData != null) {
-      // Don't overwrite existing non-empty value with new empty value.
-      if (valueNode == null || valueNode.isNull() || valueNode.isEmpty()) {
-        return;
-      }
-
-      // Don't fail when overwriting value with same value
-      if (valueNode.equals(existingData)) {
-        return;
-      }
-
-      // Instead of overwriting dictionary with another dictionary, merge them.
-      if (existingData.isObject() && valueNode.isObject()) {
-        ((ObjectNode) existingData).setAll((ObjectNode) valueNode);
-      } else {
-        throw new IllegalArgumentException(
-            "Cannot set value for an existing key. Key: "
-                + keyToSet
-                + "; Existing value: "
-                + existingData
-                + "; New value: "
-                + valueNode);
-      }
-    } else {
-      currentObject.set(keyToSet, valueNode);
+      JsonNode valueNode = JsonSerializable.toJsonNode(value);
+      Transformers.updateJsonNode(currentObject, keyToSet, valueNode);
     }
   }
 
@@ -438,10 +221,6 @@ public final class Common {
     return currentObject;
   }
 
-  /**
-   * Formats a template string by replacing {@code {key}} placeholders with values from {@code
-   * data}.
-   */
   public static String formatMap(String template, JsonNode data) {
     if (data == null) {
       return template;
@@ -459,10 +238,6 @@ public final class Common {
     return template;
   }
 
-  /**
-   * Checks whether the given object represents a zero or default empty value (e.g., null, 0, false,
-   * '\0').
-   */
   public static boolean isZero(Object obj) {
     if (obj == null) {
       return true;
@@ -521,7 +296,7 @@ public final class Common {
 
   /** Converts a snake_case string to camelCase. */
   public static String snakeToCamel(String str) {
-    if (Strings.isNullOrEmpty(str)) {
+    if (str == null || str.isEmpty()) {
       return str;
     }
 
@@ -558,7 +333,7 @@ public final class Common {
       String[] destKeys = destPath.split("\\.");
 
       // Determine keys to exclude from wildcard to avoid cyclic references
-      Set<String> excludeKeys = new HashSet<>();
+      java.util.Set<String> excludeKeys = new java.util.HashSet<>();
       int wildcardIdx = -1;
 
       for (int i = 0; i < sourceKeys.length; i++) {
@@ -595,7 +370,11 @@ public final class Common {
    * @param excludeKeys Keys to exclude when processing wildcards
    */
   public static void moveValueRecursive(
-      JsonNode data, String[] sourceKeys, String[] destKeys, int keyIdx, Set<String> excludeKeys) {
+      JsonNode data,
+      String[] sourceKeys,
+      String[] destKeys,
+      int keyIdx,
+      java.util.Set<String> excludeKeys) {
     if (keyIdx >= sourceKeys.length || data == null) {
       return;
     }
@@ -619,7 +398,7 @@ public final class Common {
         ObjectNode objectNode = (ObjectNode) data;
 
         // Get all keys to move (excluding specified keys)
-        List<String> keysToMove = new ArrayList<>();
+        java.util.List<String> keysToMove = new java.util.ArrayList<>();
         Iterator<String> fieldNames = objectNode.fieldNames();
         while (fieldNames.hasNext()) {
           String fieldName = fieldNames.next();
@@ -629,7 +408,7 @@ public final class Common {
         }
 
         // Collect values to move
-        Map<String, JsonNode> valuesToMove = new HashMap<>();
+        java.util.Map<String, JsonNode> valuesToMove = new java.util.HashMap<>();
         for (String k : keysToMove) {
           valuesToMove.put(k, objectNode.get(k));
         }
@@ -640,7 +419,7 @@ public final class Common {
           JsonNode v = entry.getValue();
 
           // Build destination keys with the field name
-          List<String> newDestKeysList = new ArrayList<>();
+          java.util.List<String> newDestKeysList = new java.util.ArrayList<>();
           for (int i = keyIdx; i < destKeys.length; i++) {
             String dk = destKeys[i];
             if (dk.equals("*")) {
