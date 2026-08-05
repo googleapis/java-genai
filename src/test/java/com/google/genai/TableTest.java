@@ -47,12 +47,24 @@ public final class TableTest {
 
   private static Collection<DynamicTest> createTableTests(String path, boolean vertexAI)
       throws IOException {
-    if (vertexAI && "api".equals(System.getenv("GOOGLE_GENAI_CLIENT_MODE"))) {
-      String runVertexInApiMode = System.getenv("GOOGLE_GENAI_RUN_VERTEX_IN_API_MODE");
-      if (runVertexInApiMode == null || runVertexInApiMode.isEmpty()) {
+    if ("api".equals(System.getenv("GOOGLE_GENAI_CLIENT_MODE"))) {
+      // The nightly Kokoro jobs run one backend per job (see
+      // go/genai-sdk:integration-testing), so each job sets exactly one of these to select its
+      // backend. When neither is set, both backends run.
+      String runVertexOnly = System.getenv("GOOGLE_GENAI_RUN_VERTEX_ONLY_IN_API_MODE");
+      String runGeminiOnly = System.getenv("GOOGLE_GENAI_RUN_GEMINI_ONLY_IN_API_MODE");
+      boolean vertexOnly = runVertexOnly != null && !runVertexOnly.isEmpty();
+      boolean geminiOnly = runGeminiOnly != null && !runGeminiOnly.isEmpty();
+
+      if (vertexAI && geminiOnly) {
         return Collections.singletonList(
             DynamicTest.dynamicTest(
-                "Skipping Vertex AI tests in API mode (no GCP credentials configured) for " + path,
+                "Skipping Vertex AI tests in API mode (GEMINI ONLY config enabled) for " + path,
+                () -> {}));
+      } else if (!vertexAI && vertexOnly) {
+        return Collections.singletonList(
+            DynamicTest.dynamicTest(
+                "Skipping Gemini API tests in API mode (VERTEX ONLY config enabled) for " + path,
                 () -> {}));
       }
     }
