@@ -1301,7 +1301,8 @@ public final class Batches {
       Common.setValueByPath(
           toObject,
           new String[] {"responseJsonSchema"},
-          Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"}));
+          Transformers.tJsonSchema(
+              Common.getValueByPath(fromObject, new String[] {"responseJsonSchema"})));
     }
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"routingConfig"}))) {

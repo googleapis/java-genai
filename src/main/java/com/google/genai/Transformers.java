@@ -56,6 +56,10 @@ public final class Transformers {
 
   private Transformers() {}
 
+  public static Object tJsonSchema(Object origin) {
+    return origin;
+  }
+
   /**
    * Transforms a model name to the correct format for the API.
    *
