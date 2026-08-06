@@ -25,8 +25,6 @@
   }, {
     "pattern":"\\QMETA-INF/services/org.junit.platform.launcher.TestExecutionListener\\E"
   }, {
-    "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
-  }, {
     "pattern":"\\Qbridge1.png\\E"
   }, {
     "pattern":"\\Qcheckerboard.png\\E"
@@ -70,8 +68,6 @@
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/MockMethodAdvice.class\\E"
   }, {
     "pattern":"\\Qorg/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.raw\\E"
-  }, {
-    "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
   }, {
     "pattern":"java.base:\\Qjava/lang/reflect/AccessibleObject.class\\E"
   }, {
