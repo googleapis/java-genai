@@ -48,18 +48,14 @@ import com.google.genai.types.MaskReferenceImage;
 import com.google.genai.types.McpServer;
 import com.google.genai.types.Model;
 import com.google.genai.types.Part;
-import com.google.genai.types.PersonGeneration;
 import com.google.genai.types.RagRetrievalConfig;
 import com.google.genai.types.RagRetrievalConfigFilter;
 import com.google.genai.types.RawReferenceImage;
 import com.google.genai.types.Retrieval;
-import com.google.genai.types.SafetyFilterLevel;
 import com.google.genai.types.StreamableHttpTransport;
 import com.google.genai.types.Tool;
 import com.google.genai.types.ToolCodeExecution;
 import com.google.genai.types.UpdateModelConfig;
-import com.google.genai.types.UpscaleImageConfig;
-import com.google.genai.types.UpscaleImageResponse;
 import com.google.genai.types.VertexAISearch;
 import com.google.genai.types.VertexRagStore;
 import com.google.genai.types.VertexRagStoreRagResource;
@@ -82,7 +78,6 @@ public class AsyncModelsTest {
   private static final String MODEL_ID = "gemini-2.5-flash";
   private static final String IMAGE_GENERATION_MODEL_ID = "gemini-2.5-flash-image";
   private static final String IMAGEN_GENERATE_MODEL_NAME = "imagen-4.0-generate-001";
-  private static final String IMAGEN_UPSCALE_MODEL_NAME = "imagen-4.0-upscale-preview";
   private static final String TEXT_EMBEDDING_MODEL_ID = "gemini-embedding-001";
 
   /** Creates a raw reference image for edit image tests. */
@@ -617,57 +612,6 @@ public class AsyncModelsTest {
     // Assert
     assertTrue(response.generatedImages().get().get(0).image().isPresent());
     assertEquals(1, response.generatedImages().get().size());
-  }
-
-  @ParameterizedTest
-  @ValueSource(booleans = {false, true})
-  public void testUpscaleImageAsync(boolean vertexAI) throws Exception {
-    // Arrange
-    String suffix = vertexAI ? "vertex" : "mldev";
-    Client client =
-        TestUtils.createClient(
-            vertexAI, "tests/models/upscale_image/test_upscale." + suffix + ".json");
-
-    URL resourceUrl = getClass().getClassLoader().getResource("bridge1.png");
-    Path filePath = Paths.get(resourceUrl.toURI());
-    Image image = Image.fromFile(filePath.toAbsolutePath().toString());
-
-    UpscaleImageConfig config =
-        UpscaleImageConfig.builder()
-            .includeRaiReason(true)
-            .safetyFilterLevel(SafetyFilterLevel.Known.BLOCK_LOW_AND_ABOVE)
-            .personGeneration(PersonGeneration.Known.ALLOW_ADULT)
-            .outputMimeType("image/jpeg")
-            .outputCompressionQuality(80)
-            .enhanceInputImage(true)
-            .imagePreservationFactor(0.6f)
-            .labels(ImmutableMap.of("imagen_label_key", "upscale_image"))
-            .build();
-
-    // Act
-    if (vertexAI) {
-      CompletableFuture<UpscaleImageResponse> responseFuture =
-          client.async.models.upscaleImage(IMAGEN_UPSCALE_MODEL_NAME, image, "x2", config);
-      UpscaleImageResponse response = responseFuture.join();
-
-      // Assert
-      assertTrue(response.generatedImages().get().get(0).image().isPresent());
-    } else {
-      UnsupportedOperationException exception =
-          assertThrows(
-              UnsupportedOperationException.class,
-              () ->
-                  client
-                      .async
-                      .models
-                      .upscaleImage(IMAGEN_UPSCALE_MODEL_NAME, image, "x2", config)
-                      .join());
-      // Assert
-      assertEquals(
-          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
-              + " Developer API mode.",
-          exception.getMessage());
-    }
   }
 
   @ParameterizedTest

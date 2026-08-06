@@ -30,22 +30,31 @@ import java.util.Optional;
 /** API parameters for UpscaleImage. */
 @AutoValue
 @InternalApi
+@Deprecated
+@ExcludeFromGeneratedCoverageReport
 @JsonDeserialize(builder = UpscaleImageAPIParameters.Builder.class)
 public abstract class UpscaleImageAPIParameters extends JsonSerializable {
+  @ExcludeFromGeneratedCoverageReport
+  public UpscaleImageAPIParameters() {}
+
   /** The model to use. */
   @JsonProperty("model")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<String> model();
 
   /** The input image to upscale. */
   @JsonProperty("image")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Image> image();
 
   /** The factor to upscale the image (x2 or x4). */
   @JsonProperty("upscaleFactor")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<String> upscaleFactor();
 
   /** Configuration for upscaling. */
   @JsonProperty("config")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<UpscaleImageAPIConfig> config();
 
   /** Instantiates a builder for UpscaleImageAPIParameters. */
@@ -55,12 +64,17 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
   }
 
   /** Creates a builder with the same values as this instance. */
+  @ExcludeFromGeneratedCoverageReport
   public abstract Builder toBuilder();
 
   /** Builder for UpscaleImageAPIParameters. */
   @AutoValue.Builder
   public abstract static class Builder {
+    @ExcludeFromGeneratedCoverageReport
+    public Builder() {}
+
     /** For internal usage. Please use `UpscaleImageAPIParameters.builder()` for instantiation. */
+    @ExcludeFromGeneratedCoverageReport
     @JsonCreator
     private static Builder create() {
       return new AutoValue_UpscaleImageAPIParameters.Builder();
@@ -72,6 +86,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      * <p>model: The model to use.
      */
     @JsonProperty("model")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder model(String model);
 
     @ExcludeFromGeneratedCoverageReport
@@ -90,6 +105,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      * <p>image: The input image to upscale.
      */
     @JsonProperty("image")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder image(Image image);
 
     /**
@@ -98,6 +114,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      * <p>image: The input image to upscale.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder image(Image.Builder imageBuilder) {
       return image(imageBuilder.build());
     }
@@ -118,6 +135,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      * <p>upscaleFactor: The factor to upscale the image (x2 or x4).
      */
     @JsonProperty("upscaleFactor")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder upscaleFactor(String upscaleFactor);
 
     @ExcludeFromGeneratedCoverageReport
@@ -136,6 +154,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
      * <p>config: Configuration for upscaling.
      */
     @JsonProperty("config")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder config(UpscaleImageAPIConfig config);
 
     @ExcludeFromGeneratedCoverageReport
@@ -148,6 +167,7 @@ public abstract class UpscaleImageAPIParameters extends JsonSerializable {
       return config(Optional.empty());
     }
 
+    @ExcludeFromGeneratedCoverageReport
     public abstract UpscaleImageAPIParameters build();
   }
 

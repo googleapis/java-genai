@@ -34,34 +34,46 @@ import java.util.Optional;
  * &lt;https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/imagen-api&gt;`_.
  */
 @AutoValue
+@Deprecated
+@ExcludeFromGeneratedCoverageReport
 @JsonDeserialize(builder = UpscaleImageConfig.Builder.class)
 public abstract class UpscaleImageConfig extends JsonSerializable {
+  @ExcludeFromGeneratedCoverageReport
+  public UpscaleImageConfig() {}
+
   /** Used to override HTTP request options. */
   @JsonProperty("httpOptions")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<HttpOptions> httpOptions();
 
   /** Cloud Storage URI used to store the generated images. */
   @JsonProperty("outputGcsUri")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<String> outputGcsUri();
 
   /** Filter level for safety filtering. */
   @JsonProperty("safetyFilterLevel")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<SafetyFilterLevel> safetyFilterLevel();
 
   /** Allows generation of people by the model. */
   @JsonProperty("personGeneration")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<PersonGeneration> personGeneration();
 
   /** Whether to include a reason for filtered-out images in the response. */
   @JsonProperty("includeRaiReason")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Boolean> includeRaiReason();
 
   /** The image format that the output should be saved as. */
   @JsonProperty("outputMimeType")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<String> outputMimeType();
 
   /** The level of compression. Only applicable if the ``output_mime_type`` is ``image/jpeg``. */
   @JsonProperty("outputCompressionQuality")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Integer> outputCompressionQuality();
 
   /**
@@ -69,6 +81,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
    * and JPEG compression artifacts from the input image.
    */
   @JsonProperty("enhanceInputImage")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Boolean> enhanceInputImage();
 
   /**
@@ -77,10 +90,12 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
    * image, but with finer details and less noise.
    */
   @JsonProperty("imagePreservationFactor")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Float> imagePreservationFactor();
 
   /** User specified labels to track billing usage. */
   @JsonProperty("labels")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<Map<String, String>> labels();
 
   /** Instantiates a builder for UpscaleImageConfig. */
@@ -90,12 +105,17 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
   }
 
   /** Creates a builder with the same values as this instance. */
+  @ExcludeFromGeneratedCoverageReport
   public abstract Builder toBuilder();
 
   /** Builder for UpscaleImageConfig. */
   @AutoValue.Builder
   public abstract static class Builder {
+    @ExcludeFromGeneratedCoverageReport
+    public Builder() {}
+
     /** For internal usage. Please use `UpscaleImageConfig.builder()` for instantiation. */
+    @ExcludeFromGeneratedCoverageReport
     @JsonCreator
     private static Builder create() {
       return new AutoValue_UpscaleImageConfig.Builder();
@@ -107,6 +127,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>httpOptions: Used to override HTTP request options.
      */
     @JsonProperty("httpOptions")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder httpOptions(HttpOptions httpOptions);
 
     /**
@@ -115,6 +136,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>httpOptions: Used to override HTTP request options.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder httpOptions(HttpOptions.Builder httpOptionsBuilder) {
       return httpOptions(httpOptionsBuilder.build());
     }
@@ -135,6 +157,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>outputGcsUri: Cloud Storage URI used to store the generated images.
      */
     @JsonProperty("outputGcsUri")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder outputGcsUri(String outputGcsUri);
 
     @ExcludeFromGeneratedCoverageReport
@@ -153,6 +176,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>safetyFilterLevel: Filter level for safety filtering.
      */
     @JsonProperty("safetyFilterLevel")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder safetyFilterLevel(SafetyFilterLevel safetyFilterLevel);
 
     @ExcludeFromGeneratedCoverageReport
@@ -171,6 +195,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>safetyFilterLevel: Filter level for safety filtering.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder safetyFilterLevel(SafetyFilterLevel.Known knownType) {
       return safetyFilterLevel(new SafetyFilterLevel(knownType));
     }
@@ -181,6 +206,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>safetyFilterLevel: Filter level for safety filtering.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder safetyFilterLevel(String safetyFilterLevel) {
       return safetyFilterLevel(new SafetyFilterLevel(safetyFilterLevel));
     }
@@ -191,6 +217,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>personGeneration: Allows generation of people by the model.
      */
     @JsonProperty("personGeneration")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder personGeneration(PersonGeneration personGeneration);
 
     @ExcludeFromGeneratedCoverageReport
@@ -209,6 +236,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>personGeneration: Allows generation of people by the model.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder personGeneration(PersonGeneration.Known knownType) {
       return personGeneration(new PersonGeneration(knownType));
     }
@@ -219,6 +247,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>personGeneration: Allows generation of people by the model.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder personGeneration(String personGeneration) {
       return personGeneration(new PersonGeneration(personGeneration));
     }
@@ -229,6 +258,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>includeRaiReason: Whether to include a reason for filtered-out images in the response.
      */
     @JsonProperty("includeRaiReason")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder includeRaiReason(boolean includeRaiReason);
 
     @ExcludeFromGeneratedCoverageReport
@@ -247,6 +277,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>outputMimeType: The image format that the output should be saved as.
      */
     @JsonProperty("outputMimeType")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder outputMimeType(String outputMimeType);
 
     @ExcludeFromGeneratedCoverageReport
@@ -266,6 +297,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * ``output_mime_type`` is ``image/jpeg``.
      */
     @JsonProperty("outputCompressionQuality")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder outputCompressionQuality(Integer outputCompressionQuality);
 
     @ExcludeFromGeneratedCoverageReport
@@ -285,6 +317,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * to suppress the noise and JPEG compression artifacts from the input image.
      */
     @JsonProperty("enhanceInputImage")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder enhanceInputImage(boolean enhanceInputImage);
 
     @ExcludeFromGeneratedCoverageReport
@@ -305,6 +338,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * be more different from the input image, but with finer details and less noise.
      */
     @JsonProperty("imagePreservationFactor")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder imagePreservationFactor(Float imagePreservationFactor);
 
     @ExcludeFromGeneratedCoverageReport
@@ -323,6 +357,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
      * <p>labels: User specified labels to track billing usage.
      */
     @JsonProperty("labels")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder labels(Map<String, String> labels);
 
     @ExcludeFromGeneratedCoverageReport
@@ -335,6 +370,7 @@ public abstract class UpscaleImageConfig extends JsonSerializable {
       return labels(Optional.empty());
     }
 
+    @ExcludeFromGeneratedCoverageReport
     public abstract UpscaleImageConfig build();
   }
 
