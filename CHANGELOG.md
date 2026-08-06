@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.65.0](https://github.com/googleapis/java-genai/compare/v1.64.0...v1.65.0) (2026-08-06)
+
+
+### Features
+
+* Add TOO_MANY_TOOL_CALLS to FinishReason enum. ([b18f934](https://github.com/googleapis/java-genai/commit/b18f9343815f4d4f756d757130c96b7bc65086d4))
+* Support GoogleMaps Tool grounding_types places and routing ([d8d0613](https://github.com/googleapis/java-genai/commit/d8d061341d667e7983f12610003bf37955f004dc))
+
+
+### Bug Fixes
+
+* Add propertyOrdering auto-population for ResponseSchema and ResponseJsonSchema for Dotnet SDK ([ea41064](https://github.com/googleapis/java-genai/commit/ea41064675d8f83e0bc43e5b61a881299a02ee1d))
+
+
+### Documentation
+
+* Communicate on upcoming updates in the next major version ([f4fadad](https://github.com/googleapis/java-genai/commit/f4fadad8faa45642f1db6c9ae07cd3efb43e7a58))
+
 ## [1.64.0](https://github.com/googleapis/java-genai/compare/v1.63.0...v1.64.0) (2026-07-29)
 
 
