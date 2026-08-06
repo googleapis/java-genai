@@ -26,6 +26,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.HttpOptions;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -39,10 +40,20 @@ public class ClientTest {
       new DebugConfig("replay", "replay-id", "replay-dir");
   private static final GoogleCredentials CREDENTIALS = GoogleCredentials.newBuilder().build();
 
+  @AfterEach
+  public void tearDown() {
+    Client.setDefaultBaseUrls(Optional.empty(), Optional.empty());
+  }
+
   @Test
   public void testInitClientFromBuilder_mldev() {
     // Act
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    Client client =
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .build();
 
     // Assert
     assertEquals(API_KEY, client.apiKey());
@@ -57,6 +68,7 @@ public class ClientTest {
     // Act
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .project(PROJECT)
             .location(LOCATION)
             .credentials(CREDENTIALS)
@@ -78,6 +90,7 @@ public class ClientTest {
     // Act
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .project(PROJECT)
             .location(LOCATION)
             .credentials(CREDENTIALS)
@@ -97,7 +110,12 @@ public class ClientTest {
   public void testReplayClient_mldev() {
     // Act
     Client client =
-        Client.builder().apiKey(API_KEY).vertexAI(false).debugConfig(DEBUG_CONFIG).build();
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .debugConfig(DEBUG_CONFIG)
+            .build();
 
     // Assert
     assertEquals(API_KEY, client.apiKey());
@@ -112,6 +130,7 @@ public class ClientTest {
     // Act
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .project(PROJECT)
             .location(LOCATION)
             .credentials(CREDENTIALS)
@@ -131,7 +150,12 @@ public class ClientTest {
   @Test
   public void testInitClientFromBuilder_setApiKeyInVertex() {
     // Act
-    Client client = Client.builder().apiKey(API_KEY).vertexAI(true).build();
+    Client client =
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .apiKey(API_KEY)
+            .vertexAI(true)
+            .build();
 
     // Assert
     assertEquals(API_KEY, client.apiKey());
@@ -147,7 +171,12 @@ public class ClientTest {
     IllegalArgumentException exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> Client.builder().vertexAI(false).project(PROJECT).build());
+            () ->
+                Client.builder()
+                    .asyncRetryScheduler(TestUtils.sharedScheduler)
+                    .vertexAI(false)
+                    .project(PROJECT)
+                    .build());
 
     // Assert
     assertEquals("Gemini API does not support project/location.", exception.getMessage());
@@ -159,7 +188,12 @@ public class ClientTest {
     IllegalArgumentException exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> Client.builder().apiKey(API_KEY).project(PROJECT).build());
+            () ->
+                Client.builder()
+                    .asyncRetryScheduler(TestUtils.sharedScheduler)
+                    .apiKey(API_KEY)
+                    .project(PROJECT)
+                    .build());
 
     // Assert
     assertEquals("Gemini API does not support project/location.", exception.getMessage());
@@ -169,7 +203,13 @@ public class ClientTest {
   public void testInitClientFromBuilder_setApiKeyAndProjectAndLocationInVertex_success() {
     // Act
     Client client =
-        Client.builder().apiKey(API_KEY).project(PROJECT).location(LOCATION).vertexAI(true).build();
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .apiKey(API_KEY)
+            .project(PROJECT)
+            .location(LOCATION)
+            .vertexAI(true)
+            .build();
 
     // Assert
     assertEquals(API_KEY, client.apiKey());
@@ -185,12 +225,18 @@ public class ClientTest {
     Client.setDefaultBaseUrls(Optional.of("gemini-base-url"), Optional.of("vertex-base-url"));
     Client vertexClient =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .project(PROJECT)
             .location(LOCATION)
             .credentials(CREDENTIALS)
             .vertexAI(true)
             .build();
-    Client mldevClient = Client.builder().apiKey(API_KEY).vertexAI(false).build();
+    Client mldevClient =
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .apiKey(API_KEY)
+            .vertexAI(false)
+            .build();
 
     assertEquals("gemini-base-url", mldevClient.baseUrl().orElse(null));
     assertEquals("vertex-base-url", vertexClient.baseUrl().orElse(null));
@@ -204,6 +250,7 @@ public class ClientTest {
     // Act
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .project(PROJECT)
             .location("global")
             .credentials(CREDENTIALS)
@@ -221,6 +268,7 @@ public class ClientTest {
     // Act
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .httpOptions(HttpOptions.builder().baseUrl("https://my-endpoint.com").build())
             .vertexAI(true)
             .build();
@@ -235,6 +283,7 @@ public class ClientTest {
   void enterpriseFlag_whenSetToTrue_isRespected() {
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .enterprise(true)
             .project("project")
             .location("location")
@@ -246,7 +295,12 @@ public class ClientTest {
 
   @Test
   void enterpriseFlag_whenSetToFalse_isRespected() {
-    Client client = Client.builder().enterprise(false).apiKey("api-key").build();
+    Client client =
+        Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
+            .enterprise(false)
+            .apiKey("api-key")
+            .build();
     assertFalse(client.vertexAI());
   }
 
@@ -254,6 +308,7 @@ public class ClientTest {
   void vertexAIFlag_whenSetToTrue_isRespected() {
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .vertexAI(true)
             .project("project")
             .location("location")
@@ -270,6 +325,7 @@ public class ClientTest {
             IllegalArgumentException.class,
             () ->
                 Client.builder()
+                    .asyncRetryScheduler(TestUtils.sharedScheduler)
                     .enterprise(true)
                     .vertexAI(false)
                     .credentials(CREDENTIALS)
@@ -285,6 +341,7 @@ public class ClientTest {
   void nonConflictingFlags_doesNotThrowException() {
     Client client =
         Client.builder()
+            .asyncRetryScheduler(TestUtils.sharedScheduler)
             .enterprise(true)
             .vertexAI(true)
             .project("project")
@@ -352,6 +409,7 @@ public class ClientTest {
           .thenReturn(ImmutableMap.of("enterprise", "false"));
       Client client =
           Client.builder()
+              .asyncRetryScheduler(TestUtils.sharedScheduler)
               .enterprise(true)
               .project("project")
               .location("location")

@@ -16,7 +16,18 @@
 
 package com.google.genai;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 public final class TestUtils {
+  static final ScheduledExecutorService sharedScheduler =
+      Executors.newSingleThreadScheduledExecutor(
+          r -> {
+            Thread t = new Thread(r, "test-retry-scheduler");
+            t.setDaemon(true);
+            return t;
+          });
+
   static final String API_KEY = "api-key";
   static final String PROJECT = "project";
   static final String LOCATION = "location";
@@ -32,7 +43,11 @@ public final class TestUtils {
             "",
             System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY"));
 
-    Client.Builder clientBuilder = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig);
+    Client.Builder clientBuilder =
+        Client.builder()
+            .vertexAI(vertexAI)
+            .debugConfig(debugConfig)
+            .asyncRetryScheduler(sharedScheduler);
 
     if (vertexAI) {
       clientBuilder.project(PROJECT).location(LOCATION);
