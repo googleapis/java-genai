@@ -103,6 +103,10 @@ public abstract class LiveServerContent extends JsonSerializable {
   @JsonProperty("interimInputTranscription")
   public abstract Optional<Transcription> interimInputTranscription();
 
+  /** The current activity status of the live session. Always sent alongside `turn_complete`. */
+  @JsonProperty("interactionStatus")
+  public abstract Optional<InteractionStatus> interactionStatus();
+
   /** Instantiates a builder for LiveServerContent. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -414,6 +418,47 @@ public abstract class LiveServerContent extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearInterimInputTranscription() {
       return interimInputTranscription(Optional.empty());
+    }
+
+    /**
+     * Setter for interactionStatus.
+     *
+     * <p>interactionStatus: The current activity status of the live session. Always sent alongside
+     * `turn_complete`.
+     */
+    @JsonProperty("interactionStatus")
+    public abstract Builder interactionStatus(InteractionStatus interactionStatus);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder interactionStatus(Optional<InteractionStatus> interactionStatus);
+
+    /** Clears the value of interactionStatus field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearInteractionStatus() {
+      return interactionStatus(Optional.empty());
+    }
+
+    /**
+     * Setter for interactionStatus given a known enum.
+     *
+     * <p>interactionStatus: The current activity status of the live session. Always sent alongside
+     * `turn_complete`.
+     */
+    @CanIgnoreReturnValue
+    public Builder interactionStatus(InteractionStatus.Known knownType) {
+      return interactionStatus(new InteractionStatus(knownType));
+    }
+
+    /**
+     * Setter for interactionStatus given a string.
+     *
+     * <p>interactionStatus: The current activity status of the live session. Always sent alongside
+     * `turn_complete`.
+     */
+    @CanIgnoreReturnValue
+    public Builder interactionStatus(String interactionStatus) {
+      return interactionStatus(new InteractionStatus(interactionStatus));
     }
 
     public abstract LiveServerContent build();
