@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.api.core.InternalApi;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Arrays;
 import java.util.List;
@@ -124,6 +125,6 @@ public abstract class InternalRegisterFilesParameters extends JsonSerializable {
   /** Deserializes a JSON string to a InternalRegisterFilesParameters object. */
   @ExcludeFromGeneratedCoverageReport
   public static InternalRegisterFilesParameters fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, InternalRegisterFilesParameters.class);
+    return Common.fromJsonString(jsonString, InternalRegisterFilesParameters.class);
   }
 }

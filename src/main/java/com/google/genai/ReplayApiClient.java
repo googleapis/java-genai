@@ -218,10 +218,9 @@ public final class ReplayApiClient extends ApiClient {
       return;
     }
     JsonNode actualBody =
-        redactRequestBody(
-            JsonSerializable.stringToJsonNode(requestBodyToString(actualRequest.body())));
+        redactRequestBody(Common.stringToJsonNode(requestBodyToString(actualRequest.body())));
     JsonNode replayBody =
-        JsonSerializable.toJsonNode(replayRequest.bodySegments().orElse(new ArrayList<>()).get(0));
+        Common.toJsonNode(replayRequest.bodySegments().orElse(new ArrayList<>()).get(0));
     if (!equalsIgnoreKeyCase(replayBody, actualBody)) {
       throw new AssertionError(
           String.format(
@@ -236,8 +235,7 @@ public final class ReplayApiClient extends ApiClient {
     if (replayResponse == null) {
       throw new IllegalArgumentException("Replay response is null.");
     }
-    JsonNode bodyNode =
-        JsonSerializable.toJsonNode(replayResponse.bodySegments().orElse(new ArrayList<>()));
+    JsonNode bodyNode = Common.toJsonNode(replayResponse.bodySegments().orElse(new ArrayList<>()));
     Headers headers = Headers.of(replayResponse.headers().orElse(ImmutableMap.of()));
     return new ReplayApiResponse(
         (ArrayNode) bodyNode, replayResponse.statusCode().orElse(0), headers, isStream);
@@ -303,7 +301,7 @@ public final class ReplayApiClient extends ApiClient {
 
   /** Redact the request body to make it robust to replay files. */
   private static JsonNode redactRequestBody(JsonNode requestBody) {
-    ObjectNode redactedNode = JsonSerializable.objectMapper.createObjectNode();
+    ObjectNode redactedNode = Common.objectMapper.createObjectNode();
     requestBody
         .fields()
         .forEachRemaining(
@@ -311,7 +309,7 @@ public final class ReplayApiClient extends ApiClient {
               if (entry.getValue().isTextual()) {
                 redactedNode.set(
                     entry.getKey(),
-                    JsonSerializable.toJsonNode(
+                    Common.toJsonNode(
                         entry
                             .getValue()
                             .asText()
@@ -351,28 +349,28 @@ public final class ReplayApiClient extends ApiClient {
     } else if (obj instanceof JsonNode) {
       JsonNode node = (JsonNode) obj;
       if (node.isObject()) {
-        ObjectNode normalizedNode = JsonSerializable.objectMapper.createObjectNode();
+        ObjectNode normalizedNode = Common.objectMapper.createObjectNode();
         node.fields()
             .forEachRemaining(
                 entry -> {
                   String newKey = Common.snakeToCamel(entry.getKey());
                   Object normalizedValue = normalizeKeyCase(entry.getValue());
-                  normalizedNode.set(newKey, JsonSerializable.toJsonNode(normalizedValue));
+                  normalizedNode.set(newKey, Common.toJsonNode(normalizedValue));
                 });
         return normalizedNode;
       } else if (node.isArray()) {
-        ArrayNode normalizedNode = JsonSerializable.objectMapper.createArrayNode();
+        ArrayNode normalizedNode = Common.objectMapper.createArrayNode();
         node.elements()
             .forEachRemaining(
                 item -> {
-                  normalizedNode.add(JsonSerializable.toJsonNode(normalizeKeyCase(item)));
+                  normalizedNode.add(Common.toJsonNode(normalizeKeyCase(item)));
                 });
         return normalizedNode;
       } else if (node.isTextual()) {
         // In the replay file, the timestamp has +00:00 offset, while in the
         // actual request it uses Z to represent the offset. We need to
         // replace it to match the replay file.
-        return JsonSerializable.toJsonNode(node.asText().replaceAll("(?<=00)Z$", "\\+00:00"));
+        return Common.toJsonNode(node.asText().replaceAll("(?<=00)Z$", "\\+00:00"));
       }
     }
     return obj;

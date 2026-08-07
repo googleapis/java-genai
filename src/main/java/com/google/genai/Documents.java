@@ -46,7 +46,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteDocumentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"force"}) != null) {
       Common.setValueByPath(
@@ -60,7 +60,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteDocumentParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -71,8 +71,7 @@ public final class Documents {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           deleteDocumentConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -81,7 +80,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getDocumentParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -94,7 +93,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -115,7 +114,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parent"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -126,8 +125,7 @@ public final class Documents {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listDocumentsConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -136,7 +134,7 @@ public final class Documents {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listDocumentsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -172,7 +170,7 @@ public final class Documents {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -202,7 +200,7 @@ public final class Documents {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -215,7 +213,7 @@ public final class Documents {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -223,7 +221,7 @@ public final class Documents {
               + " Agent Platform mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, Document.class);
+    return Common.fromJsonNode(responseNode, Document.class);
   }
 
   public Document get(String name, GetDocumentConfig config) {
@@ -247,7 +245,7 @@ public final class Documents {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -277,7 +275,7 @@ public final class Documents {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   public void delete(String name, DeleteDocumentConfig config) {
@@ -301,7 +299,7 @@ public final class Documents {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -331,7 +329,7 @@ public final class Documents {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -345,7 +343,7 @@ public final class Documents {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -357,7 +355,7 @@ public final class Documents {
       responseNode = listDocumentsResponseFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, ListDocumentsResponse.class);
+    return Common.fromJsonNode(responseNode, ListDocumentsResponse.class);
   }
 
   ListDocumentsResponse privateList(String parent, ListDocumentsConfig config) {
@@ -383,7 +381,7 @@ public final class Documents {
     if (config == null) {
       config = ListDocumentsConfig.builder().build();
     }
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListDocumentsConfig)) {
             throw new GenAiIOException(
@@ -395,7 +393,7 @@ public final class Documents {
     return new Pager<>(
         Pager.PagedItem.DOCUMENTS,
         request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(parent, config)));
+        (ObjectNode) Common.toJsonNode(config),
+        Common.toJsonNode(privateList(parent, config)));
   }
 }

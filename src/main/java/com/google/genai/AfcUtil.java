@@ -60,9 +60,9 @@ final class AfcUtil {
           config.tools().get().stream()
               .map(tool -> Transformers.tTool(tool))
               .collect(toImmutableList());
-      ObjectNode configNode = JsonSerializable.objectMapper.valueToTree(config);
-      configNode.set("tools", JsonSerializable.objectMapper.valueToTree(transformedTools));
-      transformedConfig = JsonSerializable.fromJsonNode(configNode, GenerateContentConfig.class);
+      ObjectNode configNode = Common.objectMapper.valueToTree(config);
+      configNode.set("tools", Common.objectMapper.valueToTree(transformedTools));
+      transformedConfig = Common.fromJsonNode(configNode, GenerateContentConfig.class);
     } else {
       transformedConfig = config;
     }

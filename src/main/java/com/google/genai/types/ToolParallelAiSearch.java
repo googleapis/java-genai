@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Map;
 import java.util.Optional;
@@ -123,6 +124,6 @@ public abstract class ToolParallelAiSearch extends JsonSerializable {
   /** Deserializes a JSON string to a ToolParallelAiSearch object. */
   @ExcludeFromGeneratedCoverageReport
   public static ToolParallelAiSearch fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ToolParallelAiSearch.class);
+    return Common.fromJsonString(jsonString, ToolParallelAiSearch.class);
   }
 }

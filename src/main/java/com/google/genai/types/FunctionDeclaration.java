@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -325,7 +326,7 @@ public abstract class FunctionDeclaration extends JsonSerializable {
   /** Deserializes a JSON string to a FunctionDeclaration object. */
   @ExcludeFromGeneratedCoverageReport
   public static FunctionDeclaration fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, FunctionDeclaration.class);
+    return Common.fromJsonString(jsonString, FunctionDeclaration.class);
   }
 
   /**

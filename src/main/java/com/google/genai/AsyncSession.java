@@ -21,11 +21,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.genai.types.LiveClientContent;
 import com.google.genai.types.LiveClientMessage;
 import com.google.genai.types.LiveClientToolResponse;
-import com.google.genai.types.LiveServerSetupComplete;
 import com.google.genai.types.LiveSendClientContentParameters;
 import com.google.genai.types.LiveSendRealtimeInputParameters;
 import com.google.genai.types.LiveSendToolResponseParameters;
 import com.google.genai.types.LiveServerMessage;
+import com.google.genai.types.LiveServerSetupComplete;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -105,7 +105,7 @@ public final class AsyncSession {
   private CompletableFuture<Void> send(LiveClientMessage input) {
 
     LiveConverters liveConverters = new LiveConverters(apiClient);
-    JsonNode parameterNode = JsonSerializable.toJsonNode(input);
+    JsonNode parameterNode = Common.toJsonNode(input);
 
     ObjectNode body;
     if (this.apiClient.vertexAI()) {
@@ -114,7 +114,7 @@ public final class AsyncSession {
       body = liveConverters.liveClientMessageToMldev(parameterNode, null);
     }
 
-    return CompletableFuture.runAsync(() -> websocket.send(JsonSerializable.toJsonString(body)));
+    return CompletableFuture.runAsync(() -> websocket.send(Common.toJsonString(body)));
   }
 
   /**

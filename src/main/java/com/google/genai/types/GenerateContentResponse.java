@@ -28,6 +28,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -369,7 +370,7 @@ public abstract class GenerateContentResponse extends JsonSerializable {
   /** Deserializes a JSON string to a GenerateContentResponse object. */
   @ExcludeFromGeneratedCoverageReport
   public static GenerateContentResponse fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateContentResponse.class);
+    return Common.fromJsonString(jsonString, GenerateContentResponse.class);
   }
 
   private static final Logger logger = Logger.getLogger(GenerateContentResponse.class.getName());

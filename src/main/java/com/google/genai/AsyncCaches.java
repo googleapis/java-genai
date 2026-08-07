@@ -152,7 +152,7 @@ public final class AsyncCaches {
       config = ListCachedContentsConfig.builder().build();
     }
     ListCachedContentsConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListCachedContentsConfig)) {
             throw new GenAiIOException(
@@ -160,14 +160,14 @@ public final class AsyncCaches {
                     + requestConfig.getClass().getName());
           }
           return this.privateList((ListCachedContentsConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+              .thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<CachedContent>(
                 Pager.PagedItem.CACHED_CONTENTS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 }

@@ -60,7 +60,7 @@ public final class AsyncTunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForPrivateGet(name, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -78,7 +78,7 @@ public final class AsyncTunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -107,7 +107,7 @@ public final class AsyncTunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = tunings.buildRequestForCancel(name, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -139,7 +139,7 @@ public final class AsyncTunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTune(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
@@ -172,7 +172,7 @@ public final class AsyncTunings {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         tunings.buildRequestForPrivateTuneMldev(baseModel, preTunedModel, trainingDataset, config);
     return this.apiClient
@@ -199,7 +199,7 @@ public final class AsyncTunings {
       config = ListTuningJobsConfig.builder().build();
     }
     ListTuningJobsConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListTuningJobsConfig)) {
             throw new GenAiIOException(
@@ -207,14 +207,14 @@ public final class AsyncTunings {
                     + requestConfig.getClass().getName());
           }
           return this.privateList((ListTuningJobsConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+              .thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<TuningJob>(
                 Pager.PagedItem.TUNING_JOBS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 

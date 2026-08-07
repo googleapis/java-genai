@@ -74,7 +74,7 @@ public final class Transformers {
     } else if (origin instanceof String) {
       model = (String) origin;
     } else if (origin instanceof JsonNode) {
-      model = JsonSerializable.toJsonString((JsonNode) origin);
+      model = Common.toJsonString((JsonNode) origin);
       model = model.replace("\"", "");
     } else {
       throw new IllegalArgumentException("Unsupported model type: " + origin.getClass());
@@ -159,7 +159,7 @@ public final class Transformers {
     if ((response.get("httpHeaders") == null) || (response.get("jsonPayload") != null)) {
       logger.warning("Cannot determine the models type for response: " + response.toPrettyString());
     }
-    return JsonSerializable.objectMapper.createArrayNode();
+    return Common.objectMapper.createArrayNode();
   }
 
   /**
@@ -213,7 +213,7 @@ public final class Transformers {
     } else if (content instanceof Content) {
       return (Content) content;
     } else if (content instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) content, Content.class);
+      return Common.fromJsonNode((JsonNode) content, Content.class);
     }
 
     throw new IllegalArgumentException("Unsupported content type: " + content.getClass());
@@ -226,7 +226,7 @@ public final class Transformers {
     } else if (origin instanceof Schema) {
       return (Schema) origin;
     } else if (origin instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class);
+      return Common.fromJsonNode((JsonNode) origin, Schema.class);
     }
     throw new IllegalArgumentException("Unsupported schema type: " + origin.getClass());
   }
@@ -245,7 +245,7 @@ public final class Transformers {
     } else if (speechConfig instanceof SpeechConfig) {
       return (SpeechConfig) speechConfig;
     } else if (speechConfig instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) speechConfig, SpeechConfig.class);
+      return Common.fromJsonNode((JsonNode) speechConfig, SpeechConfig.class);
     }
 
     throw new IllegalArgumentException("Unsupported speechConfig type:" + speechConfig.getClass());
@@ -266,7 +266,7 @@ public final class Transformers {
     } else if (origin instanceof SpeechConfig) {
       speechConfig = (SpeechConfig) origin;
     } else if (origin instanceof JsonNode) {
-      speechConfig = JsonSerializable.fromJsonNode((JsonNode) origin, SpeechConfig.class);
+      speechConfig = Common.fromJsonNode((JsonNode) origin, SpeechConfig.class);
     } else {
       throw new IllegalArgumentException("Unsupported speechConfig type:" + origin.getClass());
     }
@@ -305,18 +305,16 @@ public final class Transformers {
       if (tool.functionDeclarations().isPresent()) {
         combinedFunctionDeclarations.addAll(tool.functionDeclarations().get());
       }
-      ObjectNode toolNode = JsonSerializable.objectMapper.valueToTree(tool);
+      ObjectNode toolNode = Common.objectMapper.valueToTree(tool);
       toolNode.remove("functions");
       toolNode.set(
-          "functionDeclarations",
-          JsonSerializable.objectMapper.valueToTree(combinedFunctionDeclarations));
-      return JsonSerializable.fromJsonNode(toolNode, Tool.class);
+          "functionDeclarations", Common.objectMapper.valueToTree(combinedFunctionDeclarations));
+      return Common.fromJsonNode(toolNode, Tool.class);
     } else if (origin instanceof JsonNode) {
       // in case reflectMethods is present in the json node, call tTool to parse it and remove it
       // from the json node.
       return tTool(
-          JsonSerializable.objectMapper.convertValue(
-              (JsonNode) origin, new TypeReference<Tool>() {}));
+          Common.objectMapper.convertValue((JsonNode) origin, new TypeReference<Tool>() {}));
     }
 
     throw new IllegalArgumentException("Unsupported tool type: " + origin.getClass());
@@ -327,7 +325,7 @@ public final class Transformers {
     // 1. Check if the origin is a JsonNode
     if (!(origin instanceof JsonNode)) {
       // If origin is not a JsonNode, we create one from the object.
-      origin = JsonSerializable.toJsonNode(origin);
+      origin = Common.toJsonNode(origin);
     }
 
     JsonNode inputNode = (JsonNode) origin;
@@ -339,14 +337,13 @@ public final class Transformers {
 
     // 2. If it's not an array, create a new array and add the input to it.
     ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-    arrayNode.add(JsonSerializable.toJsonNode(tBlob(origin)));
+    arrayNode.add(Common.toJsonNode(tBlob(origin)));
     return arrayNode;
   }
 
   public static Blob tBlob(Object blob) {
     if (blob instanceof JsonNode) {
-      blob =
-          JsonSerializable.objectMapper.convertValue((JsonNode) blob, new TypeReference<Blob>() {});
+      blob = Common.objectMapper.convertValue((JsonNode) blob, new TypeReference<Blob>() {});
     }
 
     if (blob instanceof Blob) {
@@ -403,7 +400,7 @@ public final class Transformers {
     } else if (origin instanceof String) {
       return getResourceName(apiClient, (String) origin, "cachedContents");
     } else if (origin instanceof JsonNode) {
-      String cachedContentName = JsonSerializable.toJsonString((JsonNode) origin);
+      String cachedContentName = Common.toJsonString((JsonNode) origin);
       cachedContentName = cachedContentName.replace("\"", "");
       return getResourceName(apiClient, cachedContentName, "cachedContents");
     }
@@ -424,7 +421,7 @@ public final class Transformers {
       contents = (List<Content>) origin;
     } else if (origin instanceof JsonNode) {
       contents =
-          JsonSerializable.objectMapper.convertValue(
+          Common.objectMapper.convertValue(
               (JsonNode) origin, new TypeReference<List<Content>>() {});
     } else {
       throw new IllegalArgumentException("Unsupported contents type: " + origin.getClass());
@@ -607,7 +604,7 @@ public final class Transformers {
     if (name instanceof String) {
       nameStr = (String) name;
     } else if (name instanceof JsonNode) {
-      nameStr = JsonSerializable.toJsonString((JsonNode) name);
+      nameStr = Common.toJsonString((JsonNode) name);
       nameStr = nameStr.replace("\"", "");
     } else {
       throw new IllegalArgumentException("Unsupported batch job name type: " + name.getClass());
@@ -651,7 +648,7 @@ public final class Transformers {
     if (state instanceof String) {
       stateStr = (String) state;
     } else if (state instanceof JsonNode) {
-      stateStr = JsonSerializable.toJsonString(state);
+      stateStr = Common.toJsonString(state);
       stateStr = stateStr.replace("\"", "");
     } else {
       throw new IllegalArgumentException("Unsupported job state type: " + state.getClass());
@@ -685,34 +682,7 @@ public final class Transformers {
    * @throws IllegalArgumentException if a value cannot be set for an existing key.
    */
   public static void updateJsonNode(ObjectNode currentObject, String keyToSet, JsonNode valueNode) {
-    JsonNode existingData = currentObject.get(keyToSet);
-
-    if (existingData != null) {
-      // Don't overwrite existing non-empty value with new empty value.
-      if (valueNode == null || valueNode.isNull() || valueNode.isEmpty()) {
-        return;
-      }
-
-      // Don't fail when overwriting value with same value
-      if (valueNode.equals(existingData)) {
-        return;
-      }
-
-      // Instead of overwriting dictionary with another dictionary, merge them.
-      if (existingData.isObject() && valueNode.isObject()) {
-        ((ObjectNode) existingData).setAll((ObjectNode) valueNode);
-      } else {
-        throw new IllegalArgumentException(
-            "Cannot set value for an existing key. Key: "
-                + keyToSet
-                + "; Existing value: "
-                + existingData
-                + "; New value: "
-                + valueNode);
-      }
-    } else {
-      currentObject.set(keyToSet, valueNode);
-    }
+    Common.updateJsonNode(currentObject, keyToSet, valueNode);
   }
 
   /**
@@ -757,7 +727,7 @@ public final class Transformers {
 
     List<ObjectNode> metricsPayload = new ArrayList<>();
     for (UnifiedMetric metricObj : metricsList) {
-      ObjectNode metricPayloadItem = (ObjectNode) JsonSerializable.toJsonNode(metricObj);
+      ObjectNode metricPayloadItem = (ObjectNode) Common.toJsonNode(metricObj);
       ArrayNode aggregationMetrics = JsonNodeFactory.instance.arrayNode();
       aggregationMetrics.add("AVERAGE");
       aggregationMetrics.add("STANDARD_DEVIATION");

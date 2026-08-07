@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /**
@@ -54,6 +55,6 @@ public abstract class GoogleMapsRouting extends JsonSerializable {
   /** Deserializes a JSON string to a GoogleMapsRouting object. */
   @ExcludeFromGeneratedCoverageReport
   public static GoogleMapsRouting fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GoogleMapsRouting.class);
+    return Common.fromJsonString(jsonString, GoogleMapsRouting.class);
   }
 }

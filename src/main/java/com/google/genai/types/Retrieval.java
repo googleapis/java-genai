@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -180,6 +181,6 @@ public abstract class Retrieval extends JsonSerializable {
   /** Deserializes a JSON string to a Retrieval object. */
   @ExcludeFromGeneratedCoverageReport
   public static Retrieval fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Retrieval.class);
+    return Common.fromJsonString(jsonString, Retrieval.class);
   }
 }

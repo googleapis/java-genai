@@ -33,7 +33,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -83,7 +83,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -109,14 +109,14 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(partToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(partToMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
@@ -134,7 +134,7 @@ final class TokensConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createAuthTokenConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"expireTime"}) != null) {
       Common.setValueByPath(
@@ -163,7 +163,7 @@ final class TokensConverters {
           new String[] {"bidiGenerateContentSetup"},
           liveConnectConstraintsToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"liveConnectConstraints"})),
               toObject));
     }
@@ -181,15 +181,14 @@ final class TokensConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createAuthTokenParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"config"},
           createAuthTokenConfigToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject));
     }
 
@@ -198,7 +197,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createAuthTokenParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"config"}))) {
       throw new IllegalArgumentException(
           "config parameter is only supported in Gemini Developer API mode, not in Gemini"
@@ -210,7 +209,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
       throw new IllegalArgumentException(
           "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -236,7 +235,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
@@ -273,14 +272,13 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"authConfig"},
           authConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"authConfig"})),
               toObject));
     }
 
@@ -302,7 +300,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -334,7 +332,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode liveConnectConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"responseModalities"}) != null) {
       Common.setValueByPath(
@@ -412,7 +410,7 @@ final class TokensConverters {
           parentObject,
           new String[] {"setup", "systemInstruction"},
           contentToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
               toObject));
@@ -426,7 +424,7 @@ final class TokensConverters {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(toolToMldev(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+        result.add(toolToMldev(Common.toJsonNode(Transformers.tTool(item)), toObject));
       }
       Common.setValueByPath(parentObject, new String[] {"setup", "tools"}, result);
     }
@@ -436,7 +434,7 @@ final class TokensConverters {
           parentObject,
           new String[] {"setup", "sessionResumption"},
           sessionResumptionConfigToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"sessionResumption"})),
               toObject));
     }
@@ -496,7 +494,7 @@ final class TokensConverters {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(safetySettingToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(safetySettingToMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(parentObject, new String[] {"setup", "safetySettings"}, result);
     }
@@ -514,7 +512,7 @@ final class TokensConverters {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode liveConnectConstraintsToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -528,8 +526,7 @@ final class TokensConverters {
           toObject,
           new String[] {"config"},
           liveConnectConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject));
     }
 
@@ -538,7 +535,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -565,8 +562,7 @@ final class TokensConverters {
           toObject,
           new String[] {"fileData"},
           fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject));
     }
 
@@ -575,8 +571,7 @@ final class TokensConverters {
           toObject,
           new String[] {"functionCall"},
           functionCallToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"functionCall"})),
               toObject));
     }
 
@@ -592,8 +587,7 @@ final class TokensConverters {
           toObject,
           new String[] {"inlineData"},
           blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"inlineData"})),
               toObject));
     }
 
@@ -658,7 +652,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -684,7 +678,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode sessionResumptionConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"handle"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -703,7 +697,7 @@ final class TokensConverters {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException(
           "retrieval parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -729,8 +723,7 @@ final class TokensConverters {
           toObject,
           new String[] {"googleSearch"},
           googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject));
     }
 
@@ -739,8 +732,7 @@ final class TokensConverters {
           toObject,
           new String[] {"googleMaps"},
           googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
               toObject));
     }
 

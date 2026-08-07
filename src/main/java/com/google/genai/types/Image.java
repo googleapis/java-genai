@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import com.google.genai.errors.GenAiIOException;
 import java.io.File;
@@ -133,7 +134,7 @@ public abstract class Image extends JsonSerializable {
   /** Deserializes a JSON string to a Image object. */
   @ExcludeFromGeneratedCoverageReport
   public static Image fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, Image.class);
+    return Common.fromJsonString(jsonString, Image.class);
   }
 
   /**

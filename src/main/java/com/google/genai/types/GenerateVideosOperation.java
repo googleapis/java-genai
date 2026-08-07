@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.genai.JsonSerializable;
+import com.google.genai.Common;
 import com.google.genai.OperationsConverters;
 import java.util.Map;
 import java.util.Optional;
@@ -50,7 +50,7 @@ public abstract class GenerateVideosOperation
       response = converter.generateVideosOperationFromMldev(apiResponse, null);
     }
 
-    return JsonSerializable.fromJsonNode(response, GenerateVideosOperation.class);
+    return Common.fromJsonNode(response, GenerateVideosOperation.class);
   }
 
   /** Instantiates a builder for GenerateVideosOperation. */
@@ -183,6 +183,6 @@ public abstract class GenerateVideosOperation
   /** Deserializes a JSON string to a GenerateVideosOperation object. */
   @ExcludeFromGeneratedCoverageReport
   public static GenerateVideosOperation fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, GenerateVideosOperation.class);
+    return Common.fromJsonString(jsonString, GenerateVideosOperation.class);
   }
 }

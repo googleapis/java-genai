@@ -16,173 +16,63 @@
 
 package com.google.genai;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.StreamReadConstraints;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.api.core.InternalApi;
-import com.google.genai.errors.GenAiIOException;
-import java.util.logging.Logger;
+import java.time.Duration;
 
 /** A class that can be serialized to JSON and deserialized from JSON. */
 public abstract class JsonSerializable {
 
-  @InternalApi protected static final ObjectMapper objectMapper = new ObjectMapper();
-  private static final Logger logger = Logger.getLogger(JsonSerializable.class.getName());
+  @InternalApi protected static final ObjectMapper objectMapper = Common.objectMapper;
 
   /**
    * System property to override the default max JSON string length (20MB) in read constraints.
    * E.g., if you want to change the limit to 100MB, you can set it via
    * `-Dgenai.json.maxReadLength=100000000`.
    */
-  public static final String MAX_READ_LENGTH_PROPERTY = "genai.json.maxReadLength";
+  public static final String MAX_READ_LENGTH_PROPERTY = Common.MAX_READ_LENGTH_PROPERTY;
 
-  /** Custom Jackson serializer for {@link java.time.Duration} to output "Xs" format. */
-  static class CustomDurationSerializer extends JsonSerializer<java.time.Duration> {
-    @Override
-    public void serialize(
-        java.time.Duration duration,
-        JsonGenerator jsonGenerator,
-        SerializerProvider serializerProvider)
-        throws java.io.IOException {
-      if (duration == null) {
-        jsonGenerator.writeNull();
-      } else {
-        jsonGenerator.writeString(duration.getSeconds() + "s");
-      }
-    }
+  /** Custom Jackson serializer for {@link Duration} to output "Xs" format. */
+  public static class CustomDurationSerializer extends Common.CustomDurationSerializer {
+    public CustomDurationSerializer() {}
   }
 
-  /** Custom Jackson deserializer for {@link java.time.Duration} to parse "Xs" format. */
-  static class CustomDurationDeserializer extends JsonDeserializer<java.time.Duration> {
-    @Override
-    public java.time.Duration deserialize(JsonParser p, DeserializationContext ctxt)
-        throws java.io.IOException, JsonProcessingException {
-      String value = p.getValueAsString();
-
-      if (value == null || value.isEmpty()) {
-        return null;
-      }
-      if (value.endsWith("s")) {
-        String secondsPart = value.substring(0, value.length() - 1);
-        try {
-          long seconds = Long.parseLong(secondsPart);
-          return java.time.Duration.ofSeconds(seconds);
-        } catch (NumberFormatException e) {
-          throw ctxt.weirdStringException(
-              value,
-              java.time.Duration.class,
-              "Cannot parse duration from string: " + value + ". Expected format 'Xs'.");
-        }
-      } else {
-        // If it doesn't end with 's', delegate to the default deserializer.
-        throw ctxt.weirdStringException(
-            value, java.time.Duration.class, "Expected duration in format 'Xs', but got: " + value);
-      }
-    }
-  }
-
-  /** Configures the stream read constraints for the JSON parser. */
-  private static void configureStreamReadConstraints(int maxReadLength) {
-    if (maxReadLength <= 0) {
-      throw new IllegalArgumentException("Invalid JSON max read length: " + maxReadLength);
-    }
-    logger.info("Overriding default JSON max string length. New value = " + maxReadLength);
-    StreamReadConstraints constraints =
-        StreamReadConstraints.builder().maxStringLength(maxReadLength).build();
-    objectMapper.getFactory().setStreamReadConstraints(constraints);
-  }
-
-  static {
-    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-    objectMapper.registerModule(new Jdk8Module());
-    // Disable writing dates as timestamps to use ISO-8601 string format for Instant
-    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-    // Create a module for custom serializers/deserializers
-    SimpleModule customModule = new SimpleModule();
-    customModule.addSerializer(java.time.Duration.class, new CustomDurationSerializer());
-    customModule.addDeserializer(java.time.Duration.class, new CustomDurationDeserializer());
-
-    // Register JavaTimeModule for other java.time types *before* the custom module
-    // This ensures our custom Duration handling takes precedence over the default one
-    // provided by JavaTimeModule.
-    objectMapper.registerModule(new JavaTimeModule());
-    objectMapper.registerModule(customModule);
-
-    try {
-      String propertyValue = System.getProperty(MAX_READ_LENGTH_PROPERTY);
-      if (propertyValue != null && !propertyValue.isEmpty()) {
-        int maxStringLength = Integer.parseInt(propertyValue);
-        configureStreamReadConstraints(maxStringLength);
-      }
-    } catch (NumberFormatException e) {
-      logger.warning(
-          "Failed to parse system property ["
-              + MAX_READ_LENGTH_PROPERTY
-              + "]. Using default 20MB limit.");
-    }
+  /** Custom Jackson deserializer for {@link Duration} to parse "Xs" format. */
+  public static class CustomDurationDeserializer extends Common.CustomDurationDeserializer {
+    public CustomDurationDeserializer() {}
   }
 
   /** Serializes the instance to a Json string. */
   public String toJson() {
-    return toJsonString(this);
+    return Common.toJsonString(this);
   }
 
   /** Serializes an object to a Json string. */
   public static String toJsonString(Object object) {
-    try {
-      return objectMapper.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to serialize the object to JSON.", e);
-    }
+    return Common.toJsonString(object);
   }
 
   /** Serializes an object to a JsonNode. */
   public static JsonNode toJsonNode(Object object) {
-    return objectMapper.valueToTree(object);
+    return Common.toJsonNode(object);
   }
 
   /** Deserializes a Json string to an object of the given type. This is for internal use only. */
   @InternalApi
   public static <T extends JsonSerializable> T fromJsonString(String jsonString, Class<T> clazz) {
-    try {
-      return objectMapper.readValue(jsonString, clazz);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to deserialize the JSON string.", e);
-    }
+    return Common.fromJsonString(jsonString, clazz);
   }
 
   /** Deserializes a JsonNode to an object of the given type. */
   @InternalApi
   public static <T extends JsonSerializable> T fromJsonNode(JsonNode jsonNode, Class<T> clazz) {
-    try {
-      return objectMapper.treeToValue(jsonNode, clazz);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to deserialize the JSON node.", e);
-    }
+    return Common.fromJsonNode(jsonNode, clazz);
   }
 
   /** Converts a Json string to a JsonNode. */
   public static JsonNode stringToJsonNode(String string) {
-    try {
-      return objectMapper.readTree(string);
-    } catch (JsonProcessingException e) {
-      throw new GenAiIOException("Failed to parse the JSON string.", e);
-    }
+    return Common.stringToJsonNode(string);
   }
 
   /**
@@ -194,10 +84,11 @@ public abstract class JsonSerializable {
    * @param maxReadLength the new maximum string length in bytes (e.g., 100_000_000 for 100MB).
    */
   public static void setMaxReadLength(int maxReadLength) {
-    configureStreamReadConstraints(maxReadLength);
+    Common.setMaxReadLength(maxReadLength);
   }
 
+  /** Returns the shared {@link ObjectMapper} instance used by the SDK. */
   public static ObjectMapper objectMapper() {
-    return objectMapper;
+    return Common.objectMapper();
   }
 }

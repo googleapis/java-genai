@@ -150,22 +150,21 @@ public final class AsyncFiles {
       config = ListFilesConfig.builder().build();
     }
     ListFilesConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListFilesConfig)) {
             throw new GenAiIOException(
                 "Internal error: Pager expected ListFilesConfig but received "
                     + requestConfig.getClass().getName());
           }
-          return this.privateList((ListFilesConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+          return this.privateList((ListFilesConfig) requestConfig).thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<File>(
                 Pager.PagedItem.FILES,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 

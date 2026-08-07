@@ -52,7 +52,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode fetchPredictOperationParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"operationName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -72,7 +72,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -107,7 +107,7 @@ public final class Operations {
           toObject,
           new String[] {"response"},
           generateVideosResponseFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(
                       fromObject, new String[] {"response", "generateVideoResponse"})),
               toObject));
@@ -118,7 +118,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -152,8 +152,7 @@ public final class Operations {
           toObject,
           new String[] {"response"},
           generateVideosResponseFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"response"})),
               toObject));
     }
 
@@ -162,7 +161,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"generatedSamples"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"generatedSamples"});
@@ -170,7 +169,7 @@ public final class Operations {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(generatedVideoFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(generatedVideoFromMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
@@ -194,14 +193,14 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videos"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"videos"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(generatedVideoFromVertex(JsonSerializable.toJsonNode(item), toObject));
+        result.add(generatedVideoFromVertex(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
@@ -225,14 +224,13 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject));
     }
 
@@ -241,14 +239,13 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject));
     }
 
@@ -257,7 +254,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getOperationParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"operationName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -270,7 +267,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getOperationParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"operationName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -283,7 +280,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
@@ -308,7 +305,7 @@ public final class Operations {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -346,7 +343,7 @@ public final class Operations {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -375,7 +372,7 @@ public final class Operations {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -389,7 +386,7 @@ public final class Operations {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    return JsonSerializable.stringToJsonNode(responseString);
+    return Common.stringToJsonNode(responseString);
   }
 
   JsonNode privateGetVideosOperation(String operationName, GetOperationConfig config) {
@@ -418,7 +415,7 @@ public final class Operations {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -444,7 +441,7 @@ public final class Operations {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -458,7 +455,7 @@ public final class Operations {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    return JsonSerializable.stringToJsonNode(responseString);
+    return Common.stringToJsonNode(responseString);
   }
 
   JsonNode privateFetchPredictVideosOperation(

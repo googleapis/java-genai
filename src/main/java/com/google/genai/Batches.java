@@ -66,7 +66,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -116,7 +116,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobDestinationFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"responsesFile"}) != null) {
       Common.setValueByPath(
@@ -135,7 +135,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(inlinedResponseFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(inlinedResponseFromMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"inlinedResponses"}, result);
     }
@@ -155,7 +155,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobDestinationFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictionsFormat"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -185,7 +185,7 @@ public final class Batches {
           toObject,
           new String[] {"vertexDataset"},
           vertexMultimodalDatasetDestinationFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(
                       fromObject, new String[] {"vertexMultimodalDatasetDestination"})),
               toObject));
@@ -196,7 +196,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobDestinationToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -242,8 +242,7 @@ public final class Batches {
           toObject,
           new String[] {"vertexMultimodalDatasetDestination"},
           vertexMultimodalDatasetDestinationToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"vertexDataset"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"vertexDataset"})),
               toObject));
     }
 
@@ -252,7 +251,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -308,7 +307,7 @@ public final class Batches {
           toObject,
           new String[] {"dest"},
           batchJobDestinationFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tRecvBatchJobDestination(
                       Common.getValueByPath(fromObject, new String[] {"metadata", "output"}))),
               toObject));
@@ -319,7 +318,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -388,8 +387,7 @@ public final class Batches {
           toObject,
           new String[] {"src"},
           batchJobSourceFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inputConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"inputConfig"})),
               toObject));
     }
 
@@ -398,7 +396,7 @@ public final class Batches {
           toObject,
           new String[] {"dest"},
           batchJobDestinationFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tRecvBatchJobDestination(
                       Common.getValueByPath(fromObject, new String[] {"outputConfig"}))),
               toObject));
@@ -423,7 +421,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobSourceFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"instancesFormat"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -461,7 +459,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobSourceToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"format"}))) {
       throw new IllegalArgumentException(
           "format parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -494,7 +492,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(inlinedRequestToMldev(apiClient, JsonSerializable.toJsonNode(item), toObject));
+        result.add(inlinedRequestToMldev(apiClient, Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"requests", "requests"}, result);
     }
@@ -510,7 +508,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode batchJobSourceToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"format"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -556,7 +554,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -583,7 +581,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -598,7 +596,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode cancelBatchJobParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -612,7 +610,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode candidateFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -625,7 +623,7 @@ public final class Batches {
           toObject,
           new String[] {"citationMetadata"},
           citationMetadataFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"citationMetadata"})),
               toObject));
     }
@@ -691,7 +689,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode citationMetadataFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"citationSources"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -704,14 +702,14 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(partToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(partToMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
@@ -728,7 +726,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -755,7 +753,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createBatchJobConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -769,7 +767,7 @@ public final class Batches {
           parentObject,
           new String[] {"outputConfig"},
           batchJobDestinationToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tBatchJobDestination(
                       Common.getValueByPath(fromObject, new String[] {"dest"}))),
               toObject));
@@ -787,7 +785,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -802,7 +800,7 @@ public final class Batches {
           new String[] {"batch", "inputConfig"},
           batchJobSourceToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tBatchJobSource(
                       Common.getValueByPath(fromObject, new String[] {"src"}))),
               toObject));
@@ -811,8 +809,7 @@ public final class Batches {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createBatchJobConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -822,7 +819,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createBatchJobParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -836,7 +833,7 @@ public final class Batches {
           toObject,
           new String[] {"inputConfig"},
           batchJobSourceToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tBatchJobSource(
                       Common.getValueByPath(fromObject, new String[] {"src"}))),
               toObject));
@@ -845,8 +842,7 @@ public final class Batches {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createBatchJobConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -855,7 +851,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createEmbeddingsBatchJobConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -870,7 +866,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode createEmbeddingsBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -885,15 +881,14 @@ public final class Batches {
           new String[] {"batch", "inputConfig"},
           embeddingsBatchJobSourceToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"src"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"src"})),
               toObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           createEmbeddingsBatchJobConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -903,7 +898,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -918,7 +913,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteBatchJobParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -932,7 +927,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteResourceJobFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -966,7 +961,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteResourceJobFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1001,7 +996,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentBatchToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"contents"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1015,8 +1010,7 @@ public final class Batches {
           toObject,
           new String[] {"_self"},
           embedContentConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject));
       Common.moveValueByPath(toObject, ImmutableMap.of("requests[].*", "requests[].request.*"));
     }
@@ -1026,7 +1020,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1078,7 +1072,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embeddingsBatchJobSourceToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"fileName"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1092,7 +1086,7 @@ public final class Batches {
           new String[] {"requests"},
           embedContentBatchToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"inlinedRequests"})),
               toObject));
     }
@@ -1102,7 +1096,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
       throw new IllegalArgumentException(
           "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -1128,7 +1122,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
@@ -1165,7 +1159,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallingConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1193,14 +1187,14 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
           contentToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
               toObject));
@@ -1324,7 +1318,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(safetySettingToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(safetySettingToMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(parentObject, new String[] {"safetySettings"}, result);
     }
@@ -1337,7 +1331,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(toolToMldev(JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject));
+        result.add(toolToMldev(Common.toJsonNode(Transformers.tTool(item)), toObject));
       }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
@@ -1347,8 +1341,7 @@ public final class Batches {
           parentObject,
           new String[] {"toolConfig"},
           toolConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
               toObject));
     }
 
@@ -1406,8 +1399,7 @@ public final class Batches {
           toObject,
           new String[] {"imageConfig"},
           imageConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
               toObject));
     }
 
@@ -1443,7 +1435,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1458,7 +1450,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(candidateFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(candidateFromMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"candidates"}, result);
     }
@@ -1504,7 +1496,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getBatchJobParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1519,7 +1511,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getBatchJobParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1533,14 +1525,13 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"authConfig"},
           authConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"authConfig"})),
               toObject));
     }
 
@@ -1562,7 +1553,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1594,7 +1585,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1646,7 +1637,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode inlinedRequestToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1663,7 +1654,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(contentToMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"request", "contents"}, result);
     }
@@ -1681,8 +1672,7 @@ public final class Batches {
           new String[] {"request", "generationConfig"},
           generateContentConfigToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               (ObjectNode)
                   Common.getValueByPath(
                       toObject,
@@ -1695,14 +1685,13 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode inlinedResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"response"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"response"},
           generateContentResponseFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"response"})),
               toObject));
     }
 
@@ -1725,7 +1714,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -1752,7 +1741,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsConfigToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -1780,12 +1769,11 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listBatchJobsConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -1794,12 +1782,11 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsParametersToVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listBatchJobsConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject);
     }
 
@@ -1808,7 +1795,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1830,7 +1817,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(batchJobFromMldev(JsonSerializable.toJsonNode(item), toObject));
+        result.add(batchJobFromMldev(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"batchJobs"}, result);
     }
@@ -1840,7 +1827,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listBatchJobsResponseFromVertex(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1862,7 +1849,7 @@ public final class Batches {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(batchJobFromVertex(JsonSerializable.toJsonNode(item), toObject));
+        result.add(batchJobFromVertex(Common.toJsonNode(item), toObject));
       }
       Common.setValueByPath(toObject, new String[] {"batchJobs"}, result);
     }
@@ -1872,7 +1859,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1899,8 +1886,7 @@ public final class Batches {
           toObject,
           new String[] {"fileData"},
           fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject));
     }
 
@@ -1909,8 +1895,7 @@ public final class Batches {
           toObject,
           new String[] {"functionCall"},
           functionCallToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"functionCall"})),
               toObject));
     }
 
@@ -1926,8 +1911,7 @@ public final class Batches {
           toObject,
           new String[] {"inlineData"},
           blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"inlineData"})),
               toObject));
     }
 
@@ -1992,7 +1976,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetySettingToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2018,7 +2002,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2031,7 +2015,7 @@ public final class Batches {
           toObject,
           new String[] {"functionCallingConfig"},
           functionCallingConfigToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject));
     }
@@ -2049,7 +2033,7 @@ public final class Batches {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException(
           "retrieval parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -2075,8 +2059,7 @@ public final class Batches {
           toObject,
           new String[] {"googleSearch"},
           googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject));
     }
 
@@ -2085,8 +2068,7 @@ public final class Batches {
           toObject,
           new String[] {"googleMaps"},
           googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
               toObject));
     }
 
@@ -2149,7 +2131,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode vertexMultimodalDatasetDestinationFromVertex(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination", "outputUri"})
         != null) {
       Common.setValueByPath(
@@ -2171,7 +2153,7 @@ public final class Batches {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode vertexMultimodalDatasetDestinationToVertex(
       JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"bigqueryDestination"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2204,7 +2186,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2233,7 +2215,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2246,7 +2228,7 @@ public final class Batches {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = batchJobFromVertex(responseNode, null);
@@ -2256,7 +2238,7 @@ public final class Batches {
       responseNode = batchJobFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+    return Common.fromJsonNode(responseNode, BatchJob.class);
   }
 
   BatchJob privateCreate(String model, BatchJobSource src, CreateBatchJobConfig config) {
@@ -2285,7 +2267,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2315,7 +2297,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2329,7 +2311,7 @@ public final class Batches {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       throw new UnsupportedOperationException(
@@ -2341,7 +2323,7 @@ public final class Batches {
       responseNode = batchJobFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+    return Common.fromJsonNode(responseNode, BatchJob.class);
   }
 
   BatchJob privateCreateEmbeddings(
@@ -2366,7 +2348,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2395,7 +2377,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2408,7 +2390,7 @@ public final class Batches {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = batchJobFromVertex(responseNode, null);
@@ -2418,7 +2400,7 @@ public final class Batches {
       responseNode = batchJobFromMldev(responseNode, null);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, BatchJob.class);
+    return Common.fromJsonNode(responseNode, BatchJob.class);
   }
 
   /**
@@ -2452,7 +2434,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2481,7 +2463,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /**
@@ -2510,7 +2492,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2539,7 +2521,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2553,7 +2535,7 @@ public final class Batches {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = listBatchJobsResponseFromVertex(responseNode, null);
@@ -2564,7 +2546,7 @@ public final class Batches {
     }
 
     ListBatchJobsResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, ListBatchJobsResponse.class);
+        Common.fromJsonNode(responseNode, ListBatchJobsResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2597,7 +2579,7 @@ public final class Batches {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -2626,7 +2608,7 @@ public final class Batches {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -2639,7 +2621,7 @@ public final class Batches {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = deleteResourceJobFromVertex(responseNode, null);
@@ -2649,8 +2631,7 @@ public final class Batches {
       responseNode = deleteResourceJobFromMldev(responseNode, null);
     }
 
-    DeleteResourceJob sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, DeleteResourceJob.class);
+    DeleteResourceJob sdkResponse = Common.fromJsonNode(responseNode, DeleteResourceJob.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -2693,7 +2674,7 @@ public final class Batches {
     if (config == null) {
       config = ListBatchJobsConfig.builder().build();
     }
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListBatchJobsConfig)) {
             throw new GenAiIOException(
@@ -2705,8 +2686,8 @@ public final class Batches {
     return new Pager<>(
         Pager.PagedItem.BATCH_JOBS,
         request,
-        (ObjectNode) JsonSerializable.toJsonNode(config),
-        JsonSerializable.toJsonNode(privateList(config)));
+        (ObjectNode) Common.toJsonNode(config),
+        Common.toJsonNode(privateList(config)));
   }
 
   /**

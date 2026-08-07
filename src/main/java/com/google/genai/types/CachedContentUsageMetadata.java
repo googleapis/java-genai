@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 import java.util.Optional;
 
@@ -166,6 +167,6 @@ public abstract class CachedContentUsageMetadata extends JsonSerializable {
   /** Deserializes a JSON string to a CachedContentUsageMetadata object. */
   @ExcludeFromGeneratedCoverageReport
   public static CachedContentUsageMetadata fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, CachedContentUsageMetadata.class);
+    return Common.fromJsonString(jsonString, CachedContentUsageMetadata.class);
   }
 }

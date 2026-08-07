@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.genai.JsonSerializable;
+import com.google.genai.Common;
 import com.google.genai.OperationsConverters;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +44,7 @@ public abstract class ImportFileOperation
     OperationsConverters converter = new OperationsConverters(null);
     JsonNode response;
     response = converter.importFileOperationFromMldev(apiResponse, null);
-    return JsonSerializable.fromJsonNode(response, ImportFileOperation.class);
+    return Common.fromJsonNode(response, ImportFileOperation.class);
   }
 
   /** Instantiates a builder for ImportFileOperation. */
@@ -177,6 +177,6 @@ public abstract class ImportFileOperation
   /** Deserializes a JSON string to a ImportFileOperation object. */
   @ExcludeFromGeneratedCoverageReport
   public static ImportFileOperation fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ImportFileOperation.class);
+    return Common.fromJsonString(jsonString, ImportFileOperation.class);
   }
 }

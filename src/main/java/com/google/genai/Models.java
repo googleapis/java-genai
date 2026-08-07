@@ -147,7 +147,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode authConfigToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"apiKey"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -197,7 +197,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -223,7 +223,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode candidateFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -236,7 +236,7 @@ public final class Models {
           toObject,
           new String[] {"citationMetadata"},
           citationMetadataFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"citationMetadata"})),
               toObject,
               rootObject));
@@ -304,7 +304,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode citationMetadataFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"citationSources"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -318,7 +318,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode codeExecutionResultToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"outcome"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -345,7 +345,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode computeTokensParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -362,7 +362,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
@@ -373,7 +373,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode computeTokensResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -394,7 +394,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode computerUseToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -430,7 +430,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentEmbeddingFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"values"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -443,8 +443,7 @@ public final class Models {
           toObject,
           new String[] {"statistics"},
           contentEmbeddingStatisticsFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"statistics"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"statistics"})),
               toObject,
               rootObject));
     }
@@ -455,7 +454,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentEmbeddingStatisticsFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"truncated"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -482,14 +481,14 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(partToMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(partToMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
@@ -506,14 +505,14 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode contentToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"parts"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"parts"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(partToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(partToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"parts"}, result);
     }
@@ -531,7 +530,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode controlReferenceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"controlType"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -552,7 +551,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))) {
       throw new IllegalArgumentException(
@@ -578,14 +577,14 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
           contentToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
               toObject,
@@ -598,7 +597,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(toolToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(toolToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
@@ -608,7 +607,7 @@ public final class Models {
           parentObject,
           new String[] {"generationConfig"},
           generationConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"generationConfig"})),
               toObject,
               rootObject));
@@ -620,7 +619,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -637,7 +636,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentToMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
@@ -645,8 +644,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           countTokensConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -657,7 +655,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -674,7 +672,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
@@ -682,8 +680,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           countTokensConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -694,7 +691,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -722,7 +719,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode countTokensResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -743,7 +740,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteModelParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -758,7 +755,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteModelParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -773,7 +770,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteModelResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -787,7 +784,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode deleteModelResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -801,7 +798,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode editImageConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
       Common.setValueByPath(
@@ -928,7 +925,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode editImageParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -951,8 +948,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            referenceImageAPIToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(referenceImageAPIToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
@@ -960,8 +956,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           editImageConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -972,7 +967,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode editImageResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -987,8 +982,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
@@ -999,7 +993,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"taskType"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -1051,7 +1045,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     JsonNode discriminatorTaskType =
         (JsonNode) Common.getValueByPath(rootObject, new String[] {"embeddingApiType"});
@@ -1182,7 +1176,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentParametersPrivateToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1202,7 +1196,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"content"}) != null) {
       JsonNode unused =
           contentToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"content"}))),
               toObject,
@@ -1212,8 +1206,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           embedContentConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -1230,7 +1223,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentParametersPrivateToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1263,7 +1256,7 @@ public final class Models {
             toObject,
             new String[] {"content"},
             contentToVertex(
-                JsonSerializable.toJsonNode(
+                Common.toJsonNode(
                     Transformers.tContent(
                         Common.getValueByPath(fromObject, new String[] {"content"}))),
                 toObject,
@@ -1274,8 +1267,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           embedContentConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -1286,7 +1278,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1314,7 +1306,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode embedContentResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1330,8 +1322,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            contentEmbeddingFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentEmbeddingFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"embeddings"}, result);
     }
@@ -1353,7 +1344,7 @@ public final class Models {
           (JsonNode) Common.getValueByPath(fromObject, new String[] {"usageMetadata"});
       JsonNode truncated = (JsonNode) Common.getValueByPath(fromObject, new String[] {"truncated"});
       if (embedding != null) {
-        ObjectNode stats = JsonSerializable.objectMapper.createObjectNode();
+        ObjectNode stats = Common.objectMapper().createObjectNode();
         if (usageMetadata != null && usageMetadata.get("promptTokenCount") != null) {
           stats.set("token_count", usageMetadata.get("promptTokenCount"));
         }
@@ -1364,7 +1355,7 @@ public final class Models {
           stats.set("truncated", truncated);
         }
         ((ObjectNode) embedding).set("statistics", stats);
-        ArrayNode embeddings = JsonSerializable.objectMapper.createArrayNode();
+        ArrayNode embeddings = Common.objectMapper().createArrayNode();
         embeddings.add(embedding);
         Common.setValueByPath(toObject, new String[] {"embeddings"}, embeddings);
       }
@@ -1375,7 +1366,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode endpointFromVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"endpoint"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1396,7 +1387,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode executableCodeToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"code"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1422,7 +1413,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
       throw new IllegalArgumentException(
           "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -1449,7 +1440,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"id"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"id"}, Common.getValueByPath(fromObject, new String[] {"id"}));
@@ -1487,7 +1478,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode functionCallingConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"allowedFunctionNames"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1515,14 +1506,14 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
           contentToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
               toObject,
@@ -1647,7 +1638,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(safetySettingToMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(safetySettingToMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"safetySettings"}, result);
     }
@@ -1660,9 +1651,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            toolToMldev(
-                JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject, rootObject));
+        result.add(toolToMldev(Common.toJsonNode(Transformers.tTool(item)), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
@@ -1672,8 +1661,7 @@ public final class Models {
           parentObject,
           new String[] {"toolConfig"},
           toolConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
               toObject,
               rootObject));
     }
@@ -1732,8 +1720,7 @@ public final class Models {
           toObject,
           new String[] {"imageConfig"},
           imageConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
               toObject,
               rootObject));
     }
@@ -1771,14 +1758,14 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"systemInstruction"}) != null) {
       Common.setValueByPath(
           parentObject,
           new String[] {"systemInstruction"},
           contentToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tContent(
                       Common.getValueByPath(fromObject, new String[] {"systemInstruction"}))),
               toObject,
@@ -1913,9 +1900,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            toolToVertex(
-                JsonSerializable.toJsonNode(Transformers.tTool(item)), toObject, rootObject));
+        result.add(toolToVertex(Common.toJsonNode(Transformers.tTool(item)), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"tools"}, result);
     }
@@ -1925,8 +1910,7 @@ public final class Models {
           parentObject,
           new String[] {"toolConfig"},
           toolConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"toolConfig"})),
               toObject,
               rootObject));
     }
@@ -1965,7 +1949,7 @@ public final class Models {
           toObject,
           new String[] {"speechConfig"},
           speechConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Transformers.tSpeechConfig(
                       Common.getValueByPath(fromObject, new String[] {"speechConfig"}))),
               toObject,
@@ -1991,8 +1975,7 @@ public final class Models {
           toObject,
           new String[] {"imageConfig"},
           imageConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"imageConfig"})),
               toObject,
               rootObject));
     }
@@ -2031,7 +2014,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2048,7 +2031,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentToMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
@@ -2059,8 +2042,7 @@ public final class Models {
           new String[] {"generationConfig"},
           generateContentConfigToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject));
     }
@@ -2071,7 +2053,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2088,7 +2070,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(contentToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(contentToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"contents"}, result);
     }
@@ -2099,8 +2081,7 @@ public final class Models {
           new String[] {"generationConfig"},
           generateContentConfigToVertex(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject));
     }
@@ -2111,7 +2092,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2126,7 +2107,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(candidateFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(candidateFromMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"candidates"}, result);
     }
@@ -2172,7 +2153,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateContentResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2228,7 +2209,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
       throw new IllegalArgumentException(
@@ -2353,7 +2334,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
       Common.setValueByPath(
@@ -2480,7 +2461,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2499,8 +2480,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           generateImagesConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -2511,7 +2491,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2530,8 +2510,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           generateImagesConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -2542,7 +2521,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2557,8 +2536,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageFromMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
@@ -2569,7 +2547,7 @@ public final class Models {
           toObject,
           new String[] {"positivePromptSafetyAttributes"},
           safetyAttributesFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(
                       fromObject, new String[] {"positivePromptSafetyAttributes"})),
               toObject,
@@ -2582,7 +2560,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2597,8 +2575,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
@@ -2609,7 +2586,7 @@ public final class Models {
           toObject,
           new String[] {"positivePromptSafetyAttributes"},
           safetyAttributesFromVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(
                       fromObject, new String[] {"positivePromptSafetyAttributes"})),
               toObject,
@@ -2622,7 +2599,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"numberOfVideos"}) != null) {
       Common.setValueByPath(
@@ -2708,8 +2685,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "lastFrame"},
           imageToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
               toObject,
               rootObject));
     }
@@ -2722,8 +2698,7 @@ public final class Models {
 
       for (JsonNode item : keyArray) {
         result.add(
-            videoGenerationReferenceImageToMldev(
-                JsonSerializable.toJsonNode(item), toObject, rootObject));
+            videoGenerationReferenceImageToMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
@@ -2765,7 +2740,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"numberOfVideos"}) != null) {
       Common.setValueByPath(
@@ -2856,8 +2831,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "lastFrame"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"lastFrame"})),
               toObject,
               rootObject));
     }
@@ -2870,8 +2844,7 @@ public final class Models {
 
       for (JsonNode item : keyArray) {
         result.add(
-            videoGenerationReferenceImageToVertex(
-                JsonSerializable.toJsonNode(item), toObject, rootObject));
+            videoGenerationReferenceImageToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"instances[0]", "referenceImages"}, result);
     }
@@ -2881,7 +2854,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "mask"},
           videoGenerationMaskToVertex(
-              JsonSerializable.toJsonNode(Common.getValueByPath(fromObject, new String[] {"mask"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"mask"})),
               toObject,
               rootObject));
     }
@@ -2919,7 +2892,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -2954,7 +2927,7 @@ public final class Models {
           toObject,
           new String[] {"response"},
           generateVideosResponseFromMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(
                       fromObject, new String[] {"response", "generateVideoResponse"})),
               toObject,
@@ -2967,7 +2940,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosOperationFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3001,8 +2974,7 @@ public final class Models {
           toObject,
           new String[] {"response"},
           generateVideosResponseFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"response"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"response"})),
               toObject,
               rootObject));
     }
@@ -3013,7 +2985,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3034,8 +3006,7 @@ public final class Models {
           toObject,
           new String[] {"instances[0]", "image"},
           imageToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -3045,8 +3016,7 @@ public final class Models {
           toObject,
           new String[] {"instances[0]", "video"},
           videoToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject,
               rootObject));
     }
@@ -3054,8 +3024,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
       JsonNode unused =
           generateVideosSourceToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"source"})),
               toObject,
               rootObject);
     }
@@ -3063,8 +3032,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           generateVideosConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -3075,7 +3043,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3096,8 +3064,7 @@ public final class Models {
           toObject,
           new String[] {"instances[0]", "image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -3107,8 +3074,7 @@ public final class Models {
           toObject,
           new String[] {"instances[0]", "video"},
           videoToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject,
               rootObject));
     }
@@ -3116,8 +3082,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
       JsonNode unused =
           generateVideosSourceToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"source"})),
               toObject,
               rootObject);
     }
@@ -3125,8 +3090,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           generateVideosConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -3137,7 +3101,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"generatedSamples"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"generatedSamples"});
@@ -3145,8 +3109,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedVideoFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedVideoFromMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
@@ -3171,15 +3134,14 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"videos"}) != null) {
       ArrayNode keyArray = (ArrayNode) Common.getValueByPath(fromObject, new String[] {"videos"});
       ObjectMapper objectMapper = new ObjectMapper();
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedVideoFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedVideoFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedVideos"}, result);
     }
@@ -3204,7 +3166,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosSourceToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -3217,8 +3179,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "image"},
           imageToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -3228,8 +3189,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "video"},
           videoToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject,
               rootObject));
     }
@@ -3240,7 +3200,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generateVideosSourceToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -3253,8 +3213,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -3264,8 +3223,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "video"},
           videoToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject,
               rootObject));
     }
@@ -3276,14 +3234,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedImageFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3300,8 +3257,7 @@ public final class Models {
           toObject,
           new String[] {"safetyAttributes"},
           safetyAttributesFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3312,14 +3268,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedImageFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3336,8 +3291,7 @@ public final class Models {
           toObject,
           new String[] {"safetyAttributes"},
           safetyAttributesFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3355,14 +3309,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedImageMaskFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"mask"},
           imageFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3380,14 +3333,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"video"})),
               toObject,
               rootObject));
     }
@@ -3398,14 +3350,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedVideoFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
           videoFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -3416,7 +3367,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode generationConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"modelSelectionConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3535,8 +3486,7 @@ public final class Models {
           toObject,
           new String[] {"speechConfig"},
           speechConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"speechConfig"})),
               toObject,
               rootObject));
     }
@@ -3609,7 +3559,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getModelParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3624,7 +3574,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode getModelParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3638,14 +3588,13 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleMapsToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"authConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"authConfig"},
           authConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"authConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"authConfig"})),
               toObject,
               rootObject));
     }
@@ -3669,7 +3618,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode googleSearchToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"searchTypes"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3701,7 +3650,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageConfigToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3753,7 +3702,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3808,7 +3757,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"bytesBase64Encoded"}) != null) {
       Common.setValueByPath(
@@ -3830,7 +3779,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageFromVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3858,7 +3807,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"gcsUri"}))) {
       throw new IllegalArgumentException(
           "gcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -3884,7 +3833,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode imageToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -3912,7 +3861,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsConfigToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -3949,7 +3898,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsConfigToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"pageSize"}) != null) {
       Common.setValueByPath(
@@ -3986,13 +3935,12 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listModelsConfigToMldev(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -4003,13 +3951,12 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           listModelsConfigToVertex(
               apiClient,
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -4020,7 +3967,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4044,7 +3991,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(modelFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(modelFromMldev(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"models"}, result);
     }
@@ -4055,7 +4002,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode listModelsResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4079,7 +4026,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(modelFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(modelFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"models"}, result);
     }
@@ -4090,7 +4037,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode maskReferenceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"maskMode"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4117,7 +4064,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode mcpServerToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"name"}))) {
       throw new IllegalArgumentException(
           "name parameter is only supported in Gemini Developer API mode, not in Gemini Enterprise"
@@ -4136,7 +4083,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode modelFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4233,7 +4180,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode modelFromVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"name"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4269,7 +4216,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(endpointFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(endpointFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"endpoints"}, result);
     }
@@ -4286,8 +4233,7 @@ public final class Models {
           toObject,
           new String[] {"tunedModelInfo"},
           tunedModelInfoFromVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"_self"})),
               toObject,
               rootObject));
     }
@@ -4312,7 +4258,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode multiSpeakerVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"speakerVoiceConfigs"});
@@ -4320,8 +4266,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            speakerVoiceConfigToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(speakerVoiceConfigToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"speakerVoiceConfigs"}, result);
     }
@@ -4331,7 +4276,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4358,8 +4303,7 @@ public final class Models {
           toObject,
           new String[] {"fileData"},
           fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"fileData"})),
               toObject,
               rootObject));
     }
@@ -4369,8 +4313,7 @@ public final class Models {
           toObject,
           new String[] {"functionCall"},
           functionCallToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"functionCall"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"functionCall"})),
               toObject,
               rootObject));
     }
@@ -4387,8 +4330,7 @@ public final class Models {
           toObject,
           new String[] {"inlineData"},
           blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"inlineData"})),
               toObject,
               rootObject));
     }
@@ -4454,7 +4396,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode partToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mediaResolution"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4467,7 +4409,7 @@ public final class Models {
           toObject,
           new String[] {"codeExecutionResult"},
           codeExecutionResultToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"codeExecutionResult"})),
               toObject,
               rootObject));
@@ -4478,8 +4420,7 @@ public final class Models {
           toObject,
           new String[] {"executableCode"},
           executableCodeToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"executableCode"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"executableCode"})),
               toObject,
               rootObject));
     }
@@ -4571,14 +4512,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode productImageToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"productImage"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"productImage"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"productImage"})),
               toObject,
               rootObject));
     }
@@ -4589,7 +4529,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode recontextImageConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
       Common.setValueByPath(
@@ -4674,7 +4614,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode recontextImageParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4686,8 +4626,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
       JsonNode unused =
           recontextImageSourceToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"source"})),
               toObject,
               rootObject);
     }
@@ -4695,8 +4634,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           recontextImageConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -4707,7 +4645,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode recontextImageResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -4715,8 +4653,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
@@ -4727,7 +4664,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode recontextImageSourceToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -4740,8 +4677,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "personImage", "image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"personImage"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"personImage"})),
               toObject,
               rootObject));
     }
@@ -4753,7 +4689,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(productImageToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(productImageToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(parentObject, new String[] {"instances[0]", "productImages"}, result);
     }
@@ -4764,14 +4700,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode referenceImageAPIToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"referenceImage"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"referenceImage"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"referenceImage"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"referenceImage"})),
               toObject,
               rootObject));
     }
@@ -4795,7 +4730,7 @@ public final class Models {
           toObject,
           new String[] {"maskImageConfig"},
           maskReferenceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"maskImageConfig"})),
               toObject,
               rootObject));
@@ -4806,7 +4741,7 @@ public final class Models {
           toObject,
           new String[] {"controlImageConfig"},
           controlReferenceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"controlImageConfig"})),
               toObject,
               rootObject));
@@ -4832,7 +4767,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode replicatedVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4865,7 +4800,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetyAttributesFromMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "categories"})
         != null) {
       Common.setValueByPath(
@@ -4894,7 +4829,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetyAttributesFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "categories"})
         != null) {
       Common.setValueByPath(
@@ -4923,7 +4858,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode safetySettingToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"category"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -4950,14 +4885,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode scribbleImageToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -4968,7 +4902,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode segmentImageConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"mode"}) != null) {
       Common.setValueByPath(
@@ -5018,7 +4952,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode segmentImageParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5030,8 +4964,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
       JsonNode unused =
           segmentImageSourceToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"source"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"source"})),
               toObject,
               rootObject);
     }
@@ -5039,8 +4972,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           segmentImageConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -5051,7 +4983,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode segmentImageResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
       ArrayNode keyArray =
           (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
@@ -5059,8 +4991,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageMaskFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageMaskFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedMasks"}, result);
     }
@@ -5071,7 +5002,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode segmentImageSourceToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
       Common.setValueByPath(
           parentObject,
@@ -5084,8 +5015,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -5095,8 +5025,7 @@ public final class Models {
           parentObject,
           new String[] {"instances[0]", "scribble"},
           scribbleImageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"scribbleImage"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"scribbleImage"})),
               toObject,
               rootObject));
     }
@@ -5107,7 +5036,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speakerVoiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"speaker"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5120,8 +5049,7 @@ public final class Models {
           toObject,
           new String[] {"voiceConfig"},
           voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
               toObject,
               rootObject));
     }
@@ -5132,14 +5060,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode speechConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"voiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"voiceConfig"},
           voiceConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"voiceConfig"})),
               toObject,
               rootObject));
     }
@@ -5156,7 +5083,7 @@ public final class Models {
           toObject,
           new String[] {"multiSpeakerVoiceConfig"},
           multiSpeakerVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"multiSpeakerVoiceConfig"})),
               toObject,
               rootObject));
@@ -5167,7 +5094,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5180,7 +5107,7 @@ public final class Models {
           toObject,
           new String[] {"functionCallingConfig"},
           functionCallingConfigToMldev(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"functionCallingConfig"})),
               toObject,
               rootObject));
@@ -5199,7 +5126,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolConfigToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"retrievalConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5226,7 +5153,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"retrieval"}))) {
       throw new IllegalArgumentException(
           "retrieval parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
@@ -5252,8 +5179,7 @@ public final class Models {
           toObject,
           new String[] {"googleSearch"},
           googleSearchToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleSearch"})),
               toObject,
               rootObject));
     }
@@ -5263,8 +5189,7 @@ public final class Models {
           toObject,
           new String[] {"googleMaps"},
           googleMapsToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"googleMaps"})),
               toObject,
               rootObject));
     }
@@ -5327,7 +5252,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode toolToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"retrieval"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5340,8 +5265,7 @@ public final class Models {
           toObject,
           new String[] {"computerUse"},
           computerUseToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"computerUse"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"computerUse"})),
               toObject,
               rootObject));
     }
@@ -5415,7 +5339,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(mcpServerToVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(mcpServerToVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"mcpServers"}, result);
     }
@@ -5433,7 +5357,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode tunedModelInfoFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(
             fromObject, new String[] {"labels", "google-vertex-llm-tuning-base-model-id"})
         != null) {
@@ -5464,7 +5388,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateModelConfigToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -5493,7 +5417,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateModelConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"displayName"}) != null) {
       Common.setValueByPath(
@@ -5522,7 +5446,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateModelParametersToMldev(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5534,8 +5458,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           updateModelConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -5546,7 +5469,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode updateModelParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5558,8 +5481,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           updateModelConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -5570,7 +5492,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode upscaleImageAPIConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
 
     if (Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}) != null) {
       Common.setValueByPath(
@@ -5655,7 +5577,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode upscaleImageAPIParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5669,8 +5591,7 @@ public final class Models {
           toObject,
           new String[] {"instances[0]", "image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -5685,8 +5606,7 @@ public final class Models {
     if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
       JsonNode unused =
           upscaleImageAPIConfigToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
     }
@@ -5697,7 +5617,7 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode upscaleImageResponseFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5712,8 +5632,7 @@ public final class Models {
       ArrayNode result = objectMapper.createArrayNode();
 
       for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromVertex(JsonSerializable.toJsonNode(item), toObject, rootObject));
+        result.add(generatedImageFromVertex(Common.toJsonNode(item), toObject, rootObject));
       }
       Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
     }
@@ -5723,7 +5642,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
@@ -5748,7 +5667,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoFromVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"gcsUri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5777,14 +5696,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoGenerationMaskToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"_self"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -5802,14 +5720,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoGenerationReferenceImageToMldev(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -5829,14 +5746,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoGenerationReferenceImageToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"image"},
           imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
+              Common.toJsonNode(Common.getValueByPath(fromObject, new String[] {"image"})),
               toObject,
               rootObject));
     }
@@ -5853,7 +5769,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoToMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
           toObject, new String[] {"uri"}, Common.getValueByPath(fromObject, new String[] {"uri"}));
@@ -5878,7 +5794,7 @@ public final class Models {
 
   @ExcludeFromGeneratedCoverageReport
   ObjectNode videoToVertex(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"uri"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -5906,13 +5822,13 @@ public final class Models {
   @ExcludeFromGeneratedCoverageReport
   ObjectNode voiceConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
+    ObjectNode toObject = Common.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"replicatedVoiceConfig"},
           replicatedVoiceConfigToVertex(
-              JsonSerializable.toJsonNode(
+              Common.toJsonNode(
                   Common.getValueByPath(fromObject, new String[] {"replicatedVoiceConfig"})),
               toObject,
               rootObject));
@@ -5943,7 +5859,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -5972,7 +5888,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6002,7 +5918,7 @@ public final class Models {
           .build();
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = generateContentResponseFromVertex(responseNode, null, parameterNode);
@@ -6013,7 +5929,7 @@ public final class Models {
     }
 
     GenerateContentResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, GenerateContentResponse.class);
+        Common.fromJsonNode(responseNode, GenerateContentResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6038,7 +5954,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateGenerateContent(model, contents, config);
 
     try (ApiResponse response =
@@ -6063,7 +5979,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6092,7 +6008,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6122,7 +6038,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateGenerateContentStream(model, contents, config);
 
@@ -6158,7 +6074,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6195,7 +6111,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6209,7 +6125,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = embedContentResponseFromVertex(responseNode, null, parameterNode);
@@ -6220,7 +6136,7 @@ public final class Models {
     }
 
     EmbedContentResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, EmbedContentResponse.class);
+        Common.fromJsonNode(responseNode, EmbedContentResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6256,7 +6172,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateEmbedContent(model, contents, content, embeddingApiType, config);
 
@@ -6282,7 +6198,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6311,7 +6227,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6325,7 +6241,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = generateImagesResponseFromVertex(responseNode, null, parameterNode);
@@ -6336,7 +6252,7 @@ public final class Models {
     }
 
     GenerateImagesResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, GenerateImagesResponse.class);
+        Common.fromJsonNode(responseNode, GenerateImagesResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6362,7 +6278,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateGenerateImages(model, prompt, config);
 
     try (ApiResponse response =
@@ -6393,7 +6309,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6419,7 +6335,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6433,7 +6349,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = editImageResponseFromVertex(responseNode, null, parameterNode);
@@ -6445,8 +6361,7 @@ public final class Models {
               + " Developer API mode.");
     }
 
-    EditImageResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, EditImageResponse.class);
+    EditImageResponse sdkResponse = Common.fromJsonNode(responseNode, EditImageResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6478,7 +6393,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
 
@@ -6507,7 +6422,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6533,7 +6448,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6547,7 +6462,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = upscaleImageResponseFromVertex(responseNode, null, parameterNode);
@@ -6560,7 +6475,7 @@ public final class Models {
     }
 
     UpscaleImageResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, UpscaleImageResponse.class);
+        Common.fromJsonNode(responseNode, UpscaleImageResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6589,7 +6504,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
 
@@ -6615,7 +6530,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6641,7 +6556,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6655,7 +6570,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = recontextImageResponseFromVertex(responseNode, null, parameterNode);
@@ -6667,7 +6582,7 @@ public final class Models {
               + " Developer API mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, RecontextImageResponse.class);
+    return Common.fromJsonNode(responseNode, RecontextImageResponse.class);
   }
 
   /**
@@ -6699,7 +6614,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForRecontextImage(model, source, config);
 
     try (ApiResponse response =
@@ -6724,7 +6639,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6750,7 +6665,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6764,7 +6679,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = segmentImageResponseFromVertex(responseNode, null, parameterNode);
@@ -6776,7 +6691,7 @@ public final class Models {
               + " Developer API mode.");
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, SegmentImageResponse.class);
+    return Common.fromJsonNode(responseNode, SegmentImageResponse.class);
   }
 
   /**
@@ -6805,7 +6720,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForSegmentImage(model, source, config);
 
     try (ApiResponse response =
@@ -6826,7 +6741,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6855,7 +6770,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6868,7 +6783,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = modelFromVertex(responseNode, null, parameterNode);
@@ -6878,7 +6793,7 @@ public final class Models {
       responseNode = modelFromMldev(responseNode, null, parameterNode);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, Model.class);
+    return Common.fromJsonNode(responseNode, Model.class);
   }
 
   /**
@@ -6895,7 +6810,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForGet(model, config);
 
     try (ApiResponse response =
@@ -6913,7 +6828,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -6942,7 +6857,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -6956,7 +6871,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = listModelsResponseFromVertex(responseNode, null, parameterNode);
@@ -6966,8 +6881,7 @@ public final class Models {
       responseNode = listModelsResponseFromMldev(responseNode, null, parameterNode);
     }
 
-    ListModelsResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, ListModelsResponse.class);
+    ListModelsResponse sdkResponse = Common.fromJsonNode(responseNode, ListModelsResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -6985,7 +6899,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForPrivateList(config);
 
     try (ApiResponse response =
@@ -7006,7 +6920,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -7035,7 +6949,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -7049,7 +6963,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = modelFromVertex(responseNode, null, parameterNode);
@@ -7059,7 +6973,7 @@ public final class Models {
       responseNode = modelFromMldev(responseNode, null, parameterNode);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, Model.class);
+    return Common.fromJsonNode(responseNode, Model.class);
   }
 
   /**
@@ -7082,7 +6996,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForUpdate(model, config);
 
     try (ApiResponse response =
@@ -7103,7 +7017,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -7132,7 +7046,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -7146,7 +7060,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = deleteModelResponseFromVertex(responseNode, null, parameterNode);
@@ -7156,8 +7070,7 @@ public final class Models {
       responseNode = deleteModelResponseFromMldev(responseNode, null, parameterNode);
     }
 
-    DeleteModelResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, DeleteModelResponse.class);
+    DeleteModelResponse sdkResponse = Common.fromJsonNode(responseNode, DeleteModelResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -7183,7 +7096,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForDelete(model, config);
 
     try (ApiResponse response =
@@ -7208,7 +7121,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -7237,7 +7150,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -7251,7 +7164,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = countTokensResponseFromVertex(responseNode, null, parameterNode);
@@ -7261,8 +7174,7 @@ public final class Models {
       responseNode = countTokensResponseFromMldev(responseNode, null, parameterNode);
     }
 
-    CountTokensResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, CountTokensResponse.class);
+    CountTokensResponse sdkResponse = Common.fromJsonNode(responseNode, CountTokensResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -7297,7 +7209,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForCountTokens(model, contents, config);
 
     try (ApiResponse response =
@@ -7322,7 +7234,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -7348,7 +7260,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -7362,7 +7274,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = computeTokensResponseFromVertex(responseNode, null, parameterNode);
@@ -7375,7 +7287,7 @@ public final class Models {
     }
 
     ComputeTokensResponse sdkResponse =
-        JsonSerializable.fromJsonNode(responseNode, ComputeTokensResponse.class);
+        Common.fromJsonNode(responseNode, ComputeTokensResponse.class);
     Headers responseHeaders = response.getHeaders();
     if (responseHeaders == null) {
       return sdkResponse;
@@ -7410,7 +7322,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = buildRequestForComputeTokens(model, contents, config);
 
     try (ApiResponse response =
@@ -7449,7 +7361,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -7478,7 +7390,7 @@ public final class Models {
       requestHttpOptions = config.httpOptions();
     }
 
-    return new BuiltRequest(path, JsonSerializable.toJsonString(body), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(body), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -7492,7 +7404,7 @@ public final class Models {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
     if (this.apiClient.vertexAI()) {
       responseNode = generateVideosOperationFromVertex(responseNode, null, parameterNode);
@@ -7502,7 +7414,7 @@ public final class Models {
       responseNode = generateVideosOperationFromMldev(responseNode, null, parameterNode);
     }
 
-    return JsonSerializable.fromJsonNode(responseNode, GenerateVideosOperation.class);
+    return Common.fromJsonNode(responseNode, GenerateVideosOperation.class);
   }
 
   /** Private method for generating videos. */
@@ -7533,7 +7445,7 @@ public final class Models {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
 
@@ -8140,7 +8052,7 @@ public final class Models {
     }
     config = configBuilder.build();
 
-    Function<JsonSerializable, Object> request =
+    Function<Object, Object> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListModelsConfig)) {
             throw new GenAiIOException(

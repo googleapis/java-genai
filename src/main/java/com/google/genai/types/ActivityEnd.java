@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /**
@@ -55,6 +56,6 @@ public abstract class ActivityEnd extends JsonSerializable {
   /** Deserializes a JSON string to a ActivityEnd object. */
   @ExcludeFromGeneratedCoverageReport
   public static ActivityEnd fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ActivityEnd.class);
+    return Common.fromJsonString(jsonString, ActivityEnd.class);
   }
 }

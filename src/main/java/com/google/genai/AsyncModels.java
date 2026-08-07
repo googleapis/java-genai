@@ -108,7 +108,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContent(model, contents, config);
     return this.apiClient
@@ -134,7 +134,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateContentStream(model, contents, config);
     return this.apiClient
@@ -170,7 +170,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateEmbedContent(
             model, contents, content, embeddingApiType, config);
@@ -198,7 +198,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForPrivateGenerateImages(model, prompt, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -230,7 +230,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateEditImage(model, prompt, referenceImages, config);
     return this.apiClient
@@ -260,7 +260,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateUpscaleImage(model, image, upscaleFactor, config);
     return this.apiClient
@@ -302,7 +302,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForRecontextImage(model, source, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -340,7 +340,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForSegmentImage(model, source, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -366,7 +366,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForGet(model, config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -384,7 +384,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForPrivateList(config);
     return this.apiClient
         .asyncRequest("get", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -416,7 +416,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForUpdate(model, config);
     return this.apiClient
         .asyncRequest("patch", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -442,7 +442,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForDelete(model, config);
     return this.apiClient
         .asyncRequest(
@@ -479,7 +479,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForCountTokens(model, contents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -515,7 +515,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest = models.buildRequestForComputeTokens(model, contents, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
@@ -555,7 +555,7 @@ public final class AsyncModels {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
     BuiltRequest builtRequest =
         models.buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
     return this.apiClient
@@ -1076,7 +1076,7 @@ public final class AsyncModels {
     }
     final ListModelsConfig updatedConfig = configBuilder.build();
 
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListModelsConfig)) {
             throw new GenAiIOException(

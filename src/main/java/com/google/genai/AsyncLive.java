@@ -194,7 +194,7 @@ public class AsyncLive {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     if (this.apiClient.vertexAI()) {
@@ -206,7 +206,7 @@ public class AsyncLive {
     // TODO: Remove the hack that removes config.
     body.remove("config");
 
-    return JsonSerializable.toJsonString(body);
+    return Common.toJsonString(body);
   }
 
   static class GenAiWebSocketClient extends WebSocketListener {
@@ -336,12 +336,12 @@ public class AsyncLive {
       if (messageCallback != null) {
         try {
           LiveConverters liveConverters = new LiveConverters(this.apiClient);
-          JsonNode responseNode = JsonSerializable.stringToJsonNode(message);
+          JsonNode responseNode = Common.stringToJsonNode(message);
           if (this.apiClient.vertexAI()) {
             responseNode = liveConverters.liveServerMessageFromVertex(responseNode, null);
           }
           LiveServerMessage serverMessage =
-              JsonSerializable.fromJsonNode(responseNode, LiveServerMessage.class);
+              Common.fromJsonNode(responseNode, LiveServerMessage.class);
           messageCallback.accept(serverMessage);
         } catch (RuntimeException e) {
           logger.log(Level.SEVERE, "Error deserializing message", e);

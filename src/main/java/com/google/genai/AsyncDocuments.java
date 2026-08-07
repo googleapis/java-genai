@@ -94,7 +94,7 @@ public final class AsyncDocuments {
       config = ListDocumentsConfig.builder().build();
     }
     ListDocumentsConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListDocumentsConfig)) {
             throw new GenAiIOException(
@@ -102,14 +102,14 @@ public final class AsyncDocuments {
                     + requestConfig.getClass().getName());
           }
           return this.privateList(parent, (ListDocumentsConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+              .thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<Document>(
                 Pager.PagedItem.DOCUMENTS,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 }

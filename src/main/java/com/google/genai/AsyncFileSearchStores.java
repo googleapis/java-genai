@@ -155,7 +155,7 @@ public final class AsyncFileSearchStores {
       config = ListFileSearchStoresConfig.builder().build();
     }
     ListFileSearchStoresConfig finalConfig = config;
-    Function<JsonSerializable, CompletableFuture<JsonNode>> request =
+    Function<Object, CompletableFuture<JsonNode>> request =
         requestConfig -> {
           if (!(requestConfig instanceof ListFileSearchStoresConfig)) {
             throw new GenAiIOException(
@@ -163,14 +163,14 @@ public final class AsyncFileSearchStores {
                     + requestConfig.getClass().getName());
           }
           return this.privateList((ListFileSearchStoresConfig) requestConfig)
-              .thenApply(JsonSerializable::toJsonNode);
+              .thenApply(Common::toJsonNode);
         };
     return CompletableFuture.supplyAsync(
         () ->
             new AsyncPager<FileSearchStore>(
                 Pager.PagedItem.FILE_SEARCH_STORES,
                 request,
-                (ObjectNode) JsonSerializable.toJsonNode(finalConfig),
+                (ObjectNode) Common.toJsonNode(finalConfig),
                 request.apply(finalConfig)));
   }
 

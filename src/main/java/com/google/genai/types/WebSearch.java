@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /** Standard web search for grounding and related configurations. Only text results are returned. */
@@ -51,6 +52,6 @@ public abstract class WebSearch extends JsonSerializable {
   /** Deserializes a JSON string to a WebSearch object. */
   @ExcludeFromGeneratedCoverageReport
   public static WebSearch fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, WebSearch.class);
+    return Common.fromJsonString(jsonString, WebSearch.class);
   }
 }

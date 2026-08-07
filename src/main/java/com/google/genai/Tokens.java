@@ -189,7 +189,7 @@ public class Tokens {
     if (!Common.isZero(config)) {
       parameterBuilder.config(config);
     }
-    JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
+    JsonNode parameterNode = Common.toJsonNode(parameterBuilder.build());
 
     ObjectNode body;
     String path;
@@ -221,8 +221,7 @@ public class Tokens {
 
     ObjectNode transformedBody = convertBidiSetupToTokenSetup(body, config);
     transformedBody.remove("config");
-    return new BuiltRequest(
-        path, JsonSerializable.toJsonString(transformedBody), requestHttpOptions);
+    return new BuiltRequest(path, Common.toJsonString(transformedBody), requestHttpOptions);
   }
 
   /** A shared processResponse function for both sync and async methods. */
@@ -235,9 +234,9 @@ public class Tokens {
       throw new GenAiIOException("Failed to read HTTP response.", e);
     }
 
-    JsonNode responseNode = JsonSerializable.stringToJsonNode(responseString);
+    JsonNode responseNode = Common.stringToJsonNode(responseString);
 
-    return JsonSerializable.fromJsonNode(responseNode, AuthToken.class);
+    return Common.fromJsonNode(responseNode, AuthToken.class);
   }
 
   /**

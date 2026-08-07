@@ -21,6 +21,7 @@ package com.google.genai.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.genai.Common;
 import com.google.genai.JsonSerializable;
 
 /** Image search for grounding and related configurations. */
@@ -51,6 +52,6 @@ public abstract class ImageSearch extends JsonSerializable {
   /** Deserializes a JSON string to a ImageSearch object. */
   @ExcludeFromGeneratedCoverageReport
   public static ImageSearch fromJson(String jsonString) {
-    return JsonSerializable.fromJsonString(jsonString, ImageSearch.class);
+    return Common.fromJsonString(jsonString, ImageSearch.class);
   }
 }
