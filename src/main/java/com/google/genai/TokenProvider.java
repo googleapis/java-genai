@@ -1,0 +1,31 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.genai;
+
+import java.io.IOException;
+import java.util.Optional;
+
+/** Provider for access tokens. */
+public interface TokenProvider {
+  /** Returns a valid access token. This method should be non-blocking if used in async environments. */
+  String getToken() throws IOException;
+
+  /** Returns the quota project ID associated with the credentials, if any. */
+  default Optional<String> getQuotaProjectId() {
+    return Optional.empty();
+  }
+}
