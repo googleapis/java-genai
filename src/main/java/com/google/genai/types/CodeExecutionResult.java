@@ -43,7 +43,7 @@ public abstract class CodeExecutionResult extends JsonSerializable {
 
   /**
    * Optional. The identifier of the `ExecutableCode` part this result is for. Only populated if the
-   * corresponding `ExecutableCode` has an id. This field is not supported in Vertex AI.
+   * corresponding `ExecutableCode` has an id.
    */
   @JsonProperty("id")
   public abstract Optional<String> id();
@@ -127,8 +127,7 @@ public abstract class CodeExecutionResult extends JsonSerializable {
      * Setter for id.
      *
      * <p>id: Optional. The identifier of the `ExecutableCode` part this result is for. Only
-     * populated if the corresponding `ExecutableCode` has an id. This field is not supported in
-     * Vertex AI.
+     * populated if the corresponding `ExecutableCode` has an id.
      */
     @JsonProperty("id")
     public abstract Builder id(String id);

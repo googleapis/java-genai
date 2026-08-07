@@ -46,8 +46,8 @@ public abstract class GoogleMaps extends JsonSerializable {
   public abstract Optional<Boolean> enableWidget();
 
   /**
-   * Optional. Specifies the types of Google Maps grounding to enable. This field is not supported
-   * in Gemini API.
+   * Optional. Specifies the types of Google Maps grounding to enable. Defaults to `places` when
+   * unset. This field is not supported in Gemini API.
    */
   @JsonProperty("groundingTypes")
   public abstract Optional<GoogleMapsGroundingTypes> groundingTypes();
@@ -124,8 +124,8 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for groundingTypes.
      *
-     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. This
-     * field is not supported in Gemini API.
+     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. Defaults
+     * to `places` when unset. This field is not supported in Gemini API.
      */
     @JsonProperty("groundingTypes")
     public abstract Builder groundingTypes(GoogleMapsGroundingTypes groundingTypes);
@@ -133,8 +133,8 @@ public abstract class GoogleMaps extends JsonSerializable {
     /**
      * Setter for groundingTypes builder.
      *
-     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. This
-     * field is not supported in Gemini API.
+     * <p>groundingTypes: Optional. Specifies the types of Google Maps grounding to enable. Defaults
+     * to `places` when unset. This field is not supported in Gemini API.
      */
     @CanIgnoreReturnValue
     public Builder groundingTypes(GoogleMapsGroundingTypes.Builder groundingTypesBuilder) {
