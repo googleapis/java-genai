@@ -2719,32 +2719,27 @@ public final class Batches {
    */
   public BatchJob create(String model, BatchJobSource src, CreateBatchJobConfig config) {
     if (this.apiClient.vertexAI()) {
+      int mldevSources = 0;
       if (src.inlinedRequests().isPresent()) {
-        throw new GenAiIOException(
-            "inlinedRequests is only supported in Gemini Developer API mode, not in Gemini"
-                + " Enterprise Agent Platform mode.");
+        mldevSources++;
       }
       if (src.fileName().isPresent()) {
-        throw new GenAiIOException(
-            "fileName is only supported in Gemini Developer API mode, not in Gemini Enterprise"
-                + " Agent Platform mode.");
+        mldevSources++;
       }
-      int count = 0;
+      int vertexSources = 0;
       if (src.gcsUri().isPresent()) {
-        count++;
+        vertexSources++;
       }
       if (src.bigqueryUri().isPresent()) {
-        count++;
+        vertexSources++;
       }
       if (src.vertexDatasetName().isPresent()) {
-        count++;
+        vertexSources++;
       }
-      if (count > 1) {
+      if (mldevSources > 0 || vertexSources != 1) {
         throw new GenAiIOException(
-            "Only one of gcsUri, bigqueryUri, and vertexDatasetName can be set.");
-      }
-      if (count == 0) {
-        throw new GenAiIOException("One of gcsUri, bigqueryUri, or vertexDatasetName must be set.");
+            "Exactly one of `gcs_uri` or `bigquery_uri`, or `vertex_dataset_name` must be set,"
+                + " other sources are not supported in Gemini Enterprise Agent Platform.");
       }
     } else {
       if (src.fileName().isPresent() && src.inlinedRequests().isPresent()) {

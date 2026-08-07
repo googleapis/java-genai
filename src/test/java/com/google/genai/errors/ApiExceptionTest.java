@@ -222,6 +222,65 @@ class ApiExceptionTest {
   }
 
   @Test
+  void testThrowFromResponse_StatusInBody_PrefersBodyOverReasonPhrase() {
+    // HTTP/2 sends no reason phrase, so the body is the only source for the status.
+    String jsonBody =
+        "{ \"error\": { \"code\": 404, \"message\": \"Publisher model was not found.\", \"status\":"
+            + " \"NOT_FOUND\" } }";
+    Response response = createFakeResponse(404, "", jsonBody);
+
+    ClientException thrown =
+        assertThrows(ClientException.class, () -> ApiException.throwFromResponse(response));
+
+    assertEquals("NOT_FOUND", thrown.status());
+    assertEquals("404 NOT_FOUND. Publisher model was not found.", thrown.getMessage());
+  }
+
+  @Test
+  void testThrowFromResponse_EmptyStatusInBody_FallsBackToReasonPhrase() {
+    String jsonBody = "{ \"error\": { \"message\": \"Invalid request\", \"status\": \"\" } }";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+
+    ClientException thrown =
+        assertThrows(ClientException.class, () -> ApiException.throwFromResponse(response));
+
+    assertEquals("Bad Request", thrown.status());
+  }
+
+  @Test
+  void testThrowFromResponse_NonTextStatusInBody_FallsBackToReasonPhrase() {
+    String jsonBody = "{ \"error\": { \"message\": \"Invalid request\", \"status\": 400 } }";
+    Response response = createFakeResponse(400, "Bad Request", jsonBody);
+
+    ClientException thrown =
+        assertThrows(ClientException.class, () -> ApiException.throwFromResponse(response));
+
+    assertEquals("Bad Request", thrown.status());
+  }
+
+  @Test
+  void testThrowFromResponse_InvalidJsonBody_FallsBackToReasonPhrase() {
+    Response response = createFakeResponse(500, "Internal Server Error", "not json");
+
+    ServerException thrown =
+        assertThrows(ServerException.class, () -> ApiException.throwFromResponse(response));
+
+    assertEquals("Internal Server Error", thrown.status());
+    assertEquals("", thrown.message());
+  }
+
+  @Test
+  void testThrowFromResponse_NullBody_FallsBackToReasonPhrase() {
+    Response response = createFakeResponse(400, "Bad Request", null);
+
+    ClientException thrown =
+        assertThrows(ClientException.class, () -> ApiException.throwFromResponse(response));
+
+    assertEquals("Bad Request", thrown.status());
+    assertEquals("", thrown.message());
+  }
+
+  @Test
   void testThrowFromErrorNode_OkStatus_DoesNotThrow() {
     ArrayNode errorNode = createErrorNode("test message", "OK", 200);
     assertDoesNotThrow(() -> ApiException.throwFromErrorNode(errorNode, 200));

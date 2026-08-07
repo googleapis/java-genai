@@ -211,7 +211,7 @@ public final class TableTest {
       List<String> parameterNames,
       String replayId) {
 
-    Client client = createClient(vertexAI);
+    Client client = createClient(vertexAI, testName);
     if (testTableItem.hasUnion().isPresent() && testTableItem.hasUnion().get()) {
       String msg = " => Test skipped: parameters contain unsupported union type";
       return Collections.singletonList(DynamicTest.dynamicTest(testName + msg, () -> {}));
@@ -317,7 +317,8 @@ public final class TableTest {
       String customMethodKey,
       String replayId) {
 
-    Client client = createClient(vertexAI);
+    // The multistep test name does not carry the module, but the custom method key does.
+    Client client = createClient(vertexAI, customMethodKey);
     List<DynamicTest> dynamicTests = new ArrayList<>();
 
     if (client.clientMode().equals("replay")) {
@@ -468,6 +469,11 @@ public final class TableTest {
   }
 
   static Client createClient(boolean vertexAI) {
+    return createClient(vertexAI, "");
+  }
+
+  /** {@code testId} identifies the test, so that a case can be pinned to a supported location. */
+  static Client createClient(boolean vertexAI, String testId) {
     String replaysPath = System.getenv("GOOGLE_GENAI_REPLAYS_DIRECTORY");
     if (replaysPath == null) {
       throw new RuntimeException("GOOGLE_GENAI_REPLAYS_DIRECTORY is not set");
@@ -499,7 +505,14 @@ public final class TableTest {
       return client;
     }
 
-    return Client.builder().vertexAI(vertexAI).debugConfig(debugConfig).build();
+    Client.Builder builder = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig);
+    if (vertexAI
+        && testId.contains("tunings")
+        && "global".equals(System.getenv("GOOGLE_CLOUD_LOCATION"))) {
+      // Fine-tuning is not offered on the global endpoint.
+      builder.location("us-central1");
+    }
+    return builder.build();
   }
 
   private static Object normalizeKeys(Object data) {

@@ -137,8 +137,8 @@ public class AsyncBatchesTest {
       // Assert
       assertEquals(
           exception.getMessage(),
-          "fileName is not supported for Gemini Enterprise Agent Platform (previously known as"
-              + " Vertex AI).");
+          "Exactly one of `gcs_uri` or `bigquery_uri`, or `vertex_dataset_name` must be set, other"
+              + " sources are not supported in Gemini Enterprise Agent Platform.");
     } else {
       BatchJob batchJob = client.async.batches.create(MODEL_ID, src, config).get();
 
@@ -249,8 +249,9 @@ public class AsyncBatchesTest {
           exception
               .getMessage()
               .equals(
-                  "inlinedRequests is not supported for Gemini Enterprise Agent Platform"
-                      + " (previously known as Vertex AI)."));
+                  "Exactly one of `gcs_uri` or `bigquery_uri`, or `vertex_dataset_name` must be"
+                      + " set, other sources are not supported in Gemini Enterprise Agent"
+                      + " Platform."));
     } else {
       BatchJob batchJob = client.async.batches.create(MODEL_ID, src, null).get();
 

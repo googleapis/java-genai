@@ -867,6 +867,10 @@ public final class Files {
 
   private String createFileInApi(
       UploadFileConfig config, Optional<String> mimeType, Optional<String> fileName, long size) {
+    if (this.apiClient.vertexAI()) {
+      throw new UnsupportedOperationException(
+          "This method is only supported in the Gemini Developer client.");
+    }
     File.Builder apiFileBuilder = File.builder();
     Optional<HttpOptions> userHttpOptions = Optional.empty();
     if (config != null) {

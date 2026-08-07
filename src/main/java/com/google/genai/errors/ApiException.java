@@ -23,11 +23,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.api.core.InternalApi;
 import java.io.IOException;
+import java.util.Optional;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /** General exception class for all exceptions originating from the GenAI API side. */
 public class ApiException extends BaseException {
+
+  /** ObjectMapper is thread-safe once configured, and constructing one is not cheap. */
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
   private final int code;
   private final String status;
@@ -59,8 +63,10 @@ public class ApiException extends BaseException {
     if (code >= 200 && code < 300) {
       return;
     }
-    String status = response.message();
-    String message = getErrorMessageFromResponse(response);
+    // The body can only be consumed once, so read it here and derive both fields from it.
+    String responseBodyString = readResponseBody(response);
+    String message = getErrorMessageFromBody(responseBodyString);
+    String status = getErrorStatusFromBody(responseBodyString).orElse(response.message());
     if (code >= 400 && code < 500) { // Client errors.
       throw new ClientException(code, status, message);
     } else if (code >= 500 && code < 600) { // Server errors.
@@ -75,17 +81,54 @@ public class ApiException extends BaseException {
    * returns an empty string.
    */
   static String getErrorMessageFromResponse(Response response) {
+    return getErrorMessageFromBody(readResponseBody(response));
+  }
+
+  /** Reads the response body, returning an empty string if it is absent or unreadable. */
+  private static String readResponseBody(Response response) {
     ResponseBody responseBody = response.body();
+    if (responseBody == null) {
+      return "";
+    }
     try {
-      if (responseBody == null) {
-        return "";
+      return responseBody.string();
+    } catch (IOException ignored) {
+      return "";
+    }
+  }
+
+  /**
+   * Returns the status the API reported in the response body. HTTP/2 carries no reason phrase, so
+   * the body is the only source for it.
+   */
+  private static Optional<String> getErrorStatusFromBody(String responseBodyString) {
+    if (isNullOrEmpty(responseBodyString)) {
+      return Optional.empty();
+    }
+    try {
+      JsonNode errorNode = OBJECT_MAPPER.readTree(responseBodyString).get("error");
+      if (errorNode != null && errorNode.isObject()) {
+        JsonNode statusNode = errorNode.get("status");
+        if (statusNode != null && statusNode.isTextual() && !statusNode.asText().isEmpty()) {
+          return Optional.of(statusNode.asText());
+        }
       }
-      String responseBodyString = responseBody.string();
+    } catch (IOException ignored) {
+      // Fall through to the reason phrase.
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Returns the error message from the response body, if no error or error message is not found,
+   * then returns an empty string.
+   */
+  private static String getErrorMessageFromBody(String responseBodyString) {
+    try {
       if (isNullOrEmpty(responseBodyString)) {
         return "";
       }
-      ObjectMapper mapper = new ObjectMapper();
-      JsonNode errorNode = mapper.readTree(responseBodyString).get("error");
+      JsonNode errorNode = OBJECT_MAPPER.readTree(responseBodyString).get("error");
       if (errorNode != null && errorNode.isObject()) {
         JsonNode messageNode = errorNode.get("message");
         String message = messageNode != null && messageNode.isTextual() ? messageNode.asText() : "";
