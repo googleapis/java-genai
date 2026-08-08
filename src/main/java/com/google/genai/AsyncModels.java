@@ -529,25 +529,11 @@ public final class AsyncModels {
 
   /** Asynchronously private method for generating videos. */
   CompletableFuture<GenerateVideosOperation> privateGenerateVideos(
-      String model,
-      String prompt,
-      Image image,
-      Video video,
-      GenerateVideosSource source,
-      GenerateVideosConfig config) {
+      String model, GenerateVideosSource source, GenerateVideosConfig config) {
     GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
-    }
-    if (!Common.isZero(prompt)) {
-      parameterBuilder.prompt(prompt);
-    }
-    if (!Common.isZero(image)) {
-      parameterBuilder.image(image);
-    }
-    if (!Common.isZero(video)) {
-      parameterBuilder.video(video);
     }
     if (!Common.isZero(source)) {
       parameterBuilder.source(source);
@@ -556,8 +542,7 @@ public final class AsyncModels {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
-    BuiltRequest builtRequest =
-        models.buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
+    BuiltRequest builtRequest = models.buildRequestForPrivateGenerateVideos(model, source, config);
     return this.apiClient
         .asyncRequest("post", builtRequest.path(), builtRequest.body(), builtRequest.httpOptions())
         .thenApplyAsync(
@@ -922,8 +907,7 @@ public final class AsyncModels {
    */
   public CompletableFuture<GenerateVideosOperation> generateVideos(
       String model, GenerateVideosSource source, GenerateVideosConfig config) {
-    return privateGenerateVideos(
-        model, null, null, null, models.preProcessGenerateVideosSource(source), config);
+    return generateVideos(model, source, config);
   }
 
   /**
@@ -953,7 +937,9 @@ public final class AsyncModels {
               + " in the next major release (not before 2026-07-31). Please use"
               + " generateVideos(String, GenerateVideosSource, GenerateVideosConfig) instead.");
     }
-    return privateGenerateVideos(model, prompt, image, models.preProcessVideo(video), null, config);
+    GenerateVideosSource source =
+        GenerateVideosSource.builder().prompt(prompt).image(image).video(video).build();
+    return generateVideos(model, source, config);
   }
 
   /**
@@ -980,7 +966,9 @@ public final class AsyncModels {
               + " next major release (not before 2026-07-31). Please use generateVideos(String,"
               + " GenerateVideosSource, GenerateVideosConfig) instead.");
     }
-    return generateVideos(model, prompt, image, null, config);
+    GenerateVideosSource source =
+        GenerateVideosSource.builder().prompt(prompt).image(image).build();
+    return generateVideos(model, source, config);
   }
 
   /**

@@ -3022,35 +3022,6 @@ public final class Models {
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "prompt"},
-          Common.getValueByPath(fromObject, new String[] {"prompt"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "image"},
-          imageToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
-              toObject,
-              rootObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "video"},
-          videoToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
-              toObject,
-              rootObject));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
       JsonNode unused =
           generateVideosSourceToMldev(
@@ -3082,35 +3053,6 @@ public final class Models {
           new String[] {"_url", "model"},
           Transformers.tModel(
               this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "prompt"},
-          Common.getValueByPath(fromObject, new String[] {"prompt"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"image"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "image"},
-          imageToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"image"})),
-              toObject,
-              rootObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "video"},
-          videoToVertex(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
-              toObject,
-              rootObject));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"source"}) != null) {
@@ -7422,26 +7364,12 @@ public final class Models {
 
   /** A shared buildRequest method for both sync and async methods. */
   BuiltRequest buildRequestForPrivateGenerateVideos(
-      String model,
-      String prompt,
-      Image image,
-      Video video,
-      GenerateVideosSource source,
-      GenerateVideosConfig config) {
+      String model, GenerateVideosSource source, GenerateVideosConfig config) {
 
     GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
-    }
-    if (!Common.isZero(prompt)) {
-      parameterBuilder.prompt(prompt);
-    }
-    if (!Common.isZero(image)) {
-      parameterBuilder.image(image);
-    }
-    if (!Common.isZero(video)) {
-      parameterBuilder.video(video);
     }
     if (!Common.isZero(source)) {
       parameterBuilder.source(source);
@@ -7507,25 +7435,11 @@ public final class Models {
 
   /** Private method for generating videos. */
   GenerateVideosOperation privateGenerateVideos(
-      String model,
-      String prompt,
-      Image image,
-      Video video,
-      GenerateVideosSource source,
-      GenerateVideosConfig config) {
+      String model, GenerateVideosSource source, GenerateVideosConfig config) {
     GenerateVideosParameters.Builder parameterBuilder = GenerateVideosParameters.builder();
 
     if (!Common.isZero(model)) {
       parameterBuilder.model(model);
-    }
-    if (!Common.isZero(prompt)) {
-      parameterBuilder.prompt(prompt);
-    }
-    if (!Common.isZero(image)) {
-      parameterBuilder.image(image);
-    }
-    if (!Common.isZero(video)) {
-      parameterBuilder.video(video);
     }
     if (!Common.isZero(source)) {
       parameterBuilder.source(source);
@@ -7534,8 +7448,7 @@ public final class Models {
       parameterBuilder.config(config);
     }
     JsonNode parameterNode = JsonSerializable.toJsonNode(parameterBuilder.build());
-    BuiltRequest builtRequest =
-        buildRequestForPrivateGenerateVideos(model, prompt, image, video, source, config);
+    BuiltRequest builtRequest = buildRequestForPrivateGenerateVideos(model, source, config);
 
     try (ApiResponse response =
         this.apiClient.request(
@@ -7936,8 +7849,7 @@ public final class Models {
    */
   public GenerateVideosOperation generateVideos(
       String model, GenerateVideosSource source, GenerateVideosConfig config) {
-    return privateGenerateVideos(
-        model, null, null, null, preProcessGenerateVideosSource(source), config);
+    return privateGenerateVideos(model, preProcessGenerateVideosSource(source), config);
   }
 
   /** Preprocesses the Video for the API. */
@@ -7982,7 +7894,9 @@ public final class Models {
               + " in the next major release (not before 2026-07-31). Please use"
               + " generateVideos(String, GenerateVideosSource, GenerateVideosConfig) instead.");
     }
-    return privateGenerateVideos(model, prompt, image, preProcessVideo(video), null, config);
+    GenerateVideosSource source =
+        GenerateVideosSource.builder().prompt(prompt).image(image).video(video).build();
+    return privateGenerateVideos(model, preProcessGenerateVideosSource(source), config);
   }
 
   /**
@@ -8009,7 +7923,9 @@ public final class Models {
               + " next major release (not before 2026-07-31). Please use generateVideos(String,"
               + " GenerateVideosSource, GenerateVideosConfig) instead.");
     }
-    return generateVideos(model, prompt, image, null, config);
+    GenerateVideosSource source =
+        GenerateVideosSource.builder().prompt(prompt).image(image).build();
+    return generateVideos(model, preProcessGenerateVideosSource(source), config);
   }
 
   /**

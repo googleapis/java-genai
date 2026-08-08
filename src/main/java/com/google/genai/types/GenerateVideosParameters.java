@@ -39,24 +39,6 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
   @JsonProperty("model")
   public abstract Optional<String> model();
 
-  /** The text prompt for generating the videos. Optional if image or video is provided. */
-  @JsonProperty("prompt")
-  public abstract Optional<String> prompt();
-
-  /**
-   * The input image for generating the videos. Optional if prompt is provided. Not allowed if video
-   * is provided.
-   */
-  @JsonProperty("image")
-  public abstract Optional<Image> image();
-
-  /**
-   * The input video for video extension use cases. Optional if prompt is provided. Not allowed if
-   * image is provided.
-   */
-  @JsonProperty("video")
-  public abstract Optional<Video> video();
-
   /** A set of source input(s) for video generation. */
   @JsonProperty("source")
   public abstract Optional<GenerateVideosSource> source();
@@ -100,84 +82,6 @@ public abstract class GenerateVideosParameters extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearModel() {
       return model(Optional.empty());
-    }
-
-    /**
-     * Setter for prompt.
-     *
-     * <p>prompt: The text prompt for generating the videos. Optional if image or video is provided.
-     */
-    @JsonProperty("prompt")
-    public abstract Builder prompt(String prompt);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder prompt(Optional<String> prompt);
-
-    /** Clears the value of prompt field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearPrompt() {
-      return prompt(Optional.empty());
-    }
-
-    /**
-     * Setter for image.
-     *
-     * <p>image: The input image for generating the videos. Optional if prompt is provided. Not
-     * allowed if video is provided.
-     */
-    @JsonProperty("image")
-    public abstract Builder image(Image image);
-
-    /**
-     * Setter for image builder.
-     *
-     * <p>image: The input image for generating the videos. Optional if prompt is provided. Not
-     * allowed if video is provided.
-     */
-    @CanIgnoreReturnValue
-    public Builder image(Image.Builder imageBuilder) {
-      return image(imageBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder image(Optional<Image> image);
-
-    /** Clears the value of image field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearImage() {
-      return image(Optional.empty());
-    }
-
-    /**
-     * Setter for video.
-     *
-     * <p>video: The input video for video extension use cases. Optional if prompt is provided. Not
-     * allowed if image is provided.
-     */
-    @JsonProperty("video")
-    public abstract Builder video(Video video);
-
-    /**
-     * Setter for video builder.
-     *
-     * <p>video: The input video for video extension use cases. Optional if prompt is provided. Not
-     * allowed if image is provided.
-     */
-    @CanIgnoreReturnValue
-    public Builder video(Video.Builder videoBuilder) {
-      return video(videoBuilder.build());
-    }
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder video(Optional<Video> video);
-
-    /** Clears the value of video field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearVideo() {
-      return video(Optional.empty());
     }
 
     /**
