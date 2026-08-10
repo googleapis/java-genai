@@ -21,9 +21,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+// android:strip_begin
+import com.google.genai.gaos.Agents;
+import com.google.genai.gaos.AsyncAgents;
+import com.google.genai.gaos.AsyncGenAI;
+import com.google.genai.gaos.AsyncInteractions;
+import com.google.genai.gaos.AsyncWebhooks;
+import com.google.genai.gaos.GenAI;
+import com.google.genai.gaos.Interactions;
+import com.google.genai.gaos.Webhooks;
+import com.google.genai.gaos.utils.SpeakeasyHTTPClient;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
+// android:strip_end
 import com.google.genai.types.ClientOptions;
 import com.google.genai.types.HttpOptions;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Logger;
 
 /** Client class for GenAI. This class is thread-safe. */
@@ -43,7 +61,11 @@ public final class Client implements AutoCloseable {
     public final AsyncTokens authTokens;
     public final AsyncTunings tunings;
     public final AsyncFileSearchStores fileSearchStores;
-
+    // android:strip_begin
+    public final AsyncInteractions interactions;
+    public final AsyncAgents agents;
+    public final AsyncWebhooks webhooks;
+    // android:strip_end
 
     public Async(ApiClient apiClient) {
       this.models = new AsyncModels(apiClient);
@@ -56,7 +78,12 @@ public final class Client implements AutoCloseable {
       this.authTokens = new AsyncTokens(apiClient);
       this.tunings = new AsyncTunings(apiClient);
       this.fileSearchStores = new AsyncFileSearchStores(apiClient);
-
+      // android:strip_begin
+      AsyncGenAI asyncGaos = Client.this.gaosClient.async();
+      this.interactions = asyncGaos.interactions();
+      this.agents = asyncGaos.agents();
+      this.webhooks = asyncGaos.webhooks();
+      // android:strip_end
     }
   }
 
@@ -72,7 +99,12 @@ public final class Client implements AutoCloseable {
   public final Tokens authTokens;
   public final Tunings tunings;
   public final FileSearchStores fileSearchStores;
-
+  // android:strip_begin
+  private final GenAI gaosClient;
+  public final Interactions interactions;
+  public final Agents agents;
+  public final Webhooks webhooks;
+  // android:strip_end
 
   /** Builder for {@link Client}. */
   public static class Builder {
@@ -85,9 +117,11 @@ public final class Client implements AutoCloseable {
     private Optional<Boolean> vertexAI = Optional.empty();
     private Optional<Boolean> enterprise = Optional.empty();
     private Optional<DebugConfig> debugConfig = Optional.empty();
+    private Optional<ScheduledExecutorService> asyncRetryScheduler = Optional.empty();
 
     /** Builds the {@link Client} instance. */
     public Client build() {
+
       return new Client(
           apiKey,
           project,
@@ -97,7 +131,8 @@ public final class Client implements AutoCloseable {
           clientOptions,
           vertexAI,
           enterprise,
-          debugConfig);
+          debugConfig,
+          asyncRetryScheduler);
     }
 
     /** Sets the API key for Gemini API. */
@@ -165,6 +200,17 @@ public final class Client implements AutoCloseable {
     }
 
     /**
+     * Sets the {@link ScheduledExecutorService} for async retries in GAOS.
+     *
+     */
+    @CanIgnoreReturnValue
+    public Builder asyncRetryScheduler(ScheduledExecutorService asyncRetryScheduler) {
+      checkNotNull(asyncRetryScheduler, "asyncRetryScheduler cannot be null");
+      this.asyncRetryScheduler = Optional.of(asyncRetryScheduler);
+      return this;
+    }
+
+    /**
      * Sets the {@link DebugConfig} for debugging or testing the Client. This is for internal use
      * only.
      */
@@ -192,7 +238,8 @@ public final class Client implements AutoCloseable {
         /* clientOptions= */ Optional.empty(),
         /* vertexAI= */ Optional.empty(),
         /* enterprise= */ Optional.empty(),
-        /* debugConfig= */ Optional.empty());
+        /* debugConfig= */ Optional.empty(),
+        /* asyncRetryScheduler= */ Optional.empty());
   }
 
   /**
@@ -223,16 +270,22 @@ public final class Client implements AutoCloseable {
       Optional<ClientOptions> clientOptions,
       Optional<Boolean> vertexAI,
       Optional<Boolean> enterprise,
-      Optional<DebugConfig> debugConfig) {
+      Optional<DebugConfig> debugConfig,
+      Optional<ScheduledExecutorService> asyncRetryScheduler) {
+
     checkNotNull(vertexAI, "vertexAI cannot be null");
     checkNotNull(enterprise, "enterprise cannot be null");
     checkNotNull(debugConfig, "debugConfig cannot be null");
 
-    if (enterprise.isPresent() && vertexAI.isPresent() && !enterprise.get().equals(vertexAI.get())) {
+    if (enterprise.isPresent()
+        && vertexAI.isPresent()
+        && !enterprise.get().equals(vertexAI.get())) {
       throw new IllegalArgumentException(
           "enterprise and vertexAI flags have conflicting values, please set enterprise value"
               + " only.");
     }
+
+    this.debugConfig = debugConfig.orElse(new DebugConfig());
 
     boolean useVertexAI;
     if (enterprise.isPresent()) {
@@ -266,7 +319,6 @@ public final class Client implements AutoCloseable {
       throw new IllegalArgumentException("Gemini API does not support project/location.");
     }
 
-    this.debugConfig = debugConfig.orElse(new DebugConfig());
     if (this.debugConfig.clientMode().equals("replay")) {
       if (!useVertexAI) {
         this.apiClient =
@@ -309,11 +361,50 @@ public final class Client implements AutoCloseable {
       }
     }
 
-    models = new Models(this.apiClient);
-    batches = new Batches(this.apiClient);
-    caches = new Caches(apiClient);
-    operations = new Operations(this.apiClient);
-    chats = new Chats(this.apiClient);
+    this.models = new Models(this.apiClient);
+    this.batches = new Batches(this.apiClient);
+    this.caches = new Caches(apiClient);
+    this.operations = new Operations(this.apiClient);
+    this.chats = new Chats(this.apiClient);
+
+    // android:strip_begin
+    GenAI.Builder gaosBuilder = GenAI.builder();
+    Optional<String> baseUrlOpt = this.apiClient.httpOptions().baseUrl();
+    Optional<String> apiVersionOpt = this.apiClient.httpOptions().apiVersion();
+    if (baseUrlOpt.isPresent()) {
+      gaosBuilder = gaosBuilder.serverURL(baseUrlOpt.get());
+    }
+    if (this.apiClient.vertexAI()
+        && this.apiClient.project() != null
+        && this.apiClient.location() != null) {
+      String apiVersion = apiVersionOpt.orElse("v1beta1");
+      String vertexLocation = this.apiClient.location();
+      String vertexProject = this.apiClient.project();
+      // For Vertex AI, the OpenAPI route template is /{api_version}/interactions.
+      // Setting apiVersion to "{apiVersion}/projects/{project}/locations/{location}" produces:
+      // https://{location}-aiplatform.googleapis.com/{apiVersion}/projects/{project}/locations/{location}/interactions
+      String vertexApiVersion =
+          apiVersion + "/projects/" + vertexProject + "/locations/" + vertexLocation;
+      gaosBuilder = gaosBuilder.apiVersion(vertexApiVersion);
+    } else {
+      if (apiVersionOpt.isPresent()) {
+        gaosBuilder = gaosBuilder.apiVersion(apiVersionOpt.get());
+      }
+    }
+    if (apiClient.credentials() != null
+        && apiClient.credentials().getQuotaProjectId() != null) {
+      gaosBuilder = gaosBuilder.userProject(apiClient.credentials().getQuotaProjectId());
+    }
+    gaosBuilder = gaosBuilder.client(new GenAiGaosHttpClient(this.apiClient));
+    if (asyncRetryScheduler.isPresent()) {
+      gaosBuilder = gaosBuilder.asyncRetryScheduler(asyncRetryScheduler.get());
+    }
+    this.gaosClient = gaosBuilder.build();
+    this.interactions = gaosClient.interactions();
+    this.agents = gaosClient.agents();
+    this.webhooks = gaosClient.webhooks();
+    // android:strip_end
+
     async = new Async(this.apiClient);
     files = new Files(this.apiClient);
     authTokens = new Tokens(this.apiClient);
@@ -321,6 +412,55 @@ public final class Client implements AutoCloseable {
     fileSearchStores = new FileSearchStores(this.apiClient);
 
   }
+
+
+  // android:strip_begin
+  private static final class GenAiGaosHttpClient extends SpeakeasyHTTPClient {
+    private final ApiClient apiClient;
+
+    public GenAiGaosHttpClient(ApiClient apiClient) {
+      this.apiClient = apiClient;
+    }
+
+    private HttpRequest authorize(HttpRequest request) {
+      HttpRequest.Builder builder = request.toBuilder();
+
+      // Default SDK headers
+      builder = builder.setHeader("user-agent", ApiClient.libraryVersion());
+      builder = builder.setHeader("x-goog-api-client", ApiClient.libraryVersion());
+
+      // Authentication headers
+      if (apiClient.apiKey() != null) {
+        builder = builder.setHeader("x-goog-api-key", apiClient.apiKey());
+      } else if (apiClient.credentials() != null) {
+        String token = apiClient.refreshAndGetAccessToken();
+        if (token != null) {
+          builder = builder.setHeader("Authorization", "Bearer " + token);
+        }
+      }
+
+      // User-supplied custom headers (can override default headers)
+      if (apiClient.httpOptions().headers().isPresent()) {
+        for (Map.Entry<String, String> entry : apiClient.httpOptions().headers().get().entrySet()) {
+          builder = builder.setHeader(entry.getKey(), entry.getValue());
+        }
+      }
+
+      return builder.build();
+    }
+
+    @Override
+    public HttpResponse<InputStream> send(HttpRequest request) throws IOException {
+      return super.send(authorize(request));
+    }
+
+    @Override
+    public CompletableFuture<HttpResponse<InputStream>> sendAsync(HttpRequest request) {
+      return CompletableFuture.supplyAsync(() -> authorize(request))
+          .thenCompose(super::sendAsync);
+    }
+  }
+  // android:strip_end
 
   /** Returns whether the client is using Vertex AI APIs. */
   public boolean vertexAI() {
