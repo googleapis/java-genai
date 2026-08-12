@@ -19,7 +19,10 @@ package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.HttpOptions;
+import com.google.genai.types.HttpRetryOptions;
 import com.google.genai.types.TestTableFile;
 import com.google.genai.types.TestTableItem;
 import java.io.IOException;
@@ -468,6 +471,23 @@ public final class TableTest {
     return dynamicTests;
   }
 
+  /**
+   * Retry options for the shared integration tests, applied to every request the test client makes
+   * so that a transient 5xx or 429 does not fail the nightly.
+   *
+   * <p>Deliberately shorter than the SDK defaults: a multistep test retries per request, so the
+   * backoff has to stay well inside the test timeout. Keep aligned with conftest.py in the Python
+   * SDK tests.
+   */
+  private static final HttpRetryOptions SHARED_TEST_RETRY_OPTIONS =
+      HttpRetryOptions.builder()
+          .attempts(3)
+          .initialDelay(1.0)
+          .maxDelay(10.0)
+          .expBase(2.0)
+          .httpStatusCodes(ImmutableList.of(408, 429, 500, 502, 503, 504))
+          .build();
+
   static Client createClient(boolean vertexAI) {
     return createClient(vertexAI, "");
   }
@@ -505,7 +525,11 @@ public final class TableTest {
       return client;
     }
 
-    Client.Builder builder = Client.builder().vertexAI(vertexAI).debugConfig(debugConfig);
+    Client.Builder builder =
+        Client.builder()
+            .vertexAI(vertexAI)
+            .debugConfig(debugConfig)
+            .httpOptions(HttpOptions.builder().retryOptions(SHARED_TEST_RETRY_OPTIONS).build());
     if (vertexAI
         && testId.contains("tunings")
         && "global".equals(System.getenv("GOOGLE_CLOUD_LOCATION"))) {
