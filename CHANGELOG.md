@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.66.0](https://github.com/googleapis/java-genai/compare/v1.65.0...v1.66.0) (2026-08-12)
+
+
+### Features
+
+* Add interaction_status to LiveServerContent ([d3c90d3](https://github.com/googleapis/java-genai/commit/d3c90d3ea65daf595d72547fd9036d2d62d77be5))
+
+
+### Bug Fixes
+
+* report the API status on errors and align error messages to other SDKs ([9d22aaf](https://github.com/googleapis/java-genai/commit/9d22aaf0eb3609fb99e071a540cf756d44e47d4f))
+
 ## [1.65.0](https://github.com/googleapis/java-genai/compare/v1.64.0...v1.65.0) (2026-08-06)
 
 
