@@ -32,14 +32,21 @@ import java.util.Optional;
 
 /** */
 @AutoValue
+@Deprecated
+@ExcludeFromGeneratedCoverageReport
 @JsonDeserialize(builder = UpscaleImageResponse.Builder.class)
 public abstract class UpscaleImageResponse extends JsonSerializable {
+  @ExcludeFromGeneratedCoverageReport
+  public UpscaleImageResponse() {}
+
   /** Used to retain the full HTTP response. */
   @JsonProperty("sdkHttpResponse")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<HttpResponse> sdkHttpResponse();
 
   /** Generated images. */
   @JsonProperty("generatedImages")
+  @ExcludeFromGeneratedCoverageReport
   public abstract Optional<List<GeneratedImage>> generatedImages();
 
   /** Instantiates a builder for UpscaleImageResponse. */
@@ -49,12 +56,17 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
   }
 
   /** Creates a builder with the same values as this instance. */
+  @ExcludeFromGeneratedCoverageReport
   public abstract Builder toBuilder();
 
   /** Builder for UpscaleImageResponse. */
   @AutoValue.Builder
   public abstract static class Builder {
+    @ExcludeFromGeneratedCoverageReport
+    public Builder() {}
+
     /** For internal usage. Please use `UpscaleImageResponse.builder()` for instantiation. */
+    @ExcludeFromGeneratedCoverageReport
     @JsonCreator
     private static Builder create() {
       return new AutoValue_UpscaleImageResponse.Builder();
@@ -66,6 +78,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
     @JsonProperty("sdkHttpResponse")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
 
     /**
@@ -74,6 +87,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      * <p>sdkHttpResponse: Used to retain the full HTTP response.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder sdkHttpResponse(HttpResponse.Builder sdkHttpResponseBuilder) {
       return sdkHttpResponse(sdkHttpResponseBuilder.build());
     }
@@ -94,6 +108,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      * <p>generatedImages: Generated images.
      */
     @JsonProperty("generatedImages")
+    @ExcludeFromGeneratedCoverageReport
     public abstract Builder generatedImages(List<GeneratedImage> generatedImages);
 
     /**
@@ -102,6 +117,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      * <p>generatedImages: Generated images.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder generatedImages(GeneratedImage... generatedImages) {
       return generatedImages(Arrays.asList(generatedImages));
     }
@@ -112,6 +128,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
      * <p>generatedImages: Generated images.
      */
     @CanIgnoreReturnValue
+    @ExcludeFromGeneratedCoverageReport
     public Builder generatedImages(GeneratedImage.Builder... generatedImagesBuilders) {
       return generatedImages(
           Arrays.asList(generatedImagesBuilders).stream()
@@ -129,6 +146,7 @@ public abstract class UpscaleImageResponse extends JsonSerializable {
       return generatedImages(Optional.empty());
     }
 
+    @ExcludeFromGeneratedCoverageReport
     public abstract UpscaleImageResponse build();
   }
 
