@@ -25,11 +25,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.VerifyException;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Tool details of a tool that the model may use to generate a response. */
@@ -126,6 +131,13 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("exaAiSearch")
   public abstract Optional<ToolExaAiSearch> exaAiSearch();
+
+  /**
+   * The java.lang.reflect.Method instance to target instance mapping. If provided, it will be used
+   * to invoke instance methods during automatic function calling.
+   */
+  @JsonIgnore
+  public abstract Optional<Map<Method, Object>> functionInstances();
 
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
@@ -606,6 +618,56 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExaAiSearch() {
       return exaAiSearch(Optional.empty());
+    }
+
+    /**
+     * Setter for functionInstances.
+     *
+     * <p>functionInstances: The java.lang.reflect.Method instance to target instance mapping. If
+     * provided, it will be used to invoke instance methods during automatic function calling.
+     */
+    @JsonIgnore
+    public abstract Builder functionInstances(Map<Method, Object> functionInstances);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionInstances(Optional<Map<Method, Object>> functionInstances);
+
+    /** Clears the value of functionInstances field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionInstances() {
+      return functionInstances(Optional.empty());
+    }
+
+    public Builder functionWithInstance(Method method, Object instance) {
+      try {
+        Field fFunctions = this.getClass().getDeclaredField("functions");
+        fFunctions.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        Optional<List<Method>> optFunctions = (Optional<List<Method>>) fFunctions.get(this);
+        List<Method> currentFunctions =
+            new ArrayList<>(
+                optFunctions != null && optFunctions.isPresent()
+                    ? optFunctions.get()
+                    : new ArrayList<>());
+        currentFunctions.add(method);
+        functions(currentFunctions);
+
+        Field fInstances = this.getClass().getDeclaredField("functionInstances");
+        fInstances.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        Optional<Map<Method, Object>> optInstances =
+            (Optional<Map<Method, Object>>) fInstances.get(this);
+        Map<Method, Object> currentInstances =
+            new HashMap<>(
+                optInstances != null && optInstances.isPresent()
+                    ? optInstances.get()
+                    : new HashMap<>());
+        currentInstances.put(method, instance);
+        return functionInstances(currentInstances);
+      } catch (Exception e) {
+        throw new VerifyException("Failed to add function with instance", e);
+      }
     }
 
     public abstract Tool build();

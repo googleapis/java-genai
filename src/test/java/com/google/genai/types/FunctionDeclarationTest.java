@@ -186,18 +186,6 @@ public class FunctionDeclarationTest {
     assertEquals(EXPECTED_FUNCTION_DECLARATION.toString(), functionDeclaration.toString());
   }
 
-  @Test
-  public void fromMethodWithInstanceMethod_throwsIllegalArgumentException()
-      throws NoSuchMethodException {
-    Method method = FunctionDeclarationTest.class.getMethod("instanceMethod", String.class);
-
-    IllegalArgumentException thrown =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> FunctionDeclaration.fromMethod(FUNCTION_DESCRIPTION, method, STRING_PARAM_NAME));
-    assertEquals(
-        "Instance methods are not supported. Please use static methods.", thrown.getMessage());
-  }
 
   @Test
   public void fromMethodWithInvalidParameterType_throwsIllegalArgumentException()
@@ -240,7 +228,7 @@ public class FunctionDeclarationTest {
                                 .type(Type.Known.STRING)
                                 .title(STRING_PARAM_NAME)
                                 .build()))
-                    .required(STRING_PARAM_NAME))
+                    .required(ImmutableList.of(STRING_PARAM_NAME)))
             .response(Schema.builder().type(Type.Known.OBJECT).title("return type"))
             .build();
 
@@ -269,6 +257,34 @@ public class FunctionDeclarationTest {
         "The number of parameter names passed to the orderedParameterNames"
             + " argument does not match the number of parameters in the method.",
         thrown.getMessage());
+  }
+
+  @Test
+  public void fromMethodWithInstanceMethod_returnsFunctionDeclaration()
+      throws NoSuchMethodException {
+    Method method = FunctionDeclarationTest.class.getMethod("instanceMethod", String.class);
+    FunctionDeclaration functionDeclaration =
+        FunctionDeclaration.fromMethod(FUNCTION_DESCRIPTION, method, STRING_PARAM_NAME);
+
+    FunctionDeclaration expectedFunctionDeclaration =
+        FunctionDeclaration.builder()
+            .name("instanceMethod")
+            .description(FUNCTION_DESCRIPTION)
+            .parameters(
+                Schema.builder()
+                    .type(Type.Known.OBJECT)
+                    .properties(
+                        ImmutableMap.of(
+                            STRING_PARAM_NAME,
+                            Schema.builder()
+                                .type(Type.Known.STRING)
+                                .title(STRING_PARAM_NAME)
+                                .build()))
+                    .required(ImmutableList.of(STRING_PARAM_NAME)))
+            .response(Schema.builder().type(Type.Known.INTEGER).title("return type"))
+            .build();
+
+    assertEquals(expectedFunctionDeclaration, functionDeclaration);
   }
 
   @Test
