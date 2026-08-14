@@ -28,8 +28,11 @@ import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /** Tool details of a tool that the model may use to generate a response. */
@@ -126,6 +129,13 @@ public abstract class Tool extends JsonSerializable {
    */
   @JsonProperty("exaAiSearch")
   public abstract Optional<ToolExaAiSearch> exaAiSearch();
+
+  /**
+   * The java.lang.reflect.Method instance to target instance mapping. If provided, it will be used
+   * to invoke instance methods during automatic function calling.
+   */
+  @JsonIgnore
+  public abstract Optional<Map<Method, Object>> functionInstances();
 
   /** Instantiates a builder for Tool. */
   @ExcludeFromGeneratedCoverageReport
@@ -606,6 +616,40 @@ public abstract class Tool extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearExaAiSearch() {
       return exaAiSearch(Optional.empty());
+    }
+
+    /**
+     * Setter for functionInstances.
+     *
+     * <p>functionInstances: The java.lang.reflect.Method instance to target instance mapping. If
+     * provided, it will be used to invoke instance methods during automatic function calling.
+     */
+    @JsonIgnore
+    public abstract Builder functionInstances(Map<Method, Object> functionInstances);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder functionInstances(Optional<Map<Method, Object>> functionInstances);
+
+    /** Clears the value of functionInstances field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearFunctionInstances() {
+      return functionInstances(Optional.empty());
+    }
+
+    public abstract Optional<List<Method>> functions();
+
+    public abstract Optional<Map<Method, Object>> functionInstances();
+
+    public Builder functionWithInstance(Method method, Object instance) {
+      List<Method> currentFunctions = new ArrayList<>(functions().orElse(new ArrayList<>()));
+      currentFunctions.add(method);
+      functions(currentFunctions);
+
+      Map<Method, Object> currentInstances =
+          new HashMap<>(functionInstances().orElse(new HashMap<>()));
+      currentInstances.put(method, instance);
+      return functionInstances(currentInstances);
     }
 
     public abstract Tool build();

@@ -251,7 +251,7 @@ public class TransformersTest {
                                         .build()))
                             .required("recipeName", "ingredients")))
             .googleSearch(GoogleSearch.builder())
-            .functions()
+            .clearFunctions()
             .build();
     Tool geminiTransformedTool = Transformers.tTool(originalTool);
     Tool vertexTransformedTool = Transformers.tTool(originalTool);
