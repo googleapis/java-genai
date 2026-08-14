@@ -26,7 +26,7 @@ import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.UpdateWebhookRequest;
 import com.google.genai.gaos.models.operations.UpdateWebhookResponse;
 import com.google.genai.gaos.models.webhooks.Webhook;
@@ -232,20 +232,20 @@ public class UpdateWebhook {
             
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "default")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withWebhook(Utils.unmarshal(response, new TypeReference<Webhook>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
@@ -319,20 +319,20 @@ public class UpdateWebhook {
             
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "default")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withWebhook(Utils.unmarshal(response, new TypeReference<Webhook>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

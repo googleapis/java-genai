@@ -17,10 +17,15 @@
 package com.google.genai.errors;
 
 /** Client exception raised by the GenAI API. */
-public final class ClientException extends ApiException {
+public class ClientException extends ApiException {
 
   /** Creates a new ClientException with the specified message. */
   public ClientException(int code, String status, String message) {
     super(code, status, message);
+  }
+
+  /** Creates a new ClientException carrying the originating cause. */
+  public ClientException(int code, String status, String message, Throwable cause) {
+    super(code, status, message, cause);
   }
 }

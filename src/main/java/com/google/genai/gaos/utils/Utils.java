@@ -83,7 +83,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -1457,7 +1457,7 @@ public final class Utils {
                     Utils.extractByteArrayFromBody(response),
                     typeReference);
         } catch (Exception e) {
-            throw SDKException.from(
+            throw GaosApiException.from(
                     "Error deserializing response body: " + e.getMessage(), response, e);
         }
     }

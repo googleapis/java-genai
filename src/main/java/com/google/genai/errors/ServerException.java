@@ -17,10 +17,15 @@
 package com.google.genai.errors;
 
 /** Server exception raised by the GenAI API. */
-public final class ServerException extends ApiException {
+public class ServerException extends ApiException {
 
   /** Creates a new ServerException with the specified message. */
   public ServerException(int code, String status, String message) {
     super(code, status, message);
+  }
+
+  /** Creates a new ServerException carrying the originating cause. */
+  public ServerException(int code, String status, String message, Throwable cause) {
+    super(code, status, message, cause);
   }
 }

@@ -35,7 +35,7 @@ import java.lang.Throwable;
 import java.util.Optional;
 
 @SuppressWarnings("serial")
-public class DeleteInteractionClientError extends GenAiException {
+public class DeleteInteractionClientError extends GaosClientException {
 
     @Nullable
     private final Data data;
