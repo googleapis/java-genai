@@ -34,6 +34,31 @@ public abstract class AuthToken extends JsonSerializable {
   @JsonProperty("name")
   public abstract Optional<String> name();
 
+  /**
+   * Optional. Input only. Immutable. An optional time after which, when using the resulting token,
+   * messages in BidiGenerateContent sessions will be rejected. (Gemini may preemptively close the
+   * session after this time.) If not set then this defaults to 30 minutes in the future. If set,
+   * this value must be less than 20 hours in the future.
+   */
+  @JsonProperty("expireTime")
+  public abstract Optional<String> expireTime();
+
+  /**
+   * Optional. Input only. Immutable. The time after which new Live API sessions using the token
+   * resulting from this request will be rejected. If not set this defaults to 60 seconds in the
+   * future. If set, this value must be less than 20 hours in the future.
+   */
+  @JsonProperty("newSessionExpireTime")
+  public abstract Optional<String> newSessionExpireTime();
+
+  /**
+   * Optional. Input only. Immutable. The number of times the token can be used. If this value is
+   * zero then no limit is applied. Resuming a Live API session does not count as a use. If
+   * unspecified, the default is 1.
+   */
+  @JsonProperty("uses")
+  public abstract Optional<Integer> uses();
+
   /** Instantiates a builder for AuthToken. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -68,6 +93,68 @@ public abstract class AuthToken extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearName() {
       return name(Optional.empty());
+    }
+
+    /**
+     * Setter for expireTime.
+     *
+     * <p>expireTime: Optional. Input only. Immutable. An optional time after which, when using the
+     * resulting token, messages in BidiGenerateContent sessions will be rejected. (Gemini may
+     * preemptively close the session after this time.) If not set then this defaults to 30 minutes
+     * in the future. If set, this value must be less than 20 hours in the future.
+     */
+    @JsonProperty("expireTime")
+    public abstract Builder expireTime(String expireTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder expireTime(Optional<String> expireTime);
+
+    /** Clears the value of expireTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearExpireTime() {
+      return expireTime(Optional.empty());
+    }
+
+    /**
+     * Setter for newSessionExpireTime.
+     *
+     * <p>newSessionExpireTime: Optional. Input only. Immutable. The time after which new Live API
+     * sessions using the token resulting from this request will be rejected. If not set this
+     * defaults to 60 seconds in the future. If set, this value must be less than 20 hours in the
+     * future.
+     */
+    @JsonProperty("newSessionExpireTime")
+    public abstract Builder newSessionExpireTime(String newSessionExpireTime);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder newSessionExpireTime(Optional<String> newSessionExpireTime);
+
+    /** Clears the value of newSessionExpireTime field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearNewSessionExpireTime() {
+      return newSessionExpireTime(Optional.empty());
+    }
+
+    /**
+     * Setter for uses.
+     *
+     * <p>uses: Optional. Input only. Immutable. The number of times the token can be used. If this
+     * value is zero then no limit is applied. Resuming a Live API session does not count as a use.
+     * If unspecified, the default is 1.
+     */
+    @JsonProperty("uses")
+    public abstract Builder uses(Integer uses);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder uses(Optional<Integer> uses);
+
+    /** Clears the value of uses field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearUses() {
+      return uses(Optional.empty());
     }
 
     public abstract AuthToken build();
