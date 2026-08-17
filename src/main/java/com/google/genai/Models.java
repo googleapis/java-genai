@@ -1957,13 +1957,6 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"modelArmorConfig"}));
     }
 
-    if (Common.getValueByPath(fromObject, new String[] {"serviceTier"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"serviceTier"},
-          Common.getValueByPath(fromObject, new String[] {"serviceTier"}));
-    }
-
     if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
       Common.setValueByPath(
           toObject,
