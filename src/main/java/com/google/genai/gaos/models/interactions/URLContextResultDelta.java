@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,13 +34,11 @@ import java.lang.String;
 import java.util.List;
 import java.util.Optional;
 
-
 public class URLContextResultDelta implements StepDeltaData {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
     private Boolean isError;
-
 
     @JsonProperty("result")
     private List<URLContextResult> result;
@@ -52,7 +50,6 @@ public class URLContextResultDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -62,14 +59,13 @@ public class URLContextResultDelta implements StepDeltaData {
             @JsonProperty("result") @Nonnull List<URLContextResult> result,
             @JsonProperty("signature") @Nullable String signature) {
         this.isError = isError;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public URLContextResultDelta(
-            @Nonnull List<URLContextResult> result) {
+
+    public URLContextResultDelta(@Nonnull List<URLContextResult> result) {
         this(null, result, null);
     }
 
@@ -97,18 +93,15 @@ public class URLContextResultDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public URLContextResultDelta withIsError(@Nullable Boolean isError) {
         this.isError = isError;
         return this;
     }
 
-
     public URLContextResultDelta withResult(@Nonnull List<URLContextResult> result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
-
 
     /**
      * A signature hash for backend validation.
@@ -117,7 +110,6 @@ public class URLContextResultDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -128,31 +120,33 @@ public class URLContextResultDelta implements StepDeltaData {
             return false;
         }
         URLContextResultDelta other = (URLContextResultDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.isError, other.isError)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            isError, result, signature,
-            type);
+        return Utils.enhancedHash(isError, result, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContextResultDelta.class,
-                "isError", isError,
-                "result", result,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                URLContextResultDelta.class,
+                "isError",
+                isError,
+                "result",
+                result,
+                "signature",
+                signature,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Boolean isError;
 
@@ -161,7 +155,7 @@ public class URLContextResultDelta implements StepDeltaData {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder isError(@Nullable Boolean isError) {
@@ -183,15 +177,10 @@ public class URLContextResultDelta implements StepDeltaData {
         }
 
         public URLContextResultDelta build() {
-            return new URLContextResultDelta(
-                isError, result, signature);
+            return new URLContextResultDelta(isError, result, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"url_context_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"url_context_result\"", new TypeReference<String>() {});
     }
 }

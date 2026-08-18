@@ -30,7 +30,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListTriggersResponse implements AsyncResponse {
     /**
      * HTTP response content type for this operation
@@ -59,19 +58,16 @@ public class ListTriggersResponse implements AsyncResponse {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.listTriggersResponse = listTriggersResponse;
     }
-    
+
     public ListTriggersResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -106,7 +102,6 @@ public class ListTriggersResponse implements AsyncResponse {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -114,7 +109,6 @@ public class ListTriggersResponse implements AsyncResponse {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -124,7 +118,6 @@ public class ListTriggersResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -133,15 +126,14 @@ public class ListTriggersResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Successful operation
      */
-    public ListTriggersResponse withListTriggersResponse(@Nullable com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse) {
+    public ListTriggersResponse withListTriggersResponse(
+            @Nullable com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse) {
         this.listTriggersResponse = listTriggersResponse;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -152,31 +144,33 @@ public class ListTriggersResponse implements AsyncResponse {
             return false;
         }
         ListTriggersResponse other = (ListTriggersResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.listTriggersResponse, other.listTriggersResponse);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.listTriggersResponse, other.listTriggersResponse);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            listTriggersResponse);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, listTriggersResponse);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListTriggersResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "listTriggersResponse", listTriggersResponse);
+        return Utils.toString(
+                ListTriggersResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "listTriggersResponse",
+                listTriggersResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -187,7 +181,7 @@ public class ListTriggersResponse implements AsyncResponse {
         private com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -217,16 +211,14 @@ public class ListTriggersResponse implements AsyncResponse {
         /**
          * Successful operation
          */
-        public Builder listTriggersResponse(@Nullable com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse) {
+        public Builder listTriggersResponse(
+                @Nullable com.google.genai.gaos.models.triggers.ListTriggersResponse listTriggersResponse) {
             this.listTriggersResponse = listTriggersResponse;
             return this;
         }
 
         public ListTriggersResponse build() {
-            return new ListTriggersResponse(
-                contentType, statusCode, rawResponse,
-                listTriggersResponse);
+            return new ListTriggersResponse(contentType, statusCode, rawResponse, listTriggersResponse);
         }
-
     }
 }

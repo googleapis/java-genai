@@ -37,12 +37,14 @@ import java.util.Optional;
 public class InteractionStatusUpdateStatus {
 
     public static final InteractionStatusUpdateStatus IN_PROGRESS = new InteractionStatusUpdateStatus("in_progress");
-    public static final InteractionStatusUpdateStatus REQUIRES_ACTION = new InteractionStatusUpdateStatus("requires_action");
+    public static final InteractionStatusUpdateStatus REQUIRES_ACTION =
+            new InteractionStatusUpdateStatus("requires_action");
     public static final InteractionStatusUpdateStatus COMPLETED = new InteractionStatusUpdateStatus("completed");
     public static final InteractionStatusUpdateStatus FAILED = new InteractionStatusUpdateStatus("failed");
     public static final InteractionStatusUpdateStatus CANCELLED = new InteractionStatusUpdateStatus("cancelled");
     public static final InteractionStatusUpdateStatus INCOMPLETE = new InteractionStatusUpdateStatus("incomplete");
-    public static final InteractionStatusUpdateStatus BUDGET_EXCEEDED = new InteractionStatusUpdateStatus("budget_exceeded");
+    public static final InteractionStatusUpdateStatus BUDGET_EXCEEDED =
+            new InteractionStatusUpdateStatus("budget_exceeded");
     public static final InteractionStatusUpdateStatus QUEUED = new InteractionStatusUpdateStatus("queued");
 
     // This map will grow whenever a Color gets created with a new
@@ -60,12 +62,12 @@ public class InteractionStatusUpdateStatus {
     }
 
     /**
-     * Returns a InteractionStatusUpdateStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a InteractionStatusUpdateStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as InteractionStatusUpdateStatus
-     */ 
+     */
     @JsonCreator
     public static InteractionStatusUpdateStatus of(String value) {
         synchronized (InteractionStatusUpdateStatus.class) {
@@ -93,12 +95,9 @@ public class InteractionStatusUpdateStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         InteractionStatusUpdateStatus other = (InteractionStatusUpdateStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -140,8 +139,7 @@ public class InteractionStatusUpdateStatus {
         map.put("queued", InteractionStatusUpdateStatusEnum.QUEUED);
         return map;
     }
-    
-    
+
     public enum InteractionStatusUpdateStatusEnum {
 
         IN_PROGRESS("in_progress"),
@@ -151,7 +149,8 @@ public class InteractionStatusUpdateStatus {
         CANCELLED("cancelled"),
         INCOMPLETE("incomplete"),
         BUDGET_EXCEEDED("budget_exceeded"),
-        QUEUED("queued"),;
+        QUEUED("queued"),
+        ;
 
         private final String value;
 
@@ -164,4 +163,3 @@ public class InteractionStatusUpdateStatus {
         }
     }
 }
-

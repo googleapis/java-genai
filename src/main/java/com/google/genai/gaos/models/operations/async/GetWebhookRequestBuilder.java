@@ -71,7 +71,7 @@ public class GetWebhookRequestBuilder {
         }
         return this.request;
     }
-    
+
     public GetWebhookRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class GetWebhookRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<GetWebhookResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<GetWebhookRequest, GetWebhookResponse> operation
-              = new GetWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetWebhookRequest, GetWebhookResponse> operation =
+                new GetWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

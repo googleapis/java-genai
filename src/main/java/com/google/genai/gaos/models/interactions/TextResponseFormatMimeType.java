@@ -36,12 +36,13 @@ import java.util.Optional;
  */
 /**
  * TextResponseFormatMimeType
- * 
+ *
  * <p>The MIME type of the text output.
  */
 public class TextResponseFormatMimeType {
 
-    public static final TextResponseFormatMimeType APPLICATION_JSON = new TextResponseFormatMimeType("application/json");
+    public static final TextResponseFormatMimeType APPLICATION_JSON =
+            new TextResponseFormatMimeType("application/json");
     public static final TextResponseFormatMimeType TEXT_PLAIN = new TextResponseFormatMimeType("text/plain");
 
     // This map will grow whenever a Color gets created with a new
@@ -59,12 +60,12 @@ public class TextResponseFormatMimeType {
     }
 
     /**
-     * Returns a TextResponseFormatMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a TextResponseFormatMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as TextResponseFormatMimeType
-     */ 
+     */
     @JsonCreator
     public static TextResponseFormatMimeType of(String value) {
         synchronized (TextResponseFormatMimeType.class) {
@@ -92,12 +93,9 @@ public class TextResponseFormatMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         TextResponseFormatMimeType other = (TextResponseFormatMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +125,12 @@ public class TextResponseFormatMimeType {
         map.put("text/plain", TextResponseFormatMimeTypeEnum.TEXT_PLAIN);
         return map;
     }
-    
-    
+
     public enum TextResponseFormatMimeTypeEnum {
 
         APPLICATION_JSON("application/json"),
-        TEXT_PLAIN("text/plain"),;
+        TEXT_PLAIN("text/plain"),
+        ;
 
         private final String value;
 
@@ -145,4 +143,3 @@ public class TextResponseFormatMimeType {
         }
     }
 }
-

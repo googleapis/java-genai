@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * MCPServerToolResultStepResultUnion
- * 
+ *
  * <p>Required. The output from the MCP server call. Can be simple text or rich content.
  */
 @JsonDeserialize(using = MCPServerToolResultStepResultUnion._Deserializer.class)
@@ -44,26 +44,29 @@ public class MCPServerToolResultStepResultUnion {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private MCPServerToolResultStepResultUnion(TypedObject value) {
         this.value = value;
     }
 
     public static MCPServerToolResultStepResultUnion of(MCPServerToolResultStepResult value) {
         Utils.checkNotNull(value, "value");
-        return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MCPServerToolResultStepResult>(){}));
+        return new MCPServerToolResultStepResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MCPServerToolResultStepResult>() {}));
     }
 
     public static MCPServerToolResultStepResultUnion of(String value) {
         Utils.checkNotNull(value, "value");
-        return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new MCPServerToolResultStepResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>() {}));
     }
 
     public static MCPServerToolResultStepResultUnion of(List<FunctionResultSubcontent> value) {
         Utils.checkNotNull(value, "value");
-        return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
+        return new MCPServerToolResultStepResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code MCPServerToolResultStepResult},
      * otherwise returns an empty {@link Optional}.
@@ -76,7 +79,7 @@ public class MCPServerToolResultStepResultUnion {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code String},
      * otherwise returns an empty {@link Optional}.
@@ -89,7 +92,7 @@ public class MCPServerToolResultStepResultUnion {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code List<FunctionResultSubcontent>},
      * otherwise returns an empty {@link Optional}.
@@ -103,19 +106,19 @@ public class MCPServerToolResultStepResultUnion {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -127,28 +130,29 @@ public class MCPServerToolResultStepResultUnion {
         MCPServerToolResultStepResultUnion other = (MCPServerToolResultStepResultUnion) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<MCPServerToolResultStepResultUnion> {
 
         public _Deserializer() {
-            super(MCPServerToolResultStepResultUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MCPServerToolResultStepResult>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT));
+            super(
+                    MCPServerToolResultStepResultUnion.class,
+                    false,
+                    TypeReferenceWithShape.of(
+                            new TypeReference<MCPServerToolResultStepResult>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(
+                            new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServerToolResultStepResultUnion.class,
-                "value", value);
+        return Utils.toString(MCPServerToolResultStepResultUnion.class, "value", value);
     }
-
 }
-

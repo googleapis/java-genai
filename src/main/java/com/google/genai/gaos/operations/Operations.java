@@ -19,8 +19,8 @@
  */
 package com.google.genai.gaos.operations;
 
-import java.io.InputStream;
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -33,66 +33,65 @@ import java.util.function.Function;
 
 public class Operations {
     /**
-    * Base interface for all operations
-    */
+     * Base interface for all operations
+     */
     public interface Operation<ResT> {
         ResT handleResponse(HttpResponse<InputStream> response);
     }
 
     /**
-    * Interface for operations that require a request parameter
-    */
+     * Interface for operations that require a request parameter
+     */
     public interface RequestOperation<ReqT, ResT> extends Operation<ResT> {
         HttpResponse<InputStream> doRequest(ReqT request);
     }
 
     /**
-    * Interface for operations that don't require a request parameter
-    */
+     * Interface for operations that don't require a request parameter
+     */
     public interface RequestlessOperation<ResT> extends Operation<ResT> {
         HttpResponse<InputStream> doRequest();
     }
 
     /**
-    * Base interface for all async operations
-    */
+     * Base interface for all async operations
+     */
     public interface AsyncOperation<ResT> {
         ResT handleResponse(HttpResponse<InputStream> response);
 
         /**
-        * Returns the operation's cancellation relay, or {@code null} if unsupported.
-        */
+         * Returns the operation's cancellation relay, or {@code null} if unsupported.
+         */
         default CancellationRelay cancellationRelay() {
             return null;
         }
     }
 
     /**
-    * Interface for async operations that require a request parameter
-    */
+     * Interface for async operations that require a request parameter
+     */
     public interface AsyncRequestOperation<ReqT, ResT> extends AsyncOperation<ResT> {
         CompletableFuture<HttpResponse<InputStream>> doRequest(ReqT request);
     }
 
     /**
-    * Interface for async operations that don't require a request parameter
-    */
+     * Interface for async operations that don't require a request parameter
+     */
     public interface AsyncRequestlessOperation<ResT> extends AsyncOperation<ResT> {
         CompletableFuture<HttpResponse<InputStream>> doRequest();
     }
 
     /**
-    * Relays cancellation of the future returned to the SDK user to the
-    * in-flight HTTP call, releasing its connection.
-    */
+     * Relays cancellation of the future returned to the SDK user to the
+     * in-flight HTTP call, releasing its connection.
+     */
     public static final class CancellationRelay {
-        private final AtomicReference<CompletableFuture<HttpResponse<InputStream>>> current =
-                new AtomicReference<>();
+        private final AtomicReference<CompletableFuture<HttpResponse<InputStream>>> current = new AtomicReference<>();
         private volatile boolean cancelled;
 
         /**
-        * Registers the transport-stage future of the current attempt.
-        */
+         * Registers the transport-stage future of the current attempt.
+         */
         public CompletableFuture<HttpResponse<InputStream>> track(
                 CompletableFuture<HttpResponse<InputStream>> transportFuture) {
             current.set(transportFuture);
@@ -124,10 +123,9 @@ public class Operations {
     }
 
     /**
-    * Makes cancelling {@code future} cancel the operation's in-flight HTTP call.
-    */
-    public static <T> CompletableFuture<T> relayCancel(
-            CompletableFuture<T> future, AsyncOperation<?> operation) {
+     * Makes cancelling {@code future} cancel the operation's in-flight HTTP call.
+     */
+    public static <T> CompletableFuture<T> relayCancel(CompletableFuture<T> future, AsyncOperation<?> operation) {
         CancellationRelay relay = operation.cancellationRelay();
         if (relay != null) {
             future.whenComplete((result, error) -> {
@@ -140,22 +138,22 @@ public class Operations {
     }
 
     private static final AtomicLong STREAM_COMPLETION_THREAD_COUNT = new AtomicLong();
-    private static final ExecutorService STREAM_COMPLETION_EXECUTOR = Executors.newCachedThreadPool(
-            runnable -> {
-                Thread thread = new Thread(runnable,
-                        "speakeasy-async-stream-completion-" + STREAM_COMPLETION_THREAD_COUNT.incrementAndGet());
-                thread.setDaemon(true);
-                return thread;
-            });
+    private static final ExecutorService STREAM_COMPLETION_EXECUTOR = Executors.newCachedThreadPool(runnable -> {
+        Thread thread = new Thread(
+                runnable, "speakeasy-async-stream-completion-"
+                        + STREAM_COMPLETION_THREAD_COUNT.incrementAndGet());
+        thread.setDaemon(true);
+        return thread;
+    });
 
     public static Executor streamCompletionExecutor() {
         return STREAM_COMPLETION_EXECUTOR;
     }
 
     /**
-    * Runs blocking response-body reading and parsing away from the thread that
-    * completed the transport future.
-    */
+     * Runs blocking response-body reading and parsing away from the thread that
+     * completed the transport future.
+     */
     public static <T> CompletableFuture<T> applyBodyReadAsync(
             CompletableFuture<HttpResponse<InputStream>> transportFuture,
             Function<HttpResponse<InputStream>, T> handler) {

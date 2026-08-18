@@ -72,10 +72,10 @@ public class OpenapiJacksonModule extends Module {
         if (context.getOwner() instanceof ObjectMapper) {
             ObjectMapper mapper = (ObjectMapper) context.getOwner();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                  .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                  .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                  .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
-                  .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+                    .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                    .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+                    .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         }
     }
 }

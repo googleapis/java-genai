@@ -36,17 +36,23 @@ import java.util.Optional;
  */
 /**
  * InteractionSseEventInteractionStatus
- * 
+ *
  * <p>Required. Output only. The status of the interaction.
  */
 public class InteractionSseEventInteractionStatus {
 
-    public static final InteractionSseEventInteractionStatus IN_PROGRESS = new InteractionSseEventInteractionStatus("in_progress");
-    public static final InteractionSseEventInteractionStatus REQUIRES_ACTION = new InteractionSseEventInteractionStatus("requires_action");
-    public static final InteractionSseEventInteractionStatus COMPLETED = new InteractionSseEventInteractionStatus("completed");
-    public static final InteractionSseEventInteractionStatus FAILED = new InteractionSseEventInteractionStatus("failed");
-    public static final InteractionSseEventInteractionStatus CANCELLED = new InteractionSseEventInteractionStatus("cancelled");
-    public static final InteractionSseEventInteractionStatus INCOMPLETE = new InteractionSseEventInteractionStatus("incomplete");
+    public static final InteractionSseEventInteractionStatus IN_PROGRESS =
+            new InteractionSseEventInteractionStatus("in_progress");
+    public static final InteractionSseEventInteractionStatus REQUIRES_ACTION =
+            new InteractionSseEventInteractionStatus("requires_action");
+    public static final InteractionSseEventInteractionStatus COMPLETED =
+            new InteractionSseEventInteractionStatus("completed");
+    public static final InteractionSseEventInteractionStatus FAILED =
+            new InteractionSseEventInteractionStatus("failed");
+    public static final InteractionSseEventInteractionStatus CANCELLED =
+            new InteractionSseEventInteractionStatus("cancelled");
+    public static final InteractionSseEventInteractionStatus INCOMPLETE =
+            new InteractionSseEventInteractionStatus("incomplete");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -63,12 +69,12 @@ public class InteractionSseEventInteractionStatus {
     }
 
     /**
-     * Returns a InteractionSseEventInteractionStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a InteractionSseEventInteractionStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as InteractionSseEventInteractionStatus
-     */ 
+     */
     @JsonCreator
     public static InteractionSseEventInteractionStatus of(String value) {
         synchronized (InteractionSseEventInteractionStatus.class) {
@@ -96,12 +102,9 @@ public class InteractionSseEventInteractionStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         InteractionSseEventInteractionStatus other = (InteractionSseEventInteractionStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -139,8 +142,7 @@ public class InteractionSseEventInteractionStatus {
         map.put("incomplete", InteractionSseEventInteractionStatusEnum.INCOMPLETE);
         return map;
     }
-    
-    
+
     public enum InteractionSseEventInteractionStatusEnum {
 
         IN_PROGRESS("in_progress"),
@@ -148,7 +150,8 @@ public class InteractionSseEventInteractionStatus {
         COMPLETED("completed"),
         FAILED("failed"),
         CANCELLED("cancelled"),
-        INCOMPLETE("incomplete"),;
+        INCOMPLETE("incomplete"),
+        ;
 
         private final String value;
 
@@ -161,4 +164,3 @@ public class InteractionSseEventInteractionStatus {
         }
     }
 }
-

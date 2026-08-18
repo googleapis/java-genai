@@ -30,7 +30,7 @@ import java.lang.String;
 
 /**
  * CodeExecution
- * 
+ *
  * <p>A tool that can be used by the model to execute code.
  */
 public class CodeExecution implements Tool, AgentTool {
@@ -52,7 +52,6 @@ public class CodeExecution implements Tool, AgentTool {
         return new Builder();
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -62,39 +61,31 @@ public class CodeExecution implements Tool, AgentTool {
             return false;
         }
         CodeExecution other = (CodeExecution) o;
-        return 
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            type);
+        return Utils.enhancedHash(type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CodeExecution.class,
-                "type", type);
+        return Utils.toString(CodeExecution.class, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public CodeExecution build() {
-            return new CodeExecution(
-                );
+            return new CodeExecution();
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"code_execution\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"code_execution\"", new TypeReference<String>() {});
     }
 }

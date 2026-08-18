@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * Filter
- * 
+ *
  * <p>Config for filters.
  */
 public class Filter {
@@ -68,7 +68,7 @@ public class Filter {
         this.vectorDistanceThreshold = vectorDistanceThreshold;
         this.vectorSimilarityThreshold = vectorSimilarityThreshold;
     }
-    
+
     public Filter() {
         this(null, null, null);
     }
@@ -100,7 +100,6 @@ public class Filter {
         return new Builder();
     }
 
-
     /**
      * Optional. String for metadata filtering.
      */
@@ -108,7 +107,6 @@ public class Filter {
         this.metadataFilter = metadataFilter;
         return this;
     }
-
 
     /**
      * Optional. Only returns contexts with vector distance smaller than the
@@ -119,7 +117,6 @@ public class Filter {
         return this;
     }
 
-
     /**
      * Optional. Only returns contexts with vector similarity larger than the
      * threshold.
@@ -128,7 +125,6 @@ public class Filter {
         this.vectorSimilarityThreshold = vectorSimilarityThreshold;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -139,28 +135,30 @@ public class Filter {
             return false;
         }
         Filter other = (Filter) o;
-        return 
-            Utils.enhancedDeepEquals(this.metadataFilter, other.metadataFilter) &&
-            Utils.enhancedDeepEquals(this.vectorDistanceThreshold, other.vectorDistanceThreshold) &&
-            Utils.enhancedDeepEquals(this.vectorSimilarityThreshold, other.vectorSimilarityThreshold);
+        return Utils.enhancedDeepEquals(this.metadataFilter, other.metadataFilter)
+                && Utils.enhancedDeepEquals(this.vectorDistanceThreshold, other.vectorDistanceThreshold)
+                && Utils.enhancedDeepEquals(this.vectorSimilarityThreshold, other.vectorSimilarityThreshold);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            metadataFilter, vectorDistanceThreshold, vectorSimilarityThreshold);
+        return Utils.enhancedHash(metadataFilter, vectorDistanceThreshold, vectorSimilarityThreshold);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Filter.class,
-                "metadataFilter", metadataFilter,
-                "vectorDistanceThreshold", vectorDistanceThreshold,
-                "vectorSimilarityThreshold", vectorSimilarityThreshold);
+        return Utils.toString(
+                Filter.class,
+                "metadataFilter",
+                metadataFilter,
+                "vectorDistanceThreshold",
+                vectorDistanceThreshold,
+                "vectorSimilarityThreshold",
+                vectorSimilarityThreshold);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String metadataFilter;
 
@@ -169,7 +167,7 @@ public class Filter {
         private Double vectorSimilarityThreshold;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -199,9 +197,7 @@ public class Filter {
         }
 
         public Filter build() {
-            return new Filter(
-                metadataFilter, vectorDistanceThreshold, vectorSimilarityThreshold);
+            return new Filter(metadataFilter, vectorDistanceThreshold, vectorSimilarityThreshold);
         }
-
     }
 }

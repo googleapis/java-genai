@@ -29,21 +29,17 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class TextDelta implements StepDeltaData {
 
     @JsonProperty("text")
     private String text;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public TextDelta(
-            @JsonProperty("text") @Nonnull String text) {
-        this.text = Optional.ofNullable(text)
-            .orElseThrow(() -> new IllegalArgumentException("text cannot be null"));
+    public TextDelta(@JsonProperty("text") @Nonnull String text) {
+        this.text = Optional.ofNullable(text).orElseThrow(() -> new IllegalArgumentException("text cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
 
@@ -60,12 +56,10 @@ public class TextDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public TextDelta withText(@Nonnull String text) {
         this.text = Utils.checkNotNull(text, "text");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -76,31 +70,26 @@ public class TextDelta implements StepDeltaData {
             return false;
         }
         TextDelta other = (TextDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.text, other.text) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.text, other.text) && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            text, type);
+        return Utils.enhancedHash(text, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TextDelta.class,
-                "text", text,
-                "type", type);
+        return Utils.toString(TextDelta.class, "text", text, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String text;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder text(@Nonnull String text) {
@@ -109,15 +98,10 @@ public class TextDelta implements StepDeltaData {
         }
 
         public TextDelta build() {
-            return new TextDelta(
-                text);
+            return new TextDelta(text);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"text\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"text\"", new TypeReference<String>() {});
     }
 }

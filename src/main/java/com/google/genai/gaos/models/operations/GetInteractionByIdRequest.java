@@ -32,7 +32,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetInteractionByIdRequest {
     /**
      * The unique identifier of the interaction to retrieve.
@@ -55,7 +54,7 @@ public class GetInteractionByIdRequest {
 
     /**
      * If set to true, includes the input in the response.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=include_input")
@@ -75,20 +74,15 @@ public class GetInteractionByIdRequest {
             @Nullable String lastEventId,
             @Nullable Boolean includeInput,
             @Nullable String apiVersion) {
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.stream = Optional.ofNullable(stream)
-            .orElse(Builder._SINGLETON_VALUE_Stream.value());
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.stream = Optional.ofNullable(stream).orElse(Builder._SINGLETON_VALUE_Stream.value());
         this.lastEventId = lastEventId;
-        this.includeInput = Optional.ofNullable(includeInput)
-            .orElse(Builder._SINGLETON_VALUE_IncludeInput.value());
+        this.includeInput = Optional.ofNullable(includeInput).orElse(Builder._SINGLETON_VALUE_IncludeInput.value());
         this.apiVersion = apiVersion;
     }
-    
-    public GetInteractionByIdRequest(
-            @Nonnull String id) {
-        this(id, null, null,
-            null, null);
+
+    public GetInteractionByIdRequest(@Nonnull String id) {
+        this(id, null, null, null, null);
     }
 
     /**
@@ -115,7 +109,7 @@ public class GetInteractionByIdRequest {
 
     /**
      * If set to true, includes the input in the response.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -134,7 +128,6 @@ public class GetInteractionByIdRequest {
         return new Builder();
     }
 
-
     /**
      * The unique identifier of the interaction to retrieve.
      */
@@ -143,7 +136,6 @@ public class GetInteractionByIdRequest {
         return this;
     }
 
-
     /**
      * If set to true, the generated content will be streamed incrementally.
      */
@@ -151,7 +143,6 @@ public class GetInteractionByIdRequest {
         this.stream = stream;
         return this;
     }
-
 
     /**
      * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
@@ -162,10 +153,9 @@ public class GetInteractionByIdRequest {
         return this;
     }
 
-
     /**
      * If set to true, includes the input in the response.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -174,7 +164,6 @@ public class GetInteractionByIdRequest {
         return this;
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -182,7 +171,6 @@ public class GetInteractionByIdRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -193,33 +181,36 @@ public class GetInteractionByIdRequest {
             return false;
         }
         GetInteractionByIdRequest other = (GetInteractionByIdRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.lastEventId, other.lastEventId) &&
-            Utils.enhancedDeepEquals(this.includeInput, other.includeInput) &&
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
+        return Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.stream, other.stream)
+                && Utils.enhancedDeepEquals(this.lastEventId, other.lastEventId)
+                && Utils.enhancedDeepEquals(this.includeInput, other.includeInput)
+                && Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            id, stream, lastEventId,
-            includeInput, apiVersion);
+        return Utils.enhancedHash(id, stream, lastEventId, includeInput, apiVersion);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetInteractionByIdRequest.class,
-                "id", id,
-                "stream", stream,
-                "lastEventId", lastEventId,
-                "includeInput", includeInput,
-                "apiVersion", apiVersion);
+        return Utils.toString(
+                GetInteractionByIdRequest.class,
+                "id",
+                id,
+                "stream",
+                stream,
+                "lastEventId",
+                lastEventId,
+                "includeInput",
+                includeInput,
+                "apiVersion",
+                apiVersion);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String id;
 
@@ -233,7 +224,7 @@ public class GetInteractionByIdRequest {
         private String apiVersion;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -263,7 +254,7 @@ public class GetInteractionByIdRequest {
 
         /**
          * If set to true, includes the input in the response.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -281,22 +272,13 @@ public class GetInteractionByIdRequest {
         }
 
         public GetInteractionByIdRequest build() {
-            return new GetInteractionByIdRequest(
-                id, stream, lastEventId,
-                includeInput, apiVersion);
+            return new GetInteractionByIdRequest(id, stream, lastEventId, includeInput, apiVersion);
         }
 
-
         private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_Stream =
-                new LazySingletonValue<>(
-                        "stream",
-                        "false",
-                        new TypeReference<Boolean>() {});
+                new LazySingletonValue<>("stream", "false", new TypeReference<Boolean>() {});
 
         private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_IncludeInput =
-                new LazySingletonValue<>(
-                        "include_input",
-                        "false",
-                        new TypeReference<Boolean>() {});
+                new LazySingletonValue<>("include_input", "false", new TypeReference<Boolean>() {});
     }
 }

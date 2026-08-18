@@ -39,8 +39,10 @@ public class WebhookSubscribedEvent {
     public static final WebhookSubscribedEvent BATCH_SUCCEEDED = new WebhookSubscribedEvent("batch.succeeded");
     public static final WebhookSubscribedEvent BATCH_EXPIRED = new WebhookSubscribedEvent("batch.expired");
     public static final WebhookSubscribedEvent BATCH_FAILED = new WebhookSubscribedEvent("batch.failed");
-    public static final WebhookSubscribedEvent INTERACTION_REQUIRES_ACTION = new WebhookSubscribedEvent("interaction.requires_action");
-    public static final WebhookSubscribedEvent INTERACTION_COMPLETED = new WebhookSubscribedEvent("interaction.completed");
+    public static final WebhookSubscribedEvent INTERACTION_REQUIRES_ACTION =
+            new WebhookSubscribedEvent("interaction.requires_action");
+    public static final WebhookSubscribedEvent INTERACTION_COMPLETED =
+            new WebhookSubscribedEvent("interaction.completed");
     public static final WebhookSubscribedEvent INTERACTION_FAILED = new WebhookSubscribedEvent("interaction.failed");
     public static final WebhookSubscribedEvent VIDEO_GENERATED = new WebhookSubscribedEvent("video.generated");
 
@@ -59,12 +61,12 @@ public class WebhookSubscribedEvent {
     }
 
     /**
-     * Returns a WebhookSubscribedEvent with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a WebhookSubscribedEvent with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as WebhookSubscribedEvent
-     */ 
+     */
     @JsonCreator
     public static WebhookSubscribedEvent of(String value) {
         synchronized (WebhookSubscribedEvent.class) {
@@ -92,12 +94,9 @@ public class WebhookSubscribedEvent {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         WebhookSubscribedEvent other = (WebhookSubscribedEvent) obj;
         return Objects.equals(value, other.value);
     }
@@ -137,8 +136,7 @@ public class WebhookSubscribedEvent {
         map.put("video.generated", WebhookSubscribedEventEnum.VIDEO_GENERATED);
         return map;
     }
-    
-    
+
     public enum WebhookSubscribedEventEnum {
 
         BATCH_SUCCEEDED("batch.succeeded"),
@@ -147,7 +145,8 @@ public class WebhookSubscribedEvent {
         INTERACTION_REQUIRES_ACTION("interaction.requires_action"),
         INTERACTION_COMPLETED("interaction.completed"),
         INTERACTION_FAILED("interaction.failed"),
-        VIDEO_GENERATED("video.generated"),;
+        VIDEO_GENERATED("video.generated"),
+        ;
 
         private final String value;
 
@@ -160,4 +159,3 @@ public class WebhookSubscribedEvent {
         }
     }
 }
-

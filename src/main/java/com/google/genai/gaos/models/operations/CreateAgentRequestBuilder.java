@@ -69,7 +69,7 @@ public class CreateAgentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateAgentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -78,14 +78,14 @@ public class CreateAgentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CreateAgentResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<CreateAgentRequest, CreateAgentResponse> operation
-              = new CreateAgent.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CreateAgentRequest, CreateAgentResponse> operation =
+                new CreateAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

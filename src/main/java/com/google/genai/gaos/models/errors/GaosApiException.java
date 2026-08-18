@@ -19,12 +19,11 @@
  */
 package com.google.genai.gaos.models.errors;
 
-import jakarta.annotation.Nullable;
 import com.google.genai.gaos.utils.Utils;
-
+import com.google.genai.gaos.utils.transport.HttpResponse;
+import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
-import com.google.genai.gaos.utils.transport.HttpResponse;
 
 /**
  * Thrown by a service call when an error response occurs. Contains details about the response.
@@ -45,18 +44,18 @@ public class GaosApiException extends GaosBaseException {
         return from(message, rawResponse, null);
     }
 
-    public static GaosApiException from(String message, HttpResponse<InputStream> rawResponse, @Nullable Throwable cause) {
+    public static GaosApiException from(
+            String message, HttpResponse<InputStream> rawResponse, @Nullable Throwable cause) {
         try {
             return new GaosApiException(
                     message, rawResponse.statusCode(), Utils.extractByteArrayFromBody(rawResponse), rawResponse, cause);
         } catch (IOException e) {
             // Gracefully handle IOExceptions that occur while reading the body
             // by returning an error without a body.
-            return new GaosApiException(
-                    message, rawResponse.statusCode(), null, rawResponse, cause);
+            return new GaosApiException(message, rawResponse.statusCode(), null, rawResponse, cause);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public HttpResponse<InputStream> rawResponse() {

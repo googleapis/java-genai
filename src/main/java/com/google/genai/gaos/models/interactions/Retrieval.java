@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * Retrieval
- * 
+ *
  * <p>A tool that can be used by the model to retrieve files.
  */
 public class Retrieval implements Tool {
@@ -66,7 +66,6 @@ public class Retrieval implements Tool {
     @JsonProperty("retrieval_types")
     private List<RetrievalRetrievalType> retrievalTypes;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -91,10 +90,9 @@ public class Retrieval implements Tool {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.vertexAiSearchConfig = vertexAiSearchConfig;
     }
-    
+
     public Retrieval() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -141,7 +139,6 @@ public class Retrieval implements Tool {
         return new Builder();
     }
 
-
     /**
      * Used to specify configuration for ExaAISearch.
      */
@@ -149,7 +146,6 @@ public class Retrieval implements Tool {
         this.exaAiSearchConfig = exaAiSearchConfig;
         return this;
     }
-
 
     /**
      * Used to specify configuration for ParallelAISearch.
@@ -159,7 +155,6 @@ public class Retrieval implements Tool {
         return this;
     }
 
-
     /**
      * Use to specify configuration for RAG Store.
      */
@@ -167,7 +162,6 @@ public class Retrieval implements Tool {
         this.ragStoreConfig = ragStoreConfig;
         return this;
     }
-
 
     /**
      * The types of file retrieval to enable.
@@ -177,7 +171,6 @@ public class Retrieval implements Tool {
         return this;
     }
 
-
     /**
      * Used to specify configuration for VertexAISearch.
      */
@@ -185,7 +178,6 @@ public class Retrieval implements Tool {
         this.vertexAiSearchConfig = vertexAiSearchConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -196,35 +188,40 @@ public class Retrieval implements Tool {
             return false;
         }
         Retrieval other = (Retrieval) o;
-        return 
-            Utils.enhancedDeepEquals(this.exaAiSearchConfig, other.exaAiSearchConfig) &&
-            Utils.enhancedDeepEquals(this.parallelAiSearchConfig, other.parallelAiSearchConfig) &&
-            Utils.enhancedDeepEquals(this.ragStoreConfig, other.ragStoreConfig) &&
-            Utils.enhancedDeepEquals(this.retrievalTypes, other.retrievalTypes) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.vertexAiSearchConfig, other.vertexAiSearchConfig);
+        return Utils.enhancedDeepEquals(this.exaAiSearchConfig, other.exaAiSearchConfig)
+                && Utils.enhancedDeepEquals(this.parallelAiSearchConfig, other.parallelAiSearchConfig)
+                && Utils.enhancedDeepEquals(this.ragStoreConfig, other.ragStoreConfig)
+                && Utils.enhancedDeepEquals(this.retrievalTypes, other.retrievalTypes)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.vertexAiSearchConfig, other.vertexAiSearchConfig);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            exaAiSearchConfig, parallelAiSearchConfig, ragStoreConfig,
-            retrievalTypes, type, vertexAiSearchConfig);
+                exaAiSearchConfig, parallelAiSearchConfig, ragStoreConfig, retrievalTypes, type, vertexAiSearchConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Retrieval.class,
-                "exaAiSearchConfig", exaAiSearchConfig,
-                "parallelAiSearchConfig", parallelAiSearchConfig,
-                "ragStoreConfig", ragStoreConfig,
-                "retrievalTypes", retrievalTypes,
-                "type", type,
-                "vertexAiSearchConfig", vertexAiSearchConfig);
+        return Utils.toString(
+                Retrieval.class,
+                "exaAiSearchConfig",
+                exaAiSearchConfig,
+                "parallelAiSearchConfig",
+                parallelAiSearchConfig,
+                "ragStoreConfig",
+                ragStoreConfig,
+                "retrievalTypes",
+                retrievalTypes,
+                "type",
+                type,
+                "vertexAiSearchConfig",
+                vertexAiSearchConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private ExaAISearchConfig exaAiSearchConfig;
 
@@ -237,7 +234,7 @@ public class Retrieval implements Tool {
         private VertexAISearchConfig vertexAiSearchConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -282,15 +279,10 @@ public class Retrieval implements Tool {
 
         public Retrieval build() {
             return new Retrieval(
-                exaAiSearchConfig, parallelAiSearchConfig, ragStoreConfig,
-                retrievalTypes, vertexAiSearchConfig);
+                    exaAiSearchConfig, parallelAiSearchConfig, ragStoreConfig, retrievalTypes, vertexAiSearchConfig);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"retrieval\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"retrieval\"", new TypeReference<String>() {});
     }
 }

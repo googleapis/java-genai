@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListAgentsResponse implements AsyncResponse {
     /**
      * HTTP response content type for this operation
@@ -60,19 +59,16 @@ public class ListAgentsResponse implements AsyncResponse {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable AgentListResponse agentListResponse) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.agentListResponse = agentListResponse;
     }
-    
+
     public ListAgentsResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -107,7 +103,6 @@ public class ListAgentsResponse implements AsyncResponse {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -115,7 +110,6 @@ public class ListAgentsResponse implements AsyncResponse {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -125,7 +119,6 @@ public class ListAgentsResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -134,7 +127,6 @@ public class ListAgentsResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Successful operation
      */
@@ -142,7 +134,6 @@ public class ListAgentsResponse implements AsyncResponse {
         this.agentListResponse = agentListResponse;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -153,31 +144,33 @@ public class ListAgentsResponse implements AsyncResponse {
             return false;
         }
         ListAgentsResponse other = (ListAgentsResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.agentListResponse, other.agentListResponse);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.agentListResponse, other.agentListResponse);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            agentListResponse);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, agentListResponse);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListAgentsResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "agentListResponse", agentListResponse);
+        return Utils.toString(
+                ListAgentsResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "agentListResponse",
+                agentListResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -188,7 +181,7 @@ public class ListAgentsResponse implements AsyncResponse {
         private AgentListResponse agentListResponse;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -224,10 +217,7 @@ public class ListAgentsResponse implements AsyncResponse {
         }
 
         public ListAgentsResponse build() {
-            return new ListAgentsResponse(
-                contentType, statusCode, rawResponse,
-                agentListResponse);
+            return new ListAgentsResponse(contentType, statusCode, rawResponse, agentListResponse);
         }
-
     }
 }

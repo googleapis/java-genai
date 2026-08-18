@@ -71,7 +71,7 @@ public class DeleteInteractionRequestBuilder {
         }
         return this.request;
     }
-    
+
     public DeleteInteractionRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class DeleteInteractionRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<DeleteInteractionResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
-              = new DeleteInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation =
+                new DeleteInteraction.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

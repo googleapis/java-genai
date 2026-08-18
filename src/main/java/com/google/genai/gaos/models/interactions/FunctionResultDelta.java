@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class FunctionResultDelta implements StepDeltaData {
     /**
      * Required. ID to match the ID from the function call block.
@@ -41,20 +40,16 @@ public class FunctionResultDelta implements StepDeltaData {
     @JsonProperty("call_id")
     private String callId;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
     private Boolean isError;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("name")
     private String name;
 
-
     @JsonProperty("result")
     private FunctionResultDeltaResultUnion result;
-
 
     @JsonProperty("type")
     private String type;
@@ -65,20 +60,17 @@ public class FunctionResultDelta implements StepDeltaData {
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("result") @Nonnull FunctionResultDeltaResultUnion result) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
         this.name = name;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public FunctionResultDelta(
-            @Nonnull String callId,
-            @Nonnull FunctionResultDeltaResultUnion result) {
-        this(callId, null, null,
-            result);
+
+    public FunctionResultDelta(@Nonnull String callId, @Nonnull FunctionResultDeltaResultUnion result) {
+        this(callId, null, null, result);
     }
 
     /**
@@ -109,7 +101,6 @@ public class FunctionResultDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -118,24 +109,20 @@ public class FunctionResultDelta implements StepDeltaData {
         return this;
     }
 
-
     public FunctionResultDelta withIsError(@Nullable Boolean isError) {
         this.isError = isError;
         return this;
     }
-
 
     public FunctionResultDelta withName(@Nullable String name) {
         this.name = name;
         return this;
     }
 
-
     public FunctionResultDelta withResult(@Nonnull FunctionResultDeltaResultUnion result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -146,33 +133,36 @@ public class FunctionResultDelta implements StepDeltaData {
             return false;
         }
         FunctionResultDelta other = (FunctionResultDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.isError, other.isError)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, isError, name,
-            result, type);
+        return Utils.enhancedHash(callId, isError, name, result, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FunctionResultDelta.class,
-                "callId", callId,
-                "isError", isError,
-                "name", name,
-                "result", result,
-                "type", type);
+        return Utils.toString(
+                FunctionResultDelta.class,
+                "callId",
+                callId,
+                "isError",
+                isError,
+                "name",
+                name,
+                "result",
+                result,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
@@ -183,7 +173,7 @@ public class FunctionResultDelta implements StepDeltaData {
         private FunctionResultDeltaResultUnion result;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -210,16 +200,10 @@ public class FunctionResultDelta implements StepDeltaData {
         }
 
         public FunctionResultDelta build() {
-            return new FunctionResultDelta(
-                callId, isError, name,
-                result);
+            return new FunctionResultDelta(callId, isError, name, result);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"function_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"function_result\"", new TypeReference<String>() {});
     }
 }

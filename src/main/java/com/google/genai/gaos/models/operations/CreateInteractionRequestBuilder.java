@@ -68,7 +68,7 @@ public class CreateInteractionRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateInteractionRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class CreateInteractionRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CreateInteractionResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation =
+                new CreateInteraction.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

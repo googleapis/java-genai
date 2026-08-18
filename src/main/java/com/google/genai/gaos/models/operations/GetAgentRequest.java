@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetAgentRequest {
     /**
      * Which version of the API to use.
@@ -36,21 +35,16 @@ public class GetAgentRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
 
     @JsonCreator
-    public GetAgentRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id) {
+    public GetAgentRequest(@Nullable String apiVersion, @Nonnull String id) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
     }
-    
-    public GetAgentRequest(
-            @Nonnull String id) {
+
+    public GetAgentRequest(@Nonnull String id) {
         this(null, id);
     }
 
@@ -69,7 +63,6 @@ public class GetAgentRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -78,12 +71,10 @@ public class GetAgentRequest {
         return this;
     }
 
-
     public GetAgentRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -94,33 +85,28 @@ public class GetAgentRequest {
             return false;
         }
         GetAgentRequest other = (GetAgentRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) && Utils.enhancedDeepEquals(this.id, other.id);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id);
+        return Utils.enhancedHash(apiVersion, id);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetAgentRequest.class,
-                "apiVersion", apiVersion,
-                "id", id);
+        return Utils.toString(GetAgentRequest.class, "apiVersion", apiVersion, "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String id;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -137,9 +123,7 @@ public class GetAgentRequest {
         }
 
         public GetAgentRequest build() {
-            return new GetAgentRequest(
-                apiVersion, id);
+            return new GetAgentRequest(apiVersion, id);
         }
-
     }
 }

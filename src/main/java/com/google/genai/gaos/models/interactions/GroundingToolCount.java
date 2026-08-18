@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * GroundingToolCount
- * 
+ *
  * <p>The number of grounding tool counts.
  */
 public class GroundingToolCount {
@@ -57,7 +57,7 @@ public class GroundingToolCount {
         this.count = count;
         this.type = type;
     }
-    
+
     public GroundingToolCount() {
         this(null, null);
     }
@@ -80,7 +80,6 @@ public class GroundingToolCount {
         return new Builder();
     }
 
-
     /**
      * The number of grounding tool counts.
      */
@@ -89,7 +88,6 @@ public class GroundingToolCount {
         return this;
     }
 
-
     /**
      * The grounding tool type associated with the count.
      */
@@ -97,7 +95,6 @@ public class GroundingToolCount {
         this.type = type;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -108,33 +105,28 @@ public class GroundingToolCount {
             return false;
         }
         GroundingToolCount other = (GroundingToolCount) o;
-        return 
-            Utils.enhancedDeepEquals(this.count, other.count) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.count, other.count) && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            count, type);
+        return Utils.enhancedHash(count, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GroundingToolCount.class,
-                "count", count,
-                "type", type);
+        return Utils.toString(GroundingToolCount.class, "count", count, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer count;
 
         private GroundingToolCountType type;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -154,9 +146,7 @@ public class GroundingToolCount {
         }
 
         public GroundingToolCount build() {
-            return new GroundingToolCount(
-                count, type);
+            return new GroundingToolCount(count, type);
         }
-
     }
 }

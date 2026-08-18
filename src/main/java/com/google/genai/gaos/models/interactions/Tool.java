@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.models.interactions;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
 /**
  * Tool
- * 
+ *
  * <p>A tool that can be used by the model.
  */
 @JsonTypeInfo(
@@ -35,12 +35,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownTool.class
-)
+        defaultImpl = UnknownTool.class)
 @JsonTypeIdResolver(ToolTypeIdResolver.class)
 public interface Tool {
 
     String type();
-
 }
-

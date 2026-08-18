@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class RotateSigningSecretRequest {
     /**
      * Which version of the API to use.
@@ -55,13 +54,11 @@ public class RotateSigningSecretRequest {
             @Nonnull String id,
             @Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.body = body;
     }
-    
-    public RotateSigningSecretRequest(
-            @Nonnull String id) {
+
+    public RotateSigningSecretRequest(@Nonnull String id) {
         this(null, id, null);
     }
 
@@ -91,7 +88,6 @@ public class RotateSigningSecretRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -99,7 +95,6 @@ public class RotateSigningSecretRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Required. The ID of the webhook for which to generate a signing secret.
@@ -110,15 +105,14 @@ public class RotateSigningSecretRequest {
         return this;
     }
 
-
     /**
      * The request body.
      */
-    public RotateSigningSecretRequest withBody(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+    public RotateSigningSecretRequest withBody(
+            @Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.body = body;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -129,28 +123,23 @@ public class RotateSigningSecretRequest {
             return false;
         }
         RotateSigningSecretRequest other = (RotateSigningSecretRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id, body);
+        return Utils.enhancedHash(apiVersion, id, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RotateSigningSecretRequest.class,
-                "apiVersion", apiVersion,
-                "id", id,
-                "body", body);
+        return Utils.toString(RotateSigningSecretRequest.class, "apiVersion", apiVersion, "id", id, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -159,7 +148,7 @@ public class RotateSigningSecretRequest {
         private com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -188,9 +177,7 @@ public class RotateSigningSecretRequest {
         }
 
         public RotateSigningSecretRequest build() {
-            return new RotateSigningSecretRequest(
-                apiVersion, id, body);
+            return new RotateSigningSecretRequest(apiVersion, id, body);
         }
-
     }
 }

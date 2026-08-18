@@ -68,7 +68,7 @@ public class CancelInteractionByIdRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CancelInteractionByIdRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class CancelInteractionByIdRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CancelInteractionByIdResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
-              = new CancelInteractionById.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation =
+                new CancelInteractionById.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

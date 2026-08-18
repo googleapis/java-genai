@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CreateInteractionRequest {
     /**
      * Which version of the API to use.
@@ -43,16 +42,12 @@ public class CreateInteractionRequest {
     private CreateInteractionRequestBody body;
 
     @JsonCreator
-    public CreateInteractionRequest(
-            @Nullable String apiVersion,
-            @Nonnull CreateInteractionRequestBody body) {
+    public CreateInteractionRequest(@Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body) {
         this.apiVersion = apiVersion;
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.body = Optional.ofNullable(body).orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
-    
-    public CreateInteractionRequest(
-            @Nonnull CreateInteractionRequestBody body) {
+
+    public CreateInteractionRequest(@Nonnull CreateInteractionRequestBody body) {
         this(null, body);
     }
 
@@ -74,7 +69,6 @@ public class CreateInteractionRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -83,7 +77,6 @@ public class CreateInteractionRequest {
         return this;
     }
 
-
     /**
      * The request body.
      */
@@ -91,7 +84,6 @@ public class CreateInteractionRequest {
         this.body = Utils.checkNotNull(body, "body");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +94,29 @@ public class CreateInteractionRequest {
             return false;
         }
         CreateInteractionRequest other = (CreateInteractionRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, body);
+        return Utils.enhancedHash(apiVersion, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateInteractionRequest.class,
-                "apiVersion", apiVersion,
-                "body", body);
+        return Utils.toString(CreateInteractionRequest.class, "apiVersion", apiVersion, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private CreateInteractionRequestBody body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +136,7 @@ public class CreateInteractionRequest {
         }
 
         public CreateInteractionRequest build() {
-            return new CreateInteractionRequest(
-                apiVersion, body);
+            return new CreateInteractionRequest(apiVersion, body);
         }
-
     }
 }

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Task
- * 
+ *
  * <p>Optional task mode for video generation. If not specified, the model
  * automatically determines the appropriate mode based on the provided text
  * prompt and input media.
@@ -47,6 +47,7 @@ public class Task {
     public static final Task IMAGE_TO_VIDEO = new Task("image_to_video");
     public static final Task REFERENCE_TO_VIDEO = new Task("reference_to_video");
     public static final Task EDIT = new Task("edit");
+    public static final Task EXTEND = new Task("extend");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -63,12 +64,12 @@ public class Task {
     }
 
     /**
-     * Returns a Task with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Task with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Task
-     */ 
+     */
     @JsonCreator
     public static Task of(String value) {
         synchronized (Task.class) {
@@ -96,12 +97,9 @@ public class Task {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Task other = (Task) obj;
         return Objects.equals(value, other.value);
     }
@@ -124,6 +122,7 @@ public class Task {
         map.put("image_to_video", IMAGE_TO_VIDEO);
         map.put("reference_to_video", REFERENCE_TO_VIDEO);
         map.put("edit", EDIT);
+        map.put("extend", EXTEND);
         return map;
     }
 
@@ -133,16 +132,18 @@ public class Task {
         map.put("image_to_video", TaskEnum.IMAGE_TO_VIDEO);
         map.put("reference_to_video", TaskEnum.REFERENCE_TO_VIDEO);
         map.put("edit", TaskEnum.EDIT);
+        map.put("extend", TaskEnum.EXTEND);
         return map;
     }
-    
-    
+
     public enum TaskEnum {
 
         TEXT_TO_VIDEO("text_to_video"),
         IMAGE_TO_VIDEO("image_to_video"),
         REFERENCE_TO_VIDEO("reference_to_video"),
-        EDIT("edit"),;
+        EDIT("edit"),
+        EXTEND("extend"),
+        ;
 
         private final String value;
 
@@ -155,4 +156,3 @@ public class Task {
         }
     }
 }
-

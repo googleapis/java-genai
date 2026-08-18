@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * Allowlist
- * 
+ *
  * <p>Outbound networking configuration for the sandbox. When specified, restricts which external domains
  * the sandbox can reach. Omit entirely to allow all outbound traffic with no header injection.
  */
@@ -46,11 +46,10 @@ public class Allowlist {
     private List<AllowlistEntry> allowlist;
 
     @JsonCreator
-    public Allowlist(
-            @JsonProperty("allowlist") @Nullable List<AllowlistEntry> allowlist) {
+    public Allowlist(@JsonProperty("allowlist") @Nullable List<AllowlistEntry> allowlist) {
         this.allowlist = allowlist;
     }
-    
+
     public Allowlist() {
         this(null);
     }
@@ -67,7 +66,6 @@ public class Allowlist {
         return new Builder();
     }
 
-
     /**
      * List of allowed outbound domains. Only requests to listed domains are permitted. Use [{'domain':
      * '*'}] to allow all domains while still injecting headers on specific ones.
@@ -76,7 +74,6 @@ public class Allowlist {
         this.allowlist = allowlist;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -87,29 +84,26 @@ public class Allowlist {
             return false;
         }
         Allowlist other = (Allowlist) o;
-        return 
-            Utils.enhancedDeepEquals(this.allowlist, other.allowlist);
+        return Utils.enhancedDeepEquals(this.allowlist, other.allowlist);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            allowlist);
+        return Utils.enhancedHash(allowlist);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Allowlist.class,
-                "allowlist", allowlist);
+        return Utils.toString(Allowlist.class, "allowlist", allowlist);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<AllowlistEntry> allowlist;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -122,9 +116,7 @@ public class Allowlist {
         }
 
         public Allowlist build() {
-            return new Allowlist(
-                allowlist);
+            return new Allowlist(allowlist);
         }
-
     }
 }

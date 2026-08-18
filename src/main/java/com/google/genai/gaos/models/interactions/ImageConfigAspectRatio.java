@@ -66,12 +66,12 @@ public class ImageConfigAspectRatio {
     }
 
     /**
-     * Returns a ImageConfigAspectRatio with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageConfigAspectRatio with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageConfigAspectRatio
-     */ 
+     */
     @JsonCreator
     public static ImageConfigAspectRatio of(String value) {
         synchronized (ImageConfigAspectRatio.class) {
@@ -99,12 +99,9 @@ public class ImageConfigAspectRatio {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageConfigAspectRatio other = (ImageConfigAspectRatio) obj;
         return Objects.equals(value, other.value);
     }
@@ -158,8 +155,7 @@ public class ImageConfigAspectRatio {
         map.put("4:1", ImageConfigAspectRatioEnum.FORTY_ONE);
         return map;
     }
-    
-    
+
     public enum ImageConfigAspectRatioEnum {
 
         ELEVEN("1:1"),
@@ -175,7 +171,8 @@ public class ImageConfigAspectRatio {
         EIGHTEEN("1:8"),
         EIGHTY_ONE("8:1"),
         FOURTEEN("1:4"),
-        FORTY_ONE("4:1"),;
+        FORTY_ONE("4:1"),
+        ;
 
         private final String value;
 
@@ -188,4 +185,3 @@ public class ImageConfigAspectRatio {
         }
     }
 }
-

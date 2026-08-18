@@ -71,7 +71,7 @@ public class DeleteEnvironmentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public DeleteEnvironmentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class DeleteEnvironmentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<DeleteEnvironmentResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<DeleteEnvironmentRequest, DeleteEnvironmentResponse> operation
-              = new DeleteEnvironment.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteEnvironmentRequest, DeleteEnvironmentResponse> operation =
+                new DeleteEnvironment.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

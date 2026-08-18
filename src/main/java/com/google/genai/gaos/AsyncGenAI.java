@@ -26,11 +26,11 @@ import com.google.genai.gaos.utils.Headers;
  * Gemini models. Gemini is our most capable model, built from the ground up to be multimodal. It can
  * generalize and seamlessly understand, operate across, and combine different types of information
  * including language, images, audio, video, and code.
- * 
+ *
  * <p>You can use the Gemini API for use cases like reasoning across text and images, content generation,
  * dialogue agents, summarization and classification systems, and more.
  */
-public class AsyncGenAI {
+public class AsyncGenAI implements java.lang.AutoCloseable {
     private static final Headers _headers = Headers.EMPTY;
 
     private final AsyncInteractions interactions;
@@ -78,10 +78,21 @@ public class AsyncGenAI {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public GenAI sync() {
         return syncSDK;
+    }
+
+    /**
+     * Releases the configured HTTP client's owned resources. The sync and
+     * async SDKs share one client, which is closed at most once.
+     *
+     * @throws Exception if the configured client cannot be closed
+     */
+    @Override
+    public void close() throws Exception {
+        this.sdkConfiguration.closeClient();
     }
 }

@@ -58,8 +58,8 @@ public class Reflections {
 
         try {
             // Check for factory method of(String) or of(Integer)
-            boolean hasFactoryMethod = Arrays.stream(clazz.getDeclaredMethods())
-                    .anyMatch(method -> isValidFactoryMethod(method, clazz));
+            boolean hasFactoryMethod =
+                    Arrays.stream(clazz.getDeclaredMethods()).anyMatch(method -> isValidFactoryMethod(method, clazz));
             if (!hasFactoryMethod) {
                 return Optional.empty();
             }
@@ -106,8 +106,8 @@ public class Reflections {
 
         try {
             // Check for factory method of(String) or of(Integer)
-            boolean hasFactoryMethod = Arrays.stream(clazz.getDeclaredMethods())
-                    .anyMatch(method -> isValidFactoryMethod(method, clazz));
+            boolean hasFactoryMethod =
+                    Arrays.stream(clazz.getDeclaredMethods()).anyMatch(method -> isValidFactoryMethod(method, clazz));
             if (!hasFactoryMethod) {
                 return false;
             }
@@ -138,9 +138,12 @@ public class Reflections {
     private static boolean isNumericType(Class<?> type) {
         // Primitive numeric types
         if (type.isPrimitive()) {
-            return type == byte.class || type == short.class ||
-                    type == int.class || type == long.class ||
-                    type == float.class || type == double.class;
+            return type == byte.class
+                    || type == short.class
+                    || type == int.class
+                    || type == long.class
+                    || type == float.class
+                    || type == double.class;
         }
 
         // Number subclasses (Integer, Long, Double, BigDecimal, etc.)
@@ -172,8 +175,7 @@ public class Reflections {
 
         // Must have exactly one parameter of String or Integer type
         Class<?>[] parameterTypes = method.getParameterTypes();
-        return parameterTypes.length == 1 &&
-                (String.class.equals(parameterTypes[0]) || isNumericType(parameterTypes[0]));
+        return parameterTypes.length == 1 && (String.class.equals(parameterTypes[0]) || isNumericType(parameterTypes[0]));
     }
 
     /**
@@ -184,8 +186,8 @@ public class Reflections {
      */
     private static boolean isValidValueMethod(Method method) {
         // Must not be static and return String or Integer
-        return !Modifier.isStatic(method.getModifiers()) &&
-                (String.class.equals(method.getReturnType()) || isNumericType(method.getReturnType()));
+        return !Modifier.isStatic(method.getModifiers())
+                && (String.class.equals(method.getReturnType()) || isNumericType(method.getReturnType()));
     }
 
     /**
@@ -195,13 +197,12 @@ public class Reflections {
      * @return true if has static constants
      */
     private static boolean hasStaticConstants(Class<?> clazz) {
-        return Arrays.stream(clazz.getDeclaredFields())
-                .anyMatch(field -> {
-                    int modifiers = field.getModifiers();
-                    return Modifier.isStatic(modifiers) &&
-                            Modifier.isFinal(modifiers) &&
-                            Modifier.isPublic(modifiers) &&
-                            clazz.equals(field.getType());
-                });
+        return Arrays.stream(clazz.getDeclaredFields()).anyMatch(field -> {
+            int modifiers = field.getModifiers();
+            return Modifier.isStatic(modifiers)
+                    && Modifier.isFinal(modifiers)
+                    && Modifier.isPublic(modifiers)
+                    && clazz.equals(field.getType());
+        });
     }
 }

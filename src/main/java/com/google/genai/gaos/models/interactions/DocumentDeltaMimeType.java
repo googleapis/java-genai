@@ -54,12 +54,12 @@ public class DocumentDeltaMimeType {
     }
 
     /**
-     * Returns a DocumentDeltaMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a DocumentDeltaMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as DocumentDeltaMimeType
-     */ 
+     */
     @JsonCreator
     public static DocumentDeltaMimeType of(String value) {
         synchronized (DocumentDeltaMimeType.class) {
@@ -87,12 +87,9 @@ public class DocumentDeltaMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         DocumentDeltaMimeType other = (DocumentDeltaMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -122,12 +119,12 @@ public class DocumentDeltaMimeType {
         map.put("text/csv", DocumentDeltaMimeTypeEnum.TEXT_CSV);
         return map;
     }
-    
-    
+
     public enum DocumentDeltaMimeTypeEnum {
 
         APPLICATION_PDF("application/pdf"),
-        TEXT_CSV("text/csv"),;
+        TEXT_CSV("text/csv"),
+        ;
 
         private final String value;
 
@@ -140,4 +137,3 @@ public class DocumentDeltaMimeType {
         }
     }
 }
-

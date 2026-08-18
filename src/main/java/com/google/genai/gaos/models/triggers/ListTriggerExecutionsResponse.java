@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * ListTriggerExecutionsResponse
- * 
+ *
  * <p>Response message for TriggerService.ListTriggerExecutions.
  */
 public class ListTriggerExecutionsResponse {
@@ -58,7 +58,7 @@ public class ListTriggerExecutionsResponse {
         this.nextPageToken = nextPageToken;
         this.triggerExecutions = triggerExecutions;
     }
-    
+
     public ListTriggerExecutionsResponse() {
         this(null, null);
     }
@@ -82,7 +82,6 @@ public class ListTriggerExecutionsResponse {
         return new Builder();
     }
 
-
     /**
      * A page token, received from a previous `ListTriggerExecutions` call.
      * Provide this to retrieve the subsequent page.
@@ -92,7 +91,6 @@ public class ListTriggerExecutionsResponse {
         return this;
     }
 
-
     /**
      * The list of trigger executions.
      */
@@ -100,7 +98,6 @@ public class ListTriggerExecutionsResponse {
         this.triggerExecutions = triggerExecutions;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -111,33 +108,34 @@ public class ListTriggerExecutionsResponse {
             return false;
         }
         ListTriggerExecutionsResponse other = (ListTriggerExecutionsResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken) &&
-            Utils.enhancedDeepEquals(this.triggerExecutions, other.triggerExecutions);
+        return Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken)
+                && Utils.enhancedDeepEquals(this.triggerExecutions, other.triggerExecutions);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            nextPageToken, triggerExecutions);
+        return Utils.enhancedHash(nextPageToken, triggerExecutions);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListTriggerExecutionsResponse.class,
-                "nextPageToken", nextPageToken,
-                "triggerExecutions", triggerExecutions);
+        return Utils.toString(
+                ListTriggerExecutionsResponse.class,
+                "nextPageToken",
+                nextPageToken,
+                "triggerExecutions",
+                triggerExecutions);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String nextPageToken;
 
         private List<TriggerExecution> triggerExecutions;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -158,9 +156,7 @@ public class ListTriggerExecutionsResponse {
         }
 
         public ListTriggerExecutionsResponse build() {
-            return new ListTriggerExecutionsResponse(
-                nextPageToken, triggerExecutions);
+            return new ListTriggerExecutionsResponse(nextPageToken, triggerExecutions);
         }
-
     }
 }

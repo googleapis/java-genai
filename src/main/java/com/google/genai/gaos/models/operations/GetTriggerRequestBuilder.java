@@ -68,7 +68,7 @@ public class GetTriggerRequestBuilder {
         }
         return this.request;
     }
-    
+
     public GetTriggerRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class GetTriggerRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public GetTriggerResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<GetTriggerRequest, GetTriggerResponse> operation
-              = new GetTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetTriggerRequest, GetTriggerResponse> operation =
+                new GetTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

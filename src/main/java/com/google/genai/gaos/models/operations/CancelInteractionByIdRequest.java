@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CancelInteractionByIdRequest {
     /**
      * The unique identifier of the interaction to cancel.
@@ -43,16 +42,12 @@ public class CancelInteractionByIdRequest {
     private String apiVersion;
 
     @JsonCreator
-    public CancelInteractionByIdRequest(
-            @Nonnull String id,
-            @Nullable String apiVersion) {
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+    public CancelInteractionByIdRequest(@Nonnull String id, @Nullable String apiVersion) {
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.apiVersion = apiVersion;
     }
-    
-    public CancelInteractionByIdRequest(
-            @Nonnull String id) {
+
+    public CancelInteractionByIdRequest(@Nonnull String id) {
         this(id, null);
     }
 
@@ -74,7 +69,6 @@ public class CancelInteractionByIdRequest {
         return new Builder();
     }
 
-
     /**
      * The unique identifier of the interaction to cancel.
      */
@@ -83,7 +77,6 @@ public class CancelInteractionByIdRequest {
         return this;
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -91,7 +84,6 @@ public class CancelInteractionByIdRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +94,28 @@ public class CancelInteractionByIdRequest {
             return false;
         }
         CancelInteractionByIdRequest other = (CancelInteractionByIdRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
+        return Utils.enhancedDeepEquals(this.id, other.id) && Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            id, apiVersion);
+        return Utils.enhancedHash(id, apiVersion);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CancelInteractionByIdRequest.class,
-                "id", id,
-                "apiVersion", apiVersion);
+        return Utils.toString(CancelInteractionByIdRequest.class, "id", id, "apiVersion", apiVersion);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String id;
 
         private String apiVersion;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +135,7 @@ public class CancelInteractionByIdRequest {
         }
 
         public CancelInteractionByIdRequest build() {
-            return new CancelInteractionByIdRequest(
-                id, apiVersion);
+            return new CancelInteractionByIdRequest(id, apiVersion);
         }
-
     }
 }

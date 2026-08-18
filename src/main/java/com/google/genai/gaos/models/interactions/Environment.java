@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * Environment
- * 
+ *
  * <p>Configuration for a custom environment.
  */
 public class Environment {
@@ -53,11 +53,9 @@ public class Environment {
     @JsonProperty("network")
     private Network network;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("sources")
     private List<Source> sources;
-
 
     @JsonProperty("type")
     private String type;
@@ -72,7 +70,7 @@ public class Environment {
         this.sources = sources;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public Environment() {
         this(null, null, null);
     }
@@ -104,7 +102,6 @@ public class Environment {
         return new Builder();
     }
 
-
     /**
      * Optional. The environment ID for the interaction. If specified, the request will
      * update the existing environment instead of creating a new one.
@@ -114,7 +111,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Network configuration for the environment.
      */
@@ -123,12 +119,10 @@ public class Environment {
         return this;
     }
 
-
     public Environment withSources(@Nullable List<Source> sources) {
         this.sources = sources;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -139,31 +133,33 @@ public class Environment {
             return false;
         }
         Environment other = (Environment) o;
-        return 
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.network, other.network) &&
-            Utils.enhancedDeepEquals(this.sources, other.sources) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.environmentId, other.environmentId)
+                && Utils.enhancedDeepEquals(this.network, other.network)
+                && Utils.enhancedDeepEquals(this.sources, other.sources)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            environmentId, network, sources,
-            type);
+        return Utils.enhancedHash(environmentId, network, sources, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Environment.class,
-                "environmentId", environmentId,
-                "network", network,
-                "sources", sources,
-                "type", type);
+        return Utils.toString(
+                Environment.class,
+                "environmentId",
+                environmentId,
+                "network",
+                network,
+                "sources",
+                sources,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String environmentId;
 
@@ -172,7 +168,7 @@ public class Environment {
         private List<Source> sources;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -198,15 +194,10 @@ public class Environment {
         }
 
         public Environment build() {
-            return new Environment(
-                environmentId, network, sources);
+            return new Environment(environmentId, network, sources);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"remote\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"remote\"", new TypeReference<String>() {});
     }
 }

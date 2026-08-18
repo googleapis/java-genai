@@ -71,7 +71,7 @@ public class RunTriggerRequestBuilder {
         }
         return this.request;
     }
-    
+
     public RunTriggerRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class RunTriggerRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<RunTriggerResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<RunTriggerRequest, RunTriggerResponse> operation
-              = new RunTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<RunTriggerRequest, RunTriggerResponse> operation =
+                new RunTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

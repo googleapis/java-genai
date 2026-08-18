@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * Ranking
- * 
+ *
  * <p>Config for Rank Service.
  */
 public class Ranking {
@@ -44,17 +44,15 @@ public class Ranking {
     @JsonProperty("model_name")
     private String modelName;
 
-
     @JsonProperty("ranking_config")
     private String rankingConfig;
 
     @JsonCreator
-    public Ranking(
-            @JsonProperty("model_name") @Nullable String modelName) {
+    public Ranking(@JsonProperty("model_name") @Nullable String modelName) {
         this.modelName = modelName;
         this.rankingConfig = Builder._SINGLETON_VALUE_RankingConfig.value();
     }
-    
+
     public Ranking() {
         this(null);
     }
@@ -74,7 +72,6 @@ public class Ranking {
         return new Builder();
     }
 
-
     /**
      * Optional. The model name of the rank service.
      */
@@ -82,7 +79,6 @@ public class Ranking {
         this.modelName = modelName;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -93,31 +89,27 @@ public class Ranking {
             return false;
         }
         Ranking other = (Ranking) o;
-        return 
-            Utils.enhancedDeepEquals(this.modelName, other.modelName) &&
-            Utils.enhancedDeepEquals(this.rankingConfig, other.rankingConfig);
+        return Utils.enhancedDeepEquals(this.modelName, other.modelName)
+                && Utils.enhancedDeepEquals(this.rankingConfig, other.rankingConfig);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            modelName, rankingConfig);
+        return Utils.enhancedHash(modelName, rankingConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Ranking.class,
-                "modelName", modelName,
-                "rankingConfig", rankingConfig);
+        return Utils.toString(Ranking.class, "modelName", modelName, "rankingConfig", rankingConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String modelName;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -129,15 +121,10 @@ public class Ranking {
         }
 
         public Ranking build() {
-            return new Ranking(
-                modelName);
+            return new Ranking(modelName);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_RankingConfig =
-                new LazySingletonValue<>(
-                        "ranking_config",
-                        "\"rank_service\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("ranking_config", "\"rank_service\"", new TypeReference<String>() {});
     }
 }

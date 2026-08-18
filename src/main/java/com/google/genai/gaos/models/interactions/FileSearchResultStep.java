@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * FileSearchResultStep
- * 
+ *
  * <p>File Search result step.
  */
 public class FileSearchResultStep implements Step {
@@ -51,22 +51,19 @@ public class FileSearchResultStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
     public FileSearchResultStep(
-            @JsonProperty("call_id") @Nonnull String callId,
-            @JsonProperty("signature") @Nullable String signature) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+            @JsonProperty("call_id") @Nonnull String callId, @JsonProperty("signature") @Nullable String signature) {
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public FileSearchResultStep(
-            @Nonnull String callId) {
+
+    public FileSearchResultStep(@Nonnull String callId) {
         this(callId, null);
     }
 
@@ -93,7 +90,6 @@ public class FileSearchResultStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -102,7 +98,6 @@ public class FileSearchResultStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -110,7 +105,6 @@ public class FileSearchResultStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -121,35 +115,30 @@ public class FileSearchResultStep implements Step {
             return false;
         }
         FileSearchResultStep other = (FileSearchResultStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, signature, type);
+        return Utils.enhancedHash(callId, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileSearchResultStep.class,
-                "callId", callId,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(FileSearchResultStep.class, "callId", callId, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -169,15 +158,10 @@ public class FileSearchResultStep implements Step {
         }
 
         public FileSearchResultStep build() {
-            return new FileSearchResultStep(
-                callId, signature);
+            return new FileSearchResultStep(callId, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"file_search_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"file_search_result\"", new TypeReference<String>() {});
     }
 }

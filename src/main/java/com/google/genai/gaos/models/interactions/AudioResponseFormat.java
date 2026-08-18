@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * AudioResponseFormat
- * 
+ *
  * <p>Configuration for audio output format.
  */
 public class AudioResponseFormat {
@@ -67,7 +67,6 @@ public class AudioResponseFormat {
     @JsonProperty("sample_rate")
     private Integer sampleRate;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -83,10 +82,9 @@ public class AudioResponseFormat {
         this.sampleRate = sampleRate;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public AudioResponseFormat() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -126,7 +124,6 @@ public class AudioResponseFormat {
         return new Builder();
     }
 
-
     /**
      * Bit rate in bits per second (bps). Only applicable for compressed formats
      * (MP3, Opus).
@@ -136,7 +133,6 @@ public class AudioResponseFormat {
         return this;
     }
 
-
     /**
      * The delivery mode for the audio output.
      */
@@ -144,7 +140,6 @@ public class AudioResponseFormat {
         this.delivery = delivery;
         return this;
     }
-
 
     /**
      * The MIME type of the audio output.
@@ -154,7 +149,6 @@ public class AudioResponseFormat {
         return this;
     }
 
-
     /**
      * Sample rate in Hz.
      */
@@ -162,7 +156,6 @@ public class AudioResponseFormat {
         this.sampleRate = sampleRate;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -173,33 +166,36 @@ public class AudioResponseFormat {
             return false;
         }
         AudioResponseFormat other = (AudioResponseFormat) o;
-        return 
-            Utils.enhancedDeepEquals(this.bitRate, other.bitRate) &&
-            Utils.enhancedDeepEquals(this.delivery, other.delivery) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.bitRate, other.bitRate)
+                && Utils.enhancedDeepEquals(this.delivery, other.delivery)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            bitRate, delivery, mimeType,
-            sampleRate, type);
+        return Utils.enhancedHash(bitRate, delivery, mimeType, sampleRate, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AudioResponseFormat.class,
-                "bitRate", bitRate,
-                "delivery", delivery,
-                "mimeType", mimeType,
-                "sampleRate", sampleRate,
-                "type", type);
+        return Utils.toString(
+                AudioResponseFormat.class,
+                "bitRate",
+                bitRate,
+                "delivery",
+                delivery,
+                "mimeType",
+                mimeType,
+                "sampleRate",
+                sampleRate,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer bitRate;
 
@@ -210,7 +206,7 @@ public class AudioResponseFormat {
         private Integer sampleRate;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -247,16 +243,10 @@ public class AudioResponseFormat {
         }
 
         public AudioResponseFormat build() {
-            return new AudioResponseFormat(
-                bitRate, delivery, mimeType,
-                sampleRate);
+            return new AudioResponseFormat(bitRate, delivery, mimeType, sampleRate);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"audio\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"audio\"", new TypeReference<String>() {});
     }
 }

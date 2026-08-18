@@ -19,14 +19,13 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.google.genai.gaos.utils.Utils.JsonShape;
+import java.io.IOException;
 
 @JsonSerialize(using = TypedObject.Serializer.class)
 public class TypedObject {
@@ -52,12 +51,12 @@ public class TypedObject {
     public JsonShape shape() {
         return shape;
     }
-    
+
     @Override
     public String toString() {
         return String.valueOf(value);
     }
-    
+
     public static <T> TypedObject of(T value, JsonShape shape, TypeReference<T> typeReference) {
         return new TypedObject(value, shape, typeReference);
     }
@@ -65,16 +64,15 @@ public class TypedObject {
     public static final class Serializer extends StdSerializer<TypedObject> {
 
         private static final long serialVersionUID = -1;
-        
+
         public Serializer() {
             super(TypedObject.class);
         }
 
         @Override
         public void serialize(TypedObject value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-            Object o = Utils.convertToShape(value.value(),value.shape(), value.typeReference());
+            Object o = Utils.convertToShape(value.value(), value.shape(), value.typeReference());
             provider.defaultSerializeValue(o, gen);
         }
-
     }
 }

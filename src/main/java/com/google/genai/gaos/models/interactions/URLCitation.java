@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * URLCitation
- * 
+ *
  * <p>A URL citation annotation.
  */
 public class URLCitation implements Annotation {
@@ -47,7 +47,7 @@ public class URLCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -60,7 +60,6 @@ public class URLCitation implements Annotation {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("title")
     private String title;
-
 
     @JsonProperty("type")
     private String type;
@@ -84,10 +83,9 @@ public class URLCitation implements Annotation {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.url = url;
     }
-    
+
     public URLCitation() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -99,7 +97,7 @@ public class URLCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public Optional<Integer> startIndex() {
@@ -129,7 +127,6 @@ public class URLCitation implements Annotation {
         return new Builder();
     }
 
-
     /**
      * End of the attributed segment, exclusive.
      */
@@ -138,17 +135,15 @@ public class URLCitation implements Annotation {
         return this;
     }
 
-
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public URLCitation withStartIndex(@Nullable Integer startIndex) {
         this.startIndex = startIndex;
         return this;
     }
-
 
     /**
      * The title of the URL.
@@ -158,7 +153,6 @@ public class URLCitation implements Annotation {
         return this;
     }
 
-
     /**
      * The URL.
      */
@@ -166,7 +160,6 @@ public class URLCitation implements Annotation {
         this.url = url;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -177,33 +170,36 @@ public class URLCitation implements Annotation {
             return false;
         }
         URLCitation other = (URLCitation) o;
-        return 
-            Utils.enhancedDeepEquals(this.endIndex, other.endIndex) &&
-            Utils.enhancedDeepEquals(this.startIndex, other.startIndex) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.endIndex, other.endIndex)
+                && Utils.enhancedDeepEquals(this.startIndex, other.startIndex)
+                && Utils.enhancedDeepEquals(this.title, other.title)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            endIndex, startIndex, title,
-            type, url);
+        return Utils.enhancedHash(endIndex, startIndex, title, type, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLCitation.class,
-                "endIndex", endIndex,
-                "startIndex", startIndex,
-                "title", title,
-                "type", type,
-                "url", url);
+        return Utils.toString(
+                URLCitation.class,
+                "endIndex",
+                endIndex,
+                "startIndex",
+                startIndex,
+                "title",
+                title,
+                "type",
+                type,
+                "url",
+                url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer endIndex;
 
@@ -214,7 +210,7 @@ public class URLCitation implements Annotation {
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -227,7 +223,7 @@ public class URLCitation implements Annotation {
 
         /**
          * Start of segment of the response that is attributed to this source.
-         * 
+         *
          * <p>Index indicates the start of the segment, measured in bytes.
          */
         public Builder startIndex(@Nullable Integer startIndex) {
@@ -252,16 +248,10 @@ public class URLCitation implements Annotation {
         }
 
         public URLCitation build() {
-            return new URLCitation(
-                endIndex, startIndex, title,
-                url);
+            return new URLCitation(endIndex, startIndex, title, url);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"url_citation\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"url_citation\"", new TypeReference<String>() {});
     }
 }

@@ -71,7 +71,7 @@ public class CancelInteractionByIdRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CancelInteractionByIdRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class CancelInteractionByIdRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<CancelInteractionByIdResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
-              = new CancelInteractionById.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation =
+                new CancelInteractionById.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

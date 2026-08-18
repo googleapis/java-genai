@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * WordInfo
- * 
+ *
  * <p>Word-level ASR annotation for transcription output.
  * Carries the word text, optional timing, and optional speaker attribution.
  */
@@ -64,7 +64,7 @@ public class WordInfo implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -86,7 +86,6 @@ public class WordInfo implements Annotation {
     @JsonProperty("text")
     private String text;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -106,10 +105,9 @@ public class WordInfo implements Annotation {
         this.text = text;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public WordInfo() {
-        this(null, null, null,
-            null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     /**
@@ -137,7 +135,7 @@ public class WordInfo implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public Optional<Integer> startIndex() {
@@ -168,7 +166,6 @@ public class WordInfo implements Annotation {
         return new Builder();
     }
 
-
     /**
      * End of the attributed segment, exclusive.
      */
@@ -176,7 +173,6 @@ public class WordInfo implements Annotation {
         this.endIndex = endIndex;
         return this;
     }
-
 
     /**
      * End offset in time of the word relative to the start of the audio.
@@ -187,7 +183,6 @@ public class WordInfo implements Annotation {
         return this;
     }
 
-
     /**
      * Optional. Speaker label for this word (e.g. "spk_1", "spk_2").
      * Present when diarization_mode is set in TranscriptionConfig.
@@ -197,17 +192,15 @@ public class WordInfo implements Annotation {
         return this;
     }
 
-
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public WordInfo withStartIndex(@Nullable Integer startIndex) {
         this.startIndex = startIndex;
         return this;
     }
-
 
     /**
      * Start offset in time of the word relative to the start of the audio.
@@ -218,7 +211,6 @@ public class WordInfo implements Annotation {
         return this;
     }
 
-
     /**
      * The transcribed word.
      */
@@ -226,7 +218,6 @@ public class WordInfo implements Annotation {
         this.text = text;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -237,38 +228,42 @@ public class WordInfo implements Annotation {
             return false;
         }
         WordInfo other = (WordInfo) o;
-        return 
-            Utils.enhancedDeepEquals(this.endIndex, other.endIndex) &&
-            Utils.enhancedDeepEquals(this.endOffset, other.endOffset) &&
-            Utils.enhancedDeepEquals(this.speaker, other.speaker) &&
-            Utils.enhancedDeepEquals(this.startIndex, other.startIndex) &&
-            Utils.enhancedDeepEquals(this.startOffset, other.startOffset) &&
-            Utils.enhancedDeepEquals(this.text, other.text) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.endIndex, other.endIndex)
+                && Utils.enhancedDeepEquals(this.endOffset, other.endOffset)
+                && Utils.enhancedDeepEquals(this.speaker, other.speaker)
+                && Utils.enhancedDeepEquals(this.startIndex, other.startIndex)
+                && Utils.enhancedDeepEquals(this.startOffset, other.startOffset)
+                && Utils.enhancedDeepEquals(this.text, other.text)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            endIndex, endOffset, speaker,
-            startIndex, startOffset, text,
-            type);
+        return Utils.enhancedHash(endIndex, endOffset, speaker, startIndex, startOffset, text, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WordInfo.class,
-                "endIndex", endIndex,
-                "endOffset", endOffset,
-                "speaker", speaker,
-                "startIndex", startIndex,
-                "startOffset", startOffset,
-                "text", text,
-                "type", type);
+        return Utils.toString(
+                WordInfo.class,
+                "endIndex",
+                endIndex,
+                "endOffset",
+                endOffset,
+                "speaker",
+                speaker,
+                "startIndex",
+                startIndex,
+                "startOffset",
+                startOffset,
+                "text",
+                text,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer endIndex;
 
@@ -283,7 +278,7 @@ public class WordInfo implements Annotation {
         private String text;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -314,7 +309,7 @@ public class WordInfo implements Annotation {
 
         /**
          * Start of segment of the response that is attributed to this source.
-         * 
+         *
          * <p>Index indicates the start of the segment, measured in bytes.
          */
         public Builder startIndex(@Nullable Integer startIndex) {
@@ -340,16 +335,10 @@ public class WordInfo implements Annotation {
         }
 
         public WordInfo build() {
-            return new WordInfo(
-                endIndex, endOffset, speaker,
-                startIndex, startOffset, text);
+            return new WordInfo(endIndex, endOffset, speaker, startIndex, startOffset, text);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"word_info\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"word_info\"", new TypeReference<String>() {});
     }
 }

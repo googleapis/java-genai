@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * SessionConfig
- * 
+ *
  * <p>The configuration of CodeMender sessions.
  */
 public class SessionConfig {
@@ -45,11 +45,10 @@ public class SessionConfig {
     private Integer maxRounds;
 
     @JsonCreator
-    public SessionConfig(
-            @JsonProperty("max_rounds") @Nullable Integer maxRounds) {
+    public SessionConfig(@JsonProperty("max_rounds") @Nullable Integer maxRounds) {
         this.maxRounds = maxRounds;
     }
-    
+
     public SessionConfig() {
         this(null);
     }
@@ -66,7 +65,6 @@ public class SessionConfig {
         return new Builder();
     }
 
-
     /**
      * The maximum number of interaction rounds the agent is allowed to perform
      * before reaching a timeout.
@@ -75,7 +73,6 @@ public class SessionConfig {
         this.maxRounds = maxRounds;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -86,29 +83,26 @@ public class SessionConfig {
             return false;
         }
         SessionConfig other = (SessionConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.maxRounds, other.maxRounds);
+        return Utils.enhancedDeepEquals(this.maxRounds, other.maxRounds);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            maxRounds);
+        return Utils.enhancedHash(maxRounds);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SessionConfig.class,
-                "maxRounds", maxRounds);
+        return Utils.toString(SessionConfig.class, "maxRounds", maxRounds);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer maxRounds;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -121,9 +115,7 @@ public class SessionConfig {
         }
 
         public SessionConfig build() {
-            return new SessionConfig(
-                maxRounds);
+            return new SessionConfig(maxRounds);
         }
-
     }
 }

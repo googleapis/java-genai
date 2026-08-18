@@ -27,17 +27,14 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class InteractionSSEStreamEvent {
 
     @JsonProperty("data")
     private InteractionSSEEvent data;
 
     @JsonCreator
-    public InteractionSSEStreamEvent(
-            @JsonProperty("data") @Nonnull InteractionSSEEvent data) {
-        this.data = Optional.ofNullable(data)
-            .orElseThrow(() -> new IllegalArgumentException("data cannot be null"));
+    public InteractionSSEStreamEvent(@JsonProperty("data") @Nonnull InteractionSSEEvent data) {
+        this.data = Optional.ofNullable(data).orElseThrow(() -> new IllegalArgumentException("data cannot be null"));
     }
 
     public Optional<InteractionSSEEvent> data() {
@@ -48,12 +45,10 @@ public class InteractionSSEStreamEvent {
         return new Builder();
     }
 
-
     public InteractionSSEStreamEvent withData(@Nonnull InteractionSSEEvent data) {
         this.data = Utils.checkNotNull(data, "data");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -64,29 +59,26 @@ public class InteractionSSEStreamEvent {
             return false;
         }
         InteractionSSEStreamEvent other = (InteractionSSEStreamEvent) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data);
+        return Utils.enhancedDeepEquals(this.data, other.data);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data);
+        return Utils.enhancedHash(data);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(InteractionSSEStreamEvent.class,
-                "data", data);
+        return Utils.toString(InteractionSSEStreamEvent.class, "data", data);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private InteractionSSEEvent data;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder data(@Nonnull InteractionSSEEvent data) {
@@ -95,9 +87,7 @@ public class InteractionSSEStreamEvent {
         }
 
         public InteractionSSEStreamEvent build() {
-            return new InteractionSSEStreamEvent(
-                data);
+            return new InteractionSSEStreamEvent(data);
         }
-
     }
 }

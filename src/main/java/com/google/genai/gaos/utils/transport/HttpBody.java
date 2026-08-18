@@ -19,14 +19,13 @@
  */
 package com.google.genai.gaos.utils.transport;
 
+import com.google.genai.gaos.utils.Utils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import com.google.genai.gaos.utils.Utils;
 
 /**
  * A request body carrier that is independent of the underlying HTTP client.
@@ -138,8 +137,7 @@ public abstract class HttpBody {
     public static HttpBody ofInputStream(InputStream in, long contentLength) {
         Utils.checkNotNull(in, "in");
         if (contentLength < -1) {
-            throw new IllegalArgumentException(
-                    "contentLength must be -1 or non-negative: " + contentLength);
+            throw new IllegalArgumentException("contentLength must be -1 or non-negative: " + contentLength);
         }
         return new HttpBody() {
 

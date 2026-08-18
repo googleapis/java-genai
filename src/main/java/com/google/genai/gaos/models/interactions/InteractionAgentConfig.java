@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.models.interactions;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
 /**
  * InteractionAgentConfig
- * 
+ *
  * <p>Configuration parameters for the agent interaction.
  */
 @JsonTypeInfo(
@@ -35,12 +35,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownInteractionAgentConfig.class
-)
+        defaultImpl = UnknownInteractionAgentConfig.class)
 @JsonTypeIdResolver(InteractionAgentConfigTypeIdResolver.class)
 public interface InteractionAgentConfig {
 
     String type();
-
 }
-

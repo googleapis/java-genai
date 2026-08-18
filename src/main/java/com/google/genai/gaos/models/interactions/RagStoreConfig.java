@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * RagStoreConfig
- * 
+ *
  * <p>Use to specify configuration for RAG Store.
  */
 public class RagStoreConfig {
@@ -55,7 +55,7 @@ public class RagStoreConfig {
 
     /**
      * Optional. Number of top k results to return from the selected corpora.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -65,7 +65,7 @@ public class RagStoreConfig {
 
     /**
      * Optional. Only return results with vector distance smaller than the threshold.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -84,10 +84,9 @@ public class RagStoreConfig {
         this.similarityTopK = similarityTopK;
         this.vectorDistanceThreshold = vectorDistanceThreshold;
     }
-    
+
     public RagStoreConfig() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -106,7 +105,7 @@ public class RagStoreConfig {
 
     /**
      * Optional. Number of top k results to return from the selected corpora.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -116,7 +115,7 @@ public class RagStoreConfig {
 
     /**
      * Optional. Only return results with vector distance smaller than the threshold.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -128,7 +127,6 @@ public class RagStoreConfig {
         return new Builder();
     }
 
-
     /**
      * Optional. The representation of the rag source.
      */
@@ -136,7 +134,6 @@ public class RagStoreConfig {
         this.ragResources = ragResources;
         return this;
     }
-
 
     /**
      * Specifies the context retrieval config.
@@ -146,10 +143,9 @@ public class RagStoreConfig {
         return this;
     }
 
-
     /**
      * Optional. Number of top k results to return from the selected corpora.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -158,10 +154,9 @@ public class RagStoreConfig {
         return this;
     }
 
-
     /**
      * Optional. Only return results with vector distance smaller than the threshold.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -169,7 +164,6 @@ public class RagStoreConfig {
         this.vectorDistanceThreshold = vectorDistanceThreshold;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -180,31 +174,33 @@ public class RagStoreConfig {
             return false;
         }
         RagStoreConfig other = (RagStoreConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.ragResources, other.ragResources) &&
-            Utils.enhancedDeepEquals(this.ragRetrievalConfig, other.ragRetrievalConfig) &&
-            Utils.enhancedDeepEquals(this.similarityTopK, other.similarityTopK) &&
-            Utils.enhancedDeepEquals(this.vectorDistanceThreshold, other.vectorDistanceThreshold);
+        return Utils.enhancedDeepEquals(this.ragResources, other.ragResources)
+                && Utils.enhancedDeepEquals(this.ragRetrievalConfig, other.ragRetrievalConfig)
+                && Utils.enhancedDeepEquals(this.similarityTopK, other.similarityTopK)
+                && Utils.enhancedDeepEquals(this.vectorDistanceThreshold, other.vectorDistanceThreshold);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            ragResources, ragRetrievalConfig, similarityTopK,
-            vectorDistanceThreshold);
+        return Utils.enhancedHash(ragResources, ragRetrievalConfig, similarityTopK, vectorDistanceThreshold);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RagStoreConfig.class,
-                "ragResources", ragResources,
-                "ragRetrievalConfig", ragRetrievalConfig,
-                "similarityTopK", similarityTopK,
-                "vectorDistanceThreshold", vectorDistanceThreshold);
+        return Utils.toString(
+                RagStoreConfig.class,
+                "ragResources",
+                ragResources,
+                "ragRetrievalConfig",
+                ragRetrievalConfig,
+                "similarityTopK",
+                similarityTopK,
+                "vectorDistanceThreshold",
+                vectorDistanceThreshold);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<RagResource> ragResources;
 
@@ -217,7 +213,7 @@ public class RagStoreConfig {
         private Double vectorDistanceThreshold;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -238,7 +234,7 @@ public class RagStoreConfig {
 
         /**
          * Optional. Number of top k results to return from the selected corpora.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -249,7 +245,7 @@ public class RagStoreConfig {
 
         /**
          * Optional. Only return results with vector distance smaller than the threshold.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -259,10 +255,7 @@ public class RagStoreConfig {
         }
 
         public RagStoreConfig build() {
-            return new RagStoreConfig(
-                ragResources, ragRetrievalConfig, similarityTopK,
-                vectorDistanceThreshold);
+            return new RagStoreConfig(ragResources, ragRetrievalConfig, similarityTopK, vectorDistanceThreshold);
         }
-
     }
 }

@@ -29,8 +29,7 @@ final class Metadata {
         // prevent instantiation
     }
 
-    static <T> T parse(String name, T metadata, Field field)
-            throws IllegalArgumentException, IllegalAccessException {
+    static <T> T parse(String name, T metadata, Field field) throws IllegalArgumentException, IllegalAccessException {
         SpeakeasyMetadata md = field.getAnnotation(SpeakeasyMetadata.class);
         if (md == null) {
             return null;

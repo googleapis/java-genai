@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.environments;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * ListEnvironmentsResponse
- * 
+ *
  * <p>Response for `ListEnvironments`.
  */
 public class ListEnvironmentsResponse {
@@ -57,7 +57,7 @@ public class ListEnvironmentsResponse {
         this.environments = environments;
         this.nextPageToken = nextPageToken;
     }
-    
+
     public ListEnvironmentsResponse() {
         this(null, null);
     }
@@ -80,7 +80,6 @@ public class ListEnvironmentsResponse {
         return new Builder();
     }
 
-
     /**
      * Environments belonging to the provided project.
      */
@@ -89,7 +88,6 @@ public class ListEnvironmentsResponse {
         return this;
     }
 
-
     /**
      * Pagination token.
      */
@@ -97,7 +95,6 @@ public class ListEnvironmentsResponse {
         this.nextPageToken = nextPageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -108,33 +105,30 @@ public class ListEnvironmentsResponse {
             return false;
         }
         ListEnvironmentsResponse other = (ListEnvironmentsResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.environments, other.environments) &&
-            Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
+        return Utils.enhancedDeepEquals(this.environments, other.environments)
+                && Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            environments, nextPageToken);
+        return Utils.enhancedHash(environments, nextPageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListEnvironmentsResponse.class,
-                "environments", environments,
-                "nextPageToken", nextPageToken);
+        return Utils.toString(
+                ListEnvironmentsResponse.class, "environments", environments, "nextPageToken", nextPageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<Environment> environments;
 
         private String nextPageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -154,9 +148,7 @@ public class ListEnvironmentsResponse {
         }
 
         public ListEnvironmentsResponse build() {
-            return new ListEnvironmentsResponse(
-                environments, nextPageToken);
+            return new ListEnvironmentsResponse(environments, nextPageToken);
         }
-
     }
 }

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * DocumentContentMimeType
- * 
+ *
  * <p>The mime type of the document.
  */
 public class DocumentContentMimeType {
@@ -59,12 +59,12 @@ public class DocumentContentMimeType {
     }
 
     /**
-     * Returns a DocumentContentMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a DocumentContentMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as DocumentContentMimeType
-     */ 
+     */
     @JsonCreator
     public static DocumentContentMimeType of(String value) {
         synchronized (DocumentContentMimeType.class) {
@@ -92,12 +92,9 @@ public class DocumentContentMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         DocumentContentMimeType other = (DocumentContentMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class DocumentContentMimeType {
         map.put("text/csv", DocumentContentMimeTypeEnum.TEXT_CSV);
         return map;
     }
-    
-    
+
     public enum DocumentContentMimeTypeEnum {
 
         APPLICATION_PDF("application/pdf"),
-        TEXT_CSV("text/csv"),;
+        TEXT_CSV("text/csv"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class DocumentContentMimeType {
         }
     }
 }
-

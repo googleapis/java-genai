@@ -24,15 +24,14 @@ import java.lang.reflect.Field;
 class PathParamsMetadata {
 
     // these fields set via reflection
-    
+
     String style = "simple";
     boolean explode;
     String name;
     String serialization;
     boolean allowReserved;
 
-    private PathParamsMetadata() {
-    }
+    private PathParamsMetadata() {}
 
     static PathParamsMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {
         return Metadata.parse("pathParam", new PathParamsMetadata(), field);

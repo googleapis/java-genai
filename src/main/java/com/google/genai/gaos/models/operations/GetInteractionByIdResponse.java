@@ -34,7 +34,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetInteractionByIdResponse implements Response {
     /**
      * HTTP response content type for this operation
@@ -63,19 +62,16 @@ public class GetInteractionByIdResponse implements Response {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable Interaction interaction) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.interaction = interaction;
     }
-    
+
     public GetInteractionByIdResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -110,17 +106,12 @@ public class GetInteractionByIdResponse implements Response {
 
     public EventStream<InteractionSSEStreamEvent> events() {
         return new EventStream<InteractionSSEStreamEvent>(
-            rawResponse.body(),
-            new TypeReference<InteractionSSEStreamEvent>() {},
-            Utils.mapper(),
-            _eventSentinel);
+                rawResponse.body(), new TypeReference<InteractionSSEStreamEvent>() {}, Utils.mapper(), _eventSentinel);
     }
-
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     /**
      * HTTP response content type for this operation
@@ -130,7 +121,6 @@ public class GetInteractionByIdResponse implements Response {
         return this;
     }
 
-
     /**
      * HTTP response status code for this operation
      */
@@ -138,7 +128,6 @@ public class GetInteractionByIdResponse implements Response {
         this.statusCode = statusCode;
         return this;
     }
-
 
     /**
      * Raw HTTP response; suitable for custom response parsing
@@ -148,7 +137,6 @@ public class GetInteractionByIdResponse implements Response {
         return this;
     }
 
-
     /**
      * Successful retrieval of the interaction.
      */
@@ -156,7 +144,6 @@ public class GetInteractionByIdResponse implements Response {
         this.interaction = interaction;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -167,31 +154,33 @@ public class GetInteractionByIdResponse implements Response {
             return false;
         }
         GetInteractionByIdResponse other = (GetInteractionByIdResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.interaction, other.interaction);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            interaction);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, interaction);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetInteractionByIdResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "interaction", interaction);
+        return Utils.toString(
+                GetInteractionByIdResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "interaction",
+                interaction);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -202,7 +191,7 @@ public class GetInteractionByIdResponse implements Response {
         private Interaction interaction;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -238,10 +227,7 @@ public class GetInteractionByIdResponse implements Response {
         }
 
         public GetInteractionByIdResponse build() {
-            return new GetInteractionByIdResponse(
-                contentType, statusCode, rawResponse,
-                interaction);
+            return new GetInteractionByIdResponse(contentType, statusCode, rawResponse, interaction);
         }
-
     }
 }

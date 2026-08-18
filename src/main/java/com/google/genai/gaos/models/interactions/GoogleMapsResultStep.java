@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * GoogleMapsResultStep
- * 
+ *
  * <p>Google Maps result step.
  */
 public class GoogleMapsResultStep implements Step {
@@ -44,7 +44,6 @@ public class GoogleMapsResultStep implements Step {
      */
     @JsonProperty("call_id")
     private String callId;
-
 
     @JsonProperty("result")
     private List<GoogleMapsResult> result;
@@ -56,7 +55,6 @@ public class GoogleMapsResultStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -65,17 +63,15 @@ public class GoogleMapsResultStep implements Step {
             @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("result") @Nonnull List<GoogleMapsResult> result,
             @JsonProperty("signature") @Nullable String signature) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public GoogleMapsResultStep(
-            @Nonnull String callId,
-            @Nonnull List<GoogleMapsResult> result) {
+
+    public GoogleMapsResultStep(@Nonnull String callId, @Nonnull List<GoogleMapsResult> result) {
         this(callId, result, null);
     }
 
@@ -106,7 +102,6 @@ public class GoogleMapsResultStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -115,12 +110,10 @@ public class GoogleMapsResultStep implements Step {
         return this;
     }
 
-
     public GoogleMapsResultStep withResult(@Nonnull List<GoogleMapsResult> result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
-
 
     /**
      * A signature hash for backend validation.
@@ -129,7 +122,6 @@ public class GoogleMapsResultStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -140,31 +132,25 @@ public class GoogleMapsResultStep implements Step {
             return false;
         }
         GoogleMapsResultStep other = (GoogleMapsResultStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, result, signature,
-            type);
+        return Utils.enhancedHash(callId, result, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsResultStep.class,
-                "callId", callId,
-                "result", result,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                GoogleMapsResultStep.class, "callId", callId, "result", result, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
@@ -173,7 +159,7 @@ public class GoogleMapsResultStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -198,15 +184,10 @@ public class GoogleMapsResultStep implements Step {
         }
 
         public GoogleMapsResultStep build() {
-            return new GoogleMapsResultStep(
-                callId, result, signature);
+            return new GoogleMapsResultStep(callId, result, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_maps_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_maps_result\"", new TypeReference<String>() {});
     }
 }

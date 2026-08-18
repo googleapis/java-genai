@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * TextContent
- * 
+ *
  * <p>A text content block.
  */
 public class TextContent implements Content, ThoughtSummaryContent, FunctionResultSubcontent {
@@ -52,7 +52,6 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
     @JsonProperty("text")
     private String text;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -61,13 +60,11 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
             @JsonProperty("annotations") @Nullable List<Annotation> annotations,
             @JsonProperty("text") @Nonnull String text) {
         this.annotations = annotations;
-        this.text = Optional.ofNullable(text)
-            .orElseThrow(() -> new IllegalArgumentException("text cannot be null"));
+        this.text = Optional.ofNullable(text).orElseThrow(() -> new IllegalArgumentException("text cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public TextContent(
-            @Nonnull String text) {
+
+    public TextContent(@Nonnull String text) {
         this(null, text);
     }
 
@@ -94,7 +91,6 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
         return new Builder();
     }
 
-
     /**
      * Citation information for model-generated content.
      */
@@ -103,7 +99,6 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
         return this;
     }
 
-
     /**
      * Required. The text content.
      */
@@ -111,7 +106,6 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
         this.text = Utils.checkNotNull(text, "text");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -122,35 +116,30 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
             return false;
         }
         TextContent other = (TextContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.annotations, other.annotations) &&
-            Utils.enhancedDeepEquals(this.text, other.text) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.annotations, other.annotations)
+                && Utils.enhancedDeepEquals(this.text, other.text)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            annotations, text, type);
+        return Utils.enhancedHash(annotations, text, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TextContent.class,
-                "annotations", annotations,
-                "text", text,
-                "type", type);
+        return Utils.toString(TextContent.class, "annotations", annotations, "text", text, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<Annotation> annotations;
 
         private String text;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -170,15 +159,10 @@ public class TextContent implements Content, ThoughtSummaryContent, FunctionResu
         }
 
         public TextContent build() {
-            return new TextContent(
-                annotations, text);
+            return new TextContent(annotations, text);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"text\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"text\"", new TypeReference<String>() {});
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,22 +31,18 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class DocumentDelta implements StepDeltaData {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("data")
     private String data;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mime_type")
     private DocumentDeltaMimeType mimeType;
 
-
     @JsonProperty("type")
     private String type;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("uri")
@@ -62,7 +58,7 @@ public class DocumentDelta implements StepDeltaData {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
     }
-    
+
     public DocumentDelta() {
         this(null, null, null);
     }
@@ -88,24 +84,20 @@ public class DocumentDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public DocumentDelta withData(@Nullable String data) {
         this.data = data;
         return this;
     }
-
 
     public DocumentDelta withMimeType(@Nullable DocumentDeltaMimeType mimeType) {
         this.mimeType = mimeType;
         return this;
     }
 
-
     public DocumentDelta withUri(@Nullable String uri) {
         this.uri = uri;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -116,31 +108,24 @@ public class DocumentDelta implements StepDeltaData {
             return false;
         }
         DocumentDelta other = (DocumentDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data, mimeType, type,
-            uri);
+        return Utils.enhancedHash(data, mimeType, type, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DocumentDelta.class,
-                "data", data,
-                "mimeType", mimeType,
-                "type", type,
-                "uri", uri);
+        return Utils.toString(DocumentDelta.class, "data", data, "mimeType", mimeType, "type", type, "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String data;
 
@@ -149,7 +134,7 @@ public class DocumentDelta implements StepDeltaData {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder data(@Nullable String data) {
@@ -168,15 +153,10 @@ public class DocumentDelta implements StepDeltaData {
         }
 
         public DocumentDelta build() {
-            return new DocumentDelta(
-                data, mimeType, uri);
+            return new DocumentDelta(data, mimeType, uri);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"document\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"document\"", new TypeReference<String>() {});
     }
 }

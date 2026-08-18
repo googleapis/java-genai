@@ -38,7 +38,8 @@ public class GoogleSearchSearchType {
 
     public static final GoogleSearchSearchType WEB_SEARCH = new GoogleSearchSearchType("web_search");
     public static final GoogleSearchSearchType IMAGE_SEARCH = new GoogleSearchSearchType("image_search");
-    public static final GoogleSearchSearchType ENTERPRISE_WEB_SEARCH = new GoogleSearchSearchType("enterprise_web_search");
+    public static final GoogleSearchSearchType ENTERPRISE_WEB_SEARCH =
+            new GoogleSearchSearchType("enterprise_web_search");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -55,12 +56,12 @@ public class GoogleSearchSearchType {
     }
 
     /**
-     * Returns a GoogleSearchSearchType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a GoogleSearchSearchType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as GoogleSearchSearchType
-     */ 
+     */
     @JsonCreator
     public static GoogleSearchSearchType of(String value) {
         synchronized (GoogleSearchSearchType.class) {
@@ -88,12 +89,9 @@ public class GoogleSearchSearchType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         GoogleSearchSearchType other = (GoogleSearchSearchType) obj;
         return Objects.equals(value, other.value);
     }
@@ -125,13 +123,13 @@ public class GoogleSearchSearchType {
         map.put("enterprise_web_search", GoogleSearchSearchTypeEnum.ENTERPRISE_WEB_SEARCH);
         return map;
     }
-    
-    
+
     public enum GoogleSearchSearchTypeEnum {
 
         WEB_SEARCH("web_search"),
         IMAGE_SEARCH("image_search"),
-        ENTERPRISE_WEB_SEARCH("enterprise_web_search"),;
+        ENTERPRISE_WEB_SEARCH("enterprise_web_search"),
+        ;
 
         private final String value;
 
@@ -144,4 +142,3 @@ public class GoogleSearchSearchType {
         }
     }
 }
-

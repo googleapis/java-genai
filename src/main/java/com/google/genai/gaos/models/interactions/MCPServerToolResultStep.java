@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * MCPServerToolResultStep
- * 
+ *
  * <p>MCPServer tool result step.
  */
 public class MCPServerToolResultStep implements Step {
@@ -64,7 +64,6 @@ public class MCPServerToolResultStep implements Step {
     @JsonProperty("server_name")
     private String serverName;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -74,20 +73,17 @@ public class MCPServerToolResultStep implements Step {
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("result") @Nonnull MCPServerToolResultStepResultUnion result,
             @JsonProperty("server_name") @Nullable String serverName) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.name = name;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.serverName = serverName;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public MCPServerToolResultStep(
-            @Nonnull String callId,
-            @Nonnull MCPServerToolResultStepResultUnion result) {
-        this(callId, null, result,
-            null);
+
+    public MCPServerToolResultStep(@Nonnull String callId, @Nonnull MCPServerToolResultStepResultUnion result) {
+        this(callId, null, result, null);
     }
 
     /**
@@ -127,7 +123,6 @@ public class MCPServerToolResultStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -135,7 +130,6 @@ public class MCPServerToolResultStep implements Step {
         this.callId = Utils.checkNotNull(callId, "callId");
         return this;
     }
-
 
     /**
      * Name of the tool which is called for this specific tool call.
@@ -145,7 +139,6 @@ public class MCPServerToolResultStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The output from the MCP server call. Can be simple text or rich content.
      */
@@ -154,7 +147,6 @@ public class MCPServerToolResultStep implements Step {
         return this;
     }
 
-
     /**
      * The name of the used MCP server.
      */
@@ -162,7 +154,6 @@ public class MCPServerToolResultStep implements Step {
         this.serverName = serverName;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -173,33 +164,36 @@ public class MCPServerToolResultStep implements Step {
             return false;
         }
         MCPServerToolResultStep other = (MCPServerToolResultStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.serverName, other.serverName)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, name, result,
-            serverName, type);
+        return Utils.enhancedHash(callId, name, result, serverName, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServerToolResultStep.class,
-                "callId", callId,
-                "name", name,
-                "result", result,
-                "serverName", serverName,
-                "type", type);
+        return Utils.toString(
+                MCPServerToolResultStep.class,
+                "callId",
+                callId,
+                "name",
+                name,
+                "result",
+                result,
+                "serverName",
+                serverName,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
@@ -210,7 +204,7 @@ public class MCPServerToolResultStep implements Step {
         private String serverName;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -246,16 +240,10 @@ public class MCPServerToolResultStep implements Step {
         }
 
         public MCPServerToolResultStep build() {
-            return new MCPServerToolResultStep(
-                callId, name, result,
-                serverName);
+            return new MCPServerToolResultStep(callId, name, result, serverName);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"mcp_server_tool_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"mcp_server_tool_result\"", new TypeReference<String>() {});
     }
 }

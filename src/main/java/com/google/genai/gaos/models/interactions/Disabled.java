@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Disabled
- * 
+ *
  * <p>Turns all network off.
  */
 public class Disabled {
@@ -58,12 +58,12 @@ public class Disabled {
     }
 
     /**
-     * Returns a Disabled with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Disabled with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Disabled
-     */ 
+     */
     @JsonCreator
     public static Disabled of(String value) {
         synchronized (Disabled.class) {
@@ -91,12 +91,9 @@ public class Disabled {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Disabled other = (Disabled) obj;
         return Objects.equals(value, other.value);
     }
@@ -124,11 +121,11 @@ public class Disabled {
         map.put("disabled", DisabledEnum.DISABLED);
         return map;
     }
-    
-    
+
     public enum DisabledEnum {
 
-        DISABLED("disabled"),;
+        DISABLED("disabled"),
+        ;
 
         private final String value;
 
@@ -141,4 +138,3 @@ public class Disabled {
         }
     }
 }
-

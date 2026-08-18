@@ -80,7 +80,7 @@ public class ListTriggersRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListTriggersRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -89,14 +89,14 @@ public class ListTriggersRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public ListTriggersResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<ListTriggersRequest, ListTriggersResponse> operation
-              = new ListTriggers.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<ListTriggersRequest, ListTriggersResponse> operation =
+                new ListTriggers.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

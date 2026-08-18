@@ -29,7 +29,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class UpdateTriggerRequest {
     /**
      * Which version of the API to use.
@@ -43,25 +42,17 @@ public class UpdateTriggerRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
 
-
     @SpeakeasyMetadata("request:mediaType=application/json")
     private TriggerUpdate body;
 
     @JsonCreator
-    public UpdateTriggerRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id,
-            @Nonnull TriggerUpdate body) {
+    public UpdateTriggerRequest(@Nullable String apiVersion, @Nonnull String id, @Nonnull TriggerUpdate body) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.body = Optional.ofNullable(body).orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
-    
-    public UpdateTriggerRequest(
-            @Nonnull String id,
-            @Nonnull TriggerUpdate body) {
+
+    public UpdateTriggerRequest(@Nonnull String id, @Nonnull TriggerUpdate body) {
         this(null, id, body);
     }
 
@@ -87,7 +78,6 @@ public class UpdateTriggerRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -95,7 +85,6 @@ public class UpdateTriggerRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Resource name of the trigger.
@@ -105,12 +94,10 @@ public class UpdateTriggerRequest {
         return this;
     }
 
-
     public UpdateTriggerRequest withBody(@Nonnull TriggerUpdate body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -121,28 +108,23 @@ public class UpdateTriggerRequest {
             return false;
         }
         UpdateTriggerRequest other = (UpdateTriggerRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id, body);
+        return Utils.enhancedHash(apiVersion, id, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(UpdateTriggerRequest.class,
-                "apiVersion", apiVersion,
-                "id", id,
-                "body", body);
+        return Utils.toString(UpdateTriggerRequest.class, "apiVersion", apiVersion, "id", id, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -151,7 +133,7 @@ public class UpdateTriggerRequest {
         private TriggerUpdate body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -176,9 +158,7 @@ public class UpdateTriggerRequest {
         }
 
         public UpdateTriggerRequest build() {
-            return new UpdateTriggerRequest(
-                apiVersion, id, body);
+            return new UpdateTriggerRequest(apiVersion, id, body);
         }
-
     }
 }

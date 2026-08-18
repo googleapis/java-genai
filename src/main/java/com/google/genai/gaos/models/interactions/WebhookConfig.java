@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * WebhookConfig
- * 
+ *
  * <p>Message for configuring webhook events for a request.
  */
 public class WebhookConfig {
@@ -61,7 +61,7 @@ public class WebhookConfig {
         this.uris = uris;
         this.userMetadata = userMetadata;
     }
-    
+
     public WebhookConfig() {
         this(null, null);
     }
@@ -86,7 +86,6 @@ public class WebhookConfig {
         return new Builder();
     }
 
-
     /**
      * Optional. If set, these webhook URIs will be used for webhook events instead of the
      * registered webhooks.
@@ -95,7 +94,6 @@ public class WebhookConfig {
         this.uris = uris;
         return this;
     }
-
 
     /**
      * Optional. The user metadata that will be returned on each event emission to the
@@ -106,7 +104,6 @@ public class WebhookConfig {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -116,33 +113,29 @@ public class WebhookConfig {
             return false;
         }
         WebhookConfig other = (WebhookConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.uris, other.uris) &&
-            Utils.enhancedDeepEquals(this.userMetadata, other.userMetadata);
+        return Utils.enhancedDeepEquals(this.uris, other.uris)
+                && Utils.enhancedDeepEquals(this.userMetadata, other.userMetadata);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            uris, userMetadata);
+        return Utils.enhancedHash(uris, userMetadata);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WebhookConfig.class,
-                "uris", uris,
-                "userMetadata", userMetadata);
+        return Utils.toString(WebhookConfig.class, "uris", uris, "userMetadata", userMetadata);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<String> uris;
 
         private Map<String, Object> userMetadata;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -164,9 +157,7 @@ public class WebhookConfig {
         }
 
         public WebhookConfig build() {
-            return new WebhookConfig(
-                uris, userMetadata);
+            return new WebhookConfig(uris, userMetadata);
         }
-
     }
 }

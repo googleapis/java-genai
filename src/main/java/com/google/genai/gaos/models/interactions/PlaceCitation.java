@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * PlaceCitation
- * 
+ *
  * <p>A place citation annotation.
  */
 public class PlaceCitation implements Annotation {
@@ -70,13 +70,12 @@ public class PlaceCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("start_index")
     private Integer startIndex;
-
 
     @JsonProperty("type")
     private String type;
@@ -104,10 +103,9 @@ public class PlaceCitation implements Annotation {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.url = url;
     }
-    
+
     public PlaceCitation() {
-        this(null, null, null,
-            null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     /**
@@ -141,7 +139,7 @@ public class PlaceCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public Optional<Integer> startIndex() {
@@ -164,7 +162,6 @@ public class PlaceCitation implements Annotation {
         return new Builder();
     }
 
-
     /**
      * End of the attributed segment, exclusive.
      */
@@ -172,7 +169,6 @@ public class PlaceCitation implements Annotation {
         this.endIndex = endIndex;
         return this;
     }
-
 
     /**
      * Title of the place.
@@ -182,7 +178,6 @@ public class PlaceCitation implements Annotation {
         return this;
     }
 
-
     /**
      * The ID of the place, in `places/{place_id}` format.
      */
@@ -190,7 +185,6 @@ public class PlaceCitation implements Annotation {
         this.placeId = placeId;
         return this;
     }
-
 
     /**
      * Snippets of reviews that are used to generate answers about the
@@ -201,17 +195,15 @@ public class PlaceCitation implements Annotation {
         return this;
     }
 
-
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public PlaceCitation withStartIndex(@Nullable Integer startIndex) {
         this.startIndex = startIndex;
         return this;
     }
-
 
     /**
      * URI reference of the place.
@@ -220,7 +212,6 @@ public class PlaceCitation implements Annotation {
         this.url = url;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -231,38 +222,42 @@ public class PlaceCitation implements Annotation {
             return false;
         }
         PlaceCitation other = (PlaceCitation) o;
-        return 
-            Utils.enhancedDeepEquals(this.endIndex, other.endIndex) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.placeId, other.placeId) &&
-            Utils.enhancedDeepEquals(this.reviewSnippets, other.reviewSnippets) &&
-            Utils.enhancedDeepEquals(this.startIndex, other.startIndex) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.endIndex, other.endIndex)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.placeId, other.placeId)
+                && Utils.enhancedDeepEquals(this.reviewSnippets, other.reviewSnippets)
+                && Utils.enhancedDeepEquals(this.startIndex, other.startIndex)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            endIndex, name, placeId,
-            reviewSnippets, startIndex, type,
-            url);
+        return Utils.enhancedHash(endIndex, name, placeId, reviewSnippets, startIndex, type, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(PlaceCitation.class,
-                "endIndex", endIndex,
-                "name", name,
-                "placeId", placeId,
-                "reviewSnippets", reviewSnippets,
-                "startIndex", startIndex,
-                "type", type,
-                "url", url);
+        return Utils.toString(
+                PlaceCitation.class,
+                "endIndex",
+                endIndex,
+                "name",
+                name,
+                "placeId",
+                placeId,
+                "reviewSnippets",
+                reviewSnippets,
+                "startIndex",
+                startIndex,
+                "type",
+                type,
+                "url",
+                url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer endIndex;
 
@@ -277,7 +272,7 @@ public class PlaceCitation implements Annotation {
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -315,7 +310,7 @@ public class PlaceCitation implements Annotation {
 
         /**
          * Start of segment of the response that is attributed to this source.
-         * 
+         *
          * <p>Index indicates the start of the segment, measured in bytes.
          */
         public Builder startIndex(@Nullable Integer startIndex) {
@@ -332,16 +327,10 @@ public class PlaceCitation implements Annotation {
         }
 
         public PlaceCitation build() {
-            return new PlaceCitation(
-                endIndex, name, placeId,
-                reviewSnippets, startIndex, url);
+            return new PlaceCitation(endIndex, name, placeId, reviewSnippets, startIndex, url);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"place_citation\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"place_citation\"", new TypeReference<String>() {});
     }
 }

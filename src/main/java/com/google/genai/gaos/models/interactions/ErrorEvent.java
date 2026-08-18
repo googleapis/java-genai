@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -30,7 +30,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
-
 
 public class ErrorEvent implements InteractionSSEEvent {
     /**
@@ -48,19 +47,17 @@ public class ErrorEvent implements InteractionSSEEvent {
     @JsonProperty("event_id")
     private String eventId;
 
-
     @JsonProperty("event_type")
     private String eventType;
 
     @JsonCreator
     public ErrorEvent(
-            @JsonProperty("error") @Nullable Error error,
-            @JsonProperty("event_id") @Nullable String eventId) {
+            @JsonProperty("error") @Nullable Error error, @JsonProperty("event_id") @Nullable String eventId) {
         this.error = error;
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
     }
-    
+
     public ErrorEvent() {
         this(null, null);
     }
@@ -89,7 +86,6 @@ public class ErrorEvent implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     /**
      * Error message from an interaction.
      */
@@ -97,7 +93,6 @@ public class ErrorEvent implements InteractionSSEEvent {
         this.error = error;
         return this;
     }
-
 
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -108,7 +103,6 @@ public class ErrorEvent implements InteractionSSEEvent {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -118,35 +112,30 @@ public class ErrorEvent implements InteractionSSEEvent {
             return false;
         }
         ErrorEvent other = (ErrorEvent) o;
-        return 
-            Utils.enhancedDeepEquals(this.error, other.error) &&
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType);
+        return Utils.enhancedDeepEquals(this.error, other.error)
+                && Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            error, eventId, eventType);
+        return Utils.enhancedHash(error, eventId, eventType);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ErrorEvent.class,
-                "error", error,
-                "eventId", eventId,
-                "eventType", eventType);
+        return Utils.toString(ErrorEvent.class, "error", error, "eventId", eventId, "eventType", eventType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Error error;
 
         private String eventId;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -167,15 +156,10 @@ public class ErrorEvent implements InteractionSSEEvent {
         }
 
         public ErrorEvent build() {
-            return new ErrorEvent(
-                error, eventId);
+            return new ErrorEvent(error, eventId);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"error\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"error\"", new TypeReference<String>() {});
     }
 }

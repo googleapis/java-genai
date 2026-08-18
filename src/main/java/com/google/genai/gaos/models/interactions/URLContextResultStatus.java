@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * URLContextResultStatus
- * 
+ *
  * <p>The status of the URL retrieval.
  */
 public class URLContextResultStatus {
@@ -61,12 +61,12 @@ public class URLContextResultStatus {
     }
 
     /**
-     * Returns a URLContextResultStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a URLContextResultStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as URLContextResultStatus
-     */ 
+     */
     @JsonCreator
     public static URLContextResultStatus of(String value) {
         synchronized (URLContextResultStatus.class) {
@@ -94,12 +94,9 @@ public class URLContextResultStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         URLContextResultStatus other = (URLContextResultStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -133,14 +130,14 @@ public class URLContextResultStatus {
         map.put("unsafe", URLContextResultStatusEnum.UNSAFE);
         return map;
     }
-    
-    
+
     public enum URLContextResultStatusEnum {
 
         SUCCESS("success"),
         ERROR("error"),
         PAYWALL("paywall"),
-        UNSAFE("unsafe"),;
+        UNSAFE("unsafe"),
+        ;
 
         private final String value;
 
@@ -153,4 +150,3 @@ public class URLContextResultStatus {
         }
     }
 }
-

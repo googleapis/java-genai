@@ -31,20 +31,16 @@ import java.lang.String;
 import java.util.Map;
 import java.util.Optional;
 
-
 public class MCPServerToolCallDelta implements StepDeltaData {
 
     @JsonProperty("arguments")
     private Map<String, Object> arguments;
 
-
     @JsonProperty("name")
     private String name;
 
-
     @JsonProperty("server_name")
     private String serverName;
-
 
     @JsonProperty("type")
     private String type;
@@ -56,11 +52,10 @@ public class MCPServerToolCallDelta implements StepDeltaData {
             @JsonProperty("server_name") @Nonnull String serverName) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.name = Optional.ofNullable(name)
-            .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.name = Optional.ofNullable(name).orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
         this.serverName = Optional.ofNullable(serverName)
-            .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
 
@@ -85,24 +80,20 @@ public class MCPServerToolCallDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public MCPServerToolCallDelta withArguments(@Nonnull Map<String, Object> arguments) {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
-
 
     public MCPServerToolCallDelta withName(@Nonnull String name) {
         this.name = Utils.checkNotNull(name, "name");
         return this;
     }
 
-
     public MCPServerToolCallDelta withServerName(@Nonnull String serverName) {
         this.serverName = Utils.checkNotNull(serverName, "serverName");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -113,31 +104,33 @@ public class MCPServerToolCallDelta implements StepDeltaData {
             return false;
         }
         MCPServerToolCallDelta other = (MCPServerToolCallDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.serverName, other.serverName)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, name, serverName,
-            type);
+        return Utils.enhancedHash(arguments, name, serverName, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServerToolCallDelta.class,
-                "arguments", arguments,
-                "name", name,
-                "serverName", serverName,
-                "type", type);
+        return Utils.toString(
+                MCPServerToolCallDelta.class,
+                "arguments",
+                arguments,
+                "name",
+                name,
+                "serverName",
+                serverName,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Map<String, Object> arguments;
 
@@ -146,7 +139,7 @@ public class MCPServerToolCallDelta implements StepDeltaData {
         private String serverName;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder arguments(@Nonnull Map<String, Object> arguments) {
@@ -165,15 +158,10 @@ public class MCPServerToolCallDelta implements StepDeltaData {
         }
 
         public MCPServerToolCallDelta build() {
-            return new MCPServerToolCallDelta(
-                arguments, name, serverName);
+            return new MCPServerToolCallDelta(arguments, name, serverName);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"mcp_server_tool_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"mcp_server_tool_call\"", new TypeReference<String>() {});
     }
 }

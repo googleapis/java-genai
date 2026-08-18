@@ -27,15 +27,15 @@ import java.util.concurrent.CompletableFuture;
  * <p>
  * This class provides adapter methods that convert synchronous hook implementations
  * ({@link Hook.BeforeRequest}, {@link Hook.AfterSuccess}, {@link Hook.AfterError})
- * to their asynchronous counterparts ({@link AsyncHook.BeforeRequest}, 
+ * to their asynchronous counterparts ({@link AsyncHook.BeforeRequest},
  * {@link AsyncHook.AfterSuccess}, {@link AsyncHook.AfterError}).
  * <p>
- * <b>Performance Note:</b> The execution of synchronous hooks is offloaded to the 
+ * <b>Performance Note:</b> The execution of synchronous hooks is offloaded to the
  * default asynchronous execution facility used by {@link CompletableFuture}.
- * For better performance in high-throughput scenarios, consider re-implementing 
+ * For better performance in high-throughput scenarios, consider re-implementing
  * hooks using non-blocking I/O (NIO) patterns instead of relying on these adapters.
  * <p>
- * <b>Thread Safety:</b> All adapter methods are thread-safe and can be called 
+ * <b>Thread Safety:</b> All adapter methods are thread-safe and can be called
  * concurrently from multiple threads.
  *
  * @see Hook
@@ -67,7 +67,8 @@ public final class HookAdapters {
      */
     public static AsyncHook.BeforeRequest toAsync(Hook.BeforeRequest beforeRequestHook) {
         return ((context, request) -> CompletableFuture.supplyAsync(
-                () -> Exceptions.unchecked(() -> beforeRequestHook.beforeRequest(context, request)).get()));
+                () -> Exceptions.unchecked(() -> beforeRequestHook.beforeRequest(context, request))
+                        .get()));
     }
 
     /**
@@ -89,13 +90,12 @@ public final class HookAdapters {
      * @throws NullPointerException if {@code afterErrorHook} is {@code null}
      */
     public static AsyncHook.AfterError toAsync(Hook.AfterError afterErrorHook) {
-        return (context, response, error) -> CompletableFuture.supplyAsync(() ->
-                Exceptions.unchecked(() ->
-                        afterErrorHook.afterError(
-                                context,
-                                Optional.ofNullable(response),
-                                Optional.ofNullable(error).map(Exceptions::coerceException))).get());
-
+        return (context, response, error) -> CompletableFuture.supplyAsync(
+                () -> Exceptions.unchecked(() -> afterErrorHook.afterError(
+                        context,
+                        Optional.ofNullable(response),
+                        Optional.ofNullable(error).map(Exceptions::coerceException)))
+                        .get());
     }
 
     /**
@@ -117,9 +117,8 @@ public final class HookAdapters {
      * @throws NullPointerException if {@code afterSuccessHook} is {@code null}
      */
     public static AsyncHook.AfterSuccess toAsync(Hook.AfterSuccess afterSuccessHook) {
-        return (context, response) -> CompletableFuture.supplyAsync(() ->
-                Exceptions.unchecked(() ->
-                        afterSuccessHook.afterSuccess(context, response)).get());
-
+        return (context, response) -> CompletableFuture.supplyAsync(
+                () -> Exceptions.unchecked(() -> afterSuccessHook.afterSuccess(context, response))
+                        .get());
     }
 }

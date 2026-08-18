@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.models.interactions;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
 /**
  * Step
- * 
+ *
  * <p>A step in the interaction.
  */
 @JsonTypeInfo(
@@ -35,12 +35,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownStep.class
-)
+        defaultImpl = UnknownStep.class)
 @JsonTypeIdResolver(StepTypeIdResolver.class)
 public interface Step {
 
     String type();
-
 }
-

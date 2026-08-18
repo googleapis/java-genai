@@ -56,12 +56,12 @@ public class ImageConfigImageSize {
     }
 
     /**
-     * Returns a ImageConfigImageSize with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageConfigImageSize with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageConfigImageSize
-     */ 
+     */
     @JsonCreator
     public static ImageConfigImageSize of(String value) {
         synchronized (ImageConfigImageSize.class) {
@@ -89,12 +89,9 @@ public class ImageConfigImageSize {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageConfigImageSize other = (ImageConfigImageSize) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class ImageConfigImageSize {
         map.put("512", ImageConfigImageSizeEnum.FIVE_HUNDRED_AND_TWELVE);
         return map;
     }
-    
-    
+
     public enum ImageConfigImageSizeEnum {
 
         ONE_K("1K"),
         TWO_K("2K"),
         FOUR_K("4K"),
-        FIVE_HUNDRED_AND_TWELVE("512"),;
+        FIVE_HUNDRED_AND_TWELVE("512"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class ImageConfigImageSize {
         }
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * TriggerCreateParams
- * 
+ *
  * <p>Parameters for creating a trigger.
  */
 public class TriggerCreateParams {
@@ -94,24 +94,19 @@ public class TriggerCreateParams {
             @JsonProperty("execution_timeout_seconds") @Nullable Integer executionTimeoutSeconds,
             @JsonProperty("interaction") @Nonnull Interaction interaction) {
         this.schedule = Optional.ofNullable(schedule)
-            .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
         this.timeZone = Optional.ofNullable(timeZone)
-            .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
         this.displayName = displayName;
         this.environmentId = environmentId;
         this.maxConsecutiveFailures = maxConsecutiveFailures;
         this.executionTimeoutSeconds = executionTimeoutSeconds;
         this.interaction = Optional.ofNullable(interaction)
-            .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
     }
-    
-    public TriggerCreateParams(
-            @Nonnull String schedule,
-            @Nonnull String timeZone,
-            @Nonnull Interaction interaction) {
-        this(schedule, timeZone, null,
-            null, null, null,
-            interaction);
+
+    public TriggerCreateParams(@Nonnull String schedule, @Nonnull String timeZone, @Nonnull Interaction interaction) {
+        this(schedule, timeZone, null, null, null, null, interaction);
     }
 
     /**
@@ -168,7 +163,6 @@ public class TriggerCreateParams {
         return new Builder();
     }
 
-
     /**
      * Required. The cron schedule on which the trigger should run. Standard cron format.
      */
@@ -176,7 +170,6 @@ public class TriggerCreateParams {
         this.schedule = Utils.checkNotNull(schedule, "schedule");
         return this;
     }
-
 
     /**
      * Required. Time zone in which the schedule should be interpreted.
@@ -186,7 +179,6 @@ public class TriggerCreateParams {
         return this;
     }
 
-
     /**
      * Optional. The display name of the trigger.
      */
@@ -195,7 +187,6 @@ public class TriggerCreateParams {
         return this;
     }
 
-
     /**
      * Optional. The environment ID for the trigger execution.
      */
@@ -203,7 +194,6 @@ public class TriggerCreateParams {
         this.environmentId = environmentId;
         return this;
     }
-
 
     /**
      * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
@@ -214,7 +204,6 @@ public class TriggerCreateParams {
         return this;
     }
 
-
     /**
      * Optional. The execution timeout for the triggered interaction.
      */
@@ -223,7 +212,6 @@ public class TriggerCreateParams {
         return this;
     }
 
-
     /**
      * Required. The interaction request template to be executed.
      */
@@ -231,7 +219,6 @@ public class TriggerCreateParams {
         this.interaction = Utils.checkNotNull(interaction, "interaction");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -242,38 +229,49 @@ public class TriggerCreateParams {
             return false;
         }
         TriggerCreateParams other = (TriggerCreateParams) o;
-        return 
-            Utils.enhancedDeepEquals(this.schedule, other.schedule) &&
-            Utils.enhancedDeepEquals(this.timeZone, other.timeZone) &&
-            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures) &&
-            Utils.enhancedDeepEquals(this.executionTimeoutSeconds, other.executionTimeoutSeconds) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction);
+        return Utils.enhancedDeepEquals(this.schedule, other.schedule)
+                && Utils.enhancedDeepEquals(this.timeZone, other.timeZone)
+                && Utils.enhancedDeepEquals(this.displayName, other.displayName)
+                && Utils.enhancedDeepEquals(this.environmentId, other.environmentId)
+                && Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures)
+                && Utils.enhancedDeepEquals(this.executionTimeoutSeconds, other.executionTimeoutSeconds)
+                && Utils.enhancedDeepEquals(this.interaction, other.interaction);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            schedule, timeZone, displayName,
-            environmentId, maxConsecutiveFailures, executionTimeoutSeconds,
-            interaction);
+                schedule,
+                timeZone,
+                displayName,
+                environmentId,
+                maxConsecutiveFailures,
+                executionTimeoutSeconds,
+                interaction);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TriggerCreateParams.class,
-                "schedule", schedule,
-                "timeZone", timeZone,
-                "displayName", displayName,
-                "environmentId", environmentId,
-                "maxConsecutiveFailures", maxConsecutiveFailures,
-                "executionTimeoutSeconds", executionTimeoutSeconds,
-                "interaction", interaction);
+        return Utils.toString(
+                TriggerCreateParams.class,
+                "schedule",
+                schedule,
+                "timeZone",
+                timeZone,
+                "displayName",
+                displayName,
+                "environmentId",
+                environmentId,
+                "maxConsecutiveFailures",
+                maxConsecutiveFailures,
+                "executionTimeoutSeconds",
+                executionTimeoutSeconds,
+                "interaction",
+                interaction);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String schedule;
 
@@ -290,7 +288,7 @@ public class TriggerCreateParams {
         private Interaction interaction;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -352,10 +350,13 @@ public class TriggerCreateParams {
 
         public TriggerCreateParams build() {
             return new TriggerCreateParams(
-                schedule, timeZone, displayName,
-                environmentId, maxConsecutiveFailures, executionTimeoutSeconds,
-                interaction);
+                    schedule,
+                    timeZone,
+                    displayName,
+                    environmentId,
+                    maxConsecutiveFailures,
+                    executionTimeoutSeconds,
+                    interaction);
         }
-
     }
 }

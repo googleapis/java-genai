@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetEnvironmentResponse implements Response {
     /**
      * HTTP response content type for this operation
@@ -60,19 +59,16 @@ public class GetEnvironmentResponse implements Response {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable Environment environment) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.environment = environment;
     }
-    
+
     public GetEnvironmentResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -107,7 +103,6 @@ public class GetEnvironmentResponse implements Response {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -115,7 +110,6 @@ public class GetEnvironmentResponse implements Response {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -125,7 +119,6 @@ public class GetEnvironmentResponse implements Response {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -134,7 +127,6 @@ public class GetEnvironmentResponse implements Response {
         return this;
     }
 
-
     /**
      * Successful operation
      */
@@ -142,7 +134,6 @@ public class GetEnvironmentResponse implements Response {
         this.environment = environment;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -153,31 +144,33 @@ public class GetEnvironmentResponse implements Response {
             return false;
         }
         GetEnvironmentResponse other = (GetEnvironmentResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.environment, other.environment);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            environment);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, environment);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetEnvironmentResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "environment", environment);
+        return Utils.toString(
+                GetEnvironmentResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "environment",
+                environment);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -188,7 +181,7 @@ public class GetEnvironmentResponse implements Response {
         private Environment environment;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -224,10 +217,7 @@ public class GetEnvironmentResponse implements Response {
         }
 
         public GetEnvironmentResponse build() {
-            return new GetEnvironmentResponse(
-                contentType, statusCode, rawResponse,
-                environment);
+            return new GetEnvironmentResponse(contentType, statusCode, rawResponse, environment);
         }
-
     }
 }
