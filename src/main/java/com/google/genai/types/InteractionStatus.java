@@ -37,8 +37,11 @@ public class InteractionStatus {
      */
     IN_PROGRESS,
 
+    /** Deprecated: Use IDLE instead. */
+    REQUIRES_ACTION,
+
     /** The server has completed all processing and background reasoning. */
-    REQUIRES_ACTION
+    IDLE
   }
 
   private Known interactionStatusEnum;
