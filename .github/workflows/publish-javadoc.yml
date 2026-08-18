@@ -28,7 +28,7 @@ jobs:
 
       # 1. Validate Javadoc on both PRs and main push (using quiet batch mode to keep logs clean)
       - name: Validate Javadoc Generation 🛠️
-        run: mvn -B javadoc:javadoc
+        run: mvn -B -ntp javadoc:javadoc
 
       # 2. Deploy ONLY when merging/pushing to main
       - name: Deploy JavaDoc 🚀
