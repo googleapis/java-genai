@@ -373,8 +373,7 @@
                     <limit>
                       <counter>INSTRUCTION</counter>
                       <value>COVEREDRATIO</value>
-                      <!-- TODO: Current % is 0.39, so setting the threshold to 0.35 for now. Should be updated to a higher number once the coverage is improved. -->
-                      <minimum>0.35</minimum>
+                      <minimum>0.45</minimum>
                     </limit>
                   </limits>
                 </rule>
