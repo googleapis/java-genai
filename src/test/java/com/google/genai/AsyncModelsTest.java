@@ -593,7 +593,7 @@ public class AsyncModelsTest {
   }
 
   @ParameterizedTest
-  @ValueSource(booleans = {false, true})
+  @ValueSource(booleans = {true}) // Only for Vertex
   public void testGenerateImagesAsync(boolean vertexAI) throws Exception {
     // Arrange
     String suffix = vertexAI ? "vertex" : "mldev";
