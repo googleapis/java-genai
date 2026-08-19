@@ -32,6 +32,7 @@ import com.google.genai.gaos.Interactions;
 import com.google.genai.gaos.Webhooks;
 import com.google.genai.gaos.utils.HTTPClient;
 import com.google.genai.gaos.utils.Headers;
+import com.google.genai.gaos.utils.RetryConfig;
 import com.google.genai.gaos.utils.transport.HttpBody;
 import com.google.genai.gaos.utils.transport.HttpRequest;
 import com.google.genai.gaos.utils.transport.HttpResponse;
@@ -417,6 +418,7 @@ public final class Client implements AutoCloseable {
       gaosBuilder = gaosBuilder.userProject(apiClient.credentials().getQuotaProjectId());
     }
     gaosBuilder = gaosBuilder.client(new GenAiGaosHttpClient(this.apiClient));
+    gaosBuilder = gaosBuilder.retryConfig(RetryConfig.noRetries());
     if (asyncRetryScheduler.isPresent()) {
       gaosBuilder = gaosBuilder.asyncRetryScheduler(asyncRetryScheduler.get());
     }
