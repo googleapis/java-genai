@@ -82,10 +82,6 @@ public class TypesEnumsTest {
     testEnumWrapper(AspectRatio.class, AspectRatio.Known.class);
   }
 
-  @Test
-  public void testAudioTranscriptionConfigMode() throws Exception {
-    testEnumWrapper(AudioTranscriptionConfigMode.class, AudioTranscriptionConfigMode.Known.class);
-  }
 
   @Test
   public void testAuthType() throws Exception {

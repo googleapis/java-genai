@@ -75,17 +75,6 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
   @JsonProperty("wordTimestamp")
   public abstract Optional<Boolean> wordTimestamp();
 
-  /**
-   * Optional. Transcription mode.
-   *
-   * <p>When set to `SMART`, the model performs disfluency removal (eliminating filler words,
-   * repetitions, and false starts), light grammatical cleanup, automatic formatting (paragraphs,
-   * bullet points, numbered lists), and minor user edits (inline self-corrections). Incompatible
-   * with `word_timestamp` and `diarization`.
-   */
-  @JsonProperty("mode")
-  public abstract Optional<AudioTranscriptionConfigMode> mode();
-
   /** Instantiates a builder for AudioTranscriptionConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -288,59 +277,6 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearWordTimestamp() {
       return wordTimestamp(Optional.empty());
-    }
-
-    /**
-     * Setter for mode.
-     *
-     * <p>mode: Optional. Transcription mode.
-     *
-     * <p>When set to `SMART`, the model performs disfluency removal (eliminating filler words,
-     * repetitions, and false starts), light grammatical cleanup, automatic formatting (paragraphs,
-     * bullet points, numbered lists), and minor user edits (inline self-corrections). Incompatible
-     * with `word_timestamp` and `diarization`.
-     */
-    @JsonProperty("mode")
-    public abstract Builder mode(AudioTranscriptionConfigMode mode);
-
-    @ExcludeFromGeneratedCoverageReport
-    abstract Builder mode(Optional<AudioTranscriptionConfigMode> mode);
-
-    /** Clears the value of mode field. */
-    @ExcludeFromGeneratedCoverageReport
-    @CanIgnoreReturnValue
-    public Builder clearMode() {
-      return mode(Optional.empty());
-    }
-
-    /**
-     * Setter for mode given a known enum.
-     *
-     * <p>mode: Optional. Transcription mode.
-     *
-     * <p>When set to `SMART`, the model performs disfluency removal (eliminating filler words,
-     * repetitions, and false starts), light grammatical cleanup, automatic formatting (paragraphs,
-     * bullet points, numbered lists), and minor user edits (inline self-corrections). Incompatible
-     * with `word_timestamp` and `diarization`.
-     */
-    @CanIgnoreReturnValue
-    public Builder mode(AudioTranscriptionConfigMode.Known knownType) {
-      return mode(new AudioTranscriptionConfigMode(knownType));
-    }
-
-    /**
-     * Setter for mode given a string.
-     *
-     * <p>mode: Optional. Transcription mode.
-     *
-     * <p>When set to `SMART`, the model performs disfluency removal (eliminating filler words,
-     * repetitions, and false starts), light grammatical cleanup, automatic formatting (paragraphs,
-     * bullet points, numbered lists), and minor user edits (inline self-corrections). Incompatible
-     * with `word_timestamp` and `diarization`.
-     */
-    @CanIgnoreReturnValue
-    public Builder mode(String mode) {
-      return mode(new AudioTranscriptionConfigMode(mode));
     }
 
     public abstract AudioTranscriptionConfig build();

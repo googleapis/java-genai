@@ -57,10 +57,10 @@ public class TypesBuildersTest {
             .sessionResumption(SessionResumptionConfig.builder().handle("handle"))
             .inputAudioTranscription(
                 AudioTranscriptionConfig.builder()
-                    .mode(AudioTranscriptionConfigMode.Known.VERBATIM))
+                    .languageCodes("en-US"))
             .outputAudioTranscription(
                 AudioTranscriptionConfig.builder()
-                    .mode(AudioTranscriptionConfigMode.Known.VERBATIM))
+                    .languageCodes("en-US"))
             .realtimeInputConfig(
                 RealtimeInputConfig.builder()
                     .activityHandling(ActivityHandling.Known.START_OF_ACTIVITY_INTERRUPTS))
@@ -102,11 +102,11 @@ public class TypesBuildersTest {
     assertTrue(config.tools().get().get(0).codeExecution().isPresent());
     assertEquals("handle", config.sessionResumption().get().handle().get());
     assertEquals(
-        AudioTranscriptionConfigMode.Known.VERBATIM,
-        config.inputAudioTranscription().get().mode().get().knownEnum());
+        Arrays.asList("en-US"),
+        config.inputAudioTranscription().get().languageCodes().get());
     assertEquals(
-        AudioTranscriptionConfigMode.Known.VERBATIM,
-        config.outputAudioTranscription().get().mode().get().knownEnum());
+        Arrays.asList("en-US"),
+        config.outputAudioTranscription().get().languageCodes().get());
     assertEquals(
         ActivityHandling.Known.START_OF_ACTIVITY_INTERRUPTS,
         config.realtimeInputConfig().get().activityHandling().get().knownEnum());
@@ -159,7 +159,8 @@ public class TypesBuildersTest {
                     .voiceConfig(
                         VoiceConfig.builder()
                             .prebuiltVoiceConfig(PrebuiltVoiceConfig.builder().voiceName("Aoede"))))
-            .audioTranscriptionConfig(AudioTranscriptionConfig.builder().mode("VERBATIM"))
+            .audioTranscriptionConfig(
+                AudioTranscriptionConfig.builder().languageCodes("en-US"))
             .routingConfig(
                 GenerationConfigRoutingConfig.builder()
                     .autoMode(
@@ -194,8 +195,8 @@ public class TypesBuildersTest {
             .voiceName()
             .get());
     assertEquals(
-        AudioTranscriptionConfigMode.Known.VERBATIM,
-        config.audioTranscriptionConfig().get().mode().get().knownEnum());
+        Arrays.asList("en-US"),
+        config.audioTranscriptionConfig().get().languageCodes().get());
     assertEquals(
         ModelRoutingPreference.Known.PRIORITIZE_QUALITY,
         config.routingConfig().get().autoMode().get().modelRoutingPreference().get().knownEnum());
