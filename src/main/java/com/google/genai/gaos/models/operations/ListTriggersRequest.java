@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListTriggersRequest {
     /**
      * Which version of the API to use.
@@ -56,19 +55,15 @@ public class ListTriggersRequest {
 
     @JsonCreator
     public ListTriggersRequest(
-            @Nullable String apiVersion,
-            @Nullable String filter,
-            @Nullable Long pageSize,
-            @Nullable String pageToken) {
+            @Nullable String apiVersion, @Nullable String filter, @Nullable Long pageSize, @Nullable String pageToken) {
         this.apiVersion = apiVersion;
         this.filter = filter;
         this.pageSize = pageSize;
         this.pageToken = pageToken;
     }
-    
+
     public ListTriggersRequest() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -103,7 +98,6 @@ public class ListTriggersRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -111,7 +105,6 @@ public class ListTriggersRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Optional. Filter expression (e.g., by state).
@@ -121,7 +114,6 @@ public class ListTriggersRequest {
         return this;
     }
 
-
     /**
      * Optional. The maximum number of triggers to return per page.
      */
@@ -130,7 +122,6 @@ public class ListTriggersRequest {
         return this;
     }
 
-
     /**
      * Optional. A page token from a previous ListTriggers call.
      */
@@ -138,7 +129,6 @@ public class ListTriggersRequest {
         this.pageToken = pageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -149,31 +139,33 @@ public class ListTriggersRequest {
             return false;
         }
         ListTriggersRequest other = (ListTriggersRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.filter, other.filter) &&
-            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.filter, other.filter)
+                && Utils.enhancedDeepEquals(this.pageSize, other.pageSize)
+                && Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, filter, pageSize,
-            pageToken);
+        return Utils.enhancedHash(apiVersion, filter, pageSize, pageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListTriggersRequest.class,
-                "apiVersion", apiVersion,
-                "filter", filter,
-                "pageSize", pageSize,
-                "pageToken", pageToken);
+        return Utils.toString(
+                ListTriggersRequest.class,
+                "apiVersion",
+                apiVersion,
+                "filter",
+                filter,
+                "pageSize",
+                pageSize,
+                "pageToken",
+                pageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -184,7 +176,7 @@ public class ListTriggersRequest {
         private String pageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -220,10 +212,7 @@ public class ListTriggersRequest {
         }
 
         public ListTriggersRequest build() {
-            return new ListTriggersRequest(
-                apiVersion, filter, pageSize,
-                pageToken);
+            return new ListTriggersRequest(apiVersion, filter, pageSize, pageToken);
         }
-
     }
 }

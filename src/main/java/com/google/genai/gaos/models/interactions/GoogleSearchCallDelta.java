@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,7 +31,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
-
 
 public class GoogleSearchCallDelta implements StepDeltaData {
     /**
@@ -47,7 +46,6 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -56,13 +54,12 @@ public class GoogleSearchCallDelta implements StepDeltaData {
             @JsonProperty("arguments") @Nonnull GoogleSearchCallArguments arguments,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public GoogleSearchCallDelta(
-            @Nonnull GoogleSearchCallArguments arguments) {
+
+    public GoogleSearchCallDelta(@Nonnull GoogleSearchCallArguments arguments) {
         this(arguments, null);
     }
 
@@ -89,7 +86,6 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * The arguments to pass to Google Search.
      */
@@ -98,7 +94,6 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -106,7 +101,6 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -117,35 +111,31 @@ public class GoogleSearchCallDelta implements StepDeltaData {
             return false;
         }
         GoogleSearchCallDelta other = (GoogleSearchCallDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, signature, type);
+        return Utils.enhancedHash(arguments, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleSearchCallDelta.class,
-                "arguments", arguments,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                GoogleSearchCallDelta.class, "arguments", arguments, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private GoogleSearchCallArguments arguments;
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -165,15 +155,10 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         }
 
         public GoogleSearchCallDelta build() {
-            return new GoogleSearchCallDelta(
-                arguments, signature);
+            return new GoogleSearchCallDelta(arguments, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_search_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_search_call\"", new TypeReference<String>() {});
     }
 }

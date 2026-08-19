@@ -19,18 +19,18 @@
  */
 package com.google.genai.gaos.models.errors;
 
-import java.io.InputStream;
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
  * An exception associated with Authentication or Authorization.
  */
 @SuppressWarnings("serial")
-public class AuthException extends GenAiException {
+public class AuthException extends GaosClientException {
 
     public AuthException(String message, int code, byte[] body, HttpResponse<InputStream> rawResponse) {
-       super(message, code, body, rawResponse, null);
+        super(message, code, body, rawResponse, null);
     }
 
     /**
@@ -42,7 +42,7 @@ public class AuthException extends GenAiException {
     public Optional<Integer> statusCode() {
         return Optional.of(super.code());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public HttpResponse<InputStream> rawResponse() {

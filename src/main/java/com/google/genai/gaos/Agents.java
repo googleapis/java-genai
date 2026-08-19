@@ -45,7 +45,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Integer;
 import java.lang.String;
 
-
 public class Agents {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -58,7 +57,7 @@ public class Agents {
 
     /**
      * Switches to the async SDK.
-     * 
+     *
      * @return The async SDK
      */
     public AsyncAgents async() {
@@ -67,7 +66,7 @@ public class Agents {
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @return The call builder
      */
     public CreateAgentRequestBuilder create() {
@@ -76,7 +75,7 @@ public class Agents {
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -96,7 +95,7 @@ public class Agents {
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
@@ -112,18 +111,16 @@ public class Agents {
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public CreateAgentResponse create(
-            @Nullable String apiVersion, @Nonnull Agent body,
-            @Nullable Options options) {
+    public CreateAgentResponse create(@Nullable String apiVersion, @Nonnull Agent body, @Nullable Options options) {
         CreateAgentRequest request = new CreateAgentRequest(apiVersion, body);
-        RequestOperation<CreateAgentRequest, CreateAgentResponse> operation
-              = new CreateAgent.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CreateAgentRequest, CreateAgentResponse> operation =
+                new CreateAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Lists all Agents.
-     * 
+     *
      * @return The call builder
      */
     public ListAgentsRequestBuilder list() {
@@ -132,41 +129,40 @@ public class Agents {
 
     /**
      * Lists all Agents.
-     * 
+     *
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAgentsResponse listDirect() {
-        return list(null, null, null,
-            null, null);
+        return list(null, null, null, null, null);
     }
 
     /**
      * Lists all Agents.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param pageSize 
-     * @param pageToken 
-     * @param parent 
+     * @param pageSize
+     * @param pageToken
+     * @param parent
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAgentsResponse list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable String parent,
+            @Nullable String apiVersion,
+            @Nullable Integer pageSize,
+            @Nullable String pageToken,
+            @Nullable String parent,
             @Nullable Options options) {
-        ListAgentsRequest request = new ListAgentsRequest(
-                apiVersion, pageSize, pageToken,
-                parent);
-        RequestOperation<ListAgentsRequest, ListAgentsResponse> operation
-              = new ListAgents.Sync(sdkConfiguration, options, _headers);
+        ListAgentsRequest request = new ListAgentsRequest(apiVersion, pageSize, pageToken, parent);
+        RequestOperation<ListAgentsRequest, ListAgentsResponse> operation =
+                new ListAgents.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Gets a specific Agent.
-     * 
+     *
      * @return The call builder
      */
     public GetAgentRequestBuilder get() {
@@ -175,8 +171,8 @@ public class Agents {
 
     /**
      * Gets a specific Agent.
-     * 
-     * @param id 
+     *
+     * @param id
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -186,25 +182,23 @@ public class Agents {
 
     /**
      * Gets a specific Agent.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param id
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetAgentResponse get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public GetAgentResponse get(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetAgentRequest request = new GetAgentRequest(apiVersion, id);
-        RequestOperation<GetAgentRequest, GetAgentResponse> operation
-              = new GetAgent.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetAgentRequest, GetAgentResponse> operation =
+                new GetAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Deletes an Agent.
-     * 
+     *
      * @return The call builder
      */
     public DeleteAgentRequestBuilder delete() {
@@ -213,8 +207,8 @@ public class Agents {
 
     /**
      * Deletes an Agent.
-     * 
-     * @param id 
+     *
+     * @param id
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -224,20 +218,17 @@ public class Agents {
 
     /**
      * Deletes an Agent.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param id
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteAgentResponse delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public DeleteAgentResponse delete(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteAgentRequest request = new DeleteAgentRequest(apiVersion, id);
-        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation
-              = new DeleteAgent.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation =
+                new DeleteAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
-
 }

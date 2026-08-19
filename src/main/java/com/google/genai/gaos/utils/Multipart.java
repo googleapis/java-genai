@@ -19,6 +19,7 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.google.genai.gaos.utils.transport.HttpBody;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
@@ -28,14 +29,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import com.google.genai.gaos.utils.transport.HttpBody;
-
 public final class Multipart {
 
     private static final String CRLF = "\r\n";
     private static final String DASHES = "--";
     private static final Charset HDR_CS = StandardCharsets.ISO_8859_1; // headers
-    private static final Charset TXT_CS = StandardCharsets.UTF_8;      // text fields
+    private static final Charset TXT_CS = StandardCharsets.UTF_8; // text fields
     private static final String DEFAULT_FILE_CT = "application/octet-stream";
     public static final String DEFAULT_TEXT_CT = "text/plain; charset=UTF-8";
 
@@ -99,8 +98,7 @@ public final class Multipart {
             Utils.checkNotNull(name, "name");
             Utils.checkNotNull(blob, "blob");
             Utils.checkNotNull(filename, "filename");
-            parts.add(new FilePart(name, blob, filename,
-                    Optional.ofNullable(contentType).orElse(DEFAULT_FILE_CT)));
+            parts.add(new FilePart(name, blob, filename, Optional.ofNullable(contentType).orElse(DEFAULT_FILE_CT)));
             return this;
         }
 
@@ -142,10 +140,15 @@ public final class Multipart {
 
         @Override
         public HttpBody toBody(String boundary) {
-            String header = DASHES + boundary + CRLF +
-                    "Content-Disposition: form-data; name=\"" + escapeQuoted(name) + "\"" + CRLF +
-                    "Content-Type: " + contentType + CRLF +
-                    CRLF;
+            String header = DASHES + boundary + CRLF
+                    + "Content-Disposition: form-data; name=\""
+                    + escapeQuoted(name)
+                    + "\""
+                    + CRLF
+                    + "Content-Type: "
+                    + contentType
+                    + CRLF
+                    + CRLF;
 
             HttpBody h = HttpBody.of(header.getBytes(HDR_CS));
             HttpBody b = HttpBody.of(value.getBytes(TXT_CS));
@@ -174,10 +177,14 @@ public final class Multipart {
         @Override
         public HttpBody toBody(String boundary) {
             String cd = contentDispositionWithFilename(name, filename);
-            String header = DASHES + boundary + CRLF +
-                    "Content-Disposition: " + cd + CRLF +
-                    "Content-Type: " + contentType + CRLF +
-                    CRLF;
+            String header = DASHES + boundary + CRLF
+                    + "Content-Disposition: "
+                    + cd
+                    + CRLF
+                    + "Content-Type: "
+                    + contentType
+                    + CRLF
+                    + CRLF;
 
             HttpBody h = HttpBody.of(header.getBytes(HDR_CS));
             HttpBody c = blob.toHttpBody();
@@ -262,26 +269,26 @@ public final class Multipart {
             @Override
             public InputStream stream() throws IOException {
                 final Iterator<HttpBody> it = bodies.iterator();
-                Enumeration<InputStream> en = new Enumeration<InputStream>() {
-                    @Override
-                    public boolean hasMoreElements() {
-                        return it.hasNext();
-                    }
+                Enumeration<InputStream> en =
+                        new Enumeration<InputStream>() {
+                            @Override
+                            public boolean hasMoreElements() {
+                                return it.hasNext();
+                            }
 
-                    @Override
-                    public InputStream nextElement() {
-                        try {
-                            return it.next().stream();
-                        } catch (IOException e) {
-                            throw new UncheckedIOException(e);
-                        } catch (IllegalStateException e) {
-                            throw new UncheckedIOException(new IOException(e.getMessage(), e));
-                        }
-                    }
-                };
+                            @Override
+                            public InputStream nextElement() {
+                                try {
+                                    return it.next().stream();
+                                } catch (IOException e) {
+                                    throw new UncheckedIOException(e);
+                                } catch (IllegalStateException e) {
+                                    throw new UncheckedIOException(new IOException(e.getMessage(), e));
+                                }
+                            }
+                        };
                 return new SequenceInputStream(en);
             }
         };
     }
-
 }

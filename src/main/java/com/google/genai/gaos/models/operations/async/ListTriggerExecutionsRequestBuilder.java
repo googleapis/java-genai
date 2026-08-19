@@ -84,7 +84,7 @@ public class ListTriggerExecutionsRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListTriggerExecutionsRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -93,17 +93,16 @@ public class ListTriggerExecutionsRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<ListTriggerExecutionsResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
-              = new ListTriggerExecutions.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation =
+                new ListTriggerExecutions.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

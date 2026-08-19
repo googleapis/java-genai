@@ -19,14 +19,27 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import com.google.genai.gaos.utils.transport.HttpResponse;
+public interface HTTPClient extends java.lang.AutoCloseable {
 
-public interface HTTPClient {
+    /**
+     * Releases resources owned by this client.
+     *
+     * <p>The default is a no-op so custom implementations that borrow an
+     * externally owned client are not forced to tear down resources they do
+     * not own. Implementations that own resources should override this method.
+     *
+     * @throws Exception if an owned resource cannot be released
+     */
+    @Override
+    default void close() throws Exception {
+        // Default no-op
+    }
 
     /**
      * Sends an HTTP request and returns the response.

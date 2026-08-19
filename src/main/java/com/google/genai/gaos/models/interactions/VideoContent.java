@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * VideoContent
- * 
+ *
  * <p>A video content block.
  */
 public class VideoContent implements Content {
@@ -44,11 +44,16 @@ public class VideoContent implements Content {
     @JsonProperty("data")
     private String data;
 
+    /**
+     * How the model processes this video for understanding.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("processing")
+    private Processing processing;
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("resolution")
     private MediaResolution resolution;
-
 
     @JsonProperty("type")
     private String type;
@@ -70,19 +75,20 @@ public class VideoContent implements Content {
     @JsonCreator
     public VideoContent(
             @JsonProperty("data") @Nullable String data,
+            @JsonProperty("processing") @Nullable Processing processing,
             @JsonProperty("resolution") @Nullable MediaResolution resolution,
             @JsonProperty("uri") @Nullable String uri,
             @JsonProperty("mime_type") @Nullable VideoContentMimeType mimeType) {
         this.data = data;
+        this.processing = processing;
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
         this.mimeType = mimeType;
     }
-    
+
     public VideoContent() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -90,6 +96,13 @@ public class VideoContent implements Content {
      */
     public Optional<String> data() {
         return Optional.ofNullable(this.data);
+    }
+
+    /**
+     * How the model processes this video for understanding.
+     */
+    public Optional<Processing> processing() {
+        return Optional.ofNullable(this.processing);
     }
 
     public Optional<MediaResolution> resolution() {
@@ -119,7 +132,6 @@ public class VideoContent implements Content {
         return new Builder();
     }
 
-
     /**
      * The video content.
      */
@@ -128,12 +140,18 @@ public class VideoContent implements Content {
         return this;
     }
 
+    /**
+     * How the model processes this video for understanding.
+     */
+    public VideoContent withProcessing(@Nullable Processing processing) {
+        this.processing = processing;
+        return this;
+    }
 
     public VideoContent withResolution(@Nullable MediaResolution resolution) {
         this.resolution = resolution;
         return this;
     }
-
 
     /**
      * The URI of the video.
@@ -143,7 +161,6 @@ public class VideoContent implements Content {
         return this;
     }
 
-
     /**
      * The mime type of the video.
      */
@@ -151,7 +168,6 @@ public class VideoContent implements Content {
         this.mimeType = mimeType;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -162,35 +178,43 @@ public class VideoContent implements Content {
             return false;
         }
         VideoContent other = (VideoContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+        return Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.processing, other.processing)
+                && Utils.enhancedDeepEquals(this.resolution, other.resolution)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data, resolution, type,
-            uri, mimeType);
+        return Utils.enhancedHash(data, processing, resolution, type, uri, mimeType);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(VideoContent.class,
-                "data", data,
-                "resolution", resolution,
-                "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+        return Utils.toString(
+                VideoContent.class,
+                "data",
+                data,
+                "processing",
+                processing,
+                "resolution",
+                resolution,
+                "type",
+                type,
+                "uri",
+                uri,
+                "mimeType",
+                mimeType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String data;
+
+        private Processing processing;
 
         private MediaResolution resolution;
 
@@ -199,7 +223,7 @@ public class VideoContent implements Content {
         private VideoContentMimeType mimeType;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -207,6 +231,14 @@ public class VideoContent implements Content {
          */
         public Builder data(@Nullable String data) {
             this.data = data;
+            return this;
+        }
+
+        /**
+         * How the model processes this video for understanding.
+         */
+        public Builder processing(@Nullable Processing processing) {
+            this.processing = processing;
             return this;
         }
 
@@ -232,16 +264,10 @@ public class VideoContent implements Content {
         }
 
         public VideoContent build() {
-            return new VideoContent(
-                data, resolution, uri,
-                mimeType);
+            return new VideoContent(data, processing, resolution, uri, mimeType);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"video\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"video\"", new TypeReference<String>() {});
     }
 }

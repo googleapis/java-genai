@@ -19,13 +19,7 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.InputStream;
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import com.google.genai.gaos.utils.transport.HttpResponse;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.utils.Hook.AfterError;
 import com.google.genai.gaos.utils.Hook.AfterErrorContext;
 import com.google.genai.gaos.utils.Hook.AfterSuccess;
@@ -33,15 +27,20 @@ import com.google.genai.gaos.utils.Hook.AfterSuccessContext;
 import com.google.genai.gaos.utils.Hook.BeforeRequest;
 import com.google.genai.gaos.utils.Hook.BeforeRequestContext;
 import com.google.genai.gaos.utils.Hook.SdkInit;
-import com.google.genai.gaos.SDKConfiguration;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Registers hooks for use at runtime by an end-user or for use by a customer
  * that may edit the SDKHooks.java file.
- * 
+ *
  * <p>
  * For example, this code will add a transaction id header to every request:
- * 
+ *
  * <pre>
  * hooks.registerBeforeRequest((context, request) -&gt; {
  *     return request.toBuilder()
@@ -60,12 +59,11 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
     private final List<AfterSuccess> afterSuccessHooks = new CopyOnWriteArrayList<>();
     private final List<AfterError> afterErrorHooks = new CopyOnWriteArrayList<>();
     private final List<SdkInit> SdkInitHooks = new CopyOnWriteArrayList<>();
-    
+
     /**
      * Constructor.
      */
-    public Hooks() {
-    }
+    public Hooks() {}
 
     /**
      * Registers a {@link BeforeRequest} hook to be applied in order of
@@ -73,14 +71,17 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
      * the second BeforeRequest hook and processed similarly for the rest of the
      * registered hooks. If a BeforeRequest hook throws then that Exception will
      * <b>not</b> be passed to the {@link AfterError} hooks.
-     * 
+     *
      * @param beforeRequest hook to be registered
      * @return this
      */
     public Hooks registerBeforeRequest(BeforeRequest beforeRequest) {
         Utils.checkNotNull(beforeRequest, "beforeRequest");
         this.beforeRequestHooks.add(beforeRequest);
-        logger.debug("Registered BeforeRequest hook: {} (total: {})", beforeRequest.getClass().getSimpleName(), beforeRequestHooks.size());
+        logger.debug(
+                "Registered BeforeRequest hook: {} (total: {})",
+                beforeRequest.getClass().getSimpleName(),
+                beforeRequestHooks.size());
         return this;
     }
 
@@ -90,55 +91,65 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
      * be passed to the second AfterSuccess hook and processed similarly for the
      * rest of the registered hooks. If an AfterSuccess hook throws then that
      * Exception will <b>not</b> be passed to the {@link AfterError} hooks.
-     * 
+     *
      * @param afterSuccess hook to be registered
      * @return this
      */
     public Hooks registerAfterSuccess(AfterSuccess afterSuccess) {
         Utils.checkNotNull(afterSuccess, "afterSuccess");
         this.afterSuccessHooks.add(afterSuccess);
-        logger.debug("Registered AfterSuccess hook: {} (total: {})", afterSuccess.getClass().getSimpleName(), afterSuccessHooks.size());
+        logger.debug(
+                "Registered AfterSuccess hook: {} (total: {})",
+                afterSuccess.getClass().getSimpleName(),
+                afterSuccessHooks.size());
         return this;
     }
 
     /**
      * Registers an {@link AfterError} hook to be applied in order of registration
-     * (multiple can be registered). If the first AfterError hook throws then the 
-     * second hook will be called with that exception (and no response object) and 
-     * so on for the rest of the registered hooks. If an AfterError hook returns 
+     * (multiple can be registered). If the first AfterError hook throws then the
+     * second hook will be called with that exception (and no response object) and
+     * so on for the rest of the registered hooks. If an AfterError hook returns
      * normally then its result will be passed through to the next AfterError hook
-     * with the latest thrown Exception. 
-     * 
+     * with the latest thrown Exception.
+     *
      * @param afterError hook to be registered
      * @return this
      */
     public Hooks registerAfterError(AfterError afterError) {
         Utils.checkNotNull(afterError, "afterError");
         this.afterErrorHooks.add(afterError);
-        logger.debug("Registered AfterError hook: {} (total: {})", afterError.getClass().getSimpleName(), afterErrorHooks.size());
+        logger.debug(
+                "Registered AfterError hook: {} (total: {})",
+                afterError.getClass().getSimpleName(),
+                afterErrorHooks.size());
         return this;
     }
 
     /**
      * Registers a {@link SdkInit} hook to be applied in order of registration
      * (multiple can be registered).
-     * 
+     *
      * @param SdkInit hook to be registered
      * @return this
      */
     public Hooks registerSdkInit(SdkInit SdkInit) {
         Utils.checkNotNull(SdkInit, "SdkInit");
         this.SdkInitHooks.add(SdkInit);
-        logger.debug("Registered SdkInit hook: {} (total: {})", SdkInit.getClass().getSimpleName(), SdkInitHooks.size());
+        logger.debug(
+                "Registered SdkInit hook: {} (total: {})", SdkInit.getClass().getSimpleName(), SdkInitHooks.size());
         return this;
     }
-    
+
     @Override
     public HttpRequest beforeRequest(BeforeRequestContext context, HttpRequest request) throws Exception {
         Utils.checkNotNull(context, "context");
         Utils.checkNotNull(request, "request");
         if (logger.isTraceEnabled() && !beforeRequestHooks.isEmpty()) {
-            logger.trace("Executing {} beforeRequest hook(s) for operation: {}", beforeRequestHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} beforeRequest hook(s) for operation: {}",
+                    beforeRequestHooks.size(),
+                    context.operationId());
         }
         for (BeforeRequest hook : beforeRequestHooks) {
             request = hook.beforeRequest(context, request);
@@ -153,7 +164,10 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
         Utils.checkNotNull(response, "response");
 
         if (logger.isTraceEnabled() && !afterSuccessHooks.isEmpty()) {
-            logger.trace("Executing {} afterSuccess hook(s) for operation: {}", afterSuccessHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} afterSuccess hook(s) for operation: {}",
+                    afterSuccessHooks.size(),
+                    context.operationId());
         }
         for (AfterSuccess hook : afterSuccessHooks) {
             response = hook.afterSuccess(context, response);
@@ -166,18 +180,16 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
 
     @Override
     public HttpResponse<InputStream> afterError(
-            AfterErrorContext context,
-            Optional<HttpResponse<InputStream>> response,
-            Optional<Exception> error) throws Exception {
+            AfterErrorContext context, Optional<HttpResponse<InputStream>> response, Optional<Exception> error) throws Exception {
         Utils.checkNotNull(context, "context");
         Utils.checkNotNull(response, "response");
         Utils.checkNotNull(error, "error");
         Utils.checkArgument(
-               response.isPresent() ^ error.isPresent(),
-               "one and only one of response or error must be present");
-        
+                response.isPresent() ^ error.isPresent(), "one and only one of response or error must be present");
+
         if (logger.isTraceEnabled() && !afterErrorHooks.isEmpty()) {
-            logger.trace("Executing {} afterError hook(s) for operation: {}", afterErrorHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} afterError hook(s) for operation: {}", afterErrorHooks.size(), context.operationId());
         }
         for (AfterError hook : afterErrorHooks) {
             try {
@@ -186,19 +198,19 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
                     throw new IllegalStateException(
                             "afterError must either throw an exception or return a non-null response");
                 }
-             } catch (FailEarlyException e) {
-                 Throwable cause = e.getCause();
-                 if (cause instanceof Exception) {
-                     throw (Exception) cause;
-                 } else {
-                     // must be an Error
-                     throw (Error) cause;
-                 }
-             } catch (Exception e) {
-                 logger.debug("Hook threw exception: {}", e.getClass().getSimpleName());
-                 error = Optional.of(e);
-                 response = Optional.empty();
-             }
+            } catch (FailEarlyException e) {
+                Throwable cause = e.getCause();
+                if (cause instanceof Exception) {
+                    throw (Exception) cause;
+                } else {
+                    // must be an Error
+                    throw (Error) cause;
+                }
+            } catch (Exception e) {
+                logger.debug("Hook threw exception: {}", e.getClass().getSimpleName());
+                error = Optional.of(e);
+                response = Optional.empty();
+            }
         }
         if (response.isPresent()) {
             return response.get();
@@ -228,5 +240,4 @@ public class Hooks implements BeforeRequest, AfterSuccess, AfterError, SdkInit {
             super(e);
         }
     }
-
 }

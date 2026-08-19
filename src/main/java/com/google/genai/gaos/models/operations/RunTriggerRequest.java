@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class RunTriggerRequest {
     /**
      * Which version of the API to use.
@@ -43,16 +42,13 @@ public class RunTriggerRequest {
     private String triggerId;
 
     @JsonCreator
-    public RunTriggerRequest(
-            @Nullable String apiVersion,
-            @Nonnull String triggerId) {
+    public RunTriggerRequest(@Nullable String apiVersion, @Nonnull String triggerId) {
         this.apiVersion = apiVersion;
         this.triggerId = Optional.ofNullable(triggerId)
-            .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
     }
-    
-    public RunTriggerRequest(
-            @Nonnull String triggerId) {
+
+    public RunTriggerRequest(@Nonnull String triggerId) {
         this(null, triggerId);
     }
 
@@ -74,7 +70,6 @@ public class RunTriggerRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -83,7 +78,6 @@ public class RunTriggerRequest {
         return this;
     }
 
-
     /**
      * Resource name of the trigger.
      */
@@ -91,7 +85,6 @@ public class RunTriggerRequest {
         this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +95,29 @@ public class RunTriggerRequest {
             return false;
         }
         RunTriggerRequest other = (RunTriggerRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.triggerId, other.triggerId);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.triggerId, other.triggerId);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, triggerId);
+        return Utils.enhancedHash(apiVersion, triggerId);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RunTriggerRequest.class,
-                "apiVersion", apiVersion,
-                "triggerId", triggerId);
+        return Utils.toString(RunTriggerRequest.class, "apiVersion", apiVersion, "triggerId", triggerId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String triggerId;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +137,7 @@ public class RunTriggerRequest {
         }
 
         public RunTriggerRequest build() {
-            return new RunTriggerRequest(
-                apiVersion, triggerId);
+            return new RunTriggerRequest(apiVersion, triggerId);
         }
-
     }
 }

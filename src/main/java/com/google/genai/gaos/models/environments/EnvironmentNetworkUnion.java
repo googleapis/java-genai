@@ -26,9 +26,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.models.interactions.EnvironmentNetworkEgressAllowlist;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * EnvironmentNetworkUnion
- * 
+ *
  * <p>Network configuration for the environment.
  */
 @JsonDeserialize(using = EnvironmentNetworkUnion._Deserializer.class)
@@ -44,21 +44,23 @@ public class EnvironmentNetworkUnion {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private EnvironmentNetworkUnion(TypedObject value) {
         this.value = value;
     }
 
     public static EnvironmentNetworkUnion of(EnvironmentNetworkEgressAllowlist value) {
         Utils.checkNotNull(value, "value");
-        return new EnvironmentNetworkUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvironmentNetworkEgressAllowlist>(){}));
+        return new EnvironmentNetworkUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvironmentNetworkEgressAllowlist>() {}));
     }
 
     public static EnvironmentNetworkUnion of(EnvironmentNetworkEnum value) {
         Utils.checkNotNull(value, "value");
-        return new EnvironmentNetworkUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvironmentNetworkEnum>(){}));
+        return new EnvironmentNetworkUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<EnvironmentNetworkEnum>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code EnvironmentNetworkEgressAllowlist},
      * otherwise returns an empty {@link Optional}.
@@ -71,7 +73,7 @@ public class EnvironmentNetworkUnion {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code EnvironmentNetworkEnum},
      * otherwise returns an empty {@link Optional}.
@@ -84,19 +86,19 @@ public class EnvironmentNetworkUnion {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -108,27 +110,27 @@ public class EnvironmentNetworkUnion {
         EnvironmentNetworkUnion other = (EnvironmentNetworkUnion) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<EnvironmentNetworkUnion> {
 
         public _Deserializer() {
-            super(EnvironmentNetworkUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<EnvironmentNetworkEgressAllowlist>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<EnvironmentNetworkEnum>() {}, JsonShape.DEFAULT));
+            super(
+                    EnvironmentNetworkUnion.class,
+                    false,
+                    TypeReferenceWithShape.of(
+                            new TypeReference<EnvironmentNetworkEgressAllowlist>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<EnvironmentNetworkEnum>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(EnvironmentNetworkUnion.class,
-                "value", value);
+        return Utils.toString(EnvironmentNetworkUnion.class, "value", value);
     }
-
 }
-

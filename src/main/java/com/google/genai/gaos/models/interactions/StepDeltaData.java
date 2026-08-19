@@ -19,9 +19,9 @@
  */
 package com.google.genai.gaos.models.interactions;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
@@ -30,12 +30,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownStepDeltaData.class
-)
+        defaultImpl = UnknownStepDeltaData.class)
 @JsonTypeIdResolver(StepDeltaDataTypeIdResolver.class)
 public interface StepDeltaData {
 
     String type();
-
 }
-

@@ -36,13 +36,15 @@ import java.util.Optional;
  */
 /**
  * VideoResponseFormatAspectRatio
- * 
+ *
  * <p>The aspect ratio for the video output.
  */
 public class VideoResponseFormatAspectRatio {
 
-    public static final VideoResponseFormatAspectRatio ONE_HUNDRED_AND_SIXTY_NINE = new VideoResponseFormatAspectRatio("16:9");
-    public static final VideoResponseFormatAspectRatio NINE_HUNDRED_AND_SIXTEEN = new VideoResponseFormatAspectRatio("9:16");
+    public static final VideoResponseFormatAspectRatio ONE_HUNDRED_AND_SIXTY_NINE =
+            new VideoResponseFormatAspectRatio("16:9");
+    public static final VideoResponseFormatAspectRatio NINE_HUNDRED_AND_SIXTEEN =
+            new VideoResponseFormatAspectRatio("9:16");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -59,12 +61,12 @@ public class VideoResponseFormatAspectRatio {
     }
 
     /**
-     * Returns a VideoResponseFormatAspectRatio with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a VideoResponseFormatAspectRatio with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as VideoResponseFormatAspectRatio
-     */ 
+     */
     @JsonCreator
     public static VideoResponseFormatAspectRatio of(String value) {
         synchronized (VideoResponseFormatAspectRatio.class) {
@@ -92,12 +94,9 @@ public class VideoResponseFormatAspectRatio {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         VideoResponseFormatAspectRatio other = (VideoResponseFormatAspectRatio) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +126,12 @@ public class VideoResponseFormatAspectRatio {
         map.put("9:16", VideoResponseFormatAspectRatioEnum.NINE_HUNDRED_AND_SIXTEEN);
         return map;
     }
-    
-    
+
     public enum VideoResponseFormatAspectRatioEnum {
 
         ONE_HUNDRED_AND_SIXTY_NINE("16:9"),
-        NINE_HUNDRED_AND_SIXTEEN("9:16"),;
+        NINE_HUNDRED_AND_SIXTEEN("9:16"),
+        ;
 
         private final String value;
 
@@ -145,4 +144,3 @@ public class VideoResponseFormatAspectRatio {
         }
     }
 }
-

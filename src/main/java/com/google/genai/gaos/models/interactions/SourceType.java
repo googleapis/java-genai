@@ -56,12 +56,12 @@ public class SourceType {
     }
 
     /**
-     * Returns a SourceType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a SourceType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as SourceType
-     */ 
+     */
     @JsonCreator
     public static SourceType of(String value) {
         synchronized (SourceType.class) {
@@ -89,12 +89,9 @@ public class SourceType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         SourceType other = (SourceType) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class SourceType {
         map.put("skill_registry", SourceTypeEnum.SKILL_REGISTRY);
         return map;
     }
-    
-    
+
     public enum SourceTypeEnum {
 
         GCS("gcs"),
         INLINE("inline"),
         REPOSITORY("repository"),
-        SKILL_REGISTRY("skill_registry"),;
+        SKILL_REGISTRY("skill_registry"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class SourceType {
         }
     }
 }
-

@@ -57,12 +57,12 @@ public class ResponseModality {
     }
 
     /**
-     * Returns a ResponseModality with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ResponseModality with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ResponseModality
-     */ 
+     */
     @JsonCreator
     public static ResponseModality of(String value) {
         synchronized (ResponseModality.class) {
@@ -90,12 +90,9 @@ public class ResponseModality {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ResponseModality other = (ResponseModality) obj;
         return Objects.equals(value, other.value);
     }
@@ -131,15 +128,15 @@ public class ResponseModality {
         map.put("document", ResponseModalityEnum.DOCUMENT);
         return map;
     }
-    
-    
+
     public enum ResponseModalityEnum {
 
         TEXT("text"),
         IMAGE("image"),
         AUDIO("audio"),
         VIDEO("video"),
-        DOCUMENT("document"),;
+        DOCUMENT("document"),
+        ;
 
         private final String value;
 
@@ -152,4 +149,3 @@ public class ResponseModality {
         }
     }
 }
-

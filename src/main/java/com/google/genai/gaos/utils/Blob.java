@@ -19,6 +19,7 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.google.genai.gaos.utils.transport.HttpBody;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -26,8 +27,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
-
-import com.google.genai.gaos.utils.transport.HttpBody;
 
 /**
  * A utility class for creating data blobs from various input sources for use as

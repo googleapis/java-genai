@@ -24,16 +24,13 @@ import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 
-
 public class MCPServerToolResultStepResult {
     @JsonCreator
-    public MCPServerToolResultStepResult() {
-    }
+    public MCPServerToolResultStepResult() {}
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -45,29 +42,26 @@ public class MCPServerToolResultStepResult {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            );
+        return Utils.enhancedHash();
     }
-    
+
     @Override
     public String toString() {
         return Utils.toString(MCPServerToolResultStepResult.class);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public MCPServerToolResultStepResult build() {
-            return new MCPServerToolResultStepResult(
-                );
+            return new MCPServerToolResultStepResult();
         }
-
     }
 }

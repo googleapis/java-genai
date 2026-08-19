@@ -72,7 +72,7 @@ public class CreateTriggerRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateTriggerRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -81,17 +81,16 @@ public class CreateTriggerRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<CreateTriggerResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation
-              = new CreateTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation =
+                new CreateTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

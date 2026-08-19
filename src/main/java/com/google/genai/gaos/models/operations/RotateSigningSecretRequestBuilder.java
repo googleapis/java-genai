@@ -57,7 +57,8 @@ public class RotateSigningSecretRequestBuilder {
         return this;
     }
 
-    public RotateSigningSecretRequestBuilder body(@Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
+    public RotateSigningSecretRequestBuilder body(
+            @Nullable com.google.genai.gaos.models.webhooks.RotateSigningSecretRequest body) {
         this.pojoBuilder.body(body);
         this._setterCalled = true;
         return this;
@@ -74,7 +75,7 @@ public class RotateSigningSecretRequestBuilder {
         }
         return this.request;
     }
-    
+
     public RotateSigningSecretRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -83,14 +84,14 @@ public class RotateSigningSecretRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public RotateSigningSecretResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<RotateSigningSecretRequest, RotateSigningSecretResponse> operation
-              = new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<RotateSigningSecretRequest, RotateSigningSecretResponse> operation =
+                new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

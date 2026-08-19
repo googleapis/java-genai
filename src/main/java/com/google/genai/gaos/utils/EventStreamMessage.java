@@ -28,7 +28,8 @@ public class EventStreamMessage {
     private final Optional<Integer> retryMs;
     private final Optional<String> data;
 
-    public EventStreamMessage(Optional<String> event, Optional<String> id, Optional<Integer> retryMs, Optional<String> data) {
+    public EventStreamMessage(
+            Optional<String> event, Optional<String> id, Optional<Integer> retryMs, Optional<String> data) {
         this.event = event;
         this.id = id;
         this.retryMs = retryMs;

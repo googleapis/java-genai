@@ -19,16 +19,16 @@
  */
 package com.google.genai.gaos.operations;
 
+import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 import static com.google.genai.gaos.utils.Exceptions.unchecked;
-import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.errors.CreateInteractionClientError;
 import com.google.genai.gaos.models.errors.CreateInteractionServerError;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.interactions.Interaction;
 import com.google.genai.gaos.models.operations.CreateInteractionRequest;
 import com.google.genai.gaos.models.operations.CreateInteractionResponse;
@@ -47,8 +47,8 @@ import com.google.genai.gaos.utils.Options;
 import com.google.genai.gaos.utils.Retries;
 import com.google.genai.gaos.utils.RetryConfig;
 import com.google.genai.gaos.utils.SerializedBody;
-import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils;
+import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.transport.HttpRequest;
 import com.google.genai.gaos.utils.transport.HttpResponse;
 import jakarta.annotation.Nonnull;
@@ -66,10 +66,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-
 public class CreateInteraction {
 
-    static abstract class Base {
+    abstract static class Base {
         final SDKConfiguration sdkConfiguration;
         final String baseUrl;
         final SecuritySource securitySource;
@@ -79,30 +78,30 @@ public class CreateInteraction {
         final Headers _headers;
         final Globals operationGlobals;
 
-        public Base(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
+        public Base(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
             this.sdkConfiguration = sdkConfiguration;
-            this._headers =_headers;
+            this._headers = _headers;
             this.baseUrl = this.sdkConfiguration.serverUrl();
             this.securitySource = this.sdkConfiguration.securitySource();
-            Optional.ofNullable(options)
-                    .ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
+            Optional.ofNullable(options).ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
             this.retryStatusCodes = Java8Compat.listOf("408", "409", "429", "5XX");
-            this.retryConfig = Java8Compat.or(Optional.ofNullable(options)
-                    .flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
-                    .orElse(RetryConfig.builder().attemptCountBackoff(4, BackoffStrategy.builder()
-                                    .initialInterval(500, TimeUnit.MILLISECONDS)
-                                    .maxInterval(8000, TimeUnit.MILLISECONDS)
-                                    .baseFactor((double) (2))
-                                    .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
-                                    .retryConnectError(true)
-                                    .build())
+            this.retryConfig = Java8Compat.or(Optional.ofNullable(options).flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
+                    .orElse(RetryConfig.builder()
+                            .attemptCountBackoff(
+                                    4,
+                                    BackoffStrategy.builder()
+                                            .initialInterval(500, TimeUnit.MILLISECONDS)
+                                            .maxInterval(8000, TimeUnit.MILLISECONDS)
+                                            .baseFactor((double) (2))
+                                            .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
+                                            .retryConnectError(true)
+                                            .build())
                             .build());
             this.client = this.sdkConfiguration.client();
             this.operationGlobals = new Globals();
-            this.sdkConfiguration.globals.getParam("pathParam", "api_version")
-                .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
+            this.sdkConfiguration.globals
+                    .getParam("pathParam", "api_version")
+                    .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
         }
 
         Optional<SecuritySource> securitySource() {
@@ -135,22 +134,13 @@ public class CreateInteraction {
                     java.util.Optional.empty(),
                     securitySource());
         }
-        <T, U>HttpRequest buildRequest(T request, Class<T> klass, TypeReference<U> typeReference) throws Exception {
+
+        <T, U> HttpRequest buildRequest(T request, Class<T> klass, TypeReference<U> typeReference) throws Exception {
             String url = Utils.generateURL(
-                    klass,
-                    this.baseUrl,
-                    "/{api_version}/interactions",
-                    request, this.operationGlobals);
+                    klass, this.baseUrl, "/{api_version}/interactions", request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "POST");
-            Object convertedRequest = Utils.convertToShape(
-                    request,
-                    JsonShape.DEFAULT,
-                    typeReference);
-            SerializedBody serializedRequestBody = Utils.serializeRequestBody(
-                    convertedRequest,
-                    "body",
-                    "json",
-                    false);
+            Object convertedRequest = Utils.convertToShape(request, JsonShape.DEFAULT, typeReference);
+            SerializedBody serializedRequestBody = Utils.serializeRequestBody(convertedRequest, "body", "json", false);
             if (serializedRequestBody == null) {
                 throw new IllegalArgumentException("Request body is required");
             }
@@ -166,24 +156,21 @@ public class CreateInteraction {
 
     public static class Sync extends Base
             implements RequestOperation<CreateInteractionRequest, CreateInteractionResponse> {
-        public Sync(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+        public Sync(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
+            super(sdkConfiguration, options, _headers);
         }
 
         private HttpRequest onBuildRequest(CreateInteractionRequest request) throws Exception {
-            HttpRequest req = buildRequest(request, CreateInteractionRequest.class, new TypeReference<CreateInteractionRequest>() {});
+            HttpRequest req = buildRequest(
+                    request, CreateInteractionRequest.class, new TypeReference<CreateInteractionRequest>() {});
             return sdkConfiguration.hooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error) throws Exception {
-            return sdkConfiguration.hooks().afterError(
-                    createAfterErrorContext(),
-                    Optional.ofNullable(response),
-                    Optional.ofNullable(error));
+        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error)
+                throws Exception {
+            return sdkConfiguration
+                    .hooks()
+                    .afterError(createAfterErrorContext(), Optional.ofNullable(response), Optional.ofNullable(error));
         }
 
         private HttpResponse<InputStream> onSuccess(HttpResponse<InputStream> response) throws Exception {
@@ -216,59 +203,56 @@ public class CreateInteraction {
             return unchecked(() -> onSuccess(retries.run())).get();
         }
 
-
         @Override
         public CreateInteractionResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
-            CreateInteractionResponse.Builder resBuilder =
-                    CreateInteractionResponse
-                            .builder()
-                            .contentType(contentType)
-                            .statusCode(response.statusCode())
-                            .rawResponse(response);
+            String contentType = response.contentType().orElse("application/octet-stream");
+            CreateInteractionResponse.Builder resBuilder = CreateInteractionResponse.builder()
+                    .contentType(contentType)
+                    .statusCode(response.statusCode())
+                    .rawResponse(response);
 
             CreateInteractionResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withInteraction(Utils.unmarshal(response, new TypeReference<Interaction>() {}));
                 }
-            if (Utils.contentTypeMatches(contentType, "text/event-stream")) {
+                if (Utils.contentTypeMatches(contentType, "text/event-stream")) {
                     Utils.setSseSentinel(res, "[DONE]");
                     return res;
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CreateInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CreateInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
+
     public static class Async extends Base
-            implements AsyncRequestOperation<CreateInteractionRequest, com.google.genai.gaos.models.operations.async.CreateInteractionResponse> {
+            implements AsyncRequestOperation<
+                    CreateInteractionRequest, com.google.genai.gaos.models.operations.async.CreateInteractionResponse> {
         private final ScheduledExecutorService retryScheduler;
 
         public Async(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                @Nullable ScheduledExecutorService retryScheduler, Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+                @Nonnull SDKConfiguration sdkConfiguration,
+                @Nullable Options options,
+                @Nullable ScheduledExecutorService retryScheduler,
+                Headers _headers) {
+            super(sdkConfiguration, options, _headers);
             this.retryScheduler = retryScheduler;
         }
 
@@ -280,11 +264,13 @@ public class CreateInteraction {
         }
 
         private CompletableFuture<HttpRequest> onBuildRequest(CreateInteractionRequest request) throws Exception {
-            HttpRequest req = buildRequest(request, CreateInteractionRequest.class, new TypeReference<CreateInteractionRequest>() {});
+            HttpRequest req = buildRequest(
+                    request, CreateInteractionRequest.class, new TypeReference<CreateInteractionRequest>() {});
             return this.sdkConfiguration.asyncHooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private CompletableFuture<HttpResponse<InputStream>> onError(HttpResponse<InputStream> response, Throwable error) {
+        private CompletableFuture<HttpResponse<InputStream>> onError(
+                HttpResponse<InputStream> response, Throwable error) {
             return this.sdkConfiguration.asyncHooks().afterError(createAfterErrorContext(), response, error);
         }
 
@@ -299,61 +285,60 @@ public class CreateInteraction {
                     .statusCodes(retryStatusCodes)
                     .scheduler(retryScheduler)
                     .build();
-            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request)).get()
-                            .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
-                            .handle((resp, err) -> {
-                                if (err != null) {
-                                    return onError(null, err);
-                                }
-                                if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
-                                    return onError(resp, null);
-                                }
-                                return CompletableFuture.completedFuture(resp);
-                            })
-                            .thenCompose(Function.identity()))
+            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request))
+                    .get()
+                    .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
+                    .handle((resp, err) -> {
+                        if (err != null) {
+                            return onError(null, err);
+                        }
+                        if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
+                            return onError(resp, null);
+                        }
+                        return CompletableFuture.completedFuture(resp);
+                    })
+                    .thenCompose(Function.identity()))
                     .thenCompose(this::onSuccess);
         }
 
         @Override
-        public com.google.genai.gaos.models.operations.async.CreateInteractionResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
+        public com.google.genai.gaos.models.operations.async.CreateInteractionResponse handleResponse(
+                HttpResponse<InputStream> response) {
+            String contentType = response.contentType().orElse("application/octet-stream");
             com.google.genai.gaos.models.operations.async.CreateInteractionResponse.Builder resBuilder =
-                    com.google.genai.gaos.models.operations.async.CreateInteractionResponse
-                            .builder()
+                    com.google.genai.gaos.models.operations.async.CreateInteractionResponse.builder()
                             .contentType(contentType)
                             .statusCode(response.statusCode())
                             .rawResponse(response);
 
             com.google.genai.gaos.models.operations.async.CreateInteractionResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     return res.withInteraction(Utils.unmarshal(response, new TypeReference<Interaction>() {}));
                 }
-            if (Utils.contentTypeMatches(contentType, "text/event-stream")) {
+                if (Utils.contentTypeMatches(contentType, "text/event-stream")) {
                     Utils.setSseSentinel(res, "[DONE]");
                     return res;
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CreateInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw CreateInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

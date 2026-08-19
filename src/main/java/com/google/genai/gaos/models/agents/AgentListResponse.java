@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.agents;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -30,13 +30,11 @@ import java.lang.String;
 import java.util.List;
 import java.util.Optional;
 
-
 public class AgentListResponse {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("agents")
     private List<Agent> agents;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("next_page_token")
@@ -49,7 +47,7 @@ public class AgentListResponse {
         this.agents = agents;
         this.nextPageToken = nextPageToken;
     }
-    
+
     public AgentListResponse() {
         this(null, null);
     }
@@ -66,18 +64,15 @@ public class AgentListResponse {
         return new Builder();
     }
 
-
     public AgentListResponse withAgents(@Nullable List<Agent> agents) {
         this.agents = agents;
         return this;
     }
 
-
     public AgentListResponse withNextPageToken(@Nullable String nextPageToken) {
         this.nextPageToken = nextPageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -88,33 +83,29 @@ public class AgentListResponse {
             return false;
         }
         AgentListResponse other = (AgentListResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.agents, other.agents) &&
-            Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
+        return Utils.enhancedDeepEquals(this.agents, other.agents)
+                && Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            agents, nextPageToken);
+        return Utils.enhancedHash(agents, nextPageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AgentListResponse.class,
-                "agents", agents,
-                "nextPageToken", nextPageToken);
+        return Utils.toString(AgentListResponse.class, "agents", agents, "nextPageToken", nextPageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<Agent> agents;
 
         private String nextPageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder agents(@Nullable List<Agent> agents) {
@@ -128,9 +119,7 @@ public class AgentListResponse {
         }
 
         public AgentListResponse build() {
-            return new AgentListResponse(
-                agents, nextPageToken);
+            return new AgentListResponse(agents, nextPageToken);
         }
-
     }
 }

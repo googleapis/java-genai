@@ -71,7 +71,7 @@ public class GetEnvironmentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public GetEnvironmentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +80,16 @@ public class GetEnvironmentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<GetEnvironmentResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
-              = new GetEnvironment.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation =
+                new GetEnvironment.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

@@ -16,17 +16,9 @@
 
 package com.google.genai.gaos.hooks;
 
-import com.google.genai.gaos.models.shared.Security;
-import com.google.genai.gaos.utils.HasSecurity;
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
-//
 // This file is written once by speakeasy code generation and
 // thereafter will not be overwritten by speakeasy updates. As a
 // consequence any customization of this class will be preserved.
-//
 
 public final class SDKHooks {
 
@@ -35,55 +27,29 @@ public final class SDKHooks {
     }
 
     public static void initialize(com.google.genai.gaos.utils.Hooks hooks) {
-    hooks.registerBeforeRequest(
-        (context, request) -> {
-          if (context.securitySource().isPresent()) {
-            HasSecurity hasSecurity = context.securitySource().get().getSecurity();
-            if (hasSecurity instanceof Security) {
-              Security security = (Security) hasSecurity;
-              HttpRequest.Builder builder = request.toBuilder();
+        // register synchronous hooks here
+        // hooks.registerBeforeRequest(...);
+        // hooks.registerAfterSuccess(...);
+        // hooks.registerAfterError(...);
 
-              if (security.defaultHeaders().isPresent()) {
-                for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
-                  builder.setHeader(entry.getKey(), entry.getValue());
-                }
-              }
-              if (security.apiKey().isPresent()) {
-                builder.setHeader("x-goog-api-key", security.apiKey().get());
-              } else if (security.accessToken().isPresent()) {
-                builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
-              }
-              return builder.build();
-            }
-          }
-          return request;
-        });
+        // for more information see
+        // https://www.speakeasy.com/docs/additional-features/sdk-hooks
     }
 
     public static void initialize(com.google.genai.gaos.utils.AsyncHooks asyncHooks) {
-    asyncHooks.registerBeforeRequest(
-        (context, request) -> {
-          if (context.securitySource().isPresent()) {
-            HasSecurity hasSecurity = context.securitySource().get().getSecurity();
-            if (hasSecurity instanceof Security) {
-              Security security = (Security) hasSecurity;
-              HttpRequest.Builder builder = request.toBuilder();
+        // register async hooks here
+        // asyncHooks.registerBeforeRequest(...);
+        // asyncHooks.registerAfterSuccess(...);
+        // asyncHooks.registerAfterError(...);
 
-              if (security.defaultHeaders().isPresent()) {
-                for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
-                  builder.setHeader(entry.getKey(), entry.getValue());
-                }
-              }
-              if (security.apiKey().isPresent()) {
-                builder.setHeader("x-goog-api-key", security.apiKey().get());
-              } else if (security.accessToken().isPresent()) {
-                builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
-              }
-              return CompletableFuture.completedFuture(builder.build());
-            }
-          }
-          return CompletableFuture.completedFuture(request);
-        });
+        // NOTE: If you have existing synchronous hooks, you can adapt them using HookAdapters:
+        // asyncHooks.registerAfterError(com.google.genai.gaos.utils.HookAdapters.adapt(mySyncHook));
+
+        // PERFORMANCE TIP: For better performance, implement async hooks directly using
+        // non-blocking I/O (NIO) APIs instead of adapting synchronous hooks, as adapters
+        // offload execution to the ForkJoinPool which can introduce overhead.
+
+        // for more information see
+        // https://www.speakeasy.com/docs/additional-features/sdk-hooks
     }
-
 }

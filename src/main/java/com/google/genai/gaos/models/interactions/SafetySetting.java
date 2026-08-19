@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -32,9 +32,9 @@ import java.util.Optional;
 
 /**
  * SafetySetting
- * 
+ *
  * <p>A safety setting that affects the safety-blocking behavior.
- * 
+ *
  * <p>A SafetySetting consists of a
  * harm category and a
  * threshold for that
@@ -56,7 +56,6 @@ public class SafetySetting {
     @JsonProperty("threshold")
     private Threshold threshold;
 
-
     @JsonProperty("type")
     private HarmCategory type;
 
@@ -67,14 +66,11 @@ public class SafetySetting {
             @JsonProperty("type") @Nonnull HarmCategory type) {
         this.method = method;
         this.threshold = Optional.ofNullable(threshold)
-            .orElseThrow(() -> new IllegalArgumentException("threshold cannot be null"));
-        this.type = Optional.ofNullable(type)
-            .orElseThrow(() -> new IllegalArgumentException("type cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("threshold cannot be null"));
+        this.type = Optional.ofNullable(type).orElseThrow(() -> new IllegalArgumentException("type cannot be null"));
     }
-    
-    public SafetySetting(
-            @Nonnull Threshold threshold,
-            @Nonnull HarmCategory type) {
+
+    public SafetySetting(@Nonnull Threshold threshold, @Nonnull HarmCategory type) {
         this(null, threshold, type);
     }
 
@@ -102,7 +98,6 @@ public class SafetySetting {
         return new Builder();
     }
 
-
     /**
      * Optional. The method for blocking content. If not specified, the default
      * behavior is to use the probability score.
@@ -111,7 +106,6 @@ public class SafetySetting {
         this.method = method;
         return this;
     }
-
 
     /**
      * Required. The threshold for blocking content. If the harm probability
@@ -122,12 +116,10 @@ public class SafetySetting {
         return this;
     }
 
-
     public SafetySetting withType(@Nonnull HarmCategory type) {
         this.type = Utils.checkNotNull(type, "type");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -138,28 +130,23 @@ public class SafetySetting {
             return false;
         }
         SafetySetting other = (SafetySetting) o;
-        return 
-            Utils.enhancedDeepEquals(this.method, other.method) &&
-            Utils.enhancedDeepEquals(this.threshold, other.threshold) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.method, other.method)
+                && Utils.enhancedDeepEquals(this.threshold, other.threshold)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            method, threshold, type);
+        return Utils.enhancedHash(method, threshold, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SafetySetting.class,
-                "method", method,
-                "threshold", threshold,
-                "type", type);
+        return Utils.toString(SafetySetting.class, "method", method, "threshold", threshold, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Method method;
 
@@ -168,7 +155,7 @@ public class SafetySetting {
         private HarmCategory type;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -195,9 +182,7 @@ public class SafetySetting {
         }
 
         public SafetySetting build() {
-            return new SafetySetting(
-                method, threshold, type);
+            return new SafetySetting(method, threshold, type);
         }
-
     }
 }

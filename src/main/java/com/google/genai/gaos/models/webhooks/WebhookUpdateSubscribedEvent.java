@@ -36,13 +36,18 @@ import java.util.Optional;
  */
 public class WebhookUpdateSubscribedEvent {
 
-    public static final WebhookUpdateSubscribedEvent BATCH_SUCCEEDED = new WebhookUpdateSubscribedEvent("batch.succeeded");
+    public static final WebhookUpdateSubscribedEvent BATCH_SUCCEEDED =
+            new WebhookUpdateSubscribedEvent("batch.succeeded");
     public static final WebhookUpdateSubscribedEvent BATCH_EXPIRED = new WebhookUpdateSubscribedEvent("batch.expired");
     public static final WebhookUpdateSubscribedEvent BATCH_FAILED = new WebhookUpdateSubscribedEvent("batch.failed");
-    public static final WebhookUpdateSubscribedEvent INTERACTION_REQUIRES_ACTION = new WebhookUpdateSubscribedEvent("interaction.requires_action");
-    public static final WebhookUpdateSubscribedEvent INTERACTION_COMPLETED = new WebhookUpdateSubscribedEvent("interaction.completed");
-    public static final WebhookUpdateSubscribedEvent INTERACTION_FAILED = new WebhookUpdateSubscribedEvent("interaction.failed");
-    public static final WebhookUpdateSubscribedEvent VIDEO_GENERATED = new WebhookUpdateSubscribedEvent("video.generated");
+    public static final WebhookUpdateSubscribedEvent INTERACTION_REQUIRES_ACTION =
+            new WebhookUpdateSubscribedEvent("interaction.requires_action");
+    public static final WebhookUpdateSubscribedEvent INTERACTION_COMPLETED =
+            new WebhookUpdateSubscribedEvent("interaction.completed");
+    public static final WebhookUpdateSubscribedEvent INTERACTION_FAILED =
+            new WebhookUpdateSubscribedEvent("interaction.failed");
+    public static final WebhookUpdateSubscribedEvent VIDEO_GENERATED =
+            new WebhookUpdateSubscribedEvent("video.generated");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -59,12 +64,12 @@ public class WebhookUpdateSubscribedEvent {
     }
 
     /**
-     * Returns a WebhookUpdateSubscribedEvent with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a WebhookUpdateSubscribedEvent with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as WebhookUpdateSubscribedEvent
-     */ 
+     */
     @JsonCreator
     public static WebhookUpdateSubscribedEvent of(String value) {
         synchronized (WebhookUpdateSubscribedEvent.class) {
@@ -92,12 +97,9 @@ public class WebhookUpdateSubscribedEvent {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         WebhookUpdateSubscribedEvent other = (WebhookUpdateSubscribedEvent) obj;
         return Objects.equals(value, other.value);
     }
@@ -137,8 +139,7 @@ public class WebhookUpdateSubscribedEvent {
         map.put("video.generated", WebhookUpdateSubscribedEventEnum.VIDEO_GENERATED);
         return map;
     }
-    
-    
+
     public enum WebhookUpdateSubscribedEventEnum {
 
         BATCH_SUCCEEDED("batch.succeeded"),
@@ -147,7 +148,8 @@ public class WebhookUpdateSubscribedEvent {
         INTERACTION_REQUIRES_ACTION("interaction.requires_action"),
         INTERACTION_COMPLETED("interaction.completed"),
         INTERACTION_FAILED("interaction.failed"),
-        VIDEO_GENERATED("video.generated"),;
+        VIDEO_GENERATED("video.generated"),
+        ;
 
         private final String value;
 
@@ -160,4 +162,3 @@ public class WebhookUpdateSubscribedEvent {
         }
     }
 }
-

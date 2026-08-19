@@ -22,12 +22,12 @@ package com.google.genai.gaos.utils;
 import java.util.concurrent.TimeUnit;
 
 /**
-  * Exponential Backoff Strategy with Jitter
-  *
-  * The duration between consecutive attempts is calculated as follows:
-  *     intervalMs = min(maxIntervalMs, initialIntervalMs*(baseFactor^attempts) +/- r)
-  * where baseFactor is the base factor and r a random value between 0 and jitterFactor*intervalMs.
-  */
+ * Exponential Backoff Strategy with Jitter
+ *
+ * The duration between consecutive attempts is calculated as follows:
+ *     intervalMs = min(maxIntervalMs, initialIntervalMs*(baseFactor^attempts) +/- r)
+ * where baseFactor is the base factor and r a random value between 0 and jitterFactor*intervalMs.
+ */
 public class BackoffStrategy {
 
     private static final long DEFAULT_INITIAL_INTERVAL_MS = 500L;
@@ -46,13 +46,14 @@ public class BackoffStrategy {
     private final boolean retryConnectError;
     private final boolean retryReadTimeoutError;
 
-    private BackoffStrategy(long initialIntervalMs,
-                           long maxIntervalMs,
-                           long maxElapsedTimeMs,
-                           double baseFactor,
-                           double jitterFactor,
-                           boolean retryConnectError,
-                           boolean retryReadTimeoutError) {
+    private BackoffStrategy(
+            long initialIntervalMs,
+            long maxIntervalMs,
+            long maxElapsedTimeMs,
+            double baseFactor,
+            double jitterFactor,
+            boolean retryConnectError,
+            boolean retryReadTimeoutError) {
         this.initialIntervalMs = initialIntervalMs;
         this.maxIntervalMs = maxIntervalMs;
         this.maxElapsedTimeMs = maxElapsedTimeMs;
@@ -79,8 +80,8 @@ public class BackoffStrategy {
     }
 
     /**
-    * @deprecated use {@link #baseFactor()} instead.
-    */
+     * @deprecated use {@link #baseFactor()} instead.
+     */
     @Deprecated
     public double exponent() {
         return baseFactor;
@@ -102,11 +103,11 @@ public class BackoffStrategy {
         return retryReadTimeoutError;
     }
 
-    public final static Builder builder() {
+    public static final Builder builder() {
         return new Builder();
     }
 
-    public final static class Builder {
+    public static final class Builder {
 
         private long initialIntervalMs = DEFAULT_INITIAL_INTERVAL_MS;
         private long maxIntervalMs = DEFAULT_MAX_INTERVAL_MS;
@@ -119,12 +120,12 @@ public class BackoffStrategy {
         private Builder() {}
 
         /**
-          * Sets the initial interval
-          *
-          * @param duration The initial interval.
-          * @param unit The time unit associated with duration.
-          * @return The builder instance.
-          */
+         * Sets the initial interval
+         *
+         * @param duration The initial interval.
+         * @param unit The time unit associated with duration.
+         * @return The builder instance.
+         */
         public Builder initialInterval(long duration, TimeUnit unit) {
             Utils.checkNotNull(unit, "unit");
             if (duration < 0) {
@@ -135,12 +136,12 @@ public class BackoffStrategy {
         }
 
         /**
-          * Sets the maximum interval
-          *
-          * @param duration The maximum interval.
-          * @param unit The time unit associated with duration.
-          * @return The builder instance.
-          */
+         * Sets the maximum interval
+         *
+         * @param duration The maximum interval.
+         * @param unit The time unit associated with duration.
+         * @return The builder instance.
+         */
         public Builder maxInterval(long duration, TimeUnit unit) {
             Utils.checkNotNull(unit, "unit");
             if (duration <= 0) {
@@ -151,12 +152,12 @@ public class BackoffStrategy {
         }
 
         /**
-          * Sets the maximum elapsed time
-          *
-          * @param duration The maximum elapsed time.
-          * @param unit The time unit associated with duration.
-          * @return The builder instance.
-          */
+         * Sets the maximum elapsed time
+         *
+         * @param duration The maximum elapsed time.
+         * @param unit The time unit associated with duration.
+         * @return The builder instance.
+         */
         public Builder maxElapsedTime(long duration, TimeUnit unit) {
             Utils.checkNotNull(unit, "unit");
             if (duration < 0) {
@@ -167,13 +168,13 @@ public class BackoffStrategy {
         }
 
         /**
-          * Sets the backoff base factor.
-          *
-          * @param baseFactor The base factor to use.
-          * @return The builder instance.
-          */
+         * Sets the backoff base factor.
+         *
+         * @param baseFactor The base factor to use.
+         * @return The builder instance.
+         */
         public Builder baseFactor(double baseFactor) {
-            if (baseFactor <= 0 ) {
+            if (baseFactor <= 0) {
                 throw new IllegalArgumentException("baseFactor must be strictly positive");
             }
             this.baseFactor = baseFactor;
@@ -181,15 +182,15 @@ public class BackoffStrategy {
         }
 
         /**
-          * Sets the backoff base factor.
-          *
-          * @deprecated use {@link #baseFactor(double)} instead.
-          * @param baseFactor The base factor to use.
-          * @return The builder instance.
-          */
+         * Sets the backoff base factor.
+         *
+         * @deprecated use {@link #baseFactor(double)} instead.
+         * @param baseFactor The base factor to use.
+         * @return The builder instance.
+         */
         @Deprecated
         public Builder exponent(double baseFactor) {
-            if (baseFactor <= 0 ) {
+            if (baseFactor <= 0) {
                 throw new IllegalArgumentException("baseFactor must be strictly positive");
             }
             this.baseFactor = baseFactor;
@@ -197,11 +198,11 @@ public class BackoffStrategy {
         }
 
         /**
-          * Sets the jitter factor used to randomize the backoff interval.
-          *
-          * @param jitterFactor The jitter factor to use (default is 0.5f).
-          * @return The builder instance.
-          */
+         * Sets the jitter factor used to randomize the backoff interval.
+         *
+         * @param jitterFactor The jitter factor to use (default is 0.5f).
+         * @return The builder instance.
+         */
         public Builder jitterFactor(double jitterFactor) {
             if (jitterFactor < 0 || jitterFactor > 1) {
                 throw new IllegalArgumentException("jitterFactor must be between 0 and 1");
@@ -211,55 +212,56 @@ public class BackoffStrategy {
         }
 
         /**
-          * Specifies whether connection errors should be retried.
-          *
-          * @param retry Whether to retry on connection error.
-          * @return The builder instance.
-          */
+         * Specifies whether connection errors should be retried.
+         *
+         * @param retry Whether to retry on connection error.
+         * @return The builder instance.
+         */
         public Builder retryConnectError(boolean retry) {
             this.retryConnectError = retry;
             return this;
         }
 
         /**
-          * Do not retry on connection error.
-          *
-          * @return The builder instance.
-          */
+         * Do not retry on connection error.
+         *
+         * @return The builder instance.
+         */
         public Builder throwConnectError() {
             this.retryConnectError = false;
             return this;
         }
 
         /**
-          * Specifies whether Read Timeout errors should be retried.
-          *
-          * @param retry Whether to retry on Read Timeout error.
-          * @return The builder instance.
-          */
+         * Specifies whether Read Timeout errors should be retried.
+         *
+         * @param retry Whether to retry on Read Timeout error.
+         * @return The builder instance.
+         */
         public Builder retryReadTimeoutError(boolean retry) {
             this.retryReadTimeoutError = retry;
             return this;
         }
 
         /**
-          * Do not retry on Read Timeout error.
-          *
-          * @return The builder instance.
-          */
+         * Do not retry on Read Timeout error.
+         *
+         * @return The builder instance.
+         */
         public Builder throwReadTimeoutError() {
             this.retryReadTimeoutError = false;
             return this;
         }
 
         public BackoffStrategy build() {
-            return new BackoffStrategy(initialIntervalMs,
-                                       maxIntervalMs,
-                                       maxElapsedTimeMs,
-                                       baseFactor,
-                                       jitterFactor,
-                                       retryConnectError,
-                                       retryReadTimeoutError);
+            return new BackoffStrategy(
+                    initialIntervalMs,
+                    maxIntervalMs,
+                    maxElapsedTimeMs,
+                    baseFactor,
+                    jitterFactor,
+                    retryConnectError,
+                    retryReadTimeoutError);
         }
     }
 }

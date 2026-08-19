@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * ExaAISearchConfig
- * 
+ *
  * <p>Used to specify configuration for ExaAISearch.
  */
 public class ExaAISearchConfig {
@@ -55,13 +55,12 @@ public class ExaAISearchConfig {
     public ExaAISearchConfig(
             @JsonProperty("api_key") @Nonnull String apiKey,
             @JsonProperty("custom_config") @Nullable Map<String, Object> customConfig) {
-        this.apiKey = Optional.ofNullable(apiKey)
-            .orElseThrow(() -> new IllegalArgumentException("apiKey cannot be null"));
+        this.apiKey =
+                Optional.ofNullable(apiKey).orElseThrow(() -> new IllegalArgumentException("apiKey cannot be null"));
         this.customConfig = customConfig;
     }
-    
-    public ExaAISearchConfig(
-            @Nonnull String apiKey) {
+
+    public ExaAISearchConfig(@Nonnull String apiKey) {
         this(apiKey, null);
     }
 
@@ -83,7 +82,6 @@ public class ExaAISearchConfig {
         return new Builder();
     }
 
-
     /**
      * Required. The API key for ExaAiSearch.
      */
@@ -92,7 +90,6 @@ public class ExaAISearchConfig {
         return this;
     }
 
-
     /**
      * Optional. This field can be used to pass any parameter from the Exa.ai Search API.
      */
@@ -100,7 +97,6 @@ public class ExaAISearchConfig {
         this.customConfig = customConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -111,33 +107,29 @@ public class ExaAISearchConfig {
             return false;
         }
         ExaAISearchConfig other = (ExaAISearchConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiKey, other.apiKey) &&
-            Utils.enhancedDeepEquals(this.customConfig, other.customConfig);
+        return Utils.enhancedDeepEquals(this.apiKey, other.apiKey)
+                && Utils.enhancedDeepEquals(this.customConfig, other.customConfig);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiKey, customConfig);
+        return Utils.enhancedHash(apiKey, customConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ExaAISearchConfig.class,
-                "apiKey", apiKey,
-                "customConfig", customConfig);
+        return Utils.toString(ExaAISearchConfig.class, "apiKey", apiKey, "customConfig", customConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiKey;
 
         private Map<String, Object> customConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -157,9 +149,7 @@ public class ExaAISearchConfig {
         }
 
         public ExaAISearchConfig build() {
-            return new ExaAISearchConfig(
-                apiKey, customConfig);
+            return new ExaAISearchConfig(apiKey, customConfig);
         }
-
     }
 }

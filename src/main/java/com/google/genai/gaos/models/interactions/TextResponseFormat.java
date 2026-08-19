@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * TextResponseFormat
- * 
+ *
  * <p>Configuration for text output format.
  */
 public class TextResponseFormat {
@@ -54,7 +54,6 @@ public class TextResponseFormat {
     @JsonProperty("schema")
     private Map<String, Object> schema;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -66,7 +65,7 @@ public class TextResponseFormat {
         this.schema = schema;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public TextResponseFormat() {
         this(null, null);
     }
@@ -94,7 +93,6 @@ public class TextResponseFormat {
         return new Builder();
     }
 
-
     /**
      * The MIME type of the text output.
      */
@@ -102,7 +100,6 @@ public class TextResponseFormat {
         this.mimeType = mimeType;
         return this;
     }
-
 
     /**
      * The JSON schema that the output should conform to. Only applicable when
@@ -113,7 +110,6 @@ public class TextResponseFormat {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -123,35 +119,30 @@ public class TextResponseFormat {
             return false;
         }
         TextResponseFormat other = (TextResponseFormat) o;
-        return 
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.schema, other.schema) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.schema, other.schema)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            mimeType, schema, type);
+        return Utils.enhancedHash(mimeType, schema, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TextResponseFormat.class,
-                "mimeType", mimeType,
-                "schema", schema,
-                "type", type);
+        return Utils.toString(TextResponseFormat.class, "mimeType", mimeType, "schema", schema, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private TextResponseFormatMimeType mimeType;
 
         private Map<String, Object> schema;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -172,15 +163,10 @@ public class TextResponseFormat {
         }
 
         public TextResponseFormat build() {
-            return new TextResponseFormat(
-                mimeType, schema);
+            return new TextResponseFormat(mimeType, schema);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"text\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"text\"", new TypeReference<String>() {});
     }
 }

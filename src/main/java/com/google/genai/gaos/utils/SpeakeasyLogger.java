@@ -43,28 +43,44 @@ public class SpeakeasyLogger {
     }
 
     public void debug(String message) {}
+
     public void debug(String format, Object arg) {}
+
     public void debug(String format, Object arg1, Object arg2) {}
+
     public void debug(String format, Object... arguments) {}
 
     public void trace(String message) {}
+
     public void trace(String format, Object arg) {}
+
     public void trace(String format, Object arg1, Object arg2) {}
+
     public void trace(String format, Object... arguments) {}
 
     public void info(String message) {}
+
     public void info(String format, Object arg) {}
+
     public void info(String format, Object arg1, Object arg2) {}
+
     public void info(String format, Object... arguments) {}
 
     public void warn(String message) {}
+
     public void warn(String format, Object arg) {}
+
     public void warn(String format, Object arg1, Object arg2) {}
+
     public void warn(String format, Object... arguments) {}
 
     public void error(String message) {}
+
     public void error(String format, Object arg) {}
+
     public void error(String format, Object arg1, Object arg2) {}
+
     public void error(String format, Object... arguments) {}
+
     public void error(String message, Throwable t) {}
 }

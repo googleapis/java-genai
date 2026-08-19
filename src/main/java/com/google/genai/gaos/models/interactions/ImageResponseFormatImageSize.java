@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * ImageResponseFormatImageSize
- * 
+ *
  * <p>The size of the image output.
  */
 public class ImageResponseFormatImageSize {
@@ -61,12 +61,12 @@ public class ImageResponseFormatImageSize {
     }
 
     /**
-     * Returns a ImageResponseFormatImageSize with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageResponseFormatImageSize with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageResponseFormatImageSize
-     */ 
+     */
     @JsonCreator
     public static ImageResponseFormatImageSize of(String value) {
         synchronized (ImageResponseFormatImageSize.class) {
@@ -94,12 +94,9 @@ public class ImageResponseFormatImageSize {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageResponseFormatImageSize other = (ImageResponseFormatImageSize) obj;
         return Objects.equals(value, other.value);
     }
@@ -133,14 +130,14 @@ public class ImageResponseFormatImageSize {
         map.put("4K", ImageResponseFormatImageSizeEnum.FOUR_K);
         return map;
     }
-    
-    
+
     public enum ImageResponseFormatImageSizeEnum {
 
         FIVE_HUNDRED_AND_TWELVE("512"),
         ONE_K("1K"),
         TWO_K("2K"),
-        FOUR_K("4K"),;
+        FOUR_K("4K"),
+        ;
 
         private final String value;
 
@@ -153,4 +150,3 @@ public class ImageResponseFormatImageSize {
         }
     }
 }
-

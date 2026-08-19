@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * ComputerUse
- * 
+ *
  * <p>A tool that can be used by the model to interact with the computer.
  */
 public class ComputerUse implements Tool {
@@ -68,7 +68,6 @@ public class ComputerUse implements Tool {
     @JsonProperty("excluded_predefined_functions")
     private List<String> excludedPredefinedFunctions;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -84,10 +83,9 @@ public class ComputerUse implements Tool {
         this.excludedPredefinedFunctions = excludedPredefinedFunctions;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ComputerUse() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -128,7 +126,6 @@ public class ComputerUse implements Tool {
         return new Builder();
     }
 
-
     /**
      * Optional. Disabled safety policies for computer use.
      */
@@ -136,7 +133,6 @@ public class ComputerUse implements Tool {
         this.disabledSafetyPolicies = disabledSafetyPolicies;
         return this;
     }
-
 
     /**
      * Whether enable the prompt injection detection check on computer-use
@@ -147,7 +143,6 @@ public class ComputerUse implements Tool {
         return this;
     }
 
-
     /**
      * The environment being operated.
      */
@@ -156,7 +151,6 @@ public class ComputerUse implements Tool {
         return this;
     }
 
-
     /**
      * The list of predefined functions that are excluded from the model call.
      */
@@ -164,7 +158,6 @@ public class ComputerUse implements Tool {
         this.excludedPredefinedFunctions = excludedPredefinedFunctions;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -175,33 +168,37 @@ public class ComputerUse implements Tool {
             return false;
         }
         ComputerUse other = (ComputerUse) o;
-        return 
-            Utils.enhancedDeepEquals(this.disabledSafetyPolicies, other.disabledSafetyPolicies) &&
-            Utils.enhancedDeepEquals(this.enablePromptInjectionDetection, other.enablePromptInjectionDetection) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.excludedPredefinedFunctions, other.excludedPredefinedFunctions) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.disabledSafetyPolicies, other.disabledSafetyPolicies)
+                && Utils.enhancedDeepEquals(this.enablePromptInjectionDetection, other.enablePromptInjectionDetection)
+                && Utils.enhancedDeepEquals(this.environment, other.environment)
+                && Utils.enhancedDeepEquals(this.excludedPredefinedFunctions, other.excludedPredefinedFunctions)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            disabledSafetyPolicies, enablePromptInjectionDetection, environment,
-            excludedPredefinedFunctions, type);
+                disabledSafetyPolicies, enablePromptInjectionDetection, environment, excludedPredefinedFunctions, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ComputerUse.class,
-                "disabledSafetyPolicies", disabledSafetyPolicies,
-                "enablePromptInjectionDetection", enablePromptInjectionDetection,
-                "environment", environment,
-                "excludedPredefinedFunctions", excludedPredefinedFunctions,
-                "type", type);
+        return Utils.toString(
+                ComputerUse.class,
+                "disabledSafetyPolicies",
+                disabledSafetyPolicies,
+                "enablePromptInjectionDetection",
+                enablePromptInjectionDetection,
+                "environment",
+                environment,
+                "excludedPredefinedFunctions",
+                excludedPredefinedFunctions,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<DisabledSafetyPolicy> disabledSafetyPolicies;
 
@@ -212,7 +209,7 @@ public class ComputerUse implements Tool {
         private List<String> excludedPredefinedFunctions;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -250,15 +247,10 @@ public class ComputerUse implements Tool {
 
         public ComputerUse build() {
             return new ComputerUse(
-                disabledSafetyPolicies, enablePromptInjectionDetection, environment,
-                excludedPredefinedFunctions);
+                    disabledSafetyPolicies, enablePromptInjectionDetection, environment, excludedPredefinedFunctions);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"computer_use\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"computer_use\"", new TypeReference<String>() {});
     }
 }

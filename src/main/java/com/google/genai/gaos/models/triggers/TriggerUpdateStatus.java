@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * TriggerUpdateStatus
- * 
+ *
  * <p>Optional. The status of the trigger.
  */
 public enum TriggerUpdateStatus {
@@ -40,13 +40,13 @@ public enum TriggerUpdateStatus {
     TriggerUpdateStatus(String value) {
         this.value = value;
     }
-    
+
     public String value() {
         return value;
     }
-    
+
     public static Optional<TriggerUpdateStatus> fromValue(String value) {
-        for (TriggerUpdateStatus o: TriggerUpdateStatus.values()) {
+        for (TriggerUpdateStatus o : TriggerUpdateStatus.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }
@@ -54,4 +54,3 @@ public enum TriggerUpdateStatus {
         return Optional.empty();
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * URLContextResult
- * 
+ *
  * <p>The result of the URL context.
  */
 public class URLContextResult {
@@ -56,7 +56,7 @@ public class URLContextResult {
         this.status = status;
         this.url = url;
     }
-    
+
     public URLContextResult() {
         this(null, null);
     }
@@ -79,7 +79,6 @@ public class URLContextResult {
         return new Builder();
     }
 
-
     /**
      * The status of the URL retrieval.
      */
@@ -88,7 +87,6 @@ public class URLContextResult {
         return this;
     }
 
-
     /**
      * The URL that was fetched.
      */
@@ -96,7 +94,6 @@ public class URLContextResult {
         this.url = url;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -107,33 +104,28 @@ public class URLContextResult {
             return false;
         }
         URLContextResult other = (URLContextResult) o;
-        return 
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.status, other.status) && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            status, url);
+        return Utils.enhancedHash(status, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContextResult.class,
-                "status", status,
-                "url", url);
+        return Utils.toString(URLContextResult.class, "status", status, "url", url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private URLContextResultStatus status;
 
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -153,9 +145,7 @@ public class URLContextResult {
         }
 
         public URLContextResult build() {
-            return new URLContextResult(
-                status, url);
+            return new URLContextResult(status, url);
         }
-
     }
 }

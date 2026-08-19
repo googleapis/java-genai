@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * WebhookInput
- * 
+ *
  * <p>A Webhook resource.
  */
 public class WebhookInput {
@@ -71,14 +71,11 @@ public class WebhookInput {
             @JsonProperty("uri") @Nonnull String uri) {
         this.name = name;
         this.subscribedEvents = Optional.ofNullable(subscribedEvents)
-            .orElseThrow(() -> new IllegalArgumentException("subscribedEvents cannot be null"));
-        this.uri = Optional.ofNullable(uri)
-            .orElseThrow(() -> new IllegalArgumentException("uri cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("subscribedEvents cannot be null"));
+        this.uri = Optional.ofNullable(uri).orElseThrow(() -> new IllegalArgumentException("uri cannot be null"));
     }
-    
-    public WebhookInput(
-            @Nonnull List<WebhookSubscribedEvent> subscribedEvents,
-            @Nonnull String uri) {
+
+    public WebhookInput(@Nonnull List<WebhookSubscribedEvent> subscribedEvents, @Nonnull String uri) {
         this(null, subscribedEvents, uri);
     }
 
@@ -115,7 +112,6 @@ public class WebhookInput {
         return new Builder();
     }
 
-
     /**
      * Optional. The user-provided name of the webhook.
      */
@@ -123,7 +119,6 @@ public class WebhookInput {
         this.name = name;
         return this;
     }
-
 
     /**
      * Required. The events that the webhook is subscribed to.
@@ -141,7 +136,6 @@ public class WebhookInput {
         return this;
     }
 
-
     /**
      * Required. The URI to which webhook events will be sent.
      */
@@ -149,7 +143,6 @@ public class WebhookInput {
         this.uri = Utils.checkNotNull(uri, "uri");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -160,28 +153,23 @@ public class WebhookInput {
             return false;
         }
         WebhookInput other = (WebhookInput) o;
-        return 
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            name, subscribedEvents, uri);
+        return Utils.enhancedHash(name, subscribedEvents, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WebhookInput.class,
-                "name", name,
-                "subscribedEvents", subscribedEvents,
-                "uri", uri);
+        return Utils.toString(WebhookInput.class, "name", name, "subscribedEvents", subscribedEvents, "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String name;
 
@@ -190,7 +178,7 @@ public class WebhookInput {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -226,9 +214,7 @@ public class WebhookInput {
         }
 
         public WebhookInput build() {
-            return new WebhookInput(
-                name, subscribedEvents, uri);
+            return new WebhookInput(name, subscribedEvents, uri);
         }
-
     }
 }

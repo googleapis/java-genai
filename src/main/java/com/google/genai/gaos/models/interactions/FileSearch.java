@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * FileSearch
- * 
+ *
  * <p>A tool that can be used by the model to search files.
  */
 public class FileSearch implements Tool {
@@ -60,7 +60,6 @@ public class FileSearch implements Tool {
     @JsonProperty("top_k")
     private Integer topK;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -74,7 +73,7 @@ public class FileSearch implements Tool {
         this.topK = topK;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public FileSearch() {
         this(null, null, null);
     }
@@ -109,7 +108,6 @@ public class FileSearch implements Tool {
         return new Builder();
     }
 
-
     /**
      * The file search store names to search.
      */
@@ -117,7 +115,6 @@ public class FileSearch implements Tool {
         this.fileSearchStoreNames = fileSearchStoreNames;
         return this;
     }
-
 
     /**
      * Metadata filter to apply to the semantic retrieval documents and chunks.
@@ -127,7 +124,6 @@ public class FileSearch implements Tool {
         return this;
     }
 
-
     /**
      * The number of semantic retrieval chunks to retrieve.
      */
@@ -135,7 +131,6 @@ public class FileSearch implements Tool {
         this.topK = topK;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -146,31 +141,33 @@ public class FileSearch implements Tool {
             return false;
         }
         FileSearch other = (FileSearch) o;
-        return 
-            Utils.enhancedDeepEquals(this.fileSearchStoreNames, other.fileSearchStoreNames) &&
-            Utils.enhancedDeepEquals(this.metadataFilter, other.metadataFilter) &&
-            Utils.enhancedDeepEquals(this.topK, other.topK) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.fileSearchStoreNames, other.fileSearchStoreNames)
+                && Utils.enhancedDeepEquals(this.metadataFilter, other.metadataFilter)
+                && Utils.enhancedDeepEquals(this.topK, other.topK)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            fileSearchStoreNames, metadataFilter, topK,
-            type);
+        return Utils.enhancedHash(fileSearchStoreNames, metadataFilter, topK, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileSearch.class,
-                "fileSearchStoreNames", fileSearchStoreNames,
-                "metadataFilter", metadataFilter,
-                "topK", topK,
-                "type", type);
+        return Utils.toString(
+                FileSearch.class,
+                "fileSearchStoreNames",
+                fileSearchStoreNames,
+                "metadataFilter",
+                metadataFilter,
+                "topK",
+                topK,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<String> fileSearchStoreNames;
 
@@ -179,7 +176,7 @@ public class FileSearch implements Tool {
         private Integer topK;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -207,15 +204,10 @@ public class FileSearch implements Tool {
         }
 
         public FileSearch build() {
-            return new FileSearch(
-                fileSearchStoreNames, metadataFilter, topK);
+            return new FileSearch(fileSearchStoreNames, metadataFilter, topK);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"file_search\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"file_search\"", new TypeReference<String>() {});
     }
 }

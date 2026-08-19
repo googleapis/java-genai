@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * SpeechConfig
- * 
+ *
  * <p>The configuration for speech interaction.
  */
 public class SpeechConfig {
@@ -65,7 +65,7 @@ public class SpeechConfig {
         this.speaker = speaker;
         this.voice = voice;
     }
-    
+
     public SpeechConfig() {
         this(null, null, null);
     }
@@ -95,7 +95,6 @@ public class SpeechConfig {
         return new Builder();
     }
 
-
     /**
      * The language of the speech.
      */
@@ -103,7 +102,6 @@ public class SpeechConfig {
         this.language = language;
         return this;
     }
-
 
     /**
      * The speaker's name, it should match the speaker name given in the prompt.
@@ -113,7 +111,6 @@ public class SpeechConfig {
         return this;
     }
 
-
     /**
      * The voice of the speaker.
      */
@@ -121,7 +118,6 @@ public class SpeechConfig {
         this.voice = voice;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -132,28 +128,23 @@ public class SpeechConfig {
             return false;
         }
         SpeechConfig other = (SpeechConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.language, other.language) &&
-            Utils.enhancedDeepEquals(this.speaker, other.speaker) &&
-            Utils.enhancedDeepEquals(this.voice, other.voice);
+        return Utils.enhancedDeepEquals(this.language, other.language)
+                && Utils.enhancedDeepEquals(this.speaker, other.speaker)
+                && Utils.enhancedDeepEquals(this.voice, other.voice);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            language, speaker, voice);
+        return Utils.enhancedHash(language, speaker, voice);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SpeechConfig.class,
-                "language", language,
-                "speaker", speaker,
-                "voice", voice);
+        return Utils.toString(SpeechConfig.class, "language", language, "speaker", speaker, "voice", voice);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String language;
 
@@ -162,7 +153,7 @@ public class SpeechConfig {
         private String voice;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -190,9 +181,7 @@ public class SpeechConfig {
         }
 
         public SpeechConfig build() {
-            return new SpeechConfig(
-                language, speaker, voice);
+            return new SpeechConfig(language, speaker, voice);
         }
-
     }
 }

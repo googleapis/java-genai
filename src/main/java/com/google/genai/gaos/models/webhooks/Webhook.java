@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * Webhook
- * 
+ *
  * <p>A Webhook resource.
  */
 public class Webhook {
@@ -125,18 +125,13 @@ public class Webhook {
         this.signingSecrets = signingSecrets;
         this.state = state;
         this.subscribedEvents = Optional.ofNullable(subscribedEvents)
-            .orElseThrow(() -> new IllegalArgumentException("subscribedEvents cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("subscribedEvents cannot be null"));
         this.updateTime = updateTime;
-        this.uri = Optional.ofNullable(uri)
-            .orElseThrow(() -> new IllegalArgumentException("uri cannot be null"));
+        this.uri = Optional.ofNullable(uri).orElseThrow(() -> new IllegalArgumentException("uri cannot be null"));
     }
-    
-    public Webhook(
-            @Nonnull List<WebhookSubscribedEvent> subscribedEvents,
-            @Nonnull String uri) {
-        this(null, null, null,
-            null, null, null,
-            subscribedEvents, null, uri);
+
+    public Webhook(@Nonnull List<WebhookSubscribedEvent> subscribedEvents, @Nonnull String uri) {
+        this(null, null, null, null, null, null, subscribedEvents, null, uri);
     }
 
     /**
@@ -214,7 +209,6 @@ public class Webhook {
         return new Builder();
     }
 
-
     /**
      * Output only. The timestamp when the webhook was created.
      */
@@ -222,7 +216,6 @@ public class Webhook {
         this.createTime = createTime;
         return this;
     }
-
 
     /**
      * Output only. The ID of the webhook.
@@ -232,7 +225,6 @@ public class Webhook {
         return this;
     }
 
-
     /**
      * Optional. The user-provided name of the webhook.
      */
@@ -240,7 +232,6 @@ public class Webhook {
         this.name = name;
         return this;
     }
-
 
     /**
      * Output only. The new signing secret for the webhook. Only populated on create.
@@ -250,7 +241,6 @@ public class Webhook {
         return this;
     }
 
-
     /**
      * Output only. The signing secrets associated with this webhook.
      */
@@ -259,7 +249,6 @@ public class Webhook {
         return this;
     }
 
-
     /**
      * Output only. The state of the webhook.
      */
@@ -267,7 +256,6 @@ public class Webhook {
         this.state = state;
         return this;
     }
-
 
     /**
      * Required. The events that the webhook is subscribed to.
@@ -285,7 +273,6 @@ public class Webhook {
         return this;
     }
 
-
     /**
      * Output only. The timestamp when the webhook was last updated.
      */
@@ -294,7 +281,6 @@ public class Webhook {
         return this;
     }
 
-
     /**
      * Required. The URI to which webhook events will be sent.
      */
@@ -302,7 +288,6 @@ public class Webhook {
         this.uri = Utils.checkNotNull(uri, "uri");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -313,42 +298,49 @@ public class Webhook {
             return false;
         }
         Webhook other = (Webhook) o;
-        return 
-            Utils.enhancedDeepEquals(this.createTime, other.createTime) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.newSigningSecret, other.newSigningSecret) &&
-            Utils.enhancedDeepEquals(this.signingSecrets, other.signingSecrets) &&
-            Utils.enhancedDeepEquals(this.state, other.state) &&
-            Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents) &&
-            Utils.enhancedDeepEquals(this.updateTime, other.updateTime) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.createTime, other.createTime)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.newSigningSecret, other.newSigningSecret)
+                && Utils.enhancedDeepEquals(this.signingSecrets, other.signingSecrets)
+                && Utils.enhancedDeepEquals(this.state, other.state)
+                && Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents)
+                && Utils.enhancedDeepEquals(this.updateTime, other.updateTime)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            createTime, id, name,
-            newSigningSecret, signingSecrets, state,
-            subscribedEvents, updateTime, uri);
+                createTime, id, name, newSigningSecret, signingSecrets, state, subscribedEvents, updateTime, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Webhook.class,
-                "createTime", createTime,
-                "id", id,
-                "name", name,
-                "newSigningSecret", newSigningSecret,
-                "signingSecrets", signingSecrets,
-                "state", state,
-                "subscribedEvents", subscribedEvents,
-                "updateTime", updateTime,
-                "uri", uri);
+        return Utils.toString(
+                Webhook.class,
+                "createTime",
+                createTime,
+                "id",
+                id,
+                "name",
+                name,
+                "newSigningSecret",
+                newSigningSecret,
+                "signingSecrets",
+                signingSecrets,
+                "state",
+                state,
+                "subscribedEvents",
+                subscribedEvents,
+                "updateTime",
+                updateTime,
+                "uri",
+                uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private OffsetDateTime createTime;
 
@@ -369,7 +361,7 @@ public class Webhook {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -454,10 +446,7 @@ public class Webhook {
 
         public Webhook build() {
             return new Webhook(
-                createTime, id, name,
-                newSigningSecret, signingSecrets, state,
-                subscribedEvents, updateTime, uri);
+                    createTime, id, name, newSigningSecret, signingSecrets, state, subscribedEvents, updateTime, uri);
         }
-
     }
 }

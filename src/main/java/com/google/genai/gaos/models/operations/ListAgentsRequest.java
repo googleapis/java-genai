@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListAgentsRequest {
     /**
      * Which version of the API to use.
@@ -36,14 +35,11 @@ public class ListAgentsRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
     private Integer pageSize;
 
-
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
     private String pageToken;
-
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=parent")
     private String parent;
@@ -59,10 +55,9 @@ public class ListAgentsRequest {
         this.pageToken = pageToken;
         this.parent = parent;
     }
-    
+
     public ListAgentsRequest() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -88,7 +83,6 @@ public class ListAgentsRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -97,24 +91,20 @@ public class ListAgentsRequest {
         return this;
     }
 
-
     public ListAgentsRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
-
 
     public ListAgentsRequest withPageToken(@Nullable String pageToken) {
         this.pageToken = pageToken;
         return this;
     }
 
-
     public ListAgentsRequest withParent(@Nullable String parent) {
         this.parent = parent;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -125,31 +115,33 @@ public class ListAgentsRequest {
             return false;
         }
         ListAgentsRequest other = (ListAgentsRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken) &&
-            Utils.enhancedDeepEquals(this.parent, other.parent);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.pageSize, other.pageSize)
+                && Utils.enhancedDeepEquals(this.pageToken, other.pageToken)
+                && Utils.enhancedDeepEquals(this.parent, other.parent);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, pageSize, pageToken,
-            parent);
+        return Utils.enhancedHash(apiVersion, pageSize, pageToken, parent);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListAgentsRequest.class,
-                "apiVersion", apiVersion,
-                "pageSize", pageSize,
-                "pageToken", pageToken,
-                "parent", parent);
+        return Utils.toString(
+                ListAgentsRequest.class,
+                "apiVersion",
+                apiVersion,
+                "pageSize",
+                pageSize,
+                "pageToken",
+                pageToken,
+                "parent",
+                parent);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -160,7 +152,7 @@ public class ListAgentsRequest {
         private String parent;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -187,10 +179,7 @@ public class ListAgentsRequest {
         }
 
         public ListAgentsRequest build() {
-            return new ListAgentsRequest(
-                apiVersion, pageSize, pageToken,
-                parent);
+            return new ListAgentsRequest(apiVersion, pageSize, pageToken, parent);
         }
-
     }
 }

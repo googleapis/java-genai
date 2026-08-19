@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -32,13 +32,13 @@ import java.util.Optional;
 
 /**
  * AllowlistEntry
- * 
+ *
  * <p>A single domain allowlist rule with optional header injection.
  */
 public class AllowlistEntry {
     /**
      * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
+     *
      * <p>Use '*' to allow all domains.
      */
     @JsonProperty("domain")
@@ -54,21 +54,19 @@ public class AllowlistEntry {
 
     @JsonCreator
     public AllowlistEntry(
-            @JsonProperty("domain") @Nonnull String domain,
-            @JsonProperty("transform") @Nullable Transform transform) {
-        this.domain = Optional.ofNullable(domain)
-            .orElseThrow(() -> new IllegalArgumentException("domain cannot be null"));
+            @JsonProperty("domain") @Nonnull String domain, @JsonProperty("transform") @Nullable Transform transform) {
+        this.domain =
+                Optional.ofNullable(domain).orElseThrow(() -> new IllegalArgumentException("domain cannot be null"));
         this.transform = transform;
     }
-    
-    public AllowlistEntry(
-            @Nonnull String domain) {
+
+    public AllowlistEntry(@Nonnull String domain) {
         this(domain, null);
     }
 
     /**
      * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
+     *
      * <p>Use '*' to allow all domains.
      */
     public Optional<String> domain() {
@@ -87,17 +85,15 @@ public class AllowlistEntry {
         return new Builder();
     }
 
-
     /**
      * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
+     *
      * <p>Use '*' to allow all domains.
      */
     public AllowlistEntry withDomain(@Nonnull String domain) {
         this.domain = Utils.checkNotNull(domain, "domain");
         return this;
     }
-
 
     /**
      * Headers to inject on all outbound requests matching this domain. Accepts a single dict or a list of
@@ -108,7 +104,6 @@ public class AllowlistEntry {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -118,38 +113,34 @@ public class AllowlistEntry {
             return false;
         }
         AllowlistEntry other = (AllowlistEntry) o;
-        return 
-            Utils.enhancedDeepEquals(this.domain, other.domain) &&
-            Utils.enhancedDeepEquals(this.transform, other.transform);
+        return Utils.enhancedDeepEquals(this.domain, other.domain)
+                && Utils.enhancedDeepEquals(this.transform, other.transform);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            domain, transform);
+        return Utils.enhancedHash(domain, transform);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AllowlistEntry.class,
-                "domain", domain,
-                "transform", transform);
+        return Utils.toString(AllowlistEntry.class, "domain", domain, "transform", transform);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String domain;
 
         private Transform transform;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
          * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-         * 
+         *
          * <p>Use '*' to allow all domains.
          */
         public Builder domain(@Nonnull String domain) {
@@ -167,9 +158,7 @@ public class AllowlistEntry {
         }
 
         public AllowlistEntry build() {
-            return new AllowlistEntry(
-                domain, transform);
+            return new AllowlistEntry(domain, transform);
         }
-
     }
 }

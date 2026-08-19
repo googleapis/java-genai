@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * FunctionCallStep
- * 
+ *
  * <p>A function tool call step.
  */
 public class FunctionCallStep implements Step {
@@ -55,7 +55,6 @@ public class FunctionCallStep implements Step {
     @JsonProperty("name")
     private String name;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -66,11 +65,9 @@ public class FunctionCallStep implements Step {
             @JsonProperty("name") @Nonnull String name) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.name = Optional.ofNullable(name)
-            .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.name = Optional.ofNullable(name).orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
 
@@ -104,7 +101,6 @@ public class FunctionCallStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. The arguments to pass to the function.
      */
@@ -112,7 +108,6 @@ public class FunctionCallStep implements Step {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
-
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -122,7 +117,6 @@ public class FunctionCallStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The name of the tool to call.
      */
@@ -130,7 +124,6 @@ public class FunctionCallStep implements Step {
         this.name = Utils.checkNotNull(name, "name");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -141,31 +134,24 @@ public class FunctionCallStep implements Step {
             return false;
         }
         FunctionCallStep other = (FunctionCallStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, id, name,
-            type);
+        return Utils.enhancedHash(arguments, id, name, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FunctionCallStep.class,
-                "arguments", arguments,
-                "id", id,
-                "name", name,
-                "type", type);
+        return Utils.toString(FunctionCallStep.class, "arguments", arguments, "id", id, "name", name, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Map<String, Object> arguments;
 
@@ -174,7 +160,7 @@ public class FunctionCallStep implements Step {
         private String name;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -202,15 +188,10 @@ public class FunctionCallStep implements Step {
         }
 
         public FunctionCallStep build() {
-            return new FunctionCallStep(
-                arguments, id, name);
+            return new FunctionCallStep(arguments, id, name);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"function_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"function_call\"", new TypeReference<String>() {});
     }
 }

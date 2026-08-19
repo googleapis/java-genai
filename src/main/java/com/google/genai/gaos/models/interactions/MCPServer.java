@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.models.agents.AgentTool;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * MCPServer
- * 
+ *
  * <p>A MCPServer is a server that can be called by the model to perform actions.
  */
 public class MCPServer implements Tool, AgentTool {
@@ -61,7 +61,6 @@ public class MCPServer implements Tool, AgentTool {
     @JsonProperty("name")
     private String name;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -85,10 +84,9 @@ public class MCPServer implements Tool, AgentTool {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.url = url;
     }
-    
+
     public MCPServer() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -129,7 +127,6 @@ public class MCPServer implements Tool, AgentTool {
         return new Builder();
     }
 
-
     /**
      * The allowed tools.
      */
@@ -137,7 +134,6 @@ public class MCPServer implements Tool, AgentTool {
         this.allowedTools = allowedTools;
         return this;
     }
-
 
     /**
      * Optional: Fields for authentication headers, timeouts, etc., if needed.
@@ -147,7 +143,6 @@ public class MCPServer implements Tool, AgentTool {
         return this;
     }
 
-
     /**
      * The name of the MCPServer.
      */
@@ -155,7 +150,6 @@ public class MCPServer implements Tool, AgentTool {
         this.name = name;
         return this;
     }
-
 
     /**
      * The full URL for the MCPServer endpoint.
@@ -166,7 +160,6 @@ public class MCPServer implements Tool, AgentTool {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -176,33 +169,36 @@ public class MCPServer implements Tool, AgentTool {
             return false;
         }
         MCPServer other = (MCPServer) o;
-        return 
-            Utils.enhancedDeepEquals(this.allowedTools, other.allowedTools) &&
-            Utils.enhancedDeepEquals(this.headers, other.headers) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.allowedTools, other.allowedTools)
+                && Utils.enhancedDeepEquals(this.headers, other.headers)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            allowedTools, headers, name,
-            type, url);
+        return Utils.enhancedHash(allowedTools, headers, name, type, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServer.class,
-                "allowedTools", allowedTools,
-                "headers", headers,
-                "name", name,
-                "type", type,
-                "url", url);
+        return Utils.toString(
+                MCPServer.class,
+                "allowedTools",
+                allowedTools,
+                "headers",
+                headers,
+                "name",
+                name,
+                "type",
+                type,
+                "url",
+                url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<AllowedTools> allowedTools;
 
@@ -213,7 +209,7 @@ public class MCPServer implements Tool, AgentTool {
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -250,16 +246,10 @@ public class MCPServer implements Tool, AgentTool {
         }
 
         public MCPServer build() {
-            return new MCPServer(
-                allowedTools, headers, name,
-                url);
+            return new MCPServer(allowedTools, headers, name, url);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"mcp_server\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"mcp_server\"", new TypeReference<String>() {});
     }
 }

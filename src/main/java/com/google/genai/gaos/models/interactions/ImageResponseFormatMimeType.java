@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * ImageResponseFormatMimeType
- * 
+ *
  * <p>The MIME type of the image output.
  */
 public class ImageResponseFormatMimeType {
@@ -58,12 +58,12 @@ public class ImageResponseFormatMimeType {
     }
 
     /**
-     * Returns a ImageResponseFormatMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageResponseFormatMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageResponseFormatMimeType
-     */ 
+     */
     @JsonCreator
     public static ImageResponseFormatMimeType of(String value) {
         synchronized (ImageResponseFormatMimeType.class) {
@@ -91,12 +91,9 @@ public class ImageResponseFormatMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageResponseFormatMimeType other = (ImageResponseFormatMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -124,11 +121,11 @@ public class ImageResponseFormatMimeType {
         map.put("image/jpeg", ImageResponseFormatMimeTypeEnum.IMAGE_JPEG);
         return map;
     }
-    
-    
+
     public enum ImageResponseFormatMimeTypeEnum {
 
-        IMAGE_JPEG("image/jpeg"),;
+        IMAGE_JPEG("image/jpeg"),
+        ;
 
         private final String value;
 
@@ -141,4 +138,3 @@ public class ImageResponseFormatMimeType {
         }
     }
 }
-

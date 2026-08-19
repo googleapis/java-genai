@@ -28,8 +28,7 @@ class FormMetadata {
     boolean json;
     String name;
 
-    private FormMetadata() {
-    }
+    private FormMetadata() {}
 
     // form:name=propName,style=spaceDelimited,explode=true
     static FormMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {

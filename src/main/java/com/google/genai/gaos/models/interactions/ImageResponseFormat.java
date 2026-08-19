@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * ImageResponseFormat
- * 
+ *
  * <p>Configuration for image output format.
  */
 public class ImageResponseFormat {
@@ -65,7 +65,6 @@ public class ImageResponseFormat {
     @JsonProperty("mime_type")
     private ImageResponseFormatMimeType mimeType;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -81,10 +80,9 @@ public class ImageResponseFormat {
         this.mimeType = mimeType;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ImageResponseFormat() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -123,7 +121,6 @@ public class ImageResponseFormat {
         return new Builder();
     }
 
-
     /**
      * The aspect ratio for the image output.
      */
@@ -131,7 +128,6 @@ public class ImageResponseFormat {
         this.aspectRatio = aspectRatio;
         return this;
     }
-
 
     /**
      * The delivery mode for the image output.
@@ -141,7 +137,6 @@ public class ImageResponseFormat {
         return this;
     }
 
-
     /**
      * The size of the image output.
      */
@@ -150,7 +145,6 @@ public class ImageResponseFormat {
         return this;
     }
 
-
     /**
      * The MIME type of the image output.
      */
@@ -158,7 +152,6 @@ public class ImageResponseFormat {
         this.mimeType = mimeType;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -169,33 +162,36 @@ public class ImageResponseFormat {
             return false;
         }
         ImageResponseFormat other = (ImageResponseFormat) o;
-        return 
-            Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio) &&
-            Utils.enhancedDeepEquals(this.delivery, other.delivery) &&
-            Utils.enhancedDeepEquals(this.imageSize, other.imageSize) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio)
+                && Utils.enhancedDeepEquals(this.delivery, other.delivery)
+                && Utils.enhancedDeepEquals(this.imageSize, other.imageSize)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            aspectRatio, delivery, imageSize,
-            mimeType, type);
+        return Utils.enhancedHash(aspectRatio, delivery, imageSize, mimeType, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ImageResponseFormat.class,
-                "aspectRatio", aspectRatio,
-                "delivery", delivery,
-                "imageSize", imageSize,
-                "mimeType", mimeType,
-                "type", type);
+        return Utils.toString(
+                ImageResponseFormat.class,
+                "aspectRatio",
+                aspectRatio,
+                "delivery",
+                delivery,
+                "imageSize",
+                imageSize,
+                "mimeType",
+                mimeType,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private ImageResponseFormatAspectRatio aspectRatio;
 
@@ -206,7 +202,7 @@ public class ImageResponseFormat {
         private ImageResponseFormatMimeType mimeType;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -242,16 +238,10 @@ public class ImageResponseFormat {
         }
 
         public ImageResponseFormat build() {
-            return new ImageResponseFormat(
-                aspectRatio, delivery, imageSize,
-                mimeType);
+            return new ImageResponseFormat(aspectRatio, delivery, imageSize, mimeType);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"image\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"image\"", new TypeReference<String>() {});
     }
 }

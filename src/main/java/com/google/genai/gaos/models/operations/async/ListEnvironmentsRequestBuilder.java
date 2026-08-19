@@ -77,7 +77,7 @@ public class ListEnvironmentsRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListEnvironmentsRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -86,17 +86,16 @@ public class ListEnvironmentsRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<ListEnvironmentsResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation
-              = new ListEnvironments.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation =
+                new ListEnvironments.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

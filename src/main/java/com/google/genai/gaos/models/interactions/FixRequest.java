@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * FixRequest
- * 
+ *
  * <p>Request parameters specific to FIX sessions, used for generating and
  * validating security patches.
  */
@@ -70,7 +70,7 @@ public class FixRequest {
         this.findingId = findingId;
         this.sourceFiles = sourceFiles;
     }
-    
+
     public FixRequest() {
         this(null, null, null);
     }
@@ -103,7 +103,6 @@ public class FixRequest {
         return new Builder();
     }
 
-
     /**
      * Additional context or custom instructions provided by the user to guide
      * the patch generation process.
@@ -112,7 +111,6 @@ public class FixRequest {
         this.description = description;
         return this;
     }
-
 
     /**
      * The identifier of the specific security finding to be remediated. This ID
@@ -123,7 +121,6 @@ public class FixRequest {
         return this;
     }
 
-
     /**
      * A list of source files providing context for the remediation. These files
      * are typically the ones containing the identified vulnerability.
@@ -132,7 +129,6 @@ public class FixRequest {
         this.sourceFiles = sourceFiles;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -143,28 +139,24 @@ public class FixRequest {
             return false;
         }
         FixRequest other = (FixRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.description, other.description) &&
-            Utils.enhancedDeepEquals(this.findingId, other.findingId) &&
-            Utils.enhancedDeepEquals(this.sourceFiles, other.sourceFiles);
+        return Utils.enhancedDeepEquals(this.description, other.description)
+                && Utils.enhancedDeepEquals(this.findingId, other.findingId)
+                && Utils.enhancedDeepEquals(this.sourceFiles, other.sourceFiles);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            description, findingId, sourceFiles);
+        return Utils.enhancedHash(description, findingId, sourceFiles);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FixRequest.class,
-                "description", description,
-                "findingId", findingId,
-                "sourceFiles", sourceFiles);
+        return Utils.toString(
+                FixRequest.class, "description", description, "findingId", findingId, "sourceFiles", sourceFiles);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String description;
 
@@ -173,7 +165,7 @@ public class FixRequest {
         private List<FileContent> sourceFiles;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -204,9 +196,7 @@ public class FixRequest {
         }
 
         public FixRequest build() {
-            return new FixRequest(
-                description, findingId, sourceFiles);
+            return new FixRequest(description, findingId, sourceFiles);
         }
-
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -35,12 +35,12 @@ import java.util.Optional;
 
 /**
  * Status
- * 
+ *
  * <p>The `Status` type defines a logical error model that is suitable for
  * different programming environments, including REST APIs and RPC APIs. It is
  * used by [gRPC](https://github.com/grpc). Each `Status` message contains
  * three pieces of data: error code, error message, and error details.
- * 
+ *
  * <p>You can find out more about this error model and how to work with it in the
  * [API Design Guide](https://cloud.google.com/apis/design/errors).
  */
@@ -78,7 +78,7 @@ public class Status {
         this.details = details;
         this.message = message;
     }
-    
+
     public Status() {
         this(null, null, null);
     }
@@ -111,7 +111,6 @@ public class Status {
         return new Builder();
     }
 
-
     /**
      * The status code, which should be an enum value of google.rpc.Code.
      */
@@ -119,7 +118,6 @@ public class Status {
         this.code = code;
         return this;
     }
-
 
     /**
      * A list of messages that carry the error details. There is a common set of
@@ -129,7 +127,6 @@ public class Status {
         this.details = details;
         return this;
     }
-
 
     /**
      * A developer-facing error message, which should be in English. Any
@@ -141,7 +138,6 @@ public class Status {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -151,28 +147,23 @@ public class Status {
             return false;
         }
         Status other = (Status) o;
-        return 
-            Utils.enhancedDeepEquals(this.code, other.code) &&
-            Utils.enhancedDeepEquals(this.details, other.details) &&
-            Utils.enhancedDeepEquals(this.message, other.message);
+        return Utils.enhancedDeepEquals(this.code, other.code)
+                && Utils.enhancedDeepEquals(this.details, other.details)
+                && Utils.enhancedDeepEquals(this.message, other.message);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            code, details, message);
+        return Utils.enhancedHash(code, details, message);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Status.class,
-                "code", code,
-                "details", details,
-                "message", message);
+        return Utils.toString(Status.class, "code", code, "details", details, "message", message);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer code;
 
@@ -181,7 +172,7 @@ public class Status {
         private String message;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -212,9 +203,7 @@ public class Status {
         }
 
         public Status build() {
-            return new Status(
-                code, details, message);
+            return new Status(code, details, message);
         }
-
     }
 }

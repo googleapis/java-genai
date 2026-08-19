@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.operations;
 
+import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 import static com.google.genai.gaos.utils.Exceptions.unchecked;
-import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.errors.DeleteInteractionClientError;
 import com.google.genai.gaos.models.errors.DeleteInteractionServerError;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.DeleteInteractionRequest;
 import com.google.genai.gaos.models.operations.DeleteInteractionResponse;
 import com.google.genai.gaos.utils.AsyncRetries;
@@ -60,10 +60,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-
 public class DeleteInteraction {
 
-    static abstract class Base {
+    abstract static class Base {
         final SDKConfiguration sdkConfiguration;
         final String baseUrl;
         final SecuritySource securitySource;
@@ -73,30 +72,30 @@ public class DeleteInteraction {
         final Headers _headers;
         final Globals operationGlobals;
 
-        public Base(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
+        public Base(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
             this.sdkConfiguration = sdkConfiguration;
-            this._headers =_headers;
+            this._headers = _headers;
             this.baseUrl = this.sdkConfiguration.serverUrl();
             this.securitySource = this.sdkConfiguration.securitySource();
-            Optional.ofNullable(options)
-                    .ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
+            Optional.ofNullable(options).ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
             this.retryStatusCodes = Java8Compat.listOf("408", "409", "429", "5XX");
-            this.retryConfig = Java8Compat.or(Optional.ofNullable(options)
-                    .flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
-                    .orElse(RetryConfig.builder().attemptCountBackoff(4, BackoffStrategy.builder()
-                                    .initialInterval(500, TimeUnit.MILLISECONDS)
-                                    .maxInterval(8000, TimeUnit.MILLISECONDS)
-                                    .baseFactor((double) (2))
-                                    .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
-                                    .retryConnectError(true)
-                                    .build())
+            this.retryConfig = Java8Compat.or(Optional.ofNullable(options).flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
+                    .orElse(RetryConfig.builder()
+                            .attemptCountBackoff(
+                                    4,
+                                    BackoffStrategy.builder()
+                                            .initialInterval(500, TimeUnit.MILLISECONDS)
+                                            .maxInterval(8000, TimeUnit.MILLISECONDS)
+                                            .baseFactor((double) (2))
+                                            .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
+                                            .retryConnectError(true)
+                                            .build())
                             .build());
             this.client = this.sdkConfiguration.client();
             this.operationGlobals = new Globals();
-            this.sdkConfiguration.globals.getParam("pathParam", "api_version")
-                .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
+            this.sdkConfiguration.globals
+                    .getParam("pathParam", "api_version")
+                    .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
         }
 
         Optional<SecuritySource> securitySource() {
@@ -129,15 +128,12 @@ public class DeleteInteraction {
                     java.util.Optional.empty(),
                     securitySource());
         }
-        <T>HttpRequest buildRequest(T request, Class<T> klass) throws Exception {
+
+        <T> HttpRequest buildRequest(T request, Class<T> klass) throws Exception {
             String url = Utils.generateURL(
-                    klass,
-                    this.baseUrl,
-                    "/{api_version}/interactions/{id}",
-                    request, this.operationGlobals);
+                    klass, this.baseUrl, "/{api_version}/interactions/{id}", request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "DELETE");
-            req.addHeader("Accept", "application/json")
-                    .addHeader("user-agent", SDKConfiguration.USER_AGENT);
+            req.addHeader("Accept", "application/json").addHeader("user-agent", SDKConfiguration.USER_AGENT);
             _headers.forEach((k, list) -> list.forEach(v -> req.addHeader(k, v)));
             Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity());
 
@@ -147,12 +143,8 @@ public class DeleteInteraction {
 
     public static class Sync extends Base
             implements RequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> {
-        public Sync(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+        public Sync(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
+            super(sdkConfiguration, options, _headers);
         }
 
         private HttpRequest onBuildRequest(DeleteInteractionRequest request) throws Exception {
@@ -160,11 +152,11 @@ public class DeleteInteraction {
             return sdkConfiguration.hooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error) throws Exception {
-            return sdkConfiguration.hooks().afterError(
-                    createAfterErrorContext(),
-                    Optional.ofNullable(response),
-                    Optional.ofNullable(error));
+        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error)
+                throws Exception {
+            return sdkConfiguration
+                    .hooks()
+                    .afterError(createAfterErrorContext(), Optional.ofNullable(response), Optional.ofNullable(error));
         }
 
         private HttpResponse<InputStream> onSuccess(HttpResponse<InputStream> response) throws Exception {
@@ -197,21 +189,16 @@ public class DeleteInteraction {
             return unchecked(() -> onSuccess(retries.run())).get();
         }
 
-
         @Override
         public DeleteInteractionResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
-            DeleteInteractionResponse.Builder resBuilder =
-                    DeleteInteractionResponse
-                            .builder()
-                            .contentType(contentType)
-                            .statusCode(response.statusCode())
-                            .rawResponse(response);
+            String contentType = response.contentType().orElse("application/octet-stream");
+            DeleteInteractionResponse.Builder resBuilder = DeleteInteractionResponse.builder()
+                    .contentType(contentType)
+                    .statusCode(response.statusCode())
+                    .rawResponse(response);
 
             DeleteInteractionResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 // no content
                 Utils.closeQuietly(response.body());
@@ -221,29 +208,31 @@ public class DeleteInteraction {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
+
     public static class Async extends Base
-            implements AsyncRequestOperation<DeleteInteractionRequest, com.google.genai.gaos.models.operations.async.DeleteInteractionResponse> {
+            implements AsyncRequestOperation<
+                    DeleteInteractionRequest, com.google.genai.gaos.models.operations.async.DeleteInteractionResponse> {
         private final ScheduledExecutorService retryScheduler;
 
         public Async(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                @Nullable ScheduledExecutorService retryScheduler, Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+                @Nonnull SDKConfiguration sdkConfiguration,
+                @Nullable Options options,
+                @Nullable ScheduledExecutorService retryScheduler,
+                Headers _headers) {
+            super(sdkConfiguration, options, _headers);
             this.retryScheduler = retryScheduler;
         }
 
@@ -259,7 +248,8 @@ public class DeleteInteraction {
             return this.sdkConfiguration.asyncHooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private CompletableFuture<HttpResponse<InputStream>> onError(HttpResponse<InputStream> response, Throwable error) {
+        private CompletableFuture<HttpResponse<InputStream>> onError(
+                HttpResponse<InputStream> response, Throwable error) {
             return this.sdkConfiguration.asyncHooks().afterError(createAfterErrorContext(), response, error);
         }
 
@@ -274,35 +264,34 @@ public class DeleteInteraction {
                     .statusCodes(retryStatusCodes)
                     .scheduler(retryScheduler)
                     .build();
-            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request)).get()
-                            .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
-                            .handle((resp, err) -> {
-                                if (err != null) {
-                                    return onError(null, err);
-                                }
-                                if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
-                                    return onError(resp, null);
-                                }
-                                return CompletableFuture.completedFuture(resp);
-                            })
-                            .thenCompose(Function.identity()))
+            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request))
+                    .get()
+                    .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
+                    .handle((resp, err) -> {
+                        if (err != null) {
+                            return onError(null, err);
+                        }
+                        if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
+                            return onError(resp, null);
+                        }
+                        return CompletableFuture.completedFuture(resp);
+                    })
+                    .thenCompose(Function.identity()))
                     .thenCompose(this::onSuccess);
         }
 
         @Override
-        public com.google.genai.gaos.models.operations.async.DeleteInteractionResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
+        public com.google.genai.gaos.models.operations.async.DeleteInteractionResponse handleResponse(
+                HttpResponse<InputStream> response) {
+            String contentType = response.contentType().orElse("application/octet-stream");
             com.google.genai.gaos.models.operations.async.DeleteInteractionResponse.Builder resBuilder =
-                    com.google.genai.gaos.models.operations.async.DeleteInteractionResponse
-                            .builder()
+                    com.google.genai.gaos.models.operations.async.DeleteInteractionResponse.builder()
                             .contentType(contentType)
                             .statusCode(response.statusCode())
                             .rawResponse(response);
 
             com.google.genai.gaos.models.operations.async.DeleteInteractionResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "200")) {
                 // no content
                 Utils.closeQuietly(response.body());
@@ -312,17 +301,17 @@ public class DeleteInteraction {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

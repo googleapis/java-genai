@@ -54,7 +54,8 @@ public class CreateEnvironmentRequestBuilder {
         return this;
     }
 
-    public CreateEnvironmentRequestBuilder body(@Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
+    public CreateEnvironmentRequestBuilder body(
+            @Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
         this.pojoBuilder.body(body);
         this._setterCalled = true;
         return this;
@@ -71,7 +72,7 @@ public class CreateEnvironmentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateEnvironmentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -80,17 +81,16 @@ public class CreateEnvironmentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<CreateEnvironmentResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CreateEnvironmentRequest, CreateEnvironmentResponse> operation
-              = new CreateEnvironment.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateEnvironmentRequest, CreateEnvironmentResponse> operation =
+                new CreateEnvironment.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

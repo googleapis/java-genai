@@ -36,15 +36,18 @@ import java.util.Optional;
  */
 /**
  * RetrievalCallDeltaRetrievalType
- * 
+ *
  * <p>The type of retrieval tools.
  */
 public class RetrievalCallDeltaRetrievalType {
 
-    public static final RetrievalCallDeltaRetrievalType VERTEX_AI_SEARCH = new RetrievalCallDeltaRetrievalType("vertex_ai_search");
+    public static final RetrievalCallDeltaRetrievalType VERTEX_AI_SEARCH =
+            new RetrievalCallDeltaRetrievalType("vertex_ai_search");
     public static final RetrievalCallDeltaRetrievalType RAG_STORE = new RetrievalCallDeltaRetrievalType("rag_store");
-    public static final RetrievalCallDeltaRetrievalType EXA_AI_SEARCH = new RetrievalCallDeltaRetrievalType("exa_ai_search");
-    public static final RetrievalCallDeltaRetrievalType PARALLEL_AI_SEARCH = new RetrievalCallDeltaRetrievalType("parallel_ai_search");
+    public static final RetrievalCallDeltaRetrievalType EXA_AI_SEARCH =
+            new RetrievalCallDeltaRetrievalType("exa_ai_search");
+    public static final RetrievalCallDeltaRetrievalType PARALLEL_AI_SEARCH =
+            new RetrievalCallDeltaRetrievalType("parallel_ai_search");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -61,12 +64,12 @@ public class RetrievalCallDeltaRetrievalType {
     }
 
     /**
-     * Returns a RetrievalCallDeltaRetrievalType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a RetrievalCallDeltaRetrievalType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as RetrievalCallDeltaRetrievalType
-     */ 
+     */
     @JsonCreator
     public static RetrievalCallDeltaRetrievalType of(String value) {
         synchronized (RetrievalCallDeltaRetrievalType.class) {
@@ -94,12 +97,9 @@ public class RetrievalCallDeltaRetrievalType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         RetrievalCallDeltaRetrievalType other = (RetrievalCallDeltaRetrievalType) obj;
         return Objects.equals(value, other.value);
     }
@@ -133,14 +133,14 @@ public class RetrievalCallDeltaRetrievalType {
         map.put("parallel_ai_search", RetrievalCallDeltaRetrievalTypeEnum.PARALLEL_AI_SEARCH);
         return map;
     }
-    
-    
+
     public enum RetrievalCallDeltaRetrievalTypeEnum {
 
         VERTEX_AI_SEARCH("vertex_ai_search"),
         RAG_STORE("rag_store"),
         EXA_AI_SEARCH("exa_ai_search"),
-        PARALLEL_AI_SEARCH("parallel_ai_search"),;
+        PARALLEL_AI_SEARCH("parallel_ai_search"),
+        ;
 
         private final String value;
 
@@ -153,4 +153,3 @@ public class RetrievalCallDeltaRetrievalType {
         }
     }
 }
-

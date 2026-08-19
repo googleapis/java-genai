@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * ModalityTokens
- * 
+ *
  * <p>The token count for a single response modality.
  */
 public class ModalityTokens {
@@ -55,7 +55,7 @@ public class ModalityTokens {
         this.modality = modality;
         this.tokens = tokens;
     }
-    
+
     public ModalityTokens() {
         this(null, null);
     }
@@ -75,12 +75,10 @@ public class ModalityTokens {
         return new Builder();
     }
 
-
     public ModalityTokens withModality(@Nullable ResponseModality modality) {
         this.modality = modality;
         return this;
     }
-
 
     /**
      * Number of tokens for the modality.
@@ -89,7 +87,6 @@ public class ModalityTokens {
         this.tokens = tokens;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -100,33 +97,29 @@ public class ModalityTokens {
             return false;
         }
         ModalityTokens other = (ModalityTokens) o;
-        return 
-            Utils.enhancedDeepEquals(this.modality, other.modality) &&
-            Utils.enhancedDeepEquals(this.tokens, other.tokens);
+        return Utils.enhancedDeepEquals(this.modality, other.modality)
+                && Utils.enhancedDeepEquals(this.tokens, other.tokens);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            modality, tokens);
+        return Utils.enhancedHash(modality, tokens);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ModalityTokens.class,
-                "modality", modality,
-                "tokens", tokens);
+        return Utils.toString(ModalityTokens.class, "modality", modality, "tokens", tokens);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private ResponseModality modality;
 
         private Integer tokens;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder modality(@Nullable ResponseModality modality) {
@@ -143,9 +136,7 @@ public class ModalityTokens {
         }
 
         public ModalityTokens build() {
-            return new ModalityTokens(
-                modality, tokens);
+            return new ModalityTokens(modality, tokens);
         }
-
     }
 }

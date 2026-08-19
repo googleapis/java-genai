@@ -27,8 +27,7 @@ class HeaderMetadata {
     boolean explode;
     String name;
 
-    private HeaderMetadata() {
-    }
+    private HeaderMetadata() {}
 
     // headerParam:style=simple,explode=false,name=apiID
     static HeaderMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {

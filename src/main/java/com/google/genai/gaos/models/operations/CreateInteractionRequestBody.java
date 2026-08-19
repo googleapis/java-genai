@@ -27,9 +27,9 @@ import com.google.genai.gaos.models.interactions.CreateAgentInteraction;
 import com.google.genai.gaos.models.interactions.CreateModelInteraction;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -37,7 +37,7 @@ import java.util.Optional;
 
 /**
  * CreateInteractionRequestBody
- * 
+ *
  * <p>The request body.
  */
 @JsonDeserialize(using = CreateInteractionRequestBody._Deserializer.class)
@@ -45,21 +45,23 @@ public class CreateInteractionRequestBody {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private CreateInteractionRequestBody(TypedObject value) {
         this.value = value;
     }
 
     public static CreateInteractionRequestBody of(CreateModelInteraction value) {
         Utils.checkNotNull(value, "value");
-        return new CreateInteractionRequestBody(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateModelInteraction>(){}));
+        return new CreateInteractionRequestBody(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateModelInteraction>() {}));
     }
 
     public static CreateInteractionRequestBody of(CreateAgentInteraction value) {
         Utils.checkNotNull(value, "value");
-        return new CreateInteractionRequestBody(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateAgentInteraction>(){}));
+        return new CreateInteractionRequestBody(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateAgentInteraction>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code CreateModelInteraction},
      * otherwise returns an empty {@link Optional}.
@@ -72,7 +74,7 @@ public class CreateInteractionRequestBody {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code CreateAgentInteraction},
      * otherwise returns an empty {@link Optional}.
@@ -85,19 +87,19 @@ public class CreateInteractionRequestBody {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -109,27 +111,26 @@ public class CreateInteractionRequestBody {
         CreateInteractionRequestBody other = (CreateInteractionRequestBody) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<CreateInteractionRequestBody> {
 
         public _Deserializer() {
-            super(CreateInteractionRequestBody.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<CreateModelInteraction>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<CreateAgentInteraction>() {}, JsonShape.DEFAULT));
+            super(
+                    CreateInteractionRequestBody.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<CreateModelInteraction>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<CreateAgentInteraction>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateInteractionRequestBody.class,
-                "value", value);
+        return Utils.toString(CreateInteractionRequestBody.class, "value", value);
     }
-
 }
-

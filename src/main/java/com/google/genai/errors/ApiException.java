@@ -51,6 +51,17 @@ public class ApiException extends BaseException {
     this.message = message;
   }
 
+  /**
+   * Creates a new ApiException carrying the originating cause (e.g. a reparented gaos error). Lets
+   * translated interaction errors keep their original stack/message.
+   */
+  public ApiException(int code, String status, String message, Throwable cause) {
+    super(String.format("%d %s. %s", code, status, message), cause);
+    this.code = code;
+    this.status = status;
+    this.message = message;
+  }
+
 
   /**
    * Throws an ApiException from the response if the response is not a OK status.

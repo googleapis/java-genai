@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -37,7 +37,7 @@ import java.util.Optional;
 
 /**
  * Transform
- * 
+ *
  * <p>Headers to inject on all outbound requests matching this domain. Accepts a single dict or a list of
  * dicts. The egress proxy injects these automatically.
  */
@@ -46,21 +46,22 @@ public class Transform {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private Transform(TypedObject value) {
         this.value = value;
     }
 
     public static Transform of(Map<String, String> value) {
         Utils.checkNotNull(value, "value");
-        return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, String>>(){}));
+        return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, String>>() {}));
     }
 
     public static Transform of(List<Map<String, String>> value) {
         Utils.checkNotNull(value, "value");
-        return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Map<String, String>>>(){}));
+        return new Transform(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Map<String, String>>>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code Map<String, String>},
      * otherwise returns an empty {@link Optional}.
@@ -74,7 +75,7 @@ public class Transform {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code List<Map<String, String>>},
      * otherwise returns an empty {@link Optional}.
@@ -88,19 +89,19 @@ public class Transform {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -112,27 +113,26 @@ public class Transform {
         Transform other = (Transform) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<Transform> {
 
         public _Deserializer() {
-            super(Transform.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Map<String, String>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<Map<String, String>>>() {}, JsonShape.DEFAULT));
+            super(
+                    Transform.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<Map<String, String>>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<List<Map<String, String>>>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Transform.class,
-                "value", value);
+        return Utils.toString(Transform.class, "value", value);
     }
-
 }
-

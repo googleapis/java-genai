@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Visualization
- * 
+ *
  * <p>Whether to include visualizations in the response.
  */
 public class Visualization {
@@ -59,12 +59,12 @@ public class Visualization {
     }
 
     /**
-     * Returns a Visualization with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Visualization with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Visualization
-     */ 
+     */
     @JsonCreator
     public static Visualization of(String value) {
         synchronized (Visualization.class) {
@@ -92,12 +92,9 @@ public class Visualization {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Visualization other = (Visualization) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class Visualization {
         map.put("auto", VisualizationEnum.AUTO);
         return map;
     }
-    
-    
+
     public enum VisualizationEnum {
 
         OFF("off"),
-        AUTO("auto"),;
+        AUTO("auto"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class Visualization {
         }
     }
 }
-

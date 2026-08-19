@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * AntigravityAgentConfig
- * 
+ *
  * <p>Configuration for the Antigravity agent runtime.
  * Provides server-side control over the agent's execution environment
  * and tool configuration.
@@ -53,7 +53,6 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
     @JsonProperty("model")
     private String model;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -65,7 +64,7 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
         this.model = model;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public AntigravityAgentConfig() {
         this(null, null);
     }
@@ -93,7 +92,6 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
         return new Builder();
     }
 
-
     /**
      * Max total tokens for the agent run.
      */
@@ -102,7 +100,6 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
         return this;
     }
 
-
     /**
      * The model to use for agent reasoning.
      */
@@ -110,7 +107,6 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
         this.model = model;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -121,35 +117,31 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
             return false;
         }
         AntigravityAgentConfig other = (AntigravityAgentConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.maxTotalTokens, other.maxTotalTokens) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.maxTotalTokens, other.maxTotalTokens)
+                && Utils.enhancedDeepEquals(this.model, other.model)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            maxTotalTokens, model, type);
+        return Utils.enhancedHash(maxTotalTokens, model, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AntigravityAgentConfig.class,
-                "maxTotalTokens", maxTotalTokens,
-                "model", model,
-                "type", type);
+        return Utils.toString(
+                AntigravityAgentConfig.class, "maxTotalTokens", maxTotalTokens, "model", model, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String maxTotalTokens;
 
         private String model;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -169,15 +161,10 @@ public class AntigravityAgentConfig implements InteractionAgentConfig, CreateAge
         }
 
         public AntigravityAgentConfig build() {
-            return new AntigravityAgentConfig(
-                maxTotalTokens, model);
+            return new AntigravityAgentConfig(maxTotalTokens, model);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"antigravity\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"antigravity\"", new TypeReference<String>() {});
     }
 }

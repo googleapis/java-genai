@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class AudioDelta implements StepDeltaData {
     /**
      * The number of audio channels.
@@ -42,11 +41,9 @@ public class AudioDelta implements StepDeltaData {
     @JsonProperty("channels")
     private Integer channels;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("data")
     private String data;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mime_type")
@@ -54,7 +51,7 @@ public class AudioDelta implements StepDeltaData {
 
     /**
      * Deprecated. Use sample_rate instead. The value is ignored.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -69,10 +66,8 @@ public class AudioDelta implements StepDeltaData {
     @JsonProperty("sample_rate")
     private Integer sampleRate;
 
-
     @JsonProperty("type")
     private String type;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("uri")
@@ -94,10 +89,9 @@ public class AudioDelta implements StepDeltaData {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
     }
-    
+
     public AudioDelta() {
-        this(null, null, null,
-            null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     /**
@@ -117,7 +111,7 @@ public class AudioDelta implements StepDeltaData {
 
     /**
      * Deprecated. Use sample_rate instead. The value is ignored.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -145,7 +139,6 @@ public class AudioDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * The number of audio channels.
      */
@@ -154,22 +147,19 @@ public class AudioDelta implements StepDeltaData {
         return this;
     }
 
-
     public AudioDelta withData(@Nullable String data) {
         this.data = data;
         return this;
     }
-
 
     public AudioDelta withMimeType(@Nullable AudioDeltaMimeType mimeType) {
         this.mimeType = mimeType;
         return this;
     }
 
-
     /**
      * Deprecated. Use sample_rate instead. The value is ignored.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -177,7 +167,6 @@ public class AudioDelta implements StepDeltaData {
         this.rate = rate;
         return this;
     }
-
 
     /**
      * The sample rate of the audio.
@@ -187,12 +176,10 @@ public class AudioDelta implements StepDeltaData {
         return this;
     }
 
-
     public AudioDelta withUri(@Nullable String uri) {
         this.uri = uri;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -203,38 +190,42 @@ public class AudioDelta implements StepDeltaData {
             return false;
         }
         AudioDelta other = (AudioDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.channels, other.channels) &&
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.rate, other.rate) &&
-            Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.channels, other.channels)
+                && Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.rate, other.rate)
+                && Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            channels, data, mimeType,
-            rate, sampleRate, type,
-            uri);
+        return Utils.enhancedHash(channels, data, mimeType, rate, sampleRate, type, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AudioDelta.class,
-                "channels", channels,
-                "data", data,
-                "mimeType", mimeType,
-                "rate", rate,
-                "sampleRate", sampleRate,
-                "type", type,
-                "uri", uri);
+        return Utils.toString(
+                AudioDelta.class,
+                "channels",
+                channels,
+                "data",
+                data,
+                "mimeType",
+                mimeType,
+                "rate",
+                rate,
+                "sampleRate",
+                sampleRate,
+                "type",
+                type,
+                "uri",
+                uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer channels;
 
@@ -250,7 +241,7 @@ public class AudioDelta implements StepDeltaData {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -273,7 +264,7 @@ public class AudioDelta implements StepDeltaData {
 
         /**
          * Deprecated. Use sample_rate instead. The value is ignored.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -296,16 +287,10 @@ public class AudioDelta implements StepDeltaData {
         }
 
         public AudioDelta build() {
-            return new AudioDelta(
-                channels, data, mimeType,
-                rate, sampleRate, uri);
+            return new AudioDelta(channels, data, mimeType, rate, sampleRate, uri);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"audio\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"audio\"", new TypeReference<String>() {});
     }
 }

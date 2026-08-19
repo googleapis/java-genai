@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * HybridSearch
- * 
+ *
  * <p>Config for Hybrid Search.
  */
 public class HybridSearch {
@@ -45,11 +45,10 @@ public class HybridSearch {
     private Float alpha;
 
     @JsonCreator
-    public HybridSearch(
-            @JsonProperty("alpha") @Nullable Float alpha) {
+    public HybridSearch(@JsonProperty("alpha") @Nullable Float alpha) {
         this.alpha = alpha;
     }
-    
+
     public HybridSearch() {
         this(null);
     }
@@ -66,7 +65,6 @@ public class HybridSearch {
         return new Builder();
     }
 
-
     /**
      * Optional. Alpha value controls the weight between dense and sparse vector search
      * results.
@@ -75,7 +73,6 @@ public class HybridSearch {
         this.alpha = alpha;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -86,29 +83,26 @@ public class HybridSearch {
             return false;
         }
         HybridSearch other = (HybridSearch) o;
-        return 
-            Utils.enhancedDeepEquals(this.alpha, other.alpha);
+        return Utils.enhancedDeepEquals(this.alpha, other.alpha);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            alpha);
+        return Utils.enhancedHash(alpha);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(HybridSearch.class,
-                "alpha", alpha);
+        return Utils.toString(HybridSearch.class, "alpha", alpha);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Float alpha;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -121,9 +115,7 @@ public class HybridSearch {
         }
 
         public HybridSearch build() {
-            return new HybridSearch(
-                alpha);
+            return new HybridSearch(alpha);
         }
-
     }
 }

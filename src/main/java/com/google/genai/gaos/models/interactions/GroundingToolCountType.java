@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * GroundingToolCountType
- * 
+ *
  * <p>The grounding tool type associated with the count.
  */
 public class GroundingToolCountType {
@@ -60,12 +60,12 @@ public class GroundingToolCountType {
     }
 
     /**
-     * Returns a GroundingToolCountType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a GroundingToolCountType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as GroundingToolCountType
-     */ 
+     */
     @JsonCreator
     public static GroundingToolCountType of(String value) {
         synchronized (GroundingToolCountType.class) {
@@ -93,12 +93,9 @@ public class GroundingToolCountType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         GroundingToolCountType other = (GroundingToolCountType) obj;
         return Objects.equals(value, other.value);
     }
@@ -130,13 +127,13 @@ public class GroundingToolCountType {
         map.put("retrieval", GroundingToolCountTypeEnum.RETRIEVAL);
         return map;
     }
-    
-    
+
     public enum GroundingToolCountTypeEnum {
 
         GOOGLE_SEARCH("google_search"),
         GOOGLE_MAPS("google_maps"),
-        RETRIEVAL("retrieval"),;
+        RETRIEVAL("retrieval"),
+        ;
 
         private final String value;
 
@@ -149,4 +146,3 @@ public class GroundingToolCountType {
         }
     }
 }
-

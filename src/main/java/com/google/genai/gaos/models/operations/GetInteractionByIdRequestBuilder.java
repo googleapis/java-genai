@@ -54,7 +54,7 @@ public class GetInteractionByIdRequestBuilder {
     private GetInteractionByIdRequest _buildRequest() {
         return this.request;
     }
-    
+
     public GetInteractionByIdRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -63,14 +63,14 @@ public class GetInteractionByIdRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public GetInteractionByIdResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<GetInteractionByIdRequest, GetInteractionByIdResponse> operation
-              = new GetInteractionById.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetInteractionByIdRequest, GetInteractionByIdResponse> operation =
+                new GetInteractionById.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

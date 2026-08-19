@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * ImageContent
- * 
+ *
  * <p>An image content block.
  */
 public class ImageContent implements Content, ThoughtSummaryContent, FunctionResultSubcontent {
@@ -44,11 +44,9 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
     @JsonProperty("data")
     private String data;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("resolution")
     private MediaResolution resolution;
-
 
     @JsonProperty("type")
     private String type;
@@ -79,10 +77,9 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         this.uri = uri;
         this.mimeType = mimeType;
     }
-    
+
     public ImageContent() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -119,7 +116,6 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         return new Builder();
     }
 
-
     /**
      * The image content.
      */
@@ -128,12 +124,10 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         return this;
     }
 
-
     public ImageContent withResolution(@Nullable MediaResolution resolution) {
         this.resolution = resolution;
         return this;
     }
-
 
     /**
      * The URI of the image.
@@ -143,7 +137,6 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         return this;
     }
 
-
     /**
      * The mime type of the image.
      */
@@ -151,7 +144,6 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         this.mimeType = mimeType;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -162,33 +154,36 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
             return false;
         }
         ImageContent other = (ImageContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+        return Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.resolution, other.resolution)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data, resolution, type,
-            uri, mimeType);
+        return Utils.enhancedHash(data, resolution, type, uri, mimeType);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ImageContent.class,
-                "data", data,
-                "resolution", resolution,
-                "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+        return Utils.toString(
+                ImageContent.class,
+                "data",
+                data,
+                "resolution",
+                resolution,
+                "type",
+                type,
+                "uri",
+                uri,
+                "mimeType",
+                mimeType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String data;
 
@@ -199,7 +194,7 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         private ImageContentMimeType mimeType;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -232,16 +227,10 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         }
 
         public ImageContent build() {
-            return new ImageContent(
-                data, resolution, uri,
-                mimeType);
+            return new ImageContent(data, resolution, uri, mimeType);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"image\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"image\"", new TypeReference<String>() {});
     }
 }

@@ -21,7 +21,6 @@ package com.google.genai.gaos.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -32,13 +31,13 @@ import java.util.stream.StreamSupport;
 /**
  * Provides a convenient way to consume Server-Sent Events (SSE) from a stream.
  * <p>
- * Each SSE message's {@code data} field is deserialized into the type {@code T}, 
+ * Each SSE message's {@code data} field is deserialized into the type {@code T},
  * allowing for easy processing of events as domain objects.
  * </p>
  *
  * <h2>Event Consumption</h2>
  * <p>Events can be consumed in multiple ways:</p>
- * 
+ *
  * <ul>
  *   <li><b>Iteration:</b> Use a for-each loop to process each event:</li>
  * </ul>
@@ -49,7 +48,7 @@ import java.util.stream.StreamSupport;
  *     }
  * }
  * }</pre>
- * 
+ *
  * <ul>
  *   <li><b>Stream API:</b> Consume events as a Java Stream (must be closed after use):</li>
  * </ul>
@@ -75,8 +74,8 @@ import java.util.stream.StreamSupport;
  * </p>
  *
  * <p>
- * <b>Important:</b> This class implements {@link AutoCloseable} and must be used 
- * within a <em>try-with-resources</em> block to ensure that underlying streams are 
+ * <b>Important:</b> This class implements {@link AutoCloseable} and must be used
+ * within a <em>try-with-resources</em> block to ensure that underlying streams are
  * properly closed after consumption, preventing resource leaks.
  * </p>
  *
@@ -95,19 +94,26 @@ public final class EventStream<T> implements Iterable<T>, AutoCloseable {
     private boolean closed = false;
 
     // Internal use only
-    public EventStream(InputStream in, TypeReference<T> typeReference, ObjectMapper mapper, Optional<String> terminalMessage) {
+    public EventStream(
+            InputStream in, TypeReference<T> typeReference, ObjectMapper mapper, Optional<String> terminalMessage) {
         this(in, typeReference, mapper, terminalMessage, true);
     }
 
     // Internal use only
-    public EventStream(InputStream in, TypeReference<T> typeReference, ObjectMapper mapper, Optional<String> terminalMessage, boolean dataRequired) {
+    public EventStream(
+            InputStream in,
+            TypeReference<T> typeReference,
+            ObjectMapper mapper,
+            Optional<String> terminalMessage,
+            boolean dataRequired) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8), 8192);
         this.parser = BlockingParser.forSSE(reader);
         this.typeReference = typeReference;
         this.mapper = mapper;
         this.terminalMessage = terminalMessage;
         this.dataRequired = dataRequired;
-        logger.debug("EventStream initialized for type: {}", typeReference.getType().getTypeName());
+        logger.debug(
+                "EventStream initialized for type: {}", typeReference.getType().getTypeName());
     }
 
     /**
@@ -125,7 +131,9 @@ public final class EventStream<T> implements Iterable<T>, AutoCloseable {
                 return Optional.empty();
             }
             EventStreamMessage msg = message.get();
-            boolean isTerminal = terminalMessage.flatMap(sentinel -> msg.data().map(sentinel::equals)).orElse(false);
+            boolean isTerminal = terminalMessage
+                    .flatMap(sentinel -> msg.data().map(sentinel::equals))
+                    .orElse(false);
             if (isTerminal) {
                 terminated = true;
                 if (logger.isTraceEnabled()) {
@@ -185,10 +193,7 @@ public final class EventStream<T> implements Iterable<T>, AutoCloseable {
      * @return streamed events
      */
     public Stream<T> stream() {
-        return StreamSupport.stream(
-                        Spliterators.spliteratorUnknownSize(
-                                iterator(),
-                                Spliterator.ORDERED), false)
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), Spliterator.ORDERED), false)
                 .onClose(() -> {
                     try {
                         EventStream.this.close();

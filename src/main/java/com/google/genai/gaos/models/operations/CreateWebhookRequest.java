@@ -29,7 +29,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CreateWebhookRequest {
     /**
      * Which version of the API to use.
@@ -44,16 +43,12 @@ public class CreateWebhookRequest {
     private WebhookInput body;
 
     @JsonCreator
-    public CreateWebhookRequest(
-            @Nullable String apiVersion,
-            @Nonnull WebhookInput body) {
+    public CreateWebhookRequest(@Nullable String apiVersion, @Nonnull WebhookInput body) {
         this.apiVersion = apiVersion;
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.body = Optional.ofNullable(body).orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
-    
-    public CreateWebhookRequest(
-            @Nonnull WebhookInput body) {
+
+    public CreateWebhookRequest(@Nonnull WebhookInput body) {
         this(null, body);
     }
 
@@ -75,7 +70,6 @@ public class CreateWebhookRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -84,7 +78,6 @@ public class CreateWebhookRequest {
         return this;
     }
 
-
     /**
      * Required. The webhook to create.
      */
@@ -92,7 +85,6 @@ public class CreateWebhookRequest {
         this.body = Utils.checkNotNull(body, "body");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -103,33 +95,29 @@ public class CreateWebhookRequest {
             return false;
         }
         CreateWebhookRequest other = (CreateWebhookRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, body);
+        return Utils.enhancedHash(apiVersion, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateWebhookRequest.class,
-                "apiVersion", apiVersion,
-                "body", body);
+        return Utils.toString(CreateWebhookRequest.class, "apiVersion", apiVersion, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private WebhookInput body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -149,9 +137,7 @@ public class CreateWebhookRequest {
         }
 
         public CreateWebhookRequest build() {
-            return new CreateWebhookRequest(
-                apiVersion, body);
+            return new CreateWebhookRequest(apiVersion, body);
         }
-
     }
 }

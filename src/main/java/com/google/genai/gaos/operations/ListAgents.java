@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.operations;
 
+import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 import static com.google.genai.gaos.utils.Exceptions.unchecked;
-import static com.google.genai.gaos.operations.Operations.AsyncRequestOperation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.agents.AgentListResponse;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.ListAgentsRequest;
 import com.google.genai.gaos.models.operations.ListAgentsResponse;
 import com.google.genai.gaos.utils.AsyncRetries;
@@ -60,10 +60,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-
 public class ListAgents {
 
-    static abstract class Base {
+    abstract static class Base {
         final SDKConfiguration sdkConfiguration;
         final String baseUrl;
         final SecuritySource securitySource;
@@ -73,30 +72,30 @@ public class ListAgents {
         final Headers _headers;
         final Globals operationGlobals;
 
-        public Base(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
+        public Base(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
             this.sdkConfiguration = sdkConfiguration;
-            this._headers =_headers;
+            this._headers = _headers;
             this.baseUrl = this.sdkConfiguration.serverUrl();
             this.securitySource = this.sdkConfiguration.securitySource();
-            Optional.ofNullable(options)
-                    .ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
+            Optional.ofNullable(options).ifPresent(o -> o.validate(Java8Compat.listOf(Options.Option.RETRY_CONFIG)));
             this.retryStatusCodes = Java8Compat.listOf("408", "409", "429", "5XX");
-            this.retryConfig = Java8Compat.or(Optional.ofNullable(options)
-                    .flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
-                    .orElse(RetryConfig.builder().attemptCountBackoff(4, BackoffStrategy.builder()
-                                    .initialInterval(500, TimeUnit.MILLISECONDS)
-                                    .maxInterval(8000, TimeUnit.MILLISECONDS)
-                                    .baseFactor((double) (2))
-                                    .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
-                                    .retryConnectError(true)
-                                    .build())
+            this.retryConfig = Java8Compat.or(Optional.ofNullable(options).flatMap(Options::retryConfig), sdkConfiguration::retryConfig)
+                    .orElse(RetryConfig.builder()
+                            .attemptCountBackoff(
+                                    4,
+                                    BackoffStrategy.builder()
+                                            .initialInterval(500, TimeUnit.MILLISECONDS)
+                                            .maxInterval(8000, TimeUnit.MILLISECONDS)
+                                            .baseFactor((double) (2))
+                                            .maxElapsedTime(30000, TimeUnit.MILLISECONDS)
+                                            .retryConnectError(true)
+                                            .build())
                             .build());
             this.client = this.sdkConfiguration.client();
             this.operationGlobals = new Globals();
-            this.sdkConfiguration.globals.getParam("pathParam", "api_version")
-                .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
+            this.sdkConfiguration.globals
+                    .getParam("pathParam", "api_version")
+                    .ifPresent(param -> operationGlobals.putParam("pathParam", "api_version", param));
         }
 
         Optional<SecuritySource> securitySource() {
@@ -105,59 +104,36 @@ public class ListAgents {
 
         BeforeRequestContextImpl createBeforeRequestContext() {
             return new BeforeRequestContextImpl(
-                    this.sdkConfiguration,
-                    this.baseUrl,
-                    "ListAgents",
-                    java.util.Optional.empty(),
-                    securitySource());
+                    this.sdkConfiguration, this.baseUrl, "ListAgents", java.util.Optional.empty(), securitySource());
         }
 
         AfterSuccessContextImpl createAfterSuccessContext() {
             return new AfterSuccessContextImpl(
-                    this.sdkConfiguration,
-                    this.baseUrl,
-                    "ListAgents",
-                    java.util.Optional.empty(),
-                    securitySource());
+                    this.sdkConfiguration, this.baseUrl, "ListAgents", java.util.Optional.empty(), securitySource());
         }
 
         AfterErrorContextImpl createAfterErrorContext() {
             return new AfterErrorContextImpl(
-                    this.sdkConfiguration,
-                    this.baseUrl,
-                    "ListAgents",
-                    java.util.Optional.empty(),
-                    securitySource());
+                    this.sdkConfiguration, this.baseUrl, "ListAgents", java.util.Optional.empty(), securitySource());
         }
-        <T>HttpRequest buildRequest(T request, Class<T> klass) throws Exception {
-            String url = Utils.generateURL(
-                    klass,
-                    this.baseUrl,
-                    "/{api_version}/agents",
-                    request, this.operationGlobals);
+
+        <T> HttpRequest buildRequest(T request, Class<T> klass) throws Exception {
+            String url =
+                    Utils.generateURL(klass, this.baseUrl, "/{api_version}/agents", request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "GET");
-            req.addHeader("Accept", "application/json")
-                    .addHeader("user-agent", SDKConfiguration.USER_AGENT);
+            req.addHeader("Accept", "application/json").addHeader("user-agent", SDKConfiguration.USER_AGENT);
             _headers.forEach((k, list) -> list.forEach(v -> req.addHeader(k, v)));
 
-            req.addQueryParams(Utils.getQueryParams(
-                    klass,
-                    request,
-                    this.operationGlobals));
+            req.addQueryParams(Utils.getQueryParams(klass, request, this.operationGlobals));
             Utils.configureSecurity(req, this.sdkConfiguration.securitySource().getSecurity());
 
             return req.build();
         }
     }
 
-    public static class Sync extends Base
-            implements RequestOperation<ListAgentsRequest, ListAgentsResponse> {
-        public Sync(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+    public static class Sync extends Base implements RequestOperation<ListAgentsRequest, ListAgentsResponse> {
+        public Sync(@Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options, Headers _headers) {
+            super(sdkConfiguration, options, _headers);
         }
 
         private HttpRequest onBuildRequest(ListAgentsRequest request) throws Exception {
@@ -165,11 +141,11 @@ public class ListAgents {
             return sdkConfiguration.hooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error) throws Exception {
-            return sdkConfiguration.hooks().afterError(
-                    createAfterErrorContext(),
-                    Optional.ofNullable(response),
-                    Optional.ofNullable(error));
+        private HttpResponse<InputStream> onError(HttpResponse<InputStream> response, Exception error)
+                throws Exception {
+            return sdkConfiguration
+                    .hooks()
+                    .afterError(createAfterErrorContext(), Optional.ofNullable(response), Optional.ofNullable(error));
         }
 
         private HttpResponse<InputStream> onSuccess(HttpResponse<InputStream> response) throws Exception {
@@ -202,49 +178,46 @@ public class ListAgents {
             return unchecked(() -> onSuccess(retries.run())).get();
         }
 
-
         @Override
         public ListAgentsResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
-            ListAgentsResponse.Builder resBuilder =
-                    ListAgentsResponse
-                            .builder()
-                            .contentType(contentType)
-                            .statusCode(response.statusCode())
-                            .rawResponse(response);
+            String contentType = response.contentType().orElse("application/octet-stream");
+            ListAgentsResponse.Builder resBuilder = ListAgentsResponse.builder()
+                    .contentType(contentType)
+                    .statusCode(response.statusCode())
+                    .rawResponse(response);
 
             ListAgentsResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "default")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withAgentListResponse(Utils.unmarshal(response, new TypeReference<AgentListResponse>() {}));
+                    return res.withAgentListResponse(
+                            Utils.unmarshal(response, new TypeReference<AgentListResponse>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
+
     public static class Async extends Base
             implements AsyncRequestOperation<ListAgentsRequest, com.google.genai.gaos.models.operations.async.ListAgentsResponse> {
         private final ScheduledExecutorService retryScheduler;
 
         public Async(
-                @Nonnull SDKConfiguration sdkConfiguration, @Nullable Options options,
-                @Nullable ScheduledExecutorService retryScheduler, Headers _headers) {
-            super(
-                  sdkConfiguration, options,
-                  _headers);
+                @Nonnull SDKConfiguration sdkConfiguration,
+                @Nullable Options options,
+                @Nullable ScheduledExecutorService retryScheduler,
+                Headers _headers) {
+            super(sdkConfiguration, options, _headers);
             this.retryScheduler = retryScheduler;
         }
 
@@ -260,7 +233,8 @@ public class ListAgents {
             return this.sdkConfiguration.asyncHooks().beforeRequest(createBeforeRequestContext(), req);
         }
 
-        private CompletableFuture<HttpResponse<InputStream>> onError(HttpResponse<InputStream> response, Throwable error) {
+        private CompletableFuture<HttpResponse<InputStream>> onError(
+                HttpResponse<InputStream> response, Throwable error) {
             return this.sdkConfiguration.asyncHooks().afterError(createAfterErrorContext(), response, error);
         }
 
@@ -275,51 +249,51 @@ public class ListAgents {
                     .statusCodes(retryStatusCodes)
                     .scheduler(retryScheduler)
                     .build();
-            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request)).get()
-                            .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
-                            .handle((resp, err) -> {
-                                if (err != null) {
-                                    return onError(null, err);
-                                }
-                                if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
-                                    return onError(resp, null);
-                                }
-                                return CompletableFuture.completedFuture(resp);
-                            })
-                            .thenCompose(Function.identity()))
+            return retries.retry((attempt) -> unchecked(() -> onBuildRequest(request))
+                    .get()
+                    .thenCompose(req -> cancellationRelay.track(client.sendAsync(req)))
+                    .handle((resp, err) -> {
+                        if (err != null) {
+                            return onError(null, err);
+                        }
+                        if (Utils.statusCodeMatches(resp.statusCode(), "4XX", "5XX")) {
+                            return onError(resp, null);
+                        }
+                        return CompletableFuture.completedFuture(resp);
+                    })
+                    .thenCompose(Function.identity()))
                     .thenCompose(this::onSuccess);
         }
 
         @Override
-        public com.google.genai.gaos.models.operations.async.ListAgentsResponse handleResponse(HttpResponse<InputStream> response) {
-            String contentType = response
-                    .contentType()
-                    .orElse("application/octet-stream");
+        public com.google.genai.gaos.models.operations.async.ListAgentsResponse handleResponse(
+                HttpResponse<InputStream> response) {
+            String contentType = response.contentType().orElse("application/octet-stream");
             com.google.genai.gaos.models.operations.async.ListAgentsResponse.Builder resBuilder =
-                    com.google.genai.gaos.models.operations.async.ListAgentsResponse
-                            .builder()
+                    com.google.genai.gaos.models.operations.async.ListAgentsResponse.builder()
                             .contentType(contentType)
                             .statusCode(response.statusCode())
                             .rawResponse(response);
 
             com.google.genai.gaos.models.operations.async.ListAgentsResponse res = resBuilder.build();
-            
+
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
-                throw SDKException.from("API error occurred", response);
+                throw GaosApiException.from("API error occurred", response);
             }
             if (Utils.statusCodeMatches(response.statusCode(), "default")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withAgentListResponse(Utils.unmarshal(response, new TypeReference<AgentListResponse>() {}));
+                    return res.withAgentListResponse(
+                            Utils.unmarshal(response, new TypeReference<AgentListResponse>() {}));
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

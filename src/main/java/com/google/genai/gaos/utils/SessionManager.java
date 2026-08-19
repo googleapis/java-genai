@@ -19,13 +19,15 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.genai.gaos.models.errors.AuthException;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,10 +38,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.google.genai.gaos.models.errors.AuthException;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class SessionManager<T extends SessionManager.HasSessionKey> {
 
@@ -52,7 +50,7 @@ public final class SessionManager<T extends SessionManager.HasSessionKey> {
         String sessionKey();
     }
 
-    public final static class Session<T> {
+    public static final class Session<T> {
         private final T credentials;
         private final Optional<String> token;
         private final List<String> scopes;
@@ -80,10 +78,9 @@ public final class SessionManager<T extends SessionManager.HasSessionKey> {
         public Optional<OffsetDateTime> expiresAt() {
             return expiresAt;
         }
-
     }
 
-    public Session<T> getSession(T credentials, List<String> scopes, Function<List<String>, Session<T>> tokenProvider ) {
+    public Session<T> getSession(T credentials, List<String> scopes, Function<List<String>, Session<T>> tokenProvider) {
         final String sessionKey = credentials.sessionKey();
         final String scopeKey = getScopeKey(scopes);
 
@@ -175,14 +172,19 @@ public final class SessionManager<T extends SessionManager.HasSessionKey> {
         }
     }
 
-    public static <T extends HasSessionKey> Session<T> requestOAuth2Token(HTTPClient client, T credentials, List<String> scopes,
-            Map<String, String> body, Map<String, String> headers, URI tokenUri) {
+    public static <T extends HasSessionKey> Session<T> requestOAuth2Token(
+            HTTPClient client,
+            T credentials,
+            List<String> scopes,
+            Map<String, String> body,
+            Map<String, String> headers,
+            URI tokenUri) {
         try {
-            HttpRequest.Builder requestBuilder = HttpRequest.builder() //
-                    .uri(tokenUri) //
-                    .method("POST") //
-                    .header("Content-Type", "application/x-www-form-urlencoded") //
-                    .body(RequestBody.serializeFormData(body).body()); //
+            HttpRequest.Builder requestBuilder = HttpRequest.builder()
+                    .uri(tokenUri)
+                    .method("POST")
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .body(RequestBody.serializeFormData(body).body());
 
             for (Map.Entry<String, String> header : headers.entrySet()) {
                 requestBuilder.header(header.getKey(), header.getValue());
@@ -193,28 +195,28 @@ public final class SessionManager<T extends SessionManager.HasSessionKey> {
             if (response.statusCode() != HttpURLConnection.HTTP_OK) {
                 String responseBody = Utils.toUtf8AndClose(response.body());
                 throw new AuthException(
-                    "Unexpected status code " + response.statusCode() + ": " + responseBody,
-                    response.statusCode(),
-                    responseBody.getBytes(StandardCharsets.UTF_8),
-                    response);
+                        "Unexpected status code " + response.statusCode() + ": " + responseBody,
+                        response.statusCode(),
+                        responseBody.getBytes(StandardCharsets.UTF_8),
+                        response);
             }
             TokenResponse t = Utils.mapper().readValue(response.body(), TokenResponse.class);
             if (!t.tokenType.orElse("").toLowerCase().equals("bearer")) {
                 throw new AuthException(
-                    "Expected 'Bearer' token type but was '" + t.tokenType.orElse("") + "'",
-                    response.statusCode(),
-                    Utils.readBytesAndClose(response.body()),
-                    response);
+                        "Expected 'Bearer' token type but was '" + t.tokenType.orElse("") + "'",
+                        response.statusCode(),
+                        Utils.readBytesAndClose(response.body()),
+                        response);
             }
-            final Optional<OffsetDateTime> expiresAt = t.expiresInSeconds
-                    .map(x -> OffsetDateTime.now().plus(x, ChronoUnit.SECONDS));
+            final Optional<OffsetDateTime> expiresAt =
+                    t.expiresInSeconds.map(x -> OffsetDateTime.now().plus(x, ChronoUnit.SECONDS));
             return new Session<T>(credentials, t.accessToken, scopes, expiresAt);
         } catch (IOException | IllegalArgumentException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
-    final static class TokenResponse {
+    static final class TokenResponse {
 
         @JsonProperty("access_token")
         Optional<String> accessToken;
@@ -223,8 +225,6 @@ public final class SessionManager<T extends SessionManager.HasSessionKey> {
         Optional<String> tokenType;
 
         @JsonProperty("expires_in")
-        Optional<Long> expiresInSeconds;;
-
+        Optional<Long> expiresInSeconds;
     }
-
 }

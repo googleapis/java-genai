@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -30,7 +30,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
-
 
 public class GoogleMapsCallDelta implements StepDeltaData {
     /**
@@ -47,7 +46,6 @@ public class GoogleMapsCallDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -59,7 +57,7 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public GoogleMapsCallDelta() {
         this(null, null);
     }
@@ -87,7 +85,6 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * The arguments to pass to the Google Maps tool.
      */
@@ -96,7 +93,6 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -104,7 +100,6 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -115,35 +110,30 @@ public class GoogleMapsCallDelta implements StepDeltaData {
             return false;
         }
         GoogleMapsCallDelta other = (GoogleMapsCallDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, signature, type);
+        return Utils.enhancedHash(arguments, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsCallDelta.class,
-                "arguments", arguments,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(GoogleMapsCallDelta.class, "arguments", arguments, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private GoogleMapsCallArguments arguments;
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -163,15 +153,10 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         }
 
         public GoogleMapsCallDelta build() {
-            return new GoogleMapsCallDelta(
-                arguments, signature);
+            return new GoogleMapsCallDelta(arguments, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_maps_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_maps_call\"", new TypeReference<String>() {});
     }
 }

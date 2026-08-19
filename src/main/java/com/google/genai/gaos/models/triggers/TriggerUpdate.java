@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * TriggerUpdate
- * 
+ *
  * <p>Represents the fields of a Trigger that can be updated.
  */
 public class TriggerUpdate {
@@ -56,7 +56,7 @@ public class TriggerUpdate {
         this.displayName = displayName;
         this.status = status;
     }
-    
+
     public TriggerUpdate() {
         this(null, null);
     }
@@ -79,7 +79,6 @@ public class TriggerUpdate {
         return new Builder();
     }
 
-
     /**
      * Optional. The display name of the trigger.
      */
@@ -88,7 +87,6 @@ public class TriggerUpdate {
         return this;
     }
 
-
     /**
      * Optional. The status of the trigger.
      */
@@ -96,7 +94,6 @@ public class TriggerUpdate {
         this.status = status;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -107,33 +104,29 @@ public class TriggerUpdate {
             return false;
         }
         TriggerUpdate other = (TriggerUpdate) o;
-        return 
-            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
-            Utils.enhancedDeepEquals(this.status, other.status);
+        return Utils.enhancedDeepEquals(this.displayName, other.displayName)
+                && Utils.enhancedDeepEquals(this.status, other.status);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            displayName, status);
+        return Utils.enhancedHash(displayName, status);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TriggerUpdate.class,
-                "displayName", displayName,
-                "status", status);
+        return Utils.toString(TriggerUpdate.class, "displayName", displayName, "status", status);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String displayName;
 
         private TriggerUpdateStatus status;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -153,9 +146,7 @@ public class TriggerUpdate {
         }
 
         public TriggerUpdate build() {
-            return new TriggerUpdate(
-                displayName, status);
+            return new TriggerUpdate(displayName, status);
         }
-
     }
 }

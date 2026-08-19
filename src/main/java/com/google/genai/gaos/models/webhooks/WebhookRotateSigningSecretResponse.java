@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * WebhookRotateSigningSecretResponse
- * 
+ *
  * <p>Response message for WebhookService.RotateSigningSecret.
  */
 public class WebhookRotateSigningSecretResponse {
@@ -43,11 +43,10 @@ public class WebhookRotateSigningSecretResponse {
     private String secret;
 
     @JsonCreator
-    public WebhookRotateSigningSecretResponse(
-            @JsonProperty("secret") @Nullable String secret) {
+    public WebhookRotateSigningSecretResponse(@JsonProperty("secret") @Nullable String secret) {
         this.secret = secret;
     }
-    
+
     public WebhookRotateSigningSecretResponse() {
         this(null);
     }
@@ -63,7 +62,6 @@ public class WebhookRotateSigningSecretResponse {
         return new Builder();
     }
 
-
     /**
      * Output only. The newly generated signing secret.
      */
@@ -71,7 +69,6 @@ public class WebhookRotateSigningSecretResponse {
         this.secret = secret;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,29 +79,26 @@ public class WebhookRotateSigningSecretResponse {
             return false;
         }
         WebhookRotateSigningSecretResponse other = (WebhookRotateSigningSecretResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.secret, other.secret);
+        return Utils.enhancedDeepEquals(this.secret, other.secret);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            secret);
+        return Utils.enhancedHash(secret);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WebhookRotateSigningSecretResponse.class,
-                "secret", secret);
+        return Utils.toString(WebhookRotateSigningSecretResponse.class, "secret", secret);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String secret;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -116,9 +110,7 @@ public class WebhookRotateSigningSecretResponse {
         }
 
         public WebhookRotateSigningSecretResponse build() {
-            return new WebhookRotateSigningSecretResponse(
-                secret);
+            return new WebhookRotateSigningSecretResponse(secret);
         }
-
     }
 }

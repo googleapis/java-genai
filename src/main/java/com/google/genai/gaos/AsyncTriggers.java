@@ -60,7 +60,6 @@ import java.lang.Long;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
-
 public class AsyncTriggers {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -73,17 +72,16 @@ public class AsyncTriggers {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public Triggers sync() {
         return syncSDK;
     }
 
-
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @return The async call builder
      */
     public CreateTriggerRequestBuilder create() {
@@ -92,7 +90,7 @@ public class AsyncTriggers {
 
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @param body Parameters for creating a trigger.
      * @return {@code CompletableFuture<CreateTriggerResponse>} - The async response
      */
@@ -102,28 +100,24 @@ public class AsyncTriggers {
 
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body Parameters for creating a trigger.
      * @param options additional options
      * @return {@code CompletableFuture<CreateTriggerResponse>} - The async response
      */
     public CompletableFuture<CreateTriggerResponse> create(
-            @Nullable String apiVersion, @Nonnull TriggerCreateParams body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull TriggerCreateParams body, @Nullable Options options) {
         CreateTriggerRequest request = new CreateTriggerRequest(apiVersion, body);
-        AsyncRequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation
-              = new CreateTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation =
+                new CreateTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @return The async call builder
      */
     public ListTriggersRequestBuilder list() {
@@ -132,18 +126,16 @@ public class AsyncTriggers {
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
      */
     public CompletableFuture<ListTriggersResponse> listDirect() {
-        return list(
-                null, null, null,
-                null, null);
+        return list(null, null, null, null, null);
     }
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param filter Optional. Filter expression (e.g., by state).
      * @param pageSize Optional. The maximum number of triggers to return per page.
@@ -152,24 +144,21 @@ public class AsyncTriggers {
      * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
      */
     public CompletableFuture<ListTriggersResponse> list(
-            @Nullable String apiVersion, @Nullable String filter,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable String apiVersion,
+            @Nullable String filter,
+            @Nullable Long pageSize,
+            @Nullable String pageToken,
             @Nullable Options options) {
-        ListTriggersRequest request = new ListTriggersRequest(
-                apiVersion, filter, pageSize,
-                pageToken);
-        AsyncRequestOperation<ListTriggersRequest, ListTriggersResponse> operation
-              = new ListTriggers.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        ListTriggersRequest request = new ListTriggersRequest(apiVersion, filter, pageSize, pageToken);
+        AsyncRequestOperation<ListTriggersRequest, ListTriggersResponse> operation =
+                new ListTriggers.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @return The async call builder
      */
     public GetTriggerRequestBuilder get() {
@@ -178,7 +167,7 @@ public class AsyncTriggers {
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @return {@code CompletableFuture<GetTriggerResponse>} - The async response
      */
@@ -188,28 +177,24 @@ public class AsyncTriggers {
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param options additional options
      * @return {@code CompletableFuture<GetTriggerResponse>} - The async response
      */
     public CompletableFuture<GetTriggerResponse> get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetTriggerRequest request = new GetTriggerRequest(apiVersion, id);
-        AsyncRequestOperation<GetTriggerRequest, GetTriggerResponse> operation
-              = new GetTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetTriggerRequest, GetTriggerResponse> operation =
+                new GetTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @return The async call builder
      */
     public UpdateTriggerRequestBuilder update() {
@@ -218,20 +203,18 @@ public class AsyncTriggers {
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @param body Represents the fields of a Trigger that can be updated.
      * @return {@code CompletableFuture<UpdateTriggerResponse>} - The async response
      */
     public CompletableFuture<UpdateTriggerResponse> update(@Nonnull String id, @Nonnull TriggerUpdate body) {
-        return update(
-                null, id, body,
-                null);
+        return update(null, id, body, null);
     }
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param body Represents the fields of a Trigger that can be updated.
@@ -239,21 +222,17 @@ public class AsyncTriggers {
      * @return {@code CompletableFuture<UpdateTriggerResponse>} - The async response
      */
     public CompletableFuture<UpdateTriggerResponse> update(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nonnull TriggerUpdate body, @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nonnull TriggerUpdate body, @Nullable Options options) {
         UpdateTriggerRequest request = new UpdateTriggerRequest(apiVersion, id, body);
-        AsyncRequestOperation<UpdateTriggerRequest, UpdateTriggerResponse> operation
-              = new UpdateTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<UpdateTriggerRequest, UpdateTriggerResponse> operation =
+                new UpdateTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @return The async call builder
      */
     public DeleteTriggerRequestBuilder delete() {
@@ -262,7 +241,7 @@ public class AsyncTriggers {
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
@@ -272,28 +251,24 @@ public class AsyncTriggers {
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
     public CompletableFuture<DeleteTriggerResponse> delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteTriggerRequest request = new DeleteTriggerRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation
-              = new DeleteTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation =
+                new DeleteTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @return The async call builder
      */
     public RunTriggerRequestBuilder run() {
@@ -302,7 +277,7 @@ public class AsyncTriggers {
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @param triggerId Resource name of the trigger.
      * @return {@code CompletableFuture<RunTriggerResponse>} - The async response
      */
@@ -312,28 +287,24 @@ public class AsyncTriggers {
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param triggerId Resource name of the trigger.
      * @param options additional options
      * @return {@code CompletableFuture<RunTriggerResponse>} - The async response
      */
     public CompletableFuture<RunTriggerResponse> run(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String triggerId, @Nullable Options options) {
         RunTriggerRequest request = new RunTriggerRequest(apiVersion, triggerId);
-        AsyncRequestOperation<RunTriggerRequest, RunTriggerResponse> operation
-              = new RunTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<RunTriggerRequest, RunTriggerResponse> operation =
+                new RunTrigger.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @return The async call builder
      */
     public ListTriggerExecutionsRequestBuilder listExecutions() {
@@ -342,19 +313,17 @@ public class AsyncTriggers {
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @param triggerId Resource name of the trigger.
      * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
     public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(@Nonnull String triggerId) {
-        return listExecutions(
-                null, triggerId, null,
-                null, null);
+        return listExecutions(null, triggerId, null, null, null);
     }
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param triggerId Resource name of the trigger.
      * @param pageSize Optional. The maximum number of executions to return per page.
@@ -363,18 +332,16 @@ public class AsyncTriggers {
      * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
     public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable String apiVersion,
+            @Nonnull String triggerId,
+            @Nullable Long pageSize,
+            @Nullable String pageToken,
             @Nullable Options options) {
-        ListTriggerExecutionsRequest request = new ListTriggerExecutionsRequest(
-                apiVersion, triggerId, pageSize,
-                pageToken);
-        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
-              = new ListTriggerExecutions.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        ListTriggerExecutionsRequest request =
+                new ListTriggerExecutionsRequest(apiVersion, triggerId, pageSize, pageToken);
+        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation =
+                new ListTriggerExecutions.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 }

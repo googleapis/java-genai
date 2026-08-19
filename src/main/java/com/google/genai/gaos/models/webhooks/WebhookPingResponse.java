@@ -26,18 +26,16 @@ import java.lang.String;
 
 /**
  * WebhookPingResponse
- * 
+ *
  * <p>Response message for WebhookService.PingWebhook.
  */
 public class WebhookPingResponse {
     @JsonCreator
-    public WebhookPingResponse() {
-    }
+    public WebhookPingResponse() {}
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -49,29 +47,26 @@ public class WebhookPingResponse {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            );
+        return Utils.enhancedHash();
     }
-    
+
     @Override
     public String toString() {
         return Utils.toString(WebhookPingResponse.class);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public WebhookPingResponse build() {
-            return new WebhookPingResponse(
-                );
+            return new WebhookPingResponse();
         }
-
     }
 }

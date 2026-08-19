@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -29,7 +29,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Optional;
-
 
 public class WebhookUpdate {
     /**
@@ -79,10 +78,9 @@ public class WebhookUpdate {
         this.subscribedEvents = subscribedEvents;
         this.uri = uri;
     }
-    
+
     public WebhookUpdate() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -125,7 +123,6 @@ public class WebhookUpdate {
         return new Builder();
     }
 
-
     /**
      * Optional. The user-provided name of the webhook.
      */
@@ -134,7 +131,6 @@ public class WebhookUpdate {
         return this;
     }
 
-
     /**
      * Optional. The state of the webhook.
      */
@@ -142,7 +138,6 @@ public class WebhookUpdate {
         this.state = state;
         return this;
     }
-
 
     /**
      * Optional. The events that the webhook is subscribed to.
@@ -160,7 +155,6 @@ public class WebhookUpdate {
         return this;
     }
 
-
     /**
      * Optional. The URI to which webhook events will be sent.
      */
@@ -168,7 +162,6 @@ public class WebhookUpdate {
         this.uri = uri;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -179,31 +172,25 @@ public class WebhookUpdate {
             return false;
         }
         WebhookUpdate other = (WebhookUpdate) o;
-        return 
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.state, other.state) &&
-            Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.state, other.state)
+                && Utils.enhancedDeepEquals(this.subscribedEvents, other.subscribedEvents)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            name, state, subscribedEvents,
-            uri);
+        return Utils.enhancedHash(name, state, subscribedEvents, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WebhookUpdate.class,
-                "name", name,
-                "state", state,
-                "subscribedEvents", subscribedEvents,
-                "uri", uri);
+        return Utils.toString(
+                WebhookUpdate.class, "name", name, "state", state, "subscribedEvents", subscribedEvents, "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String name;
 
@@ -214,7 +201,7 @@ public class WebhookUpdate {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -258,10 +245,7 @@ public class WebhookUpdate {
         }
 
         public WebhookUpdate build() {
-            return new WebhookUpdate(
-                name, state, subscribedEvents,
-                uri);
+            return new WebhookUpdate(name, state, subscribedEvents, uri);
         }
-
     }
 }

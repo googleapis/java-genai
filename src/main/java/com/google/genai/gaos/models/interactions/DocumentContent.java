@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * DocumentContent
- * 
+ *
  * <p>A document content block.
  */
 public class DocumentContent implements Content {
@@ -43,7 +43,6 @@ public class DocumentContent implements Content {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("data")
     private String data;
-
 
     @JsonProperty("type")
     private String type;
@@ -72,7 +71,7 @@ public class DocumentContent implements Content {
         this.uri = uri;
         this.mimeType = mimeType;
     }
-    
+
     public DocumentContent() {
         this(null, null, null);
     }
@@ -107,7 +106,6 @@ public class DocumentContent implements Content {
         return new Builder();
     }
 
-
     /**
      * The document content.
      */
@@ -115,7 +113,6 @@ public class DocumentContent implements Content {
         this.data = data;
         return this;
     }
-
 
     /**
      * The URI of the document.
@@ -125,7 +122,6 @@ public class DocumentContent implements Content {
         return this;
     }
 
-
     /**
      * The mime type of the document.
      */
@@ -133,7 +129,6 @@ public class DocumentContent implements Content {
         this.mimeType = mimeType;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -144,31 +139,24 @@ public class DocumentContent implements Content {
             return false;
         }
         DocumentContent other = (DocumentContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+        return Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data, type, uri,
-            mimeType);
+        return Utils.enhancedHash(data, type, uri, mimeType);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DocumentContent.class,
-                "data", data,
-                "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+        return Utils.toString(DocumentContent.class, "data", data, "type", type, "uri", uri, "mimeType", mimeType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String data;
 
@@ -177,7 +165,7 @@ public class DocumentContent implements Content {
         private DocumentContentMimeType mimeType;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -205,15 +193,10 @@ public class DocumentContent implements Content {
         }
 
         public DocumentContent build() {
-            return new DocumentContent(
-                data, uri, mimeType);
+            return new DocumentContent(data, uri, mimeType);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"document\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"document\"", new TypeReference<String>() {});
     }
 }

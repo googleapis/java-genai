@@ -24,16 +24,13 @@ import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 
-
 public class FunctionResultStepResult {
     @JsonCreator
-    public FunctionResultStepResult() {
-    }
+    public FunctionResultStepResult() {}
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -45,29 +42,26 @@ public class FunctionResultStepResult {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            );
+        return Utils.enhancedHash();
     }
-    
+
     @Override
     public String toString() {
         return Utils.toString(FunctionResultStepResult.class);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public FunctionResultStepResult build() {
-            return new FunctionResultStepResult(
-                );
+            return new FunctionResultStepResult();
         }
-
     }
 }

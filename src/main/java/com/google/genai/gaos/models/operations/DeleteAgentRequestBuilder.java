@@ -68,7 +68,7 @@ public class DeleteAgentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public DeleteAgentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class DeleteAgentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public DeleteAgentResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation
-              = new DeleteAgent.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation =
+                new DeleteAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

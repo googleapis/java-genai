@@ -68,7 +68,7 @@ public class GetEnvironmentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public GetEnvironmentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class GetEnvironmentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public GetEnvironmentResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
-              = new GetEnvironment.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation =
+                new GetEnvironment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

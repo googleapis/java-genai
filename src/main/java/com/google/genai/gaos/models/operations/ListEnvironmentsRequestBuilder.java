@@ -74,7 +74,7 @@ public class ListEnvironmentsRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListEnvironmentsRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -83,14 +83,14 @@ public class ListEnvironmentsRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public ListEnvironmentsResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation
-              = new ListEnvironments.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<ListEnvironmentsRequest, ListEnvironmentsResponse> operation =
+                new ListEnvironments.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

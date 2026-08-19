@@ -81,7 +81,7 @@ public class ListTriggerExecutionsRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListTriggerExecutionsRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -90,14 +90,14 @@ public class ListTriggerExecutionsRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public ListTriggerExecutionsResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
-              = new ListTriggerExecutions.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation =
+                new ListTriggerExecutions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

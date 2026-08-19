@@ -24,7 +24,7 @@ import com.google.genai.gaos.utils.HasSecurity;
 public interface SecuritySource {
 
     HasSecurity getSecurity();
-    
+
     public static SecuritySource of(HasSecurity security) {
         return new DefaultSecuritySource(security);
     }

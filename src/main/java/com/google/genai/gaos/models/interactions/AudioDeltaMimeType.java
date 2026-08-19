@@ -64,12 +64,12 @@ public class AudioDeltaMimeType {
     }
 
     /**
-     * Returns a AudioDeltaMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a AudioDeltaMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as AudioDeltaMimeType
-     */ 
+     */
     @JsonCreator
     public static AudioDeltaMimeType of(String value) {
         synchronized (AudioDeltaMimeType.class) {
@@ -97,12 +97,9 @@ public class AudioDeltaMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         AudioDeltaMimeType other = (AudioDeltaMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -152,8 +149,7 @@ public class AudioDeltaMimeType {
         map.put("audio/mulaw", AudioDeltaMimeTypeEnum.AUDIO_MULAW);
         return map;
     }
-    
-    
+
     public enum AudioDeltaMimeTypeEnum {
 
         AUDIO_WAV("audio/wav"),
@@ -167,7 +163,8 @@ public class AudioDeltaMimeType {
         AUDIO_L16("audio/l16"),
         AUDIO_OPUS("audio/opus"),
         AUDIO_ALAW("audio/alaw"),
-        AUDIO_MULAW("audio/mulaw"),;
+        AUDIO_MULAW("audio/mulaw"),
+        ;
 
         private final String value;
 
@@ -180,4 +177,3 @@ public class AudioDeltaMimeType {
         }
     }
 }
-

@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListEnvironmentsRequest {
     /**
      * Which version of the API to use.
@@ -51,14 +50,12 @@ public class ListEnvironmentsRequest {
 
     @JsonCreator
     public ListEnvironmentsRequest(
-            @Nullable String apiVersion,
-            @Nullable Integer pageSize,
-            @Nullable String pageToken) {
+            @Nullable String apiVersion, @Nullable Integer pageSize, @Nullable String pageToken) {
         this.apiVersion = apiVersion;
         this.pageSize = pageSize;
         this.pageToken = pageToken;
     }
-    
+
     public ListEnvironmentsRequest() {
         this(null, null, null);
     }
@@ -89,7 +86,6 @@ public class ListEnvironmentsRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -97,7 +93,6 @@ public class ListEnvironmentsRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is
@@ -108,7 +103,6 @@ public class ListEnvironmentsRequest {
         return this;
     }
 
-
     /**
      * Optional. Pagination token.
      */
@@ -116,7 +110,6 @@ public class ListEnvironmentsRequest {
         this.pageToken = pageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -127,28 +120,24 @@ public class ListEnvironmentsRequest {
             return false;
         }
         ListEnvironmentsRequest other = (ListEnvironmentsRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.pageSize, other.pageSize)
+                && Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, pageSize, pageToken);
+        return Utils.enhancedHash(apiVersion, pageSize, pageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListEnvironmentsRequest.class,
-                "apiVersion", apiVersion,
-                "pageSize", pageSize,
-                "pageToken", pageToken);
+        return Utils.toString(
+                ListEnvironmentsRequest.class, "apiVersion", apiVersion, "pageSize", pageSize, "pageToken", pageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -157,7 +146,7 @@ public class ListEnvironmentsRequest {
         private String pageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -186,9 +175,7 @@ public class ListEnvironmentsRequest {
         }
 
         public ListEnvironmentsRequest build() {
-            return new ListEnvironmentsRequest(
-                apiVersion, pageSize, pageToken);
+            return new ListEnvironmentsRequest(apiVersion, pageSize, pageToken);
         }
-
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * WebhookListResponse
- * 
+ *
  * <p>Response message for WebhookService.ListWebhooks.
  */
 public class WebhookListResponse {
@@ -58,7 +58,7 @@ public class WebhookListResponse {
         this.nextPageToken = nextPageToken;
         this.webhooks = webhooks;
     }
-    
+
     public WebhookListResponse() {
         this(null, null);
     }
@@ -82,7 +82,6 @@ public class WebhookListResponse {
         return new Builder();
     }
 
-
     /**
      * A token, which can be sent as `page_token` to retrieve the next page.
      * If this field is omitted, there are no subsequent pages.
@@ -92,7 +91,6 @@ public class WebhookListResponse {
         return this;
     }
 
-
     /**
      * The webhooks.
      */
@@ -100,7 +98,6 @@ public class WebhookListResponse {
         this.webhooks = webhooks;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -111,33 +108,29 @@ public class WebhookListResponse {
             return false;
         }
         WebhookListResponse other = (WebhookListResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken) &&
-            Utils.enhancedDeepEquals(this.webhooks, other.webhooks);
+        return Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken)
+                && Utils.enhancedDeepEquals(this.webhooks, other.webhooks);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            nextPageToken, webhooks);
+        return Utils.enhancedHash(nextPageToken, webhooks);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(WebhookListResponse.class,
-                "nextPageToken", nextPageToken,
-                "webhooks", webhooks);
+        return Utils.toString(WebhookListResponse.class, "nextPageToken", nextPageToken, "webhooks", webhooks);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String nextPageToken;
 
         private List<Webhook> webhooks;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -158,9 +151,7 @@ public class WebhookListResponse {
         }
 
         public WebhookListResponse build() {
-            return new WebhookListResponse(
-                nextPageToken, webhooks);
+            return new WebhookListResponse(nextPageToken, webhooks);
         }
-
     }
 }

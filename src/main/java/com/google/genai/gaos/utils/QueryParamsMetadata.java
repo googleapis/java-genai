@@ -35,6 +35,5 @@ class QueryParamsMetadata {
         return Metadata.parse("queryParam", new QueryParamsMetadata(), field);
     }
 
-    private QueryParamsMetadata() {
-    }
+    private QueryParamsMetadata() {}
 }

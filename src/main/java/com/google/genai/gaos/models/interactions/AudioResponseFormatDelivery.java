@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * AudioResponseFormatDelivery
- * 
+ *
  * <p>The delivery mode for the audio output.
  */
 public class AudioResponseFormatDelivery {
@@ -59,12 +59,12 @@ public class AudioResponseFormatDelivery {
     }
 
     /**
-     * Returns a AudioResponseFormatDelivery with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a AudioResponseFormatDelivery with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as AudioResponseFormatDelivery
-     */ 
+     */
     @JsonCreator
     public static AudioResponseFormatDelivery of(String value) {
         synchronized (AudioResponseFormatDelivery.class) {
@@ -92,12 +92,9 @@ public class AudioResponseFormatDelivery {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         AudioResponseFormatDelivery other = (AudioResponseFormatDelivery) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class AudioResponseFormatDelivery {
         map.put("uri", AudioResponseFormatDeliveryEnum.URI);
         return map;
     }
-    
-    
+
     public enum AudioResponseFormatDeliveryEnum {
 
         INLINE("inline"),
-        URI("uri"),;
+        URI("uri"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class AudioResponseFormatDelivery {
         }
     }
 }
-

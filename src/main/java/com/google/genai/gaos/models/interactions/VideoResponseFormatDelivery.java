@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * VideoResponseFormatDelivery
- * 
+ *
  * <p>The delivery mode for the video output.
  */
 public class VideoResponseFormatDelivery {
@@ -59,12 +59,12 @@ public class VideoResponseFormatDelivery {
     }
 
     /**
-     * Returns a VideoResponseFormatDelivery with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a VideoResponseFormatDelivery with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as VideoResponseFormatDelivery
-     */ 
+     */
     @JsonCreator
     public static VideoResponseFormatDelivery of(String value) {
         synchronized (VideoResponseFormatDelivery.class) {
@@ -92,12 +92,9 @@ public class VideoResponseFormatDelivery {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         VideoResponseFormatDelivery other = (VideoResponseFormatDelivery) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class VideoResponseFormatDelivery {
         map.put("uri", VideoResponseFormatDeliveryEnum.URI);
         return map;
     }
-    
-    
+
     public enum VideoResponseFormatDeliveryEnum {
 
         INLINE("inline"),
-        URI("uri"),;
+        URI("uri"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class VideoResponseFormatDelivery {
         }
     }
 }
-

@@ -19,16 +19,16 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.io.InputStream;
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Retries {
 
@@ -38,39 +38,35 @@ public class Retries {
     private final RetryConfig retryConfig;
     private final List<String> statusCodes;
 
-    private Retries(
-            RetryAction action,
-            RetryConfig retryConfig,
-            List<String> statusCodes) {
+    private Retries(RetryAction action, RetryConfig retryConfig, List<String> statusCodes) {
         Utils.checkNotNull(action, "action");
         Utils.checkNotNull(retryConfig, "retryConfig");
         Utils.checkNotNull(statusCodes, "statusCodes");
-        if(statusCodes.size() == 0) {
+        if (statusCodes.size() == 0) {
             throw new IllegalArgumentException("statusCodes list cannot be empty");
         }
         this.action = action;
         this.retryConfig = retryConfig;
         this.statusCodes = statusCodes;
     }
+
     @FunctionalInterface
     public interface RetryAction {
         HttpResponse<InputStream> call(int attempt) throws Exception;
     }
 
-    
-
     public HttpResponse<InputStream> run() throws Exception {
 
-        switch(retryConfig.strategy()) {
+        switch (retryConfig.strategy()) {
             case BACKOFF:
-                if(!retryConfig.backoff().isPresent()){
+                if (!retryConfig.backoff().isPresent()) {
                     throw new IllegalArgumentException("Backoff strategy is not defined");
                 }
                 BackoffStrategy backoff = retryConfig.backoff().get();
                 return retryWithBackoff(backoff.retryConnectError(), backoff.retryReadTimeoutError());
 
             case ATTEMPT_COUNT_BACKOFF:
-                if(!retryConfig.backoff().isPresent()){
+                if (!retryConfig.backoff().isPresent()) {
                     throw new IllegalArgumentException("Backoff strategy is not defined");
                 }
                 backoff = retryConfig.backoff().get();
@@ -84,13 +80,15 @@ public class Retries {
         }
     }
 
-    private HttpResponse<InputStream> getResponse(boolean retryConnectError, boolean retryReadTimeoutError, int attempt) throws Exception {
+    private HttpResponse<InputStream> getResponse(
+            boolean retryConnectError, boolean retryReadTimeoutError, int attempt)
+            throws Exception {
         try {
             HttpResponse<InputStream> response = action.call(attempt);
 
             boolean shouldRetry = false;
             for (String statusCode : statusCodes) {
-                if (statusCode.toUpperCase().contains("X")){
+                if (statusCode.toUpperCase().contains("X")) {
                     int codeRange = Integer.parseInt(statusCode.substring(0, 1));
                     int statusMajor = response.statusCode() / 100;
                     if (codeRange == statusMajor) {
@@ -110,20 +108,20 @@ public class Retries {
 
             return response;
 
-        } catch(IOException e) {
-            if(e instanceof ConnectException && retryConnectError) {
+        } catch (IOException e) {
+            if (e instanceof ConnectException && retryConnectError) {
                 throw e;
             }
-            if(isConnectTimeout(e) && retryConnectError) {
+            if (isConnectTimeout(e) && retryConnectError) {
                 throw e;
             }
-            if(isReadTimeout(e) && retryReadTimeoutError) {
+            if (isReadTimeout(e) && retryReadTimeoutError) {
                 throw e;
             }
             throw new NonRetryableException(e);
-        } catch(RetryableException e) {
+        } catch (RetryableException e) {
             throw e;
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new NonRetryableException(e);
         }
     }
@@ -148,8 +146,7 @@ public class Retries {
             try {
                 long milliseconds = Long.parseLong(retryAfterMs);
                 return milliseconds < 0 ? 0 : milliseconds;
-            } catch (NumberFormatException ignored) {
-            }
+            } catch (NumberFormatException ignored) {}
         }
 
         String retryAfter = response.headers().firstValue("retry-after").orElse(null);
@@ -159,38 +156,39 @@ public class Retries {
         try {
             long seconds = Long.parseLong(retryAfter);
             return seconds < 0 ? 0 : seconds * 1000;
-        } catch (NumberFormatException ignored) {
-        }
+        } catch (NumberFormatException ignored) {}
         try {
             ZonedDateTime retryDate = ZonedDateTime.parse(retryAfter, DateTimeFormatter.RFC_1123_DATE_TIME);
             long deltaMs = retryDate.toInstant().toEpochMilli() - System.currentTimeMillis();
             return deltaMs > 0 ? deltaMs : 0;
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         return 0;
     }
 
-    private HttpResponse<InputStream> retryWithBackoff(boolean retryConnectError, boolean retryReadTimeoutError) throws Exception {
+    private HttpResponse<InputStream> retryWithBackoff(boolean retryConnectError, boolean retryReadTimeoutError)
+            throws Exception {
         BackoffStrategy backoff = retryConfig.backoff().get();
         long initialIntervalMs = backoff.initialIntervalMs();
         long startMs = System.currentTimeMillis();
         int numAttempts = 0;
 
-        while(true) {
+        while (true) {
             try {
                 if (numAttempts > 0) {
                     logger.debug("Retry attempt {} after backoff", numAttempts);
                 }
                 return getResponse(retryConnectError, retryReadTimeoutError, numAttempts);
-            } catch(NonRetryableException e) {
-                logger.debug("Non-retryable exception encountered: {}", e.exception().getClass().getSimpleName());
+            } catch (NonRetryableException e) {
+                logger.debug(
+                        "Non-retryable exception encountered: {}",
+                        e.exception().getClass().getSimpleName());
                 throw Exceptions.coerceException(e.exception());
-            } catch(IOException | RetryableException e) {
+            } catch (IOException | RetryableException e) {
                 long nowMs = System.currentTimeMillis();
                 if (nowMs - startMs > backoff.maxElapsedTimeMs()) {
                     logger.debug("Retry exhausted after {}ms, {} attempts", nowMs - startMs, numAttempts + 1);
-                    if ( e instanceof RetryableException ) {
-                        return ((RetryableException)e).response();
+                    if (e instanceof RetryableException) {
+                        return ((RetryableException) e).response();
                     }
                     throw e;
                 }
@@ -205,7 +203,7 @@ public class Retries {
                 if (sleepMs <= 0) {
                     double intervalMs = initialIntervalMs * Math.pow(backoff.baseFactor(), numAttempts);
                     double jitterMs = backoff.jitterFactor() * intervalMs;
-                    intervalMs = intervalMs - jitterMs + Math.random()*(2*jitterMs + 1);
+                    intervalMs = intervalMs - jitterMs + Math.random() * (2 * jitterMs + 1);
 
                     double maxIntervalMs = backoff.maxIntervalMs();
                     if (intervalMs > maxIntervalMs) {
@@ -216,9 +214,11 @@ public class Retries {
 
                 if (logger.isTraceEnabled()) {
                     String reason = e instanceof RetryableException
-                        ? "status " + ((RetryableException)e).response().statusCode()
-                        : e.getClass().getSimpleName();
-                    logger.trace("Retrying due to {} - waiting {}ms before attempt {}", reason, sleepMs, numAttempts + 1);
+                            ? "status "
+                                    + ((RetryableException) e).response().statusCode()
+                            : e.getClass().getSimpleName();
+                    logger.trace(
+                            "Retrying due to {} - waiting {}ms before attempt {}", reason, sleepMs, numAttempts + 1);
                 }
                 TimeUnit.MILLISECONDS.sleep(sleepMs);
                 numAttempts += 1;
@@ -226,26 +226,29 @@ public class Retries {
         }
     }
 
-    private HttpResponse<InputStream> retryWithAttemptCountBackoff(boolean retryConnectError, boolean retryReadTimeoutError) throws Exception {
+    private HttpResponse<InputStream> retryWithAttemptCountBackoff(
+            boolean retryConnectError, boolean retryReadTimeoutError) throws Exception {
         BackoffStrategy backoff = retryConfig.backoff().get();
         long initialIntervalMs = backoff.initialIntervalMs();
         int numAttempts = 0;
         int maxRetries = retryConfig.maxRetries().orElse(0);
 
-        while(true) {
+        while (true) {
             try {
                 if (numAttempts > 0) {
                     logger.debug("Retry attempt {} after backoff", numAttempts);
                 }
                 return getResponse(retryConnectError, retryReadTimeoutError, numAttempts);
-            } catch(NonRetryableException e) {
-                logger.debug("Non-retryable exception encountered: {}", e.exception().getClass().getSimpleName());
+            } catch (NonRetryableException e) {
+                logger.debug(
+                        "Non-retryable exception encountered: {}",
+                        e.exception().getClass().getSimpleName());
                 throw Exceptions.coerceException(e.exception());
-            } catch(IOException | RetryableException e) {
+            } catch (IOException | RetryableException e) {
                 if (numAttempts >= maxRetries) {
                     logger.debug("Retry exhausted after {} attempts", numAttempts + 1);
-                    if ( e instanceof RetryableException ) {
-                        return ((RetryableException)e).response();
+                    if (e instanceof RetryableException) {
+                        return ((RetryableException) e).response();
                     }
                     throw e;
                 }
@@ -275,11 +278,11 @@ public class Retries {
         }
     }
 
-    public final static Builder builder() {
+    public static final Builder builder() {
         return new Builder();
     }
 
-    public final static class Builder {
+    public static final class Builder {
 
         private RetryAction action;
         private RetryConfig retryConfig;
@@ -288,11 +291,11 @@ public class Retries {
         private Builder() {}
 
         /**
-          * Sets the HTTP callback to be retried.
-          *
-          * @param action The function called on retry.
-          * @return The builder instance.
-          */
+         * Sets the HTTP callback to be retried.
+         *
+         * @param action The function called on retry.
+         * @return The builder instance.
+         */
         public Builder action(RetryAction action) {
             Utils.checkNotNull(action, "action");
             this.action = action;
@@ -300,11 +303,11 @@ public class Retries {
         }
 
         /**
-          * Defines the retry configuration.
-          *
-          * @param retryConfig The retry configuration to use.
-          * @return The builder instance.
-          */
+         * Defines the retry configuration.
+         *
+         * @param retryConfig The retry configuration to use.
+         * @return The builder instance.
+         */
         public Builder retryConfig(RetryConfig retryConfig) {
             Utils.checkNotNull(retryConfig, "retryConfig");
             this.retryConfig = retryConfig;
@@ -312,14 +315,14 @@ public class Retries {
         }
 
         /**
-          * Defines the status codes that should be considered as errors.
-          *
-          * @param statusCodes The list of status codes to treat as errors.
-          * @return The builder instance.
-          */
+         * Defines the status codes that should be considered as errors.
+         *
+         * @param statusCodes The list of status codes to treat as errors.
+         * @return The builder instance.
+         */
         public Builder statusCodes(List<String> statusCodes) {
             Utils.checkNotNull(statusCodes, "statusCodes");
-            if(statusCodes.size() == 0) {
+            if (statusCodes.size() == 0) {
                 throw new IllegalArgumentException("statusCodes list cannot be empty");
             }
             this.statusCodes = statusCodes;

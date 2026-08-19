@@ -62,12 +62,12 @@ public class HarmCategory {
     }
 
     /**
-     * Returns a HarmCategory with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a HarmCategory with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as HarmCategory
-     */ 
+     */
     @JsonCreator
     public static HarmCategory of(String value) {
         synchronized (HarmCategory.class) {
@@ -95,12 +95,9 @@ public class HarmCategory {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         HarmCategory other = (HarmCategory) obj;
         return Objects.equals(value, other.value);
     }
@@ -146,8 +143,7 @@ public class HarmCategory {
         map.put("jailbreak", HarmCategoryEnum.JAILBREAK);
         return map;
     }
-    
-    
+
     public enum HarmCategoryEnum {
 
         HATE_SPEECH("hate_speech"),
@@ -159,7 +155,8 @@ public class HarmCategory {
         IMAGE_DANGEROUS_CONTENT("image_dangerous_content"),
         IMAGE_HARASSMENT("image_harassment"),
         IMAGE_SEXUALLY_EXPLICIT("image_sexually_explicit"),
-        JAILBREAK("jailbreak"),;
+        JAILBREAK("jailbreak"),
+        ;
 
         private final String value;
 
@@ -172,4 +169,3 @@ public class HarmCategory {
         }
     }
 }
-

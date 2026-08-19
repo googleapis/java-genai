@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * GoogleSearchResult
- * 
+ *
  * <p>The result of the Google Search.
  */
 public class GoogleSearchResult {
@@ -43,11 +43,10 @@ public class GoogleSearchResult {
     private String searchSuggestions;
 
     @JsonCreator
-    public GoogleSearchResult(
-            @JsonProperty("search_suggestions") @Nullable String searchSuggestions) {
+    public GoogleSearchResult(@JsonProperty("search_suggestions") @Nullable String searchSuggestions) {
         this.searchSuggestions = searchSuggestions;
     }
-    
+
     public GoogleSearchResult() {
         this(null);
     }
@@ -63,7 +62,6 @@ public class GoogleSearchResult {
         return new Builder();
     }
 
-
     /**
      * Web content snippet that can be embedded in a web page or an app webview.
      */
@@ -71,7 +69,6 @@ public class GoogleSearchResult {
         this.searchSuggestions = searchSuggestions;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,29 +79,26 @@ public class GoogleSearchResult {
             return false;
         }
         GoogleSearchResult other = (GoogleSearchResult) o;
-        return 
-            Utils.enhancedDeepEquals(this.searchSuggestions, other.searchSuggestions);
+        return Utils.enhancedDeepEquals(this.searchSuggestions, other.searchSuggestions);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            searchSuggestions);
+        return Utils.enhancedHash(searchSuggestions);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleSearchResult.class,
-                "searchSuggestions", searchSuggestions);
+        return Utils.toString(GoogleSearchResult.class, "searchSuggestions", searchSuggestions);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String searchSuggestions;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -116,9 +110,7 @@ public class GoogleSearchResult {
         }
 
         public GoogleSearchResult build() {
-            return new GoogleSearchResult(
-                searchSuggestions);
+            return new GoogleSearchResult(searchSuggestions);
         }
-
     }
 }

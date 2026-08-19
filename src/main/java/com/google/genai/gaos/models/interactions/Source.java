@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * Source
- * 
+ *
  * <p>A source to be mounted into the environment.
  */
 public class Source {
@@ -51,7 +51,7 @@ public class Source {
 
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -64,7 +64,6 @@ public class Source {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("target")
     private String target;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("type")
@@ -83,10 +82,9 @@ public class Source {
         this.target = target;
         this.type = type;
     }
-    
+
     public Source() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -105,7 +103,7 @@ public class Source {
 
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     public Optional<String> source() {
@@ -127,7 +125,6 @@ public class Source {
         return new Builder();
     }
 
-
     /**
      * The inline content if `type` is `INLINE`.
      */
@@ -135,7 +132,6 @@ public class Source {
         this.content = content;
         return this;
     }
-
 
     /**
      * Optional encoding for inline content (e.g. `base64`).
@@ -145,17 +141,15 @@ public class Source {
         return this;
     }
 
-
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     public Source withSource(@Nullable String source) {
         this.source = source;
         return this;
     }
-
 
     /**
      * Where the source should appear in the environment.
@@ -165,12 +159,10 @@ public class Source {
         return this;
     }
 
-
     public Source withType(@Nullable SourceType type) {
         this.type = type;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -181,33 +173,36 @@ public class Source {
             return false;
         }
         Source other = (Source) o;
-        return 
-            Utils.enhancedDeepEquals(this.content, other.content) &&
-            Utils.enhancedDeepEquals(this.encoding, other.encoding) &&
-            Utils.enhancedDeepEquals(this.source, other.source) &&
-            Utils.enhancedDeepEquals(this.target, other.target) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.content, other.content)
+                && Utils.enhancedDeepEquals(this.encoding, other.encoding)
+                && Utils.enhancedDeepEquals(this.source, other.source)
+                && Utils.enhancedDeepEquals(this.target, other.target)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            content, encoding, source,
-            target, type);
+        return Utils.enhancedHash(content, encoding, source, target, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Source.class,
-                "content", content,
-                "encoding", encoding,
-                "source", source,
-                "target", target,
-                "type", type);
+        return Utils.toString(
+                Source.class,
+                "content",
+                content,
+                "encoding",
+                encoding,
+                "source",
+                source,
+                "target",
+                target,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String content;
 
@@ -220,7 +215,7 @@ public class Source {
         private SourceType type;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -241,7 +236,7 @@ public class Source {
 
         /**
          * The source of the environment.
-         * For GCS, this is the GCS path.
+         * For Cloud Storage, this is the Cloud Storage path.
          * For GitHub, this is the GitHub path.
          */
         public Builder source(@Nullable String source) {
@@ -263,10 +258,7 @@ public class Source {
         }
 
         public Source build() {
-            return new Source(
-                content, encoding, source,
-                target, type);
+            return new Source(content, encoding, source, target, type);
         }
-
     }
 }

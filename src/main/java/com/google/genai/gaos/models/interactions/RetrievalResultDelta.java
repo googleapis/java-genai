@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * RetrievalResultDelta
- * 
+ *
  * <p>Used by Vertex Retrieval tools such as Parallel AI, Exa AI, Vertex AI Search,
  * etc.
  * ToolResultDelta.type
@@ -54,7 +54,6 @@ public class RetrievalResultDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -66,7 +65,7 @@ public class RetrievalResultDelta implements StepDeltaData {
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public RetrievalResultDelta() {
         this(null, null);
     }
@@ -94,7 +93,6 @@ public class RetrievalResultDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * Whether the retrieval resulted in an error.
      */
@@ -103,7 +101,6 @@ public class RetrievalResultDelta implements StepDeltaData {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -111,7 +108,6 @@ public class RetrievalResultDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -122,35 +118,30 @@ public class RetrievalResultDelta implements StepDeltaData {
             return false;
         }
         RetrievalResultDelta other = (RetrievalResultDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.isError, other.isError)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            isError, signature, type);
+        return Utils.enhancedHash(isError, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RetrievalResultDelta.class,
-                "isError", isError,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(RetrievalResultDelta.class, "isError", isError, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Boolean isError;
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -170,15 +161,10 @@ public class RetrievalResultDelta implements StepDeltaData {
         }
 
         public RetrievalResultDelta build() {
-            return new RetrievalResultDelta(
-                isError, signature);
+            return new RetrievalResultDelta(isError, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"retrieval_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"retrieval_result\"", new TypeReference<String>() {});
     }
 }

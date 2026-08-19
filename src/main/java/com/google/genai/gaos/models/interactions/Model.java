@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Model
- * 
+ *
  * <p>The model that will complete your prompt.\n\nSee
  * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
  */
@@ -60,6 +60,7 @@ public class Model {
     public static final Model GEMINI31_FLASH_IMAGE = new Model("gemini-3.1-flash-image");
     public static final Model GEMINI35_FLASH = new Model("gemini-3.5-flash");
     public static final Model GEMINI36_FLASH = new Model("gemini-3.6-flash");
+    public static final Model GEMINI37_FLASH = new Model("gemini-3.7-flash");
     public static final Model LYRIA3_CLIP_PREVIEW = new Model("lyria-3-clip-preview");
     public static final Model LYRIA3_PRO_PREVIEW = new Model("lyria-3-pro-preview");
     public static final Model GEMINI_ROBOTICS_ER16_PREVIEW = new Model("gemini-robotics-er-1.6-preview");
@@ -80,12 +81,12 @@ public class Model {
     }
 
     /**
-     * Returns a Model with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Model with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Model
-     */ 
+     */
     @JsonCreator
     public static Model of(String value) {
         synchronized (Model.class) {
@@ -113,12 +114,9 @@ public class Model {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Model other = (Model) obj;
         return Objects.equals(value, other.value);
     }
@@ -155,6 +153,7 @@ public class Model {
         map.put("gemini-3.1-flash-image", GEMINI31_FLASH_IMAGE);
         map.put("gemini-3.5-flash", GEMINI35_FLASH);
         map.put("gemini-3.6-flash", GEMINI36_FLASH);
+        map.put("gemini-3.7-flash", GEMINI37_FLASH);
         map.put("lyria-3-clip-preview", LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", GEMINI_ROBOTICS_ER16_PREVIEW);
@@ -182,14 +181,14 @@ public class Model {
         map.put("gemini-3.1-flash-image", ModelEnum.GEMINI31_FLASH_IMAGE);
         map.put("gemini-3.5-flash", ModelEnum.GEMINI35_FLASH);
         map.put("gemini-3.6-flash", ModelEnum.GEMINI36_FLASH);
+        map.put("gemini-3.7-flash", ModelEnum.GEMINI37_FLASH);
         map.put("lyria-3-clip-preview", ModelEnum.LYRIA3_CLIP_PREVIEW);
         map.put("lyria-3-pro-preview", ModelEnum.LYRIA3_PRO_PREVIEW);
         map.put("gemini-robotics-er-1.6-preview", ModelEnum.GEMINI_ROBOTICS_ER16_PREVIEW);
         map.put("gemini-robotics-er-2-preview", ModelEnum.GEMINI_ROBOTICS_ER2_PREVIEW);
         return map;
     }
-    
-    
+
     public enum ModelEnum {
 
         GEMINI25_FLASH("gemini-2.5-flash"),
@@ -210,10 +209,12 @@ public class Model {
         GEMINI31_FLASH_IMAGE("gemini-3.1-flash-image"),
         GEMINI35_FLASH("gemini-3.5-flash"),
         GEMINI36_FLASH("gemini-3.6-flash"),
+        GEMINI37_FLASH("gemini-3.7-flash"),
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
         LYRIA3_PRO_PREVIEW("lyria-3-pro-preview"),
         GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
-        GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),;
+        GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),
+        ;
 
         private final String value;
 
@@ -226,4 +227,3 @@ public class Model {
         }
     }
 }
-

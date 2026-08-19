@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * RevocationBehavior
- * 
+ *
  * <p>Optional. The revocation behavior for previous signing secrets.
  */
 public enum RevocationBehavior {
@@ -39,13 +39,13 @@ public enum RevocationBehavior {
     RevocationBehavior(String value) {
         this.value = value;
     }
-    
+
     public String value() {
         return value;
     }
-    
+
     public static Optional<RevocationBehavior> fromValue(String value) {
-        for (RevocationBehavior o: RevocationBehavior.values()) {
+        for (RevocationBehavior o : RevocationBehavior.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }
@@ -53,4 +53,3 @@ public enum RevocationBehavior {
         return Optional.empty();
     }
 }
-

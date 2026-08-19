@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -33,13 +33,13 @@ import java.util.Optional;
 
 /**
  * TranscriptionConfig
- * 
+ *
  * <p>Configuration for speech recognition (transcription).
  */
 public class TranscriptionConfig {
     /**
      * Optional. A list of phrases to bias the ASR model towards.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -91,15 +91,14 @@ public class TranscriptionConfig {
         this.languageCodes = languageCodes;
         this.timestampGranularities = timestampGranularities;
     }
-    
+
     public TranscriptionConfig() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
      * Optional. A list of phrases to bias the ASR model towards.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -142,10 +141,9 @@ public class TranscriptionConfig {
         return new Builder();
     }
 
-
     /**
      * Optional. A list of phrases to bias the ASR model towards.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -153,7 +151,6 @@ public class TranscriptionConfig {
         this.adaptationPhrases = adaptationPhrases;
         return this;
     }
-
 
     /**
      * Optional. A list of custom vocabulary phrases to bias the speech recognition model
@@ -164,7 +161,6 @@ public class TranscriptionConfig {
         return this;
     }
 
-
     /**
      * Optional. Configures speaker diarization. Supported values: "speaker".
      */
@@ -172,7 +168,6 @@ public class TranscriptionConfig {
         this.diarizationMode = diarizationMode;
         return this;
     }
-
 
     /**
      * Optional. BCP-47 language codes providing hints about the languages present in the
@@ -183,7 +178,6 @@ public class TranscriptionConfig {
         return this;
     }
 
-
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
@@ -192,7 +186,6 @@ public class TranscriptionConfig {
         this.timestampGranularities = timestampGranularities;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -203,33 +196,37 @@ public class TranscriptionConfig {
             return false;
         }
         TranscriptionConfig other = (TranscriptionConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.adaptationPhrases, other.adaptationPhrases) &&
-            Utils.enhancedDeepEquals(this.customVocabulary, other.customVocabulary) &&
-            Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode) &&
-            Utils.enhancedDeepEquals(this.languageCodes, other.languageCodes) &&
-            Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities);
+        return Utils.enhancedDeepEquals(this.adaptationPhrases, other.adaptationPhrases)
+                && Utils.enhancedDeepEquals(this.customVocabulary, other.customVocabulary)
+                && Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode)
+                && Utils.enhancedDeepEquals(this.languageCodes, other.languageCodes)
+                && Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            adaptationPhrases, customVocabulary, diarizationMode,
-            languageCodes, timestampGranularities);
+                adaptationPhrases, customVocabulary, diarizationMode, languageCodes, timestampGranularities);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TranscriptionConfig.class,
-                "adaptationPhrases", adaptationPhrases,
-                "customVocabulary", customVocabulary,
-                "diarizationMode", diarizationMode,
-                "languageCodes", languageCodes,
-                "timestampGranularities", timestampGranularities);
+        return Utils.toString(
+                TranscriptionConfig.class,
+                "adaptationPhrases",
+                adaptationPhrases,
+                "customVocabulary",
+                customVocabulary,
+                "diarizationMode",
+                diarizationMode,
+                "languageCodes",
+                languageCodes,
+                "timestampGranularities",
+                timestampGranularities);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         @Deprecated
         private List<String> adaptationPhrases;
@@ -243,12 +240,12 @@ public class TranscriptionConfig {
         private List<String> timestampGranularities;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
          * Optional. A list of phrases to bias the ASR model towards.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -294,9 +291,7 @@ public class TranscriptionConfig {
 
         public TranscriptionConfig build() {
             return new TranscriptionConfig(
-                adaptationPhrases, customVocabulary, diarizationMode,
-                languageCodes, timestampGranularities);
+                    adaptationPhrases, customVocabulary, diarizationMode, languageCodes, timestampGranularities);
         }
-
     }
 }

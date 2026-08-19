@@ -25,8 +25,7 @@ class RequestMetadata {
 
     String mediaType = "application/octet-stream";
 
-    private RequestMetadata() {
-    }
+    private RequestMetadata() {}
 
     // request:mediaType=multipart/form-data
     static RequestMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {

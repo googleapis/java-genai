@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * GoogleMapsResult
- * 
+ *
  * <p>The result of the Google Maps.
  */
 public class GoogleMapsResult {
@@ -40,7 +40,6 @@ public class GoogleMapsResult {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("places")
     private List<GoogleMapsResultPlaces> places;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("widget_context_token")
@@ -53,7 +52,7 @@ public class GoogleMapsResult {
         this.places = places;
         this.widgetContextToken = widgetContextToken;
     }
-    
+
     public GoogleMapsResult() {
         this(null, null);
     }
@@ -70,18 +69,15 @@ public class GoogleMapsResult {
         return new Builder();
     }
 
-
     public GoogleMapsResult withPlaces(@Nullable List<GoogleMapsResultPlaces> places) {
         this.places = places;
         return this;
     }
 
-
     public GoogleMapsResult withWidgetContextToken(@Nullable String widgetContextToken) {
         this.widgetContextToken = widgetContextToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -92,33 +88,29 @@ public class GoogleMapsResult {
             return false;
         }
         GoogleMapsResult other = (GoogleMapsResult) o;
-        return 
-            Utils.enhancedDeepEquals(this.places, other.places) &&
-            Utils.enhancedDeepEquals(this.widgetContextToken, other.widgetContextToken);
+        return Utils.enhancedDeepEquals(this.places, other.places)
+                && Utils.enhancedDeepEquals(this.widgetContextToken, other.widgetContextToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            places, widgetContextToken);
+        return Utils.enhancedHash(places, widgetContextToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsResult.class,
-                "places", places,
-                "widgetContextToken", widgetContextToken);
+        return Utils.toString(GoogleMapsResult.class, "places", places, "widgetContextToken", widgetContextToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<GoogleMapsResultPlaces> places;
 
         private String widgetContextToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder places(@Nullable List<GoogleMapsResultPlaces> places) {
@@ -132,9 +124,7 @@ public class GoogleMapsResult {
         }
 
         public GoogleMapsResult build() {
-            return new GoogleMapsResult(
-                places, widgetContextToken);
+            return new GoogleMapsResult(places, widgetContextToken);
         }
-
     }
 }
