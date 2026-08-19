@@ -29,7 +29,6 @@ import com.google.genai.gaos.utils.Utils;
 import java.lang.String;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 
 /**
@@ -41,7 +40,7 @@ import java.util.function.Consumer;
  * cases like reasoning across text and images, content generation, dialogue agents, summarization and
  * classification systems, and more.
  */
-public class GenAI {
+public class GenAI implements java.lang.AutoCloseable {
     private static final Headers _headers = Headers.EMPTY;
 
 
@@ -93,7 +92,7 @@ public class GenAI {
 
     public Environments environments() {
         return environments;
-    }
+    }private SDKConfiguration sdkConfiguration;
     private final AsyncGenAI asyncSDK;
 
     /**
@@ -195,11 +194,10 @@ public class GenAI {
          * @param retryScheduler The ScheduledExecutorService to use.
          * @return The builder instance.
          */
-        public Builder asyncRetryScheduler(ScheduledExecutorService retryScheduler) {
+        public Builder asyncRetryScheduler(java.util.concurrent.ScheduledExecutorService retryScheduler) {
             this.sdkConfiguration.setAsyncRetryScheduler(retryScheduler);
             return this;
         }
-
         /**
          * Enables debug logging for HTTP requests and responses, including JSON body content.
          * <p>
@@ -276,13 +274,14 @@ public class GenAI {
 
     private GenAI(SDKConfiguration sdkConfiguration) {
         sdkConfiguration.initialize();
+        sdkConfiguration = sdkConfiguration.hooks().sdkInit(sdkConfiguration);
         this.interactions = new Interactions(sdkConfiguration);
         this.webhooks = new Webhooks(sdkConfiguration);
         this.agents = new Agents(sdkConfiguration);
         this.triggers = new Triggers(sdkConfiguration);
         this.environments = new Environments(sdkConfiguration);
-        sdkConfiguration = sdkConfiguration.hooks().sdkInit(sdkConfiguration);
         this.asyncSDK = new AsyncGenAI(this, sdkConfiguration);
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     /**
@@ -294,4 +293,14 @@ public class GenAI {
         return asyncSDK;
     }
 
+
+    /**
+     * Releases the configured HTTP client's owned resources.
+     *
+     * @throws Exception if the configured client cannot be closed
+     */
+    @Override
+    public void close() throws Exception {
+        this.sdkConfiguration.closeClient();
+    }
 }

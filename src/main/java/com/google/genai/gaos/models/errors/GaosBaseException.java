@@ -29,14 +29,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @SuppressWarnings("serial")
-public abstract class GenAiException extends RuntimeException {
+public abstract class GaosBaseException extends com.google.genai.errors.ApiException {
 
     private int code;
     private byte[] body;
     private HttpResponse<?> rawResponse;
 
-    public GenAiException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
-        super(message, cause);
+    public GaosBaseException(String message, int code, @Nullable byte[] body, HttpResponse<?> rawResponse, @Nullable Throwable cause) {
+        super(code, "", message, cause);
         Utils.checkNotNull(message, "message");
         Utils.checkNotNull(rawResponse, "rawResponse");
         this.body = body;
@@ -80,18 +80,18 @@ public abstract class GenAiException extends RuntimeException {
         return getMessage();
     }
     
-    public GenAiException withCode(int code) {
+    public GaosBaseException withCode(int code) {
         this.code = code;
         return this;
     }
     
-    public GenAiException withBody(@Nullable byte[] body) {
+    public GaosBaseException withBody(@Nullable byte[] body) {
         Utils.checkNotNull(body, "body");
         this.body = body;
         return this;
     }
     
-    public GenAiException withRawResponse(HttpResponse<?> rawResponse) {
+    public GaosBaseException withRawResponse(HttpResponse<?> rawResponse) {
         Utils.checkNotNull(rawResponse, "rawResponse");
         this.rawResponse = rawResponse;
         return this;

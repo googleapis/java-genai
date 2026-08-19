@@ -27,7 +27,7 @@ import com.google.genai.gaos.SDKConfiguration;
 import com.google.genai.gaos.SecuritySource;
 import com.google.genai.gaos.models.errors.DeleteInteractionClientError;
 import com.google.genai.gaos.models.errors.DeleteInteractionServerError;
-import com.google.genai.gaos.models.errors.SDKException;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.DeleteInteractionRequest;
 import com.google.genai.gaos.models.operations.DeleteInteractionResponse;
 import com.google.genai.gaos.utils.AsyncRetries;
@@ -221,17 +221,17 @@ public class DeleteInteraction {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
     public static class Async extends Base
@@ -312,17 +312,17 @@ public class DeleteInteraction {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionClientError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
                     throw DeleteInteractionServerError.from(response);
                 } else {
-                    throw SDKException.from("Unexpected content-type received: " + contentType, response);
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
                 }
             }
-            throw SDKException.from("Unexpected status code received: " + response.statusCode(), response);
+            throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
     }
 }

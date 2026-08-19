@@ -353,4 +353,13 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         }
         return buffer.toByteArray();
     }
+
+    @Override
+    public void close() throws Exception {
+        client.dispatcher().executorService().shutdown();
+        client.connectionPool().evictAll();
+        if (client.cache() != null) {
+            client.cache().close();
+        }
+    }
 }

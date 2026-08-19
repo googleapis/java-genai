@@ -35,7 +35,7 @@ import java.lang.Throwable;
 import java.util.Optional;
 
 @SuppressWarnings("serial")
-public class GetInteractionByIdServerError extends GenAiException {
+public class GetInteractionByIdServerError extends GaosServerException {
 
     @Nullable
     private final Data data;
