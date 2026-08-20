@@ -126,6 +126,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("audioTranscription")
   public abstract Optional<Transcription> audioTranscription();
 
+  /** How the model processes this part's media for understanding. */
+  @JsonProperty("mediaProcessing")
+  public abstract Optional<MediaProcessing> mediaProcessing();
+
   /** Instantiates a builder for Part. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -545,6 +549,44 @@ public abstract class Part extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearAudioTranscription() {
       return audioTranscription(Optional.empty());
+    }
+
+    /**
+     * Setter for mediaProcessing.
+     *
+     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     */
+    @JsonProperty("mediaProcessing")
+    public abstract Builder mediaProcessing(MediaProcessing mediaProcessing);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder mediaProcessing(Optional<MediaProcessing> mediaProcessing);
+
+    /** Clears the value of mediaProcessing field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearMediaProcessing() {
+      return mediaProcessing(Optional.empty());
+    }
+
+    /**
+     * Setter for mediaProcessing given a known enum.
+     *
+     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaProcessing(MediaProcessing.Known knownType) {
+      return mediaProcessing(new MediaProcessing(knownType));
+    }
+
+    /**
+     * Setter for mediaProcessing given a string.
+     *
+     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     */
+    @CanIgnoreReturnValue
+    public Builder mediaProcessing(String mediaProcessing) {
+      return mediaProcessing(new MediaProcessing(mediaProcessing));
     }
 
     public abstract Part build();
