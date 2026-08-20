@@ -37,7 +37,7 @@ public class SDKConfiguration {
     private static final String LANGUAGE = "java";
     public static final String OPENAPI_DOC_VERSION = "v1beta";
     public static final String SDK_VERSION = "0.1.0";
-    public static final String GEN_VERSION = "2.924.0";
+    public static final String GEN_VERSION = "2.930.0";
     private static final String BASE_PACKAGE = "com.google.genai.gaos";
     public static final String USER_AGENT = 
             String.format("speakeasy-sdk/%s %s %s %s %s",
@@ -63,6 +63,17 @@ public class SDKConfiguration {
     public void setClient(HTTPClient client) {
         Utils.checkNotNull(client, "client");
         this.client = client;
+    }
+
+    private final java.util.concurrent.atomic.AtomicReference<Object> closedClient =
+            new java.util.concurrent.atomic.AtomicReference<>();
+
+    public void closeClient() throws Exception {
+        Object client = client();
+        if (closedClient.getAndSet(client) != client
+                && client instanceof java.lang.AutoCloseable) {
+            ((java.lang.AutoCloseable) client).close();
+        }
     }
     
     private String serverUrl;
