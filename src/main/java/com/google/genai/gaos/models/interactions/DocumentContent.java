@@ -44,6 +44,13 @@ public class DocumentContent implements Content {
     @JsonProperty("data")
     private String data;
 
+    /**
+     * The mime type of the document.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mime_type")
+    private DocumentContentMimeType mimeType;
+
 
     @JsonProperty("type")
     private String type;
@@ -55,22 +62,15 @@ public class DocumentContent implements Content {
     @JsonProperty("uri")
     private String uri;
 
-    /**
-     * The mime type of the document.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mime_type")
-    private DocumentContentMimeType mimeType;
-
     @JsonCreator
     public DocumentContent(
             @JsonProperty("data") @Nullable String data,
-            @JsonProperty("uri") @Nullable String uri,
-            @JsonProperty("mime_type") @Nullable DocumentContentMimeType mimeType) {
+            @JsonProperty("mime_type") @Nullable DocumentContentMimeType mimeType,
+            @JsonProperty("uri") @Nullable String uri) {
         this.data = data;
+        this.mimeType = mimeType;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
-        this.mimeType = mimeType;
     }
     
     public DocumentContent() {
@@ -84,6 +84,13 @@ public class DocumentContent implements Content {
         return Optional.ofNullable(this.data);
     }
 
+    /**
+     * The mime type of the document.
+     */
+    public Optional<DocumentContentMimeType> mimeType() {
+        return Optional.ofNullable(this.mimeType);
+    }
+
     @Override
     public String type() {
         return Utils.discriminatorToString(type);
@@ -94,13 +101,6 @@ public class DocumentContent implements Content {
      */
     public Optional<String> uri() {
         return Optional.ofNullable(this.uri);
-    }
-
-    /**
-     * The mime type of the document.
-     */
-    public Optional<DocumentContentMimeType> mimeType() {
-        return Optional.ofNullable(this.mimeType);
     }
 
     public static Builder builder() {
@@ -118,19 +118,19 @@ public class DocumentContent implements Content {
 
 
     /**
-     * The URI of the document.
+     * The mime type of the document.
      */
-    public DocumentContent withUri(@Nullable String uri) {
-        this.uri = uri;
+    public DocumentContent withMimeType(@Nullable DocumentContentMimeType mimeType) {
+        this.mimeType = mimeType;
         return this;
     }
 
 
     /**
-     * The mime type of the document.
+     * The URI of the document.
      */
-    public DocumentContent withMimeType(@Nullable DocumentContentMimeType mimeType) {
-        this.mimeType = mimeType;
+    public DocumentContent withUri(@Nullable String uri) {
+        this.uri = uri;
         return this;
     }
 
@@ -146,25 +146,25 @@ public class DocumentContent implements Content {
         DocumentContent other = (DocumentContent) o;
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+            Utils.enhancedDeepEquals(this.uri, other.uri);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, type, uri,
-            mimeType);
+            data, mimeType, type,
+            uri);
     }
     
     @Override
     public String toString() {
         return Utils.toString(DocumentContent.class,
                 "data", data,
+                "mimeType", mimeType,
                 "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+                "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -172,9 +172,9 @@ public class DocumentContent implements Content {
 
         private String data;
 
-        private String uri;
-
         private DocumentContentMimeType mimeType;
+
+        private String uri;
 
         private Builder() {
           // force use of static builder() method
@@ -189,14 +189,6 @@ public class DocumentContent implements Content {
         }
 
         /**
-         * The URI of the document.
-         */
-        public Builder uri(@Nullable String uri) {
-            this.uri = uri;
-            return this;
-        }
-
-        /**
          * The mime type of the document.
          */
         public Builder mimeType(@Nullable DocumentContentMimeType mimeType) {
@@ -204,9 +196,17 @@ public class DocumentContent implements Content {
             return this;
         }
 
+        /**
+         * The URI of the document.
+         */
+        public Builder uri(@Nullable String uri) {
+            this.uri = uri;
+            return this;
+        }
+
         public DocumentContent build() {
             return new DocumentContent(
-                data, uri, mimeType);
+                data, mimeType, uri);
         }
 
 

@@ -53,6 +53,13 @@ public class AudioContent implements Content {
     private String data;
 
     /**
+     * The mime type of the audio.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mime_type")
+    private AudioContentMimeType mimeType;
+
+    /**
      * The sample rate of the audio.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -70,26 +77,19 @@ public class AudioContent implements Content {
     @JsonProperty("uri")
     private String uri;
 
-    /**
-     * The mime type of the audio.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mime_type")
-    private AudioContentMimeType mimeType;
-
     @JsonCreator
     public AudioContent(
             @JsonProperty("channels") @Nullable Integer channels,
             @JsonProperty("data") @Nullable String data,
+            @JsonProperty("mime_type") @Nullable AudioContentMimeType mimeType,
             @JsonProperty("sample_rate") @Nullable Integer sampleRate,
-            @JsonProperty("uri") @Nullable String uri,
-            @JsonProperty("mime_type") @Nullable AudioContentMimeType mimeType) {
+            @JsonProperty("uri") @Nullable String uri) {
         this.channels = channels;
         this.data = data;
+        this.mimeType = mimeType;
         this.sampleRate = sampleRate;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
-        this.mimeType = mimeType;
     }
     
     public AudioContent() {
@@ -112,6 +112,13 @@ public class AudioContent implements Content {
     }
 
     /**
+     * The mime type of the audio.
+     */
+    public Optional<AudioContentMimeType> mimeType() {
+        return Optional.ofNullable(this.mimeType);
+    }
+
+    /**
      * The sample rate of the audio.
      */
     public Optional<Integer> sampleRate() {
@@ -128,13 +135,6 @@ public class AudioContent implements Content {
      */
     public Optional<String> uri() {
         return Optional.ofNullable(this.uri);
-    }
-
-    /**
-     * The mime type of the audio.
-     */
-    public Optional<AudioContentMimeType> mimeType() {
-        return Optional.ofNullable(this.mimeType);
     }
 
     public static Builder builder() {
@@ -161,6 +161,15 @@ public class AudioContent implements Content {
 
 
     /**
+     * The mime type of the audio.
+     */
+    public AudioContent withMimeType(@Nullable AudioContentMimeType mimeType) {
+        this.mimeType = mimeType;
+        return this;
+    }
+
+
+    /**
      * The sample rate of the audio.
      */
     public AudioContent withSampleRate(@Nullable Integer sampleRate) {
@@ -178,15 +187,6 @@ public class AudioContent implements Content {
     }
 
 
-    /**
-     * The mime type of the audio.
-     */
-    public AudioContent withMimeType(@Nullable AudioContentMimeType mimeType) {
-        this.mimeType = mimeType;
-        return this;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -199,17 +199,17 @@ public class AudioContent implements Content {
         return 
             Utils.enhancedDeepEquals(this.channels, other.channels) &&
             Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
             Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+            Utils.enhancedDeepEquals(this.uri, other.uri);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            channels, data, sampleRate,
-            type, uri, mimeType);
+            channels, data, mimeType,
+            sampleRate, type, uri);
     }
     
     @Override
@@ -217,10 +217,10 @@ public class AudioContent implements Content {
         return Utils.toString(AudioContent.class,
                 "channels", channels,
                 "data", data,
+                "mimeType", mimeType,
                 "sampleRate", sampleRate,
                 "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+                "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -230,11 +230,11 @@ public class AudioContent implements Content {
 
         private String data;
 
+        private AudioContentMimeType mimeType;
+
         private Integer sampleRate;
 
         private String uri;
-
-        private AudioContentMimeType mimeType;
 
         private Builder() {
           // force use of static builder() method
@@ -257,6 +257,14 @@ public class AudioContent implements Content {
         }
 
         /**
+         * The mime type of the audio.
+         */
+        public Builder mimeType(@Nullable AudioContentMimeType mimeType) {
+            this.mimeType = mimeType;
+            return this;
+        }
+
+        /**
          * The sample rate of the audio.
          */
         public Builder sampleRate(@Nullable Integer sampleRate) {
@@ -272,18 +280,10 @@ public class AudioContent implements Content {
             return this;
         }
 
-        /**
-         * The mime type of the audio.
-         */
-        public Builder mimeType(@Nullable AudioContentMimeType mimeType) {
-            this.mimeType = mimeType;
-            return this;
-        }
-
         public AudioContent build() {
             return new AudioContent(
-                channels, data, sampleRate,
-                uri, mimeType);
+                channels, data, mimeType,
+                sampleRate, uri);
         }
 
 

@@ -126,6 +126,52 @@ public class AsyncInteractions {
 
 
     /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @return The async call builder
+     */
+    public DeleteInteractionRequestBuilder delete() {
+        return new DeleteInteractionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @param id The unique identifier of the interaction to delete.
+     * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteInteractionResponse> delete(@Nonnull String id) {
+        return delete(null, id, null);
+    }
+
+    /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param id The unique identifier of the interaction to delete.
+     * @param options additional options
+     * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
+     */
+    public CompletableFuture<DeleteInteractionResponse> delete(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        DeleteInteractionRequest request = new DeleteInteractionRequest(apiVersion, id);
+        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
+              = new DeleteInteraction.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
+            operation::handleResponse), operation);
+    }
+
+
+    /**
      * Retrieving an interaction
      * 
      * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
@@ -175,52 +221,6 @@ public class AsyncInteractions {
 
 
     /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @return The async call builder
-     */
-    public DeleteInteractionRequestBuilder delete() {
-        return new DeleteInteractionRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
-     * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
-     */
-    public CompletableFuture<DeleteInteractionResponse> delete(@Nonnull String id) {
-        return delete(id, null, null);
-    }
-
-    /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
-     * @param apiVersion Which version of the API to use.
-     * @param options additional options
-     * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
-     */
-    public CompletableFuture<DeleteInteractionResponse> delete(
-            @Nonnull String id, @Nullable String apiVersion,
-            @Nullable Options options) {
-        DeleteInteractionRequest request = new DeleteInteractionRequest(id, apiVersion);
-        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
-              = new DeleteInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
-    }
-
-
-    /**
      * Canceling an interaction
      * 
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
@@ -240,7 +240,7 @@ public class AsyncInteractions {
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */
     public CompletableFuture<CancelInteractionByIdResponse> cancel(@Nonnull String id) {
-        return cancel(id, null, null);
+        return cancel(null, id, null);
     }
 
     /**
@@ -248,15 +248,15 @@ public class AsyncInteractions {
      * 
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
      * 
-     * @param id The unique identifier of the interaction to cancel.
      * @param apiVersion Which version of the API to use.
+     * @param id The unique identifier of the interaction to cancel.
      * @param options additional options
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */
     public CompletableFuture<CancelInteractionByIdResponse> cancel(
-            @Nonnull String id, @Nullable String apiVersion,
+            @Nullable String apiVersion, @Nonnull String id,
             @Nullable Options options) {
-        CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(id, apiVersion);
+        CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(apiVersion, id);
         AsyncRequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
               = new CancelInteractionById.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),

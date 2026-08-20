@@ -35,20 +35,20 @@ import java.util.Optional;
 
 public class Security implements HasSecurity {
     /**
-     * Gemini API key sent as x-goog-api-key.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("apiKey")
-    @SpeakeasyMetadata("security:scheme=true,type=http,subtype=custom,name=apiKey")
-    private String apiKey;
-
-    /**
      * OAuth access token sent as a bearer Authorization header.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("accessToken")
     @SpeakeasyMetadata("security:scheme=true,type=http,subtype=custom,name=accessToken")
     private String accessToken;
+
+    /**
+     * Gemini API key sent as x-goog-api-key.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("apiKey")
+    @SpeakeasyMetadata("security:scheme=true,type=http,subtype=custom,name=apiKey")
+    private String apiKey;
 
     /**
      * Additional default headers to apply before request-specific headers and auth.
@@ -60,11 +60,11 @@ public class Security implements HasSecurity {
 
     @JsonCreator
     public Security(
-            @JsonProperty("apiKey") @Nullable String apiKey,
             @JsonProperty("accessToken") @Nullable String accessToken,
+            @JsonProperty("apiKey") @Nullable String apiKey,
             @JsonProperty("defaultHeaders") @Nullable Map<String, String> defaultHeaders) {
-        this.apiKey = apiKey;
         this.accessToken = accessToken;
+        this.apiKey = apiKey;
         this.defaultHeaders = defaultHeaders;
     }
     
@@ -73,17 +73,17 @@ public class Security implements HasSecurity {
     }
 
     /**
-     * Gemini API key sent as x-goog-api-key.
-     */
-    public Optional<String> apiKey() {
-        return Optional.ofNullable(this.apiKey);
-    }
-
-    /**
      * OAuth access token sent as a bearer Authorization header.
      */
     public Optional<String> accessToken() {
         return Optional.ofNullable(this.accessToken);
+    }
+
+    /**
+     * Gemini API key sent as x-goog-api-key.
+     */
+    public Optional<String> apiKey() {
+        return Optional.ofNullable(this.apiKey);
     }
 
     /**
@@ -99,19 +99,19 @@ public class Security implements HasSecurity {
 
 
     /**
-     * Gemini API key sent as x-goog-api-key.
+     * OAuth access token sent as a bearer Authorization header.
      */
-    public Security withApiKey(@Nullable String apiKey) {
-        this.apiKey = apiKey;
+    public Security withAccessToken(@Nullable String accessToken) {
+        this.accessToken = accessToken;
         return this;
     }
 
 
     /**
-     * OAuth access token sent as a bearer Authorization header.
+     * Gemini API key sent as x-goog-api-key.
      */
-    public Security withAccessToken(@Nullable String accessToken) {
-        this.accessToken = accessToken;
+    public Security withApiKey(@Nullable String apiKey) {
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -135,31 +135,31 @@ public class Security implements HasSecurity {
         }
         Security other = (Security) o;
         return 
-            Utils.enhancedDeepEquals(this.apiKey, other.apiKey) &&
             Utils.enhancedDeepEquals(this.accessToken, other.accessToken) &&
+            Utils.enhancedDeepEquals(this.apiKey, other.apiKey) &&
             Utils.enhancedDeepEquals(this.defaultHeaders, other.defaultHeaders);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiKey, accessToken, defaultHeaders);
+            accessToken, apiKey, defaultHeaders);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Security.class,
-                "apiKey", apiKey,
                 "accessToken", accessToken,
+                "apiKey", apiKey,
                 "defaultHeaders", defaultHeaders);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String apiKey;
-
         private String accessToken;
+
+        private String apiKey;
 
         private Map<String, String> defaultHeaders;
 
@@ -168,18 +168,18 @@ public class Security implements HasSecurity {
         }
 
         /**
-         * Gemini API key sent as x-goog-api-key.
-         */
-        public Builder apiKey(@Nullable String apiKey) {
-            this.apiKey = apiKey;
-            return this;
-        }
-
-        /**
          * OAuth access token sent as a bearer Authorization header.
          */
         public Builder accessToken(@Nullable String accessToken) {
             this.accessToken = accessToken;
+            return this;
+        }
+
+        /**
+         * Gemini API key sent as x-goog-api-key.
+         */
+        public Builder apiKey(@Nullable String apiKey) {
+            this.apiKey = apiKey;
             return this;
         }
 
@@ -193,7 +193,7 @@ public class Security implements HasSecurity {
 
         public Security build() {
             return new Security(
-                apiKey, accessToken, defaultHeaders);
+                accessToken, apiKey, defaultHeaders);
         }
 
     }

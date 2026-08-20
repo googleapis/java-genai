@@ -49,27 +49,14 @@ public class InteractionEnvironment {
         this.value = value;
     }
 
-    public static InteractionEnvironment of(String value) {
-        Utils.checkNotNull(value, "value");
-        return new InteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
-    }
-
     public static InteractionEnvironment of(Environment value) {
         Utils.checkNotNull(value, "value");
         return new InteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Environment>(){}));
     }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code String},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
-     */
-    public Optional<String> string() {
-        if (value.value() instanceof String) {
-            return Optional.of((String) value.value());
-        }
-        return Optional.empty();
+
+    public static InteractionEnvironment of(String value) {
+        Utils.checkNotNull(value, "value");
+        return new InteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
     }
     
     /**
@@ -81,6 +68,19 @@ public class InteractionEnvironment {
     public Optional<Environment> environment() {
         if (value.value() instanceof Environment) {
             return Optional.of((Environment) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code String},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
+     */
+    public Optional<String> string() {
+        if (value.value() instanceof String) {
+            return Optional.of((String) value.value());
         }
         return Optional.empty();
     }
@@ -119,8 +119,8 @@ public class InteractionEnvironment {
 
         public _Deserializer() {
             super(InteractionEnvironment.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Environment>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Environment>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
     

@@ -38,7 +38,7 @@ import java.util.Optional;
  * 
  * <p>A tool that can be used by the model.
  */
-public class Function implements Tool, AgentTool {
+public class Function implements AgentTool, Tool {
     /**
      * A description of the function.
      */

@@ -82,6 +82,51 @@ public class AsyncWebhooks {
 
 
     /**
+     * Lists all Webhooks.
+     * 
+     * @return The async call builder
+     */
+    public ListWebhooksRequestBuilder list() {
+        return new ListWebhooksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Lists all Webhooks.
+     * 
+     * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<ListWebhooksResponse> listDirect() {
+        return list(
+                null, null, null,
+                null);
+    }
+
+    /**
+     * Lists all Webhooks.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param pageSize Optional. The maximum number of webhooks to return. The service may return fewer than
+     *         this value. If unspecified, at most 50 webhooks will be returned.
+     *         The maximum value is 1000.
+     * @param pageToken Optional. A page token, received from a previous `ListWebhooks` call.
+     *         Provide this to retrieve the subsequent page.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
+     */
+    public CompletableFuture<ListWebhooksResponse> list(
+            @Nullable String apiVersion, @Nullable Integer pageSize,
+            @Nullable String pageToken, @Nullable Options options) {
+        ListWebhooksRequest request = new ListWebhooksRequest(apiVersion, pageSize, pageToken);
+        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
+              = new ListWebhooks.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
+            operation::handleResponse), operation);
+    }
+
+
+    /**
      * Creates a new Webhook.
      * 
      * @return The async call builder
@@ -122,43 +167,40 @@ public class AsyncWebhooks {
 
 
     /**
-     * Lists all Webhooks.
+     * Deletes a Webhook.
      * 
      * @return The async call builder
      */
-    public ListWebhooksRequestBuilder list() {
-        return new ListWebhooksRequestBuilder(sdkConfiguration);
+    public DeleteWebhookRequestBuilder delete() {
+        return new DeleteWebhookRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Lists all Webhooks.
+     * Deletes a Webhook.
      * 
-     * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
+     * @param id Required. The ID of the webhook to delete.
+     *         Format: `{webhook_id}`
+     * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
      */
-    public CompletableFuture<ListWebhooksResponse> listDirect() {
-        return list(
-                null, null, null,
-                null);
+    public CompletableFuture<DeleteWebhookResponse> delete(@Nonnull String id) {
+        return delete(null, id, null);
     }
 
     /**
-     * Lists all Webhooks.
+     * Deletes a Webhook.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param pageSize Optional. The maximum number of webhooks to return. The service may return fewer than
-     *         this value. If unspecified, at most 50 webhooks will be returned.
-     *         The maximum value is 1000.
-     * @param pageToken Optional. A page token, received from a previous `ListWebhooks` call.
-     *         Provide this to retrieve the subsequent page.
+     * @param id Required. The ID of the webhook to delete.
+     *         Format: `{webhook_id}`
      * @param options additional options
-     * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
+     * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
      */
-    public CompletableFuture<ListWebhooksResponse> list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
-        ListWebhooksRequest request = new ListWebhooksRequest(apiVersion, pageSize, pageToken);
-        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
-              = new ListWebhooks.Async(
+    public CompletableFuture<DeleteWebhookResponse> delete(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
+        AsyncRequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
+              = new DeleteWebhook.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
@@ -254,40 +296,43 @@ public class AsyncWebhooks {
 
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
      * @return The async call builder
      */
-    public DeleteWebhookRequestBuilder delete() {
-        return new DeleteWebhookRequestBuilder(sdkConfiguration);
+    public PingWebhookRequestBuilder ping() {
+        return new PingWebhookRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
-     * @param id Required. The ID of the webhook to delete.
+     * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
-     * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
+     * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
-    public CompletableFuture<DeleteWebhookResponse> delete(@Nonnull String id) {
-        return delete(null, id, null);
+    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
+        return ping(
+                null, id, null,
+                null);
     }
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param id Required. The ID of the webhook to delete.
+     * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
+     * @param body Request message for WebhookService.PingWebhook.
      * @param options additional options
-     * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
+     * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
-    public CompletableFuture<DeleteWebhookResponse> delete(
+    public CompletableFuture<PingWebhookResponse> ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
-        DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
-              = new DeleteWebhook.Async(
+            @Nullable PingWebhookRequest body, @Nullable Options options) {
+        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
+        AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
+              = new PingWebhook.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
@@ -333,51 +378,6 @@ public class AsyncWebhooks {
         com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
         AsyncRequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
               = new RotateSigningSecret.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
-    }
-
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @return The async call builder
-     */
-    public PingWebhookRequestBuilder ping() {
-        return new PingWebhookRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
-     * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
-     */
-    public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
-        return ping(
-                null, id, null,
-                null);
-    }
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
-     * @param body Request message for WebhookService.PingWebhook.
-     * @param options additional options
-     * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
-     */
-    public CompletableFuture<PingWebhookResponse> ping(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
-        AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),

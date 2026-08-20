@@ -82,6 +82,52 @@ public class AsyncTriggers {
 
 
     /**
+     * Lists triggers for a project.
+     * 
+     * @return The async call builder
+     */
+    public ListTriggersRequestBuilder list() {
+        return new ListTriggersRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Lists triggers for a project.
+     * 
+     * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
+     */
+    public CompletableFuture<ListTriggersResponse> listDirect() {
+        return list(
+                null, null, null,
+                null, null);
+    }
+
+    /**
+     * Lists triggers for a project.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param filter Optional. Filter expression (e.g., by state).
+     * @param pageSize Optional. The maximum number of triggers to return per page.
+     * @param pageToken Optional. A page token from a previous ListTriggers call.
+     * @param options additional options
+     * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
+     */
+    public CompletableFuture<ListTriggersResponse> list(
+            @Nullable String apiVersion, @Nullable String filter,
+            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable Options options) {
+        ListTriggersRequest request = new ListTriggersRequest(
+                apiVersion, filter, pageSize,
+                pageToken);
+        AsyncRequestOperation<ListTriggersRequest, ListTriggersResponse> operation
+              = new ListTriggers.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
+            operation::handleResponse), operation);
+    }
+
+
+    /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
      * 
      * @return The async call builder
@@ -122,44 +168,38 @@ public class AsyncTriggers {
 
 
     /**
-     * Lists triggers for a project.
+     * Deletes a trigger.
      * 
      * @return The async call builder
      */
-    public ListTriggersRequestBuilder list() {
-        return new ListTriggersRequestBuilder(sdkConfiguration);
+    public DeleteTriggerRequestBuilder delete() {
+        return new DeleteTriggerRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Lists triggers for a project.
+     * Deletes a trigger.
      * 
-     * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
+     * @param id Resource name of the trigger.
+     * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
-    public CompletableFuture<ListTriggersResponse> listDirect() {
-        return list(
-                null, null, null,
-                null, null);
+    public CompletableFuture<DeleteTriggerResponse> delete(@Nonnull String id) {
+        return delete(null, id, null);
     }
 
     /**
-     * Lists triggers for a project.
+     * Deletes a trigger.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param filter Optional. Filter expression (e.g., by state).
-     * @param pageSize Optional. The maximum number of triggers to return per page.
-     * @param pageToken Optional. A page token from a previous ListTriggers call.
+     * @param id Resource name of the trigger.
      * @param options additional options
-     * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
+     * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
-    public CompletableFuture<ListTriggersResponse> list(
-            @Nullable String apiVersion, @Nullable String filter,
-            @Nullable Long pageSize, @Nullable String pageToken,
+    public CompletableFuture<DeleteTriggerResponse> delete(
+            @Nullable String apiVersion, @Nonnull String id,
             @Nullable Options options) {
-        ListTriggersRequest request = new ListTriggersRequest(
-                apiVersion, filter, pageSize,
-                pageToken);
-        AsyncRequestOperation<ListTriggersRequest, ListTriggersResponse> operation
-              = new ListTriggers.Async(
+        DeleteTriggerRequest request = new DeleteTriggerRequest(apiVersion, id);
+        AsyncRequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation
+              = new DeleteTrigger.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
@@ -252,38 +292,45 @@ public class AsyncTriggers {
 
 
     /**
-     * Deletes a trigger.
+     * Lists executions for a trigger.
      * 
      * @return The async call builder
      */
-    public DeleteTriggerRequestBuilder delete() {
-        return new DeleteTriggerRequestBuilder(sdkConfiguration);
+    public ListTriggerExecutionsRequestBuilder listExecutions() {
+        return new ListTriggerExecutionsRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Deletes a trigger.
+     * Lists executions for a trigger.
      * 
-     * @param id Resource name of the trigger.
-     * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
+     * @param triggerId Resource name of the trigger.
+     * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
-    public CompletableFuture<DeleteTriggerResponse> delete(@Nonnull String id) {
-        return delete(null, id, null);
+    public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(@Nonnull String triggerId) {
+        return listExecutions(
+                null, triggerId, null,
+                null, null);
     }
 
     /**
-     * Deletes a trigger.
+     * Lists executions for a trigger.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param id Resource name of the trigger.
+     * @param triggerId Resource name of the trigger.
+     * @param pageSize Optional. The maximum number of executions to return per page.
+     * @param pageToken Optional. A page token from a previous ListTriggerExecutions call.
      * @param options additional options
-     * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
+     * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
-    public CompletableFuture<DeleteTriggerResponse> delete(
-            @Nullable String apiVersion, @Nonnull String id,
+    public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(
+            @Nullable String apiVersion, @Nonnull String triggerId,
+            @Nullable Long pageSize, @Nullable String pageToken,
             @Nullable Options options) {
-        DeleteTriggerRequest request = new DeleteTriggerRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation
-              = new DeleteTrigger.Async(
+        ListTriggerExecutionsRequest request = new ListTriggerExecutionsRequest(
+                apiVersion, triggerId, pageSize,
+                pageToken);
+        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
+              = new ListTriggerExecutions.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
@@ -324,53 +371,6 @@ public class AsyncTriggers {
         RunTriggerRequest request = new RunTriggerRequest(apiVersion, triggerId);
         AsyncRequestOperation<RunTriggerRequest, RunTriggerResponse> operation
               = new RunTrigger.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
-    }
-
-
-    /**
-     * Lists executions for a trigger.
-     * 
-     * @return The async call builder
-     */
-    public ListTriggerExecutionsRequestBuilder listExecutions() {
-        return new ListTriggerExecutionsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Lists executions for a trigger.
-     * 
-     * @param triggerId Resource name of the trigger.
-     * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
-     */
-    public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(@Nonnull String triggerId) {
-        return listExecutions(
-                null, triggerId, null,
-                null, null);
-    }
-
-    /**
-     * Lists executions for a trigger.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param triggerId Resource name of the trigger.
-     * @param pageSize Optional. The maximum number of executions to return per page.
-     * @param pageToken Optional. A page token from a previous ListTriggerExecutions call.
-     * @param options additional options
-     * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
-     */
-    public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Long pageSize, @Nullable String pageToken,
-            @Nullable Options options) {
-        ListTriggerExecutionsRequest request = new ListTriggerExecutionsRequest(
-                apiVersion, triggerId, pageSize,
-                pageToken);
-        AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
-              = new ListTriggerExecutions.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),

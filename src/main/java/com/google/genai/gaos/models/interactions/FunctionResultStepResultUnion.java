@@ -49,32 +49,19 @@ public class FunctionResultStepResultUnion {
         this.value = value;
     }
 
-    public static FunctionResultStepResultUnion of(FunctionResultStepResult value) {
-        Utils.checkNotNull(value, "value");
-        return new FunctionResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultStepResult>(){}));
-    }
-
     public static FunctionResultStepResultUnion of(List<FunctionResultSubcontent> value) {
         Utils.checkNotNull(value, "value");
         return new FunctionResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
     }
 
+    public static FunctionResultStepResultUnion of(FunctionResultStepResult value) {
+        Utils.checkNotNull(value, "value");
+        return new FunctionResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultStepResult>(){}));
+    }
+
     public static FunctionResultStepResultUnion of(String value) {
         Utils.checkNotNull(value, "value");
         return new FunctionResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code FunctionResultStepResult},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code FunctionResultStepResult} value, or empty if not of this type
-     */
-    public Optional<FunctionResultStepResult> functionResultStepResult() {
-        if (value.value() instanceof FunctionResultStepResult) {
-            return Optional.of((FunctionResultStepResult) value.value());
-        }
-        return Optional.empty();
     }
     
     /**
@@ -87,6 +74,19 @@ public class FunctionResultStepResultUnion {
     public Optional<List<FunctionResultSubcontent>> arrayOfFunctionResultSubcontent() {
         if (value.value() instanceof List) {
             return Optional.of((List<FunctionResultSubcontent>) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code FunctionResultStepResult},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code FunctionResultStepResult} value, or empty if not of this type
+     */
+    public Optional<FunctionResultStepResult> functionResultStepResult() {
+        if (value.value() instanceof FunctionResultStepResult) {
+            return Optional.of((FunctionResultStepResult) value.value());
         }
         return Optional.empty();
     }
@@ -138,8 +138,8 @@ public class FunctionResultStepResultUnion {
 
         public _Deserializer() {
             super(FunctionResultStepResultUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<FunctionResultStepResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<FunctionResultStepResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }

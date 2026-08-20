@@ -33,7 +33,7 @@ import java.lang.String;
  * 
  * <p>A tool that can be used by the model to fetch URL context.
  */
-public class URLContext implements Tool, AgentTool {
+public class URLContext implements AgentTool, Tool {
 
     @JsonProperty("type")
     private String type;

@@ -45,14 +45,14 @@ public class CancelInteractionByIdRequestBuilder {
         this.optionsBuilder = Options.builder();
     }
 
-    public CancelInteractionByIdRequestBuilder id(@Nonnull String id) {
-        this.pojoBuilder.id(id);
+    public CancelInteractionByIdRequestBuilder apiVersion(@Nullable String apiVersion) {
+        this.pojoBuilder.apiVersion(apiVersion);
         this._setterCalled = true;
         return this;
     }
 
-    public CancelInteractionByIdRequestBuilder apiVersion(@Nullable String apiVersion) {
-        this.pojoBuilder.apiVersion(apiVersion);
+    public CancelInteractionByIdRequestBuilder id(@Nonnull String id) {
+        this.pojoBuilder.id(id);
         this._setterCalled = true;
         return this;
     }

@@ -68,46 +68,6 @@ public class AsyncEnvironments {
 
 
     /**
-     * Creates an environment.
-     * 
-     * @return The async call builder
-     */
-    public CreateEnvironmentRequestBuilder createEnvironment() {
-        return new CreateEnvironmentRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Creates an environment.
-     * 
-     * @param body Request for `CreateEnvironment`.
-     * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
-     */
-    public CompletableFuture<CreateEnvironmentResponse> createEnvironment(@Nonnull CreateEnvironmentRequest body) {
-        return createEnvironment(null, body, null);
-    }
-
-    /**
-     * Creates an environment.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param body Request for `CreateEnvironment`.
-     * @param options additional options
-     * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
-     */
-    public CompletableFuture<CreateEnvironmentResponse> createEnvironment(
-            @Nullable String apiVersion, @Nonnull CreateEnvironmentRequest body,
-            @Nullable Options options) {
-        com.google.genai.gaos.models.operations.CreateEnvironmentRequest request = new com.google.genai.gaos.models.operations.CreateEnvironmentRequest(apiVersion, body);
-        AsyncRequestOperation<com.google.genai.gaos.models.operations.CreateEnvironmentRequest, CreateEnvironmentResponse> operation
-              = new CreateEnvironment.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
-    }
-
-
-    /**
      * Lists environments.
      * 
      * @return The async call builder
@@ -150,38 +110,38 @@ public class AsyncEnvironments {
 
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
      * @return The async call builder
      */
-    public GetEnvironmentRequestBuilder getEnvironment() {
-        return new GetEnvironmentRequestBuilder(sdkConfiguration);
+    public CreateEnvironmentRequestBuilder createEnvironment() {
+        return new CreateEnvironmentRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
-     * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
+     * @param body Request for `CreateEnvironment`.
+     * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
      */
-    public CompletableFuture<GetEnvironmentResponse> getEnvironment(@Nonnull String id) {
-        return getEnvironment(null, id, null);
+    public CompletableFuture<CreateEnvironmentResponse> createEnvironment(@Nonnull CreateEnvironmentRequest body) {
+        return createEnvironment(null, body, null);
     }
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param body Request for `CreateEnvironment`.
      * @param options additional options
-     * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
+     * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
      */
-    public CompletableFuture<GetEnvironmentResponse> getEnvironment(
-            @Nullable String apiVersion, @Nonnull String id,
+    public CompletableFuture<CreateEnvironmentResponse> createEnvironment(
+            @Nullable String apiVersion, @Nonnull CreateEnvironmentRequest body,
             @Nullable Options options) {
-        GetEnvironmentRequest request = new GetEnvironmentRequest(apiVersion, id);
-        AsyncRequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
-              = new GetEnvironment.Async(
+        com.google.genai.gaos.models.operations.CreateEnvironmentRequest request = new com.google.genai.gaos.models.operations.CreateEnvironmentRequest(apiVersion, body);
+        AsyncRequestOperation<com.google.genai.gaos.models.operations.CreateEnvironmentRequest, CreateEnvironmentResponse> operation
+              = new CreateEnvironment.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
@@ -222,6 +182,46 @@ public class AsyncEnvironments {
         DeleteEnvironmentRequest request = new DeleteEnvironmentRequest(apiVersion, id);
         AsyncRequestOperation<DeleteEnvironmentRequest, DeleteEnvironmentResponse> operation
               = new DeleteEnvironment.Async(
+                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
+                                    _headers);
+        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
+            operation::handleResponse), operation);
+    }
+
+
+    /**
+     * Gets an environment.
+     * 
+     * @return The async call builder
+     */
+    public GetEnvironmentRequestBuilder getEnvironment() {
+        return new GetEnvironmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Gets an environment.
+     * 
+     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
+     */
+    public CompletableFuture<GetEnvironmentResponse> getEnvironment(@Nonnull String id) {
+        return getEnvironment(null, id, null);
+    }
+
+    /**
+     * Gets an environment.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param options additional options
+     * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
+     */
+    public CompletableFuture<GetEnvironmentResponse> getEnvironment(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        GetEnvironmentRequest request = new GetEnvironmentRequest(apiVersion, id);
+        AsyncRequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
+              = new GetEnvironment.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
                                     _headers);
         return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),

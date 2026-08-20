@@ -33,34 +33,34 @@ import com.google.genai.gaos.utils.Headers;
 public class AsyncGenAI implements java.lang.AutoCloseable {
     private static final Headers _headers = Headers.EMPTY;
 
-    private final AsyncInteractions interactions;
-
-    private final AsyncWebhooks webhooks;
-
     private final AsyncAgents agents;
-
-    private final AsyncTriggers triggers;
 
     private final AsyncEnvironments environments;
 
-    public AsyncInteractions interactions() {
-        return interactions;
-    }
+    private final AsyncInteractions interactions;
 
-    public AsyncWebhooks webhooks() {
-        return webhooks;
-    }
+    private final AsyncTriggers triggers;
+
+    private final AsyncWebhooks webhooks;
 
     public AsyncAgents agents() {
         return agents;
+    }
+
+    public AsyncEnvironments environments() {
+        return environments;
+    }
+
+    public AsyncInteractions interactions() {
+        return interactions;
     }
 
     public AsyncTriggers triggers() {
         return triggers;
     }
 
-    public AsyncEnvironments environments() {
-        return environments;
+    public AsyncWebhooks webhooks() {
+        return webhooks;
     }
 
     private SDKConfiguration sdkConfiguration;
@@ -69,11 +69,11 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
     AsyncGenAI(GenAI syncSDK, SDKConfiguration sdkConfiguration) {
         this.syncSDK = syncSDK;
         this.sdkConfiguration = sdkConfiguration;
-        this.interactions = new AsyncInteractions(syncSDK.interactions(), sdkConfiguration);
-        this.webhooks = new AsyncWebhooks(syncSDK.webhooks(), sdkConfiguration);
         this.agents = new AsyncAgents(syncSDK.agents(), sdkConfiguration);
-        this.triggers = new AsyncTriggers(syncSDK.triggers(), sdkConfiguration);
         this.environments = new AsyncEnvironments(syncSDK.environments(), sdkConfiguration);
+        this.interactions = new AsyncInteractions(syncSDK.interactions(), sdkConfiguration);
+        this.triggers = new AsyncTriggers(syncSDK.triggers(), sdkConfiguration);
+        this.webhooks = new AsyncWebhooks(syncSDK.webhooks(), sdkConfiguration);
     }
 
     /**

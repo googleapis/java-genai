@@ -40,10 +40,10 @@ public class ContentTypeIdResolver extends GenericTypeIdResolver<Content> {
     }
 
     private void initializeTypeMap() {
-        registerType("text", TextContent.class);
-        registerType("image", ImageContent.class);
         registerType("audio", AudioContent.class);
         registerType("document", DocumentContent.class);
+        registerType("image", ImageContent.class);
+        registerType("text", TextContent.class);
         registerType("video", VideoContent.class);
     }
 
