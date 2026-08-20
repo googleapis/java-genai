@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.67.0](https://github.com/googleapis/java-genai/compare/v1.66.0...v1.67.0) (2026-08-20)
+
+
+### Features
+
+* Add `mode` enum (`VERBATIM`, `SMART`) to `AudioTranscriptionConfig` and `TranscriptionConfig`. ([97a948f](https://github.com/googleapis/java-genai/commit/97a948f1689aa415dfb090ddd3ea83374dac964d))
+* Add enable_data_retention to ToolParallelAiSearch, Add step_count to ReinforcementTuningHyperParameters, Add BidiGenerateContentSetup ([5716305](https://github.com/googleapis/java-genai/commit/5716305543f07985b191b54882156a8385f35ea0))
+* Add IDLE state to live connection status enum and mark REQUIRES_ACTION as deprecated. ([8259f12](https://github.com/googleapis/java-genai/commit/8259f12284375218b940a9ac71c9aaef09f92da5))
+* Add interactions support for Java ([513953f](https://github.com/googleapis/java-genai/commit/513953fe71832d80b4738afd59cf541e56fd10d2))
+
+
+### Bug Fixes
+
+* [Interactions] Update Gaos errors to use the same error hierarchy as the rest of the SDK. ([9d1baeb](https://github.com/googleapis/java-genai/commit/9d1baebb0960b2f6d914298b6035291bf89b6649))
+
 ## [1.66.0](https://github.com/googleapis/java-genai/compare/v1.65.0...v1.66.0) (2026-08-12)
 
 
