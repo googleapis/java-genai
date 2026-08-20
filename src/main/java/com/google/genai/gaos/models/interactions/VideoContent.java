@@ -44,6 +44,13 @@ public class VideoContent implements Content {
     @JsonProperty("data")
     private String data;
 
+    /**
+     * How the model processes this video for understanding.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("processing")
+    private Processing processing;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("resolution")
@@ -70,10 +77,12 @@ public class VideoContent implements Content {
     @JsonCreator
     public VideoContent(
             @JsonProperty("data") @Nullable String data,
+            @JsonProperty("processing") @Nullable Processing processing,
             @JsonProperty("resolution") @Nullable MediaResolution resolution,
             @JsonProperty("uri") @Nullable String uri,
             @JsonProperty("mime_type") @Nullable VideoContentMimeType mimeType) {
         this.data = data;
+        this.processing = processing;
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
@@ -82,7 +91,7 @@ public class VideoContent implements Content {
     
     public VideoContent() {
         this(null, null, null,
-            null);
+            null, null);
     }
 
     /**
@@ -90,6 +99,13 @@ public class VideoContent implements Content {
      */
     public Optional<String> data() {
         return Optional.ofNullable(this.data);
+    }
+
+    /**
+     * How the model processes this video for understanding.
+     */
+    public Optional<Processing> processing() {
+        return Optional.ofNullable(this.processing);
     }
 
     public Optional<MediaResolution> resolution() {
@@ -129,6 +145,15 @@ public class VideoContent implements Content {
     }
 
 
+    /**
+     * How the model processes this video for understanding.
+     */
+    public VideoContent withProcessing(@Nullable Processing processing) {
+        this.processing = processing;
+        return this;
+    }
+
+
     public VideoContent withResolution(@Nullable MediaResolution resolution) {
         this.resolution = resolution;
         return this;
@@ -164,6 +189,7 @@ public class VideoContent implements Content {
         VideoContent other = (VideoContent) o;
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.processing, other.processing) &&
             Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
             Utils.enhancedDeepEquals(this.uri, other.uri) &&
@@ -173,14 +199,15 @@ public class VideoContent implements Content {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, resolution, type,
-            uri, mimeType);
+            data, processing, resolution,
+            type, uri, mimeType);
     }
     
     @Override
     public String toString() {
         return Utils.toString(VideoContent.class,
                 "data", data,
+                "processing", processing,
                 "resolution", resolution,
                 "type", type,
                 "uri", uri,
@@ -191,6 +218,8 @@ public class VideoContent implements Content {
     public final static class Builder {
 
         private String data;
+
+        private Processing processing;
 
         private MediaResolution resolution;
 
@@ -207,6 +236,14 @@ public class VideoContent implements Content {
          */
         public Builder data(@Nullable String data) {
             this.data = data;
+            return this;
+        }
+
+        /**
+         * How the model processes this video for understanding.
+         */
+        public Builder processing(@Nullable Processing processing) {
+            this.processing = processing;
             return this;
         }
 
@@ -233,8 +270,8 @@ public class VideoContent implements Content {
 
         public VideoContent build() {
             return new VideoContent(
-                data, resolution, uri,
-                mimeType);
+                data, processing, resolution,
+                uri, mimeType);
         }
 
 

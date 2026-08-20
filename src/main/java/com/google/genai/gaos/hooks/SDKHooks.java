@@ -35,55 +35,55 @@ public final class SDKHooks {
     }
 
     public static void initialize(com.google.genai.gaos.utils.Hooks hooks) {
-    hooks.registerBeforeRequest(
-        (context, request) -> {
-          if (context.securitySource().isPresent()) {
-            HasSecurity hasSecurity = context.securitySource().get().getSecurity();
-            if (hasSecurity instanceof Security) {
-              Security security = (Security) hasSecurity;
-              HttpRequest.Builder builder = request.toBuilder();
+        hooks.registerBeforeRequest(
+            (context, request) -> {
+              if (context.securitySource().isPresent()) {
+                HasSecurity hasSecurity = context.securitySource().get().getSecurity();
+                if (hasSecurity instanceof Security) {
+                  Security security = (Security) hasSecurity;
+                  HttpRequest.Builder builder = request.toBuilder();
 
-              if (security.defaultHeaders().isPresent()) {
-                for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
-                  builder.setHeader(entry.getKey(), entry.getValue());
+                  if (security.defaultHeaders().isPresent()) {
+                    for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
+                      builder.setHeader(entry.getKey(), entry.getValue());
+                    }
+                  }
+                  if (security.apiKey().isPresent()) {
+                    builder.setHeader("x-goog-api-key", security.apiKey().get());
+                  } else if (security.accessToken().isPresent()) {
+                    builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
+                  }
+                  return builder.build();
                 }
               }
-              if (security.apiKey().isPresent()) {
-                builder.setHeader("x-goog-api-key", security.apiKey().get());
-              } else if (security.accessToken().isPresent()) {
-                builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
-              }
-              return builder.build();
-            }
-          }
-          return request;
-        });
+              return request;
+            });
     }
 
     public static void initialize(com.google.genai.gaos.utils.AsyncHooks asyncHooks) {
-    asyncHooks.registerBeforeRequest(
-        (context, request) -> {
-          if (context.securitySource().isPresent()) {
-            HasSecurity hasSecurity = context.securitySource().get().getSecurity();
-            if (hasSecurity instanceof Security) {
-              Security security = (Security) hasSecurity;
-              HttpRequest.Builder builder = request.toBuilder();
+        asyncHooks.registerBeforeRequest(
+            (context, request) -> {
+              if (context.securitySource().isPresent()) {
+                HasSecurity hasSecurity = context.securitySource().get().getSecurity();
+                if (hasSecurity instanceof Security) {
+                  Security security = (Security) hasSecurity;
+                  HttpRequest.Builder builder = request.toBuilder();
 
-              if (security.defaultHeaders().isPresent()) {
-                for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
-                  builder.setHeader(entry.getKey(), entry.getValue());
+                  if (security.defaultHeaders().isPresent()) {
+                    for (Map.Entry<String, String> entry : security.defaultHeaders().get().entrySet()) {
+                      builder.setHeader(entry.getKey(), entry.getValue());
+                    }
+                  }
+                  if (security.apiKey().isPresent()) {
+                    builder.setHeader("x-goog-api-key", security.apiKey().get());
+                  } else if (security.accessToken().isPresent()) {
+                    builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
+                  }
+                  return CompletableFuture.completedFuture(builder.build());
                 }
               }
-              if (security.apiKey().isPresent()) {
-                builder.setHeader("x-goog-api-key", security.apiKey().get());
-              } else if (security.accessToken().isPresent()) {
-                builder.setHeader("Authorization", "Bearer " + security.accessToken().get());
-              }
-              return CompletableFuture.completedFuture(builder.build());
-            }
-          }
-          return CompletableFuture.completedFuture(request);
-        });
+              return CompletableFuture.completedFuture(request);
+            });
     }
 
 }

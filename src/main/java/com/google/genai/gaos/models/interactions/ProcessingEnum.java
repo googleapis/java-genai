@@ -34,46 +34,36 @@ import java.util.Optional;
  * without runtime errors. Instances are immutable singletons with reference equality.
  * Use {@code asEnum()} for switch expressions.
  */
-/**
- * Task
- * 
- * <p>Optional task mode for video generation. If not specified, the model
- * automatically determines the appropriate mode based on the provided text
- * prompt and input media.
- */
-public class Task {
+public class ProcessingEnum {
 
-    public static final Task TEXT_TO_VIDEO = new Task("text_to_video");
-    public static final Task IMAGE_TO_VIDEO = new Task("image_to_video");
-    public static final Task REFERENCE_TO_VIDEO = new Task("reference_to_video");
-    public static final Task EDIT = new Task("edit");
-    public static final Task EXTEND = new Task("extend");
+    public static final ProcessingEnum STATIC = new ProcessingEnum("static");
+    public static final ProcessingEnum AGENTIC = new ProcessingEnum("agentic");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
     // careful). Keep this field lower case to avoid clashing with
     // generated member names which will always be upper cased (Java
     // convention)
-    private static final Map<String, Task> values = createValuesMap();
-    private static final Map<String, TaskEnum> enums = createEnumsMap();
+    private static final Map<String, ProcessingEnum> values = createValuesMap();
+    private static final Map<String, ProcessingEnumEnum> enums = createEnumsMap();
 
     private final String value;
 
-    private Task(String value) {
+    private ProcessingEnum(String value) {
         this.value = value;
     }
 
     /**
-     * Returns a Task with the given value. For a specific value the 
+     * Returns a ProcessingEnum with the given value. For a specific value the 
      * returned object will always be a singleton so reference equality 
      * is satisfied when the values are the same.
      * 
-     * @param value value to be wrapped as Task
+     * @param value value to be wrapped as ProcessingEnum
      */ 
     @JsonCreator
-    public static Task of(String value) {
-        synchronized (Task.class) {
-            return values.computeIfAbsent(value, v -> new Task(v));
+    public static ProcessingEnum of(String value) {
+        synchronized (ProcessingEnum.class) {
+            return values.computeIfAbsent(value, v -> new ProcessingEnum(v));
         }
     }
 
@@ -82,7 +72,7 @@ public class Task {
         return value;
     }
 
-    public Optional<TaskEnum> asEnum() {
+    public Optional<ProcessingEnumEnum> asEnum() {
         return Optional.ofNullable(enums.getOrDefault(value, null));
     }
 
@@ -103,54 +93,45 @@ public class Task {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Task other = (Task) obj;
+        ProcessingEnum other = (ProcessingEnum) obj;
         return Objects.equals(value, other.value);
     }
 
     @Override
     public String toString() {
-        return "Task [value=" + value + "]";
+        return "ProcessingEnum [value=" + value + "]";
     }
 
     // return an array just like an enum
-    public static Task[] values() {
-        synchronized (Task.class) {
-            return values.values().toArray(new Task[] {});
+    public static ProcessingEnum[] values() {
+        synchronized (ProcessingEnum.class) {
+            return values.values().toArray(new ProcessingEnum[] {});
         }
     }
 
-    private static final Map<String, Task> createValuesMap() {
-        Map<String, Task> map = new LinkedHashMap<>();
-        map.put("text_to_video", TEXT_TO_VIDEO);
-        map.put("image_to_video", IMAGE_TO_VIDEO);
-        map.put("reference_to_video", REFERENCE_TO_VIDEO);
-        map.put("edit", EDIT);
-        map.put("extend", EXTEND);
+    private static final Map<String, ProcessingEnum> createValuesMap() {
+        Map<String, ProcessingEnum> map = new LinkedHashMap<>();
+        map.put("static", STATIC);
+        map.put("agentic", AGENTIC);
         return map;
     }
 
-    private static final Map<String, TaskEnum> createEnumsMap() {
-        Map<String, TaskEnum> map = new HashMap<>();
-        map.put("text_to_video", TaskEnum.TEXT_TO_VIDEO);
-        map.put("image_to_video", TaskEnum.IMAGE_TO_VIDEO);
-        map.put("reference_to_video", TaskEnum.REFERENCE_TO_VIDEO);
-        map.put("edit", TaskEnum.EDIT);
-        map.put("extend", TaskEnum.EXTEND);
+    private static final Map<String, ProcessingEnumEnum> createEnumsMap() {
+        Map<String, ProcessingEnumEnum> map = new HashMap<>();
+        map.put("static", ProcessingEnumEnum.STATIC);
+        map.put("agentic", ProcessingEnumEnum.AGENTIC);
         return map;
     }
     
     
-    public enum TaskEnum {
+    public enum ProcessingEnumEnum {
 
-        TEXT_TO_VIDEO("text_to_video"),
-        IMAGE_TO_VIDEO("image_to_video"),
-        REFERENCE_TO_VIDEO("reference_to_video"),
-        EDIT("edit"),
-        EXTEND("extend"),;
+        STATIC("static"),
+        AGENTIC("agentic"),;
 
         private final String value;
 
-        private TaskEnum(String value) {
+        private ProcessingEnumEnum(String value) {
             this.value = value;
         }
 

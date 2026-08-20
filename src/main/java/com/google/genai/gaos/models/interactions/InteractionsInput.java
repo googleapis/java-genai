@@ -64,11 +64,6 @@ public class InteractionsInput {
         return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Content>>(){}));
     }
 
-    public static InteractionsInput ofTurn(List<Turn> value) {
-        Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Turn>>(){}));
-    }
-
     public static InteractionsInput of(Content value) {
         Utils.checkNotNull(value, "value");
         return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Content>(){}));
@@ -111,20 +106,6 @@ public class InteractionsInput {
     public Optional<List<Content>> arrayOfContent() {
         if (value.value() instanceof List) {
             return Optional.of((List<Content>) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code List<Turn>},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code List<Turn>} value, or empty if not of this type
-     */
-    @SuppressWarnings("unchecked")
-    public Optional<List<Turn>> arrayOfTurn() {
-        if (value.value() instanceof List) {
-            return Optional.of((List<Turn>) value.value());
         }
         return Optional.empty();
     }
@@ -179,7 +160,6 @@ public class InteractionsInput {
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<Step>>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<Content>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<Turn>>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<Content>() {}, JsonShape.DEFAULT));
         }
     }

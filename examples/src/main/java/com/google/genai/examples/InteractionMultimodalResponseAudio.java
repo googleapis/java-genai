@@ -48,6 +48,7 @@ import com.google.genai.gaos.models.interactions.InteractionsInput;
 import com.google.genai.gaos.models.interactions.Model;
 import com.google.genai.gaos.models.interactions.ResponseModality;
 import com.google.genai.gaos.models.interactions.SpeechConfig;
+import com.google.genai.gaos.models.interactions.SpeechConfigUnion;
 import com.google.genai.gaos.models.interactions.Step;
 import com.google.genai.gaos.models.operations.CreateInteractionRequestBody;
 import com.google.genai.gaos.models.operations.CreateInteractionResponse;
@@ -61,7 +62,9 @@ public final class InteractionMultimodalResponseAudio {
     SpeechConfig speechConfig = SpeechConfig.builder().voice("achernar").language("en-US").build();
 
     GenerationConfig generationConfig =
-        GenerationConfig.builder().speechConfig(Arrays.asList(speechConfig)).build();
+        GenerationConfig.builder()
+            .speechConfig(SpeechConfigUnion.of(Arrays.asList(speechConfig)))
+            .build();
 
     CreateModelInteraction params =
         CreateModelInteraction.builder()

@@ -59,12 +59,19 @@ public class VideoResponseFormat {
     private String duration;
 
     /**
-     * The GCS URI to store the video output. Required for Vertex if delivery mode
-     * is URI.
+     * The Cloud Storage URI to store the video output. Required for Vertex if
+     * delivery mode is URI.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("gcs_uri")
     private String gcsUri;
+
+    /**
+     * The video output resolution. Defaults to 720p.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("resolution")
+    private Resolution resolution;
 
 
     @JsonProperty("type")
@@ -75,17 +82,19 @@ public class VideoResponseFormat {
             @JsonProperty("aspect_ratio") @Nullable VideoResponseFormatAspectRatio aspectRatio,
             @JsonProperty("delivery") @Nullable VideoResponseFormatDelivery delivery,
             @JsonProperty("duration") @Nullable String duration,
-            @JsonProperty("gcs_uri") @Nullable String gcsUri) {
+            @JsonProperty("gcs_uri") @Nullable String gcsUri,
+            @JsonProperty("resolution") @Nullable Resolution resolution) {
         this.aspectRatio = aspectRatio;
         this.delivery = delivery;
         this.duration = duration;
         this.gcsUri = gcsUri;
+        this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public VideoResponseFormat() {
         this(null, null, null,
-            null);
+            null, null);
     }
 
     /**
@@ -110,11 +119,18 @@ public class VideoResponseFormat {
     }
 
     /**
-     * The GCS URI to store the video output. Required for Vertex if delivery mode
-     * is URI.
+     * The Cloud Storage URI to store the video output. Required for Vertex if
+     * delivery mode is URI.
      */
     public Optional<String> gcsUri() {
         return Optional.ofNullable(this.gcsUri);
+    }
+
+    /**
+     * The video output resolution. Defaults to 720p.
+     */
+    public Optional<Resolution> resolution() {
+        return Optional.ofNullable(this.resolution);
     }
 
     public Optional<String> type() {
@@ -154,11 +170,20 @@ public class VideoResponseFormat {
 
 
     /**
-     * The GCS URI to store the video output. Required for Vertex if delivery mode
-     * is URI.
+     * The Cloud Storage URI to store the video output. Required for Vertex if
+     * delivery mode is URI.
      */
     public VideoResponseFormat withGcsUri(@Nullable String gcsUri) {
         this.gcsUri = gcsUri;
+        return this;
+    }
+
+
+    /**
+     * The video output resolution. Defaults to 720p.
+     */
+    public VideoResponseFormat withResolution(@Nullable Resolution resolution) {
+        this.resolution = resolution;
         return this;
     }
 
@@ -177,6 +202,7 @@ public class VideoResponseFormat {
             Utils.enhancedDeepEquals(this.delivery, other.delivery) &&
             Utils.enhancedDeepEquals(this.duration, other.duration) &&
             Utils.enhancedDeepEquals(this.gcsUri, other.gcsUri) &&
+            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
@@ -184,7 +210,7 @@ public class VideoResponseFormat {
     public int hashCode() {
         return Utils.enhancedHash(
             aspectRatio, delivery, duration,
-            gcsUri, type);
+            gcsUri, resolution, type);
     }
     
     @Override
@@ -194,6 +220,7 @@ public class VideoResponseFormat {
                 "delivery", delivery,
                 "duration", duration,
                 "gcsUri", gcsUri,
+                "resolution", resolution,
                 "type", type);
     }
 
@@ -207,6 +234,8 @@ public class VideoResponseFormat {
         private String duration;
 
         private String gcsUri;
+
+        private Resolution resolution;
 
         private Builder() {
           // force use of static builder() method
@@ -237,18 +266,26 @@ public class VideoResponseFormat {
         }
 
         /**
-         * The GCS URI to store the video output. Required for Vertex if delivery mode
-         * is URI.
+         * The Cloud Storage URI to store the video output. Required for Vertex if
+         * delivery mode is URI.
          */
         public Builder gcsUri(@Nullable String gcsUri) {
             this.gcsUri = gcsUri;
             return this;
         }
 
+        /**
+         * The video output resolution. Defaults to 720p.
+         */
+        public Builder resolution(@Nullable Resolution resolution) {
+            this.resolution = resolution;
+            return this;
+        }
+
         public VideoResponseFormat build() {
             return new VideoResponseFormat(
                 aspectRatio, delivery, duration,
-                gcsUri);
+                gcsUri, resolution);
         }
 
 

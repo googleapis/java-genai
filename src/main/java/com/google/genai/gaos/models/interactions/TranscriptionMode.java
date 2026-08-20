@@ -35,45 +35,42 @@ import java.util.Optional;
  * Use {@code asEnum()} for switch expressions.
  */
 /**
- * Task
+ * TranscriptionMode
  * 
- * <p>Optional task mode for video generation. If not specified, the model
- * automatically determines the appropriate mode based on the provided text
- * prompt and input media.
+ * <p>Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
+ * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
+ * `timestamp_granularities` and `diarization_mode`.
  */
-public class Task {
+public class TranscriptionMode {
 
-    public static final Task TEXT_TO_VIDEO = new Task("text_to_video");
-    public static final Task IMAGE_TO_VIDEO = new Task("image_to_video");
-    public static final Task REFERENCE_TO_VIDEO = new Task("reference_to_video");
-    public static final Task EDIT = new Task("edit");
-    public static final Task EXTEND = new Task("extend");
+    public static final TranscriptionMode VERBATIM = new TranscriptionMode("verbatim");
+    public static final TranscriptionMode SMART = new TranscriptionMode("smart");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
     // careful). Keep this field lower case to avoid clashing with
     // generated member names which will always be upper cased (Java
     // convention)
-    private static final Map<String, Task> values = createValuesMap();
-    private static final Map<String, TaskEnum> enums = createEnumsMap();
+    private static final Map<String, TranscriptionMode> values = createValuesMap();
+    private static final Map<String, TranscriptionModeEnum> enums = createEnumsMap();
 
     private final String value;
 
-    private Task(String value) {
+    private TranscriptionMode(String value) {
         this.value = value;
     }
 
     /**
-     * Returns a Task with the given value. For a specific value the 
+     * Returns a TranscriptionMode with the given value. For a specific value the 
      * returned object will always be a singleton so reference equality 
      * is satisfied when the values are the same.
      * 
-     * @param value value to be wrapped as Task
+     * @param value value to be wrapped as TranscriptionMode
      */ 
     @JsonCreator
-    public static Task of(String value) {
-        synchronized (Task.class) {
-            return values.computeIfAbsent(value, v -> new Task(v));
+    public static TranscriptionMode of(String value) {
+        synchronized (TranscriptionMode.class) {
+            return values.computeIfAbsent(value, v -> new TranscriptionMode(v));
         }
     }
 
@@ -82,7 +79,7 @@ public class Task {
         return value;
     }
 
-    public Optional<TaskEnum> asEnum() {
+    public Optional<TranscriptionModeEnum> asEnum() {
         return Optional.ofNullable(enums.getOrDefault(value, null));
     }
 
@@ -103,54 +100,45 @@ public class Task {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Task other = (Task) obj;
+        TranscriptionMode other = (TranscriptionMode) obj;
         return Objects.equals(value, other.value);
     }
 
     @Override
     public String toString() {
-        return "Task [value=" + value + "]";
+        return "TranscriptionMode [value=" + value + "]";
     }
 
     // return an array just like an enum
-    public static Task[] values() {
-        synchronized (Task.class) {
-            return values.values().toArray(new Task[] {});
+    public static TranscriptionMode[] values() {
+        synchronized (TranscriptionMode.class) {
+            return values.values().toArray(new TranscriptionMode[] {});
         }
     }
 
-    private static final Map<String, Task> createValuesMap() {
-        Map<String, Task> map = new LinkedHashMap<>();
-        map.put("text_to_video", TEXT_TO_VIDEO);
-        map.put("image_to_video", IMAGE_TO_VIDEO);
-        map.put("reference_to_video", REFERENCE_TO_VIDEO);
-        map.put("edit", EDIT);
-        map.put("extend", EXTEND);
+    private static final Map<String, TranscriptionMode> createValuesMap() {
+        Map<String, TranscriptionMode> map = new LinkedHashMap<>();
+        map.put("verbatim", VERBATIM);
+        map.put("smart", SMART);
         return map;
     }
 
-    private static final Map<String, TaskEnum> createEnumsMap() {
-        Map<String, TaskEnum> map = new HashMap<>();
-        map.put("text_to_video", TaskEnum.TEXT_TO_VIDEO);
-        map.put("image_to_video", TaskEnum.IMAGE_TO_VIDEO);
-        map.put("reference_to_video", TaskEnum.REFERENCE_TO_VIDEO);
-        map.put("edit", TaskEnum.EDIT);
-        map.put("extend", TaskEnum.EXTEND);
+    private static final Map<String, TranscriptionModeEnum> createEnumsMap() {
+        Map<String, TranscriptionModeEnum> map = new HashMap<>();
+        map.put("verbatim", TranscriptionModeEnum.VERBATIM);
+        map.put("smart", TranscriptionModeEnum.SMART);
         return map;
     }
     
     
-    public enum TaskEnum {
+    public enum TranscriptionModeEnum {
 
-        TEXT_TO_VIDEO("text_to_video"),
-        IMAGE_TO_VIDEO("image_to_video"),
-        REFERENCE_TO_VIDEO("reference_to_video"),
-        EDIT("edit"),
-        EXTEND("extend"),;
+        VERBATIM("verbatim"),
+        SMART("smart"),;
 
         private final String value;
 
-        private TaskEnum(String value) {
+        private TranscriptionModeEnum(String value) {
             this.value = value;
         }
 

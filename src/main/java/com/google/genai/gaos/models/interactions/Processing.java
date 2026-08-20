@@ -31,52 +31,55 @@ import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
-import java.util.List;
 import java.util.Optional;
 
-@JsonDeserialize(using = TurnContent._Deserializer.class)
-public class TurnContent {
+/**
+ * Processing
+ * 
+ * <p>How the model processes this video for understanding.
+ */
+@JsonDeserialize(using = Processing._Deserializer.class)
+public class Processing {
 
     @JsonValue
     private final TypedObject value;
     
-    private TurnContent(TypedObject value) {
+    private Processing(TypedObject value) {
         this.value = value;
     }
 
-    public static TurnContent of(List<Content> value) {
+    public static Processing of(MediaProcessing value) {
         Utils.checkNotNull(value, "value");
-        return new TurnContent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Content>>(){}));
+        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaProcessing>(){}));
     }
 
-    public static TurnContent of(String value) {
+    public static Processing of(ProcessingEnum value) {
         Utils.checkNotNull(value, "value");
-        return new TurnContent(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ProcessingEnum>(){}));
     }
     
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code List<Content>},
+     * Returns an {@link Optional} containing the value if it is of type {@code MediaProcessing},
      * otherwise returns an empty {@link Optional}.
      *
-     * @return an {@link Optional} containing the {@code List<Content>} value, or empty if not of this type
+     * @return an {@link Optional} containing the {@code MediaProcessing} value, or empty if not of this type
      */
-    @SuppressWarnings("unchecked")
-    public Optional<List<Content>> arrayOfContent() {
-        if (value.value() instanceof List) {
-            return Optional.of((List<Content>) value.value());
+    public Optional<MediaProcessing> mediaProcessing() {
+        if (value.value() instanceof MediaProcessing) {
+            return Optional.of((MediaProcessing) value.value());
         }
         return Optional.empty();
     }
     
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code String},
+     * Returns an {@link Optional} containing the value if it is of type {@code ProcessingEnum},
      * otherwise returns an empty {@link Optional}.
      *
-     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
+     * @return an {@link Optional} containing the {@code ProcessingEnum} value, or empty if not of this type
      */
-    public Optional<String> string() {
-        if (value.value() instanceof String) {
-            return Optional.of((String) value.value());
+    public Optional<ProcessingEnum> processingEnum() {
+        if (value.value() instanceof ProcessingEnum) {
+            return Optional.of((ProcessingEnum) value.value());
         }
         return Optional.empty();
     }
@@ -101,7 +104,7 @@ public class TurnContent {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TurnContent other = (TurnContent) o;
+        Processing other = (Processing) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
@@ -111,18 +114,18 @@ public class TurnContent {
     }
     
     @SuppressWarnings("serial")
-    public static final class _Deserializer extends OneOfDeserializer<TurnContent> {
+    public static final class _Deserializer extends OneOfDeserializer<Processing> {
 
         public _Deserializer() {
-            super(TurnContent.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<List<Content>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+            super(Processing.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<MediaProcessing>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<ProcessingEnum>() {}, JsonShape.DEFAULT));
         }
     }
     
     @Override
     public String toString() {
-        return Utils.toString(TurnContent.class,
+        return Utils.toString(Processing.class,
                 "value", value);
     }
 

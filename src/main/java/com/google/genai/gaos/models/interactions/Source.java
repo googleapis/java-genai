@@ -51,7 +51,7 @@ public class Source {
 
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -105,7 +105,7 @@ public class Source {
 
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     public Optional<String> source() {
@@ -148,7 +148,7 @@ public class Source {
 
     /**
      * The source of the environment.
-     * For GCS, this is the GCS path.
+     * For Cloud Storage, this is the Cloud Storage path.
      * For GitHub, this is the GitHub path.
      */
     public Source withSource(@Nullable String source) {
@@ -241,7 +241,7 @@ public class Source {
 
         /**
          * The source of the environment.
-         * For GCS, this is the GCS path.
+         * For Cloud Storage, this is the Cloud Storage path.
          * For GitHub, this is the GitHub path.
          */
         public Builder source(@Nullable String source) {

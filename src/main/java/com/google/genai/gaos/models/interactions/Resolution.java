@@ -35,45 +35,42 @@ import java.util.Optional;
  * Use {@code asEnum()} for switch expressions.
  */
 /**
- * Task
+ * Resolution
  * 
- * <p>Optional task mode for video generation. If not specified, the model
- * automatically determines the appropriate mode based on the provided text
- * prompt and input media.
+ * <p>The video output resolution. Defaults to 720p.
  */
-public class Task {
+public class Resolution {
 
-    public static final Task TEXT_TO_VIDEO = new Task("text_to_video");
-    public static final Task IMAGE_TO_VIDEO = new Task("image_to_video");
-    public static final Task REFERENCE_TO_VIDEO = new Task("reference_to_video");
-    public static final Task EDIT = new Task("edit");
-    public static final Task EXTEND = new Task("extend");
+    public static final Resolution THREE_HUNDRED_AND_SIXTYP = new Resolution("360p");
+    public static final Resolution SEVEN_HUNDRED_AND_TWENTYP = new Resolution("720p");
+    public static final Resolution ONE_THOUSAND_AND_EIGHTYP = new Resolution("1080p");
+    public static final Resolution FOURK = new Resolution("4k");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
     // careful). Keep this field lower case to avoid clashing with
     // generated member names which will always be upper cased (Java
     // convention)
-    private static final Map<String, Task> values = createValuesMap();
-    private static final Map<String, TaskEnum> enums = createEnumsMap();
+    private static final Map<String, Resolution> values = createValuesMap();
+    private static final Map<String, ResolutionEnum> enums = createEnumsMap();
 
     private final String value;
 
-    private Task(String value) {
+    private Resolution(String value) {
         this.value = value;
     }
 
     /**
-     * Returns a Task with the given value. For a specific value the 
+     * Returns a Resolution with the given value. For a specific value the 
      * returned object will always be a singleton so reference equality 
      * is satisfied when the values are the same.
      * 
-     * @param value value to be wrapped as Task
+     * @param value value to be wrapped as Resolution
      */ 
     @JsonCreator
-    public static Task of(String value) {
-        synchronized (Task.class) {
-            return values.computeIfAbsent(value, v -> new Task(v));
+    public static Resolution of(String value) {
+        synchronized (Resolution.class) {
+            return values.computeIfAbsent(value, v -> new Resolution(v));
         }
     }
 
@@ -82,7 +79,7 @@ public class Task {
         return value;
     }
 
-    public Optional<TaskEnum> asEnum() {
+    public Optional<ResolutionEnum> asEnum() {
         return Optional.ofNullable(enums.getOrDefault(value, null));
     }
 
@@ -103,54 +100,51 @@ public class Task {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Task other = (Task) obj;
+        Resolution other = (Resolution) obj;
         return Objects.equals(value, other.value);
     }
 
     @Override
     public String toString() {
-        return "Task [value=" + value + "]";
+        return "Resolution [value=" + value + "]";
     }
 
     // return an array just like an enum
-    public static Task[] values() {
-        synchronized (Task.class) {
-            return values.values().toArray(new Task[] {});
+    public static Resolution[] values() {
+        synchronized (Resolution.class) {
+            return values.values().toArray(new Resolution[] {});
         }
     }
 
-    private static final Map<String, Task> createValuesMap() {
-        Map<String, Task> map = new LinkedHashMap<>();
-        map.put("text_to_video", TEXT_TO_VIDEO);
-        map.put("image_to_video", IMAGE_TO_VIDEO);
-        map.put("reference_to_video", REFERENCE_TO_VIDEO);
-        map.put("edit", EDIT);
-        map.put("extend", EXTEND);
+    private static final Map<String, Resolution> createValuesMap() {
+        Map<String, Resolution> map = new LinkedHashMap<>();
+        map.put("360p", THREE_HUNDRED_AND_SIXTYP);
+        map.put("720p", SEVEN_HUNDRED_AND_TWENTYP);
+        map.put("1080p", ONE_THOUSAND_AND_EIGHTYP);
+        map.put("4k", FOURK);
         return map;
     }
 
-    private static final Map<String, TaskEnum> createEnumsMap() {
-        Map<String, TaskEnum> map = new HashMap<>();
-        map.put("text_to_video", TaskEnum.TEXT_TO_VIDEO);
-        map.put("image_to_video", TaskEnum.IMAGE_TO_VIDEO);
-        map.put("reference_to_video", TaskEnum.REFERENCE_TO_VIDEO);
-        map.put("edit", TaskEnum.EDIT);
-        map.put("extend", TaskEnum.EXTEND);
+    private static final Map<String, ResolutionEnum> createEnumsMap() {
+        Map<String, ResolutionEnum> map = new HashMap<>();
+        map.put("360p", ResolutionEnum.THREE_HUNDRED_AND_SIXTYP);
+        map.put("720p", ResolutionEnum.SEVEN_HUNDRED_AND_TWENTYP);
+        map.put("1080p", ResolutionEnum.ONE_THOUSAND_AND_EIGHTYP);
+        map.put("4k", ResolutionEnum.FOURK);
         return map;
     }
     
     
-    public enum TaskEnum {
+    public enum ResolutionEnum {
 
-        TEXT_TO_VIDEO("text_to_video"),
-        IMAGE_TO_VIDEO("image_to_video"),
-        REFERENCE_TO_VIDEO("reference_to_video"),
-        EDIT("edit"),
-        EXTEND("extend"),;
+        THREE_HUNDRED_AND_SIXTYP("360p"),
+        SEVEN_HUNDRED_AND_TWENTYP("720p"),
+        ONE_THOUSAND_AND_EIGHTYP("1080p"),
+        FOURK("4k"),;
 
         private final String value;
 
-        private TaskEnum(String value) {
+        private ResolutionEnum(String value) {
             this.value = value;
         }
 

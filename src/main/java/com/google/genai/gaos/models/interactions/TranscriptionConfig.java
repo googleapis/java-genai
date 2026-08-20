@@ -71,6 +71,15 @@ public class TranscriptionConfig {
     private List<String> languageCodes;
 
     /**
+     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
+     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
+     * `timestamp_granularities` and `diarization_mode`.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mode")
+    private TranscriptionMode mode;
+
+    /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
      */
@@ -84,17 +93,19 @@ public class TranscriptionConfig {
             @JsonProperty("custom_vocabulary") @Nullable List<String> customVocabulary,
             @JsonProperty("diarization_mode") @Nullable String diarizationMode,
             @JsonProperty("language_codes") @Nullable List<String> languageCodes,
+            @JsonProperty("mode") @Nullable TranscriptionMode mode,
             @JsonProperty("timestamp_granularities") @Nullable List<String> timestampGranularities) {
         this.adaptationPhrases = adaptationPhrases;
         this.customVocabulary = customVocabulary;
         this.diarizationMode = diarizationMode;
         this.languageCodes = languageCodes;
+        this.mode = mode;
         this.timestampGranularities = timestampGranularities;
     }
     
     public TranscriptionConfig() {
         this(null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -128,6 +139,15 @@ public class TranscriptionConfig {
      */
     public Optional<List<String>> languageCodes() {
         return Optional.ofNullable(this.languageCodes);
+    }
+
+    /**
+     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
+     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
+     * `timestamp_granularities` and `diarization_mode`.
+     */
+    public Optional<TranscriptionMode> mode() {
+        return Optional.ofNullable(this.mode);
     }
 
     /**
@@ -185,6 +205,17 @@ public class TranscriptionConfig {
 
 
     /**
+     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
+     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
+     * `timestamp_granularities` and `diarization_mode`.
+     */
+    public TranscriptionConfig withMode(@Nullable TranscriptionMode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+
+    /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
      */
@@ -208,6 +239,7 @@ public class TranscriptionConfig {
             Utils.enhancedDeepEquals(this.customVocabulary, other.customVocabulary) &&
             Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode) &&
             Utils.enhancedDeepEquals(this.languageCodes, other.languageCodes) &&
+            Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities);
     }
     
@@ -215,7 +247,7 @@ public class TranscriptionConfig {
     public int hashCode() {
         return Utils.enhancedHash(
             adaptationPhrases, customVocabulary, diarizationMode,
-            languageCodes, timestampGranularities);
+            languageCodes, mode, timestampGranularities);
     }
     
     @Override
@@ -225,6 +257,7 @@ public class TranscriptionConfig {
                 "customVocabulary", customVocabulary,
                 "diarizationMode", diarizationMode,
                 "languageCodes", languageCodes,
+                "mode", mode,
                 "timestampGranularities", timestampGranularities);
     }
 
@@ -239,6 +272,8 @@ public class TranscriptionConfig {
         private String diarizationMode;
 
         private List<String> languageCodes;
+
+        private TranscriptionMode mode;
 
         private List<String> timestampGranularities;
 
@@ -284,6 +319,16 @@ public class TranscriptionConfig {
         }
 
         /**
+         * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
+         * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
+         * `timestamp_granularities` and `diarization_mode`.
+         */
+        public Builder mode(@Nullable TranscriptionMode mode) {
+            this.mode = mode;
+            return this;
+        }
+
+        /**
          * Optional. The granularity of timestamps to include in the transcription output.
          * Supported values: "word". If empty, no timestamps are generated.
          */
@@ -295,7 +340,7 @@ public class TranscriptionConfig {
         public TranscriptionConfig build() {
             return new TranscriptionConfig(
                 adaptationPhrases, customVocabulary, diarizationMode,
-                languageCodes, timestampGranularities);
+                languageCodes, mode, timestampGranularities);
         }
 
     }
