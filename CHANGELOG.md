@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.68.0](https://github.com/googleapis/java-genai/compare/v1.67.0...v1.68.0) (2026-08-21)
+
+
+### Bug Fixes
+
+* update Java SDK examples and models for Gemini and Vertex AI ([4be6566](https://github.com/googleapis/java-genai/commit/4be65665a9a3b15258d1ca87e743e69dd96cb11e))
+
 ## [1.67.0](https://github.com/googleapis/java-genai/compare/v1.66.0...v1.67.0) (2026-08-20)
 
 
