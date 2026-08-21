@@ -23,7 +23,6 @@ import com.google.genai.types.File;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 import com.google.genai.types.RegisterFilesResponse;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import java.util.List;
  * API.
  */
 public final class RegisterFiles {
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     // Instantiate the client. The client by default uses the Gemini Developer API.
     Client client = new Client();
 
@@ -43,33 +42,38 @@ public final class RegisterFiles {
 
     // GoogleCredentials.getApplicationDefault() will use application default credentials.
     // Note: registerFiles is only supported by the Gemini Developer API (MLDev), not Vertex AI.
-    GoogleCredentials credentials =
-        GoogleCredentials.getApplicationDefault()
-            .createScoped(
-                Arrays.asList(
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/devstorage.read_only"));
+    try {
+      GoogleCredentials credentials =
+          GoogleCredentials.getApplicationDefault()
+              .createScoped(
+                  Arrays.asList(
+                      "https://www.googleapis.com/auth/cloud-platform",
+                      "https://www.googleapis.com/auth/devstorage.read_only",
+                      "https://www.googleapis.com/auth/generative-language"));
 
-    List<String> uris = Arrays.asList("gs://tensorflow_docs/image.jpg");
+      List<String> uris = Arrays.asList("gs://tensorflow_docs/image.jpg");
 
-    RegisterFilesResponse response = client.files.registerFiles(credentials, uris, null);
+      RegisterFilesResponse response = client.files.registerFiles(credentials, uris, null);
 
-    List<File> files =
-        response.files().orElseThrow(() -> new RuntimeException("No files returned"));
-    File file = files.get(0);
+      List<File> files =
+          response.files().orElseThrow(() -> new RuntimeException("No files returned"));
+      File file = files.get(0);
 
-    System.out.println("Registered file: " + file.uri().get());
+      System.out.println("Registered file: " + file.uri().get());
 
-    // Use the registered file in a generateContent call.
-    Content content =
-        Content.fromParts(
-            Part.fromText("can you summarize this file?"),
-            Part.fromUri(file.uri().get(), file.mimeType().get()));
+      // Use the registered file in a generateContent call.
+      Content content =
+          Content.fromParts(
+              Part.fromText("can you summarize this file?"),
+              Part.fromUri(file.uri().get(), file.mimeType().get()));
 
-    GenerateContentResponse genResponse =
-        client.models.generateContent("gemini-2.5-flash", content, null);
+      GenerateContentResponse genResponse =
+          client.models.generateContent(Constants.GEMINI_MODEL_NAME, content, null);
 
-    System.out.println("Response: " + genResponse.text());
+      System.out.println("Response: " + genResponse.text());
+    } catch (Exception e) {
+      System.err.println("registerFiles example encountered an exception: " + e.getMessage());
+    }
   }
 
   private RegisterFiles() {}

@@ -46,7 +46,7 @@ public final class Constants {
   public static final String IMAGEN_CAPABILITY_MODEL_NAME = "imagen-3.0-capability-001";
 
   /** The name of the Imagen ingredients model to be used in the examples. */
-  public static final String IMAGEN_INGREDIENTS_MODEL_NAME = "imagen-4.0-ingredients-preview";
+  public static final String IMAGEN_INGREDIENTS_MODEL_NAME = "imagen-3.0-capability-001";
 
   /** The name of the Virtual try-on model to be used in the examples. */
   public static final String VIRTUAL_TRY_ON_MODEL_NAME = "virtual-try-on-001";
@@ -55,7 +55,10 @@ public final class Constants {
   public static final String SEGMENT_IMAGE_MODEL_NAME = "image-segmentation-001";
 
   /** The name of the Veo model to be used in the examples. */
-  public static final String VEO_MODEL_NAME = "veo-3.1-generate-preview";
+  public static final String VEO_MODEL_NAME = "veo-3.1-generate-001";
+
+  /** The name of the Veo model to be used for video editing examples. */
+  public static final String VEO_EDIT_MODEL_NAME = "veo-2.0-generate-001";
 
   /** The name of the embedding model to be used in the examples. */
   public static final String EMBEDDING_MODEL_NAME = "gemini-embedding-2";

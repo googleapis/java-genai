@@ -64,25 +64,16 @@ import com.google.genai.types.HttpOptions;
 public final class TuningJobsWithEvaluationConfig {
 
   public static void main(String[] args) {
+    // Tuning is currently only supported in v1beta1.
+    HttpOptions httpOptions = HttpOptions.builder().apiVersion("v1beta1").build();
+    Client client = Client.builder().httpOptions(httpOptions).build();
+
     final String modelId;
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
+      modelId = Constants.GEMINI_2_5_FLASH;
     }
-
-    // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
-    // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
-    // environment variables `GOOGLE_CLOUD_LOCATION` and `GOOGLE_CLOUD_PROJECT`, as well as setting
-    // `GOOGLE_GENAI_USE_VERTEXAI` to "true".
-    //
-    // Note: Some services are only available in a specific API backend (Gemini or Vertex), you will
-    // get a `UnsupportedOperationException` if you try to use a service that is not available in
-    // the backend you are using.
-
-    // Tuning is currently only supported in v1beta1.
-    HttpOptions httpOptions = HttpOptions.builder().apiVersion("v1beta1").build();
-    Client client = Client.builder().httpOptions(httpOptions).build();
 
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
@@ -105,7 +96,9 @@ public final class TuningJobsWithEvaluationConfig {
               .outputConfig(
                   OutputConfig.builder()
                       .gcsDestination(
-                          GcsDestination.builder().outputUriPrefix("gs://YOUR_GCS_BUCKET/").build())
+                          GcsDestination.builder()
+                              .outputUriPrefix("gs://genai-sdk-tests/tmp/tuning/")
+                              .build())
                       .build())
               .autoraterConfig(
                   AutoraterConfig.builder().autoraterModel("test-model").samplingCount(1).build())

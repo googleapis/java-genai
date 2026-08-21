@@ -56,13 +56,6 @@ import java.util.concurrent.TimeUnit;
 public final class TuningJobsAsync {
 
   public static void main(String[] args) {
-    final String modelId;
-    if (args.length != 0) {
-      modelId = args[0];
-    } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
-    }
-
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
     // environment variables `GOOGLE_CLOUD_LOCATION` and `GOOGLE_CLOUD_PROJECT`, as well as setting
@@ -72,6 +65,13 @@ public final class TuningJobsAsync {
     // get a `UnsupportedOperationException` if you try to use a service that is not available in
     // the backend you are using.
     Client client = new Client();
+
+    final String modelId;
+    if (args.length != 0) {
+      modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_2_5_FLASH;
+    }
     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     try {
@@ -98,25 +98,25 @@ public final class TuningJobsAsync {
                 })
             .join();
         System.out.println();
+
+        // List tuning jobs.
+        CompletableFuture<AsyncPager<TuningJob>> asyncPagerFuture =
+            client.async.tunings.list(ListTuningJobsConfig.builder().pageSize(5).build());
+        asyncPagerFuture
+            .thenCompose(
+                asyncPager -> {
+                  System.out.println("List tuning jobs resource names: ");
+                  return asyncPager.page();
+                })
+            .thenAccept(
+                page -> {
+                  page.forEach(
+                      job -> System.out.println(job.name().get() + "\n" + job.state().get()));
+                })
+            .join();
       } else {
         System.out.println("Using Gemini Developer API");
       }
-
-      // List tuning jobs.
-      CompletableFuture<AsyncPager<TuningJob>> asyncPagerFuture =
-          client.async.tunings.list(ListTuningJobsConfig.builder().pageSize(5).build());
-      asyncPagerFuture
-          .thenCompose(
-              asyncPager -> {
-                System.out.println("List tuning jobs resource names: ");
-                return asyncPager.page();
-              })
-          .thenAccept(
-              page -> {
-                page.forEach(
-                    job -> System.out.println(job.name().get() + "\n" + job.state().get()));
-              })
-          .join();
     } finally {
       scheduler.shutdown();
     }

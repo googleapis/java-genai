@@ -42,7 +42,6 @@
  */
 package com.google.genai.examples;
 
-import com.google.common.collect.ImmutableList;
 import com.google.genai.Client;
 import com.google.genai.types.EmbedContentConfig;
 import com.google.genai.types.EmbedContentResponse;
@@ -76,8 +75,7 @@ public final class EmbedContentWithConfig {
     EmbedContentConfig config = EmbedContentConfig.builder().outputDimensionality(10).build();
 
     EmbedContentResponse response =
-        client.models.embedContent(
-            modelId, ImmutableList.of("why is the sky blue?", "What is your age?"), config);
+        client.models.embedContent(modelId, "why is the sky blue?", config);
 
     System.out.println("Embedding response: " + response);
   }

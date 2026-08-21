@@ -58,7 +58,7 @@ public final class GenerateVideosEditOutpaint {
     if (args.length != 0) {
       modelId = args[0];
     } else {
-      modelId = "veo-2.0-generate-preview"; // Only supported on preview model currently.
+      modelId = Constants.VEO_EDIT_MODEL_NAME;
     }
 
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
@@ -78,7 +78,7 @@ public final class GenerateVideosEditOutpaint {
       System.exit(0);
     }
 
-    // Optinoal: If the default 20MB limit is not enough for the generated video response, you can
+    // Optional: If the default 20MB limit is not enough for the generated video response, you can
     // increase the limit via system property `genai.json.maxReadLength` or via this static method
     // `JsonSerializable.setMaxReadLength`.
     JsonSerializable.setMaxReadLength(100_000_000);
@@ -133,6 +133,7 @@ public final class GenerateVideosEditOutpaint {
 
     Video generatedVideo =
         generateVideosOperation.response().get().generatedVideos().get().get(0).video().get();
+    System.out.println("Video URI: " + generatedVideo.uri().orElse("N/A"));
   }
 
   private GenerateVideosEditOutpaint() {}

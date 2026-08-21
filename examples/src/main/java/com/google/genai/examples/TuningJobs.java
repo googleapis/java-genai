@@ -51,13 +51,6 @@ import com.google.genai.types.TuningJob;
 public final class TuningJobs {
 
   public static void main(String[] args) {
-    final String modelId;
-    if (args.length != 0) {
-      modelId = args[0];
-    } else {
-      modelId = Constants.GEMINI_MODEL_NAME;
-    }
-
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
     // environment variables `GOOGLE_CLOUD_LOCATION` and `GOOGLE_CLOUD_PROJECT`, as well as setting
@@ -67,6 +60,13 @@ public final class TuningJobs {
     // get a `UnsupportedOperationException` if you try to use a service that is not available in
     // the backend you are using.
     Client client = new Client();
+
+    final String modelId;
+    if (args.length != 0) {
+      modelId = args[0];
+    } else {
+      modelId = Constants.GEMINI_2_5_FLASH;
+    }
 
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
@@ -101,16 +101,16 @@ public final class TuningJobs {
       }
       System.out.println("Tuned model: " + tunedModel);
       System.out.println();
+
+      // List tuning jobs.
+      System.out.println("List tuning jobs resource names: ");
+      for (TuningJob t :
+          client.tunings.list(ListTuningJobsConfig.builder().pageSize(5).build()).page()) {
+        System.out.println(t.name().get());
+        System.out.println(t.state().get());
+      }
     } else {
       System.out.println("Using Gemini Developer API");
-    }
-
-    // List tuning jobs.
-    System.out.println("List tuning jobs resource names: ");
-    for (TuningJob t :
-        client.tunings.list(ListTuningJobsConfig.builder().pageSize(5).build()).page()) {
-      System.out.println(t.name().get());
-      System.out.println(t.state().get());
     }
   }
 

@@ -51,13 +51,6 @@ import com.google.genai.types.Video;
 /** An example of using the Unified Gen AI Java SDK to generate videos. */
 public final class GenerateVideos {
   public static void main(String[] args) {
-    final String modelId;
-    if (args.length != 0) {
-      modelId = args[0];
-    } else {
-      modelId = Constants.VEO_MODEL_NAME;
-    }
-
     // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
     // key from the environment variable `GOOGLE_API_KEY`. Vertex AI API can be used by setting the
     // environment variables `GOOGLE_CLOUD_LOCATION` and `GOOGLE_CLOUD_PROJECT`, as well as setting
@@ -68,13 +61,21 @@ public final class GenerateVideos {
     // the backend you are using.
     Client client = new Client();
 
+    final String modelId;
+    if (args.length != 0) {
+      modelId = args[0];
+    } else {
+      modelId = Constants.VEO_MODEL_NAME;
+    }
+
     if (client.vertexAI()) {
       System.out.println("Using Vertex AI");
     } else {
-      System.out.println("Using Gemini Developer API");
+      System.out.println("Gemini Developer API is not supported for this example.");
+      System.exit(0);
     }
 
-    // Optinoal: If the default 20MB limit is not enough for the generated video response, you can
+    // Optional: If the default 20MB limit is not enough for the generated video response, you can
     // increase the limit via system property `genai.json.maxReadLength` or via this static method
     // `JsonSerializable.setMaxReadLength`.
     JsonSerializable.setMaxReadLength(100_000_000);
