@@ -63,6 +63,13 @@ public class GenerationConfig {
     private Integer seed;
 
     /**
+     * Optional. Speech and multi-speaker configuration.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("speech_config")
+    private SpeechConfigUnion speechConfig;
+
+    /**
      * A list of character sequences that will stop output interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -100,35 +107,28 @@ public class GenerationConfig {
     @JsonProperty("video_config")
     private VideoConfig videoConfig;
 
-    /**
-     * Optional. Speech and multi-speaker configuration.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("speech_config")
-    private SpeechConfigUnion speechConfig;
-
     @JsonCreator
     public GenerationConfig(
             @JsonProperty("image_config") @Nullable ImageConfig imageConfig,
             @JsonProperty("max_output_tokens") @Nullable Integer maxOutputTokens,
             @JsonProperty("seed") @Nullable Integer seed,
+            @JsonProperty("speech_config") @Nullable SpeechConfigUnion speechConfig,
             @JsonProperty("stop_sequences") @Nullable List<String> stopSequences,
             @JsonProperty("thinking_level") @Nullable ThinkingLevel thinkingLevel,
             @JsonProperty("thinking_summaries") @Nullable ThinkingSummaries thinkingSummaries,
             @JsonProperty("tool_choice") @Nullable ToolChoice toolChoice,
             @JsonProperty("transcription_config") @Nullable TranscriptionConfig transcriptionConfig,
-            @JsonProperty("video_config") @Nullable VideoConfig videoConfig,
-            @JsonProperty("speech_config") @Nullable SpeechConfigUnion speechConfig) {
+            @JsonProperty("video_config") @Nullable VideoConfig videoConfig) {
         this.imageConfig = imageConfig;
         this.maxOutputTokens = maxOutputTokens;
         this.seed = seed;
+        this.speechConfig = speechConfig;
         this.stopSequences = stopSequences;
         this.thinkingLevel = thinkingLevel;
         this.thinkingSummaries = thinkingSummaries;
         this.toolChoice = toolChoice;
         this.transcriptionConfig = transcriptionConfig;
         this.videoConfig = videoConfig;
-        this.speechConfig = speechConfig;
     }
     
     public GenerationConfig() {
@@ -160,6 +160,13 @@ public class GenerationConfig {
      */
     public Optional<Integer> seed() {
         return Optional.ofNullable(this.seed);
+    }
+
+    /**
+     * Optional. Speech and multi-speaker configuration.
+     */
+    public Optional<SpeechConfigUnion> speechConfig() {
+        return Optional.ofNullable(this.speechConfig);
     }
 
     /**
@@ -198,13 +205,6 @@ public class GenerationConfig {
         return Optional.ofNullable(this.videoConfig);
     }
 
-    /**
-     * Optional. Speech and multi-speaker configuration.
-     */
-    public Optional<SpeechConfigUnion> speechConfig() {
-        return Optional.ofNullable(this.speechConfig);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -236,6 +236,15 @@ public class GenerationConfig {
      */
     public GenerationConfig withSeed(@Nullable Integer seed) {
         this.seed = seed;
+        return this;
+    }
+
+
+    /**
+     * Optional. Speech and multi-speaker configuration.
+     */
+    public GenerationConfig withSpeechConfig(@Nullable SpeechConfigUnion speechConfig) {
+        this.speechConfig = speechConfig;
         return this;
     }
 
@@ -288,15 +297,6 @@ public class GenerationConfig {
     }
 
 
-    /**
-     * Optional. Speech and multi-speaker configuration.
-     */
-    public GenerationConfig withSpeechConfig(@Nullable SpeechConfigUnion speechConfig) {
-        this.speechConfig = speechConfig;
-        return this;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -310,22 +310,22 @@ public class GenerationConfig {
             Utils.enhancedDeepEquals(this.imageConfig, other.imageConfig) &&
             Utils.enhancedDeepEquals(this.maxOutputTokens, other.maxOutputTokens) &&
             Utils.enhancedDeepEquals(this.seed, other.seed) &&
+            Utils.enhancedDeepEquals(this.speechConfig, other.speechConfig) &&
             Utils.enhancedDeepEquals(this.stopSequences, other.stopSequences) &&
             Utils.enhancedDeepEquals(this.thinkingLevel, other.thinkingLevel) &&
             Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries) &&
             Utils.enhancedDeepEquals(this.toolChoice, other.toolChoice) &&
             Utils.enhancedDeepEquals(this.transcriptionConfig, other.transcriptionConfig) &&
-            Utils.enhancedDeepEquals(this.videoConfig, other.videoConfig) &&
-            Utils.enhancedDeepEquals(this.speechConfig, other.speechConfig);
+            Utils.enhancedDeepEquals(this.videoConfig, other.videoConfig);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             imageConfig, maxOutputTokens, seed,
-            stopSequences, thinkingLevel, thinkingSummaries,
-            toolChoice, transcriptionConfig, videoConfig,
-            speechConfig);
+            speechConfig, stopSequences, thinkingLevel,
+            thinkingSummaries, toolChoice, transcriptionConfig,
+            videoConfig);
     }
     
     @Override
@@ -334,13 +334,13 @@ public class GenerationConfig {
                 "imageConfig", imageConfig,
                 "maxOutputTokens", maxOutputTokens,
                 "seed", seed,
+                "speechConfig", speechConfig,
                 "stopSequences", stopSequences,
                 "thinkingLevel", thinkingLevel,
                 "thinkingSummaries", thinkingSummaries,
                 "toolChoice", toolChoice,
                 "transcriptionConfig", transcriptionConfig,
-                "videoConfig", videoConfig,
-                "speechConfig", speechConfig);
+                "videoConfig", videoConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -353,6 +353,8 @@ public class GenerationConfig {
 
         private Integer seed;
 
+        private SpeechConfigUnion speechConfig;
+
         private List<String> stopSequences;
 
         private ThinkingLevel thinkingLevel;
@@ -364,8 +366,6 @@ public class GenerationConfig {
         private TranscriptionConfig transcriptionConfig;
 
         private VideoConfig videoConfig;
-
-        private SpeechConfigUnion speechConfig;
 
         private Builder() {
           // force use of static builder() method
@@ -395,6 +395,14 @@ public class GenerationConfig {
          */
         public Builder seed(@Nullable Integer seed) {
             this.seed = seed;
+            return this;
+        }
+
+        /**
+         * Optional. Speech and multi-speaker configuration.
+         */
+        public Builder speechConfig(@Nullable SpeechConfigUnion speechConfig) {
+            this.speechConfig = speechConfig;
             return this;
         }
 
@@ -440,20 +448,12 @@ public class GenerationConfig {
             return this;
         }
 
-        /**
-         * Optional. Speech and multi-speaker configuration.
-         */
-        public Builder speechConfig(@Nullable SpeechConfigUnion speechConfig) {
-            this.speechConfig = speechConfig;
-            return this;
-        }
-
         public GenerationConfig build() {
             return new GenerationConfig(
                 imageConfig, maxOutputTokens, seed,
-                stopSequences, thinkingLevel, thinkingSummaries,
-                toolChoice, transcriptionConfig, videoConfig,
-                speechConfig);
+                speechConfig, stopSequences, thinkingLevel,
+                thinkingSummaries, toolChoice, transcriptionConfig,
+                videoConfig);
         }
 
     }

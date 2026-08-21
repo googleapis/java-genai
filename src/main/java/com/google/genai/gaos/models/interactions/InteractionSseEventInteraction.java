@@ -40,37 +40,11 @@ import java.util.Optional;
  */
 public class InteractionSseEventInteraction {
     /**
-     * Required. Output only. A unique identifier for the interaction completion.
-     */
-    @JsonProperty("id")
-    private String id;
-
-    /**
-     * Output only. The resource type.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("object")
-    private String object;
-
-    /**
-     * The model that will complete your prompt.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("model")
-    private String model;
-
-    /**
      * The agent to interact with.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("agent")
     private String agent;
-
-    /**
-     * Required. Output only. The status of the interaction.
-     */
-    @JsonProperty("status")
-    private InteractionSseEventInteractionStatus status;
 
     /**
      * Output only. The time at which the response was created in ISO 8601 format.
@@ -80,11 +54,24 @@ public class InteractionSseEventInteraction {
     private String created;
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format.
+     * Required. Output only. A unique identifier for the interaction completion.
+     */
+    @JsonProperty("id")
+    private String id;
+
+    /**
+     * The model that will complete your prompt.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("updated")
-    private String updated;
+    @JsonProperty("model")
+    private String model;
+
+    /**
+     * Output only. The resource type.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("object")
+    private String object;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -92,11 +79,10 @@ public class InteractionSseEventInteraction {
     private ServiceTier serviceTier;
 
     /**
-     * Statistics on the interaction request's token usage.
+     * Required. Output only. The status of the interaction.
      */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("usage")
-    private Usage usage;
+    @JsonProperty("status")
+    private InteractionSseEventInteractionStatus status;
 
     /**
      * Output only. The steps that make up the interaction, if included in this event.
@@ -105,60 +91,53 @@ public class InteractionSseEventInteraction {
     @JsonProperty("steps")
     private List<Step> steps;
 
+    /**
+     * Output only. The time at which the response was last updated in ISO 8601 format.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("updated")
+    private String updated;
+
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("usage")
+    private Usage usage;
+
     @JsonCreator
     public InteractionSseEventInteraction(
-            @JsonProperty("id") @Nonnull String id,
-            @JsonProperty("object") @Nullable String object,
-            @JsonProperty("model") @Nullable String model,
             @JsonProperty("agent") @Nullable String agent,
-            @JsonProperty("status") @Nonnull InteractionSseEventInteractionStatus status,
             @JsonProperty("created") @Nullable String created,
-            @JsonProperty("updated") @Nullable String updated,
+            @JsonProperty("id") @Nonnull String id,
+            @JsonProperty("model") @Nullable String model,
+            @JsonProperty("object") @Nullable String object,
             @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
-            @JsonProperty("usage") @Nullable Usage usage,
-            @JsonProperty("steps") @Nullable List<Step> steps) {
+            @JsonProperty("status") @Nonnull InteractionSseEventInteractionStatus status,
+            @JsonProperty("steps") @Nullable List<Step> steps,
+            @JsonProperty("updated") @Nullable String updated,
+            @JsonProperty("usage") @Nullable Usage usage) {
+        this.agent = agent;
+        this.created = created;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.object = object;
         this.model = model;
-        this.agent = agent;
+        this.object = object;
+        this.serviceTier = serviceTier;
         this.status = Optional.ofNullable(status)
             .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
-        this.created = created;
-        this.updated = updated;
-        this.serviceTier = serviceTier;
-        this.usage = usage;
         this.steps = steps;
+        this.updated = updated;
+        this.usage = usage;
     }
     
     public InteractionSseEventInteraction(
             @Nonnull String id,
             @Nonnull InteractionSseEventInteractionStatus status) {
-        this(id, null, null,
-            null, status, null,
+        this(null, null, id,
             null, null, null,
+            status, null, null,
             null);
-    }
-
-    /**
-     * Required. Output only. A unique identifier for the interaction completion.
-     */
-    public Optional<String> id() {
-        return Optional.ofNullable(this.id);
-    }
-
-    /**
-     * Output only. The resource type.
-     */
-    public Optional<String> object() {
-        return Optional.ofNullable(this.object);
-    }
-
-    /**
-     * The model that will complete your prompt.
-     */
-    public Optional<String> model() {
-        return Optional.ofNullable(this.model);
     }
 
     /**
@@ -169,13 +148,6 @@ public class InteractionSseEventInteraction {
     }
 
     /**
-     * Required. Output only. The status of the interaction.
-     */
-    public Optional<InteractionSseEventInteractionStatus> status() {
-        return Optional.ofNullable(this.status);
-    }
-
-    /**
      * Output only. The time at which the response was created in ISO 8601 format.
      */
     public Optional<String> created() {
@@ -183,10 +155,24 @@ public class InteractionSseEventInteraction {
     }
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format.
+     * Required. Output only. A unique identifier for the interaction completion.
      */
-    public Optional<String> updated() {
-        return Optional.ofNullable(this.updated);
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
+    }
+
+    /**
+     * The model that will complete your prompt.
+     */
+    public Optional<String> model() {
+        return Optional.ofNullable(this.model);
+    }
+
+    /**
+     * Output only. The resource type.
+     */
+    public Optional<String> object() {
+        return Optional.ofNullable(this.object);
     }
 
     public Optional<ServiceTier> serviceTier() {
@@ -194,10 +180,10 @@ public class InteractionSseEventInteraction {
     }
 
     /**
-     * Statistics on the interaction request's token usage.
+     * Required. Output only. The status of the interaction.
      */
-    public Optional<Usage> usage() {
-        return Optional.ofNullable(this.usage);
+    public Optional<InteractionSseEventInteractionStatus> status() {
+        return Optional.ofNullable(this.status);
     }
 
     /**
@@ -207,35 +193,22 @@ public class InteractionSseEventInteraction {
         return Optional.ofNullable(this.steps);
     }
 
+    /**
+     * Output only. The time at which the response was last updated in ISO 8601 format.
+     */
+    public Optional<String> updated() {
+        return Optional.ofNullable(this.updated);
+    }
+
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    public Optional<Usage> usage() {
+        return Optional.ofNullable(this.usage);
+    }
+
     public static Builder builder() {
         return new Builder();
-    }
-
-
-    /**
-     * Required. Output only. A unique identifier for the interaction completion.
-     */
-    public InteractionSseEventInteraction withId(@Nonnull String id) {
-        this.id = Utils.checkNotNull(id, "id");
-        return this;
-    }
-
-
-    /**
-     * Output only. The resource type.
-     */
-    public InteractionSseEventInteraction withObject(@Nullable String object) {
-        this.object = object;
-        return this;
-    }
-
-
-    /**
-     * The model that will complete your prompt.
-     */
-    public InteractionSseEventInteraction withModel(@Nullable String model) {
-        this.model = model;
-        return this;
     }
 
 
@@ -244,15 +217,6 @@ public class InteractionSseEventInteraction {
      */
     public InteractionSseEventInteraction withAgent(@Nullable String agent) {
         this.agent = agent;
-        return this;
-    }
-
-
-    /**
-     * Required. Output only. The status of the interaction.
-     */
-    public InteractionSseEventInteraction withStatus(@Nonnull InteractionSseEventInteractionStatus status) {
-        this.status = Utils.checkNotNull(status, "status");
         return this;
     }
 
@@ -267,10 +231,28 @@ public class InteractionSseEventInteraction {
 
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format.
+     * Required. Output only. A unique identifier for the interaction completion.
      */
-    public InteractionSseEventInteraction withUpdated(@Nullable String updated) {
-        this.updated = updated;
+    public InteractionSseEventInteraction withId(@Nonnull String id) {
+        this.id = Utils.checkNotNull(id, "id");
+        return this;
+    }
+
+
+    /**
+     * The model that will complete your prompt.
+     */
+    public InteractionSseEventInteraction withModel(@Nullable String model) {
+        this.model = model;
+        return this;
+    }
+
+
+    /**
+     * Output only. The resource type.
+     */
+    public InteractionSseEventInteraction withObject(@Nullable String object) {
+        this.object = object;
         return this;
     }
 
@@ -282,10 +264,10 @@ public class InteractionSseEventInteraction {
 
 
     /**
-     * Statistics on the interaction request's token usage.
+     * Required. Output only. The status of the interaction.
      */
-    public InteractionSseEventInteraction withUsage(@Nullable Usage usage) {
-        this.usage = usage;
+    public InteractionSseEventInteraction withStatus(@Nonnull InteractionSseEventInteractionStatus status) {
+        this.status = Utils.checkNotNull(status, "status");
         return this;
     }
 
@@ -295,6 +277,24 @@ public class InteractionSseEventInteraction {
      */
     public InteractionSseEventInteraction withSteps(@Nullable List<Step> steps) {
         this.steps = steps;
+        return this;
+    }
+
+
+    /**
+     * Output only. The time at which the response was last updated in ISO 8601 format.
+     */
+    public InteractionSseEventInteraction withUpdated(@Nullable String updated) {
+        this.updated = updated;
+        return this;
+    }
+
+
+    /**
+     * Statistics on the interaction request's token usage.
+     */
+    public InteractionSseEventInteraction withUsage(@Nullable Usage usage) {
+        this.usage = usage;
         return this;
     }
 
@@ -309,91 +309,67 @@ public class InteractionSseEventInteraction {
         }
         InteractionSseEventInteraction other = (InteractionSseEventInteraction) o;
         return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
             Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.updated, other.updated) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.model, other.model) &&
+            Utils.enhancedDeepEquals(this.object, other.object) &&
             Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.usage, other.usage) &&
-            Utils.enhancedDeepEquals(this.steps, other.steps);
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.steps, other.steps) &&
+            Utils.enhancedDeepEquals(this.updated, other.updated) &&
+            Utils.enhancedDeepEquals(this.usage, other.usage);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, object, model,
-            agent, status, created,
-            updated, serviceTier, usage,
-            steps);
+            agent, created, id,
+            model, object, serviceTier,
+            status, steps, updated,
+            usage);
     }
     
     @Override
     public String toString() {
         return Utils.toString(InteractionSseEventInteraction.class,
-                "id", id,
-                "object", object,
-                "model", model,
                 "agent", agent,
-                "status", status,
                 "created", created,
-                "updated", updated,
+                "id", id,
+                "model", model,
+                "object", object,
                 "serviceTier", serviceTier,
-                "usage", usage,
-                "steps", steps);
+                "status", status,
+                "steps", steps,
+                "updated", updated,
+                "usage", usage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String id;
-
-        private String object;
-
-        private String model;
-
         private String agent;
-
-        private InteractionSseEventInteractionStatus status;
 
         private String created;
 
-        private String updated;
+        private String id;
+
+        private String model;
+
+        private String object;
 
         private ServiceTier serviceTier;
 
-        private Usage usage;
+        private InteractionSseEventInteractionStatus status;
 
         private List<Step> steps;
 
+        private String updated;
+
+        private Usage usage;
+
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * Required. Output only. A unique identifier for the interaction completion.
-         */
-        public Builder id(@Nonnull String id) {
-            this.id = Utils.checkNotNull(id, "id");
-            return this;
-        }
-
-        /**
-         * Output only. The resource type.
-         */
-        public Builder object(@Nullable String object) {
-            this.object = object;
-            return this;
-        }
-
-        /**
-         * The model that will complete your prompt.
-         */
-        public Builder model(@Nullable String model) {
-            this.model = model;
-            return this;
         }
 
         /**
@@ -401,14 +377,6 @@ public class InteractionSseEventInteraction {
          */
         public Builder agent(@Nullable String agent) {
             this.agent = agent;
-            return this;
-        }
-
-        /**
-         * Required. Output only. The status of the interaction.
-         */
-        public Builder status(@Nonnull InteractionSseEventInteractionStatus status) {
-            this.status = Utils.checkNotNull(status, "status");
             return this;
         }
 
@@ -421,10 +389,26 @@ public class InteractionSseEventInteraction {
         }
 
         /**
-         * Output only. The time at which the response was last updated in ISO 8601 format.
+         * Required. Output only. A unique identifier for the interaction completion.
          */
-        public Builder updated(@Nullable String updated) {
-            this.updated = updated;
+        public Builder id(@Nonnull String id) {
+            this.id = Utils.checkNotNull(id, "id");
+            return this;
+        }
+
+        /**
+         * The model that will complete your prompt.
+         */
+        public Builder model(@Nullable String model) {
+            this.model = model;
+            return this;
+        }
+
+        /**
+         * Output only. The resource type.
+         */
+        public Builder object(@Nullable String object) {
+            this.object = object;
             return this;
         }
 
@@ -434,10 +418,10 @@ public class InteractionSseEventInteraction {
         }
 
         /**
-         * Statistics on the interaction request's token usage.
+         * Required. Output only. The status of the interaction.
          */
-        public Builder usage(@Nullable Usage usage) {
-            this.usage = usage;
+        public Builder status(@Nonnull InteractionSseEventInteractionStatus status) {
+            this.status = Utils.checkNotNull(status, "status");
             return this;
         }
 
@@ -449,12 +433,28 @@ public class InteractionSseEventInteraction {
             return this;
         }
 
+        /**
+         * Output only. The time at which the response was last updated in ISO 8601 format.
+         */
+        public Builder updated(@Nullable String updated) {
+            this.updated = updated;
+            return this;
+        }
+
+        /**
+         * Statistics on the interaction request's token usage.
+         */
+        public Builder usage(@Nullable Usage usage) {
+            this.usage = usage;
+            return this;
+        }
+
         public InteractionSseEventInteraction build() {
             return new InteractionSseEventInteraction(
-                id, object, model,
-                agent, status, created,
-                updated, serviceTier, usage,
-                steps);
+                agent, created, id,
+                model, object, serviceTier,
+                status, steps, updated,
+                usage);
         }
 
     }

@@ -79,44 +79,6 @@ public class Webhooks {
     }
 
     /**
-     * Creates a new Webhook.
-     * 
-     * @return The call builder
-     */
-    public CreateWebhookRequestBuilder create() {
-        return new CreateWebhookRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Creates a new Webhook.
-     * 
-     * @param body A Webhook resource.
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public CreateWebhookResponse create(@Nonnull WebhookInput body) {
-        return create(null, body, null);
-    }
-
-    /**
-     * Creates a new Webhook.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param body A Webhook resource.
-     * @param options additional options
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public CreateWebhookResponse create(
-            @Nullable String apiVersion, @Nonnull WebhookInput body,
-            @Nullable Options options) {
-        CreateWebhookRequest request = new CreateWebhookRequest(apiVersion, body);
-        RequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation
-              = new CreateWebhook.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
      * Lists all Webhooks.
      * 
      * @return The call builder
@@ -155,6 +117,84 @@ public class Webhooks {
         ListWebhooksRequest request = new ListWebhooksRequest(apiVersion, pageSize, pageToken);
         RequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
               = new ListWebhooks.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Creates a new Webhook.
+     * 
+     * @return The call builder
+     */
+    public CreateWebhookRequestBuilder create() {
+        return new CreateWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Creates a new Webhook.
+     * 
+     * @param body A Webhook resource.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateWebhookResponse create(@Nonnull WebhookInput body) {
+        return create(null, body, null);
+    }
+
+    /**
+     * Creates a new Webhook.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param body A Webhook resource.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateWebhookResponse create(
+            @Nullable String apiVersion, @Nonnull WebhookInput body,
+            @Nullable Options options) {
+        CreateWebhookRequest request = new CreateWebhookRequest(apiVersion, body);
+        RequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation
+              = new CreateWebhook.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Deletes a Webhook.
+     * 
+     * @return The call builder
+     */
+    public DeleteWebhookRequestBuilder delete() {
+        return new DeleteWebhookRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Deletes a Webhook.
+     * 
+     * @param id Required. The ID of the webhook to delete.
+     *         Format: `{webhook_id}`
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteWebhookResponse delete(@Nonnull String id) {
+        return delete(null, id, null);
+    }
+
+    /**
+     * Deletes a Webhook.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param id Required. The ID of the webhook to delete.
+     *         Format: `{webhook_id}`
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteWebhookResponse delete(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
+        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
+              = new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -241,42 +281,44 @@ public class Webhooks {
     }
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
      * @return The call builder
      */
-    public DeleteWebhookRequestBuilder delete() {
-        return new DeleteWebhookRequestBuilder(sdkConfiguration);
+    public PingWebhookRequestBuilder ping() {
+        return new PingWebhookRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
-     * @param id Required. The ID of the webhook to delete.
+     * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteWebhookResponse delete(@Nonnull String id) {
-        return delete(null, id, null);
+    public PingWebhookResponse ping(@Nonnull String id) {
+        return ping(null, id, null,
+            null);
     }
 
     /**
-     * Deletes a Webhook.
+     * Sends a ping event to a Webhook.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param id Required. The ID of the webhook to delete.
+     * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
+     * @param body Request message for WebhookService.PingWebhook.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteWebhookResponse delete(
+    public PingWebhookResponse ping(
             @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
-        DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
-        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
-              = new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
+            @Nullable PingWebhookRequest body, @Nullable Options options) {
+        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
+        RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
+              = new PingWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -319,48 +361,6 @@ public class Webhooks {
         com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
         RequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
               = new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @return The call builder
-     */
-    public PingWebhookRequestBuilder ping() {
-        return new PingWebhookRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public PingWebhookResponse ping(@Nonnull String id) {
-        return ping(null, id, null,
-            null);
-    }
-
-    /**
-     * Sends a ping event to a Webhook.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
-     * @param body Request message for WebhookService.PingWebhook.
-     * @param options additional options
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public PingWebhookResponse ping(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
-        RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

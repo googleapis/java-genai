@@ -36,13 +36,20 @@ import java.util.Optional;
  * 
  * <p>An image content block.
  */
-public class ImageContent implements Content, ThoughtSummaryContent, FunctionResultSubcontent {
+public class ImageContent implements FunctionResultSubcontent, Content, ThoughtSummaryContent {
     /**
      * The image content.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("data")
     private String data;
+
+    /**
+     * The mime type of the image.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mime_type")
+    private ImageContentMimeType mimeType;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -60,24 +67,17 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
     @JsonProperty("uri")
     private String uri;
 
-    /**
-     * The mime type of the image.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mime_type")
-    private ImageContentMimeType mimeType;
-
     @JsonCreator
     public ImageContent(
             @JsonProperty("data") @Nullable String data,
+            @JsonProperty("mime_type") @Nullable ImageContentMimeType mimeType,
             @JsonProperty("resolution") @Nullable MediaResolution resolution,
-            @JsonProperty("uri") @Nullable String uri,
-            @JsonProperty("mime_type") @Nullable ImageContentMimeType mimeType) {
+            @JsonProperty("uri") @Nullable String uri) {
         this.data = data;
+        this.mimeType = mimeType;
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
-        this.mimeType = mimeType;
     }
     
     public ImageContent() {
@@ -90,6 +90,13 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
      */
     public Optional<String> data() {
         return Optional.ofNullable(this.data);
+    }
+
+    /**
+     * The mime type of the image.
+     */
+    public Optional<ImageContentMimeType> mimeType() {
+        return Optional.ofNullable(this.mimeType);
     }
 
     public Optional<MediaResolution> resolution() {
@@ -108,13 +115,6 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         return Optional.ofNullable(this.uri);
     }
 
-    /**
-     * The mime type of the image.
-     */
-    public Optional<ImageContentMimeType> mimeType() {
-        return Optional.ofNullable(this.mimeType);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -125,6 +125,15 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
      */
     public ImageContent withData(@Nullable String data) {
         this.data = data;
+        return this;
+    }
+
+
+    /**
+     * The mime type of the image.
+     */
+    public ImageContent withMimeType(@Nullable ImageContentMimeType mimeType) {
+        this.mimeType = mimeType;
         return this;
     }
 
@@ -144,15 +153,6 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
     }
 
 
-    /**
-     * The mime type of the image.
-     */
-    public ImageContent withMimeType(@Nullable ImageContentMimeType mimeType) {
-        this.mimeType = mimeType;
-        return this;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -164,27 +164,27 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
         ImageContent other = (ImageContent) o;
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
             Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+            Utils.enhancedDeepEquals(this.uri, other.uri);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, resolution, type,
-            uri, mimeType);
+            data, mimeType, resolution,
+            type, uri);
     }
     
     @Override
     public String toString() {
         return Utils.toString(ImageContent.class,
                 "data", data,
+                "mimeType", mimeType,
                 "resolution", resolution,
                 "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+                "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -192,11 +192,11 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
 
         private String data;
 
+        private ImageContentMimeType mimeType;
+
         private MediaResolution resolution;
 
         private String uri;
-
-        private ImageContentMimeType mimeType;
 
         private Builder() {
           // force use of static builder() method
@@ -207,6 +207,14 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
          */
         public Builder data(@Nullable String data) {
             this.data = data;
+            return this;
+        }
+
+        /**
+         * The mime type of the image.
+         */
+        public Builder mimeType(@Nullable ImageContentMimeType mimeType) {
+            this.mimeType = mimeType;
             return this;
         }
 
@@ -223,18 +231,10 @@ public class ImageContent implements Content, ThoughtSummaryContent, FunctionRes
             return this;
         }
 
-        /**
-         * The mime type of the image.
-         */
-        public Builder mimeType(@Nullable ImageContentMimeType mimeType) {
-            this.mimeType = mimeType;
-            return this;
-        }
-
         public ImageContent build() {
             return new ImageContent(
-                data, resolution, uri,
-                mimeType);
+                data, mimeType, resolution,
+                uri);
         }
 
 

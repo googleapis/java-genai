@@ -65,44 +65,6 @@ public class Environments {
     }
 
     /**
-     * Creates an environment.
-     * 
-     * @return The call builder
-     */
-    public CreateEnvironmentRequestBuilder createEnvironment() {
-        return new CreateEnvironmentRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Creates an environment.
-     * 
-     * @param body Request for `CreateEnvironment`.
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public CreateEnvironmentResponse createEnvironment(@Nonnull CreateEnvironmentRequest body) {
-        return createEnvironment(null, body, null);
-    }
-
-    /**
-     * Creates an environment.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param body Request for `CreateEnvironment`.
-     * @param options additional options
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public CreateEnvironmentResponse createEnvironment(
-            @Nullable String apiVersion, @Nonnull CreateEnvironmentRequest body,
-            @Nullable Options options) {
-        com.google.genai.gaos.models.operations.CreateEnvironmentRequest request = new com.google.genai.gaos.models.operations.CreateEnvironmentRequest(apiVersion, body);
-        RequestOperation<com.google.genai.gaos.models.operations.CreateEnvironmentRequest, CreateEnvironmentResponse> operation
-              = new CreateEnvironment.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
      * Lists environments.
      * 
      * @return The call builder
@@ -142,40 +104,40 @@ public class Environments {
     }
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
      * @return The call builder
      */
-    public GetEnvironmentRequestBuilder getEnvironment() {
-        return new GetEnvironmentRequestBuilder(sdkConfiguration);
+    public CreateEnvironmentRequestBuilder createEnvironment() {
+        return new CreateEnvironmentRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param body Request for `CreateEnvironment`.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetEnvironmentResponse getEnvironment(@Nonnull String id) {
-        return getEnvironment(null, id, null);
+    public CreateEnvironmentResponse createEnvironment(@Nonnull CreateEnvironmentRequest body) {
+        return createEnvironment(null, body, null);
     }
 
     /**
-     * Gets an environment.
+     * Creates an environment.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param body Request for `CreateEnvironment`.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetEnvironmentResponse getEnvironment(
-            @Nullable String apiVersion, @Nonnull String id,
+    public CreateEnvironmentResponse createEnvironment(
+            @Nullable String apiVersion, @Nonnull CreateEnvironmentRequest body,
             @Nullable Options options) {
-        GetEnvironmentRequest request = new GetEnvironmentRequest(apiVersion, id);
-        RequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
-              = new GetEnvironment.Sync(sdkConfiguration, options, _headers);
+        com.google.genai.gaos.models.operations.CreateEnvironmentRequest request = new com.google.genai.gaos.models.operations.CreateEnvironmentRequest(apiVersion, body);
+        RequestOperation<com.google.genai.gaos.models.operations.CreateEnvironmentRequest, CreateEnvironmentResponse> operation
+              = new CreateEnvironment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -214,6 +176,44 @@ public class Environments {
         DeleteEnvironmentRequest request = new DeleteEnvironmentRequest(apiVersion, id);
         RequestOperation<DeleteEnvironmentRequest, DeleteEnvironmentResponse> operation
               = new DeleteEnvironment.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Gets an environment.
+     * 
+     * @return The call builder
+     */
+    public GetEnvironmentRequestBuilder getEnvironment() {
+        return new GetEnvironmentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Gets an environment.
+     * 
+     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetEnvironmentResponse getEnvironment(@Nonnull String id) {
+        return getEnvironment(null, id, null);
+    }
+
+    /**
+     * Gets an environment.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetEnvironmentResponse getEnvironment(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        GetEnvironmentRequest request = new GetEnvironmentRequest(apiVersion, id);
+        RequestOperation<GetEnvironmentRequest, GetEnvironmentResponse> operation
+              = new GetEnvironment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

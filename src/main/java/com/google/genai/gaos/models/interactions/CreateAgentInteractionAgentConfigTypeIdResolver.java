@@ -40,10 +40,10 @@ public class CreateAgentInteractionAgentConfigTypeIdResolver extends GenericType
     }
 
     private void initializeTypeMap() {
-        registerType("dynamic", DynamicAgentConfig.class);
-        registerType("deep-research", DeepResearchAgentConfig.class);
-        registerType("code-mender", CodeMenderAgentConfig.class);
         registerType("antigravity", AntigravityAgentConfig.class);
+        registerType("code-mender", CodeMenderAgentConfig.class);
+        registerType("deep-research", DeepResearchAgentConfig.class);
+        registerType("dynamic", DynamicAgentConfig.class);
     }
 
     @Override

@@ -45,14 +45,14 @@ public class DeleteInteractionRequestBuilder {
         this.optionsBuilder = Options.builder();
     }
 
-    public DeleteInteractionRequestBuilder id(@Nonnull String id) {
-        this.pojoBuilder.id(id);
+    public DeleteInteractionRequestBuilder apiVersion(@Nullable String apiVersion) {
+        this.pojoBuilder.apiVersion(apiVersion);
         this._setterCalled = true;
         return this;
     }
 
-    public DeleteInteractionRequestBuilder apiVersion(@Nullable String apiVersion) {
-        this.pojoBuilder.apiVersion(apiVersion);
+    public DeleteInteractionRequestBuilder id(@Nonnull String id) {
+        this.pojoBuilder.id(id);
         this._setterCalled = true;
         return this;
     }

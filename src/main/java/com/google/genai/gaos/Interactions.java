@@ -109,6 +109,50 @@ public class Interactions {
     }
 
     /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @return The call builder
+     */
+    public DeleteInteractionRequestBuilder delete() {
+        return new DeleteInteractionRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @param id The unique identifier of the interaction to delete.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteInteractionResponse delete(@Nonnull String id) {
+        return delete(null, id, null);
+    }
+
+    /**
+     * Deleting an interaction
+     * 
+     * <p>Deletes the interaction by id.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param id The unique identifier of the interaction to delete.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteInteractionResponse delete(
+            @Nullable String apiVersion, @Nonnull String id,
+            @Nullable Options options) {
+        DeleteInteractionRequest request = new DeleteInteractionRequest(apiVersion, id);
+        RequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
+              = new DeleteInteraction.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Retrieving an interaction
      * 
      * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
@@ -149,50 +193,6 @@ public class Interactions {
     }
 
     /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @return The call builder
-     */
-    public DeleteInteractionRequestBuilder delete() {
-        return new DeleteInteractionRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public DeleteInteractionResponse delete(@Nonnull String id) {
-        return delete(id, null, null);
-    }
-
-    /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
-     * @param apiVersion Which version of the API to use.
-     * @param options additional options
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public DeleteInteractionResponse delete(
-            @Nonnull String id, @Nullable String apiVersion,
-            @Nullable Options options) {
-        DeleteInteractionRequest request = new DeleteInteractionRequest(id, apiVersion);
-        RequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
-              = new DeleteInteraction.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
      * Canceling an interaction
      * 
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
@@ -213,7 +213,7 @@ public class Interactions {
      * @throws RuntimeException subclass if the API call fails
      */
     public CancelInteractionByIdResponse cancel(@Nonnull String id) {
-        return cancel(id, null, null);
+        return cancel(null, id, null);
     }
 
     /**
@@ -221,16 +221,16 @@ public class Interactions {
      * 
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
      * 
-     * @param id The unique identifier of the interaction to cancel.
      * @param apiVersion Which version of the API to use.
+     * @param id The unique identifier of the interaction to cancel.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public CancelInteractionByIdResponse cancel(
-            @Nonnull String id, @Nullable String apiVersion,
+            @Nullable String apiVersion, @Nonnull String id,
             @Nullable Options options) {
-        CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(id, apiVersion);
+        CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(apiVersion, id);
         RequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
               = new CancelInteractionById.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));

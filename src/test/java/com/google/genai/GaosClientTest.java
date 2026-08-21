@@ -288,7 +288,7 @@ public final class GaosClientTest {
             expectedUrlPrefix
                 + "/interactions/"
                 + interactionId
-                + "?stream=false&include_input=false"),
+                + "?include_input=false&stream=false"),
         req.uri());
 
     // 2. Test Cancel

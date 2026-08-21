@@ -40,23 +40,23 @@ public class StepTypeIdResolver extends GenericTypeIdResolver<Step> {
     }
 
     private void initializeTypeMap() {
-        registerType("user_input", UserInputStep.class);
+        registerType("code_execution_call", CodeExecutionCallStep.class);
+        registerType("code_execution_result", CodeExecutionResultStep.class);
+        registerType("file_search_call", FileSearchCallStep.class);
+        registerType("file_search_result", FileSearchResultStep.class);
+        registerType("function_call", FunctionCallStep.class);
+        registerType("function_result", FunctionResultStep.class);
+        registerType("google_maps_call", GoogleMapsCallStep.class);
+        registerType("google_maps_result", GoogleMapsResultStep.class);
+        registerType("google_search_call", GoogleSearchCallStep.class);
+        registerType("google_search_result", GoogleSearchResultStep.class);
+        registerType("mcp_server_tool_call", MCPServerToolCallStep.class);
+        registerType("mcp_server_tool_result", MCPServerToolResultStep.class);
         registerType("model_output", ModelOutputStep.class);
         registerType("thought", ThoughtStep.class);
-        registerType("function_call", FunctionCallStep.class);
-        registerType("code_execution_call", CodeExecutionCallStep.class);
         registerType("url_context_call", URLContextCallStep.class);
-        registerType("mcp_server_tool_call", MCPServerToolCallStep.class);
-        registerType("google_search_call", GoogleSearchCallStep.class);
-        registerType("file_search_call", FileSearchCallStep.class);
-        registerType("google_maps_call", GoogleMapsCallStep.class);
-        registerType("function_result", FunctionResultStep.class);
-        registerType("code_execution_result", CodeExecutionResultStep.class);
         registerType("url_context_result", URLContextResultStep.class);
-        registerType("google_search_result", GoogleSearchResultStep.class);
-        registerType("mcp_server_tool_result", MCPServerToolResultStep.class);
-        registerType("file_search_result", FileSearchResultStep.class);
-        registerType("google_maps_result", GoogleMapsResultStep.class);
+        registerType("user_input", UserInputStep.class);
     }
 
     @Override

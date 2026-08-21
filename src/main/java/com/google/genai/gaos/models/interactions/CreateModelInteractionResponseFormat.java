@@ -50,14 +50,27 @@ public class CreateModelInteractionResponseFormat {
         this.value = value;
     }
 
+    public static CreateModelInteractionResponseFormat of(ResponseFormat value) {
+        Utils.checkNotNull(value, "value");
+        return new CreateModelInteractionResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ResponseFormat>(){}));
+    }
+
     public static CreateModelInteractionResponseFormat of(List<ResponseFormat> value) {
         Utils.checkNotNull(value, "value");
         return new CreateModelInteractionResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<ResponseFormat>>(){}));
     }
-
-    public static CreateModelInteractionResponseFormat of(ResponseFormat value) {
-        Utils.checkNotNull(value, "value");
-        return new CreateModelInteractionResponseFormat(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ResponseFormat>(){}));
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code ResponseFormat},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code ResponseFormat} value, or empty if not of this type
+     */
+    public Optional<ResponseFormat> responseFormat() {
+        if (value.value() instanceof ResponseFormat) {
+            return Optional.of((ResponseFormat) value.value());
+        }
+        return Optional.empty();
     }
     
     /**
@@ -70,19 +83,6 @@ public class CreateModelInteractionResponseFormat {
     public Optional<List<ResponseFormat>> arrayOfResponseFormat() {
         if (value.value() instanceof List) {
             return Optional.of((List<ResponseFormat>) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code ResponseFormat},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code ResponseFormat} value, or empty if not of this type
-     */
-    public Optional<ResponseFormat> responseFormat() {
-        if (value.value() instanceof ResponseFormat) {
-            return Optional.of((ResponseFormat) value.value());
         }
         return Optional.empty();
     }
@@ -121,8 +121,8 @@ public class CreateModelInteractionResponseFormat {
 
         public _Deserializer() {
             super(CreateModelInteractionResponseFormat.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<List<ResponseFormat>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<ResponseFormat>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<ResponseFormat>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<List<ResponseFormat>>() {}, JsonShape.DEFAULT));
         }
     }
     

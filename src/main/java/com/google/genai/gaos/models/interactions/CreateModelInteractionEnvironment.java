@@ -49,27 +49,14 @@ public class CreateModelInteractionEnvironment {
         this.value = value;
     }
 
-    public static CreateModelInteractionEnvironment of(String value) {
-        Utils.checkNotNull(value, "value");
-        return new CreateModelInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
-    }
-
     public static CreateModelInteractionEnvironment of(Environment value) {
         Utils.checkNotNull(value, "value");
         return new CreateModelInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Environment>(){}));
     }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code String},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
-     */
-    public Optional<String> string() {
-        if (value.value() instanceof String) {
-            return Optional.of((String) value.value());
-        }
-        return Optional.empty();
+
+    public static CreateModelInteractionEnvironment of(String value) {
+        Utils.checkNotNull(value, "value");
+        return new CreateModelInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
     }
     
     /**
@@ -81,6 +68,19 @@ public class CreateModelInteractionEnvironment {
     public Optional<Environment> environment() {
         if (value.value() instanceof Environment) {
             return Optional.of((Environment) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code String},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
+     */
+    public Optional<String> string() {
+        if (value.value() instanceof String) {
+            return Optional.of((String) value.value());
         }
         return Optional.empty();
     }
@@ -119,8 +119,8 @@ public class CreateModelInteractionEnvironment {
 
         public _Deserializer() {
             super(CreateModelInteractionEnvironment.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Environment>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<Environment>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
     
