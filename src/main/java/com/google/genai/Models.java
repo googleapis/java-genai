@@ -110,30 +110,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  void personGenerationMldevEnumValidate(Object enumValue) {
-    ImmutableSet<String> invalidEnumValues = ImmutableSet.of("ALLOW_ALL");
-    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
-      throw new IllegalArgumentException(
-          String.format(
-              "%s enum value is only supported in Gemini Enterprise Agent Platform mode, not in"
-                  + " Gemini Developer API mode.",
-              enumValue));
-    }
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  void safetyFilterLevelMldevEnumValidate(Object enumValue) {
-    ImmutableSet<String> invalidEnumValues = ImmutableSet.of("BLOCK_NONE");
-    if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
-      throw new IllegalArgumentException(
-          String.format(
-              "%s enum value is only supported in Gemini Enterprise Agent Platform mode, not in"
-                  + " Gemini Developer API mode.",
-              enumValue));
-    }
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   void videoGenerationReferenceTypeMldevEnumValidate(Object enumValue) {
     ImmutableSet<String> invalidEnumValues = ImmutableSet.of("STYLE");
     if (invalidEnumValues.contains(enumValue.toString().replace("\"", ""))) {
@@ -2172,131 +2148,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode generateImagesConfigToMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"outputGcsUri"}))) {
-      throw new IllegalArgumentException(
-          "outputGcsUri parameter is only supported in Gemini Enterprise Agent Platform mode, not"
-              + " in Gemini Developer API mode.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"negativePrompt"}))) {
-      throw new IllegalArgumentException(
-          "negativePrompt parameter is only supported in Gemini Enterprise Agent Platform mode, not"
-              + " in Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"numberOfImages"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "sampleCount"},
-          Common.getValueByPath(fromObject, new String[] {"numberOfImages"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"aspectRatio"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "aspectRatio"},
-          Common.getValueByPath(fromObject, new String[] {"aspectRatio"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"guidanceScale"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "guidanceScale"},
-          Common.getValueByPath(fromObject, new String[] {"guidanceScale"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"seed"}))) {
-      throw new IllegalArgumentException(
-          "seed parameter is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
-              + " Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}) != null) {
-      safetyFilterLevelMldevEnumValidate(
-          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "safetySetting"},
-          Common.getValueByPath(fromObject, new String[] {"safetyFilterLevel"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"personGeneration"}) != null) {
-      personGenerationMldevEnumValidate(
-          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "personGeneration"},
-          Common.getValueByPath(fromObject, new String[] {"personGeneration"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "includeSafetyAttributes"},
-          Common.getValueByPath(fromObject, new String[] {"includeSafetyAttributes"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "includeRaiReason"},
-          Common.getValueByPath(fromObject, new String[] {"includeRaiReason"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"language"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "language"},
-          Common.getValueByPath(fromObject, new String[] {"language"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputMimeType"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "outputOptions", "mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"outputMimeType"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "outputOptions", "compressionQuality"},
-          Common.getValueByPath(fromObject, new String[] {"outputCompressionQuality"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"addWatermark"}))) {
-      throw new IllegalArgumentException(
-          "addWatermark parameter is only supported in Gemini Enterprise Agent Platform mode, not"
-              + " in Gemini Developer API mode.");
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"labels"}))) {
-      throw new IllegalArgumentException(
-          "labels parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"imageSize"}) != null) {
-      Common.setValueByPath(
-          parentObject,
-          new String[] {"parameters", "sampleImageSize"},
-          Common.getValueByPath(fromObject, new String[] {"imageSize"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"enhancePrompt"}))) {
-      throw new IllegalArgumentException(
-          "enhancePrompt parameter is only supported in Gemini Enterprise Agent Platform mode, not"
-              + " in Gemini Developer API mode.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesConfigToVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -2424,37 +2275,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode generateImagesParametersToMldev(
-      ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"model"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"_url", "model"},
-          Transformers.tModel(
-              this.apiClient, Common.getValueByPath(fromObject, new String[] {"model"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"prompt"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"instances[0]", "prompt"},
-          Common.getValueByPath(fromObject, new String[] {"prompt"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"config"}) != null) {
-      JsonNode unused =
-          generateImagesConfigToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"config"})),
-              toObject,
-              rootObject);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode generateImagesParametersToVertex(
       ApiClient apiClient, JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -2480,46 +2300,6 @@ public final class Models {
                   Common.getValueByPath(fromObject, new String[] {"config"})),
               toObject,
               rootObject);
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode generateImagesResponseFromMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"sdkHttpResponse"},
-          Common.getValueByPath(fromObject, new String[] {"sdkHttpResponse"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"predictions"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"predictions"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(
-            generatedImageFromMldev(JsonSerializable.toJsonNode(item), toObject, rootObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"generatedImages"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"positivePromptSafetyAttributes"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"positivePromptSafetyAttributes"},
-          safetyAttributesFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(
-                      fromObject, new String[] {"positivePromptSafetyAttributes"})),
-              toObject,
-              rootObject));
     }
 
     return toObject;
@@ -3220,42 +3000,6 @@ public final class Models {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode generatedImageFromMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"image"},
-          imageFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
-              toObject,
-              rootObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"raiFilteredReason"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"raiFilteredReason"},
-          Common.getValueByPath(fromObject, new String[] {"raiFilteredReason"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"_self"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"safetyAttributes"},
-          safetyAttributesFromMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"_self"})),
-              toObject,
-              rootObject));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode generatedImageFromVertex(
       JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
@@ -3747,28 +3491,6 @@ public final class Models {
           toObject,
           new String[] {"imageOutputOptions"},
           Common.getValueByPath(fromObject, new String[] {"imageOutputOptions"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode imageFromMldev(JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-
-    if (Common.getValueByPath(fromObject, new String[] {"bytesBase64Encoded"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"imageBytes"},
-          Transformers.tBytes(
-              Common.getValueByPath(fromObject, new String[] {"bytesBase64Encoded"})));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -4795,35 +4517,6 @@ public final class Models {
       throw new IllegalArgumentException(
           "voiceConsentSignature parameter is only supported in Gemini Developer API mode, not in"
               + " Gemini Enterprise Agent Platform mode.");
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode safetyAttributesFromMldev(
-      JsonNode fromObject, ObjectNode parentObject, JsonNode rootObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "categories"})
-        != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"categories"},
-          Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "categories"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "scores"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"scores"},
-          Common.getValueByPath(fromObject, new String[] {"safetyAttributes", "scores"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"contentType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"contentType"},
-          Common.getValueByPath(fromObject, new String[] {"contentType"}));
     }
 
     return toObject;
@@ -6228,12 +5921,9 @@ public final class Models {
       body = generateImagesParametersToVertex(this.apiClient, parameterNode, null, parameterNode);
       path = Common.formatMap("{model}:predict", body.get("_url"));
     } else {
-      body = generateImagesParametersToMldev(this.apiClient, parameterNode, null, parameterNode);
-      if (body.get("_url") != null) {
-        path = Common.formatMap("{model}:predict", body.get("_url"));
-      } else {
-        path = "{model}:predict";
-      }
+      throw new UnsupportedOperationException(
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
     body.remove("_url");
 
@@ -6270,7 +5960,9 @@ public final class Models {
     }
 
     if (!this.apiClient.vertexAI()) {
-      responseNode = generateImagesResponseFromMldev(responseNode, null, parameterNode);
+      throw new UnsupportedOperationException(
+          "This method is only supported in Gemini Enterprise Agent Platform mode, not in Gemini"
+              + " Developer API mode.");
     }
 
     GenerateImagesResponse sdkResponse =
