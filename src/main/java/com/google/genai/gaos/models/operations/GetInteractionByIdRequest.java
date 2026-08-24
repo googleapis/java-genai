@@ -35,23 +35,16 @@ import java.util.Optional;
 
 public class GetInteractionByIdRequest {
     /**
+     * Which version of the API to use.
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
+    private String apiVersion;
+
+    /**
      * The unique identifier of the interaction to retrieve.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
-
-    /**
-     * If set to true, the generated content will be streamed incrementally.
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=stream")
-    private Boolean stream;
-
-    /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
-     */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=last_event_id")
-    private String lastEventId;
 
     /**
      * If set to true, includes the input in the response.
@@ -63,32 +56,46 @@ public class GetInteractionByIdRequest {
     private Boolean includeInput;
 
     /**
-     * Which version of the API to use.
+     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
+     * event id. Can only be used if `stream` is true.
      */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
-    private String apiVersion;
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=last_event_id")
+    private String lastEventId;
+
+    /**
+     * If set to true, the generated content will be streamed incrementally.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=stream")
+    private Boolean stream;
 
     @JsonCreator
     public GetInteractionByIdRequest(
+            @Nullable String apiVersion,
             @Nonnull String id,
-            @Nullable Boolean stream,
-            @Nullable String lastEventId,
             @Nullable Boolean includeInput,
-            @Nullable String apiVersion) {
+            @Nullable String lastEventId,
+            @Nullable Boolean stream) {
+        this.apiVersion = apiVersion;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.stream = Optional.ofNullable(stream)
-            .orElse(Builder._SINGLETON_VALUE_Stream.value());
-        this.lastEventId = lastEventId;
         this.includeInput = Optional.ofNullable(includeInput)
             .orElse(Builder._SINGLETON_VALUE_IncludeInput.value());
-        this.apiVersion = apiVersion;
+        this.lastEventId = lastEventId;
+        this.stream = Optional.ofNullable(stream)
+            .orElse(Builder._SINGLETON_VALUE_Stream.value());
     }
     
     public GetInteractionByIdRequest(
             @Nonnull String id) {
-        this(id, null, null,
+        this(null, id, null,
             null, null);
+    }
+
+    /**
+     * Which version of the API to use.
+     */
+    public Optional<String> apiVersion() {
+        return Optional.ofNullable(this.apiVersion);
     }
 
     /**
@@ -96,21 +103,6 @@ public class GetInteractionByIdRequest {
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
-    }
-
-    /**
-     * If set to true, the generated content will be streamed incrementally.
-     */
-    public Optional<Boolean> stream() {
-        return Optional.ofNullable(this.stream);
-    }
-
-    /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
-     */
-    public Optional<String> lastEventId() {
-        return Optional.ofNullable(this.lastEventId);
     }
 
     /**
@@ -124,10 +116,18 @@ public class GetInteractionByIdRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
+     * event id. Can only be used if `stream` is true.
      */
-    public Optional<String> apiVersion() {
-        return Optional.ofNullable(this.apiVersion);
+    public Optional<String> lastEventId() {
+        return Optional.ofNullable(this.lastEventId);
+    }
+
+    /**
+     * If set to true, the generated content will be streamed incrementally.
+     */
+    public Optional<Boolean> stream() {
+        return Optional.ofNullable(this.stream);
     }
 
     public static Builder builder() {
@@ -136,29 +136,19 @@ public class GetInteractionByIdRequest {
 
 
     /**
+     * Which version of the API to use.
+     */
+    public GetInteractionByIdRequest withApiVersion(@Nullable String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+
+    /**
      * The unique identifier of the interaction to retrieve.
      */
     public GetInteractionByIdRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
-        return this;
-    }
-
-
-    /**
-     * If set to true, the generated content will be streamed incrementally.
-     */
-    public GetInteractionByIdRequest withStream(@Nullable Boolean stream) {
-        this.stream = stream;
-        return this;
-    }
-
-
-    /**
-     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-     * event id. Can only be used if `stream` is true.
-     */
-    public GetInteractionByIdRequest withLastEventId(@Nullable String lastEventId) {
-        this.lastEventId = lastEventId;
         return this;
     }
 
@@ -176,10 +166,20 @@ public class GetInteractionByIdRequest {
 
 
     /**
-     * Which version of the API to use.
+     * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
+     * event id. Can only be used if `stream` is true.
      */
-    public GetInteractionByIdRequest withApiVersion(@Nullable String apiVersion) {
-        this.apiVersion = apiVersion;
+    public GetInteractionByIdRequest withLastEventId(@Nullable String lastEventId) {
+        this.lastEventId = lastEventId;
+        return this;
+    }
+
+
+    /**
+     * If set to true, the generated content will be streamed incrementally.
+     */
+    public GetInteractionByIdRequest withStream(@Nullable Boolean stream) {
+        this.stream = stream;
         return this;
     }
 
@@ -194,46 +194,54 @@ public class GetInteractionByIdRequest {
         }
         GetInteractionByIdRequest other = (GetInteractionByIdRequest) o;
         return 
+            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.lastEventId, other.lastEventId) &&
             Utils.enhancedDeepEquals(this.includeInput, other.includeInput) &&
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
+            Utils.enhancedDeepEquals(this.lastEventId, other.lastEventId) &&
+            Utils.enhancedDeepEquals(this.stream, other.stream);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, stream, lastEventId,
-            includeInput, apiVersion);
+            apiVersion, id, includeInput,
+            lastEventId, stream);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GetInteractionByIdRequest.class,
+                "apiVersion", apiVersion,
                 "id", id,
-                "stream", stream,
-                "lastEventId", lastEventId,
                 "includeInput", includeInput,
-                "apiVersion", apiVersion);
+                "lastEventId", lastEventId,
+                "stream", stream);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String apiVersion;
+
         private String id;
-
-        private Boolean stream;
-
-        private String lastEventId;
 
         @Deprecated
         private Boolean includeInput;
 
-        private String apiVersion;
+        private String lastEventId;
+
+        private Boolean stream;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Which version of the API to use.
+         */
+        public Builder apiVersion(@Nullable String apiVersion) {
+            this.apiVersion = apiVersion;
+            return this;
         }
 
         /**
@@ -241,23 +249,6 @@ public class GetInteractionByIdRequest {
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");
-            return this;
-        }
-
-        /**
-         * If set to true, the generated content will be streamed incrementally.
-         */
-        public Builder stream(@Nullable Boolean stream) {
-            this.stream = stream;
-            return this;
-        }
-
-        /**
-         * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
-         * event id. Can only be used if `stream` is true.
-         */
-        public Builder lastEventId(@Nullable String lastEventId) {
-            this.lastEventId = lastEventId;
             return this;
         }
 
@@ -273,29 +264,38 @@ public class GetInteractionByIdRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * Optional. If set, resumes the interaction stream from the next chunk after the event marked by the
+         * event id. Can only be used if `stream` is true.
          */
-        public Builder apiVersion(@Nullable String apiVersion) {
-            this.apiVersion = apiVersion;
+        public Builder lastEventId(@Nullable String lastEventId) {
+            this.lastEventId = lastEventId;
+            return this;
+        }
+
+        /**
+         * If set to true, the generated content will be streamed incrementally.
+         */
+        public Builder stream(@Nullable Boolean stream) {
+            this.stream = stream;
             return this;
         }
 
         public GetInteractionByIdRequest build() {
             return new GetInteractionByIdRequest(
-                id, stream, lastEventId,
-                includeInput, apiVersion);
+                apiVersion, id, includeInput,
+                lastEventId, stream);
         }
 
-
-        private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_Stream =
-                new LazySingletonValue<>(
-                        "stream",
-                        "false",
-                        new TypeReference<Boolean>() {});
 
         private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_IncludeInput =
                 new LazySingletonValue<>(
                         "include_input",
+                        "false",
+                        new TypeReference<Boolean>() {});
+
+        private static final LazySingletonValue<Boolean> _SINGLETON_VALUE_Stream =
+                new LazySingletonValue<>(
+                        "stream",
                         "false",
                         new TypeReference<Boolean>() {});
     }

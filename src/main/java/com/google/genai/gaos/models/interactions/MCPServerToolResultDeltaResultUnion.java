@@ -44,32 +44,19 @@ public class MCPServerToolResultDeltaResultUnion {
         this.value = value;
     }
 
-    public static MCPServerToolResultDeltaResultUnion of(MCPServerToolResultDeltaResult value) {
-        Utils.checkNotNull(value, "value");
-        return new MCPServerToolResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MCPServerToolResultDeltaResult>(){}));
-    }
-
     public static MCPServerToolResultDeltaResultUnion of(List<FunctionResultSubcontent> value) {
         Utils.checkNotNull(value, "value");
         return new MCPServerToolResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
     }
 
+    public static MCPServerToolResultDeltaResultUnion of(MCPServerToolResultDeltaResult value) {
+        Utils.checkNotNull(value, "value");
+        return new MCPServerToolResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MCPServerToolResultDeltaResult>(){}));
+    }
+
     public static MCPServerToolResultDeltaResultUnion of(String value) {
         Utils.checkNotNull(value, "value");
         return new MCPServerToolResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code MCPServerToolResultDeltaResult},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code MCPServerToolResultDeltaResult} value, or empty if not of this type
-     */
-    public Optional<MCPServerToolResultDeltaResult> mcpServerToolResultDeltaResult() {
-        if (value.value() instanceof MCPServerToolResultDeltaResult) {
-            return Optional.of((MCPServerToolResultDeltaResult) value.value());
-        }
-        return Optional.empty();
     }
     
     /**
@@ -82,6 +69,19 @@ public class MCPServerToolResultDeltaResultUnion {
     public Optional<List<FunctionResultSubcontent>> arrayOfFunctionResultSubcontent() {
         if (value.value() instanceof List) {
             return Optional.of((List<FunctionResultSubcontent>) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code MCPServerToolResultDeltaResult},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code MCPServerToolResultDeltaResult} value, or empty if not of this type
+     */
+    public Optional<MCPServerToolResultDeltaResult> mcpServerToolResultDeltaResult() {
+        if (value.value() instanceof MCPServerToolResultDeltaResult) {
+            return Optional.of((MCPServerToolResultDeltaResult) value.value());
         }
         return Optional.empty();
     }
@@ -133,8 +133,8 @@ public class MCPServerToolResultDeltaResultUnion {
 
         public _Deserializer() {
             super(MCPServerToolResultDeltaResultUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MCPServerToolResultDeltaResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<MCPServerToolResultDeltaResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }

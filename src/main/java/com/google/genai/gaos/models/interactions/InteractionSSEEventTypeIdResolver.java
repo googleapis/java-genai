@@ -35,12 +35,12 @@ public class InteractionSSEEventTypeIdResolver extends GenericTypeIdResolver<Int
     }
 
     private void initializeTypeMap() {
-        registerType("interaction.created", InteractionCreatedEvent.class);
-        registerType("interaction.completed", InteractionCompletedEvent.class);
-        registerType("interaction.status_update", InteractionStatusUpdate.class);
         registerType("error", ErrorEvent.class);
-        registerType("step.start", StepStart.class);
+        registerType("interaction.completed", InteractionCompletedEvent.class);
+        registerType("interaction.created", InteractionCreatedEvent.class);
+        registerType("interaction.status_update", InteractionStatusUpdate.class);
         registerType("step.delta", StepDelta.class);
+        registerType("step.start", StepStart.class);
         registerType("step.stop", StepStop.class);
     }
 

@@ -47,11 +47,86 @@ public class CreateAgentInteraction {
     private AgentOption agent;
 
     /**
-     * Input only. Whether the interaction will be streamed.
+     * Configuration parameters for the agent interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("stream")
-    private Boolean stream;
+    @JsonProperty("agent_config")
+    private CreateAgentInteractionAgentConfig agentConfig;
+
+    /**
+     * Input only. Whether to run the model interaction in the background.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("background")
+    private Boolean background;
+
+    /**
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("environment")
+    private CreateAgentInteractionEnvironment environment;
+
+    /**
+     * The input for the interaction.
+     */
+    @JsonProperty("input")
+    private InteractionsInput input;
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("labels")
+    private Map<String, String> labels;
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("previous_interaction_id")
+    private String previousInteractionId;
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_format")
+    private CreateAgentInteractionResponseFormat responseFormat;
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_mime_type")
+    @Deprecated
+    private String responseMimeType;
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_modalities")
+    @Deprecated
+    private List<ResponseModality> responseModalities;
+
+    /**
+     * Safety settings for the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("safety_settings")
+    private List<SafetySetting> safetySettings;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("service_tier")
+    private ServiceTier serviceTier;
 
     /**
      * Input only. Whether to store the response and request for later retrieval.
@@ -61,11 +136,11 @@ public class CreateAgentInteraction {
     private Boolean store;
 
     /**
-     * Input only. Whether to run the model interaction in the background.
+     * Input only. Whether the interaction will be streamed.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("background")
-    private Boolean background;
+    @JsonProperty("stream")
+    private Boolean stream;
 
     /**
      * System instruction for the interaction.
@@ -82,136 +157,61 @@ public class CreateAgentInteraction {
     private List<Tool> tools;
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_modalities")
-    @Deprecated
-    private List<ResponseModality> responseModalities;
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_mime_type")
-    @Deprecated
-    private String responseMimeType;
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("previous_interaction_id")
-    private String previousInteractionId;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("service_tier")
-    private ServiceTier serviceTier;
-
-    /**
      * Message for configuring webhook events for a request.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("webhook_config")
     private WebhookConfig webhookConfig;
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_format")
-    private CreateAgentInteractionResponseFormat responseFormat;
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("environment")
-    private CreateAgentInteractionEnvironment environment;
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("agent_config")
-    private CreateAgentInteractionAgentConfig agentConfig;
-
-    /**
-     * Safety settings for the interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("safety_settings")
-    private List<SafetySetting> safetySettings;
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("labels")
-    private Map<String, String> labels;
-
-    /**
-     * The input for the interaction.
-     */
-    @JsonProperty("input")
-    private InteractionsInput input;
-
     @JsonCreator
     public CreateAgentInteraction(
             @JsonProperty("agent") @Nonnull AgentOption agent,
-            @JsonProperty("stream") @Nullable Boolean stream,
-            @JsonProperty("store") @Nullable Boolean store,
+            @JsonProperty("agent_config") @Nullable CreateAgentInteractionAgentConfig agentConfig,
             @JsonProperty("background") @Nullable Boolean background,
+            @JsonProperty("environment") @Nullable CreateAgentInteractionEnvironment environment,
+            @JsonProperty("input") @Nonnull InteractionsInput input,
+            @JsonProperty("labels") @Nullable Map<String, String> labels,
+            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
+            @JsonProperty("response_format") @Nullable CreateAgentInteractionResponseFormat responseFormat,
+            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
+            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
+            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
+            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
+            @JsonProperty("store") @Nullable Boolean store,
+            @JsonProperty("stream") @Nullable Boolean stream,
             @JsonProperty("system_instruction") @Nullable String systemInstruction,
             @JsonProperty("tools") @Nullable List<Tool> tools,
-            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
-            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
-            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
-            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
-            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig,
-            @JsonProperty("response_format") @Nullable CreateAgentInteractionResponseFormat responseFormat,
-            @JsonProperty("environment") @Nullable CreateAgentInteractionEnvironment environment,
-            @JsonProperty("agent_config") @Nullable CreateAgentInteractionAgentConfig agentConfig,
-            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
-            @JsonProperty("labels") @Nullable Map<String, String> labels,
-            @JsonProperty("input") @Nonnull InteractionsInput input) {
+            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
         this.agent = Optional.ofNullable(agent)
             .orElseThrow(() -> new IllegalArgumentException("agent cannot be null"));
-        this.stream = stream;
-        this.store = store;
-        this.background = background;
-        this.systemInstruction = systemInstruction;
-        this.tools = tools;
-        this.responseModalities = responseModalities;
-        this.responseMimeType = responseMimeType;
-        this.previousInteractionId = previousInteractionId;
-        this.serviceTier = serviceTier;
-        this.webhookConfig = webhookConfig;
-        this.responseFormat = responseFormat;
-        this.environment = environment;
         this.agentConfig = agentConfig;
-        this.safetySettings = safetySettings;
-        this.labels = labels;
+        this.background = background;
+        this.environment = environment;
         this.input = Optional.ofNullable(input)
             .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.labels = labels;
+        this.previousInteractionId = previousInteractionId;
+        this.responseFormat = responseFormat;
+        this.responseMimeType = responseMimeType;
+        this.responseModalities = responseModalities;
+        this.safetySettings = safetySettings;
+        this.serviceTier = serviceTier;
+        this.store = store;
+        this.stream = stream;
+        this.systemInstruction = systemInstruction;
+        this.tools = tools;
+        this.webhookConfig = webhookConfig;
     }
     
     public CreateAgentInteraction(
             @Nonnull AgentOption agent,
             @Nonnull InteractionsInput input) {
         this(agent, null, null,
+            null, input, null,
             null, null, null,
             null, null, null,
             null, null, null,
-            null, null, null,
-            null, input);
+            null, null);
     }
 
     /**
@@ -222,10 +222,85 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * Input only. Whether the interaction will be streamed.
+     * Configuration parameters for the agent interaction.
      */
-    public Optional<Boolean> stream() {
-        return Optional.ofNullable(this.stream);
+    public Optional<CreateAgentInteractionAgentConfig> agentConfig() {
+        return Optional.ofNullable(this.agentConfig);
+    }
+
+    /**
+     * Input only. Whether to run the model interaction in the background.
+     */
+    public Optional<Boolean> background() {
+        return Optional.ofNullable(this.background);
+    }
+
+    /**
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
+     */
+    public Optional<CreateAgentInteractionEnvironment> environment() {
+        return Optional.ofNullable(this.environment);
+    }
+
+    /**
+     * The input for the interaction.
+     */
+    public Optional<InteractionsInput> input() {
+        return Optional.ofNullable(this.input);
+    }
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    public Optional<Map<String, String>> labels() {
+        return Optional.ofNullable(this.labels);
+    }
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public Optional<String> previousInteractionId() {
+        return Optional.ofNullable(this.previousInteractionId);
+    }
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public Optional<CreateAgentInteractionResponseFormat> responseFormat() {
+        return Optional.ofNullable(this.responseFormat);
+    }
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<String> responseMimeType() {
+        return Optional.ofNullable(this.responseMimeType);
+    }
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<List<ResponseModality>> responseModalities() {
+        return Optional.ofNullable(this.responseModalities);
+    }
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public Optional<List<SafetySetting>> safetySettings() {
+        return Optional.ofNullable(this.safetySettings);
+    }
+
+    public Optional<ServiceTier> serviceTier() {
+        return Optional.ofNullable(this.serviceTier);
     }
 
     /**
@@ -236,10 +311,10 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * Input only. Whether to run the model interaction in the background.
+     * Input only. Whether the interaction will be streamed.
      */
-    public Optional<Boolean> background() {
-        return Optional.ofNullable(this.background);
+    public Optional<Boolean> stream() {
+        return Optional.ofNullable(this.stream);
     }
 
     /**
@@ -257,85 +332,10 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<List<ResponseModality>> responseModalities() {
-        return Optional.ofNullable(this.responseModalities);
-    }
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<String> responseMimeType() {
-        return Optional.ofNullable(this.responseMimeType);
-    }
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public Optional<String> previousInteractionId() {
-        return Optional.ofNullable(this.previousInteractionId);
-    }
-
-    public Optional<ServiceTier> serviceTier() {
-        return Optional.ofNullable(this.serviceTier);
-    }
-
-    /**
      * Message for configuring webhook events for a request.
      */
     public Optional<WebhookConfig> webhookConfig() {
         return Optional.ofNullable(this.webhookConfig);
-    }
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public Optional<CreateAgentInteractionResponseFormat> responseFormat() {
-        return Optional.ofNullable(this.responseFormat);
-    }
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    public Optional<CreateAgentInteractionEnvironment> environment() {
-        return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    public Optional<CreateAgentInteractionAgentConfig> agentConfig() {
-        return Optional.ofNullable(this.agentConfig);
-    }
-
-    /**
-     * Safety settings for the interaction.
-     */
-    public Optional<List<SafetySetting>> safetySettings() {
-        return Optional.ofNullable(this.safetySettings);
-    }
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    public Optional<Map<String, String>> labels() {
-        return Optional.ofNullable(this.labels);
-    }
-
-    /**
-     * The input for the interaction.
-     */
-    public Optional<InteractionsInput> input() {
-        return Optional.ofNullable(this.input);
     }
 
     public static Builder builder() {
@@ -353,10 +353,105 @@ public class CreateAgentInteraction {
 
 
     /**
-     * Input only. Whether the interaction will be streamed.
+     * Configuration parameters for the agent interaction.
      */
-    public CreateAgentInteraction withStream(@Nullable Boolean stream) {
-        this.stream = stream;
+    public CreateAgentInteraction withAgentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
+        this.agentConfig = agentConfig;
+        return this;
+    }
+
+
+    /**
+     * Input only. Whether to run the model interaction in the background.
+     */
+    public CreateAgentInteraction withBackground(@Nullable Boolean background) {
+        this.background = background;
+        return this;
+    }
+
+
+    /**
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
+     */
+    public CreateAgentInteraction withEnvironment(@Nullable CreateAgentInteractionEnvironment environment) {
+        this.environment = environment;
+        return this;
+    }
+
+
+    /**
+     * The input for the interaction.
+     */
+    public CreateAgentInteraction withInput(@Nonnull InteractionsInput input) {
+        this.input = Utils.checkNotNull(input, "input");
+        return this;
+    }
+
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    public CreateAgentInteraction withLabels(@Nullable Map<String, String> labels) {
+        this.labels = labels;
+        return this;
+    }
+
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public CreateAgentInteraction withPreviousInteractionId(@Nullable String previousInteractionId) {
+        this.previousInteractionId = previousInteractionId;
+        return this;
+    }
+
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public CreateAgentInteraction withResponseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
+        this.responseFormat = responseFormat;
+        return this;
+    }
+
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CreateAgentInteraction withResponseMimeType(@Nullable String responseMimeType) {
+        this.responseMimeType = responseMimeType;
+        return this;
+    }
+
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CreateAgentInteraction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
+        this.responseModalities = responseModalities;
+        return this;
+    }
+
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public CreateAgentInteraction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
+        this.safetySettings = safetySettings;
+        return this;
+    }
+
+
+    public CreateAgentInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
+        this.serviceTier = serviceTier;
         return this;
     }
 
@@ -371,10 +466,10 @@ public class CreateAgentInteraction {
 
 
     /**
-     * Input only. Whether to run the model interaction in the background.
+     * Input only. Whether the interaction will be streamed.
      */
-    public CreateAgentInteraction withBackground(@Nullable Boolean background) {
-        this.background = background;
+    public CreateAgentInteraction withStream(@Nullable Boolean stream) {
+        this.stream = stream;
         return this;
     }
 
@@ -398,105 +493,10 @@ public class CreateAgentInteraction {
 
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CreateAgentInteraction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
-        this.responseModalities = responseModalities;
-        return this;
-    }
-
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CreateAgentInteraction withResponseMimeType(@Nullable String responseMimeType) {
-        this.responseMimeType = responseMimeType;
-        return this;
-    }
-
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public CreateAgentInteraction withPreviousInteractionId(@Nullable String previousInteractionId) {
-        this.previousInteractionId = previousInteractionId;
-        return this;
-    }
-
-
-    public CreateAgentInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
-        this.serviceTier = serviceTier;
-        return this;
-    }
-
-
-    /**
      * Message for configuring webhook events for a request.
      */
     public CreateAgentInteraction withWebhookConfig(@Nullable WebhookConfig webhookConfig) {
         this.webhookConfig = webhookConfig;
-        return this;
-    }
-
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public CreateAgentInteraction withResponseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
-        this.responseFormat = responseFormat;
-        return this;
-    }
-
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    public CreateAgentInteraction withEnvironment(@Nullable CreateAgentInteractionEnvironment environment) {
-        this.environment = environment;
-        return this;
-    }
-
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    public CreateAgentInteraction withAgentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
-        this.agentConfig = agentConfig;
-        return this;
-    }
-
-
-    /**
-     * Safety settings for the interaction.
-     */
-    public CreateAgentInteraction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
-        this.safetySettings = safetySettings;
-        return this;
-    }
-
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    public CreateAgentInteraction withLabels(@Nullable Map<String, String> labels) {
-        this.labels = labels;
-        return this;
-    }
-
-
-    /**
-     * The input for the interaction.
-     */
-    public CreateAgentInteraction withInput(@Nonnull InteractionsInput input) {
-        this.input = Utils.checkNotNull(input, "input");
         return this;
     }
 
@@ -512,55 +512,55 @@ public class CreateAgentInteraction {
         CreateAgentInteraction other = (CreateAgentInteraction) o;
         return 
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.store, other.store) &&
+            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
             Utils.enhancedDeepEquals(this.background, other.background) &&
+            Utils.enhancedDeepEquals(this.environment, other.environment) &&
+            Utils.enhancedDeepEquals(this.input, other.input) &&
+            Utils.enhancedDeepEquals(this.labels, other.labels) &&
+            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
+            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
+            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
+            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
+            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
+            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
+            Utils.enhancedDeepEquals(this.store, other.store) &&
+            Utils.enhancedDeepEquals(this.stream, other.stream) &&
             Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
             Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
-            Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.input, other.input);
+            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            agent, stream, store,
-            background, systemInstruction, tools,
-            responseModalities, responseMimeType, previousInteractionId,
-            serviceTier, webhookConfig, responseFormat,
-            environment, agentConfig, safetySettings,
-            labels, input);
+            agent, agentConfig, background,
+            environment, input, labels,
+            previousInteractionId, responseFormat, responseMimeType,
+            responseModalities, safetySettings, serviceTier,
+            store, stream, systemInstruction,
+            tools, webhookConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateAgentInteraction.class,
                 "agent", agent,
-                "stream", stream,
-                "store", store,
+                "agentConfig", agentConfig,
                 "background", background,
+                "environment", environment,
+                "input", input,
+                "labels", labels,
+                "previousInteractionId", previousInteractionId,
+                "responseFormat", responseFormat,
+                "responseMimeType", responseMimeType,
+                "responseModalities", responseModalities,
+                "safetySettings", safetySettings,
+                "serviceTier", serviceTier,
+                "store", store,
+                "stream", stream,
                 "systemInstruction", systemInstruction,
                 "tools", tools,
-                "responseModalities", responseModalities,
-                "responseMimeType", responseMimeType,
-                "previousInteractionId", previousInteractionId,
-                "serviceTier", serviceTier,
-                "webhookConfig", webhookConfig,
-                "responseFormat", responseFormat,
-                "environment", environment,
-                "agentConfig", agentConfig,
-                "safetySettings", safetySettings,
-                "labels", labels,
-                "input", input);
+                "webhookConfig", webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -568,39 +568,39 @@ public class CreateAgentInteraction {
 
         private AgentOption agent;
 
-        private Boolean stream;
+        private CreateAgentInteractionAgentConfig agentConfig;
+
+        private Boolean background;
+
+        private CreateAgentInteractionEnvironment environment;
+
+        private InteractionsInput input;
+
+        private Map<String, String> labels;
+
+        private String previousInteractionId;
+
+        private CreateAgentInteractionResponseFormat responseFormat;
+
+        @Deprecated
+        private String responseMimeType;
+
+        @Deprecated
+        private List<ResponseModality> responseModalities;
+
+        private List<SafetySetting> safetySettings;
+
+        private ServiceTier serviceTier;
 
         private Boolean store;
 
-        private Boolean background;
+        private Boolean stream;
 
         private String systemInstruction;
 
         private List<Tool> tools;
 
-        @Deprecated
-        private List<ResponseModality> responseModalities;
-
-        @Deprecated
-        private String responseMimeType;
-
-        private String previousInteractionId;
-
-        private ServiceTier serviceTier;
-
         private WebhookConfig webhookConfig;
-
-        private CreateAgentInteractionResponseFormat responseFormat;
-
-        private CreateAgentInteractionEnvironment environment;
-
-        private CreateAgentInteractionAgentConfig agentConfig;
-
-        private List<SafetySetting> safetySettings;
-
-        private Map<String, String> labels;
-
-        private InteractionsInput input;
 
         private Builder() {
           // force use of static builder() method
@@ -614,16 +614,96 @@ public class CreateAgentInteraction {
             return this;
         }
 
-        public Builder agent(@Nonnull String agent) {
-            this.agent = AgentOption.of(Utils.checkNotNull(agent, "agent"));
+        /**
+         * Configuration parameters for the agent interaction.
+         */
+        public Builder agentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
+            this.agentConfig = agentConfig;
             return this;
         }
 
         /**
-         * Input only. Whether the interaction will be streamed.
+         * Input only. Whether to run the model interaction in the background.
          */
-        public Builder stream(@Nullable Boolean stream) {
-            this.stream = stream;
+        public Builder background(@Nullable Boolean background) {
+            this.background = background;
+            return this;
+        }
+
+        /**
+         * The environment configuration for the interaction. Can be an object specifying remote environment
+         * sources or a string referencing an existing environment ID.
+         */
+        public Builder environment(@Nullable CreateAgentInteractionEnvironment environment) {
+            this.environment = environment;
+            return this;
+        }
+
+        /**
+         * The input for the interaction.
+         */
+        public Builder input(@Nonnull InteractionsInput input) {
+            this.input = Utils.checkNotNull(input, "input");
+            return this;
+        }
+
+        /**
+         * The labels with user-defined metadata for the request.
+         */
+        public Builder labels(@Nullable Map<String, String> labels) {
+            this.labels = labels;
+            return this;
+        }
+
+        /**
+         * The ID of the previous interaction, if any.
+         */
+        public Builder previousInteractionId(@Nullable String previousInteractionId) {
+            this.previousInteractionId = previousInteractionId;
+            return this;
+        }
+
+        /**
+         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+         * in this field.
+         */
+        public Builder responseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
+            this.responseFormat = responseFormat;
+            return this;
+        }
+
+        /**
+         * The mime type of the response. This is required if response_format is set.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseMimeType(@Nullable String responseMimeType) {
+            this.responseMimeType = responseMimeType;
+            return this;
+        }
+
+        /**
+         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
+            this.responseModalities = responseModalities;
+            return this;
+        }
+
+        /**
+         * Safety settings for the interaction.
+         */
+        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
+            this.safetySettings = safetySettings;
+            return this;
+        }
+
+        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
+            this.serviceTier = serviceTier;
             return this;
         }
 
@@ -635,11 +715,16 @@ public class CreateAgentInteraction {
             return this;
         }
 
+        public Builder agent(@Nonnull String agent) {
+            this.agent = AgentOption.of(Utils.checkNotNull(agent, "agent"));
+            return this;
+        }
+
         /**
-         * Input only. Whether to run the model interaction in the background.
+         * Input only. Whether the interaction will be streamed.
          */
-        public Builder background(@Nullable Boolean background) {
-            this.background = background;
+        public Builder stream(@Nullable Boolean stream) {
+            this.stream = stream;
             return this;
         }
 
@@ -660,41 +745,6 @@ public class CreateAgentInteraction {
         }
 
         /**
-         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
-            this.responseModalities = responseModalities;
-            return this;
-        }
-
-        /**
-         * The mime type of the response. This is required if response_format is set.
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseMimeType(@Nullable String responseMimeType) {
-            this.responseMimeType = responseMimeType;
-            return this;
-        }
-
-        /**
-         * The ID of the previous interaction, if any.
-         */
-        public Builder previousInteractionId(@Nullable String previousInteractionId) {
-            this.previousInteractionId = previousInteractionId;
-            return this;
-        }
-
-        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
-            this.serviceTier = serviceTier;
-            return this;
-        }
-
-        /**
          * Message for configuring webhook events for a request.
          */
         public Builder webhookConfig(@Nullable WebhookConfig webhookConfig) {
@@ -702,64 +752,14 @@ public class CreateAgentInteraction {
             return this;
         }
 
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
-        public Builder responseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
-            this.responseFormat = responseFormat;
-            return this;
-        }
-
-        /**
-         * The environment configuration for the interaction. Can be an object specifying remote environment
-         * sources or a string referencing an existing environment ID.
-         */
-        public Builder environment(@Nullable CreateAgentInteractionEnvironment environment) {
-            this.environment = environment;
-            return this;
-        }
-
-        /**
-         * Configuration parameters for the agent interaction.
-         */
-        public Builder agentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
-            this.agentConfig = agentConfig;
-            return this;
-        }
-
-        /**
-         * Safety settings for the interaction.
-         */
-        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
-            this.safetySettings = safetySettings;
-            return this;
-        }
-
-        /**
-         * The labels with user-defined metadata for the request.
-         */
-        public Builder labels(@Nullable Map<String, String> labels) {
-            this.labels = labels;
-            return this;
-        }
-
-        /**
-         * The input for the interaction.
-         */
-        public Builder input(@Nonnull InteractionsInput input) {
-            this.input = Utils.checkNotNull(input, "input");
-            return this;
-        }
-
         public CreateAgentInteraction build() {
             return new CreateAgentInteraction(
-                agent, stream, store,
-                background, systemInstruction, tools,
-                responseModalities, responseMimeType, previousInteractionId,
-                serviceTier, webhookConfig, responseFormat,
-                environment, agentConfig, safetySettings,
-                labels, input);
+                agent, agentConfig, background,
+                environment, input, labels,
+                previousInteractionId, responseFormat, responseMimeType,
+                responseModalities, safetySettings, serviceTier,
+                store, stream, systemInstruction,
+                tools, webhookConfig);
         }
 
     }

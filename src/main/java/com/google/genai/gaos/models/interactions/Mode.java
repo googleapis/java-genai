@@ -19,130 +19,115 @@
  */
 package com.google.genai.gaos.models.interactions;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.genai.gaos.utils.OneOfDeserializer;
+import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils.JsonShape;
+import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
+import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.SuppressWarnings;
 import java.util.Optional;
 
 /**
- * Wrapper for an "open" enum that can handle unknown values from API responses
- * without runtime errors. Instances are immutable singletons with reference equality.
- * Use {@code asEnum()} for switch expressions.
- */
-/**
  * Mode
  * 
- * <p>The mode of the find session.
+ * <p>Discriminated transcription mode options or enum.
  */
+@JsonDeserialize(using = Mode._Deserializer.class)
 public class Mode {
 
-    public static final Mode SCAN = new Mode("scan");
-    public static final Mode VERIFY = new Mode("verify");
-
-    // This map will grow whenever a Color gets created with a new
-    // unrecognized value (a potential memory leak if the user is not
-    // careful). Keep this field lower case to avoid clashing with
-    // generated member names which will always be upper cased (Java
-    // convention)
-    private static final Map<String, Mode> values = createValuesMap();
-    private static final Map<String, ModeEnum> enums = createEnumsMap();
-
-    private final String value;
-
-    private Mode(String value) {
+    @JsonValue
+    private final TypedObject value;
+    
+    private Mode(TypedObject value) {
         this.value = value;
     }
 
+    public static Mode of(TranscriptionMode value) {
+        Utils.checkNotNull(value, "value");
+        return new Mode(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<TranscriptionMode>(){}));
+    }
+
+    public static Mode of(TranscriptionConfigModeEnum value) {
+        Utils.checkNotNull(value, "value");
+        return new Mode(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<TranscriptionConfigModeEnum>(){}));
+    }
+    
     /**
-     * Returns a Mode with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
-     * is satisfied when the values are the same.
-     * 
-     * @param value value to be wrapped as Mode
-     */ 
-    @JsonCreator
-    public static Mode of(String value) {
-        synchronized (Mode.class) {
-            return values.computeIfAbsent(value, v -> new Mode(v));
+     * Returns an {@link Optional} containing the value if it is of type {@code TranscriptionMode},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code TranscriptionMode} value, or empty if not of this type
+     */
+    public Optional<TranscriptionMode> transcriptionMode() {
+        if (value.value() instanceof TranscriptionMode) {
+            return Optional.of((TranscriptionMode) value.value());
         }
+        return Optional.empty();
     }
-
-    @JsonValue
-    public String value() {
-        return value;
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code TranscriptionConfigModeEnum},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code TranscriptionConfigModeEnum} value, or empty if not of this type
+     */
+    public Optional<TranscriptionConfigModeEnum> transcriptionConfigModeEnum() {
+        if (value.value() instanceof TranscriptionConfigModeEnum) {
+            return Optional.of((TranscriptionConfigModeEnum) value.value());
+        }
+        return Optional.empty();
     }
-
-    public Optional<ModeEnum> asEnum() {
-        return Optional.ofNullable(enums.getOrDefault(value, null));
+   /**
+    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+    *
+    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+    */
+   public Optional<JsonNode> asJson() {
+       if (value.value() instanceof JsonNode) {
+           return Optional.of((JsonNode) value.value());
+       }
+       return Optional.empty();
+   }
+    
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Mode other = (Mode) o;
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-
-    public boolean isKnown() {
-        return asEnum().isPresent();
-    }
-
+    
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Utils.enhancedHash(value.value());
     }
+    
+    @SuppressWarnings("serial")
+    public static final class _Deserializer extends OneOfDeserializer<Mode> {
 
-    @Override
-    public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Mode other = (Mode) obj;
-        return Objects.equals(value, other.value);
+        public _Deserializer() {
+            super(Mode.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<TranscriptionMode>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<TranscriptionConfigModeEnum>() {}, JsonShape.DEFAULT));
+        }
     }
-
+    
     @Override
     public String toString() {
-        return "Mode [value=" + value + "]";
+        return Utils.toString(Mode.class,
+                "value", value);
     }
 
-    // return an array just like an enum
-    public static Mode[] values() {
-        synchronized (Mode.class) {
-            return values.values().toArray(new Mode[] {});
-        }
-    }
-
-    private static final Map<String, Mode> createValuesMap() {
-        Map<String, Mode> map = new LinkedHashMap<>();
-        map.put("scan", SCAN);
-        map.put("verify", VERIFY);
-        return map;
-    }
-
-    private static final Map<String, ModeEnum> createEnumsMap() {
-        Map<String, ModeEnum> map = new HashMap<>();
-        map.put("scan", ModeEnum.SCAN);
-        map.put("verify", ModeEnum.VERIFY);
-        return map;
-    }
-    
-    
-    public enum ModeEnum {
-
-        SCAN("scan"),
-        VERIFY("verify"),;
-
-        private final String value;
-
-        private ModeEnum(String value) {
-            this.value = value;
-        }
-
-        public String value() {
-            return value;
-        }
-    }
 }
 

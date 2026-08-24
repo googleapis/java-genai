@@ -44,32 +44,19 @@ public class FunctionResultDeltaResultUnion {
         this.value = value;
     }
 
-    public static FunctionResultDeltaResultUnion of(FunctionResultDeltaResult value) {
-        Utils.checkNotNull(value, "value");
-        return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultDeltaResult>(){}));
-    }
-
     public static FunctionResultDeltaResultUnion of(List<FunctionResultSubcontent> value) {
         Utils.checkNotNull(value, "value");
         return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
     }
 
+    public static FunctionResultDeltaResultUnion of(FunctionResultDeltaResult value) {
+        Utils.checkNotNull(value, "value");
+        return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultDeltaResult>(){}));
+    }
+
     public static FunctionResultDeltaResultUnion of(String value) {
         Utils.checkNotNull(value, "value");
         return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code FunctionResultDeltaResult},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code FunctionResultDeltaResult} value, or empty if not of this type
-     */
-    public Optional<FunctionResultDeltaResult> functionResultDeltaResult() {
-        if (value.value() instanceof FunctionResultDeltaResult) {
-            return Optional.of((FunctionResultDeltaResult) value.value());
-        }
-        return Optional.empty();
     }
     
     /**
@@ -82,6 +69,19 @@ public class FunctionResultDeltaResultUnion {
     public Optional<List<FunctionResultSubcontent>> arrayOfFunctionResultSubcontent() {
         if (value.value() instanceof List) {
             return Optional.of((List<FunctionResultSubcontent>) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code FunctionResultDeltaResult},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code FunctionResultDeltaResult} value, or empty if not of this type
+     */
+    public Optional<FunctionResultDeltaResult> functionResultDeltaResult() {
+        if (value.value() instanceof FunctionResultDeltaResult) {
+            return Optional.of((FunctionResultDeltaResult) value.value());
         }
         return Optional.empty();
     }
@@ -133,8 +133,8 @@ public class FunctionResultDeltaResultUnion {
 
         public _Deserializer() {
             super(FunctionResultDeltaResultUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<FunctionResultDeltaResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<FunctionResultDeltaResult>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }

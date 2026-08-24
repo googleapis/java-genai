@@ -34,10 +34,6 @@ import java.util.Optional;
 
 
 public class InteractionCreatedEvent implements InteractionSSEEvent {
-
-    @JsonProperty("event_type")
-    private String eventType;
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
@@ -45,6 +41,10 @@ public class InteractionCreatedEvent implements InteractionSSEEvent {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("event_id")
     private String eventId;
+
+
+    @JsonProperty("event_type")
+    private String eventType;
 
     /**
      * Partial interaction resource emitted by interaction lifecycle SSE events.
@@ -58,8 +58,8 @@ public class InteractionCreatedEvent implements InteractionSSEEvent {
     public InteractionCreatedEvent(
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("interaction") @Nonnull InteractionSseEventInteraction interaction) {
-        this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.eventId = eventId;
+        this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interaction = Optional.ofNullable(interaction)
             .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
     }
@@ -69,17 +69,17 @@ public class InteractionCreatedEvent implements InteractionSSEEvent {
         this(null, interaction);
     }
 
-    @Override
-    public String eventType() {
-        return Utils.discriminatorToString(eventType);
-    }
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
      */
     public Optional<String> eventId() {
         return Optional.ofNullable(this.eventId);
+    }
+
+    @Override
+    public String eventType() {
+        return Utils.discriminatorToString(eventType);
     }
 
     /**
@@ -127,22 +127,22 @@ public class InteractionCreatedEvent implements InteractionSSEEvent {
         }
         InteractionCreatedEvent other = (InteractionCreatedEvent) o;
         return 
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
+            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.interaction, other.interaction);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            eventType, eventId, interaction);
+            eventId, eventType, interaction);
     }
     
     @Override
     public String toString() {
         return Utils.toString(InteractionCreatedEvent.class,
-                "eventType", eventType,
                 "eventId", eventId,
+                "eventType", eventType,
                 "interaction", interaction);
     }
 

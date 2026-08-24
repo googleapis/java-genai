@@ -38,7 +38,7 @@ import java.util.Optional;
  * 
  * <p>A text content block.
  */
-public class TextContent implements Content, ThoughtSummaryContent, FunctionResultSubcontent {
+public class TextContent implements FunctionResultSubcontent, Content, ThoughtSummaryContent {
     /**
      * Citation information for model-generated content.
      */

@@ -78,6 +78,7 @@ public class RunTriggerResponse implements Response {
     /**
      * HTTP response content type for this operation
      */
+    @Override
     public String contentType() {
         return this.contentType;
     }
@@ -85,6 +86,7 @@ public class RunTriggerResponse implements Response {
     /**
      * HTTP response status code for this operation
      */
+    @Override
     public int statusCode() {
         return this.statusCode;
     }
@@ -92,6 +94,7 @@ public class RunTriggerResponse implements Response {
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
+    @Override
     public HttpResponse<InputStream> rawResponse() {
         return this.rawResponse;
     }

@@ -57,9 +57,12 @@ public class TranscriptionConfig {
 
     /**
      * Optional. Configures speaker diarization. Supported values: "speaker".
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("diarization_mode")
+    @Deprecated
     private String diarizationMode;
 
     /**
@@ -71,20 +74,21 @@ public class TranscriptionConfig {
     private List<String> languageCodes;
 
     /**
-     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
-     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
-     * `timestamp_granularities` and `diarization_mode`.
+     * Discriminated transcription mode options or enum.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mode")
-    private TranscriptionMode mode;
+    private Mode mode;
 
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("timestamp_granularities")
+    @Deprecated
     private List<String> timestampGranularities;
 
     @JsonCreator
@@ -93,7 +97,7 @@ public class TranscriptionConfig {
             @JsonProperty("custom_vocabulary") @Nullable List<String> customVocabulary,
             @JsonProperty("diarization_mode") @Nullable String diarizationMode,
             @JsonProperty("language_codes") @Nullable List<String> languageCodes,
-            @JsonProperty("mode") @Nullable TranscriptionMode mode,
+            @JsonProperty("mode") @Nullable Mode mode,
             @JsonProperty("timestamp_granularities") @Nullable List<String> timestampGranularities) {
         this.adaptationPhrases = adaptationPhrases;
         this.customVocabulary = customVocabulary;
@@ -128,7 +132,10 @@ public class TranscriptionConfig {
 
     /**
      * Optional. Configures speaker diarization. Supported values: "speaker".
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public Optional<String> diarizationMode() {
         return Optional.ofNullable(this.diarizationMode);
     }
@@ -142,18 +149,19 @@ public class TranscriptionConfig {
     }
 
     /**
-     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
-     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
-     * `timestamp_granularities` and `diarization_mode`.
+     * Discriminated transcription mode options or enum.
      */
-    public Optional<TranscriptionMode> mode() {
+    public Optional<Mode> mode() {
         return Optional.ofNullable(this.mode);
     }
 
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public Optional<List<String>> timestampGranularities() {
         return Optional.ofNullable(this.timestampGranularities);
     }
@@ -187,7 +195,10 @@ public class TranscriptionConfig {
 
     /**
      * Optional. Configures speaker diarization. Supported values: "speaker".
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public TranscriptionConfig withDiarizationMode(@Nullable String diarizationMode) {
         this.diarizationMode = diarizationMode;
         return this;
@@ -205,11 +216,9 @@ public class TranscriptionConfig {
 
 
     /**
-     * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
-     * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
-     * `timestamp_granularities` and `diarization_mode`.
+     * Discriminated transcription mode options or enum.
      */
-    public TranscriptionConfig withMode(@Nullable TranscriptionMode mode) {
+    public TranscriptionConfig withMode(@Nullable Mode mode) {
         this.mode = mode;
         return this;
     }
@@ -218,7 +227,10 @@ public class TranscriptionConfig {
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
      * Supported values: "word". If empty, no timestamps are generated.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public TranscriptionConfig withTimestampGranularities(@Nullable List<String> timestampGranularities) {
         this.timestampGranularities = timestampGranularities;
         return this;
@@ -269,12 +281,14 @@ public class TranscriptionConfig {
 
         private List<String> customVocabulary;
 
+        @Deprecated
         private String diarizationMode;
 
         private List<String> languageCodes;
 
-        private TranscriptionMode mode;
+        private Mode mode;
 
+        @Deprecated
         private List<String> timestampGranularities;
 
         private Builder() {
@@ -303,7 +317,10 @@ public class TranscriptionConfig {
 
         /**
          * Optional. Configures speaker diarization. Supported values: "speaker".
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder diarizationMode(@Nullable String diarizationMode) {
             this.diarizationMode = diarizationMode;
             return this;
@@ -319,11 +336,9 @@ public class TranscriptionConfig {
         }
 
         /**
-         * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If
-         * unspecified, defaults to `VERBATIM` transcription. Mutually exclusive with
-         * `timestamp_granularities` and `diarization_mode`.
+         * Discriminated transcription mode options or enum.
          */
-        public Builder mode(@Nullable TranscriptionMode mode) {
+        public Builder mode(@Nullable Mode mode) {
             this.mode = mode;
             return this;
         }
@@ -331,7 +346,10 @@ public class TranscriptionConfig {
         /**
          * Optional. The granularity of timestamps to include in the transcription output.
          * Supported values: "word". If empty, no timestamps are generated.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder timestampGranularities(@Nullable List<String> timestampGranularities) {
             this.timestampGranularities = timestampGranularities;
             return this;

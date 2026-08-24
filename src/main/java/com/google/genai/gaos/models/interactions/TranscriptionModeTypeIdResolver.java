@@ -28,23 +28,20 @@ import java.lang.String;
 
 
 /**
- * ContentTypeIdResolver
+ * TranscriptionModeTypeIdResolver
  * 
- * <p>The content of the response.
+ * <p>Configuration for transcription mode.
  */
-public class ContentTypeIdResolver extends GenericTypeIdResolver<Content> {
+public class TranscriptionModeTypeIdResolver extends GenericTypeIdResolver<TranscriptionMode> {
 
-    public ContentTypeIdResolver() {
-        super(UnknownContent.class);
+    public TranscriptionModeTypeIdResolver() {
+        super(UnknownTranscriptionMode.class);
         initializeTypeMap();
     }
 
     private void initializeTypeMap() {
-        registerType("audio", AudioContent.class);
-        registerType("document", DocumentContent.class);
-        registerType("image", ImageContent.class);
-        registerType("text", TextContent.class);
-        registerType("video", VideoContent.class);
+        registerType("smart", SmartTranscriptionMode.class);
+        registerType("verbatim", VerbatimTranscriptionMode.class);
     }
 
     @Override
@@ -54,8 +51,8 @@ public class ContentTypeIdResolver extends GenericTypeIdResolver<Content> {
         }
         
         // Handle known types by checking if they implement the discriminator method
-        if (value instanceof Content) {
-            Content discriminated = (Content) value;
+        if (value instanceof TranscriptionMode) {
+            TranscriptionMode discriminated = (TranscriptionMode) value;
             return discriminated.type();
         }
         
@@ -64,7 +61,7 @@ public class ContentTypeIdResolver extends GenericTypeIdResolver<Content> {
 
     @Override
     public String getDescForKnownTypeIds() {
-        return "Content type resolver";
+        return "TranscriptionMode type resolver";
     }
 
 }

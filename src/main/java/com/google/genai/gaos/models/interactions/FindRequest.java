@@ -59,7 +59,7 @@ public class FindRequest {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mode")
-    private Mode mode;
+    private FindRequestMode mode;
 
     /**
      * A list of source files to provide as context for the scan.
@@ -72,7 +72,7 @@ public class FindRequest {
     public FindRequest(
             @JsonProperty("description") @Nullable String description,
             @JsonProperty("finding_id") @Nullable String findingId,
-            @JsonProperty("mode") @Nullable Mode mode,
+            @JsonProperty("mode") @Nullable FindRequestMode mode,
             @JsonProperty("source_files") @Nullable List<FileContent> sourceFiles) {
         this.description = description;
         this.findingId = findingId;
@@ -105,7 +105,7 @@ public class FindRequest {
     /**
      * The mode of the find session.
      */
-    public Optional<Mode> mode() {
+    public Optional<FindRequestMode> mode() {
         return Optional.ofNullable(this.mode);
     }
 
@@ -145,7 +145,7 @@ public class FindRequest {
     /**
      * The mode of the find session.
      */
-    public FindRequest withMode(@Nullable Mode mode) {
+    public FindRequest withMode(@Nullable FindRequestMode mode) {
         this.mode = mode;
         return this;
     }
@@ -199,7 +199,7 @@ public class FindRequest {
 
         private String findingId;
 
-        private Mode mode;
+        private FindRequestMode mode;
 
         private List<FileContent> sourceFiles;
 
@@ -229,7 +229,7 @@ public class FindRequest {
         /**
          * The mode of the find session.
          */
-        public Builder mode(@Nullable Mode mode) {
+        public Builder mode(@Nullable FindRequestMode mode) {
             this.mode = mode;
             return this;
         }

@@ -38,18 +38,6 @@ import java.util.Optional;
  */
 public class TriggerCreateParams {
     /**
-     * Required. The cron schedule on which the trigger should run. Standard cron format.
-     */
-    @JsonProperty("schedule")
-    private String schedule;
-
-    /**
-     * Required. Time zone in which the schedule should be interpreted.
-     */
-    @JsonProperty("time_zone")
-    private String timeZone;
-
-    /**
      * Optional. The display name of the trigger.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -64,14 +52,6 @@ public class TriggerCreateParams {
     private String environmentId;
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("max_consecutive_failures")
-    private Integer maxConsecutiveFailures;
-
-    /**
      * Optional. The execution timeout for the triggered interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -84,48 +64,54 @@ public class TriggerCreateParams {
     @JsonProperty("interaction")
     private Interaction interaction;
 
-    @JsonCreator
-    public TriggerCreateParams(
-            @JsonProperty("schedule") @Nonnull String schedule,
-            @JsonProperty("time_zone") @Nonnull String timeZone,
-            @JsonProperty("display_name") @Nullable String displayName,
-            @JsonProperty("environment_id") @Nullable String environmentId,
-            @JsonProperty("max_consecutive_failures") @Nullable Integer maxConsecutiveFailures,
-            @JsonProperty("execution_timeout_seconds") @Nullable Integer executionTimeoutSeconds,
-            @JsonProperty("interaction") @Nonnull Interaction interaction) {
-        this.schedule = Optional.ofNullable(schedule)
-            .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
-        this.timeZone = Optional.ofNullable(timeZone)
-            .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
-        this.displayName = displayName;
-        this.environmentId = environmentId;
-        this.maxConsecutiveFailures = maxConsecutiveFailures;
-        this.executionTimeoutSeconds = executionTimeoutSeconds;
-        this.interaction = Optional.ofNullable(interaction)
-            .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
-    }
-    
-    public TriggerCreateParams(
-            @Nonnull String schedule,
-            @Nonnull String timeZone,
-            @Nonnull Interaction interaction) {
-        this(schedule, timeZone, null,
-            null, null, null,
-            interaction);
-    }
+    /**
+     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
+     * paused (status becomes ERROR).
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("max_consecutive_failures")
+    private Integer maxConsecutiveFailures;
 
     /**
      * Required. The cron schedule on which the trigger should run. Standard cron format.
      */
-    public Optional<String> schedule() {
-        return Optional.ofNullable(this.schedule);
-    }
+    @JsonProperty("schedule")
+    private String schedule;
 
     /**
      * Required. Time zone in which the schedule should be interpreted.
      */
-    public Optional<String> timeZone() {
-        return Optional.ofNullable(this.timeZone);
+    @JsonProperty("time_zone")
+    private String timeZone;
+
+    @JsonCreator
+    public TriggerCreateParams(
+            @JsonProperty("display_name") @Nullable String displayName,
+            @JsonProperty("environment_id") @Nullable String environmentId,
+            @JsonProperty("execution_timeout_seconds") @Nullable Integer executionTimeoutSeconds,
+            @JsonProperty("interaction") @Nonnull Interaction interaction,
+            @JsonProperty("max_consecutive_failures") @Nullable Integer maxConsecutiveFailures,
+            @JsonProperty("schedule") @Nonnull String schedule,
+            @JsonProperty("time_zone") @Nonnull String timeZone) {
+        this.displayName = displayName;
+        this.environmentId = environmentId;
+        this.executionTimeoutSeconds = executionTimeoutSeconds;
+        this.interaction = Optional.ofNullable(interaction)
+            .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
+        this.maxConsecutiveFailures = maxConsecutiveFailures;
+        this.schedule = Optional.ofNullable(schedule)
+            .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
+        this.timeZone = Optional.ofNullable(timeZone)
+            .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
+    }
+    
+    public TriggerCreateParams(
+            @Nonnull Interaction interaction,
+            @Nonnull String schedule,
+            @Nonnull String timeZone) {
+        this(null, null, null,
+            interaction, null, schedule,
+            timeZone);
     }
 
     /**
@@ -143,14 +129,6 @@ public class TriggerCreateParams {
     }
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
-     */
-    public Optional<Integer> maxConsecutiveFailures() {
-        return Optional.ofNullable(this.maxConsecutiveFailures);
-    }
-
-    /**
      * Optional. The execution timeout for the triggered interaction.
      */
     public Optional<Integer> executionTimeoutSeconds() {
@@ -164,26 +142,30 @@ public class TriggerCreateParams {
         return Optional.ofNullable(this.interaction);
     }
 
-    public static Builder builder() {
-        return new Builder();
+    /**
+     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
+     * paused (status becomes ERROR).
+     */
+    public Optional<Integer> maxConsecutiveFailures() {
+        return Optional.ofNullable(this.maxConsecutiveFailures);
     }
-
 
     /**
      * Required. The cron schedule on which the trigger should run. Standard cron format.
      */
-    public TriggerCreateParams withSchedule(@Nonnull String schedule) {
-        this.schedule = Utils.checkNotNull(schedule, "schedule");
-        return this;
+    public Optional<String> schedule() {
+        return Optional.ofNullable(this.schedule);
     }
-
 
     /**
      * Required. Time zone in which the schedule should be interpreted.
      */
-    public TriggerCreateParams withTimeZone(@Nonnull String timeZone) {
-        this.timeZone = Utils.checkNotNull(timeZone, "timeZone");
-        return this;
+    public Optional<String> timeZone() {
+        return Optional.ofNullable(this.timeZone);
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
 
@@ -206,16 +188,6 @@ public class TriggerCreateParams {
 
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
-     */
-    public TriggerCreateParams withMaxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
-        this.maxConsecutiveFailures = maxConsecutiveFailures;
-        return this;
-    }
-
-
-    /**
      * Optional. The execution timeout for the triggered interaction.
      */
     public TriggerCreateParams withExecutionTimeoutSeconds(@Nullable Integer executionTimeoutSeconds) {
@@ -233,6 +205,34 @@ public class TriggerCreateParams {
     }
 
 
+    /**
+     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
+     * paused (status becomes ERROR).
+     */
+    public TriggerCreateParams withMaxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
+        this.maxConsecutiveFailures = maxConsecutiveFailures;
+        return this;
+    }
+
+
+    /**
+     * Required. The cron schedule on which the trigger should run. Standard cron format.
+     */
+    public TriggerCreateParams withSchedule(@Nonnull String schedule) {
+        this.schedule = Utils.checkNotNull(schedule, "schedule");
+        return this;
+    }
+
+
+    /**
+     * Required. Time zone in which the schedule should be interpreted.
+     */
+    public TriggerCreateParams withTimeZone(@Nonnull String timeZone) {
+        this.timeZone = Utils.checkNotNull(timeZone, "timeZone");
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -243,70 +243,54 @@ public class TriggerCreateParams {
         }
         TriggerCreateParams other = (TriggerCreateParams) o;
         return 
-            Utils.enhancedDeepEquals(this.schedule, other.schedule) &&
-            Utils.enhancedDeepEquals(this.timeZone, other.timeZone) &&
             Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures) &&
             Utils.enhancedDeepEquals(this.executionTimeoutSeconds, other.executionTimeoutSeconds) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction);
+            Utils.enhancedDeepEquals(this.interaction, other.interaction) &&
+            Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures) &&
+            Utils.enhancedDeepEquals(this.schedule, other.schedule) &&
+            Utils.enhancedDeepEquals(this.timeZone, other.timeZone);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            schedule, timeZone, displayName,
-            environmentId, maxConsecutiveFailures, executionTimeoutSeconds,
-            interaction);
+            displayName, environmentId, executionTimeoutSeconds,
+            interaction, maxConsecutiveFailures, schedule,
+            timeZone);
     }
     
     @Override
     public String toString() {
         return Utils.toString(TriggerCreateParams.class,
-                "schedule", schedule,
-                "timeZone", timeZone,
                 "displayName", displayName,
                 "environmentId", environmentId,
-                "maxConsecutiveFailures", maxConsecutiveFailures,
                 "executionTimeoutSeconds", executionTimeoutSeconds,
-                "interaction", interaction);
+                "interaction", interaction,
+                "maxConsecutiveFailures", maxConsecutiveFailures,
+                "schedule", schedule,
+                "timeZone", timeZone);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String schedule;
-
-        private String timeZone;
-
         private String displayName;
 
         private String environmentId;
-
-        private Integer maxConsecutiveFailures;
 
         private Integer executionTimeoutSeconds;
 
         private Interaction interaction;
 
+        private Integer maxConsecutiveFailures;
+
+        private String schedule;
+
+        private String timeZone;
+
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * Required. The cron schedule on which the trigger should run. Standard cron format.
-         */
-        public Builder schedule(@Nonnull String schedule) {
-            this.schedule = Utils.checkNotNull(schedule, "schedule");
-            return this;
-        }
-
-        /**
-         * Required. Time zone in which the schedule should be interpreted.
-         */
-        public Builder timeZone(@Nonnull String timeZone) {
-            this.timeZone = Utils.checkNotNull(timeZone, "timeZone");
-            return this;
         }
 
         /**
@@ -326,15 +310,6 @@ public class TriggerCreateParams {
         }
 
         /**
-         * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-         * paused (status becomes ERROR).
-         */
-        public Builder maxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
-            this.maxConsecutiveFailures = maxConsecutiveFailures;
-            return this;
-        }
-
-        /**
          * Optional. The execution timeout for the triggered interaction.
          */
         public Builder executionTimeoutSeconds(@Nullable Integer executionTimeoutSeconds) {
@@ -350,11 +325,36 @@ public class TriggerCreateParams {
             return this;
         }
 
+        /**
+         * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
+         * paused (status becomes ERROR).
+         */
+        public Builder maxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
+            this.maxConsecutiveFailures = maxConsecutiveFailures;
+            return this;
+        }
+
+        /**
+         * Required. The cron schedule on which the trigger should run. Standard cron format.
+         */
+        public Builder schedule(@Nonnull String schedule) {
+            this.schedule = Utils.checkNotNull(schedule, "schedule");
+            return this;
+        }
+
+        /**
+         * Required. Time zone in which the schedule should be interpreted.
+         */
+        public Builder timeZone(@Nonnull String timeZone) {
+            this.timeZone = Utils.checkNotNull(timeZone, "timeZone");
+            return this;
+        }
+
         public TriggerCreateParams build() {
             return new TriggerCreateParams(
-                schedule, timeZone, displayName,
-                environmentId, maxConsecutiveFailures, executionTimeoutSeconds,
-                interaction);
+                displayName, environmentId, executionTimeoutSeconds,
+                interaction, maxConsecutiveFailures, schedule,
+                timeZone);
         }
 
     }

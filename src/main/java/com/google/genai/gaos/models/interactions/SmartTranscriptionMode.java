@@ -22,24 +22,23 @@ package com.google.genai.gaos.models.interactions;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.genai.gaos.models.agents.AgentTool;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 
 /**
- * URLContext
+ * SmartTranscriptionMode
  * 
- * <p>A tool that can be used by the model to fetch URL context.
+ * <p>Configuration for smart transcription mode.
  */
-public class URLContext implements AgentTool, Tool {
+public class SmartTranscriptionMode implements TranscriptionMode {
 
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public URLContext() {
+    public SmartTranscriptionMode() {
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
 
@@ -61,7 +60,7 @@ public class URLContext implements AgentTool, Tool {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        URLContext other = (URLContext) o;
+        SmartTranscriptionMode other = (SmartTranscriptionMode) o;
         return 
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -74,7 +73,7 @@ public class URLContext implements AgentTool, Tool {
     
     @Override
     public String toString() {
-        return Utils.toString(URLContext.class,
+        return Utils.toString(SmartTranscriptionMode.class,
                 "type", type);
     }
 
@@ -85,8 +84,8 @@ public class URLContext implements AgentTool, Tool {
           // force use of static builder() method
         }
 
-        public URLContext build() {
-            return new URLContext(
+        public SmartTranscriptionMode build() {
+            return new SmartTranscriptionMode(
                 );
         }
 
@@ -94,7 +93,7 @@ public class URLContext implements AgentTool, Tool {
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
                 new LazySingletonValue<>(
                         "type",
-                        "\"url_context\"",
+                        "\"smart\"",
                         new TypeReference<String>() {});
     }
 }

@@ -31,36 +31,29 @@ import java.util.Optional;
 
 public class DeleteInteractionRequest {
     /**
-     * The unique identifier of the interaction to delete.
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
-    private String id;
-
-    /**
      * Which version of the API to use.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
+    /**
+     * The unique identifier of the interaction to delete.
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
+    private String id;
+
     @JsonCreator
     public DeleteInteractionRequest(
-            @Nonnull String id,
-            @Nullable String apiVersion) {
+            @Nullable String apiVersion,
+            @Nonnull String id) {
+        this.apiVersion = apiVersion;
         this.id = Optional.ofNullable(id)
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.apiVersion = apiVersion;
     }
     
     public DeleteInteractionRequest(
             @Nonnull String id) {
-        this(id, null);
-    }
-
-    /**
-     * The unique identifier of the interaction to delete.
-     */
-    public Optional<String> id() {
-        return Optional.ofNullable(this.id);
+        this(null, id);
     }
 
     /**
@@ -70,17 +63,15 @@ public class DeleteInteractionRequest {
         return Optional.ofNullable(this.apiVersion);
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
-
     /**
      * The unique identifier of the interaction to delete.
      */
-    public DeleteInteractionRequest withId(@Nonnull String id) {
-        this.id = Utils.checkNotNull(id, "id");
-        return this;
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
 
@@ -89,6 +80,15 @@ public class DeleteInteractionRequest {
      */
     public DeleteInteractionRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
+        return this;
+    }
+
+
+    /**
+     * The unique identifier of the interaction to delete.
+     */
+    public DeleteInteractionRequest withId(@Nonnull String id) {
+        this.id = Utils.checkNotNull(id, "id");
         return this;
     }
 
@@ -103,40 +103,32 @@ public class DeleteInteractionRequest {
         }
         DeleteInteractionRequest other = (DeleteInteractionRequest) o;
         return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion);
+            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
+            Utils.enhancedDeepEquals(this.id, other.id);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, apiVersion);
+            apiVersion, id);
     }
     
     @Override
     public String toString() {
         return Utils.toString(DeleteInteractionRequest.class,
-                "id", id,
-                "apiVersion", apiVersion);
+                "apiVersion", apiVersion,
+                "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String id;
-
         private String apiVersion;
+
+        private String id;
 
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * The unique identifier of the interaction to delete.
-         */
-        public Builder id(@Nonnull String id) {
-            this.id = Utils.checkNotNull(id, "id");
-            return this;
         }
 
         /**
@@ -147,9 +139,17 @@ public class DeleteInteractionRequest {
             return this;
         }
 
+        /**
+         * The unique identifier of the interaction to delete.
+         */
+        public Builder id(@Nonnull String id) {
+            this.id = Utils.checkNotNull(id, "id");
+            return this;
+        }
+
         public DeleteInteractionRequest build() {
             return new DeleteInteractionRequest(
-                id, apiVersion);
+                apiVersion, id);
         }
 
     }

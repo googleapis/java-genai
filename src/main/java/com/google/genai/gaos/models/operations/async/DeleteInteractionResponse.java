@@ -61,6 +61,7 @@ public class DeleteInteractionResponse implements AsyncResponse {
     /**
      * HTTP response content type for this operation
      */
+    @Override
     public String contentType() {
         return this.contentType;
     }
@@ -68,6 +69,7 @@ public class DeleteInteractionResponse implements AsyncResponse {
     /**
      * HTTP response status code for this operation
      */
+    @Override
     public int statusCode() {
         return this.statusCode;
     }
@@ -75,6 +77,7 @@ public class DeleteInteractionResponse implements AsyncResponse {
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
+    @Override
     public HttpResponse<InputStream> rawResponse() {
         return this.rawResponse;
     }

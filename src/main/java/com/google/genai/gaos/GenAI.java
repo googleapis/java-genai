@@ -21,7 +21,6 @@
 package com.google.genai.gaos;
 
 import com.google.genai.gaos.utils.HTTPClient;
-import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Java8Compat;
 import com.google.genai.gaos.utils.RetryConfig;
 import com.google.genai.gaos.utils.SpeakeasyHTTPClient;
@@ -41,7 +40,6 @@ import java.util.function.Consumer;
  * classification systems, and more.
  */
 public class GenAI implements java.lang.AutoCloseable {
-    private static final Headers _headers = Headers.EMPTY;
 
 
     /**
@@ -55,33 +53,33 @@ public class GenAI implements java.lang.AutoCloseable {
     };
 
 
-    private final Interactions interactions;
-
-
-    private final Webhooks webhooks;
-
-
     private final Agents agents;
-
-
-    private final Triggers triggers;
 
 
     private final Environments environments;
 
 
-    public Interactions interactions() {
-        return interactions;
-    }
+    private final Interactions interactions;
 
 
-    public Webhooks webhooks() {
-        return webhooks;
-    }
+    private final Triggers triggers;
+
+
+    private final Webhooks webhooks;
 
 
     public Agents agents() {
         return agents;
+    }
+
+
+    public Environments environments() {
+        return environments;
+    }
+
+
+    public Interactions interactions() {
+        return interactions;
     }
 
 
@@ -90,10 +88,9 @@ public class GenAI implements java.lang.AutoCloseable {
     }
 
 
-    public Environments environments() {
-        return environments;
-    }
-    private SDKConfiguration sdkConfiguration;
+    public Webhooks webhooks() {
+        return webhooks;
+    }private SDKConfiguration sdkConfiguration;
     private final AsyncGenAI asyncSDK;
 
     /**
@@ -103,7 +100,6 @@ public class GenAI implements java.lang.AutoCloseable {
 
         private final SDKConfiguration sdkConfiguration = new SDKConfiguration();
         private String serverUrl;
-        private String server;
         
 
         private Builder() {
@@ -276,11 +272,11 @@ public class GenAI implements java.lang.AutoCloseable {
     private GenAI(SDKConfiguration sdkConfiguration) {
         sdkConfiguration.initialize();
         sdkConfiguration = sdkConfiguration.hooks().sdkInit(sdkConfiguration);
-        this.interactions = new Interactions(sdkConfiguration);
-        this.webhooks = new Webhooks(sdkConfiguration);
         this.agents = new Agents(sdkConfiguration);
-        this.triggers = new Triggers(sdkConfiguration);
         this.environments = new Environments(sdkConfiguration);
+        this.interactions = new Interactions(sdkConfiguration);
+        this.triggers = new Triggers(sdkConfiguration);
+        this.webhooks = new Webhooks(sdkConfiguration);
         this.asyncSDK = new AsyncGenAI(this, sdkConfiguration);
         this.sdkConfiguration = sdkConfiguration;
     }

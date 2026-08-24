@@ -66,6 +66,49 @@ public class Agents {
     }
 
     /**
+     * Lists all Agents.
+     * 
+     * @return The call builder
+     */
+    public ListAgentsRequestBuilder list() {
+        return new ListAgentsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Lists all Agents.
+     * 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAgentsResponse listDirect() {
+        return list(null, null, null,
+            null, null);
+    }
+
+    /**
+     * Lists all Agents.
+     * 
+     * @param apiVersion Which version of the API to use.
+     * @param pageSize 
+     * @param pageToken 
+     * @param parent 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAgentsResponse list(
+            @Nullable String apiVersion, @Nullable Integer pageSize,
+            @Nullable String pageToken, @Nullable String parent,
+            @Nullable Options options) {
+        ListAgentsRequest request = new ListAgentsRequest(
+                apiVersion, pageSize, pageToken,
+                parent);
+        RequestOperation<ListAgentsRequest, ListAgentsResponse> operation
+              = new ListAgents.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Creates a new Agent (Typed version for SDK).
      * 
      * @return The call builder
@@ -122,45 +165,40 @@ public class Agents {
     }
 
     /**
-     * Lists all Agents.
+     * Deletes an Agent.
      * 
      * @return The call builder
      */
-    public ListAgentsRequestBuilder list() {
-        return new ListAgentsRequestBuilder(sdkConfiguration);
+    public DeleteAgentRequestBuilder delete() {
+        return new DeleteAgentRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Lists all Agents.
+     * Deletes an Agent.
      * 
+     * @param id 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public ListAgentsResponse listDirect() {
-        return list(null, null, null,
-            null, null);
+    public DeleteAgentResponse delete(@Nonnull String id) {
+        return delete(null, id, null);
     }
 
     /**
-     * Lists all Agents.
+     * Deletes an Agent.
      * 
      * @param apiVersion Which version of the API to use.
-     * @param pageSize 
-     * @param pageToken 
-     * @param parent 
+     * @param id 
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public ListAgentsResponse list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable String parent,
+    public DeleteAgentResponse delete(
+            @Nullable String apiVersion, @Nonnull String id,
             @Nullable Options options) {
-        ListAgentsRequest request = new ListAgentsRequest(
-                apiVersion, pageSize, pageToken,
-                parent);
-        RequestOperation<ListAgentsRequest, ListAgentsResponse> operation
-              = new ListAgents.Sync(sdkConfiguration, options, _headers);
+        DeleteAgentRequest request = new DeleteAgentRequest(apiVersion, id);
+        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation
+              = new DeleteAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -199,44 +237,6 @@ public class Agents {
         GetAgentRequest request = new GetAgentRequest(apiVersion, id);
         RequestOperation<GetAgentRequest, GetAgentResponse> operation
               = new GetAgent.Sync(sdkConfiguration, options, _headers);
-        return operation.handleResponse(operation.doRequest(request));
-    }
-
-    /**
-     * Deletes an Agent.
-     * 
-     * @return The call builder
-     */
-    public DeleteAgentRequestBuilder delete() {
-        return new DeleteAgentRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Deletes an Agent.
-     * 
-     * @param id 
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public DeleteAgentResponse delete(@Nonnull String id) {
-        return delete(null, id, null);
-    }
-
-    /**
-     * Deletes an Agent.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
-     * @param options additional options
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public DeleteAgentResponse delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
-        DeleteAgentRequest request = new DeleteAgentRequest(apiVersion, id);
-        RequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation
-              = new DeleteAgent.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

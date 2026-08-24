@@ -45,6 +45,13 @@ public class VideoContent implements Content {
     private String data;
 
     /**
+     * The mime type of the video.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("mime_type")
+    private VideoContentMimeType mimeType;
+
+    /**
      * How the model processes this video for understanding.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -67,26 +74,19 @@ public class VideoContent implements Content {
     @JsonProperty("uri")
     private String uri;
 
-    /**
-     * The mime type of the video.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("mime_type")
-    private VideoContentMimeType mimeType;
-
     @JsonCreator
     public VideoContent(
             @JsonProperty("data") @Nullable String data,
+            @JsonProperty("mime_type") @Nullable VideoContentMimeType mimeType,
             @JsonProperty("processing") @Nullable Processing processing,
             @JsonProperty("resolution") @Nullable MediaResolution resolution,
-            @JsonProperty("uri") @Nullable String uri,
-            @JsonProperty("mime_type") @Nullable VideoContentMimeType mimeType) {
+            @JsonProperty("uri") @Nullable String uri) {
         this.data = data;
+        this.mimeType = mimeType;
         this.processing = processing;
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
-        this.mimeType = mimeType;
     }
     
     public VideoContent() {
@@ -99,6 +99,13 @@ public class VideoContent implements Content {
      */
     public Optional<String> data() {
         return Optional.ofNullable(this.data);
+    }
+
+    /**
+     * The mime type of the video.
+     */
+    public Optional<VideoContentMimeType> mimeType() {
+        return Optional.ofNullable(this.mimeType);
     }
 
     /**
@@ -124,13 +131,6 @@ public class VideoContent implements Content {
         return Optional.ofNullable(this.uri);
     }
 
-    /**
-     * The mime type of the video.
-     */
-    public Optional<VideoContentMimeType> mimeType() {
-        return Optional.ofNullable(this.mimeType);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -141,6 +141,15 @@ public class VideoContent implements Content {
      */
     public VideoContent withData(@Nullable String data) {
         this.data = data;
+        return this;
+    }
+
+
+    /**
+     * The mime type of the video.
+     */
+    public VideoContent withMimeType(@Nullable VideoContentMimeType mimeType) {
+        this.mimeType = mimeType;
         return this;
     }
 
@@ -169,15 +178,6 @@ public class VideoContent implements Content {
     }
 
 
-    /**
-     * The mime type of the video.
-     */
-    public VideoContent withMimeType(@Nullable VideoContentMimeType mimeType) {
-        this.mimeType = mimeType;
-        return this;
-    }
-
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -189,29 +189,29 @@ public class VideoContent implements Content {
         VideoContent other = (VideoContent) o;
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
             Utils.enhancedDeepEquals(this.processing, other.processing) &&
             Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
+            Utils.enhancedDeepEquals(this.uri, other.uri);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, processing, resolution,
-            type, uri, mimeType);
+            data, mimeType, processing,
+            resolution, type, uri);
     }
     
     @Override
     public String toString() {
         return Utils.toString(VideoContent.class,
                 "data", data,
+                "mimeType", mimeType,
                 "processing", processing,
                 "resolution", resolution,
                 "type", type,
-                "uri", uri,
-                "mimeType", mimeType);
+                "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -219,13 +219,13 @@ public class VideoContent implements Content {
 
         private String data;
 
+        private VideoContentMimeType mimeType;
+
         private Processing processing;
 
         private MediaResolution resolution;
 
         private String uri;
-
-        private VideoContentMimeType mimeType;
 
         private Builder() {
           // force use of static builder() method
@@ -236,6 +236,14 @@ public class VideoContent implements Content {
          */
         public Builder data(@Nullable String data) {
             this.data = data;
+            return this;
+        }
+
+        /**
+         * The mime type of the video.
+         */
+        public Builder mimeType(@Nullable VideoContentMimeType mimeType) {
+            this.mimeType = mimeType;
             return this;
         }
 
@@ -260,18 +268,10 @@ public class VideoContent implements Content {
             return this;
         }
 
-        /**
-         * The mime type of the video.
-         */
-        public Builder mimeType(@Nullable VideoContentMimeType mimeType) {
-            this.mimeType = mimeType;
-            return this;
-        }
-
         public VideoContent build() {
             return new VideoContent(
-                data, processing, resolution,
-                uri, mimeType);
+                data, mimeType, processing,
+                resolution, uri);
         }
 
 

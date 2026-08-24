@@ -49,6 +49,11 @@ public class MCPServerToolResultStepResultUnion {
         this.value = value;
     }
 
+    public static MCPServerToolResultStepResultUnion of(List<FunctionResultSubcontent> value) {
+        Utils.checkNotNull(value, "value");
+        return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
+    }
+
     public static MCPServerToolResultStepResultUnion of(MCPServerToolResultStepResult value) {
         Utils.checkNotNull(value, "value");
         return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MCPServerToolResultStepResult>(){}));
@@ -58,10 +63,19 @@ public class MCPServerToolResultStepResultUnion {
         Utils.checkNotNull(value, "value");
         return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
     }
-
-    public static MCPServerToolResultStepResultUnion of(List<FunctionResultSubcontent> value) {
-        Utils.checkNotNull(value, "value");
-        return new MCPServerToolResultStepResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code List<FunctionResultSubcontent>},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code List<FunctionResultSubcontent>} value, or empty if not of this type
+     */
+    @SuppressWarnings("unchecked")
+    public Optional<List<FunctionResultSubcontent>> arrayOfFunctionResultSubcontent() {
+        if (value.value() instanceof List) {
+            return Optional.of((List<FunctionResultSubcontent>) value.value());
+        }
+        return Optional.empty();
     }
     
     /**
@@ -86,20 +100,6 @@ public class MCPServerToolResultStepResultUnion {
     public Optional<String> string() {
         if (value.value() instanceof String) {
             return Optional.of((String) value.value());
-        }
-        return Optional.empty();
-    }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code List<FunctionResultSubcontent>},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code List<FunctionResultSubcontent>} value, or empty if not of this type
-     */
-    @SuppressWarnings("unchecked")
-    public Optional<List<FunctionResultSubcontent>> arrayOfFunctionResultSubcontent() {
-        if (value.value() instanceof List) {
-            return Optional.of((List<FunctionResultSubcontent>) value.value());
         }
         return Optional.empty();
     }
@@ -138,9 +138,9 @@ public class MCPServerToolResultStepResultUnion {
 
         public _Deserializer() {
             super(MCPServerToolResultStepResultUnion.class, false,
+                  TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<MCPServerToolResultStepResult>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
     

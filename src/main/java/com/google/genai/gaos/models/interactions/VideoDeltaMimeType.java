@@ -45,6 +45,7 @@ public class VideoDeltaMimeType {
     public static final VideoDeltaMimeType VIDEO_WEBM = new VideoDeltaMimeType("video/webm");
     public static final VideoDeltaMimeType VIDEO_WMV = new VideoDeltaMimeType("video/wmv");
     public static final VideoDeltaMimeType VIDEO3GPP = new VideoDeltaMimeType("video/3gpp");
+    public static final VideoDeltaMimeType VIDEO_JPEG2000 = new VideoDeltaMimeType("video/jpeg2000");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -127,6 +128,7 @@ public class VideoDeltaMimeType {
         map.put("video/webm", VIDEO_WEBM);
         map.put("video/wmv", VIDEO_WMV);
         map.put("video/3gpp", VIDEO3GPP);
+        map.put("video/jpeg2000", VIDEO_JPEG2000);
         return map;
     }
 
@@ -141,6 +143,7 @@ public class VideoDeltaMimeType {
         map.put("video/webm", VideoDeltaMimeTypeEnum.VIDEO_WEBM);
         map.put("video/wmv", VideoDeltaMimeTypeEnum.VIDEO_WMV);
         map.put("video/3gpp", VideoDeltaMimeTypeEnum.VIDEO3GPP);
+        map.put("video/jpeg2000", VideoDeltaMimeTypeEnum.VIDEO_JPEG2000);
         return map;
     }
     
@@ -155,7 +158,8 @@ public class VideoDeltaMimeType {
         VIDEO_X_FLV("video/x-flv"),
         VIDEO_WEBM("video/webm"),
         VIDEO_WMV("video/wmv"),
-        VIDEO3GPP("video/3gpp"),;
+        VIDEO3GPP("video/3gpp"),
+        VIDEO_JPEG2000("video/jpeg2000"),;
 
         private final String value;
 

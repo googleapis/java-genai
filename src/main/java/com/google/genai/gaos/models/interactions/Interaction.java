@@ -42,14 +42,6 @@ import java.util.Optional;
  */
 public class Interaction {
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("model")
-    private Model model;
-
-    /**
      * The agent to interact with.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -57,17 +49,11 @@ public class Interaction {
     private AgentOption agent;
 
     /**
-     * Required. Output only. A unique identifier for the interaction completion.
+     * Configuration parameters for the agent interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("id")
-    private String id;
-
-    /**
-     * Required. Output only. The status of the interaction.
-     */
-    @JsonProperty("status")
-    private InteractionStatus status;
+    @JsonProperty("agent_config")
+    private InteractionAgentConfig agentConfig;
 
     /**
      * Output only. The time at which the response was created in ISO 8601 format
@@ -78,12 +64,153 @@ public class Interaction {
     private String created;
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
-     * (YYYY-MM-DDThh:mm:ssZ).
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("updated")
-    private String updated;
+    @JsonProperty("environment")
+    private InteractionEnvironment environment;
+
+    /**
+     * Output only. The environment ID for the interaction. Only populated if environment
+     * config is set in the request.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("environment_id")
+    private String environmentId;
+
+    /**
+     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("errors")
+    private List<Error> errors;
+
+    /**
+     * Configuration parameters for model interactions.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("generation_config")
+    private GenerationConfig generationConfig;
+
+    /**
+     * Required. Output only. A unique identifier for the interaction completion.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
+    /**
+     * The input for the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("input")
+    private InteractionsInput input;
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("labels")
+    private Map<String, String> labels;
+
+    /**
+     * The model that will complete your prompt.\n\nSee
+     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("model")
+    private Model model;
+
+    /**
+     * An audio content block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("output_audio")
+    private AudioContent outputAudio;
+
+    /**
+     * An image content block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("output_image")
+    private ImageContent outputImage;
+
+    /**
+     * Concatenated text from the last model output in response to the current request.
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("output_text")
+    private String outputText;
+
+    /**
+     * A video content block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("output_video")
+    private VideoContent outputVideo;
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("previous_interaction_id")
+    private String previousInteractionId;
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_format")
+    private InteractionResponseFormat responseFormat;
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_mime_type")
+    @Deprecated
+    private String responseMimeType;
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_modalities")
+    @Deprecated
+    private List<ResponseModality> responseModalities;
+
+    /**
+     * Safety settings for the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("safety_settings")
+    private List<SafetySetting> safetySettings;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("service_tier")
+    private ServiceTier serviceTier;
+
+    /**
+     * Required. Output only. The status of the interaction.
+     */
+    @JsonProperty("status")
+    private InteractionStatus status;
+
+    /**
+     * Output only. The steps that make up the interaction, when included in the response.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("steps")
+    private List<Step> steps;
 
     /**
      * System instruction for the interaction.
@@ -100,11 +227,12 @@ public class Interaction {
     private List<Tool> tools;
 
     /**
-     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     * Output only. The time at which the response was last updated in ISO 8601 format
+     * (YYYY-MM-DDThh:mm:ssZ).
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("errors")
-    private List<Error> errors;
+    @JsonProperty("updated")
+    private String updated;
 
     /**
      * Statistics on the interaction request's token usage.
@@ -114,222 +242,86 @@ public class Interaction {
     private Usage usage;
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_modalities")
-    @Deprecated
-    private List<ResponseModality> responseModalities;
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_mime_type")
-    @Deprecated
-    private String responseMimeType;
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("previous_interaction_id")
-    private String previousInteractionId;
-
-    /**
-     * Output only. The environment ID for the interaction. Only populated if environment
-     * config is set in the request.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("environment_id")
-    private String environmentId;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("service_tier")
-    private ServiceTier serviceTier;
-
-    /**
      * Message for configuring webhook events for a request.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("webhook_config")
     private WebhookConfig webhookConfig;
 
-    /**
-     * Output only. The steps that make up the interaction, when included in the response.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("steps")
-    private List<Step> steps;
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_format")
-    private InteractionResponseFormat responseFormat;
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("environment")
-    private InteractionEnvironment environment;
-
-    /**
-     * Configuration parameters for model interactions.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("generation_config")
-    private GenerationConfig generationConfig;
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("agent_config")
-    private InteractionAgentConfig agentConfig;
-
-    /**
-     * Safety settings for the interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("safety_settings")
-    private List<SafetySetting> safetySettings;
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("labels")
-    private Map<String, String> labels;
-
-    /**
-     * The input for the interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("input")
-    private InteractionsInput input;
-
-    /**
-     * Concatenated text from the last model output in response to the current request.
-     * 
-     * <p>Note: this is added by the SDK.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("output_text")
-    private String outputText;
-
-    /**
-     * An image content block.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("output_image")
-    private ImageContent outputImage;
-
-    /**
-     * An audio content block.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("output_audio")
-    private AudioContent outputAudio;
-
-    /**
-     * A video content block.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("output_video")
-    private VideoContent outputVideo;
-
     @JsonCreator
     public Interaction(
-            @JsonProperty("model") @Nullable Model model,
             @JsonProperty("agent") @Nullable AgentOption agent,
-            @JsonProperty("id") @Nullable String id,
-            @JsonProperty("status") @Nonnull InteractionStatus status,
+            @JsonProperty("agent_config") @Nullable InteractionAgentConfig agentConfig,
             @JsonProperty("created") @Nullable String created,
-            @JsonProperty("updated") @Nullable String updated,
+            @JsonProperty("environment") @Nullable InteractionEnvironment environment,
+            @JsonProperty("environment_id") @Nullable String environmentId,
+            @JsonProperty("errors") @Nullable List<Error> errors,
+            @JsonProperty("generation_config") @Nullable GenerationConfig generationConfig,
+            @JsonProperty("id") @Nullable String id,
+            @JsonProperty("input") @Nullable InteractionsInput input,
+            @JsonProperty("labels") @Nullable Map<String, String> labels,
+            @JsonProperty("model") @Nullable Model model,
+            @JsonProperty("output_audio") @Nullable AudioContent outputAudio,
+            @JsonProperty("output_image") @Nullable ImageContent outputImage,
+            @JsonProperty("output_text") @Nullable String outputText,
+            @JsonProperty("output_video") @Nullable VideoContent outputVideo,
+            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
+            @JsonProperty("response_format") @Nullable InteractionResponseFormat responseFormat,
+            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
+            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
+            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
+            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
+            @JsonProperty("status") @Nonnull InteractionStatus status,
+            @JsonProperty("steps") @Nullable List<Step> steps,
             @JsonProperty("system_instruction") @Nullable String systemInstruction,
             @JsonProperty("tools") @Nullable List<Tool> tools,
-            @JsonProperty("errors") @Nullable List<Error> errors,
+            @JsonProperty("updated") @Nullable String updated,
             @JsonProperty("usage") @Nullable Usage usage,
-            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
-            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
-            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
-            @JsonProperty("environment_id") @Nullable String environmentId,
-            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
-            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig,
-            @JsonProperty("steps") @Nullable List<Step> steps,
-            @JsonProperty("response_format") @Nullable InteractionResponseFormat responseFormat,
-            @JsonProperty("environment") @Nullable InteractionEnvironment environment,
-            @JsonProperty("generation_config") @Nullable GenerationConfig generationConfig,
-            @JsonProperty("agent_config") @Nullable InteractionAgentConfig agentConfig,
-            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
-            @JsonProperty("labels") @Nullable Map<String, String> labels,
-            @JsonProperty("input") @Nullable InteractionsInput input,
-            @JsonProperty("output_text") @Nullable String outputText,
-            @JsonProperty("output_image") @Nullable ImageContent outputImage,
-            @JsonProperty("output_audio") @Nullable AudioContent outputAudio,
-            @JsonProperty("output_video") @Nullable VideoContent outputVideo) {
-        this.model = model;
+            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
         this.agent = agent;
+        this.agentConfig = agentConfig;
+        this.created = created;
+        this.environment = environment;
+        this.environmentId = environmentId;
+        this.errors = errors;
+        this.generationConfig = generationConfig;
         this.id = Optional.ofNullable(id)
             .orElse(Builder._SINGLETON_VALUE_Id.value());
+        this.input = input;
+        this.labels = labels;
+        this.model = model;
+        this.outputAudio = outputAudio;
+        this.outputImage = outputImage;
+        this.outputText = outputText;
+        this.outputVideo = outputVideo;
+        this.previousInteractionId = previousInteractionId;
+        this.responseFormat = responseFormat;
+        this.responseMimeType = responseMimeType;
+        this.responseModalities = responseModalities;
+        this.safetySettings = safetySettings;
+        this.serviceTier = serviceTier;
         this.status = Optional.ofNullable(status)
             .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
-        this.created = created;
-        this.updated = updated;
+        this.steps = steps;
         this.systemInstruction = systemInstruction;
         this.tools = tools;
-        this.errors = errors;
+        this.updated = updated;
         this.usage = usage;
-        this.responseModalities = responseModalities;
-        this.responseMimeType = responseMimeType;
-        this.previousInteractionId = previousInteractionId;
-        this.environmentId = environmentId;
-        this.serviceTier = serviceTier;
         this.webhookConfig = webhookConfig;
-        this.steps = steps;
-        this.responseFormat = responseFormat;
-        this.environment = environment;
-        this.generationConfig = generationConfig;
-        this.agentConfig = agentConfig;
-        this.safetySettings = safetySettings;
-        this.labels = labels;
-        this.input = input;
-        this.outputText = outputText;
-        this.outputImage = outputImage;
-        this.outputAudio = outputAudio;
-        this.outputVideo = outputVideo;
     }
     
     public Interaction(
             @Nonnull InteractionStatus status) {
         this(null, null, null,
+            null, null, null,
+            null, null, null,
+            null, null, null,
+            null, null, null,
+            null, null, null,
+            null, null, null,
             status, null, null,
             null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
             null);
-    }
-
-    /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-     */
-    public Optional<Model> model() {
-        return Optional.ofNullable(this.model);
     }
 
     /**
@@ -340,17 +332,10 @@ public class Interaction {
     }
 
     /**
-     * Required. Output only. A unique identifier for the interaction completion.
+     * Configuration parameters for the agent interaction.
      */
-    public Optional<String> id() {
-        return Optional.ofNullable(this.id);
-    }
-
-    /**
-     * Required. Output only. The status of the interaction.
-     */
-    public Optional<InteractionStatus> status() {
-        return Optional.ofNullable(this.status);
+    public Optional<InteractionAgentConfig> agentConfig() {
+        return Optional.ofNullable(this.agentConfig);
     }
 
     /**
@@ -362,11 +347,152 @@ public class Interaction {
     }
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
-     * (YYYY-MM-DDThh:mm:ssZ).
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
      */
-    public Optional<String> updated() {
-        return Optional.ofNullable(this.updated);
+    public Optional<InteractionEnvironment> environment() {
+        return Optional.ofNullable(this.environment);
+    }
+
+    /**
+     * Output only. The environment ID for the interaction. Only populated if environment
+     * config is set in the request.
+     */
+    public Optional<String> environmentId() {
+        return Optional.ofNullable(this.environmentId);
+    }
+
+    /**
+     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     */
+    public Optional<List<Error>> errors() {
+        return Optional.ofNullable(this.errors);
+    }
+
+    /**
+     * Configuration parameters for model interactions.
+     */
+    public Optional<GenerationConfig> generationConfig() {
+        return Optional.ofNullable(this.generationConfig);
+    }
+
+    /**
+     * Required. Output only. A unique identifier for the interaction completion.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
+    }
+
+    /**
+     * The input for the interaction.
+     */
+    public Optional<InteractionsInput> input() {
+        return Optional.ofNullable(this.input);
+    }
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    public Optional<Map<String, String>> labels() {
+        return Optional.ofNullable(this.labels);
+    }
+
+    /**
+     * The model that will complete your prompt.\n\nSee
+     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     */
+    public Optional<Model> model() {
+        return Optional.ofNullable(this.model);
+    }
+
+    /**
+     * An audio content block.
+     */
+    public Optional<AudioContent> outputAudio() {
+        return Optional.ofNullable(this.outputAudio);
+    }
+
+    /**
+     * An image content block.
+     */
+    public Optional<ImageContent> outputImage() {
+        return Optional.ofNullable(this.outputImage);
+    }
+
+    /**
+     * Concatenated text from the last model output in response to the current request.
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    public Optional<String> outputText() {
+        return Optional.ofNullable(this.outputText);
+    }
+
+    /**
+     * A video content block.
+     */
+    public Optional<VideoContent> outputVideo() {
+        return Optional.ofNullable(this.outputVideo);
+    }
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public Optional<String> previousInteractionId() {
+        return Optional.ofNullable(this.previousInteractionId);
+    }
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public Optional<InteractionResponseFormat> responseFormat() {
+        return Optional.ofNullable(this.responseFormat);
+    }
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<String> responseMimeType() {
+        return Optional.ofNullable(this.responseMimeType);
+    }
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<List<ResponseModality>> responseModalities() {
+        return Optional.ofNullable(this.responseModalities);
+    }
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public Optional<List<SafetySetting>> safetySettings() {
+        return Optional.ofNullable(this.safetySettings);
+    }
+
+    public Optional<ServiceTier> serviceTier() {
+        return Optional.ofNullable(this.serviceTier);
+    }
+
+    /**
+     * Required. Output only. The status of the interaction.
+     */
+    public Optional<InteractionStatus> status() {
+        return Optional.ofNullable(this.status);
+    }
+
+    /**
+     * Output only. The steps that make up the interaction, when included in the response.
+     */
+    public Optional<List<Step>> steps() {
+        return Optional.ofNullable(this.steps);
     }
 
     /**
@@ -384,10 +510,11 @@ public class Interaction {
     }
 
     /**
-     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     * Output only. The time at which the response was last updated in ISO 8601 format
+     * (YYYY-MM-DDThh:mm:ssZ).
      */
-    public Optional<List<Error>> errors() {
-        return Optional.ofNullable(this.errors);
+    public Optional<String> updated() {
+        return Optional.ofNullable(this.updated);
     }
 
     /**
@@ -398,137 +525,10 @@ public class Interaction {
     }
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<List<ResponseModality>> responseModalities() {
-        return Optional.ofNullable(this.responseModalities);
-    }
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<String> responseMimeType() {
-        return Optional.ofNullable(this.responseMimeType);
-    }
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public Optional<String> previousInteractionId() {
-        return Optional.ofNullable(this.previousInteractionId);
-    }
-
-    /**
-     * Output only. The environment ID for the interaction. Only populated if environment
-     * config is set in the request.
-     */
-    public Optional<String> environmentId() {
-        return Optional.ofNullable(this.environmentId);
-    }
-
-    public Optional<ServiceTier> serviceTier() {
-        return Optional.ofNullable(this.serviceTier);
-    }
-
-    /**
      * Message for configuring webhook events for a request.
      */
     public Optional<WebhookConfig> webhookConfig() {
         return Optional.ofNullable(this.webhookConfig);
-    }
-
-    /**
-     * Output only. The steps that make up the interaction, when included in the response.
-     */
-    public Optional<List<Step>> steps() {
-        return Optional.ofNullable(this.steps);
-    }
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public Optional<InteractionResponseFormat> responseFormat() {
-        return Optional.ofNullable(this.responseFormat);
-    }
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    public Optional<InteractionEnvironment> environment() {
-        return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * Configuration parameters for model interactions.
-     */
-    public Optional<GenerationConfig> generationConfig() {
-        return Optional.ofNullable(this.generationConfig);
-    }
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    public Optional<InteractionAgentConfig> agentConfig() {
-        return Optional.ofNullable(this.agentConfig);
-    }
-
-    /**
-     * Safety settings for the interaction.
-     */
-    public Optional<List<SafetySetting>> safetySettings() {
-        return Optional.ofNullable(this.safetySettings);
-    }
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    public Optional<Map<String, String>> labels() {
-        return Optional.ofNullable(this.labels);
-    }
-
-    /**
-     * The input for the interaction.
-     */
-    public Optional<InteractionsInput> input() {
-        return Optional.ofNullable(this.input);
-    }
-
-    /**
-     * Concatenated text from the last model output in response to the current request.
-     * 
-     * <p>Note: this is added by the SDK.
-     */
-    public Optional<String> outputText() {
-        return Optional.ofNullable(this.outputText);
-    }
-
-    /**
-     * An image content block.
-     */
-    public Optional<ImageContent> outputImage() {
-        return Optional.ofNullable(this.outputImage);
-    }
-
-    /**
-     * An audio content block.
-     */
-    public Optional<AudioContent> outputAudio() {
-        return Optional.ofNullable(this.outputAudio);
-    }
-
-    /**
-     * A video content block.
-     */
-    public Optional<VideoContent> outputVideo() {
-        return Optional.ofNullable(this.outputVideo);
     }
 
     @JsonProperty("outputs")
@@ -548,16 +548,6 @@ public class Interaction {
 
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-     */
-    public Interaction withModel(@Nullable Model model) {
-        this.model = model;
-        return this;
-    }
-
-
-    /**
      * The agent to interact with.
      */
     public Interaction withAgent(@Nullable AgentOption agent) {
@@ -567,19 +557,10 @@ public class Interaction {
 
 
     /**
-     * Required. Output only. A unique identifier for the interaction completion.
+     * Configuration parameters for the agent interaction.
      */
-    public Interaction withId(@Nullable String id) {
-        this.id = id;
-        return this;
-    }
-
-
-    /**
-     * Required. Output only. The status of the interaction.
-     */
-    public Interaction withStatus(@Nonnull InteractionStatus status) {
-        this.status = Utils.checkNotNull(status, "status");
+    public Interaction withAgentConfig(@Nullable InteractionAgentConfig agentConfig) {
+        this.agentConfig = agentConfig;
         return this;
     }
 
@@ -595,11 +576,190 @@ public class Interaction {
 
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
-     * (YYYY-MM-DDThh:mm:ssZ).
+     * The environment configuration for the interaction. Can be an object specifying remote environment
+     * sources or a string referencing an existing environment ID.
      */
-    public Interaction withUpdated(@Nullable String updated) {
-        this.updated = updated;
+    public Interaction withEnvironment(@Nullable InteractionEnvironment environment) {
+        this.environment = environment;
+        return this;
+    }
+
+
+    /**
+     * Output only. The environment ID for the interaction. Only populated if environment
+     * config is set in the request.
+     */
+    public Interaction withEnvironmentId(@Nullable String environmentId) {
+        this.environmentId = environmentId;
+        return this;
+    }
+
+
+    /**
+     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     */
+    public Interaction withErrors(@Nullable List<Error> errors) {
+        this.errors = errors;
+        return this;
+    }
+
+
+    /**
+     * Configuration parameters for model interactions.
+     */
+    public Interaction withGenerationConfig(@Nullable GenerationConfig generationConfig) {
+        this.generationConfig = generationConfig;
+        return this;
+    }
+
+
+    /**
+     * Required. Output only. A unique identifier for the interaction completion.
+     */
+    public Interaction withId(@Nullable String id) {
+        this.id = id;
+        return this;
+    }
+
+
+    /**
+     * The input for the interaction.
+     */
+    public Interaction withInput(@Nullable InteractionsInput input) {
+        this.input = input;
+        return this;
+    }
+
+
+    /**
+     * The labels with user-defined metadata for the request.
+     */
+    public Interaction withLabels(@Nullable Map<String, String> labels) {
+        this.labels = labels;
+        return this;
+    }
+
+
+    /**
+     * The model that will complete your prompt.\n\nSee
+     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+     */
+    public Interaction withModel(@Nullable Model model) {
+        this.model = model;
+        return this;
+    }
+
+
+    /**
+     * An audio content block.
+     */
+    public Interaction withOutputAudio(@Nullable AudioContent outputAudio) {
+        this.outputAudio = outputAudio;
+        return this;
+    }
+
+
+    /**
+     * An image content block.
+     */
+    public Interaction withOutputImage(@Nullable ImageContent outputImage) {
+        this.outputImage = outputImage;
+        return this;
+    }
+
+
+    /**
+     * Concatenated text from the last model output in response to the current request.
+     * 
+     * <p>Note: this is added by the SDK.
+     */
+    public Interaction withOutputText(@Nullable String outputText) {
+        this.outputText = outputText;
+        return this;
+    }
+
+
+    /**
+     * A video content block.
+     */
+    public Interaction withOutputVideo(@Nullable VideoContent outputVideo) {
+        this.outputVideo = outputVideo;
+        return this;
+    }
+
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public Interaction withPreviousInteractionId(@Nullable String previousInteractionId) {
+        this.previousInteractionId = previousInteractionId;
+        return this;
+    }
+
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public Interaction withResponseFormat(@Nullable InteractionResponseFormat responseFormat) {
+        this.responseFormat = responseFormat;
+        return this;
+    }
+
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Interaction withResponseMimeType(@Nullable String responseMimeType) {
+        this.responseMimeType = responseMimeType;
+        return this;
+    }
+
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Interaction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
+        this.responseModalities = responseModalities;
+        return this;
+    }
+
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public Interaction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
+        this.safetySettings = safetySettings;
+        return this;
+    }
+
+
+    public Interaction withServiceTier(@Nullable ServiceTier serviceTier) {
+        this.serviceTier = serviceTier;
+        return this;
+    }
+
+
+    /**
+     * Required. Output only. The status of the interaction.
+     */
+    public Interaction withStatus(@Nonnull InteractionStatus status) {
+        this.status = Utils.checkNotNull(status, "status");
+        return this;
+    }
+
+
+    /**
+     * Output only. The steps that make up the interaction, when included in the response.
+     */
+    public Interaction withSteps(@Nullable List<Step> steps) {
+        this.steps = steps;
         return this;
     }
 
@@ -623,10 +783,11 @@ public class Interaction {
 
 
     /**
-     * Output only. Diagnostic faults / platform errors recorded on the interaction.
+     * Output only. The time at which the response was last updated in ISO 8601 format
+     * (YYYY-MM-DDThh:mm:ssZ).
      */
-    public Interaction withErrors(@Nullable List<Error> errors) {
-        this.errors = errors;
+    public Interaction withUpdated(@Nullable String updated) {
+        this.updated = updated;
         return this;
     }
 
@@ -641,171 +802,10 @@ public class Interaction {
 
 
     /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Interaction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
-        this.responseModalities = responseModalities;
-        return this;
-    }
-
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Interaction withResponseMimeType(@Nullable String responseMimeType) {
-        this.responseMimeType = responseMimeType;
-        return this;
-    }
-
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public Interaction withPreviousInteractionId(@Nullable String previousInteractionId) {
-        this.previousInteractionId = previousInteractionId;
-        return this;
-    }
-
-
-    /**
-     * Output only. The environment ID for the interaction. Only populated if environment
-     * config is set in the request.
-     */
-    public Interaction withEnvironmentId(@Nullable String environmentId) {
-        this.environmentId = environmentId;
-        return this;
-    }
-
-
-    public Interaction withServiceTier(@Nullable ServiceTier serviceTier) {
-        this.serviceTier = serviceTier;
-        return this;
-    }
-
-
-    /**
      * Message for configuring webhook events for a request.
      */
     public Interaction withWebhookConfig(@Nullable WebhookConfig webhookConfig) {
         this.webhookConfig = webhookConfig;
-        return this;
-    }
-
-
-    /**
-     * Output only. The steps that make up the interaction, when included in the response.
-     */
-    public Interaction withSteps(@Nullable List<Step> steps) {
-        this.steps = steps;
-        return this;
-    }
-
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public Interaction withResponseFormat(@Nullable InteractionResponseFormat responseFormat) {
-        this.responseFormat = responseFormat;
-        return this;
-    }
-
-
-    /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
-     */
-    public Interaction withEnvironment(@Nullable InteractionEnvironment environment) {
-        this.environment = environment;
-        return this;
-    }
-
-
-    /**
-     * Configuration parameters for model interactions.
-     */
-    public Interaction withGenerationConfig(@Nullable GenerationConfig generationConfig) {
-        this.generationConfig = generationConfig;
-        return this;
-    }
-
-
-    /**
-     * Configuration parameters for the agent interaction.
-     */
-    public Interaction withAgentConfig(@Nullable InteractionAgentConfig agentConfig) {
-        this.agentConfig = agentConfig;
-        return this;
-    }
-
-
-    /**
-     * Safety settings for the interaction.
-     */
-    public Interaction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
-        this.safetySettings = safetySettings;
-        return this;
-    }
-
-
-    /**
-     * The labels with user-defined metadata for the request.
-     */
-    public Interaction withLabels(@Nullable Map<String, String> labels) {
-        this.labels = labels;
-        return this;
-    }
-
-
-    /**
-     * The input for the interaction.
-     */
-    public Interaction withInput(@Nullable InteractionsInput input) {
-        this.input = input;
-        return this;
-    }
-
-
-    /**
-     * Concatenated text from the last model output in response to the current request.
-     * 
-     * <p>Note: this is added by the SDK.
-     */
-    public Interaction withOutputText(@Nullable String outputText) {
-        this.outputText = outputText;
-        return this;
-    }
-
-
-    /**
-     * An image content block.
-     */
-    public Interaction withOutputImage(@Nullable ImageContent outputImage) {
-        this.outputImage = outputImage;
-        return this;
-    }
-
-
-    /**
-     * An audio content block.
-     */
-    public Interaction withOutputAudio(@Nullable AudioContent outputAudio) {
-        this.outputAudio = outputAudio;
-        return this;
-    }
-
-
-    /**
-     * A video content block.
-     */
-    public Interaction withOutputVideo(@Nullable VideoContent outputVideo) {
-        this.outputVideo = outputVideo;
         return this;
     }
 
@@ -820,156 +820,147 @@ public class Interaction {
         }
         Interaction other = (Interaction) o;
         return 
-            Utils.enhancedDeepEquals(this.model, other.model) &&
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
             Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.updated, other.updated) &&
+            Utils.enhancedDeepEquals(this.environment, other.environment) &&
+            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
+            Utils.enhancedDeepEquals(this.errors, other.errors) &&
+            Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.input, other.input) &&
+            Utils.enhancedDeepEquals(this.labels, other.labels) &&
+            Utils.enhancedDeepEquals(this.model, other.model) &&
+            Utils.enhancedDeepEquals(this.outputAudio, other.outputAudio) &&
+            Utils.enhancedDeepEquals(this.outputImage, other.outputImage) &&
+            Utils.enhancedDeepEquals(this.outputText, other.outputText) &&
+            Utils.enhancedDeepEquals(this.outputVideo, other.outputVideo) &&
+            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
+            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
+            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
+            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
+            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
+            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.steps, other.steps) &&
             Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
             Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.errors, other.errors) &&
+            Utils.enhancedDeepEquals(this.updated, other.updated) &&
             Utils.enhancedDeepEquals(this.usage, other.usage) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig) &&
-            Utils.enhancedDeepEquals(this.steps, other.steps) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
-            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
-            Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.input, other.input) &&
-            Utils.enhancedDeepEquals(this.outputText, other.outputText) &&
-            Utils.enhancedDeepEquals(this.outputImage, other.outputImage) &&
-            Utils.enhancedDeepEquals(this.outputAudio, other.outputAudio) &&
-            Utils.enhancedDeepEquals(this.outputVideo, other.outputVideo);
+            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            model, agent, id,
-            status, created, updated,
-            systemInstruction, tools, errors,
-            usage, responseModalities, responseMimeType,
-            previousInteractionId, environmentId, serviceTier,
-            webhookConfig, steps, responseFormat,
-            environment, generationConfig, agentConfig,
-            safetySettings, labels, input,
-            outputText, outputImage, outputAudio,
-            outputVideo);
+            agent, agentConfig, created,
+            environment, environmentId, errors,
+            generationConfig, id, input,
+            labels, model, outputAudio,
+            outputImage, outputText, outputVideo,
+            previousInteractionId, responseFormat, responseMimeType,
+            responseModalities, safetySettings, serviceTier,
+            status, steps, systemInstruction,
+            tools, updated, usage,
+            webhookConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Interaction.class,
-                "model", model,
                 "agent", agent,
-                "id", id,
-                "status", status,
+                "agentConfig", agentConfig,
                 "created", created,
-                "updated", updated,
+                "environment", environment,
+                "environmentId", environmentId,
+                "errors", errors,
+                "generationConfig", generationConfig,
+                "id", id,
+                "input", input,
+                "labels", labels,
+                "model", model,
+                "outputAudio", outputAudio,
+                "outputImage", outputImage,
+                "outputText", outputText,
+                "outputVideo", outputVideo,
+                "previousInteractionId", previousInteractionId,
+                "responseFormat", responseFormat,
+                "responseMimeType", responseMimeType,
+                "responseModalities", responseModalities,
+                "safetySettings", safetySettings,
+                "serviceTier", serviceTier,
+                "status", status,
+                "steps", steps,
                 "systemInstruction", systemInstruction,
                 "tools", tools,
-                "errors", errors,
+                "updated", updated,
                 "usage", usage,
-                "responseModalities", responseModalities,
-                "responseMimeType", responseMimeType,
-                "previousInteractionId", previousInteractionId,
-                "environmentId", environmentId,
-                "serviceTier", serviceTier,
-                "webhookConfig", webhookConfig,
-                "steps", steps,
-                "responseFormat", responseFormat,
-                "environment", environment,
-                "generationConfig", generationConfig,
-                "agentConfig", agentConfig,
-                "safetySettings", safetySettings,
-                "labels", labels,
-                "input", input,
-                "outputText", outputText,
-                "outputImage", outputImage,
-                "outputAudio", outputAudio,
-                "outputVideo", outputVideo);
+                "webhookConfig", webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Model model;
-
         private AgentOption agent;
 
-        private String id;
-
-        private InteractionStatus status;
+        private InteractionAgentConfig agentConfig;
 
         private String created;
 
-        private String updated;
+        private InteractionEnvironment environment;
+
+        private String environmentId;
+
+        private List<Error> errors;
+
+        private GenerationConfig generationConfig;
+
+        private String id;
+
+        private InteractionsInput input;
+
+        private Map<String, String> labels;
+
+        private Model model;
+
+        private AudioContent outputAudio;
+
+        private ImageContent outputImage;
+
+        private String outputText;
+
+        private VideoContent outputVideo;
+
+        private String previousInteractionId;
+
+        private InteractionResponseFormat responseFormat;
+
+        @Deprecated
+        private String responseMimeType;
+
+        @Deprecated
+        private List<ResponseModality> responseModalities;
+
+        private List<SafetySetting> safetySettings;
+
+        private ServiceTier serviceTier;
+
+        private InteractionStatus status;
+
+        private List<Step> steps;
 
         private String systemInstruction;
 
         private List<Tool> tools;
 
-        private List<Error> errors;
+        private String updated;
 
         private Usage usage;
 
-        @Deprecated
-        private List<ResponseModality> responseModalities;
-
-        @Deprecated
-        private String responseMimeType;
-
-        private String previousInteractionId;
-
-        private String environmentId;
-
-        private ServiceTier serviceTier;
-
         private WebhookConfig webhookConfig;
-
-        private List<Step> steps;
-
-        private InteractionResponseFormat responseFormat;
-
-        private InteractionEnvironment environment;
-
-        private GenerationConfig generationConfig;
-
-        private InteractionAgentConfig agentConfig;
-
-        private List<SafetySetting> safetySettings;
-
-        private Map<String, String> labels;
-
-        private InteractionsInput input;
-
-        private String outputText;
-
-        private ImageContent outputImage;
-
-        private AudioContent outputAudio;
-
-        private VideoContent outputVideo;
 
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * The model that will complete your prompt.\n\nSee
-         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-         */
-        public Builder model(@Nullable Model model) {
-            this.model = model;
-            return this;
         }
 
         /**
@@ -981,18 +972,10 @@ public class Interaction {
         }
 
         /**
-         * Required. Output only. A unique identifier for the interaction completion.
+         * Configuration parameters for the agent interaction.
          */
-        public Builder id(@Nullable String id) {
-            this.id = id;
-            return this;
-        }
-
-        /**
-         * Required. Output only. The status of the interaction.
-         */
-        public Builder status(@Nonnull InteractionStatus status) {
-            this.status = Utils.checkNotNull(status, "status");
+        public Builder agentConfig(@Nullable InteractionAgentConfig agentConfig) {
+            this.agentConfig = agentConfig;
             return this;
         }
 
@@ -1006,11 +989,171 @@ public class Interaction {
         }
 
         /**
-         * Output only. The time at which the response was last updated in ISO 8601 format
-         * (YYYY-MM-DDThh:mm:ssZ).
+         * The environment configuration for the interaction. Can be an object specifying remote environment
+         * sources or a string referencing an existing environment ID.
          */
-        public Builder updated(@Nullable String updated) {
-            this.updated = updated;
+        public Builder environment(@Nullable InteractionEnvironment environment) {
+            this.environment = environment;
+            return this;
+        }
+
+        /**
+         * Output only. The environment ID for the interaction. Only populated if environment
+         * config is set in the request.
+         */
+        public Builder environmentId(@Nullable String environmentId) {
+            this.environmentId = environmentId;
+            return this;
+        }
+
+        /**
+         * Output only. Diagnostic faults / platform errors recorded on the interaction.
+         */
+        public Builder errors(@Nullable List<Error> errors) {
+            this.errors = errors;
+            return this;
+        }
+
+        /**
+         * Configuration parameters for model interactions.
+         */
+        public Builder generationConfig(@Nullable GenerationConfig generationConfig) {
+            this.generationConfig = generationConfig;
+            return this;
+        }
+
+        /**
+         * Required. Output only. A unique identifier for the interaction completion.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * The input for the interaction.
+         */
+        public Builder input(@Nullable InteractionsInput input) {
+            this.input = input;
+            return this;
+        }
+
+        /**
+         * The labels with user-defined metadata for the request.
+         */
+        public Builder labels(@Nullable Map<String, String> labels) {
+            this.labels = labels;
+            return this;
+        }
+
+        /**
+         * The model that will complete your prompt.\n\nSee
+         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
+         */
+        public Builder model(@Nullable Model model) {
+            this.model = model;
+            return this;
+        }
+
+        /**
+         * An audio content block.
+         */
+        public Builder outputAudio(@Nullable AudioContent outputAudio) {
+            this.outputAudio = outputAudio;
+            return this;
+        }
+
+        /**
+         * An image content block.
+         */
+        public Builder outputImage(@Nullable ImageContent outputImage) {
+            this.outputImage = outputImage;
+            return this;
+        }
+
+        /**
+         * Concatenated text from the last model output in response to the current request.
+         * 
+         * <p>Note: this is added by the SDK.
+         */
+        public Builder outputText(@Nullable String outputText) {
+            this.outputText = outputText;
+            return this;
+        }
+
+        /**
+         * A video content block.
+         */
+        public Builder outputVideo(@Nullable VideoContent outputVideo) {
+            this.outputVideo = outputVideo;
+            return this;
+        }
+
+        /**
+         * The ID of the previous interaction, if any.
+         */
+        public Builder previousInteractionId(@Nullable String previousInteractionId) {
+            this.previousInteractionId = previousInteractionId;
+            return this;
+        }
+
+        /**
+         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+         * in this field.
+         */
+        public Builder responseFormat(@Nullable InteractionResponseFormat responseFormat) {
+            this.responseFormat = responseFormat;
+            return this;
+        }
+
+        /**
+         * The mime type of the response. This is required if response_format is set.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseMimeType(@Nullable String responseMimeType) {
+            this.responseMimeType = responseMimeType;
+            return this;
+        }
+
+        /**
+         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
+            this.responseModalities = responseModalities;
+            return this;
+        }
+
+        /**
+         * Safety settings for the interaction.
+         */
+        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
+            this.safetySettings = safetySettings;
+            return this;
+        }
+
+        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
+            this.serviceTier = serviceTier;
+            return this;
+        }
+
+        /**
+         * Required. Output only. The status of the interaction.
+         */
+        public Builder status(@Nonnull InteractionStatus status) {
+            this.status = Utils.checkNotNull(status, "status");
+            return this;
+        }
+
+        /**
+         * Output only. The steps that make up the interaction, when included in the response.
+         */
+        public Builder steps(@Nullable List<Step> steps) {
+            this.steps = steps;
             return this;
         }
 
@@ -1031,10 +1174,11 @@ public class Interaction {
         }
 
         /**
-         * Output only. Diagnostic faults / platform errors recorded on the interaction.
+         * Output only. The time at which the response was last updated in ISO 8601 format
+         * (YYYY-MM-DDThh:mm:ssZ).
          */
-        public Builder errors(@Nullable List<Error> errors) {
-            this.errors = errors;
+        public Builder updated(@Nullable String updated) {
+            this.updated = updated;
             return this;
         }
 
@@ -1047,50 +1191,6 @@ public class Interaction {
         }
 
         /**
-         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
-            this.responseModalities = responseModalities;
-            return this;
-        }
-
-        /**
-         * The mime type of the response. This is required if response_format is set.
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseMimeType(@Nullable String responseMimeType) {
-            this.responseMimeType = responseMimeType;
-            return this;
-        }
-
-        /**
-         * The ID of the previous interaction, if any.
-         */
-        public Builder previousInteractionId(@Nullable String previousInteractionId) {
-            this.previousInteractionId = previousInteractionId;
-            return this;
-        }
-
-        /**
-         * Output only. The environment ID for the interaction. Only populated if environment
-         * config is set in the request.
-         */
-        public Builder environmentId(@Nullable String environmentId) {
-            this.environmentId = environmentId;
-            return this;
-        }
-
-        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
-            this.serviceTier = serviceTier;
-            return this;
-        }
-
-        /**
          * Message for configuring webhook events for a request.
          */
         public Builder webhookConfig(@Nullable WebhookConfig webhookConfig) {
@@ -1098,118 +1198,18 @@ public class Interaction {
             return this;
         }
 
-        /**
-         * Output only. The steps that make up the interaction, when included in the response.
-         */
-        public Builder steps(@Nullable List<Step> steps) {
-            this.steps = steps;
-            return this;
-        }
-
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
-        public Builder responseFormat(@Nullable InteractionResponseFormat responseFormat) {
-            this.responseFormat = responseFormat;
-            return this;
-        }
-
-        /**
-         * The environment configuration for the interaction. Can be an object specifying remote environment
-         * sources or a string referencing an existing environment ID.
-         */
-        public Builder environment(@Nullable InteractionEnvironment environment) {
-            this.environment = environment;
-            return this;
-        }
-
-        /**
-         * Configuration parameters for model interactions.
-         */
-        public Builder generationConfig(@Nullable GenerationConfig generationConfig) {
-            this.generationConfig = generationConfig;
-            return this;
-        }
-
-        /**
-         * Configuration parameters for the agent interaction.
-         */
-        public Builder agentConfig(@Nullable InteractionAgentConfig agentConfig) {
-            this.agentConfig = agentConfig;
-            return this;
-        }
-
-        /**
-         * Safety settings for the interaction.
-         */
-        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
-            this.safetySettings = safetySettings;
-            return this;
-        }
-
-        /**
-         * The labels with user-defined metadata for the request.
-         */
-        public Builder labels(@Nullable Map<String, String> labels) {
-            this.labels = labels;
-            return this;
-        }
-
-        /**
-         * The input for the interaction.
-         */
-        public Builder input(@Nullable InteractionsInput input) {
-            this.input = input;
-            return this;
-        }
-
-        /**
-         * Concatenated text from the last model output in response to the current request.
-         * 
-         * <p>Note: this is added by the SDK.
-         */
-        public Builder outputText(@Nullable String outputText) {
-            this.outputText = outputText;
-            return this;
-        }
-
-        /**
-         * An image content block.
-         */
-        public Builder outputImage(@Nullable ImageContent outputImage) {
-            this.outputImage = outputImage;
-            return this;
-        }
-
-        /**
-         * An audio content block.
-         */
-        public Builder outputAudio(@Nullable AudioContent outputAudio) {
-            this.outputAudio = outputAudio;
-            return this;
-        }
-
-        /**
-         * A video content block.
-         */
-        public Builder outputVideo(@Nullable VideoContent outputVideo) {
-            this.outputVideo = outputVideo;
-            return this;
-        }
-
         public Interaction build() {
             return new Interaction(
-                model, agent, id,
-                status, created, updated,
-                systemInstruction, tools, errors,
-                usage, responseModalities, responseMimeType,
-                previousInteractionId, environmentId, serviceTier,
-                webhookConfig, steps, responseFormat,
-                environment, generationConfig, agentConfig,
-                safetySettings, labels, input,
-                outputText, outputImage, outputAudio,
-                outputVideo);
+                agent, agentConfig, created,
+                environment, environmentId, errors,
+                generationConfig, id, input,
+                labels, model, outputAudio,
+                outputImage, outputText, outputVideo,
+                previousInteractionId, responseFormat, responseMimeType,
+                responseModalities, safetySettings, serviceTier,
+                status, steps, systemInstruction,
+                tools, updated, usage,
+                webhookConfig);
         }
 
 

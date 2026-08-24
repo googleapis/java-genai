@@ -49,9 +49,9 @@ public class InteractionsInput {
         this.value = value;
     }
 
-    public static InteractionsInput of(String value) {
+    public static InteractionsInput of(Content value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Content>(){}));
     }
 
     public static InteractionsInput ofStep(List<Step> value) {
@@ -64,20 +64,20 @@ public class InteractionsInput {
         return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Content>>(){}));
     }
 
-    public static InteractionsInput of(Content value) {
+    public static InteractionsInput of(String value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Content>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
     }
     
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code String},
+     * Returns an {@link Optional} containing the value if it is of type {@code Content},
      * otherwise returns an empty {@link Optional}.
      *
-     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
+     * @return an {@link Optional} containing the {@code Content} value, or empty if not of this type
      */
-    public Optional<String> string() {
-        if (value.value() instanceof String) {
-            return Optional.of((String) value.value());
+    public Optional<Content> content() {
+        if (value.value() instanceof Content) {
+            return Optional.of((Content) value.value());
         }
         return Optional.empty();
     }
@@ -111,14 +111,14 @@ public class InteractionsInput {
     }
     
     /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Content},
+     * Returns an {@link Optional} containing the value if it is of type {@code String},
      * otherwise returns an empty {@link Optional}.
      *
-     * @return an {@link Optional} containing the {@code Content} value, or empty if not of this type
+     * @return an {@link Optional} containing the {@code String} value, or empty if not of this type
      */
-    public Optional<Content> content() {
-        if (value.value() instanceof Content) {
-            return Optional.of((Content) value.value());
+    public Optional<String> string() {
+        if (value.value() instanceof String) {
+            return Optional.of((String) value.value());
         }
         return Optional.empty();
     }
@@ -157,10 +157,10 @@ public class InteractionsInput {
 
         public _Deserializer() {
             super(InteractionsInput.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Content>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<Step>>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<List<Content>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<Content>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
     

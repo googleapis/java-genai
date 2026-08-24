@@ -50,27 +50,14 @@ public class CreateInteractionRequestBody {
         this.value = value;
     }
 
-    public static CreateInteractionRequestBody of(CreateModelInteraction value) {
-        Utils.checkNotNull(value, "value");
-        return new CreateInteractionRequestBody(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateModelInteraction>(){}));
-    }
-
     public static CreateInteractionRequestBody of(CreateAgentInteraction value) {
         Utils.checkNotNull(value, "value");
         return new CreateInteractionRequestBody(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateAgentInteraction>(){}));
     }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code CreateModelInteraction},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code CreateModelInteraction} value, or empty if not of this type
-     */
-    public Optional<CreateModelInteraction> createModelInteraction() {
-        if (value.value() instanceof CreateModelInteraction) {
-            return Optional.of((CreateModelInteraction) value.value());
-        }
-        return Optional.empty();
+
+    public static CreateInteractionRequestBody of(CreateModelInteraction value) {
+        Utils.checkNotNull(value, "value");
+        return new CreateInteractionRequestBody(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<CreateModelInteraction>(){}));
     }
     
     /**
@@ -82,6 +69,19 @@ public class CreateInteractionRequestBody {
     public Optional<CreateAgentInteraction> createAgentInteraction() {
         if (value.value() instanceof CreateAgentInteraction) {
             return Optional.of((CreateAgentInteraction) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code CreateModelInteraction},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code CreateModelInteraction} value, or empty if not of this type
+     */
+    public Optional<CreateModelInteraction> createModelInteraction() {
+        if (value.value() instanceof CreateModelInteraction) {
+            return Optional.of((CreateModelInteraction) value.value());
         }
         return Optional.empty();
     }
@@ -120,8 +120,8 @@ public class CreateInteractionRequestBody {
 
         public _Deserializer() {
             super(CreateInteractionRequestBody.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<CreateModelInteraction>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<CreateAgentInteraction>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<CreateAgentInteraction>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<CreateModelInteraction>() {}, JsonShape.DEFAULT));
         }
     }
     

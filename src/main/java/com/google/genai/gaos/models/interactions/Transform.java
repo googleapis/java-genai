@@ -51,28 +51,14 @@ public class Transform {
         this.value = value;
     }
 
-    public static Transform of(Map<String, String> value) {
-        Utils.checkNotNull(value, "value");
-        return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, String>>(){}));
-    }
-
     public static Transform of(List<Map<String, String>> value) {
         Utils.checkNotNull(value, "value");
         return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Map<String, String>>>(){}));
     }
-    
-    /**
-     * Returns an {@link Optional} containing the value if it is of type {@code Map<String, String>},
-     * otherwise returns an empty {@link Optional}.
-     *
-     * @return an {@link Optional} containing the {@code Map<String, String>} value, or empty if not of this type
-     */
-    @SuppressWarnings("unchecked")
-    public Optional<Map<String, String>> mapOfString() {
-        if (value.value() instanceof Map) {
-            return Optional.of((Map<String, String>) value.value());
-        }
-        return Optional.empty();
+
+    public static Transform of(Map<String, String> value) {
+        Utils.checkNotNull(value, "value");
+        return new Transform(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Map<String, String>>(){}));
     }
     
     /**
@@ -85,6 +71,20 @@ public class Transform {
     public Optional<List<Map<String, String>>> arrayOfMap() {
         if (value.value() instanceof List) {
             return Optional.of((List<Map<String, String>>) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code Map<String, String>},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code Map<String, String>} value, or empty if not of this type
+     */
+    @SuppressWarnings("unchecked")
+    public Optional<Map<String, String>> mapOfString() {
+        if (value.value() instanceof Map) {
+            return Optional.of((Map<String, String>) value.value());
         }
         return Optional.empty();
     }
@@ -123,8 +123,8 @@ public class Transform {
 
         public _Deserializer() {
             super(Transform.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Map<String, String>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<Map<String, String>>>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<List<Map<String, String>>>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<Map<String, String>>() {}, JsonShape.DEFAULT));
         }
     }
     

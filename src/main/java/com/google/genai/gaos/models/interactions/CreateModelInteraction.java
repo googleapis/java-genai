@@ -41,93 +41,11 @@ import java.util.Optional;
  */
 public class CreateModelInteraction {
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-     */
-    @JsonProperty("model")
-    private Model model;
-
-    /**
-     * Input only. Whether the interaction will be streamed.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("stream")
-    private Boolean stream;
-
-    /**
-     * Input only. Whether to store the response and request for later retrieval.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("store")
-    private Boolean store;
-
-    /**
      * Input only. Whether to run the model interaction in the background.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("background")
     private Boolean background;
-
-    /**
-     * System instruction for the interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("system_instruction")
-    private String systemInstruction;
-
-    /**
-     * A list of tool declarations the model may call during interaction.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("tools")
-    private List<Tool> tools;
-
-    /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_modalities")
-    @Deprecated
-    private List<ResponseModality> responseModalities;
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_mime_type")
-    @Deprecated
-    private String responseMimeType;
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("previous_interaction_id")
-    private String previousInteractionId;
-
-
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("service_tier")
-    private ServiceTier serviceTier;
-
-    /**
-     * Message for configuring webhook events for a request.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("webhook_config")
-    private WebhookConfig webhookConfig;
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("response_format")
-    private CreateModelInteractionResponseFormat responseFormat;
 
     /**
      * The environment configuration for the interaction. Can be an object specifying remote environment
@@ -145,11 +63,10 @@ public class CreateModelInteraction {
     private GenerationConfig generationConfig;
 
     /**
-     * Safety settings for the interaction.
+     * The input for the interaction.
      */
-    @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("safety_settings")
-    private List<SafetySetting> safetySettings;
+    @JsonProperty("input")
+    private InteractionsInput input;
 
     /**
      * The labels with user-defined metadata for the request.
@@ -159,82 +76,143 @@ public class CreateModelInteraction {
     private Map<String, String> labels;
 
     /**
-     * The input for the interaction.
-     */
-    @JsonProperty("input")
-    private InteractionsInput input;
-
-    @JsonCreator
-    public CreateModelInteraction(
-            @JsonProperty("model") @Nonnull Model model,
-            @JsonProperty("stream") @Nullable Boolean stream,
-            @JsonProperty("store") @Nullable Boolean store,
-            @JsonProperty("background") @Nullable Boolean background,
-            @JsonProperty("system_instruction") @Nullable String systemInstruction,
-            @JsonProperty("tools") @Nullable List<Tool> tools,
-            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
-            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
-            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
-            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
-            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig,
-            @JsonProperty("response_format") @Nullable CreateModelInteractionResponseFormat responseFormat,
-            @JsonProperty("environment") @Nullable CreateModelInteractionEnvironment environment,
-            @JsonProperty("generation_config") @Nullable GenerationConfig generationConfig,
-            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
-            @JsonProperty("labels") @Nullable Map<String, String> labels,
-            @JsonProperty("input") @Nonnull InteractionsInput input) {
-        this.model = Optional.ofNullable(model)
-            .orElseThrow(() -> new IllegalArgumentException("model cannot be null"));
-        this.stream = stream;
-        this.store = store;
-        this.background = background;
-        this.systemInstruction = systemInstruction;
-        this.tools = tools;
-        this.responseModalities = responseModalities;
-        this.responseMimeType = responseMimeType;
-        this.previousInteractionId = previousInteractionId;
-        this.serviceTier = serviceTier;
-        this.webhookConfig = webhookConfig;
-        this.responseFormat = responseFormat;
-        this.environment = environment;
-        this.generationConfig = generationConfig;
-        this.safetySettings = safetySettings;
-        this.labels = labels;
-        this.input = Optional.ofNullable(input)
-            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
-    }
-    
-    public CreateModelInteraction(
-            @Nonnull Model model,
-            @Nonnull InteractionsInput input) {
-        this(model, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, input);
-    }
-
-    /**
      * The model that will complete your prompt.\n\nSee
      * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
      */
-    public Optional<Model> model() {
-        return Optional.ofNullable(this.model);
-    }
+    @JsonProperty("model")
+    private Model model;
 
     /**
-     * Input only. Whether the interaction will be streamed.
+     * The ID of the previous interaction, if any.
      */
-    public Optional<Boolean> stream() {
-        return Optional.ofNullable(this.stream);
-    }
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("previous_interaction_id")
+    private String previousInteractionId;
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_format")
+    private CreateModelInteractionResponseFormat responseFormat;
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_mime_type")
+    @Deprecated
+    private String responseMimeType;
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("response_modalities")
+    @Deprecated
+    private List<ResponseModality> responseModalities;
+
+    /**
+     * Safety settings for the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("safety_settings")
+    private List<SafetySetting> safetySettings;
+
+
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("service_tier")
+    private ServiceTier serviceTier;
 
     /**
      * Input only. Whether to store the response and request for later retrieval.
      */
-    public Optional<Boolean> store() {
-        return Optional.ofNullable(this.store);
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("store")
+    private Boolean store;
+
+    /**
+     * Input only. Whether the interaction will be streamed.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("stream")
+    private Boolean stream;
+
+    /**
+     * System instruction for the interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("system_instruction")
+    private String systemInstruction;
+
+    /**
+     * A list of tool declarations the model may call during interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("tools")
+    private List<Tool> tools;
+
+    /**
+     * Message for configuring webhook events for a request.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("webhook_config")
+    private WebhookConfig webhookConfig;
+
+    @JsonCreator
+    public CreateModelInteraction(
+            @JsonProperty("background") @Nullable Boolean background,
+            @JsonProperty("environment") @Nullable CreateModelInteractionEnvironment environment,
+            @JsonProperty("generation_config") @Nullable GenerationConfig generationConfig,
+            @JsonProperty("input") @Nonnull InteractionsInput input,
+            @JsonProperty("labels") @Nullable Map<String, String> labels,
+            @JsonProperty("model") @Nonnull Model model,
+            @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
+            @JsonProperty("response_format") @Nullable CreateModelInteractionResponseFormat responseFormat,
+            @JsonProperty("response_mime_type") @Nullable String responseMimeType,
+            @JsonProperty("response_modalities") @Nullable List<ResponseModality> responseModalities,
+            @JsonProperty("safety_settings") @Nullable List<SafetySetting> safetySettings,
+            @JsonProperty("service_tier") @Nullable ServiceTier serviceTier,
+            @JsonProperty("store") @Nullable Boolean store,
+            @JsonProperty("stream") @Nullable Boolean stream,
+            @JsonProperty("system_instruction") @Nullable String systemInstruction,
+            @JsonProperty("tools") @Nullable List<Tool> tools,
+            @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
+        this.background = background;
+        this.environment = environment;
+        this.generationConfig = generationConfig;
+        this.input = Optional.ofNullable(input)
+            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.labels = labels;
+        this.model = Optional.ofNullable(model)
+            .orElseThrow(() -> new IllegalArgumentException("model cannot be null"));
+        this.previousInteractionId = previousInteractionId;
+        this.responseFormat = responseFormat;
+        this.responseMimeType = responseMimeType;
+        this.responseModalities = responseModalities;
+        this.safetySettings = safetySettings;
+        this.serviceTier = serviceTier;
+        this.store = store;
+        this.stream = stream;
+        this.systemInstruction = systemInstruction;
+        this.tools = tools;
+        this.webhookConfig = webhookConfig;
+    }
+    
+    public CreateModelInteraction(
+            @Nonnull InteractionsInput input,
+            @Nonnull Model model) {
+        this(null, null, null,
+            input, null, model,
+            null, null, null,
+            null, null, null,
+            null, null, null,
+            null, null);
     }
 
     /**
@@ -242,66 +220,6 @@ public class CreateModelInteraction {
      */
     public Optional<Boolean> background() {
         return Optional.ofNullable(this.background);
-    }
-
-    /**
-     * System instruction for the interaction.
-     */
-    public Optional<String> systemInstruction() {
-        return Optional.ofNullable(this.systemInstruction);
-    }
-
-    /**
-     * A list of tool declarations the model may call during interaction.
-     */
-    public Optional<List<Tool>> tools() {
-        return Optional.ofNullable(this.tools);
-    }
-
-    /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<List<ResponseModality>> responseModalities() {
-        return Optional.ofNullable(this.responseModalities);
-    }
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public Optional<String> responseMimeType() {
-        return Optional.ofNullable(this.responseMimeType);
-    }
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public Optional<String> previousInteractionId() {
-        return Optional.ofNullable(this.previousInteractionId);
-    }
-
-    public Optional<ServiceTier> serviceTier() {
-        return Optional.ofNullable(this.serviceTier);
-    }
-
-    /**
-     * Message for configuring webhook events for a request.
-     */
-    public Optional<WebhookConfig> webhookConfig() {
-        return Optional.ofNullable(this.webhookConfig);
-    }
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public Optional<CreateModelInteractionResponseFormat> responseFormat() {
-        return Optional.ofNullable(this.responseFormat);
     }
 
     /**
@@ -320,10 +238,10 @@ public class CreateModelInteraction {
     }
 
     /**
-     * Safety settings for the interaction.
+     * The input for the interaction.
      */
-    public Optional<List<SafetySetting>> safetySettings() {
-        return Optional.ofNullable(this.safetySettings);
+    public Optional<InteractionsInput> input() {
+        return Optional.ofNullable(this.input);
     }
 
     /**
@@ -334,10 +252,92 @@ public class CreateModelInteraction {
     }
 
     /**
-     * The input for the interaction.
+     * The model that will complete your prompt.\n\nSee
+     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
      */
-    public Optional<InteractionsInput> input() {
-        return Optional.ofNullable(this.input);
+    public Optional<Model> model() {
+        return Optional.ofNullable(this.model);
+    }
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public Optional<String> previousInteractionId() {
+        return Optional.ofNullable(this.previousInteractionId);
+    }
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public Optional<CreateModelInteractionResponseFormat> responseFormat() {
+        return Optional.ofNullable(this.responseFormat);
+    }
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<String> responseMimeType() {
+        return Optional.ofNullable(this.responseMimeType);
+    }
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<List<ResponseModality>> responseModalities() {
+        return Optional.ofNullable(this.responseModalities);
+    }
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public Optional<List<SafetySetting>> safetySettings() {
+        return Optional.ofNullable(this.safetySettings);
+    }
+
+    public Optional<ServiceTier> serviceTier() {
+        return Optional.ofNullable(this.serviceTier);
+    }
+
+    /**
+     * Input only. Whether to store the response and request for later retrieval.
+     */
+    public Optional<Boolean> store() {
+        return Optional.ofNullable(this.store);
+    }
+
+    /**
+     * Input only. Whether the interaction will be streamed.
+     */
+    public Optional<Boolean> stream() {
+        return Optional.ofNullable(this.stream);
+    }
+
+    /**
+     * System instruction for the interaction.
+     */
+    public Optional<String> systemInstruction() {
+        return Optional.ofNullable(this.systemInstruction);
+    }
+
+    /**
+     * A list of tool declarations the model may call during interaction.
+     */
+    public Optional<List<Tool>> tools() {
+        return Optional.ofNullable(this.tools);
+    }
+
+    /**
+     * Message for configuring webhook events for a request.
+     */
+    public Optional<WebhookConfig> webhookConfig() {
+        return Optional.ofNullable(this.webhookConfig);
     }
 
     public static Builder builder() {
@@ -346,114 +346,10 @@ public class CreateModelInteraction {
 
 
     /**
-     * The model that will complete your prompt.\n\nSee
-     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-     */
-    public CreateModelInteraction withModel(@Nonnull Model model) {
-        this.model = Utils.checkNotNull(model, "model");
-        return this;
-    }
-
-
-    /**
-     * Input only. Whether the interaction will be streamed.
-     */
-    public CreateModelInteraction withStream(@Nullable Boolean stream) {
-        this.stream = stream;
-        return this;
-    }
-
-
-    /**
-     * Input only. Whether to store the response and request for later retrieval.
-     */
-    public CreateModelInteraction withStore(@Nullable Boolean store) {
-        this.store = store;
-        return this;
-    }
-
-
-    /**
      * Input only. Whether to run the model interaction in the background.
      */
     public CreateModelInteraction withBackground(@Nullable Boolean background) {
         this.background = background;
-        return this;
-    }
-
-
-    /**
-     * System instruction for the interaction.
-     */
-    public CreateModelInteraction withSystemInstruction(@Nullable String systemInstruction) {
-        this.systemInstruction = systemInstruction;
-        return this;
-    }
-
-
-    /**
-     * A list of tool declarations the model may call during interaction.
-     */
-    public CreateModelInteraction withTools(@Nullable List<Tool> tools) {
-        this.tools = tools;
-        return this;
-    }
-
-
-    /**
-     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CreateModelInteraction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
-        this.responseModalities = responseModalities;
-        return this;
-    }
-
-
-    /**
-     * The mime type of the response. This is required if response_format is set.
-     * 
-     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CreateModelInteraction withResponseMimeType(@Nullable String responseMimeType) {
-        this.responseMimeType = responseMimeType;
-        return this;
-    }
-
-
-    /**
-     * The ID of the previous interaction, if any.
-     */
-    public CreateModelInteraction withPreviousInteractionId(@Nullable String previousInteractionId) {
-        this.previousInteractionId = previousInteractionId;
-        return this;
-    }
-
-
-    public CreateModelInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
-        this.serviceTier = serviceTier;
-        return this;
-    }
-
-
-    /**
-     * Message for configuring webhook events for a request.
-     */
-    public CreateModelInteraction withWebhookConfig(@Nullable WebhookConfig webhookConfig) {
-        this.webhookConfig = webhookConfig;
-        return this;
-    }
-
-
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
-    public CreateModelInteraction withResponseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
-        this.responseFormat = responseFormat;
         return this;
     }
 
@@ -478,10 +374,10 @@ public class CreateModelInteraction {
 
 
     /**
-     * Safety settings for the interaction.
+     * The input for the interaction.
      */
-    public CreateModelInteraction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
-        this.safetySettings = safetySettings;
+    public CreateModelInteraction withInput(@Nonnull InteractionsInput input) {
+        this.input = Utils.checkNotNull(input, "input");
         return this;
     }
 
@@ -496,10 +392,114 @@ public class CreateModelInteraction {
 
 
     /**
-     * The input for the interaction.
+     * The model that will complete your prompt.\n\nSee
+     * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
      */
-    public CreateModelInteraction withInput(@Nonnull InteractionsInput input) {
-        this.input = Utils.checkNotNull(input, "input");
+    public CreateModelInteraction withModel(@Nonnull Model model) {
+        this.model = Utils.checkNotNull(model, "model");
+        return this;
+    }
+
+
+    /**
+     * The ID of the previous interaction, if any.
+     */
+    public CreateModelInteraction withPreviousInteractionId(@Nullable String previousInteractionId) {
+        this.previousInteractionId = previousInteractionId;
+        return this;
+    }
+
+
+    /**
+     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+     * in this field.
+     */
+    public CreateModelInteraction withResponseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
+        this.responseFormat = responseFormat;
+        return this;
+    }
+
+
+    /**
+     * The mime type of the response. This is required if response_format is set.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CreateModelInteraction withResponseMimeType(@Nullable String responseMimeType) {
+        this.responseMimeType = responseMimeType;
+        return this;
+    }
+
+
+    /**
+     * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CreateModelInteraction withResponseModalities(@Nullable List<ResponseModality> responseModalities) {
+        this.responseModalities = responseModalities;
+        return this;
+    }
+
+
+    /**
+     * Safety settings for the interaction.
+     */
+    public CreateModelInteraction withSafetySettings(@Nullable List<SafetySetting> safetySettings) {
+        this.safetySettings = safetySettings;
+        return this;
+    }
+
+
+    public CreateModelInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
+        this.serviceTier = serviceTier;
+        return this;
+    }
+
+
+    /**
+     * Input only. Whether to store the response and request for later retrieval.
+     */
+    public CreateModelInteraction withStore(@Nullable Boolean store) {
+        this.store = store;
+        return this;
+    }
+
+
+    /**
+     * Input only. Whether the interaction will be streamed.
+     */
+    public CreateModelInteraction withStream(@Nullable Boolean stream) {
+        this.stream = stream;
+        return this;
+    }
+
+
+    /**
+     * System instruction for the interaction.
+     */
+    public CreateModelInteraction withSystemInstruction(@Nullable String systemInstruction) {
+        this.systemInstruction = systemInstruction;
+        return this;
+    }
+
+
+    /**
+     * A list of tool declarations the model may call during interaction.
+     */
+    public CreateModelInteraction withTools(@Nullable List<Tool> tools) {
+        this.tools = tools;
+        return this;
+    }
+
+
+    /**
+     * Message for configuring webhook events for a request.
+     */
+    public CreateModelInteraction withWebhookConfig(@Nullable WebhookConfig webhookConfig) {
+        this.webhookConfig = webhookConfig;
         return this;
     }
 
@@ -514,129 +514,99 @@ public class CreateModelInteraction {
         }
         CreateModelInteraction other = (CreateModelInteraction) o;
         return 
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.store, other.store) &&
             Utils.enhancedDeepEquals(this.background, other.background) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
             Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
+            Utils.enhancedDeepEquals(this.input, other.input) &&
             Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.input, other.input);
+            Utils.enhancedDeepEquals(this.model, other.model) &&
+            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
+            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
+            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
+            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
+            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
+            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
+            Utils.enhancedDeepEquals(this.store, other.store) &&
+            Utils.enhancedDeepEquals(this.stream, other.stream) &&
+            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
+            Utils.enhancedDeepEquals(this.tools, other.tools) &&
+            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            model, stream, store,
-            background, systemInstruction, tools,
-            responseModalities, responseMimeType, previousInteractionId,
-            serviceTier, webhookConfig, responseFormat,
-            environment, generationConfig, safetySettings,
-            labels, input);
+            background, environment, generationConfig,
+            input, labels, model,
+            previousInteractionId, responseFormat, responseMimeType,
+            responseModalities, safetySettings, serviceTier,
+            store, stream, systemInstruction,
+            tools, webhookConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateModelInteraction.class,
-                "model", model,
-                "stream", stream,
-                "store", store,
                 "background", background,
-                "systemInstruction", systemInstruction,
-                "tools", tools,
-                "responseModalities", responseModalities,
-                "responseMimeType", responseMimeType,
-                "previousInteractionId", previousInteractionId,
-                "serviceTier", serviceTier,
-                "webhookConfig", webhookConfig,
-                "responseFormat", responseFormat,
                 "environment", environment,
                 "generationConfig", generationConfig,
-                "safetySettings", safetySettings,
+                "input", input,
                 "labels", labels,
-                "input", input);
+                "model", model,
+                "previousInteractionId", previousInteractionId,
+                "responseFormat", responseFormat,
+                "responseMimeType", responseMimeType,
+                "responseModalities", responseModalities,
+                "safetySettings", safetySettings,
+                "serviceTier", serviceTier,
+                "store", store,
+                "stream", stream,
+                "systemInstruction", systemInstruction,
+                "tools", tools,
+                "webhookConfig", webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private Model model;
-
-        private Boolean stream;
-
-        private Boolean store;
-
         private Boolean background;
-
-        private String systemInstruction;
-
-        private List<Tool> tools;
-
-        @Deprecated
-        private List<ResponseModality> responseModalities;
-
-        @Deprecated
-        private String responseMimeType;
-
-        private String previousInteractionId;
-
-        private ServiceTier serviceTier;
-
-        private WebhookConfig webhookConfig;
-
-        private CreateModelInteractionResponseFormat responseFormat;
 
         private CreateModelInteractionEnvironment environment;
 
         private GenerationConfig generationConfig;
 
-        private List<SafetySetting> safetySettings;
+        private InteractionsInput input;
 
         private Map<String, String> labels;
 
-        private InteractionsInput input;
+        private Model model;
+
+        private String previousInteractionId;
+
+        private CreateModelInteractionResponseFormat responseFormat;
+
+        @Deprecated
+        private String responseMimeType;
+
+        @Deprecated
+        private List<ResponseModality> responseModalities;
+
+        private List<SafetySetting> safetySettings;
+
+        private ServiceTier serviceTier;
+
+        private Boolean store;
+
+        private Boolean stream;
+
+        private String systemInstruction;
+
+        private List<Tool> tools;
+
+        private WebhookConfig webhookConfig;
 
         private Builder() {
           // force use of static builder() method
-        }
-
-        /**
-         * The model that will complete your prompt.\n\nSee
-         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
-         */
-        public Builder model(@Nonnull Model model) {
-            this.model = Utils.checkNotNull(model, "model");
-            return this;
-        }
-
-        public Builder model(@Nonnull String model) {
-            this.model = Model.of(Utils.checkNotNull(model, "model"));
-            return this;
-        }
-
-        /**
-         * Input only. Whether the interaction will be streamed.
-         */
-        public Builder stream(@Nullable Boolean stream) {
-            this.stream = stream;
-            return this;
-        }
-
-        /**
-         * Input only. Whether to store the response and request for later retrieval.
-         */
-        public Builder store(@Nullable Boolean store) {
-            this.store = store;
-            return this;
         }
 
         /**
@@ -644,74 +614,6 @@ public class CreateModelInteraction {
          */
         public Builder background(@Nullable Boolean background) {
             this.background = background;
-            return this;
-        }
-
-        /**
-         * System instruction for the interaction.
-         */
-        public Builder systemInstruction(@Nullable String systemInstruction) {
-            this.systemInstruction = systemInstruction;
-            return this;
-        }
-
-        /**
-         * A list of tool declarations the model may call during interaction.
-         */
-        public Builder tools(@Nullable List<Tool> tools) {
-            this.tools = tools;
-            return this;
-        }
-
-        /**
-         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
-            this.responseModalities = responseModalities;
-            return this;
-        }
-
-        /**
-         * The mime type of the response. This is required if response_format is set.
-         * 
-         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-         */
-        @Deprecated
-        public Builder responseMimeType(@Nullable String responseMimeType) {
-            this.responseMimeType = responseMimeType;
-            return this;
-        }
-
-        /**
-         * The ID of the previous interaction, if any.
-         */
-        public Builder previousInteractionId(@Nullable String previousInteractionId) {
-            this.previousInteractionId = previousInteractionId;
-            return this;
-        }
-
-        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
-            this.serviceTier = serviceTier;
-            return this;
-        }
-
-        /**
-         * Message for configuring webhook events for a request.
-         */
-        public Builder webhookConfig(@Nullable WebhookConfig webhookConfig) {
-            this.webhookConfig = webhookConfig;
-            return this;
-        }
-
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
-        public Builder responseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
-            this.responseFormat = responseFormat;
             return this;
         }
 
@@ -733,10 +635,10 @@ public class CreateModelInteraction {
         }
 
         /**
-         * Safety settings for the interaction.
+         * The input for the interaction.
          */
-        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
-            this.safetySettings = safetySettings;
+        public Builder input(@Nonnull InteractionsInput input) {
+            this.input = Utils.checkNotNull(input, "input");
             return this;
         }
 
@@ -749,21 +651,119 @@ public class CreateModelInteraction {
         }
 
         /**
-         * The input for the interaction.
+         * The model that will complete your prompt.\n\nSee
+         * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
          */
-        public Builder input(@Nonnull InteractionsInput input) {
-            this.input = Utils.checkNotNull(input, "input");
+        public Builder model(@Nonnull Model model) {
+            this.model = Utils.checkNotNull(model, "model");
+            return this;
+        }
+
+        /**
+         * The ID of the previous interaction, if any.
+         */
+        public Builder previousInteractionId(@Nullable String previousInteractionId) {
+            this.previousInteractionId = previousInteractionId;
+            return this;
+        }
+
+        /**
+         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
+         * in this field.
+         */
+        public Builder responseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
+            this.responseFormat = responseFormat;
+            return this;
+        }
+
+        /**
+         * The mime type of the response. This is required if response_format is set.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseMimeType(@Nullable String responseMimeType) {
+            this.responseMimeType = responseMimeType;
+            return this;
+        }
+
+        /**
+         * The requested modalities of the response (TEXT, IMAGE, AUDIO).
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder responseModalities(@Nullable List<ResponseModality> responseModalities) {
+            this.responseModalities = responseModalities;
+            return this;
+        }
+
+        /**
+         * Safety settings for the interaction.
+         */
+        public Builder safetySettings(@Nullable List<SafetySetting> safetySettings) {
+            this.safetySettings = safetySettings;
+            return this;
+        }
+
+        public Builder serviceTier(@Nullable ServiceTier serviceTier) {
+            this.serviceTier = serviceTier;
+            return this;
+        }
+
+        /**
+         * Input only. Whether to store the response and request for later retrieval.
+         */
+        public Builder store(@Nullable Boolean store) {
+            this.store = store;
+            return this;
+        }
+
+        public Builder model(@Nonnull String model) {
+            this.model = Model.of(Utils.checkNotNull(model, "model"));
+            return this;
+        }
+
+        /**
+         * Input only. Whether the interaction will be streamed.
+         */
+        public Builder stream(@Nullable Boolean stream) {
+            this.stream = stream;
+            return this;
+        }
+
+        /**
+         * System instruction for the interaction.
+         */
+        public Builder systemInstruction(@Nullable String systemInstruction) {
+            this.systemInstruction = systemInstruction;
+            return this;
+        }
+
+        /**
+         * A list of tool declarations the model may call during interaction.
+         */
+        public Builder tools(@Nullable List<Tool> tools) {
+            this.tools = tools;
+            return this;
+        }
+
+        /**
+         * Message for configuring webhook events for a request.
+         */
+        public Builder webhookConfig(@Nullable WebhookConfig webhookConfig) {
+            this.webhookConfig = webhookConfig;
             return this;
         }
 
         public CreateModelInteraction build() {
             return new CreateModelInteraction(
-                model, stream, store,
-                background, systemInstruction, tools,
-                responseModalities, responseMimeType, previousInteractionId,
-                serviceTier, webhookConfig, responseFormat,
-                environment, generationConfig, safetySettings,
-                labels, input);
+                background, environment, generationConfig,
+                input, labels, model,
+                previousInteractionId, responseFormat, responseMimeType,
+                responseModalities, safetySettings, serviceTier,
+                store, stream, systemInstruction,
+                tools, webhookConfig);
         }
 
     }

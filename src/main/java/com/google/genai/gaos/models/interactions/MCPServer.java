@@ -39,7 +39,7 @@ import java.util.Optional;
  * 
  * <p>A MCPServer is a server that can be called by the model to perform actions.
  */
-public class MCPServer implements Tool, AgentTool {
+public class MCPServer implements AgentTool, Tool {
     /**
      * The allowed tools.
      */
