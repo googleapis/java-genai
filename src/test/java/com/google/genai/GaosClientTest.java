@@ -184,7 +184,7 @@ public final class GaosClientTest {
     assertNotNull(req);
     assertEquals("POST", req.method());
 
-    URI expectedUri = URI.create("https://generativelanguage.googleapis.com/v1beta/interactions");
+    URI expectedUri = URI.create("https://generativelanguage.googleapis.com/v1/interactions");
     assertEquals(expectedUri, req.uri());
     assertEquals("test-api-key", req.headers().firstValue("x-goog-api-key").orElse(null));
   }
@@ -377,7 +377,7 @@ public final class GaosClientTest {
 
     String agentId = "test-agent-id";
     String webhookId = "test-webhook-id";
-    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1beta";
+    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1";
 
     // 1. Test Get Agent
     client.agents.get(agentId);
@@ -424,7 +424,7 @@ public final class GaosClientTest {
 
     String credentialId = "test-credential-id";
     String triggerId = "test-trigger-id";
-    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1beta";
+    String expectedUrlPrefix = "https://generativelanguage.googleapis.com/v1";
 
     // 1. Test Get Credential
     client.credentials.get(credentialId);

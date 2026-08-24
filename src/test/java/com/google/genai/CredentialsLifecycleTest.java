@@ -146,7 +146,7 @@ public class CredentialsLifecycleTest {
                 }
               }
 
-              if ("GET".equals(method) && "/v1beta/credentials".equals(path)) {
+              if ("GET".equals(method) && "/v1/credentials".equals(path)) {
                 return createMockResponse(
                     authorized,
                     200,
@@ -277,15 +277,15 @@ public class CredentialsLifecycleTest {
 
     assertEquals(
         Arrays.asList(
-            "POST /v1beta/credentials",
-            "POST /v1beta/credentials",
-            "POST /v1beta/credentials",
-            "GET /v1beta/credentials",
-            "GET /v1beta/credentials/cred_bearer_123",
-            "PATCH /v1beta/credentials/cred_bearer_123",
-            "PATCH /v1beta/credentials/cred_env_123",
-            "PATCH /v1beta/credentials/cred_oauth_123",
-            "DELETE /v1beta/credentials/cred_bearer_123"),
+            "POST /v1/credentials",
+            "POST /v1/credentials",
+            "POST /v1/credentials",
+            "GET /v1/credentials",
+            "GET /v1/credentials/cred_bearer_123",
+            "PATCH /v1/credentials/cred_bearer_123",
+            "PATCH /v1/credentials/cred_env_123",
+            "PATCH /v1/credentials/cred_oauth_123",
+            "DELETE /v1/credentials/cred_bearer_123"),
         captured);
 
     // Verify request bodies
@@ -370,11 +370,11 @@ public class CredentialsLifecycleTest {
 
     assertEquals(
         Arrays.asList(
-            "POST /v1beta/credentials",
-            "GET /v1beta/credentials",
-            "GET /v1beta/credentials/cred_env_123",
-            "PATCH /v1beta/credentials/cred_env_123",
-            "DELETE /v1beta/credentials/cred_env_123"),
+            "POST /v1/credentials",
+            "GET /v1/credentials",
+            "GET /v1/credentials/cred_env_123",
+            "PATCH /v1/credentials/cred_env_123",
+            "DELETE /v1/credentials/cred_env_123"),
         captured);
   }
 
