@@ -791,7 +791,7 @@ public abstract class ApiClient implements AutoCloseable {
             String.format("https://%s-aiplatform.googleapis.com", location.get()));
       }
     } else {
-      defaultHttpOptionsBuilder.apiVersion("v1beta");
+      defaultHttpOptionsBuilder.apiVersion("v1");
       String defaultBaseUrl =
           geminiBaseUrl.orElseGet(() -> defaultEnvironmentVariables.get("geminiBaseUrl"));
       if (defaultBaseUrl != null) {
