@@ -4117,6 +4117,13 @@ public final class Models {
           Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaProcessing"},
+          Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
+    }
+
     return toObject;
   }
 
@@ -4223,6 +4230,13 @@ public final class Models {
           toObject,
           new String[] {"audioTranscription"},
           Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
+    }
+
+    if (Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaProcessing"},
+          Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
     }
 
     return toObject;

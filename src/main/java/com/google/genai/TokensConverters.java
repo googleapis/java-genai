@@ -653,6 +653,13 @@ final class TokensConverters {
           Common.getValueByPath(fromObject, new String[] {"audioTranscription"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaProcessing"},
+          Common.getValueByPath(fromObject, new String[] {"mediaProcessing"}));
+    }
+
     return toObject;
   }
 

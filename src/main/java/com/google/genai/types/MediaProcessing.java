@@ -23,52 +23,40 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** The type of tool in the function call. */
-public class ToolType {
+/** How the model processes input media for understanding. */
+public class MediaProcessing {
 
-  /** Enum representing the known values for ToolType. */
+  /** Enum representing the known values for MediaProcessing. */
   public enum Known {
-    /** Unspecified tool type. */
-    TOOL_TYPE_UNSPECIFIED,
+    /** Default. Uses model-specific processing */
+    MEDIA_PROCESSING_UNSPECIFIED,
 
-    /** Google search tool, maps to Tool.google_search.search_types.web_search. */
-    GOOGLE_SEARCH_WEB,
+    /** Fixed-rate frame extraction. All frames placed in context. */
+    STATIC,
 
-    /** Image search tool, maps to Tool.google_search.search_types.image_search. */
-    GOOGLE_SEARCH_IMAGE,
-
-    /** URL context tool, maps to Tool.url_context. */
-    URL_CONTEXT,
-
-    /** Google maps tool, maps to Tool.google_maps. */
-    GOOGLE_MAPS,
-
-    /** File search tool, maps to Tool.file_search. */
-    FILE_SEARCH,
-
-    /** Media processing tool. */
-    MEDIA_PROCESSING
+    /** Model-driven dynamic navigation. Recommended for most use cases. */
+    AGENTIC
   }
 
-  private Known toolTypeEnum;
+  private Known mediaProcessingEnum;
   private final String value;
 
   @JsonCreator
-  public ToolType(String value) {
+  public MediaProcessing(String value) {
     this.value = value;
-    for (Known toolTypeEnum : Known.values()) {
-      if (Ascii.equalsIgnoreCase(toolTypeEnum.toString(), value)) {
-        this.toolTypeEnum = toolTypeEnum;
+    for (Known mediaProcessingEnum : Known.values()) {
+      if (Ascii.equalsIgnoreCase(mediaProcessingEnum.toString(), value)) {
+        this.mediaProcessingEnum = mediaProcessingEnum;
         break;
       }
     }
-    if (this.toolTypeEnum == null) {
-      this.toolTypeEnum = Known.TOOL_TYPE_UNSPECIFIED;
+    if (this.mediaProcessingEnum == null) {
+      this.mediaProcessingEnum = Known.MEDIA_PROCESSING_UNSPECIFIED;
     }
   }
 
-  public ToolType(Known knownValue) {
-    this.toolTypeEnum = knownValue;
+  public MediaProcessing(Known knownValue) {
+    this.mediaProcessingEnum = knownValue;
     this.value = knownValue.toString();
   }
 
@@ -90,17 +78,17 @@ public class ToolType {
       return false;
     }
 
-    if (!(o instanceof ToolType)) {
+    if (!(o instanceof MediaProcessing)) {
       return false;
     }
 
-    ToolType other = (ToolType) o;
+    MediaProcessing other = (MediaProcessing) o;
 
-    if (this.toolTypeEnum != Known.TOOL_TYPE_UNSPECIFIED
-        && other.toolTypeEnum != Known.TOOL_TYPE_UNSPECIFIED) {
-      return this.toolTypeEnum == other.toolTypeEnum;
-    } else if (this.toolTypeEnum == Known.TOOL_TYPE_UNSPECIFIED
-        && other.toolTypeEnum == Known.TOOL_TYPE_UNSPECIFIED) {
+    if (this.mediaProcessingEnum != Known.MEDIA_PROCESSING_UNSPECIFIED
+        && other.mediaProcessingEnum != Known.MEDIA_PROCESSING_UNSPECIFIED) {
+      return this.mediaProcessingEnum == other.mediaProcessingEnum;
+    } else if (this.mediaProcessingEnum == Known.MEDIA_PROCESSING_UNSPECIFIED
+        && other.mediaProcessingEnum == Known.MEDIA_PROCESSING_UNSPECIFIED) {
       return this.value.equals(other.value);
     }
     return false;
@@ -109,8 +97,8 @@ public class ToolType {
   @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
-    if (this.toolTypeEnum != Known.TOOL_TYPE_UNSPECIFIED) {
-      return this.toolTypeEnum.hashCode();
+    if (this.mediaProcessingEnum != Known.MEDIA_PROCESSING_UNSPECIFIED) {
+      return this.mediaProcessingEnum.hashCode();
     } else {
       return Objects.hashCode(this.value);
     }
@@ -118,6 +106,6 @@ public class ToolType {
 
   @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
-    return this.toolTypeEnum;
+    return this.mediaProcessingEnum;
   }
 }
