@@ -113,7 +113,7 @@ public class AsyncLive {
           logger.warning(
               "Warning: Ephemeral token support is experimental and may change in future"
                   + " versions.");
-          if (!apiClient.httpOptions().apiVersion().orElse("v1beta").equals("v1alpha")) {
+          if (!apiClient.httpOptions().apiVersion().orElse(ApiClient.GOOGLE_AI_API_DEFAULT_VERSION).equals("v1alpha")) {
             logger.warning(
                 "Warning: The SDK's ephemeral token support is in v1alpha only. Please use  client"
                     + " = Client.builder().httpOptions(HttpOptions.builder().apiVersion(\"v1alpha\").build()).build()"
@@ -126,7 +126,7 @@ public class AsyncLive {
         return new URI(
             String.format(
                 "%s/ws/google.ai.generativelanguage.%s.GenerativeService.%s",
-                wsBaseUrl, apiClient.httpOptions().apiVersion().orElse("v1beta"), method));
+                wsBaseUrl, apiClient.httpOptions().apiVersion().orElse(ApiClient.GOOGLE_AI_API_DEFAULT_VERSION), method));
       } else {
         return new URI(
             String.format(

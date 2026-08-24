@@ -60,6 +60,7 @@ public abstract class ApiClient implements AutoCloseable {
   // {x-version-update-start:google-genai:released}
   private static final String SDK_VERSION = "1.80.0";
   // {x-version-update-end:google-genai:released}
+  public static final String GOOGLE_AI_API_DEFAULT_VERSION = "v1";
   private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
   private static final ImmutableSet<String> METHODS_WITH_BODY =
@@ -769,8 +770,10 @@ public abstract class ApiClient implements AutoCloseable {
         HttpOptions.builder().headers(defaultHeaders.build());
 
     ImmutableMap<String, String> defaultEnvironmentVariables = defaultEnvironmentVariables();
+    String envApiVersion = defaultEnvironmentVariables.get("apiVersion");
     if (vertexAI) {
-      defaultHttpOptionsBuilder.apiVersion("v1beta1");
+      defaultHttpOptionsBuilder.apiVersion(
+          envApiVersion != null && !envApiVersion.isEmpty() ? envApiVersion : "v1beta1");
       String defaultBaseUrl =
           vertexBaseUrl.orElseGet(() -> defaultEnvironmentVariables.get("vertexBaseUrl"));
       if (defaultBaseUrl != null) {
@@ -791,7 +794,10 @@ public abstract class ApiClient implements AutoCloseable {
             String.format("https://%s-aiplatform.googleapis.com", location.get()));
       }
     } else {
-      defaultHttpOptionsBuilder.apiVersion("v1beta");
+      defaultHttpOptionsBuilder.apiVersion(
+          envApiVersion != null && !envApiVersion.isEmpty()
+              ? envApiVersion
+              : GOOGLE_AI_API_DEFAULT_VERSION);
       String defaultBaseUrl =
           geminiBaseUrl.orElseGet(() -> defaultEnvironmentVariables.get("geminiBaseUrl"));
       if (defaultBaseUrl != null) {
@@ -908,6 +914,10 @@ public abstract class ApiClient implements AutoCloseable {
     value = System.getenv("GOOGLE_VERTEX_BASE_URL");
     if (value != null && !value.isEmpty()) {
       mapBuilder.put("vertexBaseUrl", value);
+    }
+    value = System.getenv("GOOGLE_GENAI_API_VERSION");
+    if (value != null && !value.isEmpty()) {
+      mapBuilder.put("apiVersion", value);
     }
     return mapBuilder.buildOrThrow();
   }

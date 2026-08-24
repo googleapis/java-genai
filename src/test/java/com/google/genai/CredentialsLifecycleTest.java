@@ -146,7 +146,9 @@ public class CredentialsLifecycleTest {
                 }
               }
 
-              if ("GET".equals(method) && "/v1beta/credentials".equals(path)) {
+              if ("GET".equals(method)
+                  && ("/" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials")
+                      .equals(path)) {
                 return createMockResponse(
                     authorized,
                     200,
@@ -275,17 +277,18 @@ public class CredentialsLifecycleTest {
     // 9. Delete credential
     ai.credentials.delete("cred_bearer_123");
 
+    String v = ApiClient.GOOGLE_AI_API_DEFAULT_VERSION;
     assertEquals(
         Arrays.asList(
-            "POST /v1beta/credentials",
-            "POST /v1beta/credentials",
-            "POST /v1beta/credentials",
-            "GET /v1beta/credentials",
-            "GET /v1beta/credentials/cred_bearer_123",
-            "PATCH /v1beta/credentials/cred_bearer_123",
-            "PATCH /v1beta/credentials/cred_env_123",
-            "PATCH /v1beta/credentials/cred_oauth_123",
-            "DELETE /v1beta/credentials/cred_bearer_123"),
+            "POST /" + v + "/credentials",
+            "POST /" + v + "/credentials",
+            "POST /" + v + "/credentials",
+            "GET /" + v + "/credentials",
+            "GET /" + v + "/credentials/cred_bearer_123",
+            "PATCH /" + v + "/credentials/cred_bearer_123",
+            "PATCH /" + v + "/credentials/cred_env_123",
+            "PATCH /" + v + "/credentials/cred_oauth_123",
+            "DELETE /" + v + "/credentials/cred_bearer_123"),
         captured);
 
     // Verify request bodies
@@ -370,11 +373,11 @@ public class CredentialsLifecycleTest {
 
     assertEquals(
         Arrays.asList(
-            "POST /v1beta/credentials",
-            "GET /v1beta/credentials",
-            "GET /v1beta/credentials/cred_env_123",
-            "PATCH /v1beta/credentials/cred_env_123",
-            "DELETE /v1beta/credentials/cred_env_123"),
+            "POST /" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials",
+            "GET /" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials",
+            "GET /" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials/cred_env_123",
+            "PATCH /" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials/cred_env_123",
+            "DELETE /" + ApiClient.GOOGLE_AI_API_DEFAULT_VERSION + "/credentials/cred_env_123"),
         captured);
   }
 

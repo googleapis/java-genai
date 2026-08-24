@@ -452,7 +452,7 @@ public class Files {
         String baseUrl = this.sdkConfiguration.serverUrl();
         String apiVersion = (String) this.sdkConfiguration.globals.getParam("pathParam", "api_version")
                 .map(Object::toString)
-                .orElse(SDKConfiguration.OPENAPI_DOC_VERSION);
+                .orElse(com.google.genai.ApiClient.GOOGLE_AI_API_DEFAULT_VERSION);
         StringBuilder urlBuilder = new StringBuilder();
         if (baseUrl.endsWith("/")) {
             urlBuilder.append(baseUrl.substring(0, baseUrl.length() - 1));
