@@ -49,10 +49,16 @@ public class Environments {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
     private final AsyncEnvironments asyncSDK;
+    private final Files files;
 
     Environments(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
+        this.files = new Files(this.sdkConfiguration);
         this.asyncSDK = new AsyncEnvironments(this, sdkConfiguration);
+    }
+
+    public final Files files() {
+        return files;
     }
 
     /**

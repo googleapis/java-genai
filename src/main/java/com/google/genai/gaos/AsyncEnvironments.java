@@ -50,11 +50,17 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncEnvironments {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
+    private final AsyncFiles files;
     private final Environments syncSDK;
 
     AsyncEnvironments(Environments syncSDK, SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
+        this.files = new AsyncFiles(syncSDK.files(), this.sdkConfiguration);
         this.syncSDK = syncSDK;
+    }
+
+    public final AsyncFiles files() {
+        return files;
     }
 
     /**

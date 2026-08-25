@@ -78,7 +78,7 @@ public class TranscriptionConfig {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mode")
-    private Mode mode;
+    private TranscriptionConfigMode mode;
 
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
@@ -97,7 +97,7 @@ public class TranscriptionConfig {
             @JsonProperty("custom_vocabulary") @Nullable List<String> customVocabulary,
             @JsonProperty("diarization_mode") @Nullable String diarizationMode,
             @JsonProperty("language_codes") @Nullable List<String> languageCodes,
-            @JsonProperty("mode") @Nullable Mode mode,
+            @JsonProperty("mode") @Nullable TranscriptionConfigMode mode,
             @JsonProperty("timestamp_granularities") @Nullable List<String> timestampGranularities) {
         this.adaptationPhrases = adaptationPhrases;
         this.customVocabulary = customVocabulary;
@@ -151,7 +151,7 @@ public class TranscriptionConfig {
     /**
      * Discriminated transcription mode options or enum.
      */
-    public Optional<Mode> mode() {
+    public Optional<TranscriptionConfigMode> mode() {
         return Optional.ofNullable(this.mode);
     }
 
@@ -218,7 +218,7 @@ public class TranscriptionConfig {
     /**
      * Discriminated transcription mode options or enum.
      */
-    public TranscriptionConfig withMode(@Nullable Mode mode) {
+    public TranscriptionConfig withMode(@Nullable TranscriptionConfigMode mode) {
         this.mode = mode;
         return this;
     }
@@ -286,7 +286,7 @@ public class TranscriptionConfig {
 
         private List<String> languageCodes;
 
-        private Mode mode;
+        private TranscriptionConfigMode mode;
 
         @Deprecated
         private List<String> timestampGranularities;
@@ -338,7 +338,7 @@ public class TranscriptionConfig {
         /**
          * Discriminated transcription mode options or enum.
          */
-        public Builder mode(@Nullable Mode mode) {
+        public Builder mode(@Nullable TranscriptionConfigMode mode) {
             this.mode = mode;
             return this;
         }

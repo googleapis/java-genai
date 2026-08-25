@@ -24,9 +24,11 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 // android:strip_begin
 import com.google.genai.gaos.Agents;
 import com.google.genai.gaos.AsyncAgents;
+import com.google.genai.gaos.AsyncEnvironments;
 import com.google.genai.gaos.AsyncGenAI;
 import com.google.genai.gaos.AsyncInteractions;
 import com.google.genai.gaos.AsyncWebhooks;
+import com.google.genai.gaos.Environments;
 import com.google.genai.gaos.GenAI;
 import com.google.genai.gaos.Interactions;
 import com.google.genai.gaos.Webhooks;
@@ -78,6 +80,7 @@ public final class Client implements AutoCloseable {
     public final AsyncInteractions interactions;
     public final AsyncAgents agents;
     public final AsyncWebhooks webhooks;
+    public final AsyncEnvironments environments;
     // android:strip_end
 
     public Async(ApiClient apiClient) {
@@ -96,6 +99,7 @@ public final class Client implements AutoCloseable {
       this.interactions = asyncGaos.interactions();
       this.agents = asyncGaos.agents();
       this.webhooks = asyncGaos.webhooks();
+      this.environments = asyncGaos.environments();
       // android:strip_end
     }
   }
@@ -117,6 +121,7 @@ public final class Client implements AutoCloseable {
   public final Interactions interactions;
   public final Agents agents;
   public final Webhooks webhooks;
+  public final Environments environments;
   // android:strip_end
 
   /** Builder for {@link Client}. */
@@ -424,6 +429,7 @@ public final class Client implements AutoCloseable {
     this.interactions = gaosClient.interactions();
     this.agents = gaosClient.agents();
     this.webhooks = gaosClient.webhooks();
+    this.environments = gaosClient.environments();
     // android:strip_end
 
     async = new Async(this.apiClient);
