@@ -33,8 +33,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = AudioTranscriptionConfig.Builder.class)
 public abstract class AudioTranscriptionConfig extends JsonSerializable {
   /**
-   * BCP-47 language codes providing hints about the languages present in the audio. If omitted or
-   * empty, defaults to automatic language detection.
+   * Optional. BCP-47 language codes providing hints about the languages present in the audio. If
+   * omitted or empty, defaults to automatic language detection.
    */
   @JsonProperty("languageCodes")
   public abstract Optional<List<String>> languageCodes();
@@ -106,8 +106,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: BCP-47 language codes providing hints about the languages present in the
-     * audio. If omitted or empty, defaults to automatic language detection.
+     * <p>languageCodes: Optional. BCP-47 language codes providing hints about the languages present
+     * in the audio. If omitted or empty, defaults to automatic language detection.
      */
     @JsonProperty("languageCodes")
     public abstract Builder languageCodes(List<String> languageCodes);
@@ -115,8 +115,8 @@ public abstract class AudioTranscriptionConfig extends JsonSerializable {
     /**
      * Setter for languageCodes.
      *
-     * <p>languageCodes: BCP-47 language codes providing hints about the languages present in the
-     * audio. If omitted or empty, defaults to automatic language detection.
+     * <p>languageCodes: Optional. BCP-47 language codes providing hints about the languages present
+     * in the audio. If omitted or empty, defaults to automatic language detection.
      */
     @CanIgnoreReturnValue
     public Builder languageCodes(String... languageCodes) {

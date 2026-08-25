@@ -49,6 +49,16 @@ public abstract class EvaluationParserConfigCustomCodeParserConfig extends JsonS
   @JsonProperty("parsingFunction")
   public abstract Optional<String> parsingFunction();
 
+  /**
+   * Optional. The region to use for code execution. If set, the Code Execution Sandbox will be
+   * invoked in the specified region regardless of the request's originating region. Must be a
+   * region where the Code Execution Sandbox is available. Supported regions: us-central1, us-east1,
+   * us-east4, us-west1, us-west4, southamerica-east1, europe-west2, europe-west3, asia-east1,
+   * asia-south1, asia-southeast1. If unset, the request's originating region is used.
+   */
+  @JsonProperty("codeExecutionRegion")
+  public abstract Optional<String> codeExecutionRegion();
+
   /** Instantiates a builder for EvaluationParserConfigCustomCodeParserConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -97,6 +107,29 @@ public abstract class EvaluationParserConfigCustomCodeParserConfig extends JsonS
     @CanIgnoreReturnValue
     public Builder clearParsingFunction() {
       return parsingFunction(Optional.empty());
+    }
+
+    /**
+     * Setter for codeExecutionRegion.
+     *
+     * <p>codeExecutionRegion: Optional. The region to use for code execution. If set, the Code
+     * Execution Sandbox will be invoked in the specified region regardless of the request's
+     * originating region. Must be a region where the Code Execution Sandbox is available. Supported
+     * regions: us-central1, us-east1, us-east4, us-west1, us-west4, southamerica-east1,
+     * europe-west2, europe-west3, asia-east1, asia-south1, asia-southeast1. If unset, the request's
+     * originating region is used.
+     */
+    @JsonProperty("codeExecutionRegion")
+    public abstract Builder codeExecutionRegion(String codeExecutionRegion);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder codeExecutionRegion(Optional<String> codeExecutionRegion);
+
+    /** Clears the value of codeExecutionRegion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCodeExecutionRegion() {
+      return codeExecutionRegion(Optional.empty());
     }
 
     public abstract EvaluationParserConfigCustomCodeParserConfig build();

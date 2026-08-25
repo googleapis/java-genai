@@ -126,7 +126,10 @@ public abstract class Part extends JsonSerializable {
   @JsonProperty("audioTranscription")
   public abstract Optional<Transcription> audioTranscription();
 
-  /** How the model processes this part's media for understanding. */
+  /**
+   * Optional. How the model processes this part's media for understanding. Only meaningful for
+   * video parts (`inline_data` or `file_data` with video mime). Non-video parts ignore this field.
+   */
   @JsonProperty("mediaProcessing")
   public abstract Optional<MediaProcessing> mediaProcessing();
 
@@ -554,7 +557,9 @@ public abstract class Part extends JsonSerializable {
     /**
      * Setter for mediaProcessing.
      *
-     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field.
      */
     @JsonProperty("mediaProcessing")
     public abstract Builder mediaProcessing(MediaProcessing mediaProcessing);
@@ -572,7 +577,9 @@ public abstract class Part extends JsonSerializable {
     /**
      * Setter for mediaProcessing given a known enum.
      *
-     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field.
      */
     @CanIgnoreReturnValue
     public Builder mediaProcessing(MediaProcessing.Known knownType) {
@@ -582,7 +589,9 @@ public abstract class Part extends JsonSerializable {
     /**
      * Setter for mediaProcessing given a string.
      *
-     * <p>mediaProcessing: How the model processes this part's media for understanding.
+     * <p>mediaProcessing: Optional. How the model processes this part's media for understanding.
+     * Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video
+     * parts ignore this field.
      */
     @CanIgnoreReturnValue
     public Builder mediaProcessing(String mediaProcessing) {
