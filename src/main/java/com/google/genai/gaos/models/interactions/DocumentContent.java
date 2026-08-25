@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * DocumentContent
- * 
+ *
  * <p>A document content block.
  */
 public class DocumentContent implements Content {
@@ -50,7 +50,6 @@ public class DocumentContent implements Content {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("mime_type")
     private DocumentContentMimeType mimeType;
-
 
     @JsonProperty("type")
     private String type;
@@ -72,7 +71,7 @@ public class DocumentContent implements Content {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
     }
-    
+
     public DocumentContent() {
         this(null, null, null);
     }
@@ -107,7 +106,6 @@ public class DocumentContent implements Content {
         return new Builder();
     }
 
-
     /**
      * The document content.
      */
@@ -115,7 +113,6 @@ public class DocumentContent implements Content {
         this.data = data;
         return this;
     }
-
 
     /**
      * The mime type of the document.
@@ -125,7 +122,6 @@ public class DocumentContent implements Content {
         return this;
     }
 
-
     /**
      * The URI of the document.
      */
@@ -133,7 +129,6 @@ public class DocumentContent implements Content {
         this.uri = uri;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -144,31 +139,24 @@ public class DocumentContent implements Content {
             return false;
         }
         DocumentContent other = (DocumentContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            data, mimeType, type,
-            uri);
+        return Utils.enhancedHash(data, mimeType, type, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DocumentContent.class,
-                "data", data,
-                "mimeType", mimeType,
-                "type", type,
-                "uri", uri);
+        return Utils.toString(DocumentContent.class, "data", data, "mimeType", mimeType, "type", type, "uri", uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String data;
 
@@ -177,7 +165,7 @@ public class DocumentContent implements Content {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -205,15 +193,10 @@ public class DocumentContent implements Content {
         }
 
         public DocumentContent build() {
-            return new DocumentContent(
-                data, mimeType, uri);
+            return new DocumentContent(data, mimeType, uri);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"document\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"document\"", new TypeReference<String>() {});
     }
 }

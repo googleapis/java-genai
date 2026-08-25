@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * UserInputStep
- * 
+ *
  * <p>Input provided by the user.
  */
 public class UserInputStep implements Step {
@@ -43,17 +43,15 @@ public class UserInputStep implements Step {
     @JsonProperty("content")
     private List<Content> content;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public UserInputStep(
-            @JsonProperty("content") @Nullable List<Content> content) {
+    public UserInputStep(@JsonProperty("content") @Nullable List<Content> content) {
         this.content = content;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public UserInputStep() {
         this(null);
     }
@@ -71,12 +69,10 @@ public class UserInputStep implements Step {
         return new Builder();
     }
 
-
     public UserInputStep withContent(@Nullable List<Content> content) {
         this.content = content;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -87,31 +83,26 @@ public class UserInputStep implements Step {
             return false;
         }
         UserInputStep other = (UserInputStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.content, other.content) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.content, other.content) && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            content, type);
+        return Utils.enhancedHash(content, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(UserInputStep.class,
-                "content", content,
-                "type", type);
+        return Utils.toString(UserInputStep.class, "content", content, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<Content> content;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder content(@Nullable List<Content> content) {
@@ -120,15 +111,10 @@ public class UserInputStep implements Step {
         }
 
         public UserInputStep build() {
-            return new UserInputStep(
-                content);
+            return new UserInputStep(content);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"user_input\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"user_input\"", new TypeReference<String>() {});
     }
 }

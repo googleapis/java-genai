@@ -47,7 +47,6 @@ import java.lang.Integer;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
-
 public class AsyncAgents {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -60,17 +59,16 @@ public class AsyncAgents {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public Agents sync() {
         return syncSDK;
     }
 
-
     /**
      * Lists all Agents.
-     * 
+     *
      * @return The async call builder
      */
     public ListAgentsRequestBuilder list() {
@@ -79,44 +77,39 @@ public class AsyncAgents {
 
     /**
      * Lists all Agents.
-     * 
+     *
      * @return {@code CompletableFuture<ListAgentsResponse>} - The async response
      */
     public CompletableFuture<ListAgentsResponse> listDirect() {
-        return list(
-                null, null, null,
-                null, null);
+        return list(null, null, null, null, null);
     }
 
     /**
      * Lists all Agents.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param pageSize 
-     * @param pageToken 
-     * @param parent 
+     * @param pageSize
+     * @param pageToken
+     * @param parent
      * @param options additional options
      * @return {@code CompletableFuture<ListAgentsResponse>} - The async response
      */
     public CompletableFuture<ListAgentsResponse> list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable String parent,
+            @Nullable String apiVersion,
+            @Nullable Integer pageSize,
+            @Nullable String pageToken,
+            @Nullable String parent,
             @Nullable Options options) {
-        ListAgentsRequest request = new ListAgentsRequest(
-                apiVersion, pageSize, pageToken,
-                parent);
-        AsyncRequestOperation<ListAgentsRequest, ListAgentsResponse> operation
-              = new ListAgents.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        ListAgentsRequest request = new ListAgentsRequest(apiVersion, pageSize, pageToken, parent);
+        AsyncRequestOperation<ListAgentsRequest, ListAgentsResponse> operation =
+                new ListAgents.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @return The async call builder
      */
     public CreateAgentRequestBuilder create() {
@@ -125,7 +118,7 @@ public class AsyncAgents {
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -144,7 +137,7 @@ public class AsyncAgents {
 
     /**
      * Creates a new Agent (Typed version for SDK).
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
@@ -160,21 +153,17 @@ public class AsyncAgents {
      * @return {@code CompletableFuture<CreateAgentResponse>} - The async response
      */
     public CompletableFuture<CreateAgentResponse> create(
-            @Nullable String apiVersion, @Nonnull Agent body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull Agent body, @Nullable Options options) {
         CreateAgentRequest request = new CreateAgentRequest(apiVersion, body);
-        AsyncRequestOperation<CreateAgentRequest, CreateAgentResponse> operation
-              = new CreateAgent.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateAgentRequest, CreateAgentResponse> operation =
+                new CreateAgent.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Deletes an Agent.
-     * 
+     *
      * @return The async call builder
      */
     public DeleteAgentRequestBuilder delete() {
@@ -183,8 +172,8 @@ public class AsyncAgents {
 
     /**
      * Deletes an Agent.
-     * 
-     * @param id 
+     *
+     * @param id
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
     public CompletableFuture<DeleteAgentResponse> delete(@Nonnull String id) {
@@ -193,28 +182,24 @@ public class AsyncAgents {
 
     /**
      * Deletes an Agent.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param id
      * @param options additional options
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
     public CompletableFuture<DeleteAgentResponse> delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteAgentRequest request = new DeleteAgentRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation
-              = new DeleteAgent.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteAgentRequest, DeleteAgentResponse> operation =
+                new DeleteAgent.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Gets a specific Agent.
-     * 
+     *
      * @return The async call builder
      */
     public GetAgentRequestBuilder get() {
@@ -223,8 +208,8 @@ public class AsyncAgents {
 
     /**
      * Gets a specific Agent.
-     * 
-     * @param id 
+     *
+     * @param id
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */
     public CompletableFuture<GetAgentResponse> get(@Nonnull String id) {
@@ -233,22 +218,18 @@ public class AsyncAgents {
 
     /**
      * Gets a specific Agent.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param id
      * @param options additional options
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */
     public CompletableFuture<GetAgentResponse> get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetAgentRequest request = new GetAgentRequest(apiVersion, id);
-        AsyncRequestOperation<GetAgentRequest, GetAgentResponse> operation
-              = new GetAgent.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetAgentRequest, GetAgentResponse> operation =
+                new GetAgent.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 }

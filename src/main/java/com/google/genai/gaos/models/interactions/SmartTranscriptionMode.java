@@ -29,7 +29,7 @@ import java.lang.String;
 
 /**
  * SmartTranscriptionMode
- * 
+ *
  * <p>Configuration for smart transcription mode.
  */
 public class SmartTranscriptionMode implements TranscriptionMode {
@@ -51,7 +51,6 @@ public class SmartTranscriptionMode implements TranscriptionMode {
         return new Builder();
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -61,39 +60,31 @@ public class SmartTranscriptionMode implements TranscriptionMode {
             return false;
         }
         SmartTranscriptionMode other = (SmartTranscriptionMode) o;
-        return 
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            type);
+        return Utils.enhancedHash(type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SmartTranscriptionMode.class,
-                "type", type);
+        return Utils.toString(SmartTranscriptionMode.class, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public SmartTranscriptionMode build() {
-            return new SmartTranscriptionMode(
-                );
+            return new SmartTranscriptionMode();
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"smart\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"smart\"", new TypeReference<String>() {});
     }
 }

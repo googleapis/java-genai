@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -38,16 +38,17 @@ public class MediaProcessing {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private MediaProcessing(TypedObject value) {
         this.value = value;
     }
 
     public static MediaProcessing of(StaticMediaProcessing value) {
         Utils.checkNotNull(value, "value");
-        return new MediaProcessing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<StaticMediaProcessing>(){}));
+        return new MediaProcessing(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<StaticMediaProcessing>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code StaticMediaProcessing},
      * otherwise returns an empty {@link Optional}.
@@ -60,19 +61,19 @@ public class MediaProcessing {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -84,26 +85,25 @@ public class MediaProcessing {
         MediaProcessing other = (MediaProcessing) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<MediaProcessing> {
 
         public _Deserializer() {
-            super(MediaProcessing.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<StaticMediaProcessing>() {}, JsonShape.DEFAULT));
+            super(
+                    MediaProcessing.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<StaticMediaProcessing>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MediaProcessing.class,
-                "value", value);
+        return Utils.toString(MediaProcessing.class, "value", value);
     }
-
 }
-

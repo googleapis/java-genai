@@ -30,7 +30,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetEnvironmentFilesResponse implements Response {
     /**
      * HTTP response content type for this operation
@@ -59,19 +58,16 @@ public class GetEnvironmentFilesResponse implements Response {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.getEnvironmentFilesResponse = getEnvironmentFilesResponse;
     }
-    
+
     public GetEnvironmentFilesResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -109,7 +105,6 @@ public class GetEnvironmentFilesResponse implements Response {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -117,7 +112,6 @@ public class GetEnvironmentFilesResponse implements Response {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -127,7 +121,6 @@ public class GetEnvironmentFilesResponse implements Response {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -136,15 +129,14 @@ public class GetEnvironmentFilesResponse implements Response {
         return this;
     }
 
-
     /**
      * Successful operation
      */
-    public GetEnvironmentFilesResponse withGetEnvironmentFilesResponse(@Nullable com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse) {
+    public GetEnvironmentFilesResponse withGetEnvironmentFilesResponse(
+            @Nullable com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse) {
         this.getEnvironmentFilesResponse = getEnvironmentFilesResponse;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -155,31 +147,33 @@ public class GetEnvironmentFilesResponse implements Response {
             return false;
         }
         GetEnvironmentFilesResponse other = (GetEnvironmentFilesResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.getEnvironmentFilesResponse, other.getEnvironmentFilesResponse);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.getEnvironmentFilesResponse, other.getEnvironmentFilesResponse);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            getEnvironmentFilesResponse);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, getEnvironmentFilesResponse);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetEnvironmentFilesResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "getEnvironmentFilesResponse", getEnvironmentFilesResponse);
+        return Utils.toString(
+                GetEnvironmentFilesResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "getEnvironmentFilesResponse",
+                getEnvironmentFilesResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -190,7 +184,7 @@ public class GetEnvironmentFilesResponse implements Response {
         private com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -220,16 +214,14 @@ public class GetEnvironmentFilesResponse implements Response {
         /**
          * Successful operation
          */
-        public Builder getEnvironmentFilesResponse(@Nullable com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse) {
+        public Builder getEnvironmentFilesResponse(
+                @Nullable com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse getEnvironmentFilesResponse) {
             this.getEnvironmentFilesResponse = getEnvironmentFilesResponse;
             return this;
         }
 
         public GetEnvironmentFilesResponse build() {
-            return new GetEnvironmentFilesResponse(
-                contentType, statusCode, rawResponse,
-                getEnvironmentFilesResponse);
+            return new GetEnvironmentFilesResponse(contentType, statusCode, rawResponse, getEnvironmentFilesResponse);
         }
-
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * DeepResearchAgentConfig
- * 
+ *
  * <p>Configuration for the Deep Research agent.
  */
 public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAgentInteractionAgentConfig {
@@ -55,11 +55,9 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
     @JsonProperty("enable_bigquery_tool")
     private Boolean enableBigqueryTool;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("thinking_summaries")
     private ThinkingSummaries thinkingSummaries;
-
 
     @JsonProperty("type")
     private String type;
@@ -83,10 +81,9 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.visualization = visualization;
     }
-    
+
     public DeepResearchAgentConfig() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -126,7 +123,6 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         return new Builder();
     }
 
-
     /**
      * Enables human-in-the-loop planning for the Deep Research agent. If set to
      * true, the Deep Research agent will provide a research plan in its response.
@@ -138,7 +134,6 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         return this;
     }
 
-
     /**
      * Enables bigquery tool for the Deep Research agent.
      */
@@ -147,12 +142,10 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         return this;
     }
 
-
     public DeepResearchAgentConfig withThinkingSummaries(@Nullable ThinkingSummaries thinkingSummaries) {
         this.thinkingSummaries = thinkingSummaries;
         return this;
     }
-
 
     /**
      * Whether to include visualizations in the response.
@@ -161,7 +154,6 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         this.visualization = visualization;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -172,33 +164,36 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
             return false;
         }
         DeepResearchAgentConfig other = (DeepResearchAgentConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.collaborativePlanning, other.collaborativePlanning) &&
-            Utils.enhancedDeepEquals(this.enableBigqueryTool, other.enableBigqueryTool) &&
-            Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.visualization, other.visualization);
+        return Utils.enhancedDeepEquals(this.collaborativePlanning, other.collaborativePlanning)
+                && Utils.enhancedDeepEquals(this.enableBigqueryTool, other.enableBigqueryTool)
+                && Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.visualization, other.visualization);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            collaborativePlanning, enableBigqueryTool, thinkingSummaries,
-            type, visualization);
+        return Utils.enhancedHash(collaborativePlanning, enableBigqueryTool, thinkingSummaries, type, visualization);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DeepResearchAgentConfig.class,
-                "collaborativePlanning", collaborativePlanning,
-                "enableBigqueryTool", enableBigqueryTool,
-                "thinkingSummaries", thinkingSummaries,
-                "type", type,
-                "visualization", visualization);
+        return Utils.toString(
+                DeepResearchAgentConfig.class,
+                "collaborativePlanning",
+                collaborativePlanning,
+                "enableBigqueryTool",
+                enableBigqueryTool,
+                "thinkingSummaries",
+                thinkingSummaries,
+                "type",
+                type,
+                "visualization",
+                visualization);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Boolean collaborativePlanning;
 
@@ -209,7 +204,7 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
         private Visualization visualization;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -246,15 +241,10 @@ public class DeepResearchAgentConfig implements InteractionAgentConfig, CreateAg
 
         public DeepResearchAgentConfig build() {
             return new DeepResearchAgentConfig(
-                collaborativePlanning, enableBigqueryTool, thinkingSummaries,
-                visualization);
+                    collaborativePlanning, enableBigqueryTool, thinkingSummaries, visualization);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"deep-research\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"deep-research\"", new TypeReference<String>() {});
     }
 }

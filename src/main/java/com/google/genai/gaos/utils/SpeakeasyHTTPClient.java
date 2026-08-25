@@ -19,6 +19,10 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.google.genai.gaos.utils.Java8Compat;
+import com.google.genai.gaos.utils.transport.HttpBody;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,11 +33,10 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -43,12 +46,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
 import okio.Okio;
-
-import com.google.genai.gaos.utils.Java8Compat;
-
-import com.google.genai.gaos.utils.transport.HttpBody;
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import com.google.genai.gaos.utils.transport.HttpResponse;
 
 public class SpeakeasyHTTPClient implements HTTPClient {
 
@@ -60,14 +57,12 @@ public class SpeakeasyHTTPClient implements HTTPClient {
 
     private static Consumer<? super String> logger = System.out::println;
 
-    private final OkHttpClient client = new OkHttpClient.Builder()
-            .followRedirects(false)
+    private final OkHttpClient client = new OkHttpClient.Builder().followRedirects(false)
             .followSslRedirects(false)
             .readTimeout(300, TimeUnit.SECONDS)
             .build();
 
     private static final Set<String> STREAMING_MEDIA_TYPES =
-            
             Java8Compat.setOf("text/event-stream", "application/x-ndjson", "application/jsonl");
 
     private static boolean isStreamingMediaType(String value) {
@@ -76,12 +71,13 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         return STREAMING_MEDIA_TYPES.contains(mediaType.trim().toLowerCase(Locale.ENGLISH));
     }
 
-    private final OkHttpClient streamingClient = client.newBuilder()
-            .readTimeout(0, TimeUnit.MILLISECONDS)
-            .build();
+    private final OkHttpClient streamingClient =
+            client.newBuilder().readTimeout(0, TimeUnit.MILLISECONDS).build();
 
     private OkHttpClient asyncCallClient(HttpRequest request) {
-        boolean streaming = request.headers().get("Accept").stream()
+        boolean streaming = request.headers()
+                .get("Accept")
+                .stream()
                 .flatMap(value -> java.util.Arrays.stream(value.split(",")))
                 .anyMatch(SpeakeasyHTTPClient::isStreamingMediaType);
         return streaming ? streamingClient : client;
@@ -132,9 +128,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
      * @see #setDebugLogging(boolean)
      */
     public static void setRedactedHeaders(Collection<String> headerNames) {
-        redactedHeaders = headerNames.stream() //
-                .map(x -> x.toUpperCase(Locale.ENGLISH)) //
-                .collect(Collectors.toSet());
+        redactedHeaders =
+                headerNames.stream().map(x -> x.toUpperCase(Locale.ENGLISH)).collect(Collectors.toSet());
     }
 
     /**
@@ -233,7 +228,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     private static Request toOkHttpRequest(HttpRequest request) {
         Request.Builder builder = new Request.Builder().url(request.uri().toString());
         request.headers().forEach((name, values) -> values.forEach(value -> builder.addHeader(name, value)));
-        okhttp3.RequestBody body = request.body().map(SpeakeasyHTTPClient::toOkHttpBody).orElse(null);
+        okhttp3.RequestBody body =
+                request.body().map(SpeakeasyHTTPClient::toOkHttpBody).orElse(null);
         if (body == null && requiresRequestBody(request.method())) {
             body = okhttp3.RequestBody.create(new byte[0], null);
         }
@@ -292,9 +288,13 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         log("Request headers: " + redactHeaders(request.headers()));
 
         Optional<HttpBody> body = request.body();
-        if (logBody && body.isPresent() && body.get().isRepeatable() && request.headers() //
-                .first("Content-Type") //
-                .filter(x -> x.equals("application/json") || x.equals("text/plain")).isPresent()) {
+        if (logBody
+                && body.isPresent()
+                && body.get().isRepeatable()
+                && request.headers()
+                        .first("Content-Type")
+                        .filter(x -> x.equals("application/json") || x.equals("text/plain"))
+                        .isPresent()) {
             try (InputStream in = body.get().stream()) {
                 byte[] bytes = toByteArray(in);
                 log("Request body:\n" + new String(bytes, StandardCharsets.UTF_8));
@@ -302,7 +302,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         }
     }
 
-    private static HttpResponse<InputStream> logResponse(HttpResponse<InputStream> response, boolean logBody) throws IOException {
+    private static HttpResponse<InputStream> logResponse(HttpResponse<InputStream> response, boolean logBody)
+            throws IOException {
         String contentType = response.contentType().orElse("application/octet-stream");
         log("Received response: " + response);
         log("Response headers: " + redactHeaders(response.headers()));
@@ -315,8 +316,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         try (InputStream in = response.body()) {
             bytes = toByteArray(in);
         }
-        response = new HttpResponse<>(response.request(), response.statusCode(), response.headers(),
-                new ByteArrayInputStream(bytes));
+        response = new HttpResponse<>(
+                response.request(), response.statusCode(), response.headers(), new ByteArrayInputStream(bytes));
 
         if (logBody && (contentType.startsWith("application/json") || contentType.startsWith("text/plain"))) {
             log("Response body:\n" + new String(bytes, StandardCharsets.UTF_8));
@@ -325,10 +326,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     }
 
     private static String redactHeaders(Headers headers) {
-        return "{" + headers.map() //
-                .entrySet() //
-                .stream() //
-                .map(entry -> {
+        return "{"
+                + headers.map().entrySet().stream().map(entry -> {
                     final String value;
                     if (redactedHeaders.contains(entry.getKey().toUpperCase(Locale.ENGLISH))) {
                         value = "[******]";
@@ -336,8 +335,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
                         value = String.valueOf(entry.getValue());
                     }
                     return entry.getKey() + "=" + value;
-                }) //
-                .collect(Collectors.joining(", ")) + "}";
+                }).collect(Collectors.joining(", "))
+                + "}";
     }
 
     private static void log(String message) {

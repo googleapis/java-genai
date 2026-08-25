@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * Error
- * 
+ *
  * <p>Error message from an interaction.
  */
 public class Error {
@@ -50,13 +50,11 @@ public class Error {
     private String message;
 
     @JsonCreator
-    public Error(
-            @JsonProperty("code") @Nullable String code,
-            @JsonProperty("message") @Nullable String message) {
+    public Error(@JsonProperty("code") @Nullable String code, @JsonProperty("message") @Nullable String message) {
         this.code = code;
         this.message = message;
     }
-    
+
     public Error() {
         this(null, null);
     }
@@ -79,7 +77,6 @@ public class Error {
         return new Builder();
     }
 
-
     /**
      * A URI that identifies the error type.
      */
@@ -88,7 +85,6 @@ public class Error {
         return this;
     }
 
-
     /**
      * A human-readable error message.
      */
@@ -96,7 +92,6 @@ public class Error {
         this.message = message;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -107,33 +102,28 @@ public class Error {
             return false;
         }
         Error other = (Error) o;
-        return 
-            Utils.enhancedDeepEquals(this.code, other.code) &&
-            Utils.enhancedDeepEquals(this.message, other.message);
+        return Utils.enhancedDeepEquals(this.code, other.code) && Utils.enhancedDeepEquals(this.message, other.message);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            code, message);
+        return Utils.enhancedHash(code, message);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Error.class,
-                "code", code,
-                "message", message);
+        return Utils.toString(Error.class, "code", code, "message", message);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String code;
 
         private String message;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -153,9 +143,7 @@ public class Error {
         }
 
         public Error build() {
-            return new Error(
-                code, message);
+            return new Error(code, message);
         }
-
     }
 }

@@ -155,8 +155,7 @@ public final class Java8Compat {
     }
 
     public static <K, V> Map.Entry<K, V> mapEntry(K key, V value) {
-        return new AbstractMap.SimpleImmutableEntry<>(
-                Objects.requireNonNull(key), Objects.requireNonNull(value));
+        return new AbstractMap.SimpleImmutableEntry<>(Objects.requireNonNull(key), Objects.requireNonNull(value));
     }
 
     public static <T> Set<T> setCopyOf(Collection<? extends T> collection) {

@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class PingWebhookRequest {
     /**
      * Which version of the API to use.
@@ -55,13 +54,11 @@ public class PingWebhookRequest {
             @Nonnull String id,
             @Nullable com.google.genai.gaos.models.webhooks.PingWebhookRequest body) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.body = body;
     }
-    
-    public PingWebhookRequest(
-            @Nonnull String id) {
+
+    public PingWebhookRequest(@Nonnull String id) {
         this(null, id, null);
     }
 
@@ -91,7 +88,6 @@ public class PingWebhookRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -99,7 +95,6 @@ public class PingWebhookRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Required. The ID of the webhook to ping.
@@ -110,7 +105,6 @@ public class PingWebhookRequest {
         return this;
     }
 
-
     /**
      * The request body.
      */
@@ -118,7 +112,6 @@ public class PingWebhookRequest {
         this.body = body;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -129,28 +122,23 @@ public class PingWebhookRequest {
             return false;
         }
         PingWebhookRequest other = (PingWebhookRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id, body);
+        return Utils.enhancedHash(apiVersion, id, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(PingWebhookRequest.class,
-                "apiVersion", apiVersion,
-                "id", id,
-                "body", body);
+        return Utils.toString(PingWebhookRequest.class, "apiVersion", apiVersion, "id", id, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -159,7 +147,7 @@ public class PingWebhookRequest {
         private com.google.genai.gaos.models.webhooks.PingWebhookRequest body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -188,9 +176,7 @@ public class PingWebhookRequest {
         }
 
         public PingWebhookRequest build() {
-            return new PingWebhookRequest(
-                apiVersion, id, body);
+            return new PingWebhookRequest(apiVersion, id, body);
         }
-
     }
 }

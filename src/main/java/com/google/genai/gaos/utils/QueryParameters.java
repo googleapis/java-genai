@@ -21,15 +21,14 @@ package com.google.genai.gaos.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class QueryParameters {
-    public static <T extends Object> List<QueryParameter> parseQueryParams(Class<T> type, T queryParams,
-            Globals globals) throws Exception {
+    public static <T extends Object> List<QueryParameter> parseQueryParams(
+            Class<T> type, T queryParams, Globals globals) throws Exception {
         List<QueryParameter> allParams = new ArrayList<>();
 
         Field[] fields = type.getDeclaredFields();
@@ -39,11 +38,11 @@ public class QueryParameters {
             if (Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
-            
+
             Object value = queryParams != null ? field.get(queryParams) : null;
-            value = Utils.resolveStringShape(type, field.getName(), value); 
+            value = Utils.resolveStringShape(type, field.getName(), value);
             value = Utils.resolveOptionals(value);
-            
+
             value = Utils.populateGlobal(value, field.getName(), "queryParam", globals);
             if (value == null) {
                 continue;
@@ -79,16 +78,13 @@ public class QueryParameters {
 
         // include all global params in query params if not already present
         if (globals != null) {
-            Set<String> allParamNames = allParams.stream()
-                .map(QueryParameter::name)
-                .collect(Collectors.toSet());
+            Set<String> allParamNames =
+                    allParams.stream().map(QueryParameter::name).collect(Collectors.toSet());
             globals.queryParamsAsStream()
-                .filter(entry -> !allParamNames.contains(entry.getKey()))
-                .forEach(entry ->
-                        allParams.add(QueryParameter.of(entry.getKey(),
-                            entry.getValue(), false)));
+                    .filter(entry -> !allParamNames.contains(entry.getKey()))
+                    .forEach(entry -> allParams.add(QueryParameter.of(entry.getKey(), entry.getValue(), false)));
         }
-        
+
         return allParams;
     }
 
@@ -107,8 +103,8 @@ public class QueryParameters {
         return params;
     }
 
-    private static List<QueryParameter> parseDelimitedParams(QueryParamsMetadata queryParamsMetadata, Object value, String delimiter)
-            throws IllegalArgumentException, IllegalAccessException {
+    private static List<QueryParameter> parseDelimitedParams(
+            QueryParamsMetadata queryParamsMetadata, Object value, String delimiter) throws IllegalArgumentException, IllegalAccessException {
         List<QueryParameter> params = new ArrayList<>();
 
         switch (Types.getType(value.getClass())) {
@@ -129,8 +125,10 @@ public class QueryParameters {
                     values.add(String.join(delimiter, items));
                 }
 
-                params.addAll(values.stream().map(v -> QueryParameter.of(queryParamsMetadata.name, v, queryParamsMetadata.allowReserved))
-                        .collect(Collectors.toList()));
+                params.addAll(
+                        values.stream()
+                                .map(v -> QueryParameter.of(queryParamsMetadata.name, v, queryParamsMetadata.allowReserved))
+                                .collect(Collectors.toList()));
                 break;
             }
             case MAP: {
@@ -150,18 +148,23 @@ public class QueryParameters {
                 }
 
                 if (items.size() > 0) {
-                    params.add(QueryParameter.of(queryParamsMetadata.name, String.join(delimiter, items), queryParamsMetadata.allowReserved));
+                    params.add(QueryParameter.of(
+                            queryParamsMetadata.name, String.join(delimiter, items), queryParamsMetadata.allowReserved));
                 }
                 break;
             }
             case OBJECT: {
                 if (!Utils.allowIntrospection(value.getClass())) {
-                    params.add(QueryParameter.of(queryParamsMetadata.name, Utils.valToString(value), queryParamsMetadata.allowReserved));
+                    params.add(QueryParameter.of(
+                            queryParamsMetadata.name, Utils.valToString(value), queryParamsMetadata.allowReserved));
                     break;
                 }
                 Optional<?> unwrappedEnumValue = Reflections.getUnwrappedEnumValue(value.getClass(), value);
                 if (unwrappedEnumValue.isPresent()) {
-                    params.add(QueryParameter.of(queryParamsMetadata.name, Utils.valToString(unwrappedEnumValue.get()), queryParamsMetadata.allowReserved));
+                    params.add(QueryParameter.of(
+                            queryParamsMetadata.name,
+                            Utils.valToString(unwrappedEnumValue.get()),
+                            queryParamsMetadata.allowReserved));
                     break;
                 }
                 Field[] fields = value.getClass().getDeclaredFields();
@@ -189,21 +192,23 @@ public class QueryParameters {
                 }
 
                 if (items.size() > 0) {
-                    params.add(QueryParameter.of(queryParamsMetadata.name, String.join(delimiter, items), queryParamsMetadata.allowReserved));
+                    params.add(QueryParameter.of(
+                            queryParamsMetadata.name, String.join(delimiter, items), queryParamsMetadata.allowReserved));
                 }
                 break;
             }
             default:
-                params.add(QueryParameter.of(queryParamsMetadata.name, Utils.valToString(value), queryParamsMetadata.allowReserved));
+                params.add(QueryParameter.of(
+                        queryParamsMetadata.name, Utils.valToString(value), queryParamsMetadata.allowReserved));
                 break;
         }
 
         return params;
     }
 
-    private static List<QueryParameter> parseDeepObjectParams(QueryParamsMetadata queryParamsMetadata, Object value) 
-        throws Exception {
-        
+    private static List<QueryParameter> parseDeepObjectParams(QueryParamsMetadata queryParamsMetadata, Object value)
+            throws Exception {
+
         List<QueryParameter> params = new ArrayList<>();
 
         switch (Types.getType(value.getClass())) {
@@ -216,12 +221,16 @@ public class QueryParameters {
 
                     if (val instanceof List || val.getClass().isArray()) {
                         for (Object v : Utils.toList(val)) {
-                            params.add(QueryParameter.of(String.format("%s[%s]", queryParamsMetadata.name, key),
-                                    Utils.valToString(v), queryParamsMetadata.allowReserved));
+                            params.add(QueryParameter.of(
+                                    String.format("%s[%s]", queryParamsMetadata.name, key),
+                                    Utils.valToString(v),
+                                    queryParamsMetadata.allowReserved));
                         }
                     } else {
-                        params.add(QueryParameter.of(String.format("%s[%s]", queryParamsMetadata.name, key),
-                                Utils.valToString(val), queryParamsMetadata.allowReserved));
+                        params.add(QueryParameter.of(
+                                String.format("%s[%s]", queryParamsMetadata.name, key),
+                                Utils.valToString(val),
+                                queryParamsMetadata.allowReserved));
                     }
                 }
 
@@ -251,12 +260,14 @@ public class QueryParameters {
                         for (Object v : Utils.toList(val)) {
                             params.add(QueryParameter.of(
                                     String.format("%s[%s]", queryParamsMetadata.name, metadata.name),
-                                    Utils.valToString(v), metadata.allowReserved));
+                                    Utils.valToString(v),
+                                    metadata.allowReserved));
                         }
                     } else {
-                        params.add(
-                                QueryParameter.of(String.format("%s[%s]", queryParamsMetadata.name, metadata.name),
-                                        Utils.valToString(val), metadata.allowReserved));
+                        params.add(QueryParameter.of(
+                                String.format("%s[%s]", queryParamsMetadata.name, metadata.name),
+                                Utils.valToString(val),
+                                metadata.allowReserved));
                     }
                 }
 

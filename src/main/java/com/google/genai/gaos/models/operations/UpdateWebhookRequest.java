@@ -29,7 +29,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class UpdateWebhookRequest {
     /**
      * Which version of the API to use.
@@ -62,16 +61,13 @@ public class UpdateWebhookRequest {
             @Nullable String updateMask,
             @Nullable WebhookUpdate body) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.updateMask = updateMask;
         this.body = body;
     }
-    
-    public UpdateWebhookRequest(
-            @Nonnull String id) {
-        this(null, id, null,
-            null);
+
+    public UpdateWebhookRequest(@Nonnull String id) {
+        this(null, id, null, null);
     }
 
     /**
@@ -106,7 +102,6 @@ public class UpdateWebhookRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -114,7 +109,6 @@ public class UpdateWebhookRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Required. The ID of the webhook to update.
@@ -124,7 +118,6 @@ public class UpdateWebhookRequest {
         return this;
     }
 
-
     /**
      * Optional. The list of fields to update.
      */
@@ -133,7 +126,6 @@ public class UpdateWebhookRequest {
         return this;
     }
 
-
     /**
      * Required. The webhook to update.
      */
@@ -141,7 +133,6 @@ public class UpdateWebhookRequest {
         this.body = body;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -152,31 +143,25 @@ public class UpdateWebhookRequest {
             return false;
         }
         UpdateWebhookRequest other = (UpdateWebhookRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.updateMask, other.updateMask) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.updateMask, other.updateMask)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id, updateMask,
-            body);
+        return Utils.enhancedHash(apiVersion, id, updateMask, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(UpdateWebhookRequest.class,
-                "apiVersion", apiVersion,
-                "id", id,
-                "updateMask", updateMask,
-                "body", body);
+        return Utils.toString(
+                UpdateWebhookRequest.class, "apiVersion", apiVersion, "id", id, "updateMask", updateMask, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -187,7 +172,7 @@ public class UpdateWebhookRequest {
         private WebhookUpdate body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -223,10 +208,7 @@ public class UpdateWebhookRequest {
         }
 
         public UpdateWebhookRequest build() {
-            return new UpdateWebhookRequest(
-                apiVersion, id, updateMask,
-                body);
+            return new UpdateWebhookRequest(apiVersion, id, updateMask, body);
         }
-
     }
 }

@@ -53,12 +53,12 @@ public class NetworkEnum {
     }
 
     /**
-     * Returns a NetworkEnum with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a NetworkEnum with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as NetworkEnum
-     */ 
+     */
     @JsonCreator
     public static NetworkEnum of(String value) {
         synchronized (NetworkEnum.class) {
@@ -86,12 +86,9 @@ public class NetworkEnum {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         NetworkEnum other = (NetworkEnum) obj;
         return Objects.equals(value, other.value);
     }
@@ -119,11 +116,11 @@ public class NetworkEnum {
         map.put("disabled", NetworkEnumEnum.DISABLED);
         return map;
     }
-    
-    
+
     public enum NetworkEnumEnum {
 
-        DISABLED("disabled"),;
+        DISABLED("disabled"),
+        ;
 
         private final String value;
 
@@ -136,4 +133,3 @@ public class NetworkEnum {
         }
     }
 }
-

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Threshold
- * 
+ *
  * <p>Required. The threshold for blocking content. If the harm probability
  * exceeds this threshold, the content will be blocked.
  */
@@ -63,12 +63,12 @@ public class Threshold {
     }
 
     /**
-     * Returns a Threshold with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Threshold with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Threshold
-     */ 
+     */
     @JsonCreator
     public static Threshold of(String value) {
         synchronized (Threshold.class) {
@@ -96,12 +96,9 @@ public class Threshold {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Threshold other = (Threshold) obj;
         return Objects.equals(value, other.value);
     }
@@ -137,15 +134,15 @@ public class Threshold {
         map.put("off", ThresholdEnum.OFF);
         return map;
     }
-    
-    
+
     public enum ThresholdEnum {
 
         BLOCK_LOW_AND_ABOVE("block_low_and_above"),
         BLOCK_MEDIUM_AND_ABOVE("block_medium_and_above"),
         BLOCK_ONLY_HIGH("block_only_high"),
         BLOCK_NONE("block_none"),
-        OFF("off"),;
+        OFF("off"),
+        ;
 
         private final String value;
 
@@ -158,4 +155,3 @@ public class Threshold {
         }
     }
 }
-

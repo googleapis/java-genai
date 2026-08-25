@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * SigningSecret
- * 
+ *
  * <p>Represents a signing secret used to verify webhook payloads.
  */
 public class SigningSecret {
@@ -57,7 +57,7 @@ public class SigningSecret {
         this.expireTime = expireTime;
         this.truncatedSecret = truncatedSecret;
     }
-    
+
     public SigningSecret() {
         this(null, null);
     }
@@ -80,7 +80,6 @@ public class SigningSecret {
         return new Builder();
     }
 
-
     /**
      * Output only. The expiration date of the signing secret.
      */
@@ -89,7 +88,6 @@ public class SigningSecret {
         return this;
     }
 
-
     /**
      * Output only. The truncated version of the signing secret.
      */
@@ -97,7 +95,6 @@ public class SigningSecret {
         this.truncatedSecret = truncatedSecret;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -108,33 +105,29 @@ public class SigningSecret {
             return false;
         }
         SigningSecret other = (SigningSecret) o;
-        return 
-            Utils.enhancedDeepEquals(this.expireTime, other.expireTime) &&
-            Utils.enhancedDeepEquals(this.truncatedSecret, other.truncatedSecret);
+        return Utils.enhancedDeepEquals(this.expireTime, other.expireTime)
+                && Utils.enhancedDeepEquals(this.truncatedSecret, other.truncatedSecret);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            expireTime, truncatedSecret);
+        return Utils.enhancedHash(expireTime, truncatedSecret);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SigningSecret.class,
-                "expireTime", expireTime,
-                "truncatedSecret", truncatedSecret);
+        return Utils.toString(SigningSecret.class, "expireTime", expireTime, "truncatedSecret", truncatedSecret);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private OffsetDateTime expireTime;
 
         private String truncatedSecret;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -154,9 +147,7 @@ public class SigningSecret {
         }
 
         public SigningSecret build() {
-            return new SigningSecret(
-                expireTime, truncatedSecret);
+            return new SigningSecret(expireTime, truncatedSecret);
         }
-
     }
 }

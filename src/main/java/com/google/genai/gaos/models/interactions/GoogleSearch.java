@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.models.agents.AgentTool;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * GoogleSearch
- * 
+ *
  * <p>A tool that can be used by the model to search Google.
  */
 public class GoogleSearch implements AgentTool, Tool {
@@ -46,17 +46,15 @@ public class GoogleSearch implements AgentTool, Tool {
     @JsonProperty("search_types")
     private List<GoogleSearchSearchType> searchTypes;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public GoogleSearch(
-            @JsonProperty("search_types") @Nullable List<GoogleSearchSearchType> searchTypes) {
+    public GoogleSearch(@JsonProperty("search_types") @Nullable List<GoogleSearchSearchType> searchTypes) {
         this.searchTypes = searchTypes;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public GoogleSearch() {
         this(null);
     }
@@ -77,7 +75,6 @@ public class GoogleSearch implements AgentTool, Tool {
         return new Builder();
     }
 
-
     /**
      * The types of search grounding to enable.
      */
@@ -85,7 +82,6 @@ public class GoogleSearch implements AgentTool, Tool {
         this.searchTypes = searchTypes;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -96,31 +92,27 @@ public class GoogleSearch implements AgentTool, Tool {
             return false;
         }
         GoogleSearch other = (GoogleSearch) o;
-        return 
-            Utils.enhancedDeepEquals(this.searchTypes, other.searchTypes) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.searchTypes, other.searchTypes)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            searchTypes, type);
+        return Utils.enhancedHash(searchTypes, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleSearch.class,
-                "searchTypes", searchTypes,
-                "type", type);
+        return Utils.toString(GoogleSearch.class, "searchTypes", searchTypes, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<GoogleSearchSearchType> searchTypes;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -132,15 +124,10 @@ public class GoogleSearch implements AgentTool, Tool {
         }
 
         public GoogleSearch build() {
-            return new GoogleSearch(
-                searchTypes);
+            return new GoogleSearch(searchTypes);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_search\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_search\"", new TypeReference<String>() {});
     }
 }

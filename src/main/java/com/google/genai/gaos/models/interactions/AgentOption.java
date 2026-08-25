@@ -36,14 +36,16 @@ import java.util.Optional;
  */
 /**
  * AgentOption
- * 
+ *
  * <p>The agent to interact with.
  */
 public class AgentOption {
 
-    public static final AgentOption DEEP_RESEARCH_PRO_PREVIEW122025 = new AgentOption("deep-research-pro-preview-12-2025");
+    public static final AgentOption DEEP_RESEARCH_PRO_PREVIEW122025 =
+            new AgentOption("deep-research-pro-preview-12-2025");
     public static final AgentOption DEEP_RESEARCH_PREVIEW042026 = new AgentOption("deep-research-preview-04-2026");
-    public static final AgentOption DEEP_RESEARCH_MAX_PREVIEW042026 = new AgentOption("deep-research-max-preview-04-2026");
+    public static final AgentOption DEEP_RESEARCH_MAX_PREVIEW042026 =
+            new AgentOption("deep-research-max-preview-04-2026");
     public static final AgentOption ANTIGRAVITY_PREVIEW052026 = new AgentOption("antigravity-preview-05-2026");
 
     // This map will grow whenever a Color gets created with a new
@@ -61,12 +63,12 @@ public class AgentOption {
     }
 
     /**
-     * Returns a AgentOption with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a AgentOption with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as AgentOption
-     */ 
+     */
     @JsonCreator
     public static AgentOption of(String value) {
         synchronized (AgentOption.class) {
@@ -94,12 +96,9 @@ public class AgentOption {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         AgentOption other = (AgentOption) obj;
         return Objects.equals(value, other.value);
     }
@@ -133,14 +132,14 @@ public class AgentOption {
         map.put("antigravity-preview-05-2026", AgentOptionEnum.ANTIGRAVITY_PREVIEW052026);
         return map;
     }
-    
-    
+
     public enum AgentOptionEnum {
 
         DEEP_RESEARCH_PRO_PREVIEW122025("deep-research-pro-preview-12-2025"),
         DEEP_RESEARCH_PREVIEW042026("deep-research-preview-04-2026"),
         DEEP_RESEARCH_MAX_PREVIEW042026("deep-research-max-preview-04-2026"),
-        ANTIGRAVITY_PREVIEW052026("antigravity-preview-05-2026"),;
+        ANTIGRAVITY_PREVIEW052026("antigravity-preview-05-2026"),
+        ;
 
         private final String value;
 
@@ -153,4 +152,3 @@ public class AgentOption {
         }
     }
 }
-

@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -39,26 +39,29 @@ public class FunctionResultDeltaResultUnion {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private FunctionResultDeltaResultUnion(TypedObject value) {
         this.value = value;
     }
 
     public static FunctionResultDeltaResultUnion of(List<FunctionResultSubcontent> value) {
         Utils.checkNotNull(value, "value");
-        return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>(){}));
+        return new FunctionResultDeltaResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<FunctionResultSubcontent>>() {}));
     }
 
     public static FunctionResultDeltaResultUnion of(FunctionResultDeltaResult value) {
         Utils.checkNotNull(value, "value");
-        return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultDeltaResult>(){}));
+        return new FunctionResultDeltaResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FunctionResultDeltaResult>() {}));
     }
 
     public static FunctionResultDeltaResultUnion of(String value) {
         Utils.checkNotNull(value, "value");
-        return new FunctionResultDeltaResultUnion(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new FunctionResultDeltaResultUnion(
+                TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code List<FunctionResultSubcontent>},
      * otherwise returns an empty {@link Optional}.
@@ -72,7 +75,7 @@ public class FunctionResultDeltaResultUnion {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code FunctionResultDeltaResult},
      * otherwise returns an empty {@link Optional}.
@@ -85,7 +88,7 @@ public class FunctionResultDeltaResultUnion {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code String},
      * otherwise returns an empty {@link Optional}.
@@ -98,19 +101,19 @@ public class FunctionResultDeltaResultUnion {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -122,28 +125,28 @@ public class FunctionResultDeltaResultUnion {
         FunctionResultDeltaResultUnion other = (FunctionResultDeltaResultUnion) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<FunctionResultDeltaResultUnion> {
 
         public _Deserializer() {
-            super(FunctionResultDeltaResultUnion.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<FunctionResultDeltaResult>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+            super(
+                    FunctionResultDeltaResultUnion.class,
+                    false,
+                    TypeReferenceWithShape.of(
+                            new TypeReference<List<FunctionResultSubcontent>>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<FunctionResultDeltaResult>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FunctionResultDeltaResultUnion.class,
-                "value", value);
+        return Utils.toString(FunctionResultDeltaResultUnion.class, "value", value);
     }
-
 }
-

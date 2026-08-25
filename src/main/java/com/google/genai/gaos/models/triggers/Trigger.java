@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.models.interactions.Interaction;
 import com.google.genai.gaos.utils.Utils;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * Trigger
- * 
+ *
  * <p>A trigger configuration that is scheduled to run an agent.
  */
 public class Trigger {
@@ -77,7 +77,7 @@ public class Trigger {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger.
      */
     @JsonProperty("id")
@@ -183,10 +183,9 @@ public class Trigger {
         this.displayName = displayName;
         this.environmentId = environmentId;
         this.executionTimeoutSeconds = executionTimeoutSeconds;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.interaction = Optional.ofNullable(interaction)
-            .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
         this.lastPauseTime = lastPauseTime;
         this.lastResumeTime = lastResumeTime;
         this.lastRunTime = lastRunTime;
@@ -194,24 +193,33 @@ public class Trigger {
         this.nextRunTime = nextRunTime;
         this.previousInteractionId = previousInteractionId;
         this.schedule = Optional.ofNullable(schedule)
-            .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("schedule cannot be null"));
         this.status = status;
         this.timeZone = Optional.ofNullable(timeZone)
-            .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("timeZone cannot be null"));
         this.updateTime = updateTime;
     }
-    
+
     public Trigger(
-            @Nonnull String id,
-            @Nonnull Interaction interaction,
-            @Nonnull String schedule,
-            @Nonnull String timeZone) {
-        this(null, null, null,
-            null, null, id,
-            interaction, null, null,
-            null, null, null,
-            null, schedule, null,
-            timeZone, null);
+            @Nonnull String id, @Nonnull Interaction interaction, @Nonnull String schedule, @Nonnull String timeZone) {
+        this(
+                null,
+                null,
+                null,
+                null,
+                null,
+                id,
+                interaction,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                schedule,
+                null,
+                timeZone,
+                null);
     }
 
     /**
@@ -252,7 +260,7 @@ public class Trigger {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger.
      */
     public Optional<String> id() {
@@ -342,7 +350,6 @@ public class Trigger {
         return new Builder();
     }
 
-
     /**
      * Output only. The number of consecutive failures that have occurred
      * since the last successful execution.
@@ -352,7 +359,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The time when the trigger was created.
      */
@@ -360,7 +366,6 @@ public class Trigger {
         this.createTime = createTime;
         return this;
     }
-
 
     /**
      * Optional. The display name of the trigger.
@@ -370,7 +375,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Optional. The environment ID for the trigger execution.
      */
@@ -378,7 +382,6 @@ public class Trigger {
         this.environmentId = environmentId;
         return this;
     }
-
 
     /**
      * Optional. The execution timeout for the triggered interaction.
@@ -388,17 +391,15 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger.
      */
     public Trigger withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     /**
      * The Interaction resource.
@@ -408,7 +409,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The time when the trigger was last paused.
      */
@@ -416,7 +416,6 @@ public class Trigger {
         this.lastPauseTime = lastPauseTime;
         return this;
     }
-
 
     /**
      * Output only. The time when the trigger was last resumed.
@@ -426,7 +425,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The time when the trigger was last run.
      */
@@ -434,7 +432,6 @@ public class Trigger {
         this.lastRunTime = lastRunTime;
         return this;
     }
-
 
     /**
      * Optional. The maximum number of consecutive failures allowed before
@@ -445,7 +442,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The time when the trigger is scheduled to run next.
      */
@@ -454,7 +450,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The ID of the last interaction created by this trigger.
      */
@@ -462,7 +457,6 @@ public class Trigger {
         this.previousInteractionId = previousInteractionId;
         return this;
     }
-
 
     /**
      * Required. The cron schedule on which the trigger should run.
@@ -473,7 +467,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The current status of the trigger.
      */
@@ -481,7 +474,6 @@ public class Trigger {
         this.status = status;
         return this;
     }
-
 
     /**
      * Required. Time zone in which the schedule should be interpreted.
@@ -491,7 +483,6 @@ public class Trigger {
         return this;
     }
 
-
     /**
      * Output only. The time when the trigger was last updated.
      */
@@ -499,7 +490,6 @@ public class Trigger {
         this.updateTime = updateTime;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -510,61 +500,89 @@ public class Trigger {
             return false;
         }
         Trigger other = (Trigger) o;
-        return 
-            Utils.enhancedDeepEquals(this.consecutiveFailureCount, other.consecutiveFailureCount) &&
-            Utils.enhancedDeepEquals(this.createTime, other.createTime) &&
-            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.executionTimeoutSeconds, other.executionTimeoutSeconds) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction) &&
-            Utils.enhancedDeepEquals(this.lastPauseTime, other.lastPauseTime) &&
-            Utils.enhancedDeepEquals(this.lastResumeTime, other.lastResumeTime) &&
-            Utils.enhancedDeepEquals(this.lastRunTime, other.lastRunTime) &&
-            Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures) &&
-            Utils.enhancedDeepEquals(this.nextRunTime, other.nextRunTime) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.schedule, other.schedule) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.timeZone, other.timeZone) &&
-            Utils.enhancedDeepEquals(this.updateTime, other.updateTime);
+        return Utils.enhancedDeepEquals(this.consecutiveFailureCount, other.consecutiveFailureCount)
+                && Utils.enhancedDeepEquals(this.createTime, other.createTime)
+                && Utils.enhancedDeepEquals(this.displayName, other.displayName)
+                && Utils.enhancedDeepEquals(this.environmentId, other.environmentId)
+                && Utils.enhancedDeepEquals(this.executionTimeoutSeconds, other.executionTimeoutSeconds)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.interaction, other.interaction)
+                && Utils.enhancedDeepEquals(this.lastPauseTime, other.lastPauseTime)
+                && Utils.enhancedDeepEquals(this.lastResumeTime, other.lastResumeTime)
+                && Utils.enhancedDeepEquals(this.lastRunTime, other.lastRunTime)
+                && Utils.enhancedDeepEquals(this.maxConsecutiveFailures, other.maxConsecutiveFailures)
+                && Utils.enhancedDeepEquals(this.nextRunTime, other.nextRunTime)
+                && Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId)
+                && Utils.enhancedDeepEquals(this.schedule, other.schedule)
+                && Utils.enhancedDeepEquals(this.status, other.status)
+                && Utils.enhancedDeepEquals(this.timeZone, other.timeZone)
+                && Utils.enhancedDeepEquals(this.updateTime, other.updateTime);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            consecutiveFailureCount, createTime, displayName,
-            environmentId, executionTimeoutSeconds, id,
-            interaction, lastPauseTime, lastResumeTime,
-            lastRunTime, maxConsecutiveFailures, nextRunTime,
-            previousInteractionId, schedule, status,
-            timeZone, updateTime);
+                consecutiveFailureCount,
+                createTime,
+                displayName,
+                environmentId,
+                executionTimeoutSeconds,
+                id,
+                interaction,
+                lastPauseTime,
+                lastResumeTime,
+                lastRunTime,
+                maxConsecutiveFailures,
+                nextRunTime,
+                previousInteractionId,
+                schedule,
+                status,
+                timeZone,
+                updateTime);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Trigger.class,
-                "consecutiveFailureCount", consecutiveFailureCount,
-                "createTime", createTime,
-                "displayName", displayName,
-                "environmentId", environmentId,
-                "executionTimeoutSeconds", executionTimeoutSeconds,
-                "id", id,
-                "interaction", interaction,
-                "lastPauseTime", lastPauseTime,
-                "lastResumeTime", lastResumeTime,
-                "lastRunTime", lastRunTime,
-                "maxConsecutiveFailures", maxConsecutiveFailures,
-                "nextRunTime", nextRunTime,
-                "previousInteractionId", previousInteractionId,
-                "schedule", schedule,
-                "status", status,
-                "timeZone", timeZone,
-                "updateTime", updateTime);
+        return Utils.toString(
+                Trigger.class,
+                "consecutiveFailureCount",
+                consecutiveFailureCount,
+                "createTime",
+                createTime,
+                "displayName",
+                displayName,
+                "environmentId",
+                environmentId,
+                "executionTimeoutSeconds",
+                executionTimeoutSeconds,
+                "id",
+                id,
+                "interaction",
+                interaction,
+                "lastPauseTime",
+                lastPauseTime,
+                "lastResumeTime",
+                lastResumeTime,
+                "lastRunTime",
+                lastRunTime,
+                "maxConsecutiveFailures",
+                maxConsecutiveFailures,
+                "nextRunTime",
+                nextRunTime,
+                "previousInteractionId",
+                previousInteractionId,
+                "schedule",
+                schedule,
+                "status",
+                status,
+                "timeZone",
+                timeZone,
+                "updateTime",
+                updateTime);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer consecutiveFailureCount;
 
@@ -601,7 +619,7 @@ public class Trigger {
         private OffsetDateTime updateTime;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -647,7 +665,7 @@ public class Trigger {
 
         /**
          * Required. Output only. Identifier.
-         * 
+         *
          * <p>The ID of the trigger.
          */
         public Builder id(@Nonnull String id) {
@@ -747,13 +765,23 @@ public class Trigger {
 
         public Trigger build() {
             return new Trigger(
-                consecutiveFailureCount, createTime, displayName,
-                environmentId, executionTimeoutSeconds, id,
-                interaction, lastPauseTime, lastResumeTime,
-                lastRunTime, maxConsecutiveFailures, nextRunTime,
-                previousInteractionId, schedule, status,
-                timeZone, updateTime);
+                    consecutiveFailureCount,
+                    createTime,
+                    displayName,
+                    environmentId,
+                    executionTimeoutSeconds,
+                    id,
+                    interaction,
+                    lastPauseTime,
+                    lastResumeTime,
+                    lastRunTime,
+                    maxConsecutiveFailures,
+                    nextRunTime,
+                    previousInteractionId,
+                    schedule,
+                    status,
+                    timeZone,
+                    updateTime);
         }
-
     }
 }

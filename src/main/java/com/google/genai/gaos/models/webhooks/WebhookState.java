@@ -36,14 +36,15 @@ import java.util.Optional;
  */
 /**
  * WebhookState
- * 
+ *
  * <p>Output only. The state of the webhook.
  */
 public class WebhookState {
 
     public static final WebhookState ENABLED = new WebhookState("enabled");
     public static final WebhookState DISABLED = new WebhookState("disabled");
-    public static final WebhookState DISABLED_DUE_TO_FAILED_DELIVERIES = new WebhookState("disabled_due_to_failed_deliveries");
+    public static final WebhookState DISABLED_DUE_TO_FAILED_DELIVERIES =
+            new WebhookState("disabled_due_to_failed_deliveries");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -60,12 +61,12 @@ public class WebhookState {
     }
 
     /**
-     * Returns a WebhookState with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a WebhookState with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as WebhookState
-     */ 
+     */
     @JsonCreator
     public static WebhookState of(String value) {
         synchronized (WebhookState.class) {
@@ -93,12 +94,9 @@ public class WebhookState {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         WebhookState other = (WebhookState) obj;
         return Objects.equals(value, other.value);
     }
@@ -130,13 +128,13 @@ public class WebhookState {
         map.put("disabled_due_to_failed_deliveries", WebhookStateEnum.DISABLED_DUE_TO_FAILED_DELIVERIES);
         return map;
     }
-    
-    
+
     public enum WebhookStateEnum {
 
         ENABLED("enabled"),
         DISABLED("disabled"),
-        DISABLED_DUE_TO_FAILED_DELIVERIES("disabled_due_to_failed_deliveries"),;
+        DISABLED_DUE_TO_FAILED_DELIVERIES("disabled_due_to_failed_deliveries"),
+        ;
 
         private final String value;
 
@@ -149,4 +147,3 @@ public class WebhookState {
         }
     }
 }
-

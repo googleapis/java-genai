@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.models.interactions;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
 /**
  * Annotation
- * 
+ *
  * <p>Citation information for model-generated content.
  */
 @JsonTypeInfo(
@@ -35,12 +35,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownAnnotation.class
-)
+        defaultImpl = UnknownAnnotation.class)
 @JsonTypeIdResolver(AnnotationTypeIdResolver.class)
 public interface Annotation {
 
     String type();
-
 }
-

@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * InteractionsInput
- * 
+ *
  * <p>The input for the interaction.
  */
 @JsonDeserialize(using = InteractionsInput._Deserializer.class)
@@ -44,31 +44,31 @@ public class InteractionsInput {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private InteractionsInput(TypedObject value) {
         this.value = value;
     }
 
     public static InteractionsInput of(Content value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Content>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Content>() {}));
     }
 
     public static InteractionsInput ofStep(List<Step> value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Step>>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Step>>() {}));
     }
 
     public static InteractionsInput ofContent(List<Content> value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Content>>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<Content>>() {}));
     }
 
     public static InteractionsInput of(String value) {
         Utils.checkNotNull(value, "value");
-        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new InteractionsInput(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code Content},
      * otherwise returns an empty {@link Optional}.
@@ -81,7 +81,7 @@ public class InteractionsInput {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code List<Step>},
      * otherwise returns an empty {@link Optional}.
@@ -95,7 +95,7 @@ public class InteractionsInput {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code List<Content>},
      * otherwise returns an empty {@link Optional}.
@@ -109,7 +109,7 @@ public class InteractionsInput {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code String},
      * otherwise returns an empty {@link Optional}.
@@ -122,19 +122,19 @@ public class InteractionsInput {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -146,29 +146,28 @@ public class InteractionsInput {
         InteractionsInput other = (InteractionsInput) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<InteractionsInput> {
 
         public _Deserializer() {
-            super(InteractionsInput.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<Content>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<Step>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<List<Content>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+            super(
+                    InteractionsInput.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<Content>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<List<Step>>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<List<Content>>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(InteractionsInput.class,
-                "value", value);
+        return Utils.toString(InteractionsInput.class, "value", value);
     }
-
 }
-

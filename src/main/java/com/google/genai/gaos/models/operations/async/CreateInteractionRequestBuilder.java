@@ -76,7 +76,7 @@ public class CreateInteractionRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateInteractionRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -85,30 +85,30 @@ public class CreateInteractionRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    *
-    * <p>This operation returns a {@link EventStream<InteractionSSEStreamEvent>} blocking SSE (Server-Sent Events) stream.
-    *
-    * <p>
-    * The returned CompletableFuture completes with the blocking event stream once response headers are received.
-    * Iterating the stream blocks the calling thread; close it after use.
-    *
-    * @return A CompletableFuture that completes with a blocking event stream of typed events from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     *
+     * <p>This operation returns a {@link EventStream<InteractionSSEStreamEvent>} blocking SSE (Server-Sent Events) stream.
+     *
+     * <p>
+     * The returned CompletableFuture completes with the blocking event stream once response headers are received.
+     * Iterating the stream blocks the calling thread; close it after use.
+     *
+     * @return A CompletableFuture that completes with a blocking event stream of typed events from the server.
+     */
     public CompletableFuture<EventStream<InteractionSSEStreamEvent>> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-                operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation =
+                new CreateInteraction.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse)
+                        .thenApplyAsync(
+                                response -> new EventStream<InteractionSSEStreamEvent>(
+                                        response.rawResponse().body(),
+                                        new TypeReference<InteractionSSEStreamEvent>() {},
+                                        Utils.mapper(),
+                                        Optional.of("[DONE]")),
+                                Operations.streamCompletionExecutor()),
+                operation);
     }
 }

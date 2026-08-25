@@ -56,12 +56,12 @@ public class ServiceTier {
     }
 
     /**
-     * Returns a ServiceTier with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ServiceTier with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ServiceTier
-     */ 
+     */
     @JsonCreator
     public static ServiceTier of(String value) {
         synchronized (ServiceTier.class) {
@@ -89,12 +89,9 @@ public class ServiceTier {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ServiceTier other = (ServiceTier) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class ServiceTier {
         map.put("deferred", ServiceTierEnum.DEFERRED);
         return map;
     }
-    
-    
+
     public enum ServiceTierEnum {
 
         FLEX("flex"),
         STANDARD("standard"),
         PRIORITY("priority"),
-        DEFERRED("deferred"),;
+        DEFERRED("deferred"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class ServiceTier {
         }
     }
 }
-

@@ -30,7 +30,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetEnvironmentFilesRequest {
     /**
      * Which version of the API to use.
@@ -38,10 +37,8 @@ public class GetEnvironmentFilesRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=environment")
     private String environment;
-
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=path")
     private String path;
@@ -74,19 +71,15 @@ public class GetEnvironmentFilesRequest {
             @Nullable Boolean recursive) {
         this.apiVersion = apiVersion;
         this.environment = Optional.ofNullable(environment)
-            .orElseThrow(() -> new IllegalArgumentException("environment cannot be null"));
-        this.path = Optional.ofNullable(path)
-            .orElseThrow(() -> new IllegalArgumentException("path cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("environment cannot be null"));
+        this.path = Optional.ofNullable(path).orElseThrow(() -> new IllegalArgumentException("path cannot be null"));
         this.pageSize = pageSize;
         this.pageToken = pageToken;
         this.recursive = recursive;
     }
-    
-    public GetEnvironmentFilesRequest(
-            @Nonnull String environment,
-            @Nonnull String path) {
-        this(null, environment, path,
-            null, null, null);
+
+    public GetEnvironmentFilesRequest(@Nonnull String environment, @Nonnull String path) {
+        this(null, environment, path, null, null, null);
     }
 
     /**
@@ -129,7 +122,6 @@ public class GetEnvironmentFilesRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -138,18 +130,15 @@ public class GetEnvironmentFilesRequest {
         return this;
     }
 
-
     public GetEnvironmentFilesRequest withEnvironment(@Nonnull String environment) {
         this.environment = Utils.checkNotNull(environment, "environment");
         return this;
     }
 
-
     public GetEnvironmentFilesRequest withPath(@Nonnull String path) {
         this.path = Utils.checkNotNull(path, "path");
         return this;
     }
-
 
     /**
      * Optional. Maximum number of entries to return per page (for directory listing).
@@ -159,7 +148,6 @@ public class GetEnvironmentFilesRequest {
         return this;
     }
 
-
     /**
      * Optional. Pagination token for directory listing.
      */
@@ -168,7 +156,6 @@ public class GetEnvironmentFilesRequest {
         return this;
     }
 
-
     /**
      * Optional. If true and the path is a directory, recursively lists all files.
      */
@@ -176,7 +163,6 @@ public class GetEnvironmentFilesRequest {
         this.recursive = recursive;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -187,35 +173,39 @@ public class GetEnvironmentFilesRequest {
             return false;
         }
         GetEnvironmentFilesRequest other = (GetEnvironmentFilesRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.path, other.path) &&
-            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken) &&
-            Utils.enhancedDeepEquals(this.recursive, other.recursive);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.environment, other.environment)
+                && Utils.enhancedDeepEquals(this.path, other.path)
+                && Utils.enhancedDeepEquals(this.pageSize, other.pageSize)
+                && Utils.enhancedDeepEquals(this.pageToken, other.pageToken)
+                && Utils.enhancedDeepEquals(this.recursive, other.recursive);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, environment, path,
-            pageSize, pageToken, recursive);
+        return Utils.enhancedHash(apiVersion, environment, path, pageSize, pageToken, recursive);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetEnvironmentFilesRequest.class,
-                "apiVersion", apiVersion,
-                "environment", environment,
-                "path", path,
-                "pageSize", pageSize,
-                "pageToken", pageToken,
-                "recursive", recursive);
+        return Utils.toString(
+                GetEnvironmentFilesRequest.class,
+                "apiVersion",
+                apiVersion,
+                "environment",
+                environment,
+                "path",
+                path,
+                "pageSize",
+                pageSize,
+                "pageToken",
+                pageToken,
+                "recursive",
+                recursive);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -230,7 +220,7 @@ public class GetEnvironmentFilesRequest {
         private Boolean recursive;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -276,10 +266,7 @@ public class GetEnvironmentFilesRequest {
         }
 
         public GetEnvironmentFilesRequest build() {
-            return new GetEnvironmentFilesRequest(
-                apiVersion, environment, path,
-                pageSize, pageToken, recursive);
+            return new GetEnvironmentFilesRequest(apiVersion, environment, path, pageSize, pageToken, recursive);
         }
-
     }
 }

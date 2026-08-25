@@ -19,12 +19,11 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
-
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import com.google.genai.gaos.utils.transport.HttpResponse;
 
 public interface HTTPClient extends java.lang.AutoCloseable {
 

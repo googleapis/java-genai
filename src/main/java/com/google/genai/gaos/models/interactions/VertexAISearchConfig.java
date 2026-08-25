@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * VertexAISearchConfig
- * 
+ *
  * <p>Used to specify configuration for VertexAISearch.
  */
 public class VertexAISearchConfig {
@@ -57,7 +57,7 @@ public class VertexAISearchConfig {
         this.datastores = datastores;
         this.engine = engine;
     }
-    
+
     public VertexAISearchConfig() {
         this(null, null);
     }
@@ -80,7 +80,6 @@ public class VertexAISearchConfig {
         return new Builder();
     }
 
-
     /**
      * Optional. Used to specify Vertex AI Search datastores.
      */
@@ -89,7 +88,6 @@ public class VertexAISearchConfig {
         return this;
     }
 
-
     /**
      * Optional. Used to specify Vertex AI Search engine.
      */
@@ -97,7 +95,6 @@ public class VertexAISearchConfig {
         this.engine = engine;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -108,33 +105,29 @@ public class VertexAISearchConfig {
             return false;
         }
         VertexAISearchConfig other = (VertexAISearchConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.datastores, other.datastores) &&
-            Utils.enhancedDeepEquals(this.engine, other.engine);
+        return Utils.enhancedDeepEquals(this.datastores, other.datastores)
+                && Utils.enhancedDeepEquals(this.engine, other.engine);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            datastores, engine);
+        return Utils.enhancedHash(datastores, engine);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(VertexAISearchConfig.class,
-                "datastores", datastores,
-                "engine", engine);
+        return Utils.toString(VertexAISearchConfig.class, "datastores", datastores, "engine", engine);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<String> datastores;
 
         private String engine;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -154,9 +147,7 @@ public class VertexAISearchConfig {
         }
 
         public VertexAISearchConfig build() {
-            return new VertexAISearchConfig(
-                datastores, engine);
+            return new VertexAISearchConfig(datastores, engine);
         }
-
     }
 }

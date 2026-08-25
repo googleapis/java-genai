@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.environments;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.models.interactions.Source;
 import com.google.genai.gaos.utils.Utils;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * CreateEnvironmentRequest
- * 
+ *
  * <p>Request for `CreateEnvironment`.
  */
 public class CreateEnvironmentRequest {
@@ -58,7 +58,7 @@ public class CreateEnvironmentRequest {
         this.network = network;
         this.sources = sources;
     }
-    
+
     public CreateEnvironmentRequest() {
         this(null, null);
     }
@@ -81,7 +81,6 @@ public class CreateEnvironmentRequest {
         return new Builder();
     }
 
-
     /**
      * Network configuration for the environment.
      */
@@ -90,7 +89,6 @@ public class CreateEnvironmentRequest {
         return this;
     }
 
-
     /**
      * Sources to be mounted into the environment.
      */
@@ -98,7 +96,6 @@ public class CreateEnvironmentRequest {
         this.sources = sources;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -109,33 +106,29 @@ public class CreateEnvironmentRequest {
             return false;
         }
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.network, other.network) &&
-            Utils.enhancedDeepEquals(this.sources, other.sources);
+        return Utils.enhancedDeepEquals(this.network, other.network)
+                && Utils.enhancedDeepEquals(this.sources, other.sources);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            network, sources);
+        return Utils.enhancedHash(network, sources);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateEnvironmentRequest.class,
-                "network", network,
-                "sources", sources);
+        return Utils.toString(CreateEnvironmentRequest.class, "network", network, "sources", sources);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private CreateEnvironmentRequestNetworkUnion network;
 
         private List<Source> sources;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -155,9 +148,7 @@ public class CreateEnvironmentRequest {
         }
 
         public CreateEnvironmentRequest build() {
-            return new CreateEnvironmentRequest(
-                network, sources);
+            return new CreateEnvironmentRequest(network, sources);
         }
-
     }
 }

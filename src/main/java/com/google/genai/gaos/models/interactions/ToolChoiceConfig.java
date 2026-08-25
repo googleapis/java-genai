@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * ToolChoiceConfig
- * 
+ *
  * <p>The tool choice configuration containing allowed tools.
  */
 public class ToolChoiceConfig {
@@ -43,11 +43,10 @@ public class ToolChoiceConfig {
     private AllowedTools allowedTools;
 
     @JsonCreator
-    public ToolChoiceConfig(
-            @JsonProperty("allowed_tools") @Nullable AllowedTools allowedTools) {
+    public ToolChoiceConfig(@JsonProperty("allowed_tools") @Nullable AllowedTools allowedTools) {
         this.allowedTools = allowedTools;
     }
-    
+
     public ToolChoiceConfig() {
         this(null);
     }
@@ -63,7 +62,6 @@ public class ToolChoiceConfig {
         return new Builder();
     }
 
-
     /**
      * The configuration for allowed tools.
      */
@@ -71,7 +69,6 @@ public class ToolChoiceConfig {
         this.allowedTools = allowedTools;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,29 +79,26 @@ public class ToolChoiceConfig {
             return false;
         }
         ToolChoiceConfig other = (ToolChoiceConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.allowedTools, other.allowedTools);
+        return Utils.enhancedDeepEquals(this.allowedTools, other.allowedTools);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            allowedTools);
+        return Utils.enhancedHash(allowedTools);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ToolChoiceConfig.class,
-                "allowedTools", allowedTools);
+        return Utils.toString(ToolChoiceConfig.class, "allowedTools", allowedTools);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private AllowedTools allowedTools;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -116,9 +110,7 @@ public class ToolChoiceConfig {
         }
 
         public ToolChoiceConfig build() {
-            return new ToolChoiceConfig(
-                allowedTools);
+            return new ToolChoiceConfig(allowedTools);
         }
-
     }
 }

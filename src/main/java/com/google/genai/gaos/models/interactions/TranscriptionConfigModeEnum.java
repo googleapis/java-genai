@@ -54,12 +54,12 @@ public class TranscriptionConfigModeEnum {
     }
 
     /**
-     * Returns a TranscriptionConfigModeEnum with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a TranscriptionConfigModeEnum with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as TranscriptionConfigModeEnum
-     */ 
+     */
     @JsonCreator
     public static TranscriptionConfigModeEnum of(String value) {
         synchronized (TranscriptionConfigModeEnum.class) {
@@ -87,12 +87,9 @@ public class TranscriptionConfigModeEnum {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         TranscriptionConfigModeEnum other = (TranscriptionConfigModeEnum) obj;
         return Objects.equals(value, other.value);
     }
@@ -122,12 +119,12 @@ public class TranscriptionConfigModeEnum {
         map.put("smart", TranscriptionConfigModeEnumEnum.SMART);
         return map;
     }
-    
-    
+
     public enum TranscriptionConfigModeEnumEnum {
 
         VERBATIM("verbatim"),
-        SMART("smart"),;
+        SMART("smart"),
+        ;
 
         private final String value;
 
@@ -140,4 +137,3 @@ public class TranscriptionConfigModeEnum {
         }
     }
 }
-

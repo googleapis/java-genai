@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * CodeMenderAgentConfig
- * 
+ *
  * <p>Configuration for the CodeMender agent.
  */
 public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgentInteractionAgentConfig {
@@ -76,7 +76,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
     @JsonProperty("session_id")
     private String sessionId;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -94,10 +93,9 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         this.sessionId = sessionId;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public CodeMenderAgentConfig() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -148,7 +146,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         return new Builder();
     }
 
-
     /**
      * Request parameters specific to FIND sessions, used for discovering
      * vulnerabilities in a codebase.
@@ -157,7 +154,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         this.findRequest = findRequest;
         return this;
     }
-
 
     /**
      * Request parameters specific to FIX sessions, used for generating and
@@ -168,7 +164,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         return this;
     }
 
-
     /**
      * The name of the model to use for the CodeMender agent. One
      * CodeMender session will only use one model.
@@ -178,7 +173,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         return this;
     }
 
-
     /**
      * The configuration of CodeMender sessions.
      */
@@ -186,7 +180,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         this.sessionConfig = sessionConfig;
         return this;
     }
-
 
     /**
      * Parameter for grouping multiple interactions that belong to
@@ -197,7 +190,6 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -207,35 +199,39 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
             return false;
         }
         CodeMenderAgentConfig other = (CodeMenderAgentConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.findRequest, other.findRequest) &&
-            Utils.enhancedDeepEquals(this.fixRequest, other.fixRequest) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.sessionConfig, other.sessionConfig) &&
-            Utils.enhancedDeepEquals(this.sessionId, other.sessionId) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.findRequest, other.findRequest)
+                && Utils.enhancedDeepEquals(this.fixRequest, other.fixRequest)
+                && Utils.enhancedDeepEquals(this.model, other.model)
+                && Utils.enhancedDeepEquals(this.sessionConfig, other.sessionConfig)
+                && Utils.enhancedDeepEquals(this.sessionId, other.sessionId)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            findRequest, fixRequest, model,
-            sessionConfig, sessionId, type);
+        return Utils.enhancedHash(findRequest, fixRequest, model, sessionConfig, sessionId, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CodeMenderAgentConfig.class,
-                "findRequest", findRequest,
-                "fixRequest", fixRequest,
-                "model", model,
-                "sessionConfig", sessionConfig,
-                "sessionId", sessionId,
-                "type", type);
+        return Utils.toString(
+                CodeMenderAgentConfig.class,
+                "findRequest",
+                findRequest,
+                "fixRequest",
+                fixRequest,
+                "model",
+                model,
+                "sessionConfig",
+                sessionConfig,
+                "sessionId",
+                sessionId,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private FindRequest findRequest;
 
@@ -248,7 +244,7 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         private String sessionId;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -296,16 +292,10 @@ public class CodeMenderAgentConfig implements InteractionAgentConfig, CreateAgen
         }
 
         public CodeMenderAgentConfig build() {
-            return new CodeMenderAgentConfig(
-                findRequest, fixRequest, model,
-                sessionConfig, sessionId);
+            return new CodeMenderAgentConfig(findRequest, fixRequest, model, sessionConfig, sessionId);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"code-mender\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"code-mender\"", new TypeReference<String>() {});
     }
 }

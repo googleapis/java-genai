@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * InteractionStatus
- * 
+ *
  * <p>Required. Output only. The status of the interaction.
  */
 public class InteractionStatus {
@@ -65,12 +65,12 @@ public class InteractionStatus {
     }
 
     /**
-     * Returns a InteractionStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a InteractionStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as InteractionStatus
-     */ 
+     */
     @JsonCreator
     public static InteractionStatus of(String value) {
         synchronized (InteractionStatus.class) {
@@ -98,12 +98,9 @@ public class InteractionStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         InteractionStatus other = (InteractionStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -145,8 +142,7 @@ public class InteractionStatus {
         map.put("queued", InteractionStatusEnum.QUEUED);
         return map;
     }
-    
-    
+
     public enum InteractionStatusEnum {
 
         IN_PROGRESS("in_progress"),
@@ -156,7 +152,8 @@ public class InteractionStatus {
         CANCELLED("cancelled"),
         INCOMPLETE("incomplete"),
         BUDGET_EXCEEDED("budget_exceeded"),
-        QUEUED("queued"),;
+        QUEUED("queued"),
+        ;
 
         private final String value;
 
@@ -169,4 +166,3 @@ public class InteractionStatus {
         }
     }
 }
-

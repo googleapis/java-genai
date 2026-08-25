@@ -26,15 +26,13 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class Globals {
-    
+
     private final Map<String, String> queryParams = new HashMap<>();
     private final Map<String, String> pathParams = new HashMap<>();
     private final Map<String, String> headerParams = new HashMap<>();
-    
 
-    public Globals() {
-    }
-    
+    public Globals() {}
+
     // internal use only
     public void putParam(String type, String name, Object value) {
         if ("pathParam".equals(type)) {
@@ -47,19 +45,19 @@ public final class Globals {
             throw new IllegalArgumentException("Unknown parameter type: " + type);
         }
     }
-    
+
     // internal use only
     public Optional<String> getParam(String type, String name) {
-        if ("pathParam".equals(type)){
+        if ("pathParam".equals(type)) {
             return getPathParam(name);
         } else if ("queryParam".equals(type)) {
-           return getQueryParam(name);
+            return getQueryParam(name);
         } else if ("header".equals(type)) {
-           return getHeader(name);
+            return getHeader(name);
         } else {
             throw new IllegalArgumentException("Unknown parameter type: " + type);
         }
-    }    
+    }
 
     public void putQueryParam(String name, Object value) {
         if (value != null) {
@@ -80,9 +78,9 @@ public final class Globals {
     }
 
     public Optional<String> getQueryParam(String name) {
-        return Optional.ofNullable(queryParams.get(name));      
+        return Optional.ofNullable(queryParams.get(name));
     }
-   
+
     public Optional<String> getPathParam(String name) {
         return Optional.ofNullable(pathParams.get(name));
     }
@@ -90,11 +88,11 @@ public final class Globals {
     public Optional<String> getHeader(String name) {
         return Optional.ofNullable(headerParams.get(name));
     }
-    
+
     public Stream<Entry<String, String>> queryParamsAsStream() {
         return queryParams.entrySet().stream();
     }
-    
+
     public Stream<Entry<String, String>> pathParamsAsStream() {
         return pathParams.entrySet().stream();
     }

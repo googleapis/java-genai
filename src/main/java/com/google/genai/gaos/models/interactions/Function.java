@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.models.agents.AgentTool;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * Function
- * 
+ *
  * <p>A tool that can be used by the model.
  */
 public class Function implements AgentTool, Tool {
@@ -60,7 +60,6 @@ public class Function implements AgentTool, Tool {
     @JsonProperty("parameters")
     private Object parameters;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -74,7 +73,7 @@ public class Function implements AgentTool, Tool {
         this.parameters = parameters;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public Function() {
         this(null, null, null);
     }
@@ -109,7 +108,6 @@ public class Function implements AgentTool, Tool {
         return new Builder();
     }
 
-
     /**
      * A description of the function.
      */
@@ -117,7 +115,6 @@ public class Function implements AgentTool, Tool {
         this.description = description;
         return this;
     }
-
 
     /**
      * The name of the function.
@@ -127,7 +124,6 @@ public class Function implements AgentTool, Tool {
         return this;
     }
 
-
     /**
      * The JSON Schema for the function's parameters.
      */
@@ -135,7 +131,6 @@ public class Function implements AgentTool, Tool {
         this.parameters = parameters;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -146,31 +141,25 @@ public class Function implements AgentTool, Tool {
             return false;
         }
         Function other = (Function) o;
-        return 
-            Utils.enhancedDeepEquals(this.description, other.description) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.parameters, other.parameters) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.description, other.description)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.parameters, other.parameters)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            description, name, parameters,
-            type);
+        return Utils.enhancedHash(description, name, parameters, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Function.class,
-                "description", description,
-                "name", name,
-                "parameters", parameters,
-                "type", type);
+        return Utils.toString(
+                Function.class, "description", description, "name", name, "parameters", parameters, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String description;
 
@@ -179,7 +168,7 @@ public class Function implements AgentTool, Tool {
         private Object parameters;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -207,15 +196,10 @@ public class Function implements AgentTool, Tool {
         }
 
         public Function build() {
-            return new Function(
-                description, name, parameters);
+            return new Function(description, name, parameters);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"function\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"function\"", new TypeReference<String>() {});
     }
 }

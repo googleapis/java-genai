@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * AllowedTools
- * 
+ *
  * <p>The configuration for allowed tools.
  */
 public class AllowedTools {
@@ -50,12 +50,11 @@ public class AllowedTools {
 
     @JsonCreator
     public AllowedTools(
-            @JsonProperty("mode") @Nullable ToolChoiceType mode,
-            @JsonProperty("tools") @Nullable List<String> tools) {
+            @JsonProperty("mode") @Nullable ToolChoiceType mode, @JsonProperty("tools") @Nullable List<String> tools) {
         this.mode = mode;
         this.tools = tools;
     }
-    
+
     public AllowedTools() {
         this(null, null);
     }
@@ -75,12 +74,10 @@ public class AllowedTools {
         return new Builder();
     }
 
-
     public AllowedTools withMode(@Nullable ToolChoiceType mode) {
         this.mode = mode;
         return this;
     }
-
 
     /**
      * The names of the allowed tools.
@@ -89,7 +86,6 @@ public class AllowedTools {
         this.tools = tools;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -100,33 +96,28 @@ public class AllowedTools {
             return false;
         }
         AllowedTools other = (AllowedTools) o;
-        return 
-            Utils.enhancedDeepEquals(this.mode, other.mode) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools);
+        return Utils.enhancedDeepEquals(this.mode, other.mode) && Utils.enhancedDeepEquals(this.tools, other.tools);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            mode, tools);
+        return Utils.enhancedHash(mode, tools);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AllowedTools.class,
-                "mode", mode,
-                "tools", tools);
+        return Utils.toString(AllowedTools.class, "mode", mode, "tools", tools);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private ToolChoiceType mode;
 
         private List<String> tools;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder mode(@Nullable ToolChoiceType mode) {
@@ -143,9 +134,7 @@ public class AllowedTools {
         }
 
         public AllowedTools build() {
-            return new AllowedTools(
-                mode, tools);
+            return new AllowedTools(mode, tools);
         }
-
     }
 }

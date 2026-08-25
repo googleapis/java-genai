@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class StepStop implements InteractionSSEEvent {
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -42,10 +41,8 @@ public class StepStop implements InteractionSSEEvent {
     @JsonProperty("event_id")
     private String eventId;
 
-
     @JsonProperty("event_type")
     private String eventType;
-
 
     @JsonProperty("index")
     private int index;
@@ -76,11 +73,9 @@ public class StepStop implements InteractionSSEEvent {
         this.stepUsage = stepUsage;
         this.usage = usage;
     }
-    
-    public StepStop(
-            int index) {
-        this(null, index, null,
-            null);
+
+    public StepStop(int index) {
+        this(null, index, null, null);
     }
 
     /**
@@ -118,7 +113,6 @@ public class StepStop implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
@@ -128,12 +122,10 @@ public class StepStop implements InteractionSSEEvent {
         return this;
     }
 
-
     public StepStop withIndex(int index) {
         this.index = index;
         return this;
     }
-
 
     /**
      * Statistics on the interaction request's token usage.
@@ -143,7 +135,6 @@ public class StepStop implements InteractionSSEEvent {
         return this;
     }
 
-
     /**
      * Statistics on the interaction request's token usage.
      */
@@ -151,7 +142,6 @@ public class StepStop implements InteractionSSEEvent {
         this.usage = usage;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -162,33 +152,36 @@ public class StepStop implements InteractionSSEEvent {
             return false;
         }
         StepStop other = (StepStop) o;
-        return 
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.index, other.index) &&
-            Utils.enhancedDeepEquals(this.stepUsage, other.stepUsage) &&
-            Utils.enhancedDeepEquals(this.usage, other.usage);
+        return Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType)
+                && Utils.enhancedDeepEquals(this.index, other.index)
+                && Utils.enhancedDeepEquals(this.stepUsage, other.stepUsage)
+                && Utils.enhancedDeepEquals(this.usage, other.usage);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            eventId, eventType, index,
-            stepUsage, usage);
+        return Utils.enhancedHash(eventId, eventType, index, stepUsage, usage);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(StepStop.class,
-                "eventId", eventId,
-                "eventType", eventType,
-                "index", index,
-                "stepUsage", stepUsage,
-                "usage", usage);
+        return Utils.toString(
+                StepStop.class,
+                "eventId",
+                eventId,
+                "eventType",
+                eventType,
+                "index",
+                index,
+                "stepUsage",
+                stepUsage,
+                "usage",
+                usage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String eventId;
 
@@ -199,7 +192,7 @@ public class StepStop implements InteractionSSEEvent {
         private Usage usage;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -233,16 +226,10 @@ public class StepStop implements InteractionSSEEvent {
         }
 
         public StepStop build() {
-            return new StepStop(
-                eventId, index, stepUsage,
-                usage);
+            return new StepStop(eventId, index, stepUsage, usage);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"step.stop\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"step.stop\"", new TypeReference<String>() {});
     }
 }

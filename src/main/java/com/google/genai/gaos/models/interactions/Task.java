@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Task
- * 
+ *
  * <p>Optional task mode for video generation. If not specified, the model
  * automatically determines the appropriate mode based on the provided text
  * prompt and input media.
@@ -64,12 +64,12 @@ public class Task {
     }
 
     /**
-     * Returns a Task with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Task with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Task
-     */ 
+     */
     @JsonCreator
     public static Task of(String value) {
         synchronized (Task.class) {
@@ -97,12 +97,9 @@ public class Task {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Task other = (Task) obj;
         return Objects.equals(value, other.value);
     }
@@ -138,15 +135,15 @@ public class Task {
         map.put("extend", TaskEnum.EXTEND);
         return map;
     }
-    
-    
+
     public enum TaskEnum {
 
         TEXT_TO_VIDEO("text_to_video"),
         IMAGE_TO_VIDEO("image_to_video"),
         REFERENCE_TO_VIDEO("reference_to_video"),
         EDIT("edit"),
-        EXTEND("extend"),;
+        EXTEND("extend"),
+        ;
 
         private final String value;
 
@@ -159,4 +156,3 @@ public class Task {
         }
     }
 }
-

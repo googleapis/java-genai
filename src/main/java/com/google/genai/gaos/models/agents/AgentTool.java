@@ -19,15 +19,15 @@
  */
 package com.google.genai.gaos.models.agents;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import java.lang.String;
 
 /**
  * AgentTool
- * 
+ *
  * <p>A tool that the agent can use.
  */
 @JsonTypeInfo(
@@ -35,12 +35,9 @@ import java.lang.String;
         property = "type",
         include = As.EXISTING_PROPERTY,
         visible = true,
-        defaultImpl = UnknownAgentTool.class
-)
+        defaultImpl = UnknownAgentTool.class)
 @JsonTypeIdResolver(AgentToolTypeIdResolver.class)
 public interface AgentTool {
 
     String type();
-
 }
-

@@ -30,7 +30,6 @@ import com.google.genai.gaos.utils.Options;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-
 public class Files {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -43,7 +42,7 @@ public class Files {
 
     /**
      * Switches to the async SDK.
-     * 
+     *
      * @return The async SDK
      */
     public AsyncFiles async() {
@@ -52,7 +51,7 @@ public class Files {
 
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @return The call builder
      */
     public GetEnvironmentFilesRequestBuilder list() {
@@ -61,7 +60,7 @@ public class Files {
 
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -72,16 +71,15 @@ public class Files {
 
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public GetEnvironmentFilesResponse list(@Nonnull GetEnvironmentFilesRequest request, @Nullable Options options) {
-        RequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation
-              = new GetEnvironmentFiles.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation =
+                new GetEnvironmentFiles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
-
 }

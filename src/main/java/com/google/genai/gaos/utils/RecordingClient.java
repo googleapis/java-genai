@@ -19,13 +19,13 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.CompletableFuture;
 import com.google.genai.gaos.utils.transport.HttpRequest;
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.UnaryOperator;
 
@@ -77,7 +77,7 @@ public final class RecordingClient implements HTTPClient {
         beforeRequestHooks.add(hook);
         return this;
     }
-    
+
     public RecordingClient afterResponse(UnaryOperator<HttpResponse<InputStream>> hook) {
         afterResponseHooks.add(hook);
         return this;
@@ -86,5 +86,4 @@ public final class RecordingClient implements HTTPClient {
     public void reset() {
         requests.clear();
     }
-
 }

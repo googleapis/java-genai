@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.environments;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * GetEnvironmentFilesResponse
- * 
+ *
  * <p>Response for `GetEnvironmentFiles`.
  */
 public class GetEnvironmentFilesResponse {
@@ -61,7 +61,7 @@ public class GetEnvironmentFilesResponse {
         this.files = files;
         this.nextPageToken = nextPageToken;
     }
-    
+
     public GetEnvironmentFilesResponse() {
         this(null, null);
     }
@@ -88,7 +88,6 @@ public class GetEnvironmentFilesResponse {
         return new Builder();
     }
 
-
     /**
      * If the requested path is a directory, this contains its contents.
      * If the requested path is a file, this contains a single entry with the
@@ -100,7 +99,6 @@ public class GetEnvironmentFilesResponse {
         return this;
     }
 
-
     /**
      * Pagination token for directory listing.
      * NOLINT
@@ -109,7 +107,6 @@ public class GetEnvironmentFilesResponse {
         this.nextPageToken = nextPageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -120,33 +117,29 @@ public class GetEnvironmentFilesResponse {
             return false;
         }
         GetEnvironmentFilesResponse other = (GetEnvironmentFilesResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.files, other.files) &&
-            Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
+        return Utils.enhancedDeepEquals(this.files, other.files)
+                && Utils.enhancedDeepEquals(this.nextPageToken, other.nextPageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            files, nextPageToken);
+        return Utils.enhancedHash(files, nextPageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetEnvironmentFilesResponse.class,
-                "files", files,
-                "nextPageToken", nextPageToken);
+        return Utils.toString(GetEnvironmentFilesResponse.class, "files", files, "nextPageToken", nextPageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<EnvironmentFile> files;
 
         private String nextPageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -170,9 +163,7 @@ public class GetEnvironmentFilesResponse {
         }
 
         public GetEnvironmentFilesResponse build() {
-            return new GetEnvironmentFilesResponse(
-                files, nextPageToken);
+            return new GetEnvironmentFilesResponse(files, nextPageToken);
         }
-
     }
 }

@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * WebhookUpdateState
- * 
+ *
  * <p>Optional. The state of the webhook.
  */
 public enum WebhookUpdateState {
@@ -40,13 +40,13 @@ public enum WebhookUpdateState {
     WebhookUpdateState(String value) {
         this.value = value;
     }
-    
+
     public String value() {
         return value;
     }
-    
+
     public static Optional<WebhookUpdateState> fromValue(String value) {
-        for (WebhookUpdateState o: WebhookUpdateState.values()) {
+        for (WebhookUpdateState o : WebhookUpdateState.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }
@@ -54,4 +54,3 @@ public enum WebhookUpdateState {
         return Optional.empty();
     }
 }
-

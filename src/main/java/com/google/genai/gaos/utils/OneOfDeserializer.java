@@ -19,6 +19,18 @@
  */
 package com.google.genai.gaos.utils;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -35,21 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-
 
 public class OneOfDeserializer<T> extends StdDeserializer<T> {
 
@@ -79,8 +76,8 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
         return deserializeOneOf(mapper, tree, typeReferences, cls);
     }
 
-    private static <T> T deserializeOneOf(ObjectMapper mapper, TreeNode tree,
-            List<TypeReferenceWithShape> typeReferences, Class<T> cls) throws JsonProcessingException {
+    private static <T> T deserializeOneOf(
+            ObjectMapper mapper, TreeNode tree, List<TypeReferenceWithShape> typeReferences, Class<T> cls) throws JsonProcessingException {
         // TODO don't have to generate json because can use tree.traverse to get a
         // parser to read value, perf advantage and can stop plugging in ObjectMapper
         String json = mapper.writeValueAsString(tree);
@@ -112,7 +109,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
         if (!matches.isEmpty()) {
             return matches.get(0).value;
         }
-        
+
         // No types matched - fall back to JsonNode
         // TreeNode is already parsed, just cast to JsonNode
         JsonNode node;
@@ -122,10 +119,9 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             // Shouldn't happen with Jackson's default implementation, but handle gracefully
             node = mapper.readTree(json);
         }
-        
+
         // Wrap JsonNode in TypedObject and create union instance
-        TypedObject typed = TypedObject.of(node, Utils.JsonShape.DEFAULT,
-            new TypeReference<JsonNode>() {});
+        TypedObject typed = TypedObject.of(node, Utils.JsonShape.DEFAULT, new TypeReference<JsonNode>() {});
         return newInstance(cls, typed);
     }
     /**
@@ -137,9 +133,9 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
         final TypeReferenceWithShape typeReference;
         final T value;
         private final TreeNode tree;
-        private int matched = 0;    // Count of matched fields (includes inexact)
-        private int inexact = 0;    // Count of fields with unknown/unrecognized enum values
-        private int unmatched = 0;  // Count of struct fields not found in raw JSON
+        private int matched = 0; // Count of matched fields (includes inexact)
+        private int inexact = 0; // Count of fields with unknown/unrecognized enum values
+        private int unmatched = 0; // Count of struct fields not found in raw JSON
 
         Match(TypeReferenceWithShape typeReference, T value, TreeNode tree) {
             this.typeReference = typeReference;
@@ -246,7 +242,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
                         field.setAccessible(true);
                         Object fieldValue = field.get(obj);
                         String fieldName = getJsonFieldName(field);
-                        
+
                         if (fieldName == null) {
                             continue; // Skip fields marked with @JsonIgnore or json:"-"
                         }
@@ -281,7 +277,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             // Check for @JsonProperty - only include fields with Jackson annotations
             if (field.isAnnotationPresent(com.fasterxml.jackson.annotation.JsonProperty.class)) {
                 com.fasterxml.jackson.annotation.JsonProperty prop =
-                    field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class);
+                        field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class);
                 String value = prop.value();
                 if (value != null && !value.isEmpty()) {
                     return value;
@@ -357,17 +353,17 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
 
     private static boolean isPrimitiveOrString(Object obj) {
         Class<?> clazz = obj.getClass();
-        return clazz.isPrimitive() ||
-                clazz == String.class ||
-                clazz == Integer.class ||
-                clazz == Long.class ||
-                clazz == Double.class ||
-                clazz == Float.class ||
-                clazz == Boolean.class ||
-                clazz == BigDecimal.class ||
-                clazz == BigInteger.class ||
-                clazz == OffsetDateTime.class ||
-                clazz == LocalDate.class;
+        return clazz.isPrimitive()
+                || clazz == String.class
+                || clazz == Integer.class
+                || clazz == Long.class
+                || clazz == Double.class
+                || clazz == Float.class
+                || clazz == Boolean.class
+                || clazz == BigDecimal.class
+                || clazz == BigInteger.class
+                || clazz == OffsetDateTime.class
+                || clazz == LocalDate.class;
     }
 
     private static final Set<String> NUMERIC_CLASSES = Java8Compat.setOf(
@@ -379,19 +375,14 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             BigDecimal.class.getCanonicalName());
 
     private static final Set<String> DECIMAL_CLASSES = Java8Compat.setOf(
-            Float.class.getCanonicalName(),
-            Double.class.getCanonicalName(),
-            BigDecimal.class.getCanonicalName());
-    
+            Float.class.getCanonicalName(), Double.class.getCanonicalName(), BigDecimal.class.getCanonicalName());
+
     private static final Set<String> INTEGER_CLASSES = Java8Compat.setOf(
-            Integer.class.getCanonicalName(),
-            Long.class.getCanonicalName(),
-            BigInteger.class.getCanonicalName());
-    
-    private static final Set<String> DATE_TIME_CLASSES = Java8Compat.setOf(
-            OffsetDateTime.class.getCanonicalName(),
-            LocalDate.class.getCanonicalName());
-    
+            Integer.class.getCanonicalName(), Long.class.getCanonicalName(), BigInteger.class.getCanonicalName());
+
+    private static final Set<String> DATE_TIME_CLASSES =
+            Java8Compat.setOf(OffsetDateTime.class.getCanonicalName(), LocalDate.class.getCanonicalName());
+
     // VisibleForTesting
     public static boolean matchPossible(JavaType type, String json) {
         // situations we want to AVOID that can happen with Jackson ObjectMapper:
@@ -399,7 +390,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
         // * non-double-quoted json string considered as valid string
         // * json numeric can be parsed as a Boolean
         // * double-quoted numerics can be parsed as numerics
-        
+
         // We make important assumptions about matching json with types
         if (typeIs(type, String.class) || typeIs(type, BigIntegerString.class) || typeIs(type, BigDecimalString.class)) {
             // string must be double quoted
@@ -416,7 +407,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             return true;
         }
     }
-    
+
     private static boolean isDoubleQuoted(String s) {
         return s.length() >= 2 && s.startsWith("\"") && s.endsWith("\"");
     }
@@ -452,7 +443,7 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             for (Match<T> match : matches) {
                 match.countFields();
             }
-            
+
             return matches.stream()
                     .sorted(Comparator.reverseOrder()) // Best candidates first (highest scores)
                     .collect(Collectors.toList());
@@ -462,34 +453,37 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
     }
 
     private static <T> List<Match<T>> filter(List<Match<T>> matches, Class<?> filterByClass) {
-        return matches //
-                .stream() //
-                .filter(x -> x.typeReference.typeReference().getType().getTypeName().equals(filterByClass.getCanonicalName())) //
+        return matches.stream()
+                .filter(x -> x.typeReference.typeReference().getType().getTypeName().equals(filterByClass.getCanonicalName()))
                 .collect(Collectors.toList());
     }
-    
+
     private static <T> boolean allDateTime(List<Match<T>> matches) {
-        return matches.stream().allMatch(x -> DATE_TIME_CLASSES.contains(x.typeReference.typeReference().getType().getTypeName()));
+        return matches.stream()
+                .allMatch(x -> DATE_TIME_CLASSES.contains(
+                        x.typeReference.typeReference().getType().getTypeName()));
     }
-    
+
     private static <T> boolean allNumeric(List<Match<T>> matches) {
-        return matches.stream().allMatch(x -> NUMERIC_CLASSES.contains(x.typeReference.typeReference().getType().getTypeName()));
+        return matches.stream()
+                .allMatch(x -> NUMERIC_CLASSES.contains(
+                        x.typeReference.typeReference().getType().getTypeName()));
     }
-    
+
     private static <T> List<Match<T>> decimalMatches(List<Match<T>> matches) {
-        return matches //
-                .stream() //
-                .filter(x -> DECIMAL_CLASSES.contains(x.typeReference.typeReference().getType().getTypeName())) //
+        return matches.stream()
+                .filter(x -> DECIMAL_CLASSES.contains(
+                        x.typeReference.typeReference().getType().getTypeName()))
                 .collect(Collectors.toList());
     }
-    
+
     private static <T> List<Match<T>> integerMatches(List<Match<T>> matches) {
-        return matches //
-                .stream() //
-                .filter(x -> INTEGER_CLASSES.contains(x.typeReference.typeReference().getType().getTypeName())) //
+        return matches.stream()
+                .filter(x -> INTEGER_CLASSES.contains(
+                        x.typeReference.typeReference().getType().getTypeName()))
                 .collect(Collectors.toList());
     }
-    
+
     private static boolean isNumeric(String s) {
         try {
             Double.parseDouble(s);
@@ -498,23 +492,23 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             return false;
         }
     }
-    
+
     private static boolean typeIs(JavaType type, Class<?> cls) {
         return type.getRawClass().equals(cls);
     }
-    
+
     private static <T> String typeNames(List<Match<T>> matches) {
-        return "[" + matches
-                .stream()
-                .map(x -> x.typeReference.typeReference().getType().getTypeName())
-                .collect(Collectors.joining(", ")) + "]";
+        return "["
+                + matches.stream()
+                        .map(x -> x.typeReference.typeReference().getType().getTypeName())
+                        .collect(Collectors.joining(", "))
+                + "]";
     }
-    
+
     private static String typeReferenceNames(List<TypeReferenceWithShape> list) {
-        return "[" + list
-                .stream()
-                .map(x -> x.typeReference().getType().getTypeName())
-                .collect(Collectors.joining(", ")) + "]";
+        return "["
+                + list.stream().map(x -> x.typeReference().getType().getTypeName()).collect(Collectors.joining(", "))
+                + "]";
     }
 
     private static <T> T newInstance(Class<T> cls, Object parameter) {
@@ -522,10 +516,13 @@ public class OneOfDeserializer<T> extends StdDeserializer<T> {
             Constructor<T> con = cls.getDeclaredConstructor(TypedObject.class);
             con.setAccessible(true);
             return con.newInstance(parameter);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                | NoSuchMethodException | SecurityException e) {
+        } catch (InstantiationException
+                | IllegalAccessException
+                | IllegalArgumentException
+                | InvocationTargetException
+                | NoSuchMethodException
+                | SecurityException e) {
             throw new RuntimeException(e);
         }
     }
-    
 }

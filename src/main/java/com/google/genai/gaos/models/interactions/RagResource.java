@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * RagResource
- * 
+ *
  * <p>The definition of the Rag resource.
  */
 public class RagResource {
@@ -58,7 +58,7 @@ public class RagResource {
         this.ragCorpus = ragCorpus;
         this.ragFileIds = ragFileIds;
     }
-    
+
     public RagResource() {
         this(null, null);
     }
@@ -82,7 +82,6 @@ public class RagResource {
         return new Builder();
     }
 
-
     /**
      * Optional. RagCorpora resource name.
      */
@@ -90,7 +89,6 @@ public class RagResource {
         this.ragCorpus = ragCorpus;
         return this;
     }
-
 
     /**
      * Optional. rag_file_id. The files should be in the same rag_corpus set in
@@ -101,7 +99,6 @@ public class RagResource {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,33 +108,29 @@ public class RagResource {
             return false;
         }
         RagResource other = (RagResource) o;
-        return 
-            Utils.enhancedDeepEquals(this.ragCorpus, other.ragCorpus) &&
-            Utils.enhancedDeepEquals(this.ragFileIds, other.ragFileIds);
+        return Utils.enhancedDeepEquals(this.ragCorpus, other.ragCorpus)
+                && Utils.enhancedDeepEquals(this.ragFileIds, other.ragFileIds);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            ragCorpus, ragFileIds);
+        return Utils.enhancedHash(ragCorpus, ragFileIds);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RagResource.class,
-                "ragCorpus", ragCorpus,
-                "ragFileIds", ragFileIds);
+        return Utils.toString(RagResource.class, "ragCorpus", ragCorpus, "ragFileIds", ragFileIds);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String ragCorpus;
 
         private List<String> ragFileIds;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -158,9 +151,7 @@ public class RagResource {
         }
 
         public RagResource build() {
-            return new RagResource(
-                ragCorpus, ragFileIds);
+            return new RagResource(ragCorpus, ragFileIds);
         }
-
     }
 }

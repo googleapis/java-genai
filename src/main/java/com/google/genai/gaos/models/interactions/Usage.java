@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * Usage
- * 
+ *
  * <p>Statistics on the interaction request's token usage.
  */
 public class Usage {
@@ -140,12 +140,9 @@ public class Usage {
         this.totalTokens = totalTokens;
         this.totalToolUseTokens = totalToolUseTokens;
     }
-    
+
     public Usage() {
-        this(null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null);
+        this(null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -230,7 +227,6 @@ public class Usage {
         return new Builder();
     }
 
-
     /**
      * A breakdown of cached token usage by modality.
      */
@@ -238,7 +234,6 @@ public class Usage {
         this.cachedTokensByModality = cachedTokensByModality;
         return this;
     }
-
 
     /**
      * Grounding tool count.
@@ -248,7 +243,6 @@ public class Usage {
         return this;
     }
 
-
     /**
      * A breakdown of input token usage by modality.
      */
@@ -256,7 +250,6 @@ public class Usage {
         this.inputTokensByModality = inputTokensByModality;
         return this;
     }
-
 
     /**
      * A breakdown of output token usage by modality.
@@ -266,7 +259,6 @@ public class Usage {
         return this;
     }
 
-
     /**
      * A breakdown of tool-use token usage by modality.
      */
@@ -274,7 +266,6 @@ public class Usage {
         this.toolUseTokensByModality = toolUseTokensByModality;
         return this;
     }
-
 
     /**
      * Number of tokens in the cached part of the prompt (the cached content).
@@ -284,7 +275,6 @@ public class Usage {
         return this;
     }
 
-
     /**
      * Number of tokens in the prompt (context).
      */
@@ -292,7 +282,6 @@ public class Usage {
         this.totalInputTokens = totalInputTokens;
         return this;
     }
-
 
     /**
      * Total number of tokens across all the generated responses.
@@ -302,7 +291,6 @@ public class Usage {
         return this;
     }
 
-
     /**
      * Number of tokens of thoughts for thinking models.
      */
@@ -310,7 +298,6 @@ public class Usage {
         this.totalThoughtTokens = totalThoughtTokens;
         return this;
     }
-
 
     /**
      * Total token count for the interaction request (prompt + responses + other
@@ -321,7 +308,6 @@ public class Usage {
         return this;
     }
 
-
     /**
      * Number of tokens present in tool-use prompt(s).
      */
@@ -329,7 +315,6 @@ public class Usage {
         this.totalToolUseTokens = totalToolUseTokens;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -340,47 +325,65 @@ public class Usage {
             return false;
         }
         Usage other = (Usage) o;
-        return 
-            Utils.enhancedDeepEquals(this.cachedTokensByModality, other.cachedTokensByModality) &&
-            Utils.enhancedDeepEquals(this.groundingToolCount, other.groundingToolCount) &&
-            Utils.enhancedDeepEquals(this.inputTokensByModality, other.inputTokensByModality) &&
-            Utils.enhancedDeepEquals(this.outputTokensByModality, other.outputTokensByModality) &&
-            Utils.enhancedDeepEquals(this.toolUseTokensByModality, other.toolUseTokensByModality) &&
-            Utils.enhancedDeepEquals(this.totalCachedTokens, other.totalCachedTokens) &&
-            Utils.enhancedDeepEquals(this.totalInputTokens, other.totalInputTokens) &&
-            Utils.enhancedDeepEquals(this.totalOutputTokens, other.totalOutputTokens) &&
-            Utils.enhancedDeepEquals(this.totalThoughtTokens, other.totalThoughtTokens) &&
-            Utils.enhancedDeepEquals(this.totalTokens, other.totalTokens) &&
-            Utils.enhancedDeepEquals(this.totalToolUseTokens, other.totalToolUseTokens);
+        return Utils.enhancedDeepEquals(this.cachedTokensByModality, other.cachedTokensByModality)
+                && Utils.enhancedDeepEquals(this.groundingToolCount, other.groundingToolCount)
+                && Utils.enhancedDeepEquals(this.inputTokensByModality, other.inputTokensByModality)
+                && Utils.enhancedDeepEquals(this.outputTokensByModality, other.outputTokensByModality)
+                && Utils.enhancedDeepEquals(this.toolUseTokensByModality, other.toolUseTokensByModality)
+                && Utils.enhancedDeepEquals(this.totalCachedTokens, other.totalCachedTokens)
+                && Utils.enhancedDeepEquals(this.totalInputTokens, other.totalInputTokens)
+                && Utils.enhancedDeepEquals(this.totalOutputTokens, other.totalOutputTokens)
+                && Utils.enhancedDeepEquals(this.totalThoughtTokens, other.totalThoughtTokens)
+                && Utils.enhancedDeepEquals(this.totalTokens, other.totalTokens)
+                && Utils.enhancedDeepEquals(this.totalToolUseTokens, other.totalToolUseTokens);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            cachedTokensByModality, groundingToolCount, inputTokensByModality,
-            outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-            totalInputTokens, totalOutputTokens, totalThoughtTokens,
-            totalTokens, totalToolUseTokens);
+                cachedTokensByModality,
+                groundingToolCount,
+                inputTokensByModality,
+                outputTokensByModality,
+                toolUseTokensByModality,
+                totalCachedTokens,
+                totalInputTokens,
+                totalOutputTokens,
+                totalThoughtTokens,
+                totalTokens,
+                totalToolUseTokens);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Usage.class,
-                "cachedTokensByModality", cachedTokensByModality,
-                "groundingToolCount", groundingToolCount,
-                "inputTokensByModality", inputTokensByModality,
-                "outputTokensByModality", outputTokensByModality,
-                "toolUseTokensByModality", toolUseTokensByModality,
-                "totalCachedTokens", totalCachedTokens,
-                "totalInputTokens", totalInputTokens,
-                "totalOutputTokens", totalOutputTokens,
-                "totalThoughtTokens", totalThoughtTokens,
-                "totalTokens", totalTokens,
-                "totalToolUseTokens", totalToolUseTokens);
+        return Utils.toString(
+                Usage.class,
+                "cachedTokensByModality",
+                cachedTokensByModality,
+                "groundingToolCount",
+                groundingToolCount,
+                "inputTokensByModality",
+                inputTokensByModality,
+                "outputTokensByModality",
+                outputTokensByModality,
+                "toolUseTokensByModality",
+                toolUseTokensByModality,
+                "totalCachedTokens",
+                totalCachedTokens,
+                "totalInputTokens",
+                totalInputTokens,
+                "totalOutputTokens",
+                totalOutputTokens,
+                "totalThoughtTokens",
+                totalThoughtTokens,
+                "totalTokens",
+                totalTokens,
+                "totalToolUseTokens",
+                totalToolUseTokens);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<ModalityTokens> cachedTokensByModality;
 
@@ -405,7 +408,7 @@ public class Usage {
         private Integer totalToolUseTokens;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -499,11 +502,17 @@ public class Usage {
 
         public Usage build() {
             return new Usage(
-                cachedTokensByModality, groundingToolCount, inputTokensByModality,
-                outputTokensByModality, toolUseTokensByModality, totalCachedTokens,
-                totalInputTokens, totalOutputTokens, totalThoughtTokens,
-                totalTokens, totalToolUseTokens);
+                    cachedTokensByModality,
+                    groundingToolCount,
+                    inputTokensByModality,
+                    outputTokensByModality,
+                    toolUseTokensByModality,
+                    totalCachedTokens,
+                    totalInputTokens,
+                    totalOutputTokens,
+                    totalThoughtTokens,
+                    totalTokens,
+                    totalToolUseTokens);
         }
-
     }
 }

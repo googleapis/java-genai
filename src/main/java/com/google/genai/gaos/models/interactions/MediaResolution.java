@@ -56,12 +56,12 @@ public class MediaResolution {
     }
 
     /**
-     * Returns a MediaResolution with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a MediaResolution with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as MediaResolution
-     */ 
+     */
     @JsonCreator
     public static MediaResolution of(String value) {
         synchronized (MediaResolution.class) {
@@ -89,12 +89,9 @@ public class MediaResolution {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         MediaResolution other = (MediaResolution) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class MediaResolution {
         map.put("ultra_high", MediaResolutionEnum.ULTRA_HIGH);
         return map;
     }
-    
-    
+
     public enum MediaResolutionEnum {
 
         LOW("low"),
         MEDIUM("medium"),
         HIGH("high"),
-        ULTRA_HIGH("ultra_high"),;
+        ULTRA_HIGH("ultra_high"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class MediaResolution {
         }
     }
 }
-

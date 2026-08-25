@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * VideoContentMimeType
- * 
+ *
  * <p>The mime type of the video.
  */
 public class VideoContentMimeType {
@@ -66,12 +66,12 @@ public class VideoContentMimeType {
     }
 
     /**
-     * Returns a VideoContentMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a VideoContentMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as VideoContentMimeType
-     */ 
+     */
     @JsonCreator
     public static VideoContentMimeType of(String value) {
         synchronized (VideoContentMimeType.class) {
@@ -99,12 +99,9 @@ public class VideoContentMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         VideoContentMimeType other = (VideoContentMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -148,8 +145,7 @@ public class VideoContentMimeType {
         map.put("video/3gpp", VideoContentMimeTypeEnum.VIDEO3GPP);
         return map;
     }
-    
-    
+
     public enum VideoContentMimeTypeEnum {
 
         VIDEO_MP4("video/mp4"),
@@ -160,7 +156,8 @@ public class VideoContentMimeType {
         VIDEO_X_FLV("video/x-flv"),
         VIDEO_WEBM("video/webm"),
         VIDEO_WMV("video/wmv"),
-        VIDEO3GPP("video/3gpp"),;
+        VIDEO3GPP("video/3gpp"),
+        ;
 
         private final String value;
 
@@ -173,4 +170,3 @@ public class VideoContentMimeType {
         }
     }
 }
-

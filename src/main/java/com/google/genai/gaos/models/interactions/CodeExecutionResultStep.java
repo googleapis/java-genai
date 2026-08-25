@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * CodeExecutionResultStep
- * 
+ *
  * <p>Code execution result step.
  */
 public class CodeExecutionResultStep implements Step {
@@ -65,7 +65,6 @@ public class CodeExecutionResultStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -75,20 +74,17 @@ public class CodeExecutionResultStep implements Step {
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("result") @Nonnull String result,
             @JsonProperty("signature") @Nullable String signature) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public CodeExecutionResultStep(
-            @Nonnull String callId,
-            @Nonnull String result) {
-        this(callId, null, result,
-            null);
+
+    public CodeExecutionResultStep(@Nonnull String callId, @Nonnull String result) {
+        this(callId, null, result, null);
     }
 
     /**
@@ -128,7 +124,6 @@ public class CodeExecutionResultStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -136,7 +131,6 @@ public class CodeExecutionResultStep implements Step {
         this.callId = Utils.checkNotNull(callId, "callId");
         return this;
     }
-
 
     /**
      * Whether the code execution resulted in an error.
@@ -146,7 +140,6 @@ public class CodeExecutionResultStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The output of the code execution.
      */
@@ -155,7 +148,6 @@ public class CodeExecutionResultStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -163,7 +155,6 @@ public class CodeExecutionResultStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -174,33 +165,36 @@ public class CodeExecutionResultStep implements Step {
             return false;
         }
         CodeExecutionResultStep other = (CodeExecutionResultStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.isError, other.isError)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, isError, result,
-            signature, type);
+        return Utils.enhancedHash(callId, isError, result, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CodeExecutionResultStep.class,
-                "callId", callId,
-                "isError", isError,
-                "result", result,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                CodeExecutionResultStep.class,
+                "callId",
+                callId,
+                "isError",
+                isError,
+                "result",
+                result,
+                "signature",
+                signature,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
@@ -211,7 +205,7 @@ public class CodeExecutionResultStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -247,16 +241,10 @@ public class CodeExecutionResultStep implements Step {
         }
 
         public CodeExecutionResultStep build() {
-            return new CodeExecutionResultStep(
-                callId, isError, result,
-                signature);
+            return new CodeExecutionResultStep(callId, isError, result, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"code_execution_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"code_execution_result\"", new TypeReference<String>() {});
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -37,7 +37,7 @@ import java.util.Optional;
 
 /**
  * Interaction
- * 
+ *
  * <p>The Interaction resource.
  */
 public class Interaction {
@@ -138,7 +138,7 @@ public class Interaction {
 
     /**
      * Concatenated text from the last model output in response to the current request.
-     * 
+     *
      * <p>Note: this is added by the SDK.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -169,7 +169,7 @@ public class Interaction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -179,7 +179,7 @@ public class Interaction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -193,7 +193,6 @@ public class Interaction {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("safety_settings")
     private List<SafetySetting> safetySettings;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("service_tier")
@@ -285,8 +284,7 @@ public class Interaction {
         this.environmentId = environmentId;
         this.errors = errors;
         this.generationConfig = generationConfig;
-        this.id = Optional.ofNullable(id)
-            .orElse(Builder._SINGLETON_VALUE_Id.value());
+        this.id = Optional.ofNullable(id).orElse(Builder._SINGLETON_VALUE_Id.value());
         this.input = input;
         this.labels = labels;
         this.model = model;
@@ -300,8 +298,8 @@ public class Interaction {
         this.responseModalities = responseModalities;
         this.safetySettings = safetySettings;
         this.serviceTier = serviceTier;
-        this.status = Optional.ofNullable(status)
-            .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
+        this.status =
+                Optional.ofNullable(status).orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
         this.steps = steps;
         this.systemInstruction = systemInstruction;
         this.tools = tools;
@@ -309,19 +307,37 @@ public class Interaction {
         this.usage = usage;
         this.webhookConfig = webhookConfig;
     }
-    
-    public Interaction(
-            @Nonnull InteractionStatus status) {
-        this(null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            status, null, null,
-            null, null, null,
-            null);
+
+    public Interaction(@Nonnull InteractionStatus status) {
+        this(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                status,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     /**
@@ -421,7 +437,7 @@ public class Interaction {
 
     /**
      * Concatenated text from the last model output in response to the current request.
-     * 
+     *
      * <p>Note: this is added by the SDK.
      */
     public Optional<String> outputText() {
@@ -452,7 +468,7 @@ public class Interaction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -462,7 +478,7 @@ public class Interaction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -546,7 +562,6 @@ public class Interaction {
         return new Builder();
     }
 
-
     /**
      * The agent to interact with.
      */
@@ -555,7 +570,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Configuration parameters for the agent interaction.
      */
@@ -563,7 +577,6 @@ public class Interaction {
         this.agentConfig = agentConfig;
         return this;
     }
-
 
     /**
      * Output only. The time at which the response was created in ISO 8601 format
@@ -574,7 +587,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * The environment configuration for the interaction. Can be an object specifying remote environment
      * sources or a string referencing an existing environment ID.
@@ -583,7 +595,6 @@ public class Interaction {
         this.environment = environment;
         return this;
     }
-
 
     /**
      * Output only. The environment ID for the interaction. Only populated if environment
@@ -594,7 +605,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Output only. Diagnostic faults / platform errors recorded on the interaction.
      */
@@ -602,7 +612,6 @@ public class Interaction {
         this.errors = errors;
         return this;
     }
-
 
     /**
      * Configuration parameters for model interactions.
@@ -612,7 +621,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Required. Output only. A unique identifier for the interaction completion.
      */
@@ -620,7 +628,6 @@ public class Interaction {
         this.id = id;
         return this;
     }
-
 
     /**
      * The input for the interaction.
@@ -630,7 +637,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * The labels with user-defined metadata for the request.
      */
@@ -638,7 +644,6 @@ public class Interaction {
         this.labels = labels;
         return this;
     }
-
 
     /**
      * The model that will complete your prompt.\n\nSee
@@ -649,7 +654,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * An audio content block.
      */
@@ -657,7 +661,6 @@ public class Interaction {
         this.outputAudio = outputAudio;
         return this;
     }
-
 
     /**
      * An image content block.
@@ -667,17 +670,15 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Concatenated text from the last model output in response to the current request.
-     * 
+     *
      * <p>Note: this is added by the SDK.
      */
     public Interaction withOutputText(@Nullable String outputText) {
         this.outputText = outputText;
         return this;
     }
-
 
     /**
      * A video content block.
@@ -687,7 +688,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * The ID of the previous interaction, if any.
      */
@@ -695,7 +695,6 @@ public class Interaction {
         this.previousInteractionId = previousInteractionId;
         return this;
     }
-
 
     /**
      * Enforces that the generated response is a JSON object that complies with the JSON schema specified
@@ -706,10 +705,9 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -718,10 +716,9 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -729,7 +726,6 @@ public class Interaction {
         this.responseModalities = responseModalities;
         return this;
     }
-
 
     /**
      * Safety settings for the interaction.
@@ -739,12 +735,10 @@ public class Interaction {
         return this;
     }
 
-
     public Interaction withServiceTier(@Nullable ServiceTier serviceTier) {
         this.serviceTier = serviceTier;
         return this;
     }
-
 
     /**
      * Required. Output only. The status of the interaction.
@@ -754,7 +748,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Output only. The steps that make up the interaction, when included in the response.
      */
@@ -762,7 +755,6 @@ public class Interaction {
         this.steps = steps;
         return this;
     }
-
 
     /**
      * System instruction for the interaction.
@@ -772,7 +764,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * A list of tool declarations the model may call during interaction.
      */
@@ -780,7 +771,6 @@ public class Interaction {
         this.tools = tools;
         return this;
     }
-
 
     /**
      * Output only. The time at which the response was last updated in ISO 8601 format
@@ -791,7 +781,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Statistics on the interaction request's token usage.
      */
@@ -800,7 +789,6 @@ public class Interaction {
         return this;
     }
 
-
     /**
      * Message for configuring webhook events for a request.
      */
@@ -808,7 +796,6 @@ public class Interaction {
         this.webhookConfig = webhookConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -819,87 +806,133 @@ public class Interaction {
             return false;
         }
         Interaction other = (Interaction) o;
-        return 
-            Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
-            Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.errors, other.errors) &&
-            Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.input, other.input) &&
-            Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.outputAudio, other.outputAudio) &&
-            Utils.enhancedDeepEquals(this.outputImage, other.outputImage) &&
-            Utils.enhancedDeepEquals(this.outputText, other.outputText) &&
-            Utils.enhancedDeepEquals(this.outputVideo, other.outputVideo) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.steps, other.steps) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.updated, other.updated) &&
-            Utils.enhancedDeepEquals(this.usage, other.usage) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
+        return Utils.enhancedDeepEquals(this.agent, other.agent)
+                && Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig)
+                && Utils.enhancedDeepEquals(this.created, other.created)
+                && Utils.enhancedDeepEquals(this.environment, other.environment)
+                && Utils.enhancedDeepEquals(this.environmentId, other.environmentId)
+                && Utils.enhancedDeepEquals(this.errors, other.errors)
+                && Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.input, other.input)
+                && Utils.enhancedDeepEquals(this.labels, other.labels)
+                && Utils.enhancedDeepEquals(this.model, other.model)
+                && Utils.enhancedDeepEquals(this.outputAudio, other.outputAudio)
+                && Utils.enhancedDeepEquals(this.outputImage, other.outputImage)
+                && Utils.enhancedDeepEquals(this.outputText, other.outputText)
+                && Utils.enhancedDeepEquals(this.outputVideo, other.outputVideo)
+                && Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId)
+                && Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat)
+                && Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType)
+                && Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities)
+                && Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings)
+                && Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier)
+                && Utils.enhancedDeepEquals(this.status, other.status)
+                && Utils.enhancedDeepEquals(this.steps, other.steps)
+                && Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction)
+                && Utils.enhancedDeepEquals(this.tools, other.tools)
+                && Utils.enhancedDeepEquals(this.updated, other.updated)
+                && Utils.enhancedDeepEquals(this.usage, other.usage)
+                && Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            agent, agentConfig, created,
-            environment, environmentId, errors,
-            generationConfig, id, input,
-            labels, model, outputAudio,
-            outputImage, outputText, outputVideo,
-            previousInteractionId, responseFormat, responseMimeType,
-            responseModalities, safetySettings, serviceTier,
-            status, steps, systemInstruction,
-            tools, updated, usage,
-            webhookConfig);
+                agent,
+                agentConfig,
+                created,
+                environment,
+                environmentId,
+                errors,
+                generationConfig,
+                id,
+                input,
+                labels,
+                model,
+                outputAudio,
+                outputImage,
+                outputText,
+                outputVideo,
+                previousInteractionId,
+                responseFormat,
+                responseMimeType,
+                responseModalities,
+                safetySettings,
+                serviceTier,
+                status,
+                steps,
+                systemInstruction,
+                tools,
+                updated,
+                usage,
+                webhookConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Interaction.class,
-                "agent", agent,
-                "agentConfig", agentConfig,
-                "created", created,
-                "environment", environment,
-                "environmentId", environmentId,
-                "errors", errors,
-                "generationConfig", generationConfig,
-                "id", id,
-                "input", input,
-                "labels", labels,
-                "model", model,
-                "outputAudio", outputAudio,
-                "outputImage", outputImage,
-                "outputText", outputText,
-                "outputVideo", outputVideo,
-                "previousInteractionId", previousInteractionId,
-                "responseFormat", responseFormat,
-                "responseMimeType", responseMimeType,
-                "responseModalities", responseModalities,
-                "safetySettings", safetySettings,
-                "serviceTier", serviceTier,
-                "status", status,
-                "steps", steps,
-                "systemInstruction", systemInstruction,
-                "tools", tools,
-                "updated", updated,
-                "usage", usage,
-                "webhookConfig", webhookConfig);
+        return Utils.toString(
+                Interaction.class,
+                "agent",
+                agent,
+                "agentConfig",
+                agentConfig,
+                "created",
+                created,
+                "environment",
+                environment,
+                "environmentId",
+                environmentId,
+                "errors",
+                errors,
+                "generationConfig",
+                generationConfig,
+                "id",
+                id,
+                "input",
+                input,
+                "labels",
+                labels,
+                "model",
+                model,
+                "outputAudio",
+                outputAudio,
+                "outputImage",
+                outputImage,
+                "outputText",
+                outputText,
+                "outputVideo",
+                outputVideo,
+                "previousInteractionId",
+                previousInteractionId,
+                "responseFormat",
+                responseFormat,
+                "responseMimeType",
+                responseMimeType,
+                "responseModalities",
+                responseModalities,
+                "safetySettings",
+                safetySettings,
+                "serviceTier",
+                serviceTier,
+                "status",
+                status,
+                "steps",
+                steps,
+                "systemInstruction",
+                systemInstruction,
+                "tools",
+                tools,
+                "updated",
+                updated,
+                "usage",
+                usage,
+                "webhookConfig",
+                webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private AgentOption agent;
 
@@ -960,7 +993,7 @@ public class Interaction {
         private WebhookConfig webhookConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -1073,7 +1106,7 @@ public class Interaction {
 
         /**
          * Concatenated text from the last model output in response to the current request.
-         * 
+         *
          * <p>Note: this is added by the SDK.
          */
         public Builder outputText(@Nullable String outputText) {
@@ -1108,7 +1141,7 @@ public class Interaction {
 
         /**
          * The mime type of the response. This is required if response_format is set.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -1119,7 +1152,7 @@ public class Interaction {
 
         /**
          * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -1200,23 +1233,37 @@ public class Interaction {
 
         public Interaction build() {
             return new Interaction(
-                agent, agentConfig, created,
-                environment, environmentId, errors,
-                generationConfig, id, input,
-                labels, model, outputAudio,
-                outputImage, outputText, outputVideo,
-                previousInteractionId, responseFormat, responseMimeType,
-                responseModalities, safetySettings, serviceTier,
-                status, steps, systemInstruction,
-                tools, updated, usage,
-                webhookConfig);
+                    agent,
+                    agentConfig,
+                    created,
+                    environment,
+                    environmentId,
+                    errors,
+                    generationConfig,
+                    id,
+                    input,
+                    labels,
+                    model,
+                    outputAudio,
+                    outputImage,
+                    outputText,
+                    outputVideo,
+                    previousInteractionId,
+                    responseFormat,
+                    responseMimeType,
+                    responseModalities,
+                    safetySettings,
+                    serviceTier,
+                    status,
+                    steps,
+                    systemInstruction,
+                    tools,
+                    updated,
+                    usage,
+                    webhookConfig);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Id =
-                new LazySingletonValue<>(
-                        "id",
-                        "\"\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("id", "\"\"", new TypeReference<String>() {});
     }
 }

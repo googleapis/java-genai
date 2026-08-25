@@ -19,10 +19,9 @@
  */
 package com.google.genai.gaos.utils.transport;
 
-import java.util.Optional;
-
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Utils;
+import java.util.Optional;
 
 /**
  * An HTTP response that is independent of the underlying HTTP client.

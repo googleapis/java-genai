@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.webhooks;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * RotateSigningSecretRequest
- * 
+ *
  * <p>Request message for WebhookService.RotateSigningSecret.
  */
 public class RotateSigningSecretRequest {
@@ -47,7 +47,7 @@ public class RotateSigningSecretRequest {
             @JsonProperty("revocation_behavior") @Nullable RevocationBehavior revocationBehavior) {
         this.revocationBehavior = revocationBehavior;
     }
-    
+
     public RotateSigningSecretRequest() {
         this(null);
     }
@@ -63,7 +63,6 @@ public class RotateSigningSecretRequest {
         return new Builder();
     }
 
-
     /**
      * Optional. The revocation behavior for previous signing secrets.
      */
@@ -71,7 +70,6 @@ public class RotateSigningSecretRequest {
         this.revocationBehavior = revocationBehavior;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,29 +80,26 @@ public class RotateSigningSecretRequest {
             return false;
         }
         RotateSigningSecretRequest other = (RotateSigningSecretRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.revocationBehavior, other.revocationBehavior);
+        return Utils.enhancedDeepEquals(this.revocationBehavior, other.revocationBehavior);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            revocationBehavior);
+        return Utils.enhancedHash(revocationBehavior);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RotateSigningSecretRequest.class,
-                "revocationBehavior", revocationBehavior);
+        return Utils.toString(RotateSigningSecretRequest.class, "revocationBehavior", revocationBehavior);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private RevocationBehavior revocationBehavior;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -116,9 +111,7 @@ public class RotateSigningSecretRequest {
         }
 
         public RotateSigningSecretRequest build() {
-            return new RotateSigningSecretRequest(
-                revocationBehavior);
+            return new RotateSigningSecretRequest(revocationBehavior);
         }
-
     }
 }

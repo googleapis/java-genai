@@ -56,7 +56,7 @@ public class GetEnvironmentFilesRequestBuilder {
     private GetEnvironmentFilesRequest _buildRequest() {
         return this.request;
     }
-    
+
     public GetEnvironmentFilesRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -65,17 +65,16 @@ public class GetEnvironmentFilesRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<GetEnvironmentFilesResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation
-              = new GetEnvironmentFiles.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation =
+                new GetEnvironmentFiles.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

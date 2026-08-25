@@ -56,12 +56,12 @@ public class RetrievalRetrievalType {
     }
 
     /**
-     * Returns a RetrievalRetrievalType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a RetrievalRetrievalType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as RetrievalRetrievalType
-     */ 
+     */
     @JsonCreator
     public static RetrievalRetrievalType of(String value) {
         synchronized (RetrievalRetrievalType.class) {
@@ -89,12 +89,9 @@ public class RetrievalRetrievalType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         RetrievalRetrievalType other = (RetrievalRetrievalType) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class RetrievalRetrievalType {
         map.put("parallel_ai_search", RetrievalRetrievalTypeEnum.PARALLEL_AI_SEARCH);
         return map;
     }
-    
-    
+
     public enum RetrievalRetrievalTypeEnum {
 
         VERTEX_AI_SEARCH("vertex_ai_search"),
         RAG_STORE("rag_store"),
         EXA_AI_SEARCH("exa_ai_search"),
-        PARALLEL_AI_SEARCH("parallel_ai_search"),;
+        PARALLEL_AI_SEARCH("parallel_ai_search"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class RetrievalRetrievalType {
         }
     }
 }
-

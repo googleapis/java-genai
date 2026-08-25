@@ -58,7 +58,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Integer;
 import java.lang.String;
 
-
 public class Webhooks {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -71,7 +70,7 @@ public class Webhooks {
 
     /**
      * Switches to the async SDK.
-     * 
+     *
      * @return The async SDK
      */
     public AsyncWebhooks async() {
@@ -80,7 +79,7 @@ public class Webhooks {
 
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @return The call builder
      */
     public ListWebhooksRequestBuilder list() {
@@ -89,18 +88,17 @@ public class Webhooks {
 
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListWebhooksResponse listDirect() {
-        return list(null, null, null,
-            null);
+        return list(null, null, null, null);
     }
 
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param pageSize Optional. The maximum number of webhooks to return. The service may return fewer than
      *         this value. If unspecified, at most 50 webhooks will be returned.
@@ -112,17 +110,19 @@ public class Webhooks {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListWebhooksResponse list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
+            @Nullable String apiVersion,
+            @Nullable Integer pageSize,
+            @Nullable String pageToken,
+            @Nullable Options options) {
         ListWebhooksRequest request = new ListWebhooksRequest(apiVersion, pageSize, pageToken);
-        RequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
-              = new ListWebhooks.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation =
+                new ListWebhooks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @return The call builder
      */
     public CreateWebhookRequestBuilder create() {
@@ -131,7 +131,7 @@ public class Webhooks {
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @param body A Webhook resource.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -142,7 +142,7 @@ public class Webhooks {
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body A Webhook resource.
      * @param options additional options
@@ -150,17 +150,16 @@ public class Webhooks {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateWebhookResponse create(
-            @Nullable String apiVersion, @Nonnull WebhookInput body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull WebhookInput body, @Nullable Options options) {
         CreateWebhookRequest request = new CreateWebhookRequest(apiVersion, body);
-        RequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation
-              = new CreateWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation =
+                new CreateWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @return The call builder
      */
     public DeleteWebhookRequestBuilder delete() {
@@ -169,7 +168,7 @@ public class Webhooks {
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to delete.
      *         Format: `{webhook_id}`
      * @return The response from the API call
@@ -181,7 +180,7 @@ public class Webhooks {
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to delete.
      *         Format: `{webhook_id}`
@@ -189,18 +188,16 @@ public class Webhooks {
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteWebhookResponse delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public DeleteWebhookResponse delete(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
-        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
-              = new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation =
+                new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @return The call builder
      */
     public GetWebhookRequestBuilder get() {
@@ -209,7 +206,7 @@ public class Webhooks {
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to retrieve.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -220,25 +217,23 @@ public class Webhooks {
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to retrieve.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetWebhookResponse get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public GetWebhookResponse get(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetWebhookRequest request = new GetWebhookRequest(apiVersion, id);
-        RequestOperation<GetWebhookRequest, GetWebhookResponse> operation
-              = new GetWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetWebhookRequest, GetWebhookResponse> operation =
+                new GetWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @return The call builder
      */
     public UpdateWebhookRequestBuilder update() {
@@ -247,42 +242,41 @@ public class Webhooks {
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to update.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public UpdateWebhookResponse update(@Nonnull String id) {
-        return update(null, id, null,
-            null, null);
+        return update(null, id, null, null, null);
     }
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to update.
      * @param updateMask Optional. The list of fields to update.
-     * @param body 
+     * @param body
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public UpdateWebhookResponse update(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable String updateMask, @Nullable WebhookUpdate body,
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable String updateMask,
+            @Nullable WebhookUpdate body,
             @Nullable Options options) {
-        UpdateWebhookRequest request = new UpdateWebhookRequest(
-                apiVersion, id, updateMask,
-                body);
-        RequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation
-              = new UpdateWebhook.Sync(sdkConfiguration, options, _headers);
+        UpdateWebhookRequest request = new UpdateWebhookRequest(apiVersion, id, updateMask, body);
+        RequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation =
+                new UpdateWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @return The call builder
      */
     public PingWebhookRequestBuilder ping() {
@@ -291,20 +285,19 @@ public class Webhooks {
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public PingWebhookResponse ping(@Nonnull String id) {
-        return ping(null, id, null,
-            null);
+        return ping(null, id, null, null);
     }
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
@@ -314,17 +307,20 @@ public class Webhooks {
      * @throws RuntimeException subclass if the API call fails
      */
     public PingWebhookResponse ping(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
-        RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Sync(sdkConfiguration, options, _headers);
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable PingWebhookRequest body,
+            @Nullable Options options) {
+        com.google.genai.gaos.models.operations.PingWebhookRequest request =
+                new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
+        RequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation =
+                new PingWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @return The call builder
      */
     public RotateSigningSecretRequestBuilder rotateSigningSecret() {
@@ -333,20 +329,19 @@ public class Webhooks {
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook for which to generate a signing secret.
      *         Format: `{webhook_id}`
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public RotateSigningSecretResponse rotateSigningSecret(@Nonnull String id) {
-        return rotateSigningSecret(null, id, null,
-            null);
+        return rotateSigningSecret(null, id, null, null);
     }
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook for which to generate a signing secret.
      *         Format: `{webhook_id}`
@@ -356,12 +351,14 @@ public class Webhooks {
      * @throws RuntimeException subclass if the API call fails
      */
     public RotateSigningSecretResponse rotateSigningSecret(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable RotateSigningSecretRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
-        RequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
-              = new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable RotateSigningSecretRequest body,
+            @Nullable Options options) {
+        com.google.genai.gaos.models.operations.RotateSigningSecretRequest request =
+                new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
+        RequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation =
+                new RotateSigningSecret.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
-
 }

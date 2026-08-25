@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class InteractionStatusUpdate implements InteractionSSEEvent {
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -42,14 +41,11 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     @JsonProperty("event_id")
     private String eventId;
 
-
     @JsonProperty("event_type")
     private String eventType;
 
-
     @JsonProperty("interaction_id")
     private String interactionId;
-
 
     @JsonProperty("status")
     private InteractionStatusUpdateStatus status;
@@ -62,14 +58,12 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interactionId = Optional.ofNullable(interactionId)
-            .orElseThrow(() -> new IllegalArgumentException("interactionId cannot be null"));
-        this.status = Optional.ofNullable(status)
-            .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("interactionId cannot be null"));
+        this.status =
+                Optional.ofNullable(status).orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
     }
-    
-    public InteractionStatusUpdate(
-            @Nonnull String interactionId,
-            @Nonnull InteractionStatusUpdateStatus status) {
+
+    public InteractionStatusUpdate(@Nonnull String interactionId, @Nonnull InteractionStatusUpdateStatus status) {
         this(null, interactionId, status);
     }
 
@@ -98,7 +92,6 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
@@ -108,18 +101,15 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         return this;
     }
 
-
     public InteractionStatusUpdate withInteractionId(@Nonnull String interactionId) {
         this.interactionId = Utils.checkNotNull(interactionId, "interactionId");
         return this;
     }
 
-
     public InteractionStatusUpdate withStatus(@Nonnull InteractionStatusUpdateStatus status) {
         this.status = Utils.checkNotNull(status, "status");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -130,31 +120,33 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
             return false;
         }
         InteractionStatusUpdate other = (InteractionStatusUpdate) o;
-        return 
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.interactionId, other.interactionId) &&
-            Utils.enhancedDeepEquals(this.status, other.status);
+        return Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType)
+                && Utils.enhancedDeepEquals(this.interactionId, other.interactionId)
+                && Utils.enhancedDeepEquals(this.status, other.status);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            eventId, eventType, interactionId,
-            status);
+        return Utils.enhancedHash(eventId, eventType, interactionId, status);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(InteractionStatusUpdate.class,
-                "eventId", eventId,
-                "eventType", eventType,
-                "interactionId", interactionId,
-                "status", status);
+        return Utils.toString(
+                InteractionStatusUpdate.class,
+                "eventId",
+                eventId,
+                "eventType",
+                eventType,
+                "interactionId",
+                interactionId,
+                "status",
+                status);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String eventId;
 
@@ -163,7 +155,7 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         private InteractionStatusUpdateStatus status;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -186,15 +178,10 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         }
 
         public InteractionStatusUpdate build() {
-            return new InteractionStatusUpdate(
-                eventId, interactionId, status);
+            return new InteractionStatusUpdate(eventId, interactionId, status);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"interaction.status_update\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"interaction.status_update\"", new TypeReference<String>() {});
     }
 }

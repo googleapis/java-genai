@@ -54,12 +54,12 @@ public class ThinkingSummaries {
     }
 
     /**
-     * Returns a ThinkingSummaries with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ThinkingSummaries with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ThinkingSummaries
-     */ 
+     */
     @JsonCreator
     public static ThinkingSummaries of(String value) {
         synchronized (ThinkingSummaries.class) {
@@ -87,12 +87,9 @@ public class ThinkingSummaries {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ThinkingSummaries other = (ThinkingSummaries) obj;
         return Objects.equals(value, other.value);
     }
@@ -122,12 +119,12 @@ public class ThinkingSummaries {
         map.put("none", ThinkingSummariesEnum.NONE);
         return map;
     }
-    
-    
+
     public enum ThinkingSummariesEnum {
 
         AUTO("auto"),
-        NONE("none"),;
+        NONE("none"),
+        ;
 
         private final String value;
 
@@ -140,4 +137,3 @@ public class ThinkingSummaries {
         }
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,9 +32,9 @@ import java.util.Optional;
 
 /**
  * ImageConfig
- * 
+ *
  * <p>The configuration for image interaction.
- * 
+ *
  * @deprecated class: This will be removed in a future release, please migrate away from it as soon as possible.
  */
 @Deprecated
@@ -43,7 +43,6 @@ public class ImageConfig {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("aspect_ratio")
     private ImageConfigAspectRatio aspectRatio;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("image_size")
@@ -56,7 +55,7 @@ public class ImageConfig {
         this.aspectRatio = aspectRatio;
         this.imageSize = imageSize;
     }
-    
+
     public ImageConfig() {
         this(null, null);
     }
@@ -73,18 +72,15 @@ public class ImageConfig {
         return new Builder();
     }
 
-
     public ImageConfig withAspectRatio(@Nullable ImageConfigAspectRatio aspectRatio) {
         this.aspectRatio = aspectRatio;
         return this;
     }
 
-
     public ImageConfig withImageSize(@Nullable ImageConfigImageSize imageSize) {
         this.imageSize = imageSize;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -95,33 +91,29 @@ public class ImageConfig {
             return false;
         }
         ImageConfig other = (ImageConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio) &&
-            Utils.enhancedDeepEquals(this.imageSize, other.imageSize);
+        return Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio)
+                && Utils.enhancedDeepEquals(this.imageSize, other.imageSize);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            aspectRatio, imageSize);
+        return Utils.enhancedHash(aspectRatio, imageSize);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ImageConfig.class,
-                "aspectRatio", aspectRatio,
-                "imageSize", imageSize);
+        return Utils.toString(ImageConfig.class, "aspectRatio", aspectRatio, "imageSize", imageSize);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private ImageConfigAspectRatio aspectRatio;
 
         private ImageConfigImageSize imageSize;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder aspectRatio(@Nullable ImageConfigAspectRatio aspectRatio) {
@@ -135,9 +127,7 @@ public class ImageConfig {
         }
 
         public ImageConfig build() {
-            return new ImageConfig(
-                aspectRatio, imageSize);
+            return new ImageConfig(aspectRatio, imageSize);
         }
-
     }
 }

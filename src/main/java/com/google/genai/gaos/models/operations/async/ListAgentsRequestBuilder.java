@@ -83,7 +83,7 @@ public class ListAgentsRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListAgentsRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -92,17 +92,16 @@ public class ListAgentsRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<ListAgentsResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<ListAgentsRequest, ListAgentsResponse> operation
-              = new ListAgents.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<ListAgentsRequest, ListAgentsResponse> operation =
+                new ListAgents.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

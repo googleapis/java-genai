@@ -54,12 +54,12 @@ public class ProcessingEnum {
     }
 
     /**
-     * Returns a ProcessingEnum with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ProcessingEnum with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ProcessingEnum
-     */ 
+     */
     @JsonCreator
     public static ProcessingEnum of(String value) {
         synchronized (ProcessingEnum.class) {
@@ -87,12 +87,9 @@ public class ProcessingEnum {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ProcessingEnum other = (ProcessingEnum) obj;
         return Objects.equals(value, other.value);
     }
@@ -122,12 +119,12 @@ public class ProcessingEnum {
         map.put("agentic", ProcessingEnumEnum.AGENTIC);
         return map;
     }
-    
-    
+
     public enum ProcessingEnumEnum {
 
         STATIC("static"),
-        AGENTIC("agentic"),;
+        AGENTIC("agentic"),
+        ;
 
         private final String value;
 
@@ -140,4 +137,3 @@ public class ProcessingEnum {
         }
     }
 }
-

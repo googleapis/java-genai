@@ -29,7 +29,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CreateTriggerRequest {
     /**
      * Which version of the API to use.
@@ -37,21 +36,16 @@ public class CreateTriggerRequest {
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
-
     @SpeakeasyMetadata("request:mediaType=application/json")
     private TriggerCreateParams body;
 
     @JsonCreator
-    public CreateTriggerRequest(
-            @Nullable String apiVersion,
-            @Nonnull TriggerCreateParams body) {
+    public CreateTriggerRequest(@Nullable String apiVersion, @Nonnull TriggerCreateParams body) {
         this.apiVersion = apiVersion;
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.body = Optional.ofNullable(body).orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
-    
-    public CreateTriggerRequest(
-            @Nonnull TriggerCreateParams body) {
+
+    public CreateTriggerRequest(@Nonnull TriggerCreateParams body) {
         this(null, body);
     }
 
@@ -70,7 +64,6 @@ public class CreateTriggerRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -79,12 +72,10 @@ public class CreateTriggerRequest {
         return this;
     }
 
-
     public CreateTriggerRequest withBody(@Nonnull TriggerCreateParams body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -95,33 +86,29 @@ public class CreateTriggerRequest {
             return false;
         }
         CreateTriggerRequest other = (CreateTriggerRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, body);
+        return Utils.enhancedHash(apiVersion, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateTriggerRequest.class,
-                "apiVersion", apiVersion,
-                "body", body);
+        return Utils.toString(CreateTriggerRequest.class, "apiVersion", apiVersion, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private TriggerCreateParams body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -138,9 +125,7 @@ public class CreateTriggerRequest {
         }
 
         public CreateTriggerRequest build() {
-            return new CreateTriggerRequest(
-                apiVersion, body);
+            return new CreateTriggerRequest(apiVersion, body);
         }
-
     }
 }

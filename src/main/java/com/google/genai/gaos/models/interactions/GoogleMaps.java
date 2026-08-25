@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * GoogleMaps
- * 
+ *
  * <p>A tool that can be used by the model to call Google Maps.
  */
 public class GoogleMaps implements Tool {
@@ -61,7 +61,6 @@ public class GoogleMaps implements Tool {
     @JsonProperty("longitude")
     private Double longitude;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -75,7 +74,7 @@ public class GoogleMaps implements Tool {
         this.longitude = longitude;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public GoogleMaps() {
         this(null, null, null);
     }
@@ -111,7 +110,6 @@ public class GoogleMaps implements Tool {
         return new Builder();
     }
 
-
     /**
      * Whether to return a widget context token in the tool call result of the
      * response.
@@ -121,7 +119,6 @@ public class GoogleMaps implements Tool {
         return this;
     }
 
-
     /**
      * The latitude of the user's location.
      */
@@ -130,7 +127,6 @@ public class GoogleMaps implements Tool {
         return this;
     }
 
-
     /**
      * The longitude of the user's location.
      */
@@ -138,7 +134,6 @@ public class GoogleMaps implements Tool {
         this.longitude = longitude;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -149,31 +144,33 @@ public class GoogleMaps implements Tool {
             return false;
         }
         GoogleMaps other = (GoogleMaps) o;
-        return 
-            Utils.enhancedDeepEquals(this.enableWidget, other.enableWidget) &&
-            Utils.enhancedDeepEquals(this.latitude, other.latitude) &&
-            Utils.enhancedDeepEquals(this.longitude, other.longitude) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.enableWidget, other.enableWidget)
+                && Utils.enhancedDeepEquals(this.latitude, other.latitude)
+                && Utils.enhancedDeepEquals(this.longitude, other.longitude)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            enableWidget, latitude, longitude,
-            type);
+        return Utils.enhancedHash(enableWidget, latitude, longitude, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMaps.class,
-                "enableWidget", enableWidget,
-                "latitude", latitude,
-                "longitude", longitude,
-                "type", type);
+        return Utils.toString(
+                GoogleMaps.class,
+                "enableWidget",
+                enableWidget,
+                "latitude",
+                latitude,
+                "longitude",
+                longitude,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Boolean enableWidget;
 
@@ -182,7 +179,7 @@ public class GoogleMaps implements Tool {
         private Double longitude;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -211,15 +208,10 @@ public class GoogleMaps implements Tool {
         }
 
         public GoogleMaps build() {
-            return new GoogleMaps(
-                enableWidget, latitude, longitude);
+            return new GoogleMaps(enableWidget, latitude, longitude);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_maps\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_maps\"", new TypeReference<String>() {});
     }
 }

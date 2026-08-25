@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.shared;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.HasSecurity;
 import com.google.genai.gaos.utils.SpeakeasyMetadata;
@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Map;
 import java.util.Optional;
-
 
 public class Security implements HasSecurity {
     /**
@@ -67,7 +66,7 @@ public class Security implements HasSecurity {
         this.apiKey = apiKey;
         this.defaultHeaders = defaultHeaders;
     }
-    
+
     public Security() {
         this(null, null, null);
     }
@@ -97,7 +96,6 @@ public class Security implements HasSecurity {
         return new Builder();
     }
 
-
     /**
      * OAuth access token sent as a bearer Authorization header.
      */
@@ -105,7 +103,6 @@ public class Security implements HasSecurity {
         this.accessToken = accessToken;
         return this;
     }
-
 
     /**
      * Gemini API key sent as x-goog-api-key.
@@ -115,7 +112,6 @@ public class Security implements HasSecurity {
         return this;
     }
 
-
     /**
      * Additional default headers to apply before request-specific headers and auth.
      */
@@ -123,7 +119,6 @@ public class Security implements HasSecurity {
         this.defaultHeaders = defaultHeaders;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -134,28 +129,24 @@ public class Security implements HasSecurity {
             return false;
         }
         Security other = (Security) o;
-        return 
-            Utils.enhancedDeepEquals(this.accessToken, other.accessToken) &&
-            Utils.enhancedDeepEquals(this.apiKey, other.apiKey) &&
-            Utils.enhancedDeepEquals(this.defaultHeaders, other.defaultHeaders);
+        return Utils.enhancedDeepEquals(this.accessToken, other.accessToken)
+                && Utils.enhancedDeepEquals(this.apiKey, other.apiKey)
+                && Utils.enhancedDeepEquals(this.defaultHeaders, other.defaultHeaders);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            accessToken, apiKey, defaultHeaders);
+        return Utils.enhancedHash(accessToken, apiKey, defaultHeaders);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Security.class,
-                "accessToken", accessToken,
-                "apiKey", apiKey,
-                "defaultHeaders", defaultHeaders);
+        return Utils.toString(
+                Security.class, "accessToken", accessToken, "apiKey", apiKey, "defaultHeaders", defaultHeaders);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String accessToken;
 
@@ -164,7 +155,7 @@ public class Security implements HasSecurity {
         private Map<String, String> defaultHeaders;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -192,9 +183,7 @@ public class Security implements HasSecurity {
         }
 
         public Security build() {
-            return new Security(
-                accessToken, apiKey, defaultHeaders);
+            return new Security(accessToken, apiKey, defaultHeaders);
         }
-
     }
 }

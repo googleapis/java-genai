@@ -19,14 +19,6 @@
  */
 package com.google.genai.gaos.utils;
 
-import com.google.genai.gaos.utils.transport.HttpResponse;
-import com.google.genai.gaos.utils.transport.HttpRequest;
-import java.io.InputStream;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.google.genai.gaos.utils.AsyncHook.AfterError;
 import com.google.genai.gaos.utils.AsyncHook.AfterSuccess;
 import com.google.genai.gaos.utils.AsyncHook.BeforeRequest;
@@ -34,6 +26,13 @@ import com.google.genai.gaos.utils.Hook.AfterErrorContext;
 import com.google.genai.gaos.utils.Hook.AfterSuccessContext;
 import com.google.genai.gaos.utils.Hook.BeforeRequestContext;
 import com.google.genai.gaos.utils.Hooks.FailEarlyException;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Async hook registry for runtime request/response processing.
@@ -57,8 +56,7 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
     private final List<AfterSuccess> afterSuccessHooks = new CopyOnWriteArrayList<>();
     private final List<AfterError> afterErrorHooks = new CopyOnWriteArrayList<>();
 
-    public AsyncHooks() {
-    }
+    public AsyncHooks() {}
 
     /**
      * Registers an async before-request hook. Hooks are chained in registration order.
@@ -69,7 +67,10 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
     public AsyncHooks registerBeforeRequest(BeforeRequest beforeRequest) {
         Utils.checkNotNull(beforeRequest, "beforeRequest");
         this.beforeRequestHooks.add(beforeRequest);
-        logger.debug("Registered async BeforeRequest hook: {} (total: {})", beforeRequest.getClass().getSimpleName(), beforeRequestHooks.size());
+        logger.debug(
+                "Registered async BeforeRequest hook: {} (total: {})",
+                beforeRequest.getClass().getSimpleName(),
+                beforeRequestHooks.size());
         return this;
     }
 
@@ -82,7 +83,10 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
     public AsyncHooks registerAfterSuccess(AfterSuccess afterSuccess) {
         Utils.checkNotNull(afterSuccess, "afterSuccess");
         this.afterSuccessHooks.add(afterSuccess);
-        logger.debug("Registered async AfterSuccess hook: {} (total: {})", afterSuccess.getClass().getSimpleName(), afterSuccessHooks.size());
+        logger.debug(
+                "Registered async AfterSuccess hook: {} (total: {})",
+                afterSuccess.getClass().getSimpleName(),
+                afterSuccessHooks.size());
         return this;
     }
 
@@ -95,7 +99,10 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
     public AsyncHooks registerAfterError(AfterError afterError) {
         Utils.checkNotNull(afterError, "afterError");
         this.afterErrorHooks.add(afterError);
-        logger.debug("Registered async AfterError hook: {} (total: {})", afterError.getClass().getSimpleName(), afterErrorHooks.size());
+        logger.debug(
+                "Registered async AfterError hook: {} (total: {})",
+                afterError.getClass().getSimpleName(),
+                afterErrorHooks.size());
         return this;
     }
 
@@ -105,7 +112,10 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
         Utils.checkNotNull(request, "request");
 
         if (logger.isTraceEnabled() && !beforeRequestHooks.isEmpty()) {
-            logger.trace("Executing {} async beforeRequest hook(s) for operation: {}", beforeRequestHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} async beforeRequest hook(s) for operation: {}",
+                    beforeRequestHooks.size(),
+                    context.operationId());
         }
 
         CompletableFuture<HttpRequest> result = CompletableFuture.completedFuture(request);
@@ -119,28 +129,27 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
 
     @Override
     public CompletableFuture<HttpResponse<InputStream>> afterSuccess(
-            AfterSuccessContext context,
-            HttpResponse<InputStream> response) {
+            AfterSuccessContext context, HttpResponse<InputStream> response) {
         Utils.checkNotNull(context, "context");
         Utils.checkNotNull(response, "response");
 
         if (logger.isTraceEnabled() && !afterSuccessHooks.isEmpty()) {
-            logger.trace("Executing {} async afterSuccess hook(s) for operation: {}", afterSuccessHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} async afterSuccess hook(s) for operation: {}",
+                    afterSuccessHooks.size(),
+                    context.operationId());
         }
 
         CompletableFuture<HttpResponse<InputStream>> result = CompletableFuture.completedFuture(response);
 
         for (AfterSuccess hook : afterSuccessHooks) {
-            result = result.handle((resp, ex) ->
-                    hook.afterSuccess(context, resp)
-                            .thenApply(hookResp -> {
-                                if (hookResp == null) {
-                                    throw new IllegalStateException(
-                                            "afterSuccess must return a non-null response");
-                                }
-                                return hookResp;
-                            })
-            ).thenCompose(future -> future);
+            result = result.handle((resp, ex) -> hook.afterSuccess(context, resp).thenApply(hookResp -> {
+                if (hookResp == null) {
+                    throw new IllegalStateException("afterSuccess must return a non-null response");
+                }
+                return hookResp;
+            }))
+                    .thenCompose(future -> future);
         }
 
         return result;
@@ -148,16 +157,16 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
 
     @Override
     public CompletableFuture<HttpResponse<InputStream>> afterError(
-            AfterErrorContext context,
-            HttpResponse<InputStream> response,
-            Throwable error) {
+            AfterErrorContext context, HttpResponse<InputStream> response, Throwable error) {
         Utils.checkNotNull(context, "context");
         Utils.checkArgument(
-                (response != null) ^ (error != null),
-                "one and only one of response or error must be present");
+                (response != null) ^ (error != null), "one and only one of response or error must be present");
 
         if (logger.isTraceEnabled() && !afterErrorHooks.isEmpty()) {
-            logger.trace("Executing {} async afterError hook(s) for operation: {}", afterErrorHooks.size(), context.operationId());
+            logger.trace(
+                    "Executing {} async afterError hook(s) for operation: {}",
+                    afterErrorHooks.size(),
+                    context.operationId());
         }
 
         CompletableFuture<HttpResponse<InputStream>> result;
@@ -170,31 +179,30 @@ public class AsyncHooks implements BeforeRequest, AfterSuccess, AfterError {
         AtomicBoolean failedEarly = new AtomicBoolean(false);
         for (AfterError hook : afterErrorHooks) {
             result = result.handle((resp, ex) -> {
-                        if (failedEarly.get()) {
-                            throw (FailEarlyException) ex;
+                if (failedEarly.get()) {
+                    throw (FailEarlyException) ex;
+                }
+                return hook.afterError(context, resp, ex).handle((hookResp, hookErr) -> {
+                    if (hookErr != null) {
+                        if (hookErr instanceof FailEarlyException) {
+                            failedEarly.set(true);
+                            throw (FailEarlyException) hookErr;
                         }
-                        return hook.afterError(context, resp, ex)
-                                .handle((hookResp, hookErr) -> {
-                                    if (hookErr != null) {
-                                        if (hookErr instanceof FailEarlyException) {
-                                            failedEarly.set(true);
-                                            throw (FailEarlyException) hookErr;
-                                        }
-                                        logger.debug("Async hook threw exception: {}", hookErr.getClass().getSimpleName());
-                                        throw  Exceptions.unchecked(hookErr);
-                                    }
-                                    if (hookResp == null) {
-                                        throw new IllegalStateException(
-                                                "afterError must either throw an exception or return a non-null response");
-                                    }
-
-                                    return hookResp;
-                                });
+                        logger.debug(
+                                "Async hook threw exception: {}",
+                                hookErr.getClass().getSimpleName());
+                        throw Exceptions.unchecked(hookErr);
                     }
-            ).thenCompose(future -> future);
+                    if (hookResp == null) {
+                        throw new IllegalStateException(
+                                "afterError must either throw an exception or return a non-null response");
+                    }
+
+                    return hookResp;
+                });
+            }).thenCompose(future -> future);
         }
 
         return result;
     }
-
 }

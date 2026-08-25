@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * RagRetrievalConfig
- * 
+ *
  * <p>Specifies the context retrieval config.
  */
 public class RagRetrievalConfig {
@@ -75,10 +75,9 @@ public class RagRetrievalConfig {
         this.ranking = ranking;
         this.topK = topK;
     }
-    
+
     public RagRetrievalConfig() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -113,7 +112,6 @@ public class RagRetrievalConfig {
         return new Builder();
     }
 
-
     /**
      * Config for filters.
      */
@@ -121,7 +119,6 @@ public class RagRetrievalConfig {
         this.filter = filter;
         return this;
     }
-
 
     /**
      * Config for Hybrid Search.
@@ -131,7 +128,6 @@ public class RagRetrievalConfig {
         return this;
     }
 
-
     /**
      * Config for Rank Service.
      */
@@ -140,7 +136,6 @@ public class RagRetrievalConfig {
         return this;
     }
 
-
     /**
      * Optional. The number of contexts to retrieve.
      */
@@ -148,7 +143,6 @@ public class RagRetrievalConfig {
         this.topK = topK;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -159,31 +153,33 @@ public class RagRetrievalConfig {
             return false;
         }
         RagRetrievalConfig other = (RagRetrievalConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.filter, other.filter) &&
-            Utils.enhancedDeepEquals(this.hybridSearch, other.hybridSearch) &&
-            Utils.enhancedDeepEquals(this.ranking, other.ranking) &&
-            Utils.enhancedDeepEquals(this.topK, other.topK);
+        return Utils.enhancedDeepEquals(this.filter, other.filter)
+                && Utils.enhancedDeepEquals(this.hybridSearch, other.hybridSearch)
+                && Utils.enhancedDeepEquals(this.ranking, other.ranking)
+                && Utils.enhancedDeepEquals(this.topK, other.topK);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            filter, hybridSearch, ranking,
-            topK);
+        return Utils.enhancedHash(filter, hybridSearch, ranking, topK);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RagRetrievalConfig.class,
-                "filter", filter,
-                "hybridSearch", hybridSearch,
-                "ranking", ranking,
-                "topK", topK);
+        return Utils.toString(
+                RagRetrievalConfig.class,
+                "filter",
+                filter,
+                "hybridSearch",
+                hybridSearch,
+                "ranking",
+                ranking,
+                "topK",
+                topK);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Filter filter;
 
@@ -194,7 +190,7 @@ public class RagRetrievalConfig {
         private Integer topK;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -230,10 +226,7 @@ public class RagRetrievalConfig {
         }
 
         public RagRetrievalConfig build() {
-            return new RagRetrievalConfig(
-                filter, hybridSearch, ranking,
-                topK);
+            return new RagRetrievalConfig(filter, hybridSearch, ranking, topK);
         }
-
     }
 }

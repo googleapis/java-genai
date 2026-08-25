@@ -36,14 +36,13 @@ import java.util.Map;
 
 /**
  * DynamicAgentConfig
- * 
+ *
  * <p>Configuration for dynamic agents.
  */
 public class DynamicAgentConfig implements InteractionAgentConfig, CreateAgentInteractionAgentConfig {
 
     @JsonProperty("type")
     private String type;
-
 
     @JsonIgnore
     private Map<String, Object> additionalProperties;
@@ -68,7 +67,6 @@ public class DynamicAgentConfig implements InteractionAgentConfig, CreateAgentIn
         return new Builder();
     }
 
-
     @JsonAnySetter
     public DynamicAgentConfig withAdditionalProperty(String key, Object value) {
         // note that value can be null because of the way JsonAnySetter works
@@ -82,7 +80,6 @@ public class DynamicAgentConfig implements InteractionAgentConfig, CreateAgentIn
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -92,31 +89,27 @@ public class DynamicAgentConfig implements InteractionAgentConfig, CreateAgentIn
             return false;
         }
         DynamicAgentConfig other = (DynamicAgentConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
+        return Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.additionalProperties, other.additionalProperties);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            type, additionalProperties);
+        return Utils.enhancedHash(type, additionalProperties);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DynamicAgentConfig.class,
-                "type", type,
-                "additionalProperties", additionalProperties);
+        return Utils.toString(DynamicAgentConfig.class, "type", type, "additionalProperties", additionalProperties);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -124,22 +117,17 @@ public class DynamicAgentConfig implements InteractionAgentConfig, CreateAgentIn
             this.additionalProperties.put(key, value);
             return this;
         }
+
         public Builder additionalProperties(@Nullable Map<String, Object> additionalProperties) {
             this.additionalProperties = additionalProperties;
             return this;
         }
 
         public DynamicAgentConfig build() {
-            return new DynamicAgentConfig(
-                )
-                .withAdditionalProperties(additionalProperties);
+            return new DynamicAgentConfig().withAdditionalProperties(additionalProperties);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"dynamic\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"dynamic\"", new TypeReference<String>() {});
     }
 }

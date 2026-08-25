@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * ImageResponseFormatDelivery
- * 
+ *
  * <p>The delivery mode for the image output.
  */
 public class ImageResponseFormatDelivery {
@@ -59,12 +59,12 @@ public class ImageResponseFormatDelivery {
     }
 
     /**
-     * Returns a ImageResponseFormatDelivery with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageResponseFormatDelivery with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageResponseFormatDelivery
-     */ 
+     */
     @JsonCreator
     public static ImageResponseFormatDelivery of(String value) {
         synchronized (ImageResponseFormatDelivery.class) {
@@ -92,12 +92,9 @@ public class ImageResponseFormatDelivery {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageResponseFormatDelivery other = (ImageResponseFormatDelivery) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class ImageResponseFormatDelivery {
         map.put("uri", ImageResponseFormatDeliveryEnum.URI);
         return map;
     }
-    
-    
+
     public enum ImageResponseFormatDeliveryEnum {
 
         INLINE("inline"),
-        URI("uri"),;
+        URI("uri"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class ImageResponseFormatDelivery {
         }
     }
 }
-

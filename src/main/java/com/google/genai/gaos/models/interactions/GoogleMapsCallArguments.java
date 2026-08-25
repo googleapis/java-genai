@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * GoogleMapsCallArguments
- * 
+ *
  * <p>The arguments to pass to the Google Maps tool.
  */
 public class GoogleMapsCallArguments {
@@ -44,11 +44,10 @@ public class GoogleMapsCallArguments {
     private List<String> queries;
 
     @JsonCreator
-    public GoogleMapsCallArguments(
-            @JsonProperty("queries") @Nullable List<String> queries) {
+    public GoogleMapsCallArguments(@JsonProperty("queries") @Nullable List<String> queries) {
         this.queries = queries;
     }
-    
+
     public GoogleMapsCallArguments() {
         this(null);
     }
@@ -64,7 +63,6 @@ public class GoogleMapsCallArguments {
         return new Builder();
     }
 
-
     /**
      * The queries to be executed.
      */
@@ -72,7 +70,6 @@ public class GoogleMapsCallArguments {
         this.queries = queries;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -83,29 +80,26 @@ public class GoogleMapsCallArguments {
             return false;
         }
         GoogleMapsCallArguments other = (GoogleMapsCallArguments) o;
-        return 
-            Utils.enhancedDeepEquals(this.queries, other.queries);
+        return Utils.enhancedDeepEquals(this.queries, other.queries);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            queries);
+        return Utils.enhancedHash(queries);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsCallArguments.class,
-                "queries", queries);
+        return Utils.toString(GoogleMapsCallArguments.class, "queries", queries);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<String> queries;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -117,9 +111,7 @@ public class GoogleMapsCallArguments {
         }
 
         public GoogleMapsCallArguments build() {
-            return new GoogleMapsCallArguments(
-                queries);
+            return new GoogleMapsCallArguments(queries);
         }
-
     }
 }

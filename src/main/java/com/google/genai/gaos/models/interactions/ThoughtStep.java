@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * ThoughtStep
- * 
+ *
  * <p>A thought step.
  */
 public class ThoughtStep implements Step {
@@ -52,7 +52,6 @@ public class ThoughtStep implements Step {
     @JsonProperty("summary")
     private List<ThoughtSummaryContent> summary;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -64,7 +63,7 @@ public class ThoughtStep implements Step {
         this.summary = summary;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ThoughtStep() {
         this(null, null);
     }
@@ -92,7 +91,6 @@ public class ThoughtStep implements Step {
         return new Builder();
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -101,7 +99,6 @@ public class ThoughtStep implements Step {
         return this;
     }
 
-
     /**
      * A summary of the thought.
      */
@@ -109,7 +106,6 @@ public class ThoughtStep implements Step {
         this.summary = summary;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -120,35 +116,30 @@ public class ThoughtStep implements Step {
             return false;
         }
         ThoughtStep other = (ThoughtStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.summary, other.summary) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.summary, other.summary)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            signature, summary, type);
+        return Utils.enhancedHash(signature, summary, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ThoughtStep.class,
-                "signature", signature,
-                "summary", summary,
-                "type", type);
+        return Utils.toString(ThoughtStep.class, "signature", signature, "summary", summary, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String signature;
 
         private List<ThoughtSummaryContent> summary;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -168,15 +159,10 @@ public class ThoughtStep implements Step {
         }
 
         public ThoughtStep build() {
-            return new ThoughtStep(
-                signature, summary);
+            return new ThoughtStep(signature, summary);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"thought\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"thought\"", new TypeReference<String>() {});
     }
 }

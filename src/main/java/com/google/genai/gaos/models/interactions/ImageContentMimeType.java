@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * ImageContentMimeType
- * 
+ *
  * <p>The mime type of the image.
  */
 public class ImageContentMimeType {
@@ -65,12 +65,12 @@ public class ImageContentMimeType {
     }
 
     /**
-     * Returns a ImageContentMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageContentMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageContentMimeType
-     */ 
+     */
     @JsonCreator
     public static ImageContentMimeType of(String value) {
         synchronized (ImageContentMimeType.class) {
@@ -98,12 +98,9 @@ public class ImageContentMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageContentMimeType other = (ImageContentMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -145,8 +142,7 @@ public class ImageContentMimeType {
         map.put("image/tiff", ImageContentMimeTypeEnum.IMAGE_TIFF);
         return map;
     }
-    
-    
+
     public enum ImageContentMimeTypeEnum {
 
         IMAGE_PNG("image/png"),
@@ -156,7 +152,8 @@ public class ImageContentMimeType {
         IMAGE_HEIF("image/heif"),
         IMAGE_GIF("image/gif"),
         IMAGE_BMP("image/bmp"),
-        IMAGE_TIFF("image/tiff"),;
+        IMAGE_TIFF("image/tiff"),
+        ;
 
         private final String value;
 
@@ -169,4 +166,3 @@ public class ImageContentMimeType {
         }
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,24 +31,21 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ArgumentsDelta implements StepDeltaData {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("arguments")
     private String arguments;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public ArgumentsDelta(
-            @JsonProperty("arguments") @Nullable String arguments) {
+    public ArgumentsDelta(@JsonProperty("arguments") @Nullable String arguments) {
         this.arguments = arguments;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ArgumentsDelta() {
         this(null);
     }
@@ -66,12 +63,10 @@ public class ArgumentsDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public ArgumentsDelta withArguments(@Nullable String arguments) {
         this.arguments = arguments;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,31 +77,27 @@ public class ArgumentsDelta implements StepDeltaData {
             return false;
         }
         ArgumentsDelta other = (ArgumentsDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, type);
+        return Utils.enhancedHash(arguments, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ArgumentsDelta.class,
-                "arguments", arguments,
-                "type", type);
+        return Utils.toString(ArgumentsDelta.class, "arguments", arguments, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String arguments;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder arguments(@Nullable String arguments) {
@@ -115,15 +106,10 @@ public class ArgumentsDelta implements StepDeltaData {
         }
 
         public ArgumentsDelta build() {
-            return new ArgumentsDelta(
-                arguments);
+            return new ArgumentsDelta(arguments);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"arguments_delta\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"arguments_delta\"", new TypeReference<String>() {});
     }
 }

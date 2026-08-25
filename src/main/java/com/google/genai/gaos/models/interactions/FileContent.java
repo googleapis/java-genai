@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * FileContent
- * 
+ *
  * <p>Content of a single file in the codebase.
  */
 public class FileContent {
@@ -50,13 +50,11 @@ public class FileContent {
     private String path;
 
     @JsonCreator
-    public FileContent(
-            @JsonProperty("content") @Nullable String content,
-            @JsonProperty("path") @Nullable String path) {
+    public FileContent(@JsonProperty("content") @Nullable String content, @JsonProperty("path") @Nullable String path) {
         this.content = content;
         this.path = path;
     }
-    
+
     public FileContent() {
         this(null, null);
     }
@@ -79,7 +77,6 @@ public class FileContent {
         return new Builder();
     }
 
-
     /**
      * The UTF-8 encoded text content of the file.
      */
@@ -88,7 +85,6 @@ public class FileContent {
         return this;
     }
 
-
     /**
      * The relative path of the file from the project root.
      */
@@ -96,7 +92,6 @@ public class FileContent {
         this.path = path;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -107,33 +102,28 @@ public class FileContent {
             return false;
         }
         FileContent other = (FileContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.content, other.content) &&
-            Utils.enhancedDeepEquals(this.path, other.path);
+        return Utils.enhancedDeepEquals(this.content, other.content) && Utils.enhancedDeepEquals(this.path, other.path);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            content, path);
+        return Utils.enhancedHash(content, path);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileContent.class,
-                "content", content,
-                "path", path);
+        return Utils.toString(FileContent.class, "content", content, "path", path);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String content;
 
         private String path;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -153,9 +143,7 @@ public class FileContent {
         }
 
         public FileContent build() {
-            return new FileContent(
-                content, path);
+            return new FileContent(content, path);
         }
-
     }
 }

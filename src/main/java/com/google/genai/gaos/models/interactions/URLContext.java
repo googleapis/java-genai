@@ -30,7 +30,7 @@ import java.lang.String;
 
 /**
  * URLContext
- * 
+ *
  * <p>A tool that can be used by the model to fetch URL context.
  */
 public class URLContext implements AgentTool, Tool {
@@ -52,7 +52,6 @@ public class URLContext implements AgentTool, Tool {
         return new Builder();
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -62,39 +61,31 @@ public class URLContext implements AgentTool, Tool {
             return false;
         }
         URLContext other = (URLContext) o;
-        return 
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            type);
+        return Utils.enhancedHash(type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContext.class,
-                "type", type);
+        return Utils.toString(URLContext.class, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public URLContext build() {
-            return new URLContext(
-                );
+            return new URLContext();
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"url_context\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"url_context\"", new TypeReference<String>() {});
     }
 }

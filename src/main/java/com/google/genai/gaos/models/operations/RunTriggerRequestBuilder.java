@@ -68,7 +68,7 @@ public class RunTriggerRequestBuilder {
         }
         return this.request;
     }
-    
+
     public RunTriggerRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class RunTriggerRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public RunTriggerResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<RunTriggerRequest, RunTriggerResponse> operation
-              = new RunTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<RunTriggerRequest, RunTriggerResponse> operation =
+                new RunTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

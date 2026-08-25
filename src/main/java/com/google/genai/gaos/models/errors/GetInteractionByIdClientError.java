@@ -44,20 +44,20 @@ public class GetInteractionByIdClientError extends GaosClientException {
     private final Throwable deserializationException;
 
     public GetInteractionByIdClientError(
-                int code,
-                byte[] body,
-                HttpResponse<?> rawResponse,
-                @Nullable Data data,
-                @Nullable Throwable deserializationException) {
+            int code,
+            byte[] body,
+            HttpResponse<?> rawResponse,
+            @Nullable Data data,
+            @Nullable Throwable deserializationException) {
         super("API error occurred", code, body, rawResponse, null);
         this.data = data;
         this.deserializationException = deserializationException;
     }
 
     /**
-    * Parse a response into an instance of GetInteractionByIdClientError. If deserialization of the response body fails,
-    * the resulting GetInteractionByIdClientError instance will have a null data() value and a non-null deserializationException().
-    */
+     * Parse a response into an instance of GetInteractionByIdClientError. If deserialization of the response body fails,
+     * the resulting GetInteractionByIdClientError instance will have a null data() value and a non-null deserializationException().
+     */
     public static GetInteractionByIdClientError from(HttpResponse<InputStream> response) {
         try {
             byte[] bytes = Utils.extractByteArrayFromBody(response);
@@ -88,7 +88,7 @@ public class GetInteractionByIdClientError extends GaosClientException {
     }
     /**
      * Data
-     * 
+     *
      * <p>Error getting interaction
      */
     public static class Data {
@@ -99,10 +99,9 @@ public class GetInteractionByIdClientError extends GaosClientException {
         private Error error;
 
         @JsonCreator
-        public Data(
-                @JsonProperty("error") @Nonnull Error error) {
-            this.error = Optional.ofNullable(error)
-                .orElseThrow(() -> new IllegalArgumentException("error cannot be null"));
+        public Data(@JsonProperty("error") @Nonnull Error error) {
+            this.error =
+                    Optional.ofNullable(error).orElseThrow(() -> new IllegalArgumentException("error cannot be null"));
         }
 
         /**
@@ -116,7 +115,6 @@ public class GetInteractionByIdClientError extends GaosClientException {
             return new Builder();
         }
 
-
         /**
          * Error message from an interaction.
          */
@@ -124,7 +122,6 @@ public class GetInteractionByIdClientError extends GaosClientException {
             this.error = Utils.checkNotNull(error, "error");
             return this;
         }
-
 
         @Override
         public boolean equals(java.lang.Object o) {
@@ -135,29 +132,26 @@ public class GetInteractionByIdClientError extends GaosClientException {
                 return false;
             }
             Data other = (Data) o;
-            return 
-                Utils.enhancedDeepEquals(this.error, other.error);
+            return Utils.enhancedDeepEquals(this.error, other.error);
         }
-        
+
         @Override
         public int hashCode() {
-            return Utils.enhancedHash(
-                error);
+            return Utils.enhancedHash(error);
         }
-        
+
         @Override
         public String toString() {
-            return Utils.toString(Data.class,
-                    "error", error);
+            return Utils.toString(Data.class, "error", error);
         }
 
         @SuppressWarnings("UnusedReturnValue")
-        public final static class Builder {
+        public static final class Builder {
 
             private Error error;
 
             private Builder() {
-              // force use of static builder() method
+                // force use of static builder() method
             }
 
             /**
@@ -169,12 +163,8 @@ public class GetInteractionByIdClientError extends GaosClientException {
             }
 
             public Data build() {
-                return new Data(
-                    error);
+                return new Data(error);
             }
-
         }
     }
-
 }
-

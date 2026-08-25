@@ -74,7 +74,7 @@ public class PingWebhookRequestBuilder {
         }
         return this.request;
     }
-    
+
     public PingWebhookRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -83,14 +83,14 @@ public class PingWebhookRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public PingWebhookResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<PingWebhookRequest, PingWebhookResponse> operation =
+                new PingWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

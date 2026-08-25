@@ -30,8 +30,8 @@ import java.util.Optional;
 public final class StreamingParser<T> {
 
     /**
-    * Information about a found boundary in byte data
-    */
+     * Information about a found boundary in byte data
+     */
     static class BoundaryInfo {
         public final int position;
         public final int delimiterLength;
@@ -43,28 +43,28 @@ public final class StreamingParser<T> {
     }
 
     /**
-    * Interface for format-specific parsing logic
-    */
+     * Interface for format-specific parsing logic
+     */
     interface StreamContentProcessor<T> {
         /**
-        * Find the next boundary in the byte buffer
-        * @return boundary info, or position -1 if no boundary found
-        */
+         * Find the next boundary in the byte buffer
+         * @return boundary info, or position -1 if no boundary found
+         */
         BoundaryInfo findBoundary(byte[] data, int limit);
 
         /**
-        * Process extracted content and return the parsed result
-        * @param content the extracted content (without boundary delimiters)
-        * @return parsed result, or empty if content should be skipped
-        */
+         * Process extracted content and return the parsed result
+         * @param content the extracted content (without boundary delimiters)
+         * @return parsed result, or empty if content should be skipped
+         */
         Optional<T> processContent(String content);
 
         /**
-        * Sanitize content text (e.g., handle line endings, BOM, etc.)
-        * @param rawContent the raw extracted content
-        * @param isFirst whether this is the first content processed
-        * @return sanitized content
-        */
+         * Sanitize content text (e.g., handle line endings, BOM, etc.)
+         * @param rawContent the raw extracted content
+         * @param isFirst whether this is the first content processed
+         * @return sanitized content
+         */
         default String sanitizeContent(String rawContent, boolean isFirst) {
             return rawContent.replace("\r\n", "\n").replace("\r", "\n");
         }
@@ -181,7 +181,7 @@ public final class StreamingParser<T> {
     }
 
     // ===== JSON Lines Content Processor =====
-    
+
     /**
      * JSON Lines content processor implementation
      */
@@ -223,7 +223,7 @@ public final class StreamingParser<T> {
     }
 
     // ===== SSE Content Processor =====
-    
+
     /**
      * SSE content processor implementation
      */
@@ -232,11 +232,7 @@ public final class StreamingParser<T> {
         private static final char LINEFEED = '\n';
         private static final byte CR = '\r';
         private static final byte LF = '\n';
-        private static final byte[][] BOUNDARY_PATTERNS = {
-            {CR, LF},
-            {LF},
-            {CR}
-        };
+        private static final byte[][] BOUNDARY_PATTERNS = {{CR, LF}, {LF}, {CR}};
 
         private Optional<String> eventId = Optional.empty();
 

@@ -24,7 +24,7 @@ package com.google.genai.gaos;
  * Gemini models. Gemini is our most capable model, built from the ground up to be multimodal. It can
  * generalize and seamlessly understand, operate across, and combine different types of information
  * including language, images, audio, video, and code.
- * 
+ *
  * <p>You can use the Gemini API for use cases like reasoning across text and images, content generation,
  * dialogue agents, summarization and classification systems, and more.
  */
@@ -75,7 +75,7 @@ public class AsyncGenAI implements java.lang.AutoCloseable {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public GenAI sync() {

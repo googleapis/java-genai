@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * CreateAgentInteraction
- * 
+ *
  * <p>Parameters for creating agent interactions
  */
 public class CreateAgentInteraction {
@@ -98,7 +98,7 @@ public class CreateAgentInteraction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -108,7 +108,7 @@ public class CreateAgentInteraction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -122,7 +122,6 @@ public class CreateAgentInteraction {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("safety_settings")
     private List<SafetySetting> safetySettings;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("service_tier")
@@ -182,13 +181,11 @@ public class CreateAgentInteraction {
             @JsonProperty("system_instruction") @Nullable String systemInstruction,
             @JsonProperty("tools") @Nullable List<Tool> tools,
             @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
-        this.agent = Optional.ofNullable(agent)
-            .orElseThrow(() -> new IllegalArgumentException("agent cannot be null"));
+        this.agent = Optional.ofNullable(agent).orElseThrow(() -> new IllegalArgumentException("agent cannot be null"));
         this.agentConfig = agentConfig;
         this.background = background;
         this.environment = environment;
-        this.input = Optional.ofNullable(input)
-            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.input = Optional.ofNullable(input).orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
         this.labels = labels;
         this.previousInteractionId = previousInteractionId;
         this.responseFormat = responseFormat;
@@ -202,16 +199,9 @@ public class CreateAgentInteraction {
         this.tools = tools;
         this.webhookConfig = webhookConfig;
     }
-    
-    public CreateAgentInteraction(
-            @Nonnull AgentOption agent,
-            @Nonnull InteractionsInput input) {
-        this(agent, null, null,
-            null, input, null,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null);
+
+    public CreateAgentInteraction(@Nonnull AgentOption agent, @Nonnull InteractionsInput input) {
+        this(agent, null, null, null, input, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -274,7 +264,7 @@ public class CreateAgentInteraction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -284,7 +274,7 @@ public class CreateAgentInteraction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -342,7 +332,6 @@ public class CreateAgentInteraction {
         return new Builder();
     }
 
-
     /**
      * The agent to interact with.
      */
@@ -350,7 +339,6 @@ public class CreateAgentInteraction {
         this.agent = Utils.checkNotNull(agent, "agent");
         return this;
     }
-
 
     /**
      * Configuration parameters for the agent interaction.
@@ -360,7 +348,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * Input only. Whether to run the model interaction in the background.
      */
@@ -368,7 +355,6 @@ public class CreateAgentInteraction {
         this.background = background;
         return this;
     }
-
 
     /**
      * The environment configuration for the interaction. Can be an object specifying remote environment
@@ -379,7 +365,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * The input for the interaction.
      */
@@ -387,7 +372,6 @@ public class CreateAgentInteraction {
         this.input = Utils.checkNotNull(input, "input");
         return this;
     }
-
 
     /**
      * The labels with user-defined metadata for the request.
@@ -397,7 +381,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * The ID of the previous interaction, if any.
      */
@@ -405,7 +388,6 @@ public class CreateAgentInteraction {
         this.previousInteractionId = previousInteractionId;
         return this;
     }
-
 
     /**
      * Enforces that the generated response is a JSON object that complies with the JSON schema specified
@@ -416,10 +398,9 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -428,10 +409,9 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -439,7 +419,6 @@ public class CreateAgentInteraction {
         this.responseModalities = responseModalities;
         return this;
     }
-
 
     /**
      * Safety settings for the interaction.
@@ -449,12 +428,10 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     public CreateAgentInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
         this.serviceTier = serviceTier;
         return this;
     }
-
 
     /**
      * Input only. Whether to store the response and request for later retrieval.
@@ -464,7 +441,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * Input only. Whether the interaction will be streamed.
      */
@@ -472,7 +448,6 @@ public class CreateAgentInteraction {
         this.stream = stream;
         return this;
     }
-
 
     /**
      * System instruction for the interaction.
@@ -482,7 +457,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * A list of tool declarations the model may call during interaction.
      */
@@ -491,7 +465,6 @@ public class CreateAgentInteraction {
         return this;
     }
 
-
     /**
      * Message for configuring webhook events for a request.
      */
@@ -499,7 +472,6 @@ public class CreateAgentInteraction {
         this.webhookConfig = webhookConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -510,61 +482,89 @@ public class CreateAgentInteraction {
             return false;
         }
         CreateAgentInteraction other = (CreateAgentInteraction) o;
-        return 
-            Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
-            Utils.enhancedDeepEquals(this.background, other.background) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.input, other.input) &&
-            Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.store, other.store) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
+        return Utils.enhancedDeepEquals(this.agent, other.agent)
+                && Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig)
+                && Utils.enhancedDeepEquals(this.background, other.background)
+                && Utils.enhancedDeepEquals(this.environment, other.environment)
+                && Utils.enhancedDeepEquals(this.input, other.input)
+                && Utils.enhancedDeepEquals(this.labels, other.labels)
+                && Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId)
+                && Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat)
+                && Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType)
+                && Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities)
+                && Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings)
+                && Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier)
+                && Utils.enhancedDeepEquals(this.store, other.store)
+                && Utils.enhancedDeepEquals(this.stream, other.stream)
+                && Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction)
+                && Utils.enhancedDeepEquals(this.tools, other.tools)
+                && Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            agent, agentConfig, background,
-            environment, input, labels,
-            previousInteractionId, responseFormat, responseMimeType,
-            responseModalities, safetySettings, serviceTier,
-            store, stream, systemInstruction,
-            tools, webhookConfig);
+                agent,
+                agentConfig,
+                background,
+                environment,
+                input,
+                labels,
+                previousInteractionId,
+                responseFormat,
+                responseMimeType,
+                responseModalities,
+                safetySettings,
+                serviceTier,
+                store,
+                stream,
+                systemInstruction,
+                tools,
+                webhookConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateAgentInteraction.class,
-                "agent", agent,
-                "agentConfig", agentConfig,
-                "background", background,
-                "environment", environment,
-                "input", input,
-                "labels", labels,
-                "previousInteractionId", previousInteractionId,
-                "responseFormat", responseFormat,
-                "responseMimeType", responseMimeType,
-                "responseModalities", responseModalities,
-                "safetySettings", safetySettings,
-                "serviceTier", serviceTier,
-                "store", store,
-                "stream", stream,
-                "systemInstruction", systemInstruction,
-                "tools", tools,
-                "webhookConfig", webhookConfig);
+        return Utils.toString(
+                CreateAgentInteraction.class,
+                "agent",
+                agent,
+                "agentConfig",
+                agentConfig,
+                "background",
+                background,
+                "environment",
+                environment,
+                "input",
+                input,
+                "labels",
+                labels,
+                "previousInteractionId",
+                previousInteractionId,
+                "responseFormat",
+                responseFormat,
+                "responseMimeType",
+                responseMimeType,
+                "responseModalities",
+                responseModalities,
+                "safetySettings",
+                safetySettings,
+                "serviceTier",
+                serviceTier,
+                "store",
+                store,
+                "stream",
+                stream,
+                "systemInstruction",
+                systemInstruction,
+                "tools",
+                tools,
+                "webhookConfig",
+                webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private AgentOption agent;
 
@@ -603,7 +603,7 @@ public class CreateAgentInteraction {
         private WebhookConfig webhookConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -674,7 +674,7 @@ public class CreateAgentInteraction {
 
         /**
          * The mime type of the response. This is required if response_format is set.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -685,7 +685,7 @@ public class CreateAgentInteraction {
 
         /**
          * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -754,13 +754,23 @@ public class CreateAgentInteraction {
 
         public CreateAgentInteraction build() {
             return new CreateAgentInteraction(
-                agent, agentConfig, background,
-                environment, input, labels,
-                previousInteractionId, responseFormat, responseMimeType,
-                responseModalities, safetySettings, serviceTier,
-                store, stream, systemInstruction,
-                tools, webhookConfig);
+                    agent,
+                    agentConfig,
+                    background,
+                    environment,
+                    input,
+                    labels,
+                    previousInteractionId,
+                    responseFormat,
+                    responseMimeType,
+                    responseModalities,
+                    safetySettings,
+                    serviceTier,
+                    store,
+                    stream,
+                    systemInstruction,
+                    tools,
+                    webhookConfig);
         }
-
     }
 }

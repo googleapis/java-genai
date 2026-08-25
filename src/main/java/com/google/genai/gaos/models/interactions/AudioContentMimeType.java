@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * AudioContentMimeType
- * 
+ *
  * <p>The mime type of the audio.
  */
 public class AudioContentMimeType {
@@ -69,12 +69,12 @@ public class AudioContentMimeType {
     }
 
     /**
-     * Returns a AudioContentMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a AudioContentMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as AudioContentMimeType
-     */ 
+     */
     @JsonCreator
     public static AudioContentMimeType of(String value) {
         synchronized (AudioContentMimeType.class) {
@@ -102,12 +102,9 @@ public class AudioContentMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         AudioContentMimeType other = (AudioContentMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -157,8 +154,7 @@ public class AudioContentMimeType {
         map.put("audio/mulaw", AudioContentMimeTypeEnum.AUDIO_MULAW);
         return map;
     }
-    
-    
+
     public enum AudioContentMimeTypeEnum {
 
         AUDIO_WAV("audio/wav"),
@@ -172,7 +168,8 @@ public class AudioContentMimeType {
         AUDIO_L16("audio/l16"),
         AUDIO_OPUS("audio/opus"),
         AUDIO_ALAW("audio/alaw"),
-        AUDIO_MULAW("audio/mulaw"),;
+        AUDIO_MULAW("audio/mulaw"),
+        ;
 
         private final String value;
 
@@ -185,4 +182,3 @@ public class AudioContentMimeType {
         }
     }
 }
-

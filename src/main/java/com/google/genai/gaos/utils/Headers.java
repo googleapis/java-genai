@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.Locale;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 // Internal API only
 
@@ -44,10 +44,8 @@ public final class Headers {
     // Internal use only
     public Headers(Map<String, List<String>> headers) {
         Utils.checkNotNull(headers, "headers");
-        this.map = headers //
-                .entrySet() //
-                .stream() //
-                .map(entry -> Java8Compat.mapEntry(entry.getKey().toLowerCase(Locale.ENGLISH), entry.getValue())) //
+        this.map = headers.entrySet().stream()
+                .map(entry -> Java8Compat.mapEntry(entry.getKey().toLowerCase(Locale.ENGLISH), entry.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -58,7 +56,7 @@ public final class Headers {
 
     /**
      * Returns all values for a header name. Header name is case-insensitive.
-     * 
+     *
      * @param name header name
      * @return all values for the header name
      */
@@ -69,7 +67,7 @@ public final class Headers {
 
     /**
      * Returns the first value for a header name. Header name is case-insensitive.
-     * 
+     *
      * @param name header name
      * @return the first value for the header name
      */
@@ -92,7 +90,7 @@ public final class Headers {
 
     /**
      * Appends a header value. Header name is case-insensitive.
-     * 
+     *
      * @param name  header name
      * @param value header value
      * @return this
@@ -110,28 +108,25 @@ public final class Headers {
         }
         return this;
     }
-    
+
     public Headers add(Headers headers) {
         Utils.checkNotNull(headers, "headers");
-        headers
-            .forEach((key, values) -> values.forEach(value -> add(key, value)));
+        headers.forEach((key, values) -> values.forEach(value -> add(key, value)));
         return this;
     }
-    
-    public void forEach(BiConsumer<? super String,? super List<String>> consumer) {
+
+    public void forEach(BiConsumer<? super String, ? super List<String>> consumer) {
         Utils.checkNotNull(consumer, "consumer");
         map.forEach(consumer);
     }
 
     /**
      * Returns a copy of the headers as a map. Header names are lowercase.
-     * 
+     *
      * @return headers as a map
      */
     public Map<String, List<String>> map() {
-        return map //
-                .entrySet() //
-                .stream() //
+        return map.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> new ArrayList<>(entry.getValue())));
     }
 
@@ -141,11 +136,10 @@ public final class Headers {
 
     @Override
     public String toString() {
-        return "Headers[ " //
-                + map.entrySet() //
-                        .stream() //
-                        .map(entry -> entry.getKey() + "=" + entry.getValue()) //
-                        .collect(Collectors.joining(", ")) //
+        return "Headers[ "
+                + map.entrySet().stream()
+                        .map(entry -> entry.getKey() + "=" + entry.getValue())
+                        .collect(Collectors.joining(", "))
                 + "]";
     }
 }

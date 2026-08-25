@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -30,23 +30,19 @@ import java.lang.String;
 import java.util.List;
 import java.util.Optional;
 
-
 public class GoogleMapsResultPlaces {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("name")
     private String name;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("place_id")
     private String placeId;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("review_snippets")
     private List<ReviewSnippet> reviewSnippets;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("url")
@@ -63,10 +59,9 @@ public class GoogleMapsResultPlaces {
         this.reviewSnippets = reviewSnippets;
         this.url = url;
     }
-    
+
     public GoogleMapsResultPlaces() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     public Optional<String> name() {
@@ -89,30 +84,25 @@ public class GoogleMapsResultPlaces {
         return new Builder();
     }
 
-
     public GoogleMapsResultPlaces withName(@Nullable String name) {
         this.name = name;
         return this;
     }
-
 
     public GoogleMapsResultPlaces withPlaceId(@Nullable String placeId) {
         this.placeId = placeId;
         return this;
     }
 
-
     public GoogleMapsResultPlaces withReviewSnippets(@Nullable List<ReviewSnippet> reviewSnippets) {
         this.reviewSnippets = reviewSnippets;
         return this;
     }
 
-
     public GoogleMapsResultPlaces withUrl(@Nullable String url) {
         this.url = url;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -123,31 +113,33 @@ public class GoogleMapsResultPlaces {
             return false;
         }
         GoogleMapsResultPlaces other = (GoogleMapsResultPlaces) o;
-        return 
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.placeId, other.placeId) &&
-            Utils.enhancedDeepEquals(this.reviewSnippets, other.reviewSnippets) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.placeId, other.placeId)
+                && Utils.enhancedDeepEquals(this.reviewSnippets, other.reviewSnippets)
+                && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            name, placeId, reviewSnippets,
-            url);
+        return Utils.enhancedHash(name, placeId, reviewSnippets, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsResultPlaces.class,
-                "name", name,
-                "placeId", placeId,
-                "reviewSnippets", reviewSnippets,
-                "url", url);
+        return Utils.toString(
+                GoogleMapsResultPlaces.class,
+                "name",
+                name,
+                "placeId",
+                placeId,
+                "reviewSnippets",
+                reviewSnippets,
+                "url",
+                url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String name;
 
@@ -158,7 +150,7 @@ public class GoogleMapsResultPlaces {
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder name(@Nullable String name) {
@@ -182,10 +174,7 @@ public class GoogleMapsResultPlaces {
         }
 
         public GoogleMapsResultPlaces build() {
-            return new GoogleMapsResultPlaces(
-                name, placeId, reviewSnippets,
-                url);
+            return new GoogleMapsResultPlaces(name, placeId, reviewSnippets, url);
         }
-
     }
 }

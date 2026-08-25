@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * InteractionSseEventInteraction
- * 
+ *
  * <p>Partial interaction resource emitted by interaction lifecycle SSE events.
  * Streaming lifecycle payloads may omit fields that are only available on
  * full non-streaming Interaction responses.
@@ -72,7 +72,6 @@ public class InteractionSseEventInteraction {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("object")
     private String object;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("service_tier")
@@ -119,25 +118,19 @@ public class InteractionSseEventInteraction {
             @JsonProperty("usage") @Nullable Usage usage) {
         this.agent = agent;
         this.created = created;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.model = model;
         this.object = object;
         this.serviceTier = serviceTier;
-        this.status = Optional.ofNullable(status)
-            .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
+        this.status =
+                Optional.ofNullable(status).orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
         this.steps = steps;
         this.updated = updated;
         this.usage = usage;
     }
-    
-    public InteractionSseEventInteraction(
-            @Nonnull String id,
-            @Nonnull InteractionSseEventInteractionStatus status) {
-        this(null, null, id,
-            null, null, null,
-            status, null, null,
-            null);
+
+    public InteractionSseEventInteraction(@Nonnull String id, @Nonnull InteractionSseEventInteractionStatus status) {
+        this(null, null, id, null, null, null, status, null, null, null);
     }
 
     /**
@@ -211,7 +204,6 @@ public class InteractionSseEventInteraction {
         return new Builder();
     }
 
-
     /**
      * The agent to interact with.
      */
@@ -219,7 +211,6 @@ public class InteractionSseEventInteraction {
         this.agent = agent;
         return this;
     }
-
 
     /**
      * Output only. The time at which the response was created in ISO 8601 format.
@@ -229,7 +220,6 @@ public class InteractionSseEventInteraction {
         return this;
     }
 
-
     /**
      * Required. Output only. A unique identifier for the interaction completion.
      */
@@ -237,7 +227,6 @@ public class InteractionSseEventInteraction {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     /**
      * The model that will complete your prompt.
@@ -247,7 +236,6 @@ public class InteractionSseEventInteraction {
         return this;
     }
 
-
     /**
      * Output only. The resource type.
      */
@@ -256,12 +244,10 @@ public class InteractionSseEventInteraction {
         return this;
     }
 
-
     public InteractionSseEventInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
         this.serviceTier = serviceTier;
         return this;
     }
-
 
     /**
      * Required. Output only. The status of the interaction.
@@ -271,7 +257,6 @@ public class InteractionSseEventInteraction {
         return this;
     }
 
-
     /**
      * Output only. The steps that make up the interaction, if included in this event.
      */
@@ -279,7 +264,6 @@ public class InteractionSseEventInteraction {
         this.steps = steps;
         return this;
     }
-
 
     /**
      * Output only. The time at which the response was last updated in ISO 8601 format.
@@ -289,7 +273,6 @@ public class InteractionSseEventInteraction {
         return this;
     }
 
-
     /**
      * Statistics on the interaction request's token usage.
      */
@@ -297,7 +280,6 @@ public class InteractionSseEventInteraction {
         this.usage = usage;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -308,45 +290,51 @@ public class InteractionSseEventInteraction {
             return false;
         }
         InteractionSseEventInteraction other = (InteractionSseEventInteraction) o;
-        return 
-            Utils.enhancedDeepEquals(this.agent, other.agent) &&
-            Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.object, other.object) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.steps, other.steps) &&
-            Utils.enhancedDeepEquals(this.updated, other.updated) &&
-            Utils.enhancedDeepEquals(this.usage, other.usage);
+        return Utils.enhancedDeepEquals(this.agent, other.agent)
+                && Utils.enhancedDeepEquals(this.created, other.created)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.model, other.model)
+                && Utils.enhancedDeepEquals(this.object, other.object)
+                && Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier)
+                && Utils.enhancedDeepEquals(this.status, other.status)
+                && Utils.enhancedDeepEquals(this.steps, other.steps)
+                && Utils.enhancedDeepEquals(this.updated, other.updated)
+                && Utils.enhancedDeepEquals(this.usage, other.usage);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            agent, created, id,
-            model, object, serviceTier,
-            status, steps, updated,
-            usage);
+        return Utils.enhancedHash(agent, created, id, model, object, serviceTier, status, steps, updated, usage);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(InteractionSseEventInteraction.class,
-                "agent", agent,
-                "created", created,
-                "id", id,
-                "model", model,
-                "object", object,
-                "serviceTier", serviceTier,
-                "status", status,
-                "steps", steps,
-                "updated", updated,
-                "usage", usage);
+        return Utils.toString(
+                InteractionSseEventInteraction.class,
+                "agent",
+                agent,
+                "created",
+                created,
+                "id",
+                id,
+                "model",
+                model,
+                "object",
+                object,
+                "serviceTier",
+                serviceTier,
+                "status",
+                status,
+                "steps",
+                steps,
+                "updated",
+                updated,
+                "usage",
+                usage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String agent;
 
@@ -369,7 +357,7 @@ public class InteractionSseEventInteraction {
         private Usage usage;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -451,11 +439,7 @@ public class InteractionSseEventInteraction {
 
         public InteractionSseEventInteraction build() {
             return new InteractionSseEventInteraction(
-                agent, created, id,
-                model, object, serviceTier,
-                status, steps, updated,
-                usage);
+                    agent, created, id, model, object, serviceTier, status, steps, updated, usage);
         }
-
     }
 }

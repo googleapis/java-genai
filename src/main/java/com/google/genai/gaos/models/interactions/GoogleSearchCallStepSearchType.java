@@ -36,14 +36,16 @@ import java.util.Optional;
  */
 /**
  * GoogleSearchCallStepSearchType
- * 
+ *
  * <p>The type of search grounding enabled.
  */
 public class GoogleSearchCallStepSearchType {
 
     public static final GoogleSearchCallStepSearchType WEB_SEARCH = new GoogleSearchCallStepSearchType("web_search");
-    public static final GoogleSearchCallStepSearchType IMAGE_SEARCH = new GoogleSearchCallStepSearchType("image_search");
-    public static final GoogleSearchCallStepSearchType ENTERPRISE_WEB_SEARCH = new GoogleSearchCallStepSearchType("enterprise_web_search");
+    public static final GoogleSearchCallStepSearchType IMAGE_SEARCH =
+            new GoogleSearchCallStepSearchType("image_search");
+    public static final GoogleSearchCallStepSearchType ENTERPRISE_WEB_SEARCH =
+            new GoogleSearchCallStepSearchType("enterprise_web_search");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -60,12 +62,12 @@ public class GoogleSearchCallStepSearchType {
     }
 
     /**
-     * Returns a GoogleSearchCallStepSearchType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a GoogleSearchCallStepSearchType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as GoogleSearchCallStepSearchType
-     */ 
+     */
     @JsonCreator
     public static GoogleSearchCallStepSearchType of(String value) {
         synchronized (GoogleSearchCallStepSearchType.class) {
@@ -93,12 +95,9 @@ public class GoogleSearchCallStepSearchType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         GoogleSearchCallStepSearchType other = (GoogleSearchCallStepSearchType) obj;
         return Objects.equals(value, other.value);
     }
@@ -130,13 +129,13 @@ public class GoogleSearchCallStepSearchType {
         map.put("enterprise_web_search", GoogleSearchCallStepSearchTypeEnum.ENTERPRISE_WEB_SEARCH);
         return map;
     }
-    
-    
+
     public enum GoogleSearchCallStepSearchTypeEnum {
 
         WEB_SEARCH("web_search"),
         IMAGE_SEARCH("image_search"),
-        ENTERPRISE_WEB_SEARCH("enterprise_web_search"),;
+        ENTERPRISE_WEB_SEARCH("enterprise_web_search"),
+        ;
 
         private final String value;
 
@@ -149,4 +148,3 @@ public class GoogleSearchCallStepSearchType {
         }
     }
 }
-

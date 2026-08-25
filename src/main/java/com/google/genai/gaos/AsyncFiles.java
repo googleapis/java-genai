@@ -32,7 +32,6 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-
 public class AsyncFiles {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -45,17 +44,16 @@ public class AsyncFiles {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public Files sync() {
         return syncSDK;
     }
 
-
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @return The async call builder
      */
     public GetEnvironmentFilesRequestBuilder list() {
@@ -64,7 +62,7 @@ public class AsyncFiles {
 
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<GetEnvironmentFilesResponse>} - The async response
      */
@@ -74,18 +72,16 @@ public class AsyncFiles {
 
     /**
      * Retrieves a file or directory from an environment's snapshot.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options
      * @return {@code CompletableFuture<GetEnvironmentFilesResponse>} - The async response
      */
-    public CompletableFuture<GetEnvironmentFilesResponse> list(@Nonnull GetEnvironmentFilesRequest request, @Nullable Options options) {
-        AsyncRequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation
-              = new GetEnvironmentFiles.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+    public CompletableFuture<GetEnvironmentFilesResponse> list(
+            @Nonnull GetEnvironmentFilesRequest request, @Nullable Options options) {
+        AsyncRequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation =
+                new GetEnvironmentFiles.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 }

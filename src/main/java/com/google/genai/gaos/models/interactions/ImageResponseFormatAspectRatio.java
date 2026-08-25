@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * ImageResponseFormatAspectRatio
- * 
+ *
  * <p>The aspect ratio for the image output.
  */
 public class ImageResponseFormatAspectRatio {
@@ -48,9 +48,12 @@ public class ImageResponseFormatAspectRatio {
     public static final ImageResponseFormatAspectRatio FORTY_THREE = new ImageResponseFormatAspectRatio("4:3");
     public static final ImageResponseFormatAspectRatio FORTY_FIVE = new ImageResponseFormatAspectRatio("4:5");
     public static final ImageResponseFormatAspectRatio FIFTY_FOUR = new ImageResponseFormatAspectRatio("5:4");
-    public static final ImageResponseFormatAspectRatio NINE_HUNDRED_AND_SIXTEEN = new ImageResponseFormatAspectRatio("9:16");
-    public static final ImageResponseFormatAspectRatio ONE_HUNDRED_AND_SIXTY_NINE = new ImageResponseFormatAspectRatio("16:9");
-    public static final ImageResponseFormatAspectRatio TWO_HUNDRED_AND_NINETEEN = new ImageResponseFormatAspectRatio("21:9");
+    public static final ImageResponseFormatAspectRatio NINE_HUNDRED_AND_SIXTEEN =
+            new ImageResponseFormatAspectRatio("9:16");
+    public static final ImageResponseFormatAspectRatio ONE_HUNDRED_AND_SIXTY_NINE =
+            new ImageResponseFormatAspectRatio("16:9");
+    public static final ImageResponseFormatAspectRatio TWO_HUNDRED_AND_NINETEEN =
+            new ImageResponseFormatAspectRatio("21:9");
     public static final ImageResponseFormatAspectRatio EIGHTEEN = new ImageResponseFormatAspectRatio("1:8");
     public static final ImageResponseFormatAspectRatio EIGHTY_ONE = new ImageResponseFormatAspectRatio("8:1");
     public static final ImageResponseFormatAspectRatio FOURTEEN = new ImageResponseFormatAspectRatio("1:4");
@@ -71,12 +74,12 @@ public class ImageResponseFormatAspectRatio {
     }
 
     /**
-     * Returns a ImageResponseFormatAspectRatio with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageResponseFormatAspectRatio with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageResponseFormatAspectRatio
-     */ 
+     */
     @JsonCreator
     public static ImageResponseFormatAspectRatio of(String value) {
         synchronized (ImageResponseFormatAspectRatio.class) {
@@ -104,12 +107,9 @@ public class ImageResponseFormatAspectRatio {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageResponseFormatAspectRatio other = (ImageResponseFormatAspectRatio) obj;
         return Objects.equals(value, other.value);
     }
@@ -163,8 +163,7 @@ public class ImageResponseFormatAspectRatio {
         map.put("4:1", ImageResponseFormatAspectRatioEnum.FORTY_ONE);
         return map;
     }
-    
-    
+
     public enum ImageResponseFormatAspectRatioEnum {
 
         ELEVEN("1:1"),
@@ -180,7 +179,8 @@ public class ImageResponseFormatAspectRatio {
         EIGHTEEN("1:8"),
         EIGHTY_ONE("8:1"),
         FOURTEEN("1:4"),
-        FORTY_ONE("4:1"),;
+        FORTY_ONE("4:1"),
+        ;
 
         private final String value;
 
@@ -193,4 +193,3 @@ public class ImageResponseFormatAspectRatio {
         }
     }
 }
-

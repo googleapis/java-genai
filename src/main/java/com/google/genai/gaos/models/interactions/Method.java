@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Method
- * 
+ *
  * <p>Optional. The method for blocking content. If not specified, the default
  * behavior is to use the probability score.
  */
@@ -60,12 +60,12 @@ public class Method {
     }
 
     /**
-     * Returns a Method with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Method with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Method
-     */ 
+     */
     @JsonCreator
     public static Method of(String value) {
         synchronized (Method.class) {
@@ -93,12 +93,9 @@ public class Method {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Method other = (Method) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,12 +125,12 @@ public class Method {
         map.put("probability", MethodEnum.PROBABILITY);
         return map;
     }
-    
-    
+
     public enum MethodEnum {
 
         SEVERITY("severity"),
-        PROBABILITY("probability"),;
+        PROBABILITY("probability"),
+        ;
 
         private final String value;
 
@@ -146,4 +143,3 @@ public class Method {
         }
     }
 }
-

@@ -74,7 +74,7 @@ public class ListWebhooksRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListWebhooksRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -83,14 +83,14 @@ public class ListWebhooksRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public ListWebhooksResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
-              = new ListWebhooks.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation =
+                new ListWebhooks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Status
- * 
+ *
  * <p>Output only. The status of the environment container.
  */
 public class Status {
@@ -59,12 +59,12 @@ public class Status {
     }
 
     /**
-     * Returns a Status with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Status with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Status
-     */ 
+     */
     @JsonCreator
     public static Status of(String value) {
         synchronized (Status.class) {
@@ -92,12 +92,9 @@ public class Status {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Status other = (Status) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class Status {
         map.put("expired", StatusEnum.EXPIRED);
         return map;
     }
-    
-    
+
     public enum StatusEnum {
 
         ACTIVE("active"),
-        EXPIRED("expired"),;
+        EXPIRED("expired"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class Status {
         }
     }
 }
-

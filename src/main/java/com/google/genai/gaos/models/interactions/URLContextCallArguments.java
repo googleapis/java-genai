@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * URLContextCallArguments
- * 
+ *
  * <p>The arguments to pass to the URL context.
  */
 public class URLContextCallArguments {
@@ -44,11 +44,10 @@ public class URLContextCallArguments {
     private List<String> urls;
 
     @JsonCreator
-    public URLContextCallArguments(
-            @JsonProperty("urls") @Nullable List<String> urls) {
+    public URLContextCallArguments(@JsonProperty("urls") @Nullable List<String> urls) {
         this.urls = urls;
     }
-    
+
     public URLContextCallArguments() {
         this(null);
     }
@@ -64,7 +63,6 @@ public class URLContextCallArguments {
         return new Builder();
     }
 
-
     /**
      * The URLs to fetch.
      */
@@ -72,7 +70,6 @@ public class URLContextCallArguments {
         this.urls = urls;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -83,29 +80,26 @@ public class URLContextCallArguments {
             return false;
         }
         URLContextCallArguments other = (URLContextCallArguments) o;
-        return 
-            Utils.enhancedDeepEquals(this.urls, other.urls);
+        return Utils.enhancedDeepEquals(this.urls, other.urls);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            urls);
+        return Utils.enhancedHash(urls);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContextCallArguments.class,
-                "urls", urls);
+        return Utils.toString(URLContextCallArguments.class, "urls", urls);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<String> urls;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -117,9 +111,7 @@ public class URLContextCallArguments {
         }
 
         public URLContextCallArguments build() {
-            return new URLContextCallArguments(
-                urls);
+            return new URLContextCallArguments(urls);
         }
-
     }
 }

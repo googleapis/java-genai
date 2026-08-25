@@ -26,24 +26,22 @@ import java.lang.String;
 
 /**
  * Empty
- * 
+ *
  * <p>A generic empty message that you can re-use to avoid defining duplicated
  * empty messages in your APIs. A typical example is to use it as the request
  * or the response type of an API method. For instance:
- * 
+ *
  * <p>service Foo {
  * rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
  * }
  */
 public class Empty {
     @JsonCreator
-    public Empty() {
-    }
+    public Empty() {}
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -55,29 +53,26 @@ public class Empty {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            );
+        return Utils.enhancedHash();
     }
-    
+
     @Override
     public String toString() {
         return Utils.toString(Empty.class);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Empty build() {
-            return new Empty(
-                );
+            return new Empty();
         }
-
     }
 }
