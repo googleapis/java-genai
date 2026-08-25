@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.68.0](https://github.com/googleapis/java-genai/compare/v1.67.0...v1.68.0) (2026-08-25)
+
+
+### Features
+
+* Add AudioTranscriptionConfigMode ([3344fa1](https://github.com/googleapis/java-genai/commit/3344fa132e307d14b2078a8931096974db2c638c))
+* **java:** Add environments + environment files support. ([4971b7d](https://github.com/googleapis/java-genai/commit/4971b7d849e7f672407e14810bbdd912d6062be6))
+* **java:** regenerate Java GAOS SDK and support Java in OpenAPI generator ([ac14e4c](https://github.com/googleapis/java-genai/commit/ac14e4c0db2d95241085f43f848bb7e2227b1911))
+
+
+### Bug Fixes
+
+* update Java SDK examples and models for Gemini and Vertex AI ([4be6566](https://github.com/googleapis/java-genai/commit/4be65665a9a3b15258d1ca87e743e69dd96cb11e))
+
 ## [1.67.0](https://github.com/googleapis/java-genai/compare/v1.66.0...v1.67.0) (2026-08-20)
 
 
