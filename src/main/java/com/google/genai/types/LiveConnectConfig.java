@@ -173,6 +173,10 @@ public abstract class LiveConnectConfig extends JsonSerializable {
   @JsonProperty("translationConfig")
   public abstract Optional<TranslationConfig> translationConfig();
 
+  /** Saves live audio data to session and artifact service. */
+  @JsonProperty("saveLiveBlob")
+  public abstract Optional<Boolean> saveLiveBlob();
+
   /** Instantiates a builder for LiveConnectConfig. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -896,6 +900,24 @@ public abstract class LiveConnectConfig extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearTranslationConfig() {
       return translationConfig(Optional.empty());
+    }
+
+    /**
+     * Setter for saveLiveBlob.
+     *
+     * <p>saveLiveBlob: Saves live audio data to session and artifact service.
+     */
+    @JsonProperty("saveLiveBlob")
+    public abstract Builder saveLiveBlob(boolean saveLiveBlob);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder saveLiveBlob(Optional<Boolean> saveLiveBlob);
+
+    /** Clears the value of saveLiveBlob field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearSaveLiveBlob() {
+      return saveLiveBlob(Optional.empty());
     }
 
     public abstract LiveConnectConfig build();
