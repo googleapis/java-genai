@@ -53,6 +53,10 @@ public abstract class VideoResponseFormat extends JsonSerializable {
   @JsonProperty("gcsUri")
   public abstract Optional<String> gcsUri();
 
+  /** Optional. The video output resolution. Supported values: "360p", "720p", "1080p", "4k". */
+  @JsonProperty("resolution")
+  public abstract Optional<String> resolution();
+
   /** Instantiates a builder for VideoResponseFormat. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -182,6 +186,25 @@ public abstract class VideoResponseFormat extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearGcsUri() {
       return gcsUri(Optional.empty());
+    }
+
+    /**
+     * Setter for resolution.
+     *
+     * <p>resolution: Optional. The video output resolution. Supported values: "360p", "720p",
+     * "1080p", "4k".
+     */
+    @JsonProperty("resolution")
+    public abstract Builder resolution(String resolution);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder resolution(Optional<String> resolution);
+
+    /** Clears the value of resolution field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearResolution() {
+      return resolution(Optional.empty());
     }
 
     public abstract VideoResponseFormat build();

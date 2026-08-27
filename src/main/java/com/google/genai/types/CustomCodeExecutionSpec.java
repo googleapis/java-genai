@@ -39,6 +39,17 @@ public abstract class CustomCodeExecutionSpec extends JsonSerializable {
   @JsonProperty("evaluationFunction")
   public abstract Optional<String> evaluationFunction();
 
+  /**
+   * Optional. The region to use for code execution. If set, the Code Execution Sandbox will be
+   * invoked in the specified region regardless of the request's originating region. Must be a
+   * region where the Code Execution Sandbox is available. Supported regions: us-central1, us-east1,
+   * us-east4, us-west1, us-west4, southamerica-east1, europe-west2, europe-west3, asia-east1,
+   * asia-south1, asia-southeast1. If unset, the request's originating region is used; requests from
+   * regions where the sandbox is unavailable will fail with UNIMPLEMENTED.
+   */
+  @JsonProperty("codeExecutionRegion")
+  public abstract Optional<String> codeExecutionRegion();
+
   /** Instantiates a builder for CustomCodeExecutionSpec. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -77,6 +88,30 @@ public abstract class CustomCodeExecutionSpec extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearEvaluationFunction() {
       return evaluationFunction(Optional.empty());
+    }
+
+    /**
+     * Setter for codeExecutionRegion.
+     *
+     * <p>codeExecutionRegion: Optional. The region to use for code execution. If set, the Code
+     * Execution Sandbox will be invoked in the specified region regardless of the request's
+     * originating region. Must be a region where the Code Execution Sandbox is available. Supported
+     * regions: us-central1, us-east1, us-east4, us-west1, us-west4, southamerica-east1,
+     * europe-west2, europe-west3, asia-east1, asia-south1, asia-southeast1. If unset, the request's
+     * originating region is used; requests from regions where the sandbox is unavailable will fail
+     * with UNIMPLEMENTED.
+     */
+    @JsonProperty("codeExecutionRegion")
+    public abstract Builder codeExecutionRegion(String codeExecutionRegion);
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder codeExecutionRegion(Optional<String> codeExecutionRegion);
+
+    /** Clears the value of codeExecutionRegion field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearCodeExecutionRegion() {
+      return codeExecutionRegion(Optional.empty());
     }
 
     public abstract CustomCodeExecutionSpec build();
