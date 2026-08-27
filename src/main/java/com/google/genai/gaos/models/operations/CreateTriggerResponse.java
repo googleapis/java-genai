@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CreateTriggerResponse implements Response {
     /**
      * HTTP response content type for this operation
@@ -60,19 +59,16 @@ public class CreateTriggerResponse implements Response {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable Trigger trigger) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.trigger = trigger;
     }
-    
+
     public CreateTriggerResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -110,7 +106,6 @@ public class CreateTriggerResponse implements Response {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -118,7 +113,6 @@ public class CreateTriggerResponse implements Response {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -128,7 +122,6 @@ public class CreateTriggerResponse implements Response {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -137,7 +130,6 @@ public class CreateTriggerResponse implements Response {
         return this;
     }
 
-
     /**
      * Successful operation
      */
@@ -145,7 +137,6 @@ public class CreateTriggerResponse implements Response {
         this.trigger = trigger;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -156,31 +147,33 @@ public class CreateTriggerResponse implements Response {
             return false;
         }
         CreateTriggerResponse other = (CreateTriggerResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.trigger, other.trigger);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.trigger, other.trigger);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            trigger);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, trigger);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateTriggerResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "trigger", trigger);
+        return Utils.toString(
+                CreateTriggerResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "trigger",
+                trigger);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -191,7 +184,7 @@ public class CreateTriggerResponse implements Response {
         private Trigger trigger;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -227,10 +220,7 @@ public class CreateTriggerResponse implements Response {
         }
 
         public CreateTriggerResponse build() {
-            return new CreateTriggerResponse(
-                contentType, statusCode, rawResponse,
-                trigger);
+            return new CreateTriggerResponse(contentType, statusCode, rawResponse, trigger);
         }
-
     }
 }

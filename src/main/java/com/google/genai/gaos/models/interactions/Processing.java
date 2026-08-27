@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * Processing
- * 
+ *
  * <p>How the model processes this video for understanding.
  */
 @JsonDeserialize(using = Processing._Deserializer.class)
@@ -43,21 +43,21 @@ public class Processing {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private Processing(TypedObject value) {
         this.value = value;
     }
 
     public static Processing of(MediaProcessing value) {
         Utils.checkNotNull(value, "value");
-        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaProcessing>(){}));
+        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<MediaProcessing>() {}));
     }
 
     public static Processing of(ProcessingEnum value) {
         Utils.checkNotNull(value, "value");
-        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ProcessingEnum>(){}));
+        return new Processing(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<ProcessingEnum>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code MediaProcessing},
      * otherwise returns an empty {@link Optional}.
@@ -70,7 +70,7 @@ public class Processing {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code ProcessingEnum},
      * otherwise returns an empty {@link Optional}.
@@ -83,19 +83,19 @@ public class Processing {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -107,27 +107,26 @@ public class Processing {
         Processing other = (Processing) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<Processing> {
 
         public _Deserializer() {
-            super(Processing.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<MediaProcessing>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<ProcessingEnum>() {}, JsonShape.DEFAULT));
+            super(
+                    Processing.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<MediaProcessing>() {}, JsonShape.DEFAULT),
+                    TypeReferenceWithShape.of(new TypeReference<ProcessingEnum>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Processing.class,
-                "value", value);
+        return Utils.toString(Processing.class, "value", value);
     }
-
 }
-

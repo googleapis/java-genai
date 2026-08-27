@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * GoogleMapsCallStep
- * 
+ *
  * <p>Google Maps call step.
  */
 public class GoogleMapsCallStep implements Step {
@@ -58,7 +58,6 @@ public class GoogleMapsCallStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -68,14 +67,12 @@ public class GoogleMapsCallStep implements Step {
             @JsonProperty("id") @Nonnull String id,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = arguments;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public GoogleMapsCallStep(
-            @Nonnull String id) {
+
+    public GoogleMapsCallStep(@Nonnull String id) {
         this(null, id, null);
     }
 
@@ -109,7 +106,6 @@ public class GoogleMapsCallStep implements Step {
         return new Builder();
     }
 
-
     /**
      * The arguments to pass to the Google Maps tool.
      */
@@ -117,7 +113,6 @@ public class GoogleMapsCallStep implements Step {
         this.arguments = arguments;
         return this;
     }
-
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -127,7 +122,6 @@ public class GoogleMapsCallStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -135,7 +129,6 @@ public class GoogleMapsCallStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -146,31 +139,25 @@ public class GoogleMapsCallStep implements Step {
             return false;
         }
         GoogleMapsCallStep other = (GoogleMapsCallStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, id, signature,
-            type);
+        return Utils.enhancedHash(arguments, id, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleMapsCallStep.class,
-                "arguments", arguments,
-                "id", id,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                GoogleMapsCallStep.class, "arguments", arguments, "id", id, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private GoogleMapsCallArguments arguments;
 
@@ -179,7 +166,7 @@ public class GoogleMapsCallStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -207,15 +194,10 @@ public class GoogleMapsCallStep implements Step {
         }
 
         public GoogleMapsCallStep build() {
-            return new GoogleMapsCallStep(
-                arguments, id, signature);
+            return new GoogleMapsCallStep(arguments, id, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_maps_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_maps_call\"", new TypeReference<String>() {});
     }
 }

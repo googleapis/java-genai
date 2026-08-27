@@ -19,8 +19,8 @@
  */
 package com.google.genai.gaos.models.errors;
 
-import java.io.InputStream;
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
@@ -30,7 +30,7 @@ import java.util.Optional;
 public class AuthException extends GaosClientException {
 
     public AuthException(String message, int code, byte[] body, HttpResponse<InputStream> rawResponse) {
-       super(message, code, body, rawResponse, null);
+        super(message, code, body, rawResponse, null);
     }
 
     /**
@@ -42,7 +42,7 @@ public class AuthException extends GaosClientException {
     public Optional<Integer> statusCode() {
         return Optional.of(super.code());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public HttpResponse<InputStream> rawResponse() {

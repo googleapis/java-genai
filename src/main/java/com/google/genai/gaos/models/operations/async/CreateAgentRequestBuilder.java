@@ -72,7 +72,7 @@ public class CreateAgentRequestBuilder {
         }
         return this.request;
     }
-    
+
     public CreateAgentRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -81,17 +81,16 @@ public class CreateAgentRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<CreateAgentResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<CreateAgentRequest, CreateAgentResponse> operation
-              = new CreateAgent.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateAgentRequest, CreateAgentResponse> operation =
+                new CreateAgent.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

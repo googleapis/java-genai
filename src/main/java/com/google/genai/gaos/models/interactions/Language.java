@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Language
- * 
+ *
  * <p>Programming language of the `code`.
  */
 public class Language {
@@ -58,12 +58,12 @@ public class Language {
     }
 
     /**
-     * Returns a Language with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Language with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Language
-     */ 
+     */
     @JsonCreator
     public static Language of(String value) {
         synchronized (Language.class) {
@@ -91,12 +91,9 @@ public class Language {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Language other = (Language) obj;
         return Objects.equals(value, other.value);
     }
@@ -124,11 +121,11 @@ public class Language {
         map.put("python", LanguageEnum.PYTHON);
         return map;
     }
-    
-    
+
     public enum LanguageEnum {
 
-        PYTHON("python"),;
+        PYTHON("python"),
+        ;
 
         private final String value;
 
@@ -141,4 +138,3 @@ public class Language {
         }
     }
 }
-

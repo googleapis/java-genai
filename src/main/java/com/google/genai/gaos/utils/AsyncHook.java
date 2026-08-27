@@ -19,13 +19,12 @@
  */
 package com.google.genai.gaos.utils;
 
-
 import com.google.genai.gaos.utils.transport.HttpRequest;
 import com.google.genai.gaos.utils.transport.HttpResponse;
 import java.io.InputStream;
-import java.util.concurrent.CompletableFuture;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Utility class for defining async hook interfaces.
@@ -70,9 +69,10 @@ public final class AsyncHook {
          * @param response response to be transformed
          * @return transformed response
          */
-        CompletableFuture<HttpResponse<InputStream>> afterSuccess(Hook.AfterSuccessContext context, HttpResponse<InputStream> response);
+        CompletableFuture<HttpResponse<InputStream>> afterSuccess(
+                Hook.AfterSuccessContext context, HttpResponse<InputStream> response);
 
-        AfterSuccess DEFAULT = (context, response) ->  CompletableFuture.completedFuture(response);
+        AfterSuccess DEFAULT = (context, response) -> CompletableFuture.completedFuture(response);
     }
 
     /**
@@ -93,13 +93,9 @@ public final class AsyncHook {
          * @return HTTP response if method decides that an exception is not to be thrown
          */
         CompletableFuture<HttpResponse<InputStream>> afterError(
-                Hook.AfterErrorContext context,
-                HttpResponse<InputStream> response,
-                Throwable error);
+                Hook.AfterErrorContext context, HttpResponse<InputStream> response, Throwable error);
 
-        AfterError DEFAULT = (context, response, error) -> Optional.ofNullable(response)
-                    .map(CompletableFuture::completedFuture)
-                    .orElse(Java8Compat.failedFuture(error));
+        AfterError DEFAULT = (context, response, error) -> Optional.ofNullable(response).map(CompletableFuture::completedFuture).orElse(Java8Compat.failedFuture(error));
     }
 
     public static final class IdempotencyHook implements BeforeRequest {

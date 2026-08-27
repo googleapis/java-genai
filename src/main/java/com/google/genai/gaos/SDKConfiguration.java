@@ -39,27 +39,26 @@ public class SDKConfiguration {
     public static final String SDK_VERSION = "0.1.0";
     public static final String GEN_VERSION = "internal";
     private static final String BASE_PACKAGE = "com.google.genai.gaos";
-    public static final String USER_AGENT = 
-            String.format("speakeasy-sdk/%s %s %s %s %s",
-                LANGUAGE, SDK_VERSION, GEN_VERSION, OPENAPI_DOC_VERSION, BASE_PACKAGE);
+    public static final String USER_AGENT = String.format(
+            "speakeasy-sdk/%s %s %s %s %s", LANGUAGE, SDK_VERSION, GEN_VERSION, OPENAPI_DOC_VERSION, BASE_PACKAGE);
 
     private SecuritySource securitySource = SecuritySource.of(null);
-    
+
     public SecuritySource securitySource() {
         return securitySource;
     }
-    
+
     public void setSecuritySource(SecuritySource securitySource) {
         Utils.checkNotNull(securitySource, "securitySource");
         this.securitySource = securitySource;
     }
-    
+
     private HTTPClient client = new SpeakeasyHTTPClient();
-    
+
     public HTTPClient client() {
         return client;
     }
-    
+
     public void setClient(HTTPClient client) {
         Utils.checkNotNull(client, "client");
         this.client = client;
@@ -70,55 +69,53 @@ public class SDKConfiguration {
 
     public void closeClient() throws Exception {
         Object client = client();
-        if (closedClient.getAndSet(client) != client
-                && client instanceof java.lang.AutoCloseable) {
+        if (closedClient.getAndSet(client) != client && client instanceof java.lang.AutoCloseable) {
             ((java.lang.AutoCloseable) client).close();
         }
     }
-    
+
     private String serverUrl;
-    
+
     public String serverUrl() {
         return serverUrl;
     }
-    
+
     public void setServerUrl(String serverUrl) {
         Utils.checkNotNull(serverUrl, "serverUrl");
         this.serverUrl = trimFinalSlash(serverUrl);
     }
-    
+
     private static String trimFinalSlash(String url) {
         if (url == null) {
             return null;
         } else if (url.endsWith("/")) {
             return url.substring(0, url.length() - 1);
-        } else  {
+        } else {
             return url;
         }
     }
-    
+
     public String resolvedServerUrl() {
         return serverUrl;
     }
-    
+
     private int serverIdx = 0;
-    
+
     public void setServerIdx(int serverIdx) {
         this.serverIdx = serverIdx;
     }
-    
+
     public int serverIdx() {
         return serverIdx;
     }
-    
-    
+
     private Hooks _hooks = createHooks();
 
     private static Hooks createHooks() {
         Hooks hooks = new Hooks();
         return hooks;
     }
-    
+
     public Hooks hooks() {
         return _hooks;
     }
@@ -137,9 +134,9 @@ public class SDKConfiguration {
 
     @SuppressWarnings("serial")
     public Globals globals = new Globals();
-    
+
     private Optional<RetryConfig> retryConfig = Optional.empty();
-    
+
     public Optional<RetryConfig> retryConfig() {
         return retryConfig;
     }
@@ -148,9 +145,17 @@ public class SDKConfiguration {
         Utils.checkNotNull(retryConfig, "retryConfig");
         this.retryConfig = retryConfig;
     }
-    private ScheduledExecutorService retryScheduler = java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
-    
+
+    private ScheduledExecutorService retryScheduler
+            ;
+
     public ScheduledExecutorService retryScheduler() {
+        if (retryScheduler == null) {
+            throw new IllegalStateException(
+                "asyncRetryScheduler is required in google3 to avoid disallowed thread creation. "
+                + "Please provide a managed ScheduledExecutorService via "
+                + "Client.Builder.asyncRetryScheduler().");
+        }
         return retryScheduler;
     }
 

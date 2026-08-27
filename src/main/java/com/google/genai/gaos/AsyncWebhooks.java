@@ -60,7 +60,6 @@ import java.lang.Integer;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
-
 public class AsyncWebhooks {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -73,17 +72,16 @@ public class AsyncWebhooks {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public Webhooks sync() {
         return syncSDK;
     }
 
-
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @return The async call builder
      */
     public ListWebhooksRequestBuilder list() {
@@ -92,18 +90,16 @@ public class AsyncWebhooks {
 
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
      */
     public CompletableFuture<ListWebhooksResponse> listDirect() {
-        return list(
-                null, null, null,
-                null);
+        return list(null, null, null, null);
     }
 
     /**
      * Lists all Webhooks.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param pageSize Optional. The maximum number of webhooks to return. The service may return fewer than
      *         this value. If unspecified, at most 50 webhooks will be returned.
@@ -114,21 +110,20 @@ public class AsyncWebhooks {
      * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
      */
     public CompletableFuture<ListWebhooksResponse> list(
-            @Nullable String apiVersion, @Nullable Integer pageSize,
-            @Nullable String pageToken, @Nullable Options options) {
+            @Nullable String apiVersion,
+            @Nullable Integer pageSize,
+            @Nullable String pageToken,
+            @Nullable Options options) {
         ListWebhooksRequest request = new ListWebhooksRequest(apiVersion, pageSize, pageToken);
-        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
-              = new ListWebhooks.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation =
+                new ListWebhooks.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public CreateWebhookRequestBuilder create() {
@@ -137,7 +132,7 @@ public class AsyncWebhooks {
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @param body A Webhook resource.
      * @return {@code CompletableFuture<CreateWebhookResponse>} - The async response
      */
@@ -147,28 +142,24 @@ public class AsyncWebhooks {
 
     /**
      * Creates a new Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body A Webhook resource.
      * @param options additional options
      * @return {@code CompletableFuture<CreateWebhookResponse>} - The async response
      */
     public CompletableFuture<CreateWebhookResponse> create(
-            @Nullable String apiVersion, @Nonnull WebhookInput body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull WebhookInput body, @Nullable Options options) {
         CreateWebhookRequest request = new CreateWebhookRequest(apiVersion, body);
-        AsyncRequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation
-              = new CreateWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CreateWebhookRequest, CreateWebhookResponse> operation =
+                new CreateWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public DeleteWebhookRequestBuilder delete() {
@@ -177,7 +168,7 @@ public class AsyncWebhooks {
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to delete.
      *         Format: `{webhook_id}`
      * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
@@ -188,7 +179,7 @@ public class AsyncWebhooks {
 
     /**
      * Deletes a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to delete.
      *         Format: `{webhook_id}`
@@ -196,21 +187,17 @@ public class AsyncWebhooks {
      * @return {@code CompletableFuture<DeleteWebhookResponse>} - The async response
      */
     public CompletableFuture<DeleteWebhookResponse> delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteWebhookRequest request = new DeleteWebhookRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
-              = new DeleteWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation =
+                new DeleteWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public GetWebhookRequestBuilder get() {
@@ -219,7 +206,7 @@ public class AsyncWebhooks {
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to retrieve.
      * @return {@code CompletableFuture<GetWebhookResponse>} - The async response
      */
@@ -229,28 +216,24 @@ public class AsyncWebhooks {
 
     /**
      * Gets a specific Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to retrieve.
      * @param options additional options
      * @return {@code CompletableFuture<GetWebhookResponse>} - The async response
      */
     public CompletableFuture<GetWebhookResponse> get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetWebhookRequest request = new GetWebhookRequest(apiVersion, id);
-        AsyncRequestOperation<GetWebhookRequest, GetWebhookResponse> operation
-              = new GetWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<GetWebhookRequest, GetWebhookResponse> operation =
+                new GetWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public UpdateWebhookRequestBuilder update() {
@@ -259,45 +242,40 @@ public class AsyncWebhooks {
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to update.
      * @return {@code CompletableFuture<UpdateWebhookResponse>} - The async response
      */
     public CompletableFuture<UpdateWebhookResponse> update(@Nonnull String id) {
-        return update(
-                null, id, null,
-                null, null);
+        return update(null, id, null, null, null);
     }
 
     /**
      * Updates an existing Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to update.
      * @param updateMask Optional. The list of fields to update.
-     * @param body 
+     * @param body
      * @param options additional options
      * @return {@code CompletableFuture<UpdateWebhookResponse>} - The async response
      */
     public CompletableFuture<UpdateWebhookResponse> update(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable String updateMask, @Nullable WebhookUpdate body,
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable String updateMask,
+            @Nullable WebhookUpdate body,
             @Nullable Options options) {
-        UpdateWebhookRequest request = new UpdateWebhookRequest(
-                apiVersion, id, updateMask,
-                body);
-        AsyncRequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation
-              = new UpdateWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        UpdateWebhookRequest request = new UpdateWebhookRequest(apiVersion, id, updateMask, body);
+        AsyncRequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation =
+                new UpdateWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public PingWebhookRequestBuilder ping() {
@@ -306,20 +284,18 @@ public class AsyncWebhooks {
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
     public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
-        return ping(
-                null, id, null,
-                null);
+        return ping(null, id, null, null);
     }
 
     /**
      * Sends a ping event to a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook to ping.
      *         Format: `{webhook_id}`
@@ -328,21 +304,21 @@ public class AsyncWebhooks {
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
     public CompletableFuture<PingWebhookResponse> ping(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable PingWebhookRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.PingWebhookRequest request = new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
-        AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable PingWebhookRequest body,
+            @Nullable Options options) {
+        com.google.genai.gaos.models.operations.PingWebhookRequest request =
+                new com.google.genai.gaos.models.operations.PingWebhookRequest(apiVersion, id, body);
+        AsyncRequestOperation<com.google.genai.gaos.models.operations.PingWebhookRequest, PingWebhookResponse> operation =
+                new PingWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @return The async call builder
      */
     public RotateSigningSecretRequestBuilder rotateSigningSecret() {
@@ -351,20 +327,18 @@ public class AsyncWebhooks {
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @param id Required. The ID of the webhook for which to generate a signing secret.
      *         Format: `{webhook_id}`
      * @return {@code CompletableFuture<RotateSigningSecretResponse>} - The async response
      */
     public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(@Nonnull String id) {
-        return rotateSigningSecret(
-                null, id, null,
-                null);
+        return rotateSigningSecret(null, id, null, null);
     }
 
     /**
      * Generates a new signing secret for a Webhook.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Required. The ID of the webhook for which to generate a signing secret.
      *         Format: `{webhook_id}`
@@ -373,15 +347,17 @@ public class AsyncWebhooks {
      * @return {@code CompletableFuture<RotateSigningSecretResponse>} - The async response
      */
     public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable RotateSigningSecretRequest body, @Nullable Options options) {
-        com.google.genai.gaos.models.operations.RotateSigningSecretRequest request = new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
-        AsyncRequestOperation<com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse> operation
-              = new RotateSigningSecret.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+            @Nullable String apiVersion,
+            @Nonnull String id,
+            @Nullable RotateSigningSecretRequest body,
+            @Nullable Options options) {
+        com.google.genai.gaos.models.operations.RotateSigningSecretRequest request =
+                new com.google.genai.gaos.models.operations.RotateSigningSecretRequest(apiVersion, id, body);
+        AsyncRequestOperation<
+                        com.google.genai.gaos.models.operations.RotateSigningSecretRequest, RotateSigningSecretResponse>
+                operation = new RotateSigningSecret.Async(
+                        sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 }

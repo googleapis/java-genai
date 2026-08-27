@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * ReviewSnippet
- * 
+ *
  * <p>Encapsulates a snippet of a user review that answers a question about
  * the features of a specific place in Google Maps.
  */
@@ -66,7 +66,7 @@ public class ReviewSnippet {
         this.title = title;
         this.url = url;
     }
-    
+
     public ReviewSnippet() {
         this(null, null, null);
     }
@@ -96,7 +96,6 @@ public class ReviewSnippet {
         return new Builder();
     }
 
-
     /**
      * The ID of the review snippet.
      */
@@ -104,7 +103,6 @@ public class ReviewSnippet {
         this.reviewId = reviewId;
         return this;
     }
-
 
     /**
      * Title of the review.
@@ -114,7 +112,6 @@ public class ReviewSnippet {
         return this;
     }
 
-
     /**
      * A link that corresponds to the user review on Google Maps.
      */
@@ -122,7 +119,6 @@ public class ReviewSnippet {
         this.url = url;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -133,28 +129,23 @@ public class ReviewSnippet {
             return false;
         }
         ReviewSnippet other = (ReviewSnippet) o;
-        return 
-            Utils.enhancedDeepEquals(this.reviewId, other.reviewId) &&
-            Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.url, other.url);
+        return Utils.enhancedDeepEquals(this.reviewId, other.reviewId)
+                && Utils.enhancedDeepEquals(this.title, other.title)
+                && Utils.enhancedDeepEquals(this.url, other.url);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            reviewId, title, url);
+        return Utils.enhancedHash(reviewId, title, url);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ReviewSnippet.class,
-                "reviewId", reviewId,
-                "title", title,
-                "url", url);
+        return Utils.toString(ReviewSnippet.class, "reviewId", reviewId, "title", title, "url", url);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String reviewId;
 
@@ -163,7 +154,7 @@ public class ReviewSnippet {
         private String url;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -191,9 +182,7 @@ public class ReviewSnippet {
         }
 
         public ReviewSnippet build() {
-            return new ReviewSnippet(
-                reviewId, title, url);
+            return new ReviewSnippet(reviewId, title, url);
         }
-
     }
 }

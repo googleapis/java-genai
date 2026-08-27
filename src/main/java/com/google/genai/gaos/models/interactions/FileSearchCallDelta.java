@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class FileSearchCallDelta implements StepDeltaData {
     /**
      * A signature hash for backend validation.
@@ -40,17 +39,15 @@ public class FileSearchCallDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public FileSearchCallDelta(
-            @JsonProperty("signature") @Nullable String signature) {
+    public FileSearchCallDelta(@JsonProperty("signature") @Nullable String signature) {
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public FileSearchCallDelta() {
         this(null);
     }
@@ -71,7 +68,6 @@ public class FileSearchCallDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -79,7 +75,6 @@ public class FileSearchCallDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -90,31 +85,27 @@ public class FileSearchCallDelta implements StepDeltaData {
             return false;
         }
         FileSearchCallDelta other = (FileSearchCallDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            signature, type);
+        return Utils.enhancedHash(signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileSearchCallDelta.class,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(FileSearchCallDelta.class, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -126,15 +117,10 @@ public class FileSearchCallDelta implements StepDeltaData {
         }
 
         public FileSearchCallDelta build() {
-            return new FileSearchCallDelta(
-                signature);
+            return new FileSearchCallDelta(signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"file_search_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"file_search_call\"", new TypeReference<String>() {});
     }
 }

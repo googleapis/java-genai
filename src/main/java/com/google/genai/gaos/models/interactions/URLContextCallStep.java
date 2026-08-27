@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * URLContextCallStep
- * 
+ *
  * <p>URL context call step.
  */
 public class URLContextCallStep implements Step {
@@ -57,7 +57,6 @@ public class URLContextCallStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -67,16 +66,13 @@ public class URLContextCallStep implements Step {
             @JsonProperty("id") @Nonnull String id,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public URLContextCallStep(
-            @Nonnull URLContextCallArguments arguments,
-            @Nonnull String id) {
+
+    public URLContextCallStep(@Nonnull URLContextCallArguments arguments, @Nonnull String id) {
         this(arguments, id, null);
     }
 
@@ -110,7 +106,6 @@ public class URLContextCallStep implements Step {
         return new Builder();
     }
 
-
     /**
      * The arguments to pass to the URL context.
      */
@@ -118,7 +113,6 @@ public class URLContextCallStep implements Step {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
-
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -128,7 +122,6 @@ public class URLContextCallStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -136,7 +129,6 @@ public class URLContextCallStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -147,31 +139,25 @@ public class URLContextCallStep implements Step {
             return false;
         }
         URLContextCallStep other = (URLContextCallStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, id, signature,
-            type);
+        return Utils.enhancedHash(arguments, id, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContextCallStep.class,
-                "arguments", arguments,
-                "id", id,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                URLContextCallStep.class, "arguments", arguments, "id", id, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private URLContextCallArguments arguments;
 
@@ -180,7 +166,7 @@ public class URLContextCallStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -208,15 +194,10 @@ public class URLContextCallStep implements Step {
         }
 
         public URLContextCallStep build() {
-            return new URLContextCallStep(
-                arguments, id, signature);
+            return new URLContextCallStep(arguments, id, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"url_context_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"url_context_call\"", new TypeReference<String>() {});
     }
 }

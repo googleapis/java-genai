@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * FindRequest
- * 
+ *
  * <p>Request parameters specific to FIND sessions, used for discovering
  * vulnerabilities in a codebase.
  */
@@ -79,10 +79,9 @@ public class FindRequest {
         this.mode = mode;
         this.sourceFiles = sourceFiles;
     }
-    
+
     public FindRequest() {
-        this(null, null, null,
-            null);
+        this(null, null, null, null);
     }
 
     /**
@@ -120,7 +119,6 @@ public class FindRequest {
         return new Builder();
     }
 
-
     /**
      * Additional context or custom instructions provided by the user to guide
      * the vulnerability analysis.
@@ -129,7 +127,6 @@ public class FindRequest {
         this.description = description;
         return this;
     }
-
 
     /**
      * The identifier of a specific finding to verify. This is primarily used in
@@ -141,7 +138,6 @@ public class FindRequest {
         return this;
     }
 
-
     /**
      * The mode of the find session.
      */
@@ -150,7 +146,6 @@ public class FindRequest {
         return this;
     }
 
-
     /**
      * A list of source files to provide as context for the scan.
      */
@@ -158,7 +153,6 @@ public class FindRequest {
         this.sourceFiles = sourceFiles;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -169,31 +163,33 @@ public class FindRequest {
             return false;
         }
         FindRequest other = (FindRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.description, other.description) &&
-            Utils.enhancedDeepEquals(this.findingId, other.findingId) &&
-            Utils.enhancedDeepEquals(this.mode, other.mode) &&
-            Utils.enhancedDeepEquals(this.sourceFiles, other.sourceFiles);
+        return Utils.enhancedDeepEquals(this.description, other.description)
+                && Utils.enhancedDeepEquals(this.findingId, other.findingId)
+                && Utils.enhancedDeepEquals(this.mode, other.mode)
+                && Utils.enhancedDeepEquals(this.sourceFiles, other.sourceFiles);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            description, findingId, mode,
-            sourceFiles);
+        return Utils.enhancedHash(description, findingId, mode, sourceFiles);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FindRequest.class,
-                "description", description,
-                "findingId", findingId,
-                "mode", mode,
-                "sourceFiles", sourceFiles);
+        return Utils.toString(
+                FindRequest.class,
+                "description",
+                description,
+                "findingId",
+                findingId,
+                "mode",
+                mode,
+                "sourceFiles",
+                sourceFiles);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String description;
 
@@ -204,7 +200,7 @@ public class FindRequest {
         private List<FileContent> sourceFiles;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -243,10 +239,7 @@ public class FindRequest {
         }
 
         public FindRequest build() {
-            return new FindRequest(
-                description, findingId, mode,
-                sourceFiles);
+            return new FindRequest(description, findingId, mode, sourceFiles);
         }
-
     }
 }

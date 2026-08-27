@@ -35,12 +35,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class Security {
-    
+
     private Security() {
         // prevent instantiation
     }
-    
-    public static HTTPRequest configureSecurity(HTTPRequest request, Object security, String... allowedFields) throws Exception {
+
+    public static HTTPRequest configureSecurity(HTTPRequest request, Object security, String... allowedFields)
+            throws Exception {
         if (security != null) {
             Field[] fields;
             if (allowedFields.length > 0) {
@@ -90,14 +91,13 @@ public final class Security {
         return request;
     }
 
-    private static void parseSecurityOption(HTTPRequest request, Object option)
-            throws Exception {
+    private static void parseSecurityOption(HTTPRequest request, Object option) throws Exception {
         Field[] fields = option.getClass().getDeclaredFields();
 
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = Utils.resolveOptionals(field.get(option));
-            
+
             if (value == null) {
                 continue;
             }
@@ -107,7 +107,8 @@ public final class Security {
                 continue;
             }
 
-            if (securityMetadata.subtype != null && securityMetadata.subtype.equals("basic")
+            if (securityMetadata.subtype != null
+                    && securityMetadata.subtype.equals("basic")
                     && Types.getType(value.getClass()) != Types.OBJECT) {
                 parseSecurityScheme(request, securityMetadata, option);
             } else {
@@ -116,8 +117,9 @@ public final class Security {
         }
     }
 
-    private static void parseSecurityScheme(HTTPRequest requestBuilder, SecurityMetadata schemeMetadata,
-            Object scheme) throws Exception {
+    private static void parseSecurityScheme(
+            HTTPRequest requestBuilder, SecurityMetadata schemeMetadata, Object scheme)
+            throws Exception {
 
         if (Types.getType(scheme.getClass()) == Types.OBJECT) {
             if (schemeMetadata.type.equals("http") && schemeMetadata.subtype.equals("basic")) {
@@ -147,9 +149,8 @@ public final class Security {
         }
     }
 
-    private static void parseSecuritySchemeValue(HTTPRequest request, SecurityMetadata schemeMetadata,
-            SecurityMetadata securityMetadata,
-            Object value) throws Exception {
+    private static void parseSecuritySchemeValue(
+            HTTPRequest request, SecurityMetadata schemeMetadata, SecurityMetadata securityMetadata, Object value) throws Exception {
         switch (schemeMetadata.type) {
             case "apiKey":
                 switch (schemeMetadata.subtype) {
@@ -157,16 +158,13 @@ public final class Security {
                         request.addHeader(securityMetadata.name, Utils.valToString(value));
                         break;
                     case "query":
-                        request.addQueryParam(
-                                securityMetadata.name, Utils.valToString(value), false);
+                        request.addQueryParam(securityMetadata.name, Utils.valToString(value), false);
                         break;
                     case "cookie":
-                        request.addHeader("Cookie",
-                                String.format("%s=%s", securityMetadata.name, Utils.valToString(value)));
+                        request.addHeader("Cookie", String.format("%s=%s", securityMetadata.name, Utils.valToString(value)));
                         break;
                     default:
-                        throw new RuntimeException(
-                                "Unsupported apiKey security scheme subtype: " + securityMetadata.subtype);
+                        throw new RuntimeException("Unsupported apiKey security scheme subtype: " + securityMetadata.subtype);
                 }
                 break;
             case "openIdConnect":
@@ -175,7 +173,7 @@ public final class Security {
             case "oauth2":
                 if (!"client_credentials".equals(schemeMetadata.subtype)) {
                     request.addHeader(securityMetadata.name, Utils.prefixBearer(Utils.valToString(value)));
-                } 
+                }
                 break;
             case "http":
                 switch (schemeMetadata.subtype) {
@@ -187,7 +185,9 @@ public final class Security {
                         break;
                     case "custom":
                         // customers are expected to consume the security object and transform requests
+
                         // in their own BeforeRequest hook.
+
                         break;
                     default:
                         throw new RuntimeException("Unsupported http security scheme subtype: " + schemeMetadata.subtype);
@@ -198,8 +198,7 @@ public final class Security {
         }
     }
 
-    private static void parseBasicAuthScheme(HTTPRequest requestBuilder, Object scheme)
-            throws IllegalAccessException {
+    private static void parseBasicAuthScheme(HTTPRequest requestBuilder, Object scheme) throws IllegalAccessException {
         Field[] fields = scheme.getClass().getDeclaredFields();
 
         String username = "";
@@ -230,13 +229,14 @@ public final class Security {
             }
         }
 
-        requestBuilder.addHeader("Authorization",
-                "Basic " 
-                + Base64.getEncoder()
-                     .encodeToString(String.format("%s:%s", username, password)
-                     .getBytes(StandardCharsets.UTF_8)));
+        requestBuilder.addHeader(
+                "Authorization",
+                "Basic "
+                        + Base64.getEncoder()
+                                .encodeToString(String.format("%s:%s", username, password)
+                                        .getBytes(StandardCharsets.UTF_8)));
     }
-    
+
     public static Optional<Object> findComplexObjectWithNonEmptyAnnotatedField(Object object, String... regexes) {
         if (object == null || object instanceof String) {
             return Optional.empty();
@@ -249,20 +249,16 @@ public final class Security {
         while (!stack.isEmpty()) {
             Object o = stack.pop();
             Field[] fields = o.getClass().getDeclaredFields();
-            List<Field> annotatedFields = Arrays.stream(fields) //
-                    .filter(f -> {
-                        SpeakeasyMetadata[] anns = f.getDeclaredAnnotationsByType(SpeakeasyMetadata.class);
-                        return anns != null && anns.length > 0;
-                    }) //
-                    .collect(Collectors.toList());
+            List<Field> annotatedFields = Arrays.stream(fields).filter(f -> {
+                SpeakeasyMetadata[] anns = f.getDeclaredAnnotationsByType(SpeakeasyMetadata.class);
+                return anns != null && anns.length > 0;
+            }).collect(Collectors.toList());
             for (Field f : annotatedFields) {
                 SpeakeasyMetadata[] anns = f.getDeclaredAnnotationsByType(SpeakeasyMetadata.class);
                 Object value = getUnwrappedFieldValue(o, f);
                 if (value != null && !(value instanceof String)) {
                     // we are looking for a complex object (so can't be a String)
-                    boolean regexMatches = Arrays //
-                            .stream(regexes) //
-                            .allMatch(regex -> matches(anns, regex));
+                    boolean regexMatches = Arrays.stream(regexes).allMatch(regex -> matches(anns, regex));
                     if (regexMatches) {
                         return Optional.of(value);
                     } else if (!processed.contains(value)) {
@@ -288,51 +284,47 @@ public final class Security {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static Stream<Field> findFieldsWhereMetadataContainsRegexes(Object o, String... regexes) {
         Field[] fields = o.getClass().getDeclaredFields();
-        return Arrays.stream(fields) //
-                .filter(f -> {
-                    SpeakeasyMetadata[] anns = f.getDeclaredAnnotationsByType(SpeakeasyMetadata.class);
-                    if (anns == null) {
-                        return false;
-                    }
-                    return Arrays //
-                        .stream(regexes) //
-                        .allMatch(regex -> matches(anns, regex));
-                });
+        return Arrays.stream(fields).filter(f -> {
+            SpeakeasyMetadata[] anns = f.getDeclaredAnnotationsByType(SpeakeasyMetadata.class);
+            if (anns == null) {
+                return false;
+            }
+            return Arrays.stream(regexes).allMatch(regex -> matches(anns, regex));
+        });
     }
-    
+
     public static Optional<String> findStringValueWhereMetadataContainsRegexes(Object o, String... regexes) {
         return findValueWhereMetadataContainsRegexes(o, regexes).map(x -> (String) x);
     }
-    
+
     public static Optional<String> findStringValueWhereMetadataNameIs(Object o, String name) {
         return Security.findStringValueWhereMetadataContainsRegexes(o, "\\bname=" + name + "\\b");
     }
-    
+
     public static Optional<Object> findValueWhereMetadataContainsRegexes(Object o, String... regexes) {
-        return findFieldsWhereMetadataContainsRegexes(o, regexes)
-                   .flatMap(f -> {
-                        f.setAccessible(true);
-                        Object result;
-                        try {
-                            result = f.get(o);
-                        } catch (IllegalArgumentException | IllegalAccessException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if (result instanceof Optional) {
-                            @SuppressWarnings("unchecked")
-                            Optional<Object> r = (Optional<Object>) result;
-                            if (!r.isPresent()) {
-                                return Stream.empty();
-                            } else {
-                               return Stream.of(r.get());
-                            }
-                        } else {
-                            return Stream.of(result);
-                        }
-                    }).findAny();
+        return findFieldsWhereMetadataContainsRegexes(o, regexes).flatMap(f -> {
+            f.setAccessible(true);
+            Object result;
+            try {
+                result = f.get(o);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            if (result instanceof Optional) {
+                @SuppressWarnings("unchecked")
+                Optional<Object> r = (Optional<Object>) result;
+                if (!r.isPresent()) {
+                    return Stream.empty();
+                } else {
+                    return Stream.of(r.get());
+                }
+            } else {
+                return Stream.of(result);
+            }
+        }).findAny();
     }
 
     private static boolean matches(SpeakeasyMetadata[] anns, String regex) {

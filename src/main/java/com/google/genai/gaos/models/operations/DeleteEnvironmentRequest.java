@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class DeleteEnvironmentRequest {
     /**
      * Which version of the API to use.
@@ -44,16 +43,12 @@ public class DeleteEnvironmentRequest {
     private String id;
 
     @JsonCreator
-    public DeleteEnvironmentRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id) {
+    public DeleteEnvironmentRequest(@Nullable String apiVersion, @Nonnull String id) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
     }
-    
-    public DeleteEnvironmentRequest(
-            @Nonnull String id) {
+
+    public DeleteEnvironmentRequest(@Nonnull String id) {
         this(null, id);
     }
 
@@ -76,7 +71,6 @@ public class DeleteEnvironmentRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -84,7 +78,6 @@ public class DeleteEnvironmentRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Resource ID segment making up resource `name`. It identifies the resource within its parent
@@ -95,7 +88,6 @@ public class DeleteEnvironmentRequest {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -105,33 +97,28 @@ public class DeleteEnvironmentRequest {
             return false;
         }
         DeleteEnvironmentRequest other = (DeleteEnvironmentRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) && Utils.enhancedDeepEquals(this.id, other.id);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id);
+        return Utils.enhancedHash(apiVersion, id);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DeleteEnvironmentRequest.class,
-                "apiVersion", apiVersion,
-                "id", id);
+        return Utils.toString(DeleteEnvironmentRequest.class, "apiVersion", apiVersion, "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String id;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -152,9 +139,7 @@ public class DeleteEnvironmentRequest {
         }
 
         public DeleteEnvironmentRequest build() {
-            return new DeleteEnvironmentRequest(
-                apiVersion, id);
+            return new DeleteEnvironmentRequest(apiVersion, id);
         }
-
     }
 }

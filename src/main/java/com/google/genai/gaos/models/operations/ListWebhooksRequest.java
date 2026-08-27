@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListWebhooksRequest {
     /**
      * Which version of the API to use.
@@ -52,15 +51,12 @@ public class ListWebhooksRequest {
     private String pageToken;
 
     @JsonCreator
-    public ListWebhooksRequest(
-            @Nullable String apiVersion,
-            @Nullable Integer pageSize,
-            @Nullable String pageToken) {
+    public ListWebhooksRequest(@Nullable String apiVersion, @Nullable Integer pageSize, @Nullable String pageToken) {
         this.apiVersion = apiVersion;
         this.pageSize = pageSize;
         this.pageToken = pageToken;
     }
-    
+
     public ListWebhooksRequest() {
         this(null, null, null);
     }
@@ -93,7 +89,6 @@ public class ListWebhooksRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -101,7 +96,6 @@ public class ListWebhooksRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Optional. The maximum number of webhooks to return. The service may return fewer than
@@ -113,7 +107,6 @@ public class ListWebhooksRequest {
         return this;
     }
 
-
     /**
      * Optional. A page token, received from a previous `ListWebhooks` call.
      * Provide this to retrieve the subsequent page.
@@ -122,7 +115,6 @@ public class ListWebhooksRequest {
         this.pageToken = pageToken;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -133,28 +125,24 @@ public class ListWebhooksRequest {
             return false;
         }
         ListWebhooksRequest other = (ListWebhooksRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.pageSize, other.pageSize)
+                && Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, pageSize, pageToken);
+        return Utils.enhancedHash(apiVersion, pageSize, pageToken);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListWebhooksRequest.class,
-                "apiVersion", apiVersion,
-                "pageSize", pageSize,
-                "pageToken", pageToken);
+        return Utils.toString(
+                ListWebhooksRequest.class, "apiVersion", apiVersion, "pageSize", pageSize, "pageToken", pageToken);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
@@ -163,7 +151,7 @@ public class ListWebhooksRequest {
         private String pageToken;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -194,9 +182,7 @@ public class ListWebhooksRequest {
         }
 
         public ListWebhooksRequest build() {
-            return new ListWebhooksRequest(
-                apiVersion, pageSize, pageToken);
+            return new ListWebhooksRequest(apiVersion, pageSize, pageToken);
         }
-
     }
 }

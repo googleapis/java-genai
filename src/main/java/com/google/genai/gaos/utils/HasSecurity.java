@@ -22,5 +22,4 @@ package com.google.genai.gaos.utils;
 /**
  * Implemented by classes that have security annotations on fields.
  **/
-public interface HasSecurity {
-}
+public interface HasSecurity {}

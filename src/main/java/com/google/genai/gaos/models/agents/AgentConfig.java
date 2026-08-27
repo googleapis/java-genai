@@ -26,9 +26,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.genai.gaos.models.interactions.AntigravityAgentConfig;
 import com.google.genai.gaos.utils.OneOfDeserializer;
 import com.google.genai.gaos.utils.TypedObject;
+import com.google.genai.gaos.utils.Utils;
 import com.google.genai.gaos.utils.Utils.JsonShape;
 import com.google.genai.gaos.utils.Utils.TypeReferenceWithShape;
-import com.google.genai.gaos.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * AgentConfig
- * 
+ *
  * <p>Configuration parameters for the agent.
  */
 @JsonDeserialize(using = AgentConfig._Deserializer.class)
@@ -44,16 +44,16 @@ public class AgentConfig {
 
     @JsonValue
     private final TypedObject value;
-    
+
     private AgentConfig(TypedObject value) {
         this.value = value;
     }
 
     public static AgentConfig of(AntigravityAgentConfig value) {
         Utils.checkNotNull(value, "value");
-        return new AgentConfig(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<AntigravityAgentConfig>(){}));
+        return new AgentConfig(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<AntigravityAgentConfig>() {}));
     }
-    
+
     /**
      * Returns an {@link Optional} containing the value if it is of type {@code AntigravityAgentConfig},
      * otherwise returns an empty {@link Optional}.
@@ -66,19 +66,19 @@ public class AgentConfig {
         }
         return Optional.empty();
     }
-   /**
-    * Returns an {@link Optional} containing the value as a {@code JsonNode}.
-    * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
-    *
-    * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
-    */
-   public Optional<JsonNode> asJson() {
-       if (value.value() instanceof JsonNode) {
-           return Optional.of((JsonNode) value.value());
-       }
-       return Optional.empty();
-   }
-    
+    /**
+     * Returns an {@link Optional} containing the value as a {@code JsonNode}.
+     * This accessor returns the raw JSON when the value doesn't match any of the defined union types.
+     *
+     * @return an {@link Optional} containing the {@code JsonNode} value, or empty if value matched a known type
+     */
+    public Optional<JsonNode> asJson() {
+        if (value.value() instanceof JsonNode) {
+            return Optional.of((JsonNode) value.value());
+        }
+        return Optional.empty();
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -90,26 +90,25 @@ public class AgentConfig {
         AgentConfig other = (AgentConfig) o;
         return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(value.value());
     }
-    
+
     @SuppressWarnings("serial")
     public static final class _Deserializer extends OneOfDeserializer<AgentConfig> {
 
         public _Deserializer() {
-            super(AgentConfig.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<AntigravityAgentConfig>() {}, JsonShape.DEFAULT));
+            super(
+                    AgentConfig.class,
+                    false,
+                    TypeReferenceWithShape.of(new TypeReference<AntigravityAgentConfig>() {}, JsonShape.DEFAULT));
         }
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AgentConfig.class,
-                "value", value);
+        return Utils.toString(AgentConfig.class, "value", value);
     }
-
 }
-

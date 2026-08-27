@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Resolution
- * 
+ *
  * <p>The video output resolution. Defaults to 720p.
  */
 public class Resolution {
@@ -61,12 +61,12 @@ public class Resolution {
     }
 
     /**
-     * Returns a Resolution with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Resolution with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Resolution
-     */ 
+     */
     @JsonCreator
     public static Resolution of(String value) {
         synchronized (Resolution.class) {
@@ -94,12 +94,9 @@ public class Resolution {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Resolution other = (Resolution) obj;
         return Objects.equals(value, other.value);
     }
@@ -133,14 +130,14 @@ public class Resolution {
         map.put("4k", ResolutionEnum.FOURK);
         return map;
     }
-    
-    
+
     public enum ResolutionEnum {
 
         THREE_HUNDRED_AND_SIXTYP("360p"),
         SEVEN_HUNDRED_AND_TWENTYP("720p"),
         ONE_THOUSAND_AND_EIGHTYP("1080p"),
-        FOURK("4k"),;
+        FOURK("4k"),
+        ;
 
         private final String value;
 
@@ -153,4 +150,3 @@ public class Resolution {
         }
     }
 }
-

@@ -19,13 +19,12 @@
  */
 package com.google.genai.gaos.utils.transport;
 
+import com.google.genai.gaos.utils.Headers;
+import com.google.genai.gaos.utils.Utils;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import com.google.genai.gaos.utils.Headers;
-import com.google.genai.gaos.utils.Utils;
 
 /**
  * An immutable HTTP request that is independent of the underlying HTTP
@@ -104,8 +103,7 @@ public final class HttpRequest {
         private Headers headers = new Headers();
         private Optional<HttpBody> body = Optional.empty();
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder method(String method) {
             Utils.checkNotNull(method, "method");

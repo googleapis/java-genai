@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.String;
 import java.util.List;
 import java.util.Optional;
 
-
 public class TextAnnotationDelta implements StepDeltaData {
     /**
      * Citation information for model-generated content.
@@ -41,17 +40,15 @@ public class TextAnnotationDelta implements StepDeltaData {
     @JsonProperty("annotations")
     private List<Annotation> annotations;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public TextAnnotationDelta(
-            @JsonProperty("annotations") @Nullable List<Annotation> annotations) {
+    public TextAnnotationDelta(@JsonProperty("annotations") @Nullable List<Annotation> annotations) {
         this.annotations = annotations;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public TextAnnotationDelta() {
         this(null);
     }
@@ -72,7 +69,6 @@ public class TextAnnotationDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * Citation information for model-generated content.
      */
@@ -80,7 +76,6 @@ public class TextAnnotationDelta implements StepDeltaData {
         this.annotations = annotations;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -91,31 +86,27 @@ public class TextAnnotationDelta implements StepDeltaData {
             return false;
         }
         TextAnnotationDelta other = (TextAnnotationDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.annotations, other.annotations) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.annotations, other.annotations)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            annotations, type);
+        return Utils.enhancedHash(annotations, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TextAnnotationDelta.class,
-                "annotations", annotations,
-                "type", type);
+        return Utils.toString(TextAnnotationDelta.class, "annotations", annotations, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<Annotation> annotations;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -127,15 +118,10 @@ public class TextAnnotationDelta implements StepDeltaData {
         }
 
         public TextAnnotationDelta build() {
-            return new TextAnnotationDelta(
-                annotations);
+            return new TextAnnotationDelta(annotations);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"text_annotation_delta\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"text_annotation_delta\"", new TypeReference<String>() {});
     }
 }

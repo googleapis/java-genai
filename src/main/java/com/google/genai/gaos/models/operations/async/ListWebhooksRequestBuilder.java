@@ -77,7 +77,7 @@ public class ListWebhooksRequestBuilder {
         }
         return this.request;
     }
-    
+
     public ListWebhooksRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -86,17 +86,16 @@ public class ListWebhooksRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<ListWebhooksResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation
-              = new ListWebhooks.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<ListWebhooksRequest, ListWebhooksResponse> operation =
+                new ListWebhooks.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

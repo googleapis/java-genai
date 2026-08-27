@@ -56,12 +56,12 @@ public class ThinkingLevel {
     }
 
     /**
-     * Returns a ThinkingLevel with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ThinkingLevel with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ThinkingLevel
-     */ 
+     */
     @JsonCreator
     public static ThinkingLevel of(String value) {
         synchronized (ThinkingLevel.class) {
@@ -89,12 +89,9 @@ public class ThinkingLevel {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ThinkingLevel other = (ThinkingLevel) obj;
         return Objects.equals(value, other.value);
     }
@@ -128,14 +125,14 @@ public class ThinkingLevel {
         map.put("high", ThinkingLevelEnum.HIGH);
         return map;
     }
-    
-    
+
     public enum ThinkingLevelEnum {
 
         MINIMAL("minimal"),
         LOW("low"),
         MEDIUM("medium"),
-        HIGH("high"),;
+        HIGH("high"),
+        ;
 
         private final String value;
 
@@ -148,4 +145,3 @@ public class ThinkingLevel {
         }
     }
 }
-

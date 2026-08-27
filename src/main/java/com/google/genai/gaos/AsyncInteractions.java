@@ -51,7 +51,6 @@ import java.lang.String;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-
 public class AsyncInteractions {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -64,19 +63,18 @@ public class AsyncInteractions {
 
     /**
      * Switches to the sync SDK.
-     * 
+     *
      * @return The sync SDK
      */
     public Interactions sync() {
         return syncSDK;
     }
 
-
     /**
      * Creating an interaction
-     * 
+     *
      * <p>Creates a new interaction.
-     * 
+     *
      * @return The async call builder
      */
     public CreateInteractionRequestBuilder create() {
@@ -85,21 +83,22 @@ public class AsyncInteractions {
 
     /**
      * Creating an interaction
-     * 
+     *
      * <p>Creates a new interaction.
-     * 
+     *
      * @param body The request body.
      * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
      */
-    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(@Nonnull CreateInteractionRequestBody body) {
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
+            @Nonnull CreateInteractionRequestBody body) {
         return create(null, body, null);
     }
 
     /**
      * Creating an interaction
-     * 
+     *
      * <p>Creates a new interaction.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body The request body.
      * @param options additional options
@@ -107,29 +106,27 @@ public class AsyncInteractions {
      * Iterating the stream blocks the calling thread; close it after use.
      */
     public CompletableFuture<EventStream<InteractionSSEStreamEvent>> create(
-            @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull CreateInteractionRequestBody body, @Nullable Options options) {
         CreateInteractionRequest request = new CreateInteractionRequest(apiVersion, body);
-        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation
-              = new CreateInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-                operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+        AsyncRequestOperation<CreateInteractionRequest, CreateInteractionResponse> operation =
+                new CreateInteraction.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse)
+                        .thenApplyAsync(
+                                response -> new EventStream<InteractionSSEStreamEvent>(
+                                        response.rawResponse().body(),
+                                        new TypeReference<InteractionSSEStreamEvent>() {},
+                                        Utils.mapper(),
+                                        Optional.of("[DONE]")),
+                                Operations.streamCompletionExecutor()),
+                operation);
     }
-
 
     /**
      * Deleting an interaction
-     * 
+     *
      * <p>Deletes the interaction by id.
-     * 
+     *
      * @return The async call builder
      */
     public DeleteInteractionRequestBuilder delete() {
@@ -138,9 +135,9 @@ public class AsyncInteractions {
 
     /**
      * Deleting an interaction
-     * 
+     *
      * <p>Deletes the interaction by id.
-     * 
+     *
      * @param id The unique identifier of the interaction to delete.
      * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
      */
@@ -150,32 +147,28 @@ public class AsyncInteractions {
 
     /**
      * Deleting an interaction
-     * 
+     *
      * <p>Deletes the interaction by id.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id The unique identifier of the interaction to delete.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteInteractionResponse>} - The async response
      */
     public CompletableFuture<DeleteInteractionResponse> delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteInteractionRequest request = new DeleteInteractionRequest(apiVersion, id);
-        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation
-              = new DeleteInteraction.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<DeleteInteractionRequest, DeleteInteractionResponse> operation =
+                new DeleteInteraction.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 
     /**
      * Retrieving an interaction
-     * 
+     *
      * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
-     * 
+     *
      * @return The async call builder
      */
     public GetInteractionByIdRequestBuilder get() {
@@ -184,9 +177,9 @@ public class AsyncInteractions {
 
     /**
      * Retrieving an interaction
-     * 
+     *
      * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<EventStream<InteractionSSEStreamEvent>}&gt; - The async response
      */
@@ -196,35 +189,35 @@ public class AsyncInteractions {
 
     /**
      * Retrieving an interaction
-     * 
+     *
      * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
-     * 
+     *
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options
      * @return A CompletableFuture that completes with a blocking event stream once response headers are received.
      * Iterating the stream blocks the calling thread; close it after use.
      */
-    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> get(@Nonnull GetInteractionByIdRequest request, @Nullable Options options) {
-        AsyncRequestOperation<GetInteractionByIdRequest, GetInteractionByIdResponse> operation
-              = new GetInteractionById.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-                operation::handleResponse)
-                .thenApplyAsync(response -> new EventStream<InteractionSSEStreamEvent>(
-                        response.rawResponse().body(),
-                        new TypeReference<InteractionSSEStreamEvent>() {
-                        },
-                        Utils.mapper(),
-                        Optional.of("[DONE]")), Operations.streamCompletionExecutor()), operation);
+    public CompletableFuture<EventStream<InteractionSSEStreamEvent>> get(
+            @Nonnull GetInteractionByIdRequest request, @Nullable Options options) {
+        AsyncRequestOperation<GetInteractionByIdRequest, GetInteractionByIdResponse> operation =
+                new GetInteractionById.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse)
+                        .thenApplyAsync(
+                                response -> new EventStream<InteractionSSEStreamEvent>(
+                                        response.rawResponse().body(),
+                                        new TypeReference<InteractionSSEStreamEvent>() {},
+                                        Utils.mapper(),
+                                        Optional.of("[DONE]")),
+                                Operations.streamCompletionExecutor()),
+                operation);
     }
-
 
     /**
      * Canceling an interaction
-     * 
+     *
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
+     *
      * @return The async call builder
      */
     public CancelInteractionByIdRequestBuilder cancel() {
@@ -233,9 +226,9 @@ public class AsyncInteractions {
 
     /**
      * Canceling an interaction
-     * 
+     *
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
+     *
      * @param id The unique identifier of the interaction to cancel.
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */
@@ -245,24 +238,20 @@ public class AsyncInteractions {
 
     /**
      * Canceling an interaction
-     * 
+     *
      * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id The unique identifier of the interaction to cancel.
      * @param options additional options
      * @return {@code CompletableFuture<CancelInteractionByIdResponse>} - The async response
      */
     public CompletableFuture<CancelInteractionByIdResponse> cancel(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         CancelInteractionByIdRequest request = new CancelInteractionByIdRequest(apiVersion, id);
-        AsyncRequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation
-              = new CancelInteractionById.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(request),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<CancelInteractionByIdRequest, CancelInteractionByIdResponse> operation =
+                new CancelInteractionById.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(request), operation::handleResponse), operation);
     }
-
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Optional;
-
 
 public class FileSearchResultDelta implements StepDeltaData {
 
@@ -46,7 +45,6 @@ public class FileSearchResultDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -54,14 +52,13 @@ public class FileSearchResultDelta implements StepDeltaData {
     public FileSearchResultDelta(
             @JsonProperty("result") @Nonnull List<FileSearchResult> result,
             @JsonProperty("signature") @Nullable String signature) {
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public FileSearchResultDelta(
-            @Nonnull List<FileSearchResult> result) {
+
+    public FileSearchResultDelta(@Nonnull List<FileSearchResult> result) {
         this(result, null);
     }
 
@@ -85,12 +82,10 @@ public class FileSearchResultDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public FileSearchResultDelta withResult(@Nonnull List<FileSearchResult> result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
-
 
     /**
      * A signature hash for backend validation.
@@ -99,7 +94,6 @@ public class FileSearchResultDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -110,35 +104,30 @@ public class FileSearchResultDelta implements StepDeltaData {
             return false;
         }
         FileSearchResultDelta other = (FileSearchResultDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            result, signature, type);
+        return Utils.enhancedHash(result, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileSearchResultDelta.class,
-                "result", result,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(FileSearchResultDelta.class, "result", result, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<FileSearchResult> result;
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder result(@Nonnull List<FileSearchResult> result) {
@@ -155,15 +144,10 @@ public class FileSearchResultDelta implements StepDeltaData {
         }
 
         public FileSearchResultDelta build() {
-            return new FileSearchResultDelta(
-                result, signature);
+            return new FileSearchResultDelta(result, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"file_search_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"file_search_result\"", new TypeReference<String>() {});
     }
 }

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * TriggerExecutionStatus
- * 
+ *
  * <p>Output only. The status of the execution.
  */
 public class TriggerExecutionStatus {
@@ -62,12 +62,12 @@ public class TriggerExecutionStatus {
     }
 
     /**
-     * Returns a TriggerExecutionStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a TriggerExecutionStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as TriggerExecutionStatus
-     */ 
+     */
     @JsonCreator
     public static TriggerExecutionStatus of(String value) {
         synchronized (TriggerExecutionStatus.class) {
@@ -95,12 +95,9 @@ public class TriggerExecutionStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         TriggerExecutionStatus other = (TriggerExecutionStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -136,15 +133,15 @@ public class TriggerExecutionStatus {
         map.put("timed_out", TriggerExecutionStatusEnum.TIMED_OUT);
         return map;
     }
-    
-    
+
     public enum TriggerExecutionStatusEnum {
 
         IN_PROGRESS("in_progress"),
         COMPLETED("completed"),
         FAILED("failed"),
         SKIPPED("skipped"),
-        TIMED_OUT("timed_out"),;
+        TIMED_OUT("timed_out"),
+        ;
 
         private final String value;
 
@@ -157,4 +154,3 @@ public class TriggerExecutionStatus {
         }
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * SpeakerConfig
- * 
+ *
  * <p>Configuration for multi-speaker and speech generation.
  */
 public class SpeakerConfig {
@@ -44,11 +44,10 @@ public class SpeakerConfig {
     private List<SpeechConfig> speakers;
 
     @JsonCreator
-    public SpeakerConfig(
-            @JsonProperty("speakers") @Nullable List<SpeechConfig> speakers) {
+    public SpeakerConfig(@JsonProperty("speakers") @Nullable List<SpeechConfig> speakers) {
         this.speakers = speakers;
     }
-    
+
     public SpeakerConfig() {
         this(null);
     }
@@ -64,7 +63,6 @@ public class SpeakerConfig {
         return new Builder();
     }
 
-
     /**
      * Individual speaker configurations.
      */
@@ -72,7 +70,6 @@ public class SpeakerConfig {
         this.speakers = speakers;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -83,29 +80,26 @@ public class SpeakerConfig {
             return false;
         }
         SpeakerConfig other = (SpeakerConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.speakers, other.speakers);
+        return Utils.enhancedDeepEquals(this.speakers, other.speakers);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            speakers);
+        return Utils.enhancedHash(speakers);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(SpeakerConfig.class,
-                "speakers", speakers);
+        return Utils.toString(SpeakerConfig.class, "speakers", speakers);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private List<SpeechConfig> speakers;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -117,9 +111,7 @@ public class SpeakerConfig {
         }
 
         public SpeakerConfig build() {
-            return new SpeakerConfig(
-                speakers);
+            return new SpeakerConfig(speakers);
         }
-
     }
 }

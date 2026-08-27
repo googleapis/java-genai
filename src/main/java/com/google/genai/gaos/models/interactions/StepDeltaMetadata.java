@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * StepDeltaMetadata
- * 
+ *
  * <p>Optional metadata accompanying ANY streamed event.
  */
 public class StepDeltaMetadata {
@@ -43,11 +43,10 @@ public class StepDeltaMetadata {
     private Usage totalUsage;
 
     @JsonCreator
-    public StepDeltaMetadata(
-            @JsonProperty("total_usage") @Nullable Usage totalUsage) {
+    public StepDeltaMetadata(@JsonProperty("total_usage") @Nullable Usage totalUsage) {
         this.totalUsage = totalUsage;
     }
-    
+
     public StepDeltaMetadata() {
         this(null);
     }
@@ -63,7 +62,6 @@ public class StepDeltaMetadata {
         return new Builder();
     }
 
-
     /**
      * Statistics on the interaction request's token usage.
      */
@@ -71,7 +69,6 @@ public class StepDeltaMetadata {
         this.totalUsage = totalUsage;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -82,29 +79,26 @@ public class StepDeltaMetadata {
             return false;
         }
         StepDeltaMetadata other = (StepDeltaMetadata) o;
-        return 
-            Utils.enhancedDeepEquals(this.totalUsage, other.totalUsage);
+        return Utils.enhancedDeepEquals(this.totalUsage, other.totalUsage);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            totalUsage);
+        return Utils.enhancedHash(totalUsage);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(StepDeltaMetadata.class,
-                "totalUsage", totalUsage);
+        return Utils.toString(StepDeltaMetadata.class, "totalUsage", totalUsage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Usage totalUsage;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -116,9 +110,7 @@ public class StepDeltaMetadata {
         }
 
         public StepDeltaMetadata build() {
-            return new StepDeltaMetadata(
-                totalUsage);
+            return new StepDeltaMetadata(totalUsage);
         }
-
     }
 }

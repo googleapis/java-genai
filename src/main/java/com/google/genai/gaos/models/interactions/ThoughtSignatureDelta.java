@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ThoughtSignatureDelta implements StepDeltaData {
     /**
      * Signature to match the backend source to be part of the generation.
@@ -40,17 +39,15 @@ public class ThoughtSignatureDelta implements StepDeltaData {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public ThoughtSignatureDelta(
-            @JsonProperty("signature") @Nullable String signature) {
+    public ThoughtSignatureDelta(@JsonProperty("signature") @Nullable String signature) {
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ThoughtSignatureDelta() {
         this(null);
     }
@@ -71,7 +68,6 @@ public class ThoughtSignatureDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * Signature to match the backend source to be part of the generation.
      */
@@ -79,7 +75,6 @@ public class ThoughtSignatureDelta implements StepDeltaData {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -90,31 +85,27 @@ public class ThoughtSignatureDelta implements StepDeltaData {
             return false;
         }
         ThoughtSignatureDelta other = (ThoughtSignatureDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            signature, type);
+        return Utils.enhancedHash(signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ThoughtSignatureDelta.class,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(ThoughtSignatureDelta.class, "signature", signature, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -126,15 +117,10 @@ public class ThoughtSignatureDelta implements StepDeltaData {
         }
 
         public ThoughtSignatureDelta build() {
-            return new ThoughtSignatureDelta(
-                signature);
+            return new ThoughtSignatureDelta(signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"thought_signature\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"thought_signature\"", new TypeReference<String>() {});
     }
 }

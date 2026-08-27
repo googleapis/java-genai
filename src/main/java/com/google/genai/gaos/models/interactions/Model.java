@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Model
- * 
+ *
  * <p>The model that will complete your prompt.\n\nSee
  * [models](https://ai.google.dev/gemini-api/docs/models) for additional details.
  */
@@ -81,12 +81,12 @@ public class Model {
     }
 
     /**
-     * Returns a Model with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Model with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Model
-     */ 
+     */
     @JsonCreator
     public static Model of(String value) {
         synchronized (Model.class) {
@@ -114,12 +114,9 @@ public class Model {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Model other = (Model) obj;
         return Objects.equals(value, other.value);
     }
@@ -191,8 +188,7 @@ public class Model {
         map.put("gemini-robotics-er-2-preview", ModelEnum.GEMINI_ROBOTICS_ER2_PREVIEW);
         return map;
     }
-    
-    
+
     public enum ModelEnum {
 
         GEMINI25_FLASH("gemini-2.5-flash"),
@@ -217,7 +213,8 @@ public class Model {
         LYRIA3_CLIP_PREVIEW("lyria-3-clip-preview"),
         LYRIA3_PRO_PREVIEW("lyria-3-pro-preview"),
         GEMINI_ROBOTICS_ER16_PREVIEW("gemini-robotics-er-1.6-preview"),
-        GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),;
+        GEMINI_ROBOTICS_ER2_PREVIEW("gemini-robotics-er-2-preview"),
+        ;
 
         private final String value;
 
@@ -230,4 +227,3 @@ public class Model {
         }
     }
 }
-

@@ -19,9 +19,8 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.InputStream;
-
 import com.google.genai.gaos.utils.transport.HttpResponse;
+import java.io.InputStream;
 
 public final class AsyncRetryableException extends Exception {
     private final HttpResponse<InputStream> response;

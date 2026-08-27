@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,7 +31,6 @@ import java.lang.Double;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
-
 
 public class StaticMediaProcessing {
     /**
@@ -58,7 +57,6 @@ public class StaticMediaProcessing {
     @JsonProperty("start_offset")
     private String startOffset;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -72,7 +70,7 @@ public class StaticMediaProcessing {
         this.startOffset = startOffset;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public StaticMediaProcessing() {
         this(null, null, null);
     }
@@ -109,7 +107,6 @@ public class StaticMediaProcessing {
         return new Builder();
     }
 
-
     /**
      * Optional. Segment end time. Specified as a decimal number of seconds followed
      * by an 's' suffix, e.g., "30s". Must be non-negative and greater than
@@ -120,7 +117,6 @@ public class StaticMediaProcessing {
         return this;
     }
 
-
     /**
      * Optional. Video frame-rate sampling density.
      */
@@ -128,7 +124,6 @@ public class StaticMediaProcessing {
         this.fps = fps;
         return this;
     }
-
 
     /**
      * Optional. Segment start time. Specified as a decimal number of seconds followed
@@ -139,7 +134,6 @@ public class StaticMediaProcessing {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -149,31 +143,33 @@ public class StaticMediaProcessing {
             return false;
         }
         StaticMediaProcessing other = (StaticMediaProcessing) o;
-        return 
-            Utils.enhancedDeepEquals(this.endOffset, other.endOffset) &&
-            Utils.enhancedDeepEquals(this.fps, other.fps) &&
-            Utils.enhancedDeepEquals(this.startOffset, other.startOffset) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.endOffset, other.endOffset)
+                && Utils.enhancedDeepEquals(this.fps, other.fps)
+                && Utils.enhancedDeepEquals(this.startOffset, other.startOffset)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            endOffset, fps, startOffset,
-            type);
+        return Utils.enhancedHash(endOffset, fps, startOffset, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(StaticMediaProcessing.class,
-                "endOffset", endOffset,
-                "fps", fps,
-                "startOffset", startOffset,
-                "type", type);
+        return Utils.toString(
+                StaticMediaProcessing.class,
+                "endOffset",
+                endOffset,
+                "fps",
+                fps,
+                "startOffset",
+                startOffset,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String endOffset;
 
@@ -182,7 +178,7 @@ public class StaticMediaProcessing {
         private String startOffset;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -213,15 +209,10 @@ public class StaticMediaProcessing {
         }
 
         public StaticMediaProcessing build() {
-            return new StaticMediaProcessing(
-                endOffset, fps, startOffset);
+            return new StaticMediaProcessing(endOffset, fps, startOffset);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"static\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"static\"", new TypeReference<String>() {});
     }
 }

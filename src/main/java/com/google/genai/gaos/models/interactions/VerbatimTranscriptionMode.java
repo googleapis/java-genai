@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * VerbatimTranscriptionMode
- * 
+ *
  * <p>Configuration for verbatim transcription mode.
  */
 public class VerbatimTranscriptionMode implements TranscriptionMode {
@@ -53,7 +53,6 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
     @JsonProperty("timestamp_granularities")
     private List<String> timestampGranularities;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -65,7 +64,7 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
         this.timestampGranularities = timestampGranularities;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public VerbatimTranscriptionMode() {
         this(null, null);
     }
@@ -94,7 +93,6 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
         return new Builder();
     }
 
-
     /**
      * Optional. Configures speaker diarization. Supported values: "speaker".
      */
@@ -102,7 +100,6 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
         this.diarizationMode = diarizationMode;
         return this;
     }
-
 
     /**
      * Optional. The granularity of timestamps to include in the transcription output.
@@ -113,7 +110,6 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -123,35 +119,37 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
             return false;
         }
         VerbatimTranscriptionMode other = (VerbatimTranscriptionMode) o;
-        return 
-            Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode) &&
-            Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode)
+                && Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            diarizationMode, timestampGranularities, type);
+        return Utils.enhancedHash(diarizationMode, timestampGranularities, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(VerbatimTranscriptionMode.class,
-                "diarizationMode", diarizationMode,
-                "timestampGranularities", timestampGranularities,
-                "type", type);
+        return Utils.toString(
+                VerbatimTranscriptionMode.class,
+                "diarizationMode",
+                diarizationMode,
+                "timestampGranularities",
+                timestampGranularities,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String diarizationMode;
 
         private List<String> timestampGranularities;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -172,15 +170,10 @@ public class VerbatimTranscriptionMode implements TranscriptionMode {
         }
 
         public VerbatimTranscriptionMode build() {
-            return new VerbatimTranscriptionMode(
-                diarizationMode, timestampGranularities);
+            return new VerbatimTranscriptionMode(diarizationMode, timestampGranularities);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"verbatim\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"verbatim\"", new TypeReference<String>() {});
     }
 }

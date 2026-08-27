@@ -19,10 +19,6 @@
  */
 package com.google.genai.gaos.utils;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Objects;
-
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -33,6 +29,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Objects;
 
 // Internal API only
 
@@ -48,20 +47,20 @@ public class BigDecimalString {
     public BigDecimalString(BigDecimal value) {
         this.value = value;
     }
-    
+
     public BigDecimalString(String value) {
         this(new BigDecimal(value));
     }
-    
+
     public BigDecimal value() {
         return value;
     }
-    
+
     @Override
     public String toString() {
         return value.toString();
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(value);
@@ -69,16 +68,13 @@ public class BigDecimalString {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         BigDecimalString other = (BigDecimalString) obj;
         return Objects.equals(value, other.value);
     }
-    
+
     @SuppressWarnings("serial")
     public static final class Serializer extends StdSerializer<BigDecimalString> {
 

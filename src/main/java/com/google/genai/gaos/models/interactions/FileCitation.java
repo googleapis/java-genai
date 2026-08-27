@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * FileCitation
- * 
+ *
  * <p>A file citation annotation.
  */
 public class FileCitation implements Annotation {
@@ -91,13 +91,12 @@ public class FileCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("start_index")
     private Integer startIndex;
-
 
     @JsonProperty("type")
     private String type;
@@ -122,11 +121,9 @@ public class FileCitation implements Annotation {
         this.startIndex = startIndex;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public FileCitation() {
-        this(null, null, null,
-            null, null, null,
-            null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -180,7 +177,7 @@ public class FileCitation implements Annotation {
 
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public Optional<Integer> startIndex() {
@@ -196,7 +193,6 @@ public class FileCitation implements Annotation {
         return new Builder();
     }
 
-
     /**
      * User provided metadata about the retrieved context.
      */
@@ -204,7 +200,6 @@ public class FileCitation implements Annotation {
         this.customMetadata = customMetadata;
         return this;
     }
-
 
     /**
      * The URI of the file.
@@ -214,7 +209,6 @@ public class FileCitation implements Annotation {
         return this;
     }
 
-
     /**
      * End of the attributed segment, exclusive.
      */
@@ -222,7 +216,6 @@ public class FileCitation implements Annotation {
         this.endIndex = endIndex;
         return this;
     }
-
 
     /**
      * The name of the file.
@@ -232,7 +225,6 @@ public class FileCitation implements Annotation {
         return this;
     }
 
-
     /**
      * Media ID in-case of image citations, if applicable.
      */
@@ -240,7 +232,6 @@ public class FileCitation implements Annotation {
         this.mediaId = mediaId;
         return this;
     }
-
 
     /**
      * Page number of the cited document, if applicable.
@@ -250,7 +241,6 @@ public class FileCitation implements Annotation {
         return this;
     }
 
-
     /**
      * Source attributed for a portion of the text.
      */
@@ -259,17 +249,15 @@ public class FileCitation implements Annotation {
         return this;
     }
 
-
     /**
      * Start of segment of the response that is attributed to this source.
-     * 
+     *
      * <p>Index indicates the start of the segment, measured in bytes.
      */
     public FileCitation withStartIndex(@Nullable Integer startIndex) {
         this.startIndex = startIndex;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -280,42 +268,49 @@ public class FileCitation implements Annotation {
             return false;
         }
         FileCitation other = (FileCitation) o;
-        return 
-            Utils.enhancedDeepEquals(this.customMetadata, other.customMetadata) &&
-            Utils.enhancedDeepEquals(this.documentUri, other.documentUri) &&
-            Utils.enhancedDeepEquals(this.endIndex, other.endIndex) &&
-            Utils.enhancedDeepEquals(this.fileName, other.fileName) &&
-            Utils.enhancedDeepEquals(this.mediaId, other.mediaId) &&
-            Utils.enhancedDeepEquals(this.pageNumber, other.pageNumber) &&
-            Utils.enhancedDeepEquals(this.source, other.source) &&
-            Utils.enhancedDeepEquals(this.startIndex, other.startIndex) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.customMetadata, other.customMetadata)
+                && Utils.enhancedDeepEquals(this.documentUri, other.documentUri)
+                && Utils.enhancedDeepEquals(this.endIndex, other.endIndex)
+                && Utils.enhancedDeepEquals(this.fileName, other.fileName)
+                && Utils.enhancedDeepEquals(this.mediaId, other.mediaId)
+                && Utils.enhancedDeepEquals(this.pageNumber, other.pageNumber)
+                && Utils.enhancedDeepEquals(this.source, other.source)
+                && Utils.enhancedDeepEquals(this.startIndex, other.startIndex)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            customMetadata, documentUri, endIndex,
-            fileName, mediaId, pageNumber,
-            source, startIndex, type);
+                customMetadata, documentUri, endIndex, fileName, mediaId, pageNumber, source, startIndex, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(FileCitation.class,
-                "customMetadata", customMetadata,
-                "documentUri", documentUri,
-                "endIndex", endIndex,
-                "fileName", fileName,
-                "mediaId", mediaId,
-                "pageNumber", pageNumber,
-                "source", source,
-                "startIndex", startIndex,
-                "type", type);
+        return Utils.toString(
+                FileCitation.class,
+                "customMetadata",
+                customMetadata,
+                "documentUri",
+                documentUri,
+                "endIndex",
+                endIndex,
+                "fileName",
+                fileName,
+                "mediaId",
+                mediaId,
+                "pageNumber",
+                pageNumber,
+                "source",
+                source,
+                "startIndex",
+                startIndex,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Map<String, Object> customMetadata;
 
@@ -334,7 +329,7 @@ public class FileCitation implements Annotation {
         private Integer startIndex;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -395,7 +390,7 @@ public class FileCitation implements Annotation {
 
         /**
          * Start of segment of the response that is attributed to this source.
-         * 
+         *
          * <p>Index indicates the start of the segment, measured in bytes.
          */
         public Builder startIndex(@Nullable Integer startIndex) {
@@ -405,16 +400,10 @@ public class FileCitation implements Annotation {
 
         public FileCitation build() {
             return new FileCitation(
-                customMetadata, documentUri, endIndex,
-                fileName, mediaId, pageNumber,
-                source, startIndex);
+                    customMetadata, documentUri, endIndex, fileName, mediaId, pageNumber, source, startIndex);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"file_citation\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"file_citation\"", new TypeReference<String>() {});
     }
 }

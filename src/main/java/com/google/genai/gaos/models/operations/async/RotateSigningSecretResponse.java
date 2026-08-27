@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class RotateSigningSecretResponse implements AsyncResponse {
     /**
      * HTTP response content type for this operation
@@ -60,19 +59,16 @@ public class RotateSigningSecretResponse implements AsyncResponse {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.webhookRotateSigningSecretResponse = webhookRotateSigningSecretResponse;
     }
-    
+
     public RotateSigningSecretResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -110,7 +106,6 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -118,7 +113,6 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -128,7 +122,6 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -137,15 +130,14 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Successful operation
      */
-    public RotateSigningSecretResponse withWebhookRotateSigningSecretResponse(@Nullable WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse) {
+    public RotateSigningSecretResponse withWebhookRotateSigningSecretResponse(
+            @Nullable WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse) {
         this.webhookRotateSigningSecretResponse = webhookRotateSigningSecretResponse;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -156,31 +148,34 @@ public class RotateSigningSecretResponse implements AsyncResponse {
             return false;
         }
         RotateSigningSecretResponse other = (RotateSigningSecretResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.webhookRotateSigningSecretResponse, other.webhookRotateSigningSecretResponse);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(
+                        this.webhookRotateSigningSecretResponse, other.webhookRotateSigningSecretResponse);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            webhookRotateSigningSecretResponse);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, webhookRotateSigningSecretResponse);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(RotateSigningSecretResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "webhookRotateSigningSecretResponse", webhookRotateSigningSecretResponse);
+        return Utils.toString(
+                RotateSigningSecretResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "webhookRotateSigningSecretResponse",
+                webhookRotateSigningSecretResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -191,7 +186,7 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         private WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -221,16 +216,15 @@ public class RotateSigningSecretResponse implements AsyncResponse {
         /**
          * Successful operation
          */
-        public Builder webhookRotateSigningSecretResponse(@Nullable WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse) {
+        public Builder webhookRotateSigningSecretResponse(
+                @Nullable WebhookRotateSigningSecretResponse webhookRotateSigningSecretResponse) {
             this.webhookRotateSigningSecretResponse = webhookRotateSigningSecretResponse;
             return this;
         }
 
         public RotateSigningSecretResponse build() {
             return new RotateSigningSecretResponse(
-                contentType, statusCode, rawResponse,
-                webhookRotateSigningSecretResponse);
+                    contentType, statusCode, rawResponse, webhookRotateSigningSecretResponse);
         }
-
     }
 }

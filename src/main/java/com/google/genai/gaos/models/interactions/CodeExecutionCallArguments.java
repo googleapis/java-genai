@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * CodeExecutionCallArguments
- * 
+ *
  * <p>The arguments to pass to the code execution.
  */
 public class CodeExecutionCallArguments {
@@ -51,12 +51,11 @@ public class CodeExecutionCallArguments {
 
     @JsonCreator
     public CodeExecutionCallArguments(
-            @JsonProperty("code") @Nullable String code,
-            @JsonProperty("language") @Nullable Language language) {
+            @JsonProperty("code") @Nullable String code, @JsonProperty("language") @Nullable Language language) {
         this.code = code;
         this.language = language;
     }
-    
+
     public CodeExecutionCallArguments() {
         this(null, null);
     }
@@ -79,7 +78,6 @@ public class CodeExecutionCallArguments {
         return new Builder();
     }
 
-
     /**
      * The code to be executed.
      */
@@ -88,7 +86,6 @@ public class CodeExecutionCallArguments {
         return this;
     }
 
-
     /**
      * Programming language of the `code`.
      */
@@ -96,7 +93,6 @@ public class CodeExecutionCallArguments {
         this.language = language;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -107,33 +103,28 @@ public class CodeExecutionCallArguments {
             return false;
         }
         CodeExecutionCallArguments other = (CodeExecutionCallArguments) o;
-        return 
-            Utils.enhancedDeepEquals(this.code, other.code) &&
-            Utils.enhancedDeepEquals(this.language, other.language);
+        return Utils.enhancedDeepEquals(this.code, other.code) && Utils.enhancedDeepEquals(this.language, other.language);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            code, language);
+        return Utils.enhancedHash(code, language);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CodeExecutionCallArguments.class,
-                "code", code,
-                "language", language);
+        return Utils.toString(CodeExecutionCallArguments.class, "code", code, "language", language);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String code;
 
         private Language language;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -153,9 +144,7 @@ public class CodeExecutionCallArguments {
         }
 
         public CodeExecutionCallArguments build() {
-            return new CodeExecutionCallArguments(
-                code, language);
+            return new CodeExecutionCallArguments(code, language);
         }
-
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -34,13 +34,13 @@ import java.util.Optional;
 
 /**
  * GenerationConfig
- * 
+ *
  * <p>Configuration parameters for model interactions.
  */
 public class GenerationConfig {
     /**
      * The configuration for image interaction.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -76,11 +76,9 @@ public class GenerationConfig {
     @JsonProperty("stop_sequences")
     private List<String> stopSequences;
 
-
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("thinking_level")
     private ThinkingLevel thinkingLevel;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("thinking_summaries")
@@ -130,17 +128,14 @@ public class GenerationConfig {
         this.transcriptionConfig = transcriptionConfig;
         this.videoConfig = videoConfig;
     }
-    
+
     public GenerationConfig() {
-        this(null, null, null,
-            null, null, null,
-            null, null, null,
-            null);
+        this(null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
      * The configuration for image interaction.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -209,10 +204,9 @@ public class GenerationConfig {
         return new Builder();
     }
 
-
     /**
      * The configuration for image interaction.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -220,7 +214,6 @@ public class GenerationConfig {
         this.imageConfig = imageConfig;
         return this;
     }
-
 
     /**
      * The maximum number of tokens to include in the response.
@@ -230,7 +223,6 @@ public class GenerationConfig {
         return this;
     }
 
-
     /**
      * Seed used in decoding for reproducibility.
      */
@@ -238,7 +230,6 @@ public class GenerationConfig {
         this.seed = seed;
         return this;
     }
-
 
     /**
      * Optional. Speech and multi-speaker configuration.
@@ -248,7 +239,6 @@ public class GenerationConfig {
         return this;
     }
 
-
     /**
      * A list of character sequences that will stop output interaction.
      */
@@ -257,18 +247,15 @@ public class GenerationConfig {
         return this;
     }
 
-
     public GenerationConfig withThinkingLevel(@Nullable ThinkingLevel thinkingLevel) {
         this.thinkingLevel = thinkingLevel;
         return this;
     }
 
-
     public GenerationConfig withThinkingSummaries(@Nullable ThinkingSummaries thinkingSummaries) {
         this.thinkingSummaries = thinkingSummaries;
         return this;
     }
-
 
     /**
      * The tool choice configuration.
@@ -278,7 +265,6 @@ public class GenerationConfig {
         return this;
     }
 
-
     /**
      * Configuration for speech recognition (transcription).
      */
@@ -287,7 +273,6 @@ public class GenerationConfig {
         return this;
     }
 
-
     /**
      * Configuration options for video generation.
      */
@@ -295,7 +280,6 @@ public class GenerationConfig {
         this.videoConfig = videoConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -306,45 +290,61 @@ public class GenerationConfig {
             return false;
         }
         GenerationConfig other = (GenerationConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.imageConfig, other.imageConfig) &&
-            Utils.enhancedDeepEquals(this.maxOutputTokens, other.maxOutputTokens) &&
-            Utils.enhancedDeepEquals(this.seed, other.seed) &&
-            Utils.enhancedDeepEquals(this.speechConfig, other.speechConfig) &&
-            Utils.enhancedDeepEquals(this.stopSequences, other.stopSequences) &&
-            Utils.enhancedDeepEquals(this.thinkingLevel, other.thinkingLevel) &&
-            Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries) &&
-            Utils.enhancedDeepEquals(this.toolChoice, other.toolChoice) &&
-            Utils.enhancedDeepEquals(this.transcriptionConfig, other.transcriptionConfig) &&
-            Utils.enhancedDeepEquals(this.videoConfig, other.videoConfig);
+        return Utils.enhancedDeepEquals(this.imageConfig, other.imageConfig)
+                && Utils.enhancedDeepEquals(this.maxOutputTokens, other.maxOutputTokens)
+                && Utils.enhancedDeepEquals(this.seed, other.seed)
+                && Utils.enhancedDeepEquals(this.speechConfig, other.speechConfig)
+                && Utils.enhancedDeepEquals(this.stopSequences, other.stopSequences)
+                && Utils.enhancedDeepEquals(this.thinkingLevel, other.thinkingLevel)
+                && Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries)
+                && Utils.enhancedDeepEquals(this.toolChoice, other.toolChoice)
+                && Utils.enhancedDeepEquals(this.transcriptionConfig, other.transcriptionConfig)
+                && Utils.enhancedDeepEquals(this.videoConfig, other.videoConfig);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            imageConfig, maxOutputTokens, seed,
-            speechConfig, stopSequences, thinkingLevel,
-            thinkingSummaries, toolChoice, transcriptionConfig,
-            videoConfig);
+                imageConfig,
+                maxOutputTokens,
+                seed,
+                speechConfig,
+                stopSequences,
+                thinkingLevel,
+                thinkingSummaries,
+                toolChoice,
+                transcriptionConfig,
+                videoConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GenerationConfig.class,
-                "imageConfig", imageConfig,
-                "maxOutputTokens", maxOutputTokens,
-                "seed", seed,
-                "speechConfig", speechConfig,
-                "stopSequences", stopSequences,
-                "thinkingLevel", thinkingLevel,
-                "thinkingSummaries", thinkingSummaries,
-                "toolChoice", toolChoice,
-                "transcriptionConfig", transcriptionConfig,
-                "videoConfig", videoConfig);
+        return Utils.toString(
+                GenerationConfig.class,
+                "imageConfig",
+                imageConfig,
+                "maxOutputTokens",
+                maxOutputTokens,
+                "seed",
+                seed,
+                "speechConfig",
+                speechConfig,
+                "stopSequences",
+                stopSequences,
+                "thinkingLevel",
+                thinkingLevel,
+                "thinkingSummaries",
+                thinkingSummaries,
+                "toolChoice",
+                toolChoice,
+                "transcriptionConfig",
+                transcriptionConfig,
+                "videoConfig",
+                videoConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         @Deprecated
         private ImageConfig imageConfig;
@@ -368,12 +368,12 @@ public class GenerationConfig {
         private VideoConfig videoConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
          * The configuration for image interaction.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -450,11 +450,16 @@ public class GenerationConfig {
 
         public GenerationConfig build() {
             return new GenerationConfig(
-                imageConfig, maxOutputTokens, seed,
-                speechConfig, stopSequences, thinkingLevel,
-                thinkingSummaries, toolChoice, transcriptionConfig,
-                videoConfig);
+                    imageConfig,
+                    maxOutputTokens,
+                    seed,
+                    speechConfig,
+                    stopSequences,
+                    thinkingLevel,
+                    thinkingSummaries,
+                    toolChoice,
+                    transcriptionConfig,
+                    videoConfig);
         }
-
     }
 }

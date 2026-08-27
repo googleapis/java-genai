@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.agents;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * Agent
- * 
+ *
  * <p>An agent definition for the CreateAgent API.
  * This message is the target for annotation-parser-based JSON parsing.
  * New format:
@@ -111,11 +111,9 @@ public class Agent {
         this.systemInstruction = systemInstruction;
         this.tools = tools;
     }
-    
+
     public Agent() {
-        this(null, null, null,
-            null, null, null,
-            null);
+        this(null, null, null, null, null, null, null);
     }
 
     /**
@@ -171,7 +169,6 @@ public class Agent {
         return new Builder();
     }
 
-
     /**
      * Configuration parameters for the agent.
      */
@@ -179,7 +176,6 @@ public class Agent {
         this.agentConfig = agentConfig;
         return this;
     }
-
 
     /**
      * The base agent to extend.
@@ -189,7 +185,6 @@ public class Agent {
         return this;
     }
 
-
     /**
      * The environment configuration for the agent.
      */
@@ -197,7 +192,6 @@ public class Agent {
         this.baseEnvironment = baseEnvironment;
         return this;
     }
-
 
     /**
      * Agent description for developers to quickly read and understand.
@@ -207,7 +201,6 @@ public class Agent {
         return this;
     }
 
-
     /**
      * The unique identifier for the agent.
      */
@@ -215,7 +208,6 @@ public class Agent {
         this.id = id;
         return this;
     }
-
 
     /**
      * System instruction for the agent.
@@ -225,7 +217,6 @@ public class Agent {
         return this;
     }
 
-
     /**
      * The tools available to the agent.
      */
@@ -233,7 +224,6 @@ public class Agent {
         this.tools = tools;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -244,38 +234,42 @@ public class Agent {
             return false;
         }
         Agent other = (Agent) o;
-        return 
-            Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
-            Utils.enhancedDeepEquals(this.baseAgent, other.baseAgent) &&
-            Utils.enhancedDeepEquals(this.baseEnvironment, other.baseEnvironment) &&
-            Utils.enhancedDeepEquals(this.description, other.description) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools);
+        return Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig)
+                && Utils.enhancedDeepEquals(this.baseAgent, other.baseAgent)
+                && Utils.enhancedDeepEquals(this.baseEnvironment, other.baseEnvironment)
+                && Utils.enhancedDeepEquals(this.description, other.description)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction)
+                && Utils.enhancedDeepEquals(this.tools, other.tools);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            agentConfig, baseAgent, baseEnvironment,
-            description, id, systemInstruction,
-            tools);
+        return Utils.enhancedHash(agentConfig, baseAgent, baseEnvironment, description, id, systemInstruction, tools);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Agent.class,
-                "agentConfig", agentConfig,
-                "baseAgent", baseAgent,
-                "baseEnvironment", baseEnvironment,
-                "description", description,
-                "id", id,
-                "systemInstruction", systemInstruction,
-                "tools", tools);
+        return Utils.toString(
+                Agent.class,
+                "agentConfig",
+                agentConfig,
+                "baseAgent",
+                baseAgent,
+                "baseEnvironment",
+                baseEnvironment,
+                "description",
+                description,
+                "id",
+                id,
+                "systemInstruction",
+                systemInstruction,
+                "tools",
+                tools);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private AgentConfig agentConfig;
 
@@ -292,7 +286,7 @@ public class Agent {
         private List<AgentTool> tools;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -352,11 +346,7 @@ public class Agent {
         }
 
         public Agent build() {
-            return new Agent(
-                agentConfig, baseAgent, baseEnvironment,
-                description, id, systemInstruction,
-                tools);
+            return new Agent(agentConfig, baseAgent, baseEnvironment, description, id, systemInstruction, tools);
         }
-
     }
 }

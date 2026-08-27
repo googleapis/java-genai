@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class DeleteWebhookRequest {
     /**
      * Which version of the API to use.
@@ -44,16 +43,12 @@ public class DeleteWebhookRequest {
     private String id;
 
     @JsonCreator
-    public DeleteWebhookRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id) {
+    public DeleteWebhookRequest(@Nullable String apiVersion, @Nonnull String id) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
     }
-    
-    public DeleteWebhookRequest(
-            @Nonnull String id) {
+
+    public DeleteWebhookRequest(@Nonnull String id) {
         this(null, id);
     }
 
@@ -76,7 +71,6 @@ public class DeleteWebhookRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -84,7 +78,6 @@ public class DeleteWebhookRequest {
         this.apiVersion = apiVersion;
         return this;
     }
-
 
     /**
      * Required. The ID of the webhook to delete.
@@ -95,7 +88,6 @@ public class DeleteWebhookRequest {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -105,33 +97,28 @@ public class DeleteWebhookRequest {
             return false;
         }
         DeleteWebhookRequest other = (DeleteWebhookRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) && Utils.enhancedDeepEquals(this.id, other.id);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id);
+        return Utils.enhancedHash(apiVersion, id);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DeleteWebhookRequest.class,
-                "apiVersion", apiVersion,
-                "id", id);
+        return Utils.toString(DeleteWebhookRequest.class, "apiVersion", apiVersion, "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String id;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -152,9 +139,7 @@ public class DeleteWebhookRequest {
         }
 
         public DeleteWebhookRequest build() {
-            return new DeleteWebhookRequest(
-                apiVersion, id);
+            return new DeleteWebhookRequest(apiVersion, id);
         }
-
     }
 }

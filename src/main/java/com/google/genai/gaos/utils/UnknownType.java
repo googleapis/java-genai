@@ -39,7 +39,7 @@ public class UnknownType {
 
     /**
      * Extract the discriminator value from the JSON node.
-     * 
+     *
      * @param key the discriminator property name
      * @return the discriminator value if present
      */
@@ -52,7 +52,7 @@ public class UnknownType {
 
     /**
      * Get the raw JSON data for this unknown type.
-     * 
+     *
      * @return the raw JSON node
      */
     public JsonNode asJson() {

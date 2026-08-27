@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ThoughtSummaryDelta implements StepDeltaData {
     /**
      * The content of the response.
@@ -40,17 +39,15 @@ public class ThoughtSummaryDelta implements StepDeltaData {
     @JsonProperty("content")
     private Content content;
 
-
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
-    public ThoughtSummaryDelta(
-            @JsonProperty("content") @Nullable Content content) {
+    public ThoughtSummaryDelta(@JsonProperty("content") @Nullable Content content) {
         this.content = content;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public ThoughtSummaryDelta() {
         this(null);
     }
@@ -71,7 +68,6 @@ public class ThoughtSummaryDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     /**
      * The content of the response.
      */
@@ -79,7 +75,6 @@ public class ThoughtSummaryDelta implements StepDeltaData {
         this.content = content;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -90,31 +85,26 @@ public class ThoughtSummaryDelta implements StepDeltaData {
             return false;
         }
         ThoughtSummaryDelta other = (ThoughtSummaryDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.content, other.content) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.content, other.content) && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            content, type);
+        return Utils.enhancedHash(content, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ThoughtSummaryDelta.class,
-                "content", content,
-                "type", type);
+        return Utils.toString(ThoughtSummaryDelta.class, "content", content, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Content content;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -126,15 +116,10 @@ public class ThoughtSummaryDelta implements StepDeltaData {
         }
 
         public ThoughtSummaryDelta build() {
-            return new ThoughtSummaryDelta(
-                content);
+            return new ThoughtSummaryDelta(content);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"thought_summary\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"thought_summary\"", new TypeReference<String>() {});
     }
 }

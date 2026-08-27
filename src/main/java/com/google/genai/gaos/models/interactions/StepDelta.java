@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
-
 
 public class StepDelta implements InteractionSSEEvent {
 
@@ -47,10 +46,8 @@ public class StepDelta implements InteractionSSEEvent {
     @JsonProperty("event_id")
     private String eventId;
 
-
     @JsonProperty("event_type")
     private String eventType;
-
 
     @JsonProperty("index")
     private int index;
@@ -68,19 +65,15 @@ public class StepDelta implements InteractionSSEEvent {
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("index") int index,
             @JsonProperty("metadata") @Nullable StepDeltaMetadata metadata) {
-        this.delta = Optional.ofNullable(delta)
-            .orElseThrow(() -> new IllegalArgumentException("delta cannot be null"));
+        this.delta = Optional.ofNullable(delta).orElseThrow(() -> new IllegalArgumentException("delta cannot be null"));
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.index = index;
         this.metadata = metadata;
     }
-    
-    public StepDelta(
-            @Nonnull StepDeltaData delta,
-            int index) {
-        this(delta, null, index,
-            null);
+
+    public StepDelta(@Nonnull StepDeltaData delta, int index) {
+        this(delta, null, index, null);
     }
 
     public Optional<StepDeltaData> delta() {
@@ -115,12 +108,10 @@ public class StepDelta implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     public StepDelta withDelta(@Nonnull StepDeltaData delta) {
         this.delta = Utils.checkNotNull(delta, "delta");
         return this;
     }
-
 
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -131,12 +122,10 @@ public class StepDelta implements InteractionSSEEvent {
         return this;
     }
 
-
     public StepDelta withIndex(int index) {
         this.index = index;
         return this;
     }
-
 
     /**
      * Optional metadata accompanying ANY streamed event.
@@ -145,7 +134,6 @@ public class StepDelta implements InteractionSSEEvent {
         this.metadata = metadata;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -156,33 +144,36 @@ public class StepDelta implements InteractionSSEEvent {
             return false;
         }
         StepDelta other = (StepDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.delta, other.delta) &&
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.index, other.index) &&
-            Utils.enhancedDeepEquals(this.metadata, other.metadata);
+        return Utils.enhancedDeepEquals(this.delta, other.delta)
+                && Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType)
+                && Utils.enhancedDeepEquals(this.index, other.index)
+                && Utils.enhancedDeepEquals(this.metadata, other.metadata);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            delta, eventId, eventType,
-            index, metadata);
+        return Utils.enhancedHash(delta, eventId, eventType, index, metadata);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(StepDelta.class,
-                "delta", delta,
-                "eventId", eventId,
-                "eventType", eventType,
-                "index", index,
-                "metadata", metadata);
+        return Utils.toString(
+                StepDelta.class,
+                "delta",
+                delta,
+                "eventId",
+                eventId,
+                "eventType",
+                eventType,
+                "index",
+                index,
+                "metadata",
+                metadata);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private StepDeltaData delta;
 
@@ -193,7 +184,7 @@ public class StepDelta implements InteractionSSEEvent {
         private StepDeltaMetadata metadata;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder delta(@Nonnull StepDeltaData delta) {
@@ -224,16 +215,10 @@ public class StepDelta implements InteractionSSEEvent {
         }
 
         public StepDelta build() {
-            return new StepDelta(
-                delta, eventId, index,
-                metadata);
+            return new StepDelta(delta, eventId, index, metadata);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"step.delta\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"step.delta\"", new TypeReference<String>() {});
     }
 }

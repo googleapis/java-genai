@@ -31,7 +31,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class ListWebhooksResponse implements AsyncResponse {
     /**
      * HTTP response content type for this operation
@@ -60,19 +59,16 @@ public class ListWebhooksResponse implements AsyncResponse {
             @Nonnull HttpResponse<InputStream> rawResponse,
             @Nullable WebhookListResponse webhookListResponse) {
         this.contentType = Optional.ofNullable(contentType)
-            .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("contentType cannot be null"));
         this.statusCode = statusCode;
         this.rawResponse = Optional.ofNullable(rawResponse)
-            .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("rawResponse cannot be null"));
         this.webhookListResponse = webhookListResponse;
     }
-    
+
     public ListWebhooksResponse(
-            @Nonnull String contentType,
-            int statusCode,
-            @Nonnull HttpResponse<InputStream> rawResponse) {
-        this(contentType, statusCode, rawResponse,
-            null);
+            @Nonnull String contentType, int statusCode, @Nonnull HttpResponse<InputStream> rawResponse) {
+        this(contentType, statusCode, rawResponse, null);
     }
 
     /**
@@ -110,7 +106,6 @@ public class ListWebhooksResponse implements AsyncResponse {
         return new Builder();
     }
 
-
     /**
      * HTTP response content type for this operation
      */
@@ -118,7 +113,6 @@ public class ListWebhooksResponse implements AsyncResponse {
         this.contentType = Utils.checkNotNull(contentType, "contentType");
         return this;
     }
-
 
     /**
      * HTTP response status code for this operation
@@ -128,7 +122,6 @@ public class ListWebhooksResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
@@ -137,7 +130,6 @@ public class ListWebhooksResponse implements AsyncResponse {
         return this;
     }
 
-
     /**
      * Successful operation
      */
@@ -145,7 +137,6 @@ public class ListWebhooksResponse implements AsyncResponse {
         this.webhookListResponse = webhookListResponse;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -156,31 +147,33 @@ public class ListWebhooksResponse implements AsyncResponse {
             return false;
         }
         ListWebhooksResponse other = (ListWebhooksResponse) o;
-        return 
-            Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
-            Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
-            Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.webhookListResponse, other.webhookListResponse);
+        return Utils.enhancedDeepEquals(this.contentType, other.contentType)
+                && Utils.enhancedDeepEquals(this.statusCode, other.statusCode)
+                && Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse)
+                && Utils.enhancedDeepEquals(this.webhookListResponse, other.webhookListResponse);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            contentType, statusCode, rawResponse,
-            webhookListResponse);
+        return Utils.enhancedHash(contentType, statusCode, rawResponse, webhookListResponse);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ListWebhooksResponse.class,
-                "contentType", contentType,
-                "statusCode", statusCode,
-                "rawResponse", rawResponse,
-                "webhookListResponse", webhookListResponse);
+        return Utils.toString(
+                ListWebhooksResponse.class,
+                "contentType",
+                contentType,
+                "statusCode",
+                statusCode,
+                "rawResponse",
+                rawResponse,
+                "webhookListResponse",
+                webhookListResponse);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String contentType;
 
@@ -191,7 +184,7 @@ public class ListWebhooksResponse implements AsyncResponse {
         private WebhookListResponse webhookListResponse;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -227,10 +220,7 @@ public class ListWebhooksResponse implements AsyncResponse {
         }
 
         public ListWebhooksResponse build() {
-            return new ListWebhooksResponse(
-                contentType, statusCode, rawResponse,
-                webhookListResponse);
+            return new ListWebhooksResponse(contentType, statusCode, rawResponse, webhookListResponse);
         }
-
     }
 }

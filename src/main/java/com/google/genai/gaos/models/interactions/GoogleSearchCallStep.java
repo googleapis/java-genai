@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * GoogleSearchCallStep
- * 
+ *
  * <p>Google Search call step.
  */
 public class GoogleSearchCallStep implements Step {
@@ -64,7 +64,6 @@ public class GoogleSearchCallStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -75,19 +74,15 @@ public class GoogleSearchCallStep implements Step {
             @JsonProperty("search_type") @Nullable GoogleSearchCallStepSearchType searchType,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.searchType = searchType;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public GoogleSearchCallStep(
-            @Nonnull GoogleSearchCallArguments arguments,
-            @Nonnull String id) {
-        this(arguments, id, null,
-            null);
+
+    public GoogleSearchCallStep(@Nonnull GoogleSearchCallArguments arguments, @Nonnull String id) {
+        this(arguments, id, null, null);
     }
 
     /**
@@ -127,7 +122,6 @@ public class GoogleSearchCallStep implements Step {
         return new Builder();
     }
 
-
     /**
      * The arguments to pass to Google Search.
      */
@@ -135,7 +129,6 @@ public class GoogleSearchCallStep implements Step {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
-
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -145,7 +138,6 @@ public class GoogleSearchCallStep implements Step {
         return this;
     }
 
-
     /**
      * The type of search grounding enabled.
      */
@@ -154,7 +146,6 @@ public class GoogleSearchCallStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -162,7 +153,6 @@ public class GoogleSearchCallStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -173,33 +163,36 @@ public class GoogleSearchCallStep implements Step {
             return false;
         }
         GoogleSearchCallStep other = (GoogleSearchCallStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.searchType, other.searchType) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.searchType, other.searchType)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, id, searchType,
-            signature, type);
+        return Utils.enhancedHash(arguments, id, searchType, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GoogleSearchCallStep.class,
-                "arguments", arguments,
-                "id", id,
-                "searchType", searchType,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                GoogleSearchCallStep.class,
+                "arguments",
+                arguments,
+                "id",
+                id,
+                "searchType",
+                searchType,
+                "signature",
+                signature,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private GoogleSearchCallArguments arguments;
 
@@ -210,7 +203,7 @@ public class GoogleSearchCallStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -246,16 +239,10 @@ public class GoogleSearchCallStep implements Step {
         }
 
         public GoogleSearchCallStep build() {
-            return new GoogleSearchCallStep(
-                arguments, id, searchType,
-                signature);
+            return new GoogleSearchCallStep(arguments, id, searchType, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"google_search_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"google_search_call\"", new TypeReference<String>() {});
     }
 }

@@ -77,7 +77,7 @@ public class PingWebhookRequestBuilder {
         }
         return this.request;
     }
-    
+
     public PingWebhookRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -86,17 +86,16 @@ public class PingWebhookRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public CompletableFuture<PingWebhookResponse> call() {
         Options options = optionsBuilder.build();
-        AsyncRequestOperation<PingWebhookRequest, PingWebhookResponse> operation
-              = new PingWebhook.Async(
-                                    sdkConfiguration, options, sdkConfiguration.retryScheduler(),
-                                    _headers);
-        return Operations.relayCancel(Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()),
-            operation::handleResponse), operation);
+        AsyncRequestOperation<PingWebhookRequest, PingWebhookResponse> operation =
+                new PingWebhook.Async(sdkConfiguration, options, sdkConfiguration.retryScheduler(), _headers);
+        return Operations.relayCancel(
+                Operations.applyBodyReadAsync(operation.doRequest(this._buildRequest()), operation::handleResponse),
+                operation);
     }
 }

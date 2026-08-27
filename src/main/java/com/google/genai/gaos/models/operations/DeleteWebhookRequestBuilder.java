@@ -68,7 +68,7 @@ public class DeleteWebhookRequestBuilder {
         }
         return this.request;
     }
-    
+
     public DeleteWebhookRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -77,14 +77,14 @@ public class DeleteWebhookRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public DeleteWebhookResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation
-              = new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<DeleteWebhookRequest, DeleteWebhookResponse> operation =
+                new DeleteWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

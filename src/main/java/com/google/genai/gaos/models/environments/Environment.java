@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.environments;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.models.interactions.Source;
 import com.google.genai.gaos.utils.Utils;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * Environment
- * 
+ *
  * <p>An execution environment for an agent.
  */
 public class Environment {
@@ -116,8 +116,7 @@ public class Environment {
             @JsonProperty("updated") @Nullable String updated) {
         this.created = created;
         this.fileCount = fileCount;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.lastAccessed = lastAccessed;
         this.network = network;
         this.sizeBytes = sizeBytes;
@@ -125,12 +124,9 @@ public class Environment {
         this.status = status;
         this.updated = updated;
     }
-    
-    public Environment(
-            @Nonnull String id) {
-        this(null, null, id,
-            null, null, null,
-            null, null, null);
+
+    public Environment(@Nonnull String id) {
+        this(null, null, id, null, null, null, null, null, null);
     }
 
     /**
@@ -203,7 +199,6 @@ public class Environment {
         return new Builder();
     }
 
-
     /**
      * Output only. The time at which the environment was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
@@ -213,7 +208,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Output only. The number of files in the environment, output only.
      */
@@ -222,7 +216,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Required. Output only. The ID of the environment.
      */
@@ -230,7 +223,6 @@ public class Environment {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     /**
      * Output only. The time at which the environment was last accessed in ISO 8601 format
@@ -241,7 +233,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Network configuration for the environment.
      */
@@ -249,7 +240,6 @@ public class Environment {
         this.network = network;
         return this;
     }
-
 
     /**
      * Output only. The total size of the environment files in bytes, output only.
@@ -259,7 +249,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Sources to be mounted into the environment.
      */
@@ -268,7 +257,6 @@ public class Environment {
         return this;
     }
 
-
     /**
      * Output only. The status of the environment container.
      */
@@ -276,7 +264,6 @@ public class Environment {
         this.status = status;
         return this;
     }
-
 
     /**
      * Output only. The time at which the environment was last updated in ISO 8601 format
@@ -287,7 +274,6 @@ public class Environment {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -297,42 +283,48 @@ public class Environment {
             return false;
         }
         Environment other = (Environment) o;
-        return 
-            Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.fileCount, other.fileCount) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.lastAccessed, other.lastAccessed) &&
-            Utils.enhancedDeepEquals(this.network, other.network) &&
-            Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes) &&
-            Utils.enhancedDeepEquals(this.sources, other.sources) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.updated, other.updated);
+        return Utils.enhancedDeepEquals(this.created, other.created)
+                && Utils.enhancedDeepEquals(this.fileCount, other.fileCount)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.lastAccessed, other.lastAccessed)
+                && Utils.enhancedDeepEquals(this.network, other.network)
+                && Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes)
+                && Utils.enhancedDeepEquals(this.sources, other.sources)
+                && Utils.enhancedDeepEquals(this.status, other.status)
+                && Utils.enhancedDeepEquals(this.updated, other.updated);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            created, fileCount, id,
-            lastAccessed, network, sizeBytes,
-            sources, status, updated);
+        return Utils.enhancedHash(created, fileCount, id, lastAccessed, network, sizeBytes, sources, status, updated);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(Environment.class,
-                "created", created,
-                "fileCount", fileCount,
-                "id", id,
-                "lastAccessed", lastAccessed,
-                "network", network,
-                "sizeBytes", sizeBytes,
-                "sources", sources,
-                "status", status,
-                "updated", updated);
+        return Utils.toString(
+                Environment.class,
+                "created",
+                created,
+                "fileCount",
+                fileCount,
+                "id",
+                id,
+                "lastAccessed",
+                lastAccessed,
+                "network",
+                network,
+                "sizeBytes",
+                sizeBytes,
+                "sources",
+                sources,
+                "status",
+                status,
+                "updated",
+                updated);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String created;
 
@@ -353,7 +345,7 @@ public class Environment {
         private String updated;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -432,11 +424,7 @@ public class Environment {
         }
 
         public Environment build() {
-            return new Environment(
-                created, fileCount, id,
-                lastAccessed, network, sizeBytes,
-                sources, status, updated);
+            return new Environment(created, fileCount, id, lastAccessed, network, sizeBytes, sources, status, updated);
         }
-
     }
 }

@@ -28,8 +28,7 @@ class MultipartFormMetadata {
     boolean json;
     String name;
 
-    private MultipartFormMetadata() {
-    }
+    private MultipartFormMetadata() {}
 
     // multipartForm:name=file
     static MultipartFormMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {

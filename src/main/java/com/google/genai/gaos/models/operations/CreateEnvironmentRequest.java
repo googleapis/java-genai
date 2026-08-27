@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class CreateEnvironmentRequest {
     /**
      * Which version of the API to use.
@@ -44,15 +43,12 @@ public class CreateEnvironmentRequest {
 
     @JsonCreator
     public CreateEnvironmentRequest(
-            @Nullable String apiVersion,
-            @Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
+            @Nullable String apiVersion, @Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
         this.apiVersion = apiVersion;
-        this.body = Optional.ofNullable(body)
-            .orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
+        this.body = Optional.ofNullable(body).orElseThrow(() -> new IllegalArgumentException("body cannot be null"));
     }
-    
-    public CreateEnvironmentRequest(
-            @Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
+
+    public CreateEnvironmentRequest(@Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
         this(null, body);
     }
 
@@ -74,7 +70,6 @@ public class CreateEnvironmentRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -83,15 +78,14 @@ public class CreateEnvironmentRequest {
         return this;
     }
 
-
     /**
      * Required. The environment to create.
      */
-    public CreateEnvironmentRequest withBody(@Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
+    public CreateEnvironmentRequest withBody(
+            @Nonnull com.google.genai.gaos.models.environments.CreateEnvironmentRequest body) {
         this.body = Utils.checkNotNull(body, "body");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +96,29 @@ public class CreateEnvironmentRequest {
             return false;
         }
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.body, other.body);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion)
+                && Utils.enhancedDeepEquals(this.body, other.body);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, body);
+        return Utils.enhancedHash(apiVersion, body);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateEnvironmentRequest.class,
-                "apiVersion", apiVersion,
-                "body", body);
+        return Utils.toString(CreateEnvironmentRequest.class, "apiVersion", apiVersion, "body", body);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private com.google.genai.gaos.models.environments.CreateEnvironmentRequest body;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +138,7 @@ public class CreateEnvironmentRequest {
         }
 
         public CreateEnvironmentRequest build() {
-            return new CreateEnvironmentRequest(
-                apiVersion, body);
+            return new CreateEnvironmentRequest(apiVersion, body);
         }
-
     }
 }

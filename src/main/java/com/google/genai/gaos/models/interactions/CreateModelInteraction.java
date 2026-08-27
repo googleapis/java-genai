@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * CreateModelInteraction
- * 
+ *
  * <p>Parameters for creating model interactions
  */
 public class CreateModelInteraction {
@@ -99,7 +99,7 @@ public class CreateModelInteraction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -109,7 +109,7 @@ public class CreateModelInteraction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -123,7 +123,6 @@ public class CreateModelInteraction {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("safety_settings")
     private List<SafetySetting> safetySettings;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("service_tier")
@@ -186,11 +185,9 @@ public class CreateModelInteraction {
         this.background = background;
         this.environment = environment;
         this.generationConfig = generationConfig;
-        this.input = Optional.ofNullable(input)
-            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.input = Optional.ofNullable(input).orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
         this.labels = labels;
-        this.model = Optional.ofNullable(model)
-            .orElseThrow(() -> new IllegalArgumentException("model cannot be null"));
+        this.model = Optional.ofNullable(model).orElseThrow(() -> new IllegalArgumentException("model cannot be null"));
         this.previousInteractionId = previousInteractionId;
         this.responseFormat = responseFormat;
         this.responseMimeType = responseMimeType;
@@ -203,16 +200,9 @@ public class CreateModelInteraction {
         this.tools = tools;
         this.webhookConfig = webhookConfig;
     }
-    
-    public CreateModelInteraction(
-            @Nonnull InteractionsInput input,
-            @Nonnull Model model) {
-        this(null, null, null,
-            input, null, model,
-            null, null, null,
-            null, null, null,
-            null, null, null,
-            null, null);
+
+    public CreateModelInteraction(@Nonnull InteractionsInput input, @Nonnull Model model) {
+        this(null, null, null, input, null, model, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -276,7 +266,7 @@ public class CreateModelInteraction {
 
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -286,7 +276,7 @@ public class CreateModelInteraction {
 
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -344,7 +334,6 @@ public class CreateModelInteraction {
         return new Builder();
     }
 
-
     /**
      * Input only. Whether to run the model interaction in the background.
      */
@@ -352,7 +341,6 @@ public class CreateModelInteraction {
         this.background = background;
         return this;
     }
-
 
     /**
      * The environment configuration for the interaction. Can be an object specifying remote environment
@@ -363,7 +351,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * Configuration parameters for model interactions.
      */
@@ -371,7 +358,6 @@ public class CreateModelInteraction {
         this.generationConfig = generationConfig;
         return this;
     }
-
 
     /**
      * The input for the interaction.
@@ -381,7 +367,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * The labels with user-defined metadata for the request.
      */
@@ -389,7 +374,6 @@ public class CreateModelInteraction {
         this.labels = labels;
         return this;
     }
-
 
     /**
      * The model that will complete your prompt.\n\nSee
@@ -400,7 +384,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * The ID of the previous interaction, if any.
      */
@@ -408,7 +391,6 @@ public class CreateModelInteraction {
         this.previousInteractionId = previousInteractionId;
         return this;
     }
-
 
     /**
      * Enforces that the generated response is a JSON object that complies with the JSON schema specified
@@ -419,10 +401,9 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * The mime type of the response. This is required if response_format is set.
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -431,10 +412,9 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-     * 
+     *
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
@@ -442,7 +422,6 @@ public class CreateModelInteraction {
         this.responseModalities = responseModalities;
         return this;
     }
-
 
     /**
      * Safety settings for the interaction.
@@ -452,12 +431,10 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     public CreateModelInteraction withServiceTier(@Nullable ServiceTier serviceTier) {
         this.serviceTier = serviceTier;
         return this;
     }
-
 
     /**
      * Input only. Whether to store the response and request for later retrieval.
@@ -467,7 +444,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * Input only. Whether the interaction will be streamed.
      */
@@ -475,7 +451,6 @@ public class CreateModelInteraction {
         this.stream = stream;
         return this;
     }
-
 
     /**
      * System instruction for the interaction.
@@ -485,7 +460,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * A list of tool declarations the model may call during interaction.
      */
@@ -494,7 +468,6 @@ public class CreateModelInteraction {
         return this;
     }
 
-
     /**
      * Message for configuring webhook events for a request.
      */
@@ -502,7 +475,6 @@ public class CreateModelInteraction {
         this.webhookConfig = webhookConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -513,61 +485,89 @@ public class CreateModelInteraction {
             return false;
         }
         CreateModelInteraction other = (CreateModelInteraction) o;
-        return 
-            Utils.enhancedDeepEquals(this.background, other.background) &&
-            Utils.enhancedDeepEquals(this.environment, other.environment) &&
-            Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
-            Utils.enhancedDeepEquals(this.input, other.input) &&
-            Utils.enhancedDeepEquals(this.labels, other.labels) &&
-            Utils.enhancedDeepEquals(this.model, other.model) &&
-            Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId) &&
-            Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat) &&
-            Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType) &&
-            Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities) &&
-            Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings) &&
-            Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier) &&
-            Utils.enhancedDeepEquals(this.store, other.store) &&
-            Utils.enhancedDeepEquals(this.stream, other.stream) &&
-            Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction) &&
-            Utils.enhancedDeepEquals(this.tools, other.tools) &&
-            Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
+        return Utils.enhancedDeepEquals(this.background, other.background)
+                && Utils.enhancedDeepEquals(this.environment, other.environment)
+                && Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig)
+                && Utils.enhancedDeepEquals(this.input, other.input)
+                && Utils.enhancedDeepEquals(this.labels, other.labels)
+                && Utils.enhancedDeepEquals(this.model, other.model)
+                && Utils.enhancedDeepEquals(this.previousInteractionId, other.previousInteractionId)
+                && Utils.enhancedDeepEquals(this.responseFormat, other.responseFormat)
+                && Utils.enhancedDeepEquals(this.responseMimeType, other.responseMimeType)
+                && Utils.enhancedDeepEquals(this.responseModalities, other.responseModalities)
+                && Utils.enhancedDeepEquals(this.safetySettings, other.safetySettings)
+                && Utils.enhancedDeepEquals(this.serviceTier, other.serviceTier)
+                && Utils.enhancedDeepEquals(this.store, other.store)
+                && Utils.enhancedDeepEquals(this.stream, other.stream)
+                && Utils.enhancedDeepEquals(this.systemInstruction, other.systemInstruction)
+                && Utils.enhancedDeepEquals(this.tools, other.tools)
+                && Utils.enhancedDeepEquals(this.webhookConfig, other.webhookConfig);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            background, environment, generationConfig,
-            input, labels, model,
-            previousInteractionId, responseFormat, responseMimeType,
-            responseModalities, safetySettings, serviceTier,
-            store, stream, systemInstruction,
-            tools, webhookConfig);
+                background,
+                environment,
+                generationConfig,
+                input,
+                labels,
+                model,
+                previousInteractionId,
+                responseFormat,
+                responseMimeType,
+                responseModalities,
+                safetySettings,
+                serviceTier,
+                store,
+                stream,
+                systemInstruction,
+                tools,
+                webhookConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(CreateModelInteraction.class,
-                "background", background,
-                "environment", environment,
-                "generationConfig", generationConfig,
-                "input", input,
-                "labels", labels,
-                "model", model,
-                "previousInteractionId", previousInteractionId,
-                "responseFormat", responseFormat,
-                "responseMimeType", responseMimeType,
-                "responseModalities", responseModalities,
-                "safetySettings", safetySettings,
-                "serviceTier", serviceTier,
-                "store", store,
-                "stream", stream,
-                "systemInstruction", systemInstruction,
-                "tools", tools,
-                "webhookConfig", webhookConfig);
+        return Utils.toString(
+                CreateModelInteraction.class,
+                "background",
+                background,
+                "environment",
+                environment,
+                "generationConfig",
+                generationConfig,
+                "input",
+                input,
+                "labels",
+                labels,
+                "model",
+                model,
+                "previousInteractionId",
+                previousInteractionId,
+                "responseFormat",
+                responseFormat,
+                "responseMimeType",
+                responseMimeType,
+                "responseModalities",
+                responseModalities,
+                "safetySettings",
+                safetySettings,
+                "serviceTier",
+                serviceTier,
+                "store",
+                store,
+                "stream",
+                stream,
+                "systemInstruction",
+                systemInstruction,
+                "tools",
+                tools,
+                "webhookConfig",
+                webhookConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Boolean background;
 
@@ -606,7 +606,7 @@ public class CreateModelInteraction {
         private WebhookConfig webhookConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -678,7 +678,7 @@ public class CreateModelInteraction {
 
         /**
          * The mime type of the response. This is required if response_format is set.
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -689,7 +689,7 @@ public class CreateModelInteraction {
 
         /**
          * The requested modalities of the response (TEXT, IMAGE, AUDIO).
-         * 
+         *
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
@@ -758,13 +758,23 @@ public class CreateModelInteraction {
 
         public CreateModelInteraction build() {
             return new CreateModelInteraction(
-                background, environment, generationConfig,
-                input, labels, model,
-                previousInteractionId, responseFormat, responseMimeType,
-                responseModalities, safetySettings, serviceTier,
-                store, stream, systemInstruction,
-                tools, webhookConfig);
+                    background,
+                    environment,
+                    generationConfig,
+                    input,
+                    labels,
+                    model,
+                    previousInteractionId,
+                    responseFormat,
+                    responseMimeType,
+                    responseModalities,
+                    safetySettings,
+                    serviceTier,
+                    store,
+                    stream,
+                    systemInstruction,
+                    tools,
+                    webhookConfig);
         }
-
     }
 }

@@ -30,11 +30,10 @@ class SecurityMetadata {
     boolean composite;
     String name;
 
-    private SecurityMetadata() {
-    }
+    private SecurityMetadata() {}
 
     // security:scheme=true,type=apiKey,subtype=header
     static SecurityMetadata parse(Field field) throws IllegalArgumentException, IllegalAccessException {
-       return Metadata.parse("security", new SecurityMetadata(), field);
+        return Metadata.parse("security", new SecurityMetadata(), field);
     }
 }

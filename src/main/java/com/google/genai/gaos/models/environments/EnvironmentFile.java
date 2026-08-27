@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.environments;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 /**
  * EnvironmentFile
- * 
+ *
  * <p>Metadata for a file or directory within an environment.
  */
 public class EnvironmentFile {
@@ -106,11 +106,9 @@ public class EnvironmentFile {
         this.sizeBytes = sizeBytes;
         this.type = type;
     }
-    
+
     public EnvironmentFile() {
-        this(null, null, null,
-            null, null, null,
-            null);
+        this(null, null, null, null, null, null, null);
     }
 
     /**
@@ -170,7 +168,6 @@ public class EnvironmentFile {
         return new Builder();
     }
 
-
     /**
      * Output only. The creation time of the file/directory.
      */
@@ -178,7 +175,6 @@ public class EnvironmentFile {
         this.created = created;
         return this;
     }
-
 
     /**
      * Output only. The MIME type of the file (e.g., "text/python", "image/png").
@@ -190,7 +186,6 @@ public class EnvironmentFile {
         return this;
     }
 
-
     /**
      * Output only. The modification time of the file/directory.
      */
@@ -199,7 +194,6 @@ public class EnvironmentFile {
         return this;
     }
 
-
     /**
      * Output only. The name of the file or directory (e.g., "main.py" or "src").
      */
@@ -207,7 +201,6 @@ public class EnvironmentFile {
         this.name = name;
         return this;
     }
-
 
     /**
      * Output only. The full relative path within the environment
@@ -218,7 +211,6 @@ public class EnvironmentFile {
         return this;
     }
 
-
     /**
      * Output only. The size of the file/directory in bytes.
      * NOLINT
@@ -228,7 +220,6 @@ public class EnvironmentFile {
         return this;
     }
 
-
     /**
      * Output only. The type of the entry.
      */
@@ -236,7 +227,6 @@ public class EnvironmentFile {
         this.type = type;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -247,38 +237,42 @@ public class EnvironmentFile {
             return false;
         }
         EnvironmentFile other = (EnvironmentFile) o;
-        return 
-            Utils.enhancedDeepEquals(this.created, other.created) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.modified, other.modified) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.path, other.path) &&
-            Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.created, other.created)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.modified, other.modified)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.path, other.path)
+                && Utils.enhancedDeepEquals(this.sizeBytes, other.sizeBytes)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            created, mimeType, modified,
-            name, path, sizeBytes,
-            type);
+        return Utils.enhancedHash(created, mimeType, modified, name, path, sizeBytes, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(EnvironmentFile.class,
-                "created", created,
-                "mimeType", mimeType,
-                "modified", modified,
-                "name", name,
-                "path", path,
-                "sizeBytes", sizeBytes,
-                "type", type);
+        return Utils.toString(
+                EnvironmentFile.class,
+                "created",
+                created,
+                "mimeType",
+                mimeType,
+                "modified",
+                modified,
+                "name",
+                name,
+                "path",
+                path,
+                "sizeBytes",
+                sizeBytes,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private OffsetDateTime created;
 
@@ -295,7 +289,7 @@ public class EnvironmentFile {
         private Type type;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -359,11 +353,7 @@ public class EnvironmentFile {
         }
 
         public EnvironmentFile build() {
-            return new EnvironmentFile(
-                created, mimeType, modified,
-                name, path, sizeBytes,
-                type);
+            return new EnvironmentFile(created, mimeType, modified, name, path, sizeBytes, type);
         }
-
     }
 }

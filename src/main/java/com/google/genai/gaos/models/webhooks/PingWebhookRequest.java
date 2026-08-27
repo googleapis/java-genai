@@ -26,18 +26,16 @@ import java.lang.String;
 
 /**
  * PingWebhookRequest
- * 
+ *
  * <p>Request message for WebhookService.PingWebhook.
  */
 public class PingWebhookRequest {
     @JsonCreator
-    public PingWebhookRequest() {
-    }
+    public PingWebhookRequest() {}
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -49,29 +47,26 @@ public class PingWebhookRequest {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            );
+        return Utils.enhancedHash();
     }
-    
+
     @Override
     public String toString() {
         return Utils.toString(PingWebhookRequest.class);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public PingWebhookRequest build() {
-            return new PingWebhookRequest(
-                );
+            return new PingWebhookRequest();
         }
-
     }
 }

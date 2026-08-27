@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class StepStart implements InteractionSSEEvent {
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -43,10 +42,8 @@ public class StepStart implements InteractionSSEEvent {
     @JsonProperty("event_id")
     private String eventId;
 
-
     @JsonProperty("event_type")
     private String eventType;
-
 
     @JsonProperty("index")
     private int index;
@@ -65,13 +62,10 @@ public class StepStart implements InteractionSSEEvent {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.index = index;
-        this.step = Optional.ofNullable(step)
-            .orElseThrow(() -> new IllegalArgumentException("step cannot be null"));
+        this.step = Optional.ofNullable(step).orElseThrow(() -> new IllegalArgumentException("step cannot be null"));
     }
-    
-    public StepStart(
-            int index,
-            @Nonnull Step step) {
+
+    public StepStart(int index, @Nonnull Step step) {
         this(null, index, step);
     }
 
@@ -103,7 +97,6 @@ public class StepStart implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
@@ -113,12 +106,10 @@ public class StepStart implements InteractionSSEEvent {
         return this;
     }
 
-
     public StepStart withIndex(int index) {
         this.index = index;
         return this;
     }
-
 
     /**
      * A step in the interaction.
@@ -127,7 +118,6 @@ public class StepStart implements InteractionSSEEvent {
         this.step = Utils.checkNotNull(step, "step");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -138,31 +128,25 @@ public class StepStart implements InteractionSSEEvent {
             return false;
         }
         StepStart other = (StepStart) o;
-        return 
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.index, other.index) &&
-            Utils.enhancedDeepEquals(this.step, other.step);
+        return Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType)
+                && Utils.enhancedDeepEquals(this.index, other.index)
+                && Utils.enhancedDeepEquals(this.step, other.step);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            eventId, eventType, index,
-            step);
+        return Utils.enhancedHash(eventId, eventType, index, step);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(StepStart.class,
-                "eventId", eventId,
-                "eventType", eventType,
-                "index", index,
-                "step", step);
+        return Utils.toString(
+                StepStart.class, "eventId", eventId, "eventType", eventType, "index", index, "step", step);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String eventId;
 
@@ -171,7 +155,7 @@ public class StepStart implements InteractionSSEEvent {
         private Step step;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -197,15 +181,10 @@ public class StepStart implements InteractionSSEEvent {
         }
 
         public StepStart build() {
-            return new StepStart(
-                eventId, index, step);
+            return new StepStart(eventId, index, step);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"step.start\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"step.start\"", new TypeReference<String>() {});
     }
 }

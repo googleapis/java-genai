@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class GetWebhookRequest {
     /**
      * Which version of the API to use.
@@ -43,16 +42,12 @@ public class GetWebhookRequest {
     private String id;
 
     @JsonCreator
-    public GetWebhookRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id) {
+    public GetWebhookRequest(@Nullable String apiVersion, @Nonnull String id) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
     }
-    
-    public GetWebhookRequest(
-            @Nonnull String id) {
+
+    public GetWebhookRequest(@Nonnull String id) {
         this(null, id);
     }
 
@@ -74,7 +69,6 @@ public class GetWebhookRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -83,7 +77,6 @@ public class GetWebhookRequest {
         return this;
     }
 
-
     /**
      * Required. The ID of the webhook to retrieve.
      */
@@ -91,7 +84,6 @@ public class GetWebhookRequest {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +94,28 @@ public class GetWebhookRequest {
             return false;
         }
         GetWebhookRequest other = (GetWebhookRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) && Utils.enhancedDeepEquals(this.id, other.id);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id);
+        return Utils.enhancedHash(apiVersion, id);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(GetWebhookRequest.class,
-                "apiVersion", apiVersion,
-                "id", id);
+        return Utils.toString(GetWebhookRequest.class, "apiVersion", apiVersion, "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String id;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +135,7 @@ public class GetWebhookRequest {
         }
 
         public GetWebhookRequest build() {
-            return new GetWebhookRequest(
-                apiVersion, id);
+            return new GetWebhookRequest(apiVersion, id);
         }
-
     }
 }

@@ -53,7 +53,7 @@ public class GetEnvironmentFilesRequestBuilder {
     private GetEnvironmentFilesRequest _buildRequest() {
         return this.request;
     }
-    
+
     public GetEnvironmentFilesRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -62,14 +62,14 @@ public class GetEnvironmentFilesRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public GetEnvironmentFilesResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation
-              = new GetEnvironmentFiles.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation =
+                new GetEnvironmentFiles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

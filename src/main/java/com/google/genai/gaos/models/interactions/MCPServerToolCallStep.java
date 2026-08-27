@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * MCPServerToolCallStep
- * 
+ *
  * <p>MCPServer tool call step.
  */
 public class MCPServerToolCallStep implements Step {
@@ -61,7 +61,6 @@ public class MCPServerToolCallStep implements Step {
     @JsonProperty("server_name")
     private String serverName;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -73,13 +72,11 @@ public class MCPServerToolCallStep implements Step {
             @JsonProperty("server_name") @Nonnull String serverName) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
-            .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
-        this.name = Optional.ofNullable(name)
-            .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.name = Optional.ofNullable(name).orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
         this.serverName = Optional.ofNullable(serverName)
-            .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
 
@@ -120,7 +117,6 @@ public class MCPServerToolCallStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. The JSON object of arguments for the function.
      */
@@ -128,7 +124,6 @@ public class MCPServerToolCallStep implements Step {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
-
 
     /**
      * Required. A unique ID for this specific tool call.
@@ -138,7 +133,6 @@ public class MCPServerToolCallStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The name of the tool which was called.
      */
@@ -147,7 +141,6 @@ public class MCPServerToolCallStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The name of the used MCP server.
      */
@@ -155,7 +148,6 @@ public class MCPServerToolCallStep implements Step {
         this.serverName = Utils.checkNotNull(serverName, "serverName");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -166,33 +158,36 @@ public class MCPServerToolCallStep implements Step {
             return false;
         }
         MCPServerToolCallStep other = (MCPServerToolCallStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.arguments, other.arguments)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.serverName, other.serverName)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            arguments, id, name,
-            serverName, type);
+        return Utils.enhancedHash(arguments, id, name, serverName, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServerToolCallStep.class,
-                "arguments", arguments,
-                "id", id,
-                "name", name,
-                "serverName", serverName,
-                "type", type);
+        return Utils.toString(
+                MCPServerToolCallStep.class,
+                "arguments",
+                arguments,
+                "id",
+                id,
+                "name",
+                name,
+                "serverName",
+                serverName,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Map<String, Object> arguments;
 
@@ -203,7 +198,7 @@ public class MCPServerToolCallStep implements Step {
         private String serverName;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -239,16 +234,10 @@ public class MCPServerToolCallStep implements Step {
         }
 
         public MCPServerToolCallStep build() {
-            return new MCPServerToolCallStep(
-                arguments, id, name,
-                serverName);
+            return new MCPServerToolCallStep(arguments, id, name, serverName);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"mcp_server_tool_call\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"mcp_server_tool_call\"", new TypeReference<String>() {});
     }
 }

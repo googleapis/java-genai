@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -36,7 +36,7 @@ import java.util.Optional;
 
 /**
  * URLContextResultStep
- * 
+ *
  * <p>URL context result step.
  */
 public class URLContextResultStep implements Step {
@@ -66,7 +66,6 @@ public class URLContextResultStep implements Step {
     @JsonProperty("signature")
     private String signature;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -76,20 +75,17 @@ public class URLContextResultStep implements Step {
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("result") @Nonnull List<URLContextResult> result,
             @JsonProperty("signature") @Nullable String signature) {
-        this.callId = Optional.ofNullable(callId)
-            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
+        this.callId =
+                Optional.ofNullable(callId).orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public URLContextResultStep(
-            @Nonnull String callId,
-            @Nonnull List<URLContextResult> result) {
-        this(callId, null, result,
-            null);
+
+    public URLContextResultStep(@Nonnull String callId, @Nonnull List<URLContextResult> result) {
+        this(callId, null, result, null);
     }
 
     /**
@@ -129,7 +125,6 @@ public class URLContextResultStep implements Step {
         return new Builder();
     }
 
-
     /**
      * Required. ID to match the ID from the function call block.
      */
@@ -137,7 +132,6 @@ public class URLContextResultStep implements Step {
         this.callId = Utils.checkNotNull(callId, "callId");
         return this;
     }
-
 
     /**
      * Whether the URL context resulted in an error.
@@ -147,7 +141,6 @@ public class URLContextResultStep implements Step {
         return this;
     }
 
-
     /**
      * Required. The results of the URL context.
      */
@@ -156,7 +149,6 @@ public class URLContextResultStep implements Step {
         return this;
     }
 
-
     /**
      * A signature hash for backend validation.
      */
@@ -164,7 +156,6 @@ public class URLContextResultStep implements Step {
         this.signature = signature;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -175,33 +166,36 @@ public class URLContextResultStep implements Step {
             return false;
         }
         URLContextResultStep other = (URLContextResultStep) o;
-        return 
-            Utils.enhancedDeepEquals(this.callId, other.callId) &&
-            Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.signature, other.signature) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.callId, other.callId)
+                && Utils.enhancedDeepEquals(this.isError, other.isError)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.signature, other.signature)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            callId, isError, result,
-            signature, type);
+        return Utils.enhancedHash(callId, isError, result, signature, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(URLContextResultStep.class,
-                "callId", callId,
-                "isError", isError,
-                "result", result,
-                "signature", signature,
-                "type", type);
+        return Utils.toString(
+                URLContextResultStep.class,
+                "callId",
+                callId,
+                "isError",
+                isError,
+                "result",
+                result,
+                "signature",
+                signature,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String callId;
 
@@ -212,7 +206,7 @@ public class URLContextResultStep implements Step {
         private String signature;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -248,16 +242,10 @@ public class URLContextResultStep implements Step {
         }
 
         public URLContextResultStep build() {
-            return new URLContextResultStep(
-                callId, isError, result,
-                signature);
+            return new URLContextResultStep(callId, isError, result, signature);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"url_context_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"url_context_result\"", new TypeReference<String>() {});
     }
 }

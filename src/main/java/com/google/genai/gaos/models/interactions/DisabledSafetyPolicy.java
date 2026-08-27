@@ -36,13 +36,17 @@ import java.util.Optional;
  */
 public class DisabledSafetyPolicy {
 
-    public static final DisabledSafetyPolicy FINANCIAL_TRANSACTIONS = new DisabledSafetyPolicy("financial_transactions");
-    public static final DisabledSafetyPolicy SENSITIVE_DATA_MODIFICATION = new DisabledSafetyPolicy("sensitive_data_modification");
+    public static final DisabledSafetyPolicy FINANCIAL_TRANSACTIONS =
+            new DisabledSafetyPolicy("financial_transactions");
+    public static final DisabledSafetyPolicy SENSITIVE_DATA_MODIFICATION =
+            new DisabledSafetyPolicy("sensitive_data_modification");
     public static final DisabledSafetyPolicy COMMUNICATION_TOOL = new DisabledSafetyPolicy("communication_tool");
     public static final DisabledSafetyPolicy ACCOUNT_CREATION = new DisabledSafetyPolicy("account_creation");
     public static final DisabledSafetyPolicy DATA_MODIFICATION = new DisabledSafetyPolicy("data_modification");
-    public static final DisabledSafetyPolicy USER_CONSENT_MANAGEMENT = new DisabledSafetyPolicy("user_consent_management");
-    public static final DisabledSafetyPolicy LEGAL_TERMS_AND_AGREEMENTS = new DisabledSafetyPolicy("legal_terms_and_agreements");
+    public static final DisabledSafetyPolicy USER_CONSENT_MANAGEMENT =
+            new DisabledSafetyPolicy("user_consent_management");
+    public static final DisabledSafetyPolicy LEGAL_TERMS_AND_AGREEMENTS =
+            new DisabledSafetyPolicy("legal_terms_and_agreements");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -59,12 +63,12 @@ public class DisabledSafetyPolicy {
     }
 
     /**
-     * Returns a DisabledSafetyPolicy with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a DisabledSafetyPolicy with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as DisabledSafetyPolicy
-     */ 
+     */
     @JsonCreator
     public static DisabledSafetyPolicy of(String value) {
         synchronized (DisabledSafetyPolicy.class) {
@@ -92,12 +96,9 @@ public class DisabledSafetyPolicy {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         DisabledSafetyPolicy other = (DisabledSafetyPolicy) obj;
         return Objects.equals(value, other.value);
     }
@@ -137,8 +138,7 @@ public class DisabledSafetyPolicy {
         map.put("legal_terms_and_agreements", DisabledSafetyPolicyEnum.LEGAL_TERMS_AND_AGREEMENTS);
         return map;
     }
-    
-    
+
     public enum DisabledSafetyPolicyEnum {
 
         FINANCIAL_TRANSACTIONS("financial_transactions"),
@@ -147,7 +147,8 @@ public class DisabledSafetyPolicy {
         ACCOUNT_CREATION("account_creation"),
         DATA_MODIFICATION("data_modification"),
         USER_CONSENT_MANAGEMENT("user_consent_management"),
-        LEGAL_TERMS_AND_AGREEMENTS("legal_terms_and_agreements"),;
+        LEGAL_TERMS_AND_AGREEMENTS("legal_terms_and_agreements"),
+        ;
 
         private final String value;
 
@@ -160,4 +161,3 @@ public class DisabledSafetyPolicy {
         }
     }
 }
-

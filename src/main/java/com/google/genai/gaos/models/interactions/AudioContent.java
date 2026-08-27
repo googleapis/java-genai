@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * AudioContent
- * 
+ *
  * <p>An audio content block.
  */
 public class AudioContent implements Content {
@@ -66,7 +66,6 @@ public class AudioContent implements Content {
     @JsonProperty("sample_rate")
     private Integer sampleRate;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -91,10 +90,9 @@ public class AudioContent implements Content {
         this.type = Builder._SINGLETON_VALUE_Type.value();
         this.uri = uri;
     }
-    
+
     public AudioContent() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -141,7 +139,6 @@ public class AudioContent implements Content {
         return new Builder();
     }
 
-
     /**
      * The number of audio channels.
      */
@@ -149,7 +146,6 @@ public class AudioContent implements Content {
         this.channels = channels;
         return this;
     }
-
 
     /**
      * The audio content.
@@ -159,7 +155,6 @@ public class AudioContent implements Content {
         return this;
     }
 
-
     /**
      * The mime type of the audio.
      */
@@ -167,7 +162,6 @@ public class AudioContent implements Content {
         this.mimeType = mimeType;
         return this;
     }
-
 
     /**
      * The sample rate of the audio.
@@ -177,7 +171,6 @@ public class AudioContent implements Content {
         return this;
     }
 
-
     /**
      * The URI of the audio.
      */
@@ -185,7 +178,6 @@ public class AudioContent implements Content {
         this.uri = uri;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -196,35 +188,39 @@ public class AudioContent implements Content {
             return false;
         }
         AudioContent other = (AudioContent) o;
-        return 
-            Utils.enhancedDeepEquals(this.channels, other.channels) &&
-            Utils.enhancedDeepEquals(this.data, other.data) &&
-            Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
-            Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate) &&
-            Utils.enhancedDeepEquals(this.type, other.type) &&
-            Utils.enhancedDeepEquals(this.uri, other.uri);
+        return Utils.enhancedDeepEquals(this.channels, other.channels)
+                && Utils.enhancedDeepEquals(this.data, other.data)
+                && Utils.enhancedDeepEquals(this.mimeType, other.mimeType)
+                && Utils.enhancedDeepEquals(this.sampleRate, other.sampleRate)
+                && Utils.enhancedDeepEquals(this.type, other.type)
+                && Utils.enhancedDeepEquals(this.uri, other.uri);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            channels, data, mimeType,
-            sampleRate, type, uri);
+        return Utils.enhancedHash(channels, data, mimeType, sampleRate, type, uri);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(AudioContent.class,
-                "channels", channels,
-                "data", data,
-                "mimeType", mimeType,
-                "sampleRate", sampleRate,
-                "type", type,
-                "uri", uri);
+        return Utils.toString(
+                AudioContent.class,
+                "channels",
+                channels,
+                "data",
+                data,
+                "mimeType",
+                mimeType,
+                "sampleRate",
+                sampleRate,
+                "type",
+                type,
+                "uri",
+                uri);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Integer channels;
 
@@ -237,7 +233,7 @@ public class AudioContent implements Content {
         private String uri;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -281,16 +277,10 @@ public class AudioContent implements Content {
         }
 
         public AudioContent build() {
-            return new AudioContent(
-                channels, data, mimeType,
-                sampleRate, uri);
+            return new AudioContent(channels, data, mimeType, sampleRate, uri);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"audio\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"audio\"", new TypeReference<String>() {});
     }
 }

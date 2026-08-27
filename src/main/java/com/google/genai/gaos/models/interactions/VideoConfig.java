@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * VideoConfig
- * 
+ *
  * <p>Configuration options for video generation.
  */
 public class VideoConfig {
@@ -45,11 +45,10 @@ public class VideoConfig {
     private Task task;
 
     @JsonCreator
-    public VideoConfig(
-            @JsonProperty("task") @Nullable Task task) {
+    public VideoConfig(@JsonProperty("task") @Nullable Task task) {
         this.task = task;
     }
-    
+
     public VideoConfig() {
         this(null);
     }
@@ -67,7 +66,6 @@ public class VideoConfig {
         return new Builder();
     }
 
-
     /**
      * Optional task mode for video generation. If not specified, the model
      * automatically determines the appropriate mode based on the provided text
@@ -78,7 +76,6 @@ public class VideoConfig {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -88,29 +85,26 @@ public class VideoConfig {
             return false;
         }
         VideoConfig other = (VideoConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.task, other.task);
+        return Utils.enhancedDeepEquals(this.task, other.task);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            task);
+        return Utils.enhancedHash(task);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(VideoConfig.class,
-                "task", task);
+        return Utils.toString(VideoConfig.class, "task", task);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private Task task;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -124,9 +118,7 @@ public class VideoConfig {
         }
 
         public VideoConfig build() {
-            return new VideoConfig(
-                task);
+            return new VideoConfig(task);
         }
-
     }
 }

@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * TriggerStatus
- * 
+ *
  * <p>Output only. The current status of the trigger.
  */
 public class TriggerStatus {
@@ -60,12 +60,12 @@ public class TriggerStatus {
     }
 
     /**
-     * Returns a TriggerStatus with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a TriggerStatus with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as TriggerStatus
-     */ 
+     */
     @JsonCreator
     public static TriggerStatus of(String value) {
         synchronized (TriggerStatus.class) {
@@ -93,12 +93,9 @@ public class TriggerStatus {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         TriggerStatus other = (TriggerStatus) obj;
         return Objects.equals(value, other.value);
     }
@@ -130,13 +127,13 @@ public class TriggerStatus {
         map.put("error", TriggerStatusEnum.ERROR);
         return map;
     }
-    
-    
+
     public enum TriggerStatusEnum {
 
         ACTIVE("active"),
         PAUSED("paused"),
-        ERROR("error"),;
+        ERROR("error"),
+        ;
 
         private final String value;
 
@@ -149,4 +146,3 @@ public class TriggerStatus {
         }
     }
 }
-

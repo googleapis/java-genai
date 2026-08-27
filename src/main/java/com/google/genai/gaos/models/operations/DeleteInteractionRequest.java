@@ -28,7 +28,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class DeleteInteractionRequest {
     /**
      * Which version of the API to use.
@@ -43,16 +42,12 @@ public class DeleteInteractionRequest {
     private String id;
 
     @JsonCreator
-    public DeleteInteractionRequest(
-            @Nullable String apiVersion,
-            @Nonnull String id) {
+    public DeleteInteractionRequest(@Nullable String apiVersion, @Nonnull String id) {
         this.apiVersion = apiVersion;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
     }
-    
-    public DeleteInteractionRequest(
-            @Nonnull String id) {
+
+    public DeleteInteractionRequest(@Nonnull String id) {
         this(null, id);
     }
 
@@ -74,7 +69,6 @@ public class DeleteInteractionRequest {
         return new Builder();
     }
 
-
     /**
      * Which version of the API to use.
      */
@@ -83,7 +77,6 @@ public class DeleteInteractionRequest {
         return this;
     }
 
-
     /**
      * The unique identifier of the interaction to delete.
      */
@@ -91,7 +84,6 @@ public class DeleteInteractionRequest {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -102,33 +94,28 @@ public class DeleteInteractionRequest {
             return false;
         }
         DeleteInteractionRequest other = (DeleteInteractionRequest) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.id, other.id);
+        return Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) && Utils.enhancedDeepEquals(this.id, other.id);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiVersion, id);
+        return Utils.enhancedHash(apiVersion, id);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(DeleteInteractionRequest.class,
-                "apiVersion", apiVersion,
-                "id", id);
+        return Utils.toString(DeleteInteractionRequest.class, "apiVersion", apiVersion, "id", id);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiVersion;
 
         private String id;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -148,9 +135,7 @@ public class DeleteInteractionRequest {
         }
 
         public DeleteInteractionRequest build() {
-            return new DeleteInteractionRequest(
-                apiVersion, id);
+            return new DeleteInteractionRequest(apiVersion, id);
         }
-
     }
 }

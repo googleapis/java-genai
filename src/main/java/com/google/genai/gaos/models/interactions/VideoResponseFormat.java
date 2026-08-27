@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * VideoResponseFormat
- * 
+ *
  * <p>Configuration for video output format.
  */
 public class VideoResponseFormat {
@@ -73,7 +73,6 @@ public class VideoResponseFormat {
     @JsonProperty("resolution")
     private Resolution resolution;
 
-
     @JsonProperty("type")
     private String type;
 
@@ -91,10 +90,9 @@ public class VideoResponseFormat {
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
+
     public VideoResponseFormat() {
-        this(null, null, null,
-            null, null);
+        this(null, null, null, null, null);
     }
 
     /**
@@ -141,7 +139,6 @@ public class VideoResponseFormat {
         return new Builder();
     }
 
-
     /**
      * The aspect ratio for the video output.
      */
@@ -149,7 +146,6 @@ public class VideoResponseFormat {
         this.aspectRatio = aspectRatio;
         return this;
     }
-
 
     /**
      * The delivery mode for the video output.
@@ -159,7 +155,6 @@ public class VideoResponseFormat {
         return this;
     }
 
-
     /**
      * The duration for the video output.
      */
@@ -167,7 +162,6 @@ public class VideoResponseFormat {
         this.duration = duration;
         return this;
     }
-
 
     /**
      * The Cloud Storage URI to store the video output. Required for Vertex if
@@ -178,7 +172,6 @@ public class VideoResponseFormat {
         return this;
     }
 
-
     /**
      * The video output resolution. Defaults to 720p.
      */
@@ -186,7 +179,6 @@ public class VideoResponseFormat {
         this.resolution = resolution;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -197,35 +189,39 @@ public class VideoResponseFormat {
             return false;
         }
         VideoResponseFormat other = (VideoResponseFormat) o;
-        return 
-            Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio) &&
-            Utils.enhancedDeepEquals(this.delivery, other.delivery) &&
-            Utils.enhancedDeepEquals(this.duration, other.duration) &&
-            Utils.enhancedDeepEquals(this.gcsUri, other.gcsUri) &&
-            Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.aspectRatio, other.aspectRatio)
+                && Utils.enhancedDeepEquals(this.delivery, other.delivery)
+                && Utils.enhancedDeepEquals(this.duration, other.duration)
+                && Utils.enhancedDeepEquals(this.gcsUri, other.gcsUri)
+                && Utils.enhancedDeepEquals(this.resolution, other.resolution)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            aspectRatio, delivery, duration,
-            gcsUri, resolution, type);
+        return Utils.enhancedHash(aspectRatio, delivery, duration, gcsUri, resolution, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(VideoResponseFormat.class,
-                "aspectRatio", aspectRatio,
-                "delivery", delivery,
-                "duration", duration,
-                "gcsUri", gcsUri,
-                "resolution", resolution,
-                "type", type);
+        return Utils.toString(
+                VideoResponseFormat.class,
+                "aspectRatio",
+                aspectRatio,
+                "delivery",
+                delivery,
+                "duration",
+                duration,
+                "gcsUri",
+                gcsUri,
+                "resolution",
+                resolution,
+                "type",
+                type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private VideoResponseFormatAspectRatio aspectRatio;
 
@@ -238,7 +234,7 @@ public class VideoResponseFormat {
         private Resolution resolution;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -283,16 +279,10 @@ public class VideoResponseFormat {
         }
 
         public VideoResponseFormat build() {
-            return new VideoResponseFormat(
-                aspectRatio, delivery, duration,
-                gcsUri, resolution);
+            return new VideoResponseFormat(aspectRatio, delivery, duration, gcsUri, resolution);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"video\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"video\"", new TypeReference<String>() {});
     }
 }

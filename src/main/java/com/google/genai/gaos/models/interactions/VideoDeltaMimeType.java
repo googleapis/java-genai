@@ -62,12 +62,12 @@ public class VideoDeltaMimeType {
     }
 
     /**
-     * Returns a VideoDeltaMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a VideoDeltaMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as VideoDeltaMimeType
-     */ 
+     */
     @JsonCreator
     public static VideoDeltaMimeType of(String value) {
         synchronized (VideoDeltaMimeType.class) {
@@ -95,12 +95,9 @@ public class VideoDeltaMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         VideoDeltaMimeType other = (VideoDeltaMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -146,8 +143,7 @@ public class VideoDeltaMimeType {
         map.put("video/jpeg2000", VideoDeltaMimeTypeEnum.VIDEO_JPEG2000);
         return map;
     }
-    
-    
+
     public enum VideoDeltaMimeTypeEnum {
 
         VIDEO_MP4("video/mp4"),
@@ -159,7 +155,8 @@ public class VideoDeltaMimeType {
         VIDEO_WEBM("video/webm"),
         VIDEO_WMV("video/wmv"),
         VIDEO3GPP("video/3gpp"),
-        VIDEO_JPEG2000("video/jpeg2000"),;
+        VIDEO_JPEG2000("video/jpeg2000"),
+        ;
 
         private final String value;
 
@@ -172,4 +169,3 @@ public class VideoDeltaMimeType {
         }
     }
 }
-

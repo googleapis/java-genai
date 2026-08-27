@@ -60,12 +60,12 @@ public class ImageDeltaMimeType {
     }
 
     /**
-     * Returns a ImageDeltaMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a ImageDeltaMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as ImageDeltaMimeType
-     */ 
+     */
     @JsonCreator
     public static ImageDeltaMimeType of(String value) {
         synchronized (ImageDeltaMimeType.class) {
@@ -93,12 +93,9 @@ public class ImageDeltaMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         ImageDeltaMimeType other = (ImageDeltaMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -140,8 +137,7 @@ public class ImageDeltaMimeType {
         map.put("image/tiff", ImageDeltaMimeTypeEnum.IMAGE_TIFF);
         return map;
     }
-    
-    
+
     public enum ImageDeltaMimeTypeEnum {
 
         IMAGE_PNG("image/png"),
@@ -151,7 +147,8 @@ public class ImageDeltaMimeType {
         IMAGE_HEIF("image/heif"),
         IMAGE_GIF("image/gif"),
         IMAGE_BMP("image/bmp"),
-        IMAGE_TIFF("image/tiff"),;
+        IMAGE_TIFF("image/tiff"),
+        ;
 
         private final String value;
 
@@ -164,4 +161,3 @@ public class ImageDeltaMimeType {
         }
     }
 }
-

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,7 +32,6 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class InteractionCompletedEvent implements InteractionSSEEvent {
     /**
      * The event_id token to be used to resume the interaction stream, from
@@ -41,7 +40,6 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("event_id")
     private String eventId;
-
 
     @JsonProperty("event_type")
     private String eventType;
@@ -61,11 +59,10 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interaction = Optional.ofNullable(interaction)
-            .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
     }
-    
-    public InteractionCompletedEvent(
-            @Nonnull InteractionSseEventInteraction interaction) {
+
+    public InteractionCompletedEvent(@Nonnull InteractionSseEventInteraction interaction) {
         this(null, interaction);
     }
 
@@ -95,7 +92,6 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         return new Builder();
     }
 
-
     /**
      * The event_id token to be used to resume the interaction stream, from
      * this event.
@@ -104,7 +100,6 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         this.eventId = eventId;
         return this;
     }
-
 
     /**
      * Partial interaction resource emitted by interaction lifecycle SSE events.
@@ -116,7 +111,6 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         return this;
     }
 
-
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -126,35 +120,37 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
             return false;
         }
         InteractionCompletedEvent other = (InteractionCompletedEvent) o;
-        return 
-            Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction);
+        return Utils.enhancedDeepEquals(this.eventId, other.eventId)
+                && Utils.enhancedDeepEquals(this.eventType, other.eventType)
+                && Utils.enhancedDeepEquals(this.interaction, other.interaction);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            eventId, eventType, interaction);
+        return Utils.enhancedHash(eventId, eventType, interaction);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(InteractionCompletedEvent.class,
-                "eventId", eventId,
-                "eventType", eventType,
-                "interaction", interaction);
+        return Utils.toString(
+                InteractionCompletedEvent.class,
+                "eventId",
+                eventId,
+                "eventType",
+                eventType,
+                "interaction",
+                interaction);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String eventId;
 
         private InteractionSseEventInteraction interaction;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -177,15 +173,10 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         }
 
         public InteractionCompletedEvent build() {
-            return new InteractionCompletedEvent(
-                eventId, interaction);
+            return new InteractionCompletedEvent(eventId, interaction);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_EventType =
-                new LazySingletonValue<>(
-                        "event_type",
-                        "\"interaction.completed\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("event_type", "\"interaction.completed\"", new TypeReference<String>() {});
     }
 }

@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
@@ -32,22 +32,18 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
 public class MCPServerToolResultDelta implements StepDeltaData {
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("name")
     private String name;
 
-
     @JsonProperty("result")
     private MCPServerToolResultDeltaResultUnion result;
-
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("server_name")
     private String serverName;
-
 
     @JsonProperty("type")
     private String type;
@@ -58,14 +54,13 @@ public class MCPServerToolResultDelta implements StepDeltaData {
             @JsonProperty("result") @Nonnull MCPServerToolResultDeltaResultUnion result,
             @JsonProperty("server_name") @Nullable String serverName) {
         this.name = name;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.result =
+                Optional.ofNullable(result).orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.serverName = serverName;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
-    
-    public MCPServerToolResultDelta(
-            @Nonnull MCPServerToolResultDeltaResultUnion result) {
+
+    public MCPServerToolResultDelta(@Nonnull MCPServerToolResultDeltaResultUnion result) {
         this(null, result, null);
     }
 
@@ -90,24 +85,20 @@ public class MCPServerToolResultDelta implements StepDeltaData {
         return new Builder();
     }
 
-
     public MCPServerToolResultDelta withName(@Nullable String name) {
         this.name = name;
         return this;
     }
-
 
     public MCPServerToolResultDelta withResult(@Nonnull MCPServerToolResultDeltaResultUnion result) {
         this.result = Utils.checkNotNull(result, "result");
         return this;
     }
 
-
     public MCPServerToolResultDelta withServerName(@Nullable String serverName) {
         this.serverName = serverName;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -118,31 +109,25 @@ public class MCPServerToolResultDelta implements StepDeltaData {
             return false;
         }
         MCPServerToolResultDelta other = (MCPServerToolResultDelta) o;
-        return 
-            Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
-            Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
-            Utils.enhancedDeepEquals(this.type, other.type);
+        return Utils.enhancedDeepEquals(this.name, other.name)
+                && Utils.enhancedDeepEquals(this.result, other.result)
+                && Utils.enhancedDeepEquals(this.serverName, other.serverName)
+                && Utils.enhancedDeepEquals(this.type, other.type);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            name, result, serverName,
-            type);
+        return Utils.enhancedHash(name, result, serverName, type);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(MCPServerToolResultDelta.class,
-                "name", name,
-                "result", result,
-                "serverName", serverName,
-                "type", type);
+        return Utils.toString(
+                MCPServerToolResultDelta.class, "name", name, "result", result, "serverName", serverName, "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String name;
 
@@ -151,7 +136,7 @@ public class MCPServerToolResultDelta implements StepDeltaData {
         private String serverName;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         public Builder name(@Nullable String name) {
@@ -170,15 +155,10 @@ public class MCPServerToolResultDelta implements StepDeltaData {
         }
 
         public MCPServerToolResultDelta build() {
-            return new MCPServerToolResultDelta(
-                name, result, serverName);
+            return new MCPServerToolResultDelta(name, result, serverName);
         }
 
-
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
-                new LazySingletonValue<>(
-                        "type",
-                        "\"mcp_server_tool_result\"",
-                        new TypeReference<String>() {});
+                new LazySingletonValue<>("type", "\"mcp_server_tool_result\"", new TypeReference<String>() {});
     }
 }

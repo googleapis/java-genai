@@ -33,13 +33,13 @@ public enum CreateEnvironmentRequestNetworkEnum {
     CreateEnvironmentRequestNetworkEnum(String value) {
         this.value = value;
     }
-    
+
     public String value() {
         return value;
     }
-    
+
     public static Optional<CreateEnvironmentRequestNetworkEnum> fromValue(String value) {
-        for (CreateEnvironmentRequestNetworkEnum o: CreateEnvironmentRequestNetworkEnum.values()) {
+        for (CreateEnvironmentRequestNetworkEnum o : CreateEnvironmentRequestNetworkEnum.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }
@@ -47,4 +47,3 @@ public enum CreateEnvironmentRequestNetworkEnum {
         return Optional.empty();
     }
 }
-

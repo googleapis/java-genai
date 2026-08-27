@@ -59,13 +59,13 @@ public final class Utf8UrlEncoder {
     public String encode(String s) {
         return encode(s, StandardCharsets.UTF_8);
     }
-    
+
     private String encode(String s, Charset charset) {
         boolean changed = false;
         StringBuilder out = new StringBuilder(s.length());
         CharArrayWriter writer = new CharArrayWriter();
 
-        for (int i = 0; i < s.length();) {
+        for (int i = 0; i < s.length(); ) {
             int c = (int) s.charAt(i);
             if (DO_NOT_ENCODE_CHARS.get(c) || safeChars.get(c)) {
                 out.append((char) c);

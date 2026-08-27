@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * AudioResponseFormatMimeType
- * 
+ *
  * <p>The MIME type of the audio output.
  */
 public class AudioResponseFormatMimeType {
@@ -63,12 +63,12 @@ public class AudioResponseFormatMimeType {
     }
 
     /**
-     * Returns a AudioResponseFormatMimeType with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a AudioResponseFormatMimeType with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as AudioResponseFormatMimeType
-     */ 
+     */
     @JsonCreator
     public static AudioResponseFormatMimeType of(String value) {
         synchronized (AudioResponseFormatMimeType.class) {
@@ -96,12 +96,9 @@ public class AudioResponseFormatMimeType {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         AudioResponseFormatMimeType other = (AudioResponseFormatMimeType) obj;
         return Objects.equals(value, other.value);
     }
@@ -139,8 +136,7 @@ public class AudioResponseFormatMimeType {
         map.put("audio/mulaw", AudioResponseFormatMimeTypeEnum.AUDIO_MULAW);
         return map;
     }
-    
-    
+
     public enum AudioResponseFormatMimeTypeEnum {
 
         AUDIO_MP3("audio/mp3"),
@@ -148,7 +144,8 @@ public class AudioResponseFormatMimeType {
         AUDIO_L16("audio/l16"),
         AUDIO_WAV("audio/wav"),
         AUDIO_ALAW("audio/alaw"),
-        AUDIO_MULAW("audio/mulaw"),;
+        AUDIO_MULAW("audio/mulaw"),
+        ;
 
         private final String value;
 
@@ -161,4 +158,3 @@ public class AudioResponseFormatMimeType {
         }
     }
 }
-

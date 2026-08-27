@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * ParallelAISearchConfig
- * 
+ *
  * <p>Used to specify configuration for ParallelAISearch.
  */
 public class ParallelAISearchConfig {
@@ -58,7 +58,7 @@ public class ParallelAISearchConfig {
         this.apiKey = apiKey;
         this.customConfig = customConfig;
     }
-    
+
     public ParallelAISearchConfig() {
         this(null, null);
     }
@@ -81,7 +81,6 @@ public class ParallelAISearchConfig {
         return new Builder();
     }
 
-
     /**
      * Optional. The API key for ParallelAiSearch.
      */
@@ -90,7 +89,6 @@ public class ParallelAISearchConfig {
         return this;
     }
 
-
     /**
      * Optional. Custom configs for ParallelAiSearch.
      */
@@ -98,7 +96,6 @@ public class ParallelAISearchConfig {
         this.customConfig = customConfig;
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -109,33 +106,29 @@ public class ParallelAISearchConfig {
             return false;
         }
         ParallelAISearchConfig other = (ParallelAISearchConfig) o;
-        return 
-            Utils.enhancedDeepEquals(this.apiKey, other.apiKey) &&
-            Utils.enhancedDeepEquals(this.customConfig, other.customConfig);
+        return Utils.enhancedDeepEquals(this.apiKey, other.apiKey)
+                && Utils.enhancedDeepEquals(this.customConfig, other.customConfig);
     }
-    
+
     @Override
     public int hashCode() {
-        return Utils.enhancedHash(
-            apiKey, customConfig);
+        return Utils.enhancedHash(apiKey, customConfig);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(ParallelAISearchConfig.class,
-                "apiKey", apiKey,
-                "customConfig", customConfig);
+        return Utils.toString(ParallelAISearchConfig.class, "apiKey", apiKey, "customConfig", customConfig);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private String apiKey;
 
         private Map<String, Object> customConfig;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -155,9 +148,7 @@ public class ParallelAISearchConfig {
         }
 
         public ParallelAISearchConfig build() {
-            return new ParallelAISearchConfig(
-                apiKey, customConfig);
+            return new ParallelAISearchConfig(apiKey, customConfig);
         }
-
     }
 }

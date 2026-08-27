@@ -26,15 +26,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
 
 final class QueryEncoding {
-    
+
     private static final int RADIX = 16;
     private static final char QUERY_PARAM_SEPARATOR = '&';
     private static final char PARAM_VALUE_SEPARATOR = '=';
-    
-    
-    /////////////////////////////////
+
+    ///////////////////////////////
     // Query Encoding
-    /////////////////////////////////
+    ///////////////////////////////
 
     private static final BitSet UNRESERVED = new BitSet(256);
 
@@ -54,17 +53,17 @@ final class QueryEncoding {
         UNRESERVED.set('_');
         UNRESERVED.set('~');
     }
-    
+
     /**
      * Returns the encoded query string from the given parameters.
-     * 
+     *
      * @param parameters query parameters
      * @param charset charset to apply for percent encoding
      * @param blankAsPlus set to true to encode a blank as a plus character
      * @return encoded query string
      */
-    static String formatQuery(final Iterable<? extends NameValue> parameters,
-            final Charset charset, final boolean blankAsPlus) {
+    static String formatQuery(
+            final Iterable<? extends NameValue> parameters, final Charset charset, final boolean blankAsPlus) {
         StringBuilder buf = new StringBuilder();
         int i = 0;
         for (final NameValue parameter : parameters) {
@@ -81,13 +80,17 @@ final class QueryEncoding {
         return buf.toString();
     }
 
-    private static void percentEncode(final StringBuilder buf, final CharSequence content, final Charset charset,
-            final boolean blankAsPlus) {
+    private static void percentEncode(
+            final StringBuilder buf, final CharSequence content, final Charset charset, final boolean blankAsPlus) {
         percentEncode(buf, content, charset, UNRESERVED, blankAsPlus);
     }
 
-    private static void percentEncode(final StringBuilder buf, final CharSequence content, final Charset charset,
-            final BitSet safechars, final boolean blankAsPlus) {
+    private static void percentEncode(
+            final StringBuilder buf,
+            final CharSequence content,
+            final Charset charset,
+            final BitSet safechars,
+            final boolean blankAsPlus) {
         if (content == null) {
             return;
         }

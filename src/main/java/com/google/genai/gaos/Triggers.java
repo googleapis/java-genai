@@ -58,7 +58,6 @@ import jakarta.annotation.Nullable;
 import java.lang.Long;
 import java.lang.String;
 
-
 public class Triggers {
     private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
@@ -71,7 +70,7 @@ public class Triggers {
 
     /**
      * Switches to the async SDK.
-     * 
+     *
      * @return The async SDK
      */
     public AsyncTriggers async() {
@@ -80,7 +79,7 @@ public class Triggers {
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @return The call builder
      */
     public ListTriggersRequestBuilder list() {
@@ -89,18 +88,17 @@ public class Triggers {
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListTriggersResponse listDirect() {
-        return list(null, null, null,
-            null, null);
+        return list(null, null, null, null, null);
     }
 
     /**
      * Lists triggers for a project.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param filter Optional. Filter expression (e.g., by state).
      * @param pageSize Optional. The maximum number of triggers to return per page.
@@ -110,20 +108,20 @@ public class Triggers {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListTriggersResponse list(
-            @Nullable String apiVersion, @Nullable String filter,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable String apiVersion,
+            @Nullable String filter,
+            @Nullable Long pageSize,
+            @Nullable String pageToken,
             @Nullable Options options) {
-        ListTriggersRequest request = new ListTriggersRequest(
-                apiVersion, filter, pageSize,
-                pageToken);
-        RequestOperation<ListTriggersRequest, ListTriggersResponse> operation
-              = new ListTriggers.Sync(sdkConfiguration, options, _headers);
+        ListTriggersRequest request = new ListTriggersRequest(apiVersion, filter, pageSize, pageToken);
+        RequestOperation<ListTriggersRequest, ListTriggersResponse> operation =
+                new ListTriggers.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @return The call builder
      */
     public CreateTriggerRequestBuilder create() {
@@ -132,7 +130,7 @@ public class Triggers {
 
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @param body Parameters for creating a trigger.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -143,7 +141,7 @@ public class Triggers {
 
     /**
      * Creates a new trigger that will invoke the specified agent on the given cron schedule.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param body Parameters for creating a trigger.
      * @param options additional options
@@ -151,17 +149,16 @@ public class Triggers {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateTriggerResponse create(
-            @Nullable String apiVersion, @Nonnull TriggerCreateParams body,
-            @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull TriggerCreateParams body, @Nullable Options options) {
         CreateTriggerRequest request = new CreateTriggerRequest(apiVersion, body);
-        RequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation
-              = new CreateTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<CreateTriggerRequest, CreateTriggerResponse> operation =
+                new CreateTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @return The call builder
      */
     public DeleteTriggerRequestBuilder delete() {
@@ -170,7 +167,7 @@ public class Triggers {
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -181,25 +178,23 @@ public class Triggers {
 
     /**
      * Deletes a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public DeleteTriggerResponse delete(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public DeleteTriggerResponse delete(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         DeleteTriggerRequest request = new DeleteTriggerRequest(apiVersion, id);
-        RequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation
-              = new DeleteTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<DeleteTriggerRequest, DeleteTriggerResponse> operation =
+                new DeleteTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @return The call builder
      */
     public GetTriggerRequestBuilder get() {
@@ -208,7 +203,7 @@ public class Triggers {
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -219,25 +214,23 @@ public class Triggers {
 
     /**
      * Gets details of a single trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetTriggerResponse get(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nullable Options options) {
+    public GetTriggerResponse get(@Nullable String apiVersion, @Nonnull String id, @Nullable Options options) {
         GetTriggerRequest request = new GetTriggerRequest(apiVersion, id);
-        RequestOperation<GetTriggerRequest, GetTriggerResponse> operation
-              = new GetTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<GetTriggerRequest, GetTriggerResponse> operation =
+                new GetTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @return The call builder
      */
     public UpdateTriggerRequestBuilder update() {
@@ -246,20 +239,19 @@ public class Triggers {
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @param id Resource name of the trigger.
      * @param body Represents the fields of a Trigger that can be updated.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public UpdateTriggerResponse update(@Nonnull String id, @Nonnull TriggerUpdate body) {
-        return update(null, id, body,
-            null);
+        return update(null, id, body, null);
     }
 
     /**
      * Updates a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param id Resource name of the trigger.
      * @param body Represents the fields of a Trigger that can be updated.
@@ -268,17 +260,16 @@ public class Triggers {
      * @throws RuntimeException subclass if the API call fails
      */
     public UpdateTriggerResponse update(
-            @Nullable String apiVersion, @Nonnull String id,
-            @Nonnull TriggerUpdate body, @Nullable Options options) {
+            @Nullable String apiVersion, @Nonnull String id, @Nonnull TriggerUpdate body, @Nullable Options options) {
         UpdateTriggerRequest request = new UpdateTriggerRequest(apiVersion, id, body);
-        RequestOperation<UpdateTriggerRequest, UpdateTriggerResponse> operation
-              = new UpdateTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<UpdateTriggerRequest, UpdateTriggerResponse> operation =
+                new UpdateTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @return The call builder
      */
     public ListTriggerExecutionsRequestBuilder listExecutions() {
@@ -287,19 +278,18 @@ public class Triggers {
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @param triggerId Resource name of the trigger.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListTriggerExecutionsResponse listExecutions(@Nonnull String triggerId) {
-        return listExecutions(null, triggerId, null,
-            null, null);
+        return listExecutions(null, triggerId, null, null, null);
     }
 
     /**
      * Lists executions for a trigger.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param triggerId Resource name of the trigger.
      * @param pageSize Optional. The maximum number of executions to return per page.
@@ -309,20 +299,21 @@ public class Triggers {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListTriggerExecutionsResponse listExecutions(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable String apiVersion,
+            @Nonnull String triggerId,
+            @Nullable Long pageSize,
+            @Nullable String pageToken,
             @Nullable Options options) {
-        ListTriggerExecutionsRequest request = new ListTriggerExecutionsRequest(
-                apiVersion, triggerId, pageSize,
-                pageToken);
-        RequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
-              = new ListTriggerExecutions.Sync(sdkConfiguration, options, _headers);
+        ListTriggerExecutionsRequest request =
+                new ListTriggerExecutionsRequest(apiVersion, triggerId, pageSize, pageToken);
+        RequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation =
+                new ListTriggerExecutions.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @return The call builder
      */
     public RunTriggerRequestBuilder run() {
@@ -331,7 +322,7 @@ public class Triggers {
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @param triggerId Resource name of the trigger.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -342,20 +333,17 @@ public class Triggers {
 
     /**
      * Runs a trigger immediately.
-     * 
+     *
      * @param apiVersion Which version of the API to use.
      * @param triggerId Resource name of the trigger.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public RunTriggerResponse run(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Options options) {
+    public RunTriggerResponse run(@Nullable String apiVersion, @Nonnull String triggerId, @Nullable Options options) {
         RunTriggerRequest request = new RunTriggerRequest(apiVersion, triggerId);
-        RequestOperation<RunTriggerRequest, RunTriggerResponse> operation
-              = new RunTrigger.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<RunTriggerRequest, RunTriggerResponse> operation =
+                new RunTrigger.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
-
 }

@@ -81,7 +81,7 @@ public class UpdateWebhookRequestBuilder {
         }
         return this.request;
     }
-    
+
     public UpdateWebhookRequestBuilder header(String name, String value) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(value, "value");
@@ -90,14 +90,14 @@ public class UpdateWebhookRequestBuilder {
     }
 
     /**
-    * Executes the request and returns the response.
-    *
-    * @return The response from the server.
-    */
+     * Executes the request and returns the response.
+     *
+     * @return The response from the server.
+     */
     public UpdateWebhookResponse call() {
         Options options = optionsBuilder.build();
-        RequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation
-              = new UpdateWebhook.Sync(sdkConfiguration, options, _headers);
+        RequestOperation<UpdateWebhookRequest, UpdateWebhookResponse> operation =
+                new UpdateWebhook.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(this._buildRequest()));
     }
 }

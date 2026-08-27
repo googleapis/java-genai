@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 /**
  * Type
- * 
+ *
  * <p>Output only. The type of the entry.
  */
 public class Type {
@@ -59,12 +59,12 @@ public class Type {
     }
 
     /**
-     * Returns a Type with the given value. For a specific value the 
-     * returned object will always be a singleton so reference equality 
+     * Returns a Type with the given value. For a specific value the
+     * returned object will always be a singleton so reference equality
      * is satisfied when the values are the same.
-     * 
+     *
      * @param value value to be wrapped as Type
-     */ 
+     */
     @JsonCreator
     public static Type of(String value) {
         synchronized (Type.class) {
@@ -92,12 +92,9 @@ public class Type {
 
     @Override
     public boolean equals(java.lang.Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Type other = (Type) obj;
         return Objects.equals(value, other.value);
     }
@@ -127,12 +124,12 @@ public class Type {
         map.put("directory", TypeEnum.DIRECTORY);
         return map;
     }
-    
-    
+
     public enum TypeEnum {
 
         FILE("file"),
-        DIRECTORY("directory"),;
+        DIRECTORY("directory"),
+        ;
 
         private final String value;
 
@@ -145,4 +142,3 @@ public class Type {
         }
     }
 }
-

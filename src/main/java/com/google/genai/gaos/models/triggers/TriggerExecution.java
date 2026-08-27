@@ -20,8 +20,8 @@
 package com.google.genai.gaos.models.triggers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * TriggerExecution
- * 
+ *
  * <p>An execution instance of a trigger.
  */
 public class TriggerExecution {
@@ -60,7 +60,7 @@ public class TriggerExecution {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger execution.
      */
     @JsonProperty("id")
@@ -96,7 +96,7 @@ public class TriggerExecution {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger that created this execution.
      */
     @JsonProperty("trigger_id")
@@ -116,22 +116,17 @@ public class TriggerExecution {
         this.endTime = endTime;
         this.environmentId = environmentId;
         this.error = error;
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = Optional.ofNullable(id).orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.interactionId = interactionId;
         this.scheduledTime = scheduledTime;
         this.startTime = startTime;
         this.status = status;
         this.triggerId = Optional.ofNullable(triggerId)
-            .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
+                .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
     }
-    
-    public TriggerExecution(
-            @Nonnull String id,
-            @Nonnull String triggerId) {
-        this(null, null, null,
-            id, null, null,
-            null, null, triggerId);
+
+    public TriggerExecution(@Nonnull String id, @Nonnull String triggerId) {
+        this(null, null, null, id, null, null, null, null, triggerId);
     }
 
     /**
@@ -157,7 +152,7 @@ public class TriggerExecution {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger execution.
      */
     public Optional<String> id() {
@@ -194,7 +189,7 @@ public class TriggerExecution {
 
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger that created this execution.
      */
     public Optional<String> triggerId() {
@@ -205,7 +200,6 @@ public class TriggerExecution {
         return new Builder();
     }
 
-
     /**
      * Output only. The time when the execution finished.
      */
@@ -213,7 +207,6 @@ public class TriggerExecution {
         this.endTime = endTime;
         return this;
     }
-
 
     /**
      * Output only. The environment ID used for the execution.
@@ -223,7 +216,6 @@ public class TriggerExecution {
         return this;
     }
 
-
     /**
      * Output only. The error message if the execution failed.
      */
@@ -232,17 +224,15 @@ public class TriggerExecution {
         return this;
     }
 
-
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger execution.
      */
     public TriggerExecution withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
         return this;
     }
-
 
     /**
      * Output only. The ID of the interaction created by this execution, if any.
@@ -252,7 +242,6 @@ public class TriggerExecution {
         return this;
     }
 
-
     /**
      * Output only. The time when the execution was scheduled to run.
      */
@@ -260,7 +249,6 @@ public class TriggerExecution {
         this.scheduledTime = scheduledTime;
         return this;
     }
-
 
     /**
      * Output only. The time when the execution started.
@@ -270,7 +258,6 @@ public class TriggerExecution {
         return this;
     }
 
-
     /**
      * Output only. The status of the execution.
      */
@@ -279,17 +266,15 @@ public class TriggerExecution {
         return this;
     }
 
-
     /**
      * Required. Output only. Identifier.
-     * 
+     *
      * <p>The ID of the trigger that created this execution.
      */
     public TriggerExecution withTriggerId(@Nonnull String triggerId) {
         this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
         return this;
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -300,42 +285,49 @@ public class TriggerExecution {
             return false;
         }
         TriggerExecution other = (TriggerExecution) o;
-        return 
-            Utils.enhancedDeepEquals(this.endTime, other.endTime) &&
-            Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
-            Utils.enhancedDeepEquals(this.error, other.error) &&
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.interactionId, other.interactionId) &&
-            Utils.enhancedDeepEquals(this.scheduledTime, other.scheduledTime) &&
-            Utils.enhancedDeepEquals(this.startTime, other.startTime) &&
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.triggerId, other.triggerId);
+        return Utils.enhancedDeepEquals(this.endTime, other.endTime)
+                && Utils.enhancedDeepEquals(this.environmentId, other.environmentId)
+                && Utils.enhancedDeepEquals(this.error, other.error)
+                && Utils.enhancedDeepEquals(this.id, other.id)
+                && Utils.enhancedDeepEquals(this.interactionId, other.interactionId)
+                && Utils.enhancedDeepEquals(this.scheduledTime, other.scheduledTime)
+                && Utils.enhancedDeepEquals(this.startTime, other.startTime)
+                && Utils.enhancedDeepEquals(this.status, other.status)
+                && Utils.enhancedDeepEquals(this.triggerId, other.triggerId);
     }
-    
+
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            endTime, environmentId, error,
-            id, interactionId, scheduledTime,
-            startTime, status, triggerId);
+                endTime, environmentId, error, id, interactionId, scheduledTime, startTime, status, triggerId);
     }
-    
+
     @Override
     public String toString() {
-        return Utils.toString(TriggerExecution.class,
-                "endTime", endTime,
-                "environmentId", environmentId,
-                "error", error,
-                "id", id,
-                "interactionId", interactionId,
-                "scheduledTime", scheduledTime,
-                "startTime", startTime,
-                "status", status,
-                "triggerId", triggerId);
+        return Utils.toString(
+                TriggerExecution.class,
+                "endTime",
+                endTime,
+                "environmentId",
+                environmentId,
+                "error",
+                error,
+                "id",
+                id,
+                "interactionId",
+                interactionId,
+                "scheduledTime",
+                scheduledTime,
+                "startTime",
+                startTime,
+                "status",
+                status,
+                "triggerId",
+                triggerId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
+    public static final class Builder {
 
         private OffsetDateTime endTime;
 
@@ -356,7 +348,7 @@ public class TriggerExecution {
         private String triggerId;
 
         private Builder() {
-          // force use of static builder() method
+            // force use of static builder() method
         }
 
         /**
@@ -385,7 +377,7 @@ public class TriggerExecution {
 
         /**
          * Required. Output only. Identifier.
-         * 
+         *
          * <p>The ID of the trigger execution.
          */
         public Builder id(@Nonnull String id) {
@@ -427,7 +419,7 @@ public class TriggerExecution {
 
         /**
          * Required. Output only. Identifier.
-         * 
+         *
          * <p>The ID of the trigger that created this execution.
          */
         public Builder triggerId(@Nonnull String triggerId) {
@@ -437,10 +429,7 @@ public class TriggerExecution {
 
         public TriggerExecution build() {
             return new TriggerExecution(
-                endTime, environmentId, error,
-                id, interactionId, scheduledTime,
-                startTime, status, triggerId);
+                    endTime, environmentId, error, id, interactionId, scheduledTime, startTime, status, triggerId);
         }
-
     }
 }
