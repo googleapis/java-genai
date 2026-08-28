@@ -33,6 +33,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.api.core.InternalApi;
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Strings;
 import com.google.genai.errors.GenAiIOException;
 import java.util.logging.Logger;
 
@@ -67,6 +69,8 @@ public abstract class JsonSerializable {
 
   /** Custom Jackson deserializer for {@link java.time.Duration} to parse "Xs" format. */
   static class CustomDurationDeserializer extends JsonDeserializer<java.time.Duration> {
+    private static final int NANO_DIGITS = 9;
+
     @Override
     public java.time.Duration deserialize(JsonParser p, DeserializationContext ctxt)
         throws java.io.IOException, JsonProcessingException {
@@ -78,8 +82,17 @@ public abstract class JsonSerializable {
       if (value.endsWith("s")) {
         String secondsPart = value.substring(0, value.length() - 1);
         try {
+          long nanos = 0;
+          int dotIndex = secondsPart.indexOf('.');
+          if (dotIndex >= 0) {
+            nanos = parseNanos(secondsPart.substring(dotIndex + 1));
+            if (secondsPart.startsWith("-")) {
+              nanos = -nanos;
+            }
+            secondsPart = secondsPart.substring(0, dotIndex);
+          }
           long seconds = Long.parseLong(secondsPart);
-          return java.time.Duration.ofSeconds(seconds);
+          return java.time.Duration.ofSeconds(seconds, nanos);
         } catch (NumberFormatException e) {
           throw ctxt.weirdStringException(
               value,
@@ -91,6 +104,21 @@ public abstract class JsonSerializable {
         throw ctxt.weirdStringException(
             value, java.time.Duration.class, "Expected duration in format 'Xs', but got: " + value);
       }
+    }
+
+    /**
+     * Converts the fraction digits of a duration string to nanoseconds.
+     *
+     * <p>{@code Duration.parse} does not fit here. It also accepts "7.s", "1,5s" and "1h2m3s",
+     * which the protobuf JSON duration format does not allow.
+     */
+    private static long parseNanos(String fraction) {
+      if (fraction.isEmpty()
+          || fraction.length() > NANO_DIGITS
+          || !CharMatcher.inRange('0', '9').matchesAllOf(fraction)) {
+        throw new NumberFormatException("Invalid fraction digits: " + fraction);
+      }
+      return Long.parseLong(Strings.padEnd(fraction, NANO_DIGITS, '0'));
     }
   }
 
