@@ -50,6 +50,8 @@ public class StepDeltaDataTypeIdResolver extends GenericTypeIdResolver<StepDelta
         registerType("image", ImageDelta.class);
         registerType("mcp_server_tool_call", MCPServerToolCallDelta.class);
         registerType("mcp_server_tool_result", MCPServerToolResultDelta.class);
+        registerType("processing_call", ProcessingCallDelta.class);
+        registerType("processing_result", ProcessingResultDelta.class);
         registerType("retrieval_call", RetrievalCallDelta.class);
         registerType("retrieval_result", RetrievalResultDelta.class);
         registerType("text_annotation_delta", TextAnnotationDelta.class);

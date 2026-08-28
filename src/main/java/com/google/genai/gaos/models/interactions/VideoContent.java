@@ -52,6 +52,14 @@ public class VideoContent implements Content {
     private VideoContentMimeType mimeType;
 
     /**
+     * A user-defined name for this content block. Can be referenced by the model
+     * in the final response.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("name")
+    private String name;
+
+    /**
      * How the model processes this video for understanding.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -78,11 +86,13 @@ public class VideoContent implements Content {
     public VideoContent(
             @JsonProperty("data") @Nullable String data,
             @JsonProperty("mime_type") @Nullable VideoContentMimeType mimeType,
+            @JsonProperty("name") @Nullable String name,
             @JsonProperty("processing") @Nullable Processing processing,
             @JsonProperty("resolution") @Nullable MediaResolution resolution,
             @JsonProperty("uri") @Nullable String uri) {
         this.data = data;
         this.mimeType = mimeType;
+        this.name = name;
         this.processing = processing;
         this.resolution = resolution;
         this.type = Builder._SINGLETON_VALUE_Type.value();
@@ -91,7 +101,7 @@ public class VideoContent implements Content {
     
     public VideoContent() {
         this(null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -106,6 +116,14 @@ public class VideoContent implements Content {
      */
     public Optional<VideoContentMimeType> mimeType() {
         return Optional.ofNullable(this.mimeType);
+    }
+
+    /**
+     * A user-defined name for this content block. Can be referenced by the model
+     * in the final response.
+     */
+    public Optional<String> name() {
+        return Optional.ofNullable(this.name);
     }
 
     /**
@@ -155,6 +173,16 @@ public class VideoContent implements Content {
 
 
     /**
+     * A user-defined name for this content block. Can be referenced by the model
+     * in the final response.
+     */
+    public VideoContent withName(@Nullable String name) {
+        this.name = name;
+        return this;
+    }
+
+
+    /**
      * How the model processes this video for understanding.
      */
     public VideoContent withProcessing(@Nullable Processing processing) {
@@ -190,6 +218,7 @@ public class VideoContent implements Content {
         return 
             Utils.enhancedDeepEquals(this.data, other.data) &&
             Utils.enhancedDeepEquals(this.mimeType, other.mimeType) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.processing, other.processing) &&
             Utils.enhancedDeepEquals(this.resolution, other.resolution) &&
             Utils.enhancedDeepEquals(this.type, other.type) &&
@@ -199,8 +228,9 @@ public class VideoContent implements Content {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            data, mimeType, processing,
-            resolution, type, uri);
+            data, mimeType, name,
+            processing, resolution, type,
+            uri);
     }
     
     @Override
@@ -208,6 +238,7 @@ public class VideoContent implements Content {
         return Utils.toString(VideoContent.class,
                 "data", data,
                 "mimeType", mimeType,
+                "name", name,
                 "processing", processing,
                 "resolution", resolution,
                 "type", type,
@@ -220,6 +251,8 @@ public class VideoContent implements Content {
         private String data;
 
         private VideoContentMimeType mimeType;
+
+        private String name;
 
         private Processing processing;
 
@@ -248,6 +281,15 @@ public class VideoContent implements Content {
         }
 
         /**
+         * A user-defined name for this content block. Can be referenced by the model
+         * in the final response.
+         */
+        public Builder name(@Nullable String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
          * How the model processes this video for understanding.
          */
         public Builder processing(@Nullable Processing processing) {
@@ -270,8 +312,8 @@ public class VideoContent implements Content {
 
         public VideoContent build() {
             return new VideoContent(
-                data, mimeType, processing,
-                resolution, uri);
+                data, mimeType, name,
+                processing, resolution, uri);
         }
 
 
