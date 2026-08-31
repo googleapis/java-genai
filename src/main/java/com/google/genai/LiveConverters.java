@@ -1361,10 +1361,11 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"safetySettings"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
-      throw new IllegalArgumentException(
-          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"translationConfig"}) != null) {
+      Common.setValueByPath(
+          parentObject,
+          new String[] {"setup", "generationConfig", "translationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
     }
 
     return toObject;
