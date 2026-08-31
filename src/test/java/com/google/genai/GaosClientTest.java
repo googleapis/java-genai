@@ -395,4 +395,17 @@ public final class GaosClientTest {
     assertEquals("GET", req.method());
     assertEquals(URI.create(expectedUrlPrefix + "/webhooks/" + webhookId), req.uri());
   }
+
+  @Test
+  public void testGaosClientRetryConfigIsNoRetries() throws Exception {
+    Client client = Client.builder().apiKey("test-api-key").vertexAI(false).build();
+    Field sdkConfigField = client.interactions.getClass().getDeclaredField("sdkConfiguration");
+    sdkConfigField.setAccessible(true);
+    SDKConfiguration sdkConfig = (SDKConfiguration) sdkConfigField.get(client.interactions);
+
+    assertTrue(sdkConfig.retryConfig().isPresent());
+    assertEquals(
+        com.google.genai.gaos.utils.RetryConfig.Strategy.NONE,
+        sdkConfig.retryConfig().get().strategy());
+  }
 }
