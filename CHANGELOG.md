@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.69.0](https://github.com/googleapis/java-genai/compare/v1.68.0...v1.69.0) (2026-08-31)
+
+
+### Features
+
+* Add translation_config SDK support for GEAP. ([2e42431](https://github.com/googleapis/java-genai/commit/2e42431e6028c44d62bd471c80ff30bb841cec66))
+
+
+### Bug Fixes
+
+* Disable retries on the GAOS SDK so they don't compound with the native RetryInterceptor in the underlying HTTP client ([4fabc42](https://github.com/googleapis/java-genai/commit/4fabc424a47f34e7c4e90e9475cfbd393f2dfe92))
+* expose ProcessingCallStep and ProcessingResultStep in Interactions SDK ([cfcdef5](https://github.com/googleapis/java-genai/commit/cfcdef5d5baf9fad16abc590581ea2b5587073f5))
+* Increase JVM process exit timeout in AutoCloseableExecutionTest. ([3d14716](https://github.com/googleapis/java-genai/commit/3d147165c86cc2b29a7d57c96144698637516f5c))
+
+
+### Documentation
+
+* Add README.md with example usage instructions in examples directory. ([bac272c](https://github.com/googleapis/java-genai/commit/bac272cfeea52b04e4737317163ddfbb0d103b85))
+
 ## [1.68.0](https://github.com/googleapis/java-genai/compare/v1.67.0...v1.68.0) (2026-08-25)
 
 
