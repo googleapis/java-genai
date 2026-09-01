@@ -48,6 +48,7 @@ public class AudioDeltaMimeType {
     public static final AudioDeltaMimeType AUDIO_OPUS = new AudioDeltaMimeType("audio/opus");
     public static final AudioDeltaMimeType AUDIO_ALAW = new AudioDeltaMimeType("audio/alaw");
     public static final AudioDeltaMimeType AUDIO_MULAW = new AudioDeltaMimeType("audio/mulaw");
+    public static final AudioDeltaMimeType AUDIO_WEBM = new AudioDeltaMimeType("audio/webm");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -133,6 +134,7 @@ public class AudioDeltaMimeType {
         map.put("audio/opus", AUDIO_OPUS);
         map.put("audio/alaw", AUDIO_ALAW);
         map.put("audio/mulaw", AUDIO_MULAW);
+        map.put("audio/webm", AUDIO_WEBM);
         return map;
     }
 
@@ -150,6 +152,7 @@ public class AudioDeltaMimeType {
         map.put("audio/opus", AudioDeltaMimeTypeEnum.AUDIO_OPUS);
         map.put("audio/alaw", AudioDeltaMimeTypeEnum.AUDIO_ALAW);
         map.put("audio/mulaw", AudioDeltaMimeTypeEnum.AUDIO_MULAW);
+        map.put("audio/webm", AudioDeltaMimeTypeEnum.AUDIO_WEBM);
         return map;
     }
     
@@ -167,7 +170,8 @@ public class AudioDeltaMimeType {
         AUDIO_L16("audio/l16"),
         AUDIO_OPUS("audio/opus"),
         AUDIO_ALAW("audio/alaw"),
-        AUDIO_MULAW("audio/mulaw"),;
+        AUDIO_MULAW("audio/mulaw"),
+        AUDIO_WEBM("audio/webm"),;
 
         private final String value;
 
