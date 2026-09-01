@@ -224,6 +224,17 @@ public class GenAI implements java.lang.AutoCloseable {
         }
 
         /**
+         * Allows setting the apiRevision parameter for all supported operations.
+         *
+         * @param apiRevision The value to set.
+         * @return The builder instance.
+         */
+        public Builder apiRevision(String apiRevision) {
+            this.sdkConfiguration.globals.putParam("header", "Api-Revision", apiRevision);
+            return this;
+        }
+
+        /**
          * Allows setting the userProject parameter for all supported operations.
          *
          * @param userProject The value to set.

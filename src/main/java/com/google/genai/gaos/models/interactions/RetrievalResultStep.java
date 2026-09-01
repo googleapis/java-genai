@@ -31,26 +31,28 @@ import jakarta.annotation.Nullable;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
-import java.util.List;
 import java.util.Optional;
 
-
-public class URLContextResultDelta implements StepDeltaData {
+/**
+ * RetrievalResultStep
+ * 
+ * <p>Vertex Retrieval result step.
+ * Used by Vertex Retrieval tools such as Parallel AI, Exa AI, Vertex AI Search,
+ * etc.
+ */
+public class RetrievalResultStep implements Step {
     /**
      * Required. ID to match the ID from the function call block.
      */
-    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("call_id")
     private String callId;
 
-
+    /**
+     * Whether the retrieval resulted in an error.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
     private Boolean isError;
-
-
-    @JsonProperty("result")
-    private List<URLContextResult> result;
 
     /**
      * A signature hash for backend validation.
@@ -64,23 +66,20 @@ public class URLContextResultDelta implements StepDeltaData {
     private String type;
 
     @JsonCreator
-    public URLContextResultDelta(
-            @JsonProperty("call_id") @Nullable String callId,
+    public RetrievalResultStep(
+            @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
-            @JsonProperty("result") @Nonnull List<URLContextResult> result,
             @JsonProperty("signature") @Nullable String signature) {
-        this.callId = callId;
+        this.callId = Optional.ofNullable(callId)
+            .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
-        this.result = Optional.ofNullable(result)
-            .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
-    public URLContextResultDelta(
-            @Nonnull List<URLContextResult> result) {
-        this(null, null, result,
-            null);
+    public RetrievalResultStep(
+            @Nonnull String callId) {
+        this(callId, null, null);
     }
 
     /**
@@ -90,12 +89,11 @@ public class URLContextResultDelta implements StepDeltaData {
         return Optional.ofNullable(this.callId);
     }
 
+    /**
+     * Whether the retrieval resulted in an error.
+     */
     public Optional<Boolean> isError() {
         return Optional.ofNullable(this.isError);
-    }
-
-    public Optional<List<URLContextResult>> result() {
-        return Optional.ofNullable(this.result);
     }
 
     /**
@@ -118,20 +116,17 @@ public class URLContextResultDelta implements StepDeltaData {
     /**
      * Required. ID to match the ID from the function call block.
      */
-    public URLContextResultDelta withCallId(@Nullable String callId) {
-        this.callId = callId;
+    public RetrievalResultStep withCallId(@Nonnull String callId) {
+        this.callId = Utils.checkNotNull(callId, "callId");
         return this;
     }
 
 
-    public URLContextResultDelta withIsError(@Nullable Boolean isError) {
+    /**
+     * Whether the retrieval resulted in an error.
+     */
+    public RetrievalResultStep withIsError(@Nullable Boolean isError) {
         this.isError = isError;
-        return this;
-    }
-
-
-    public URLContextResultDelta withResult(@Nonnull List<URLContextResult> result) {
-        this.result = Utils.checkNotNull(result, "result");
         return this;
     }
 
@@ -139,7 +134,7 @@ public class URLContextResultDelta implements StepDeltaData {
     /**
      * A signature hash for backend validation.
      */
-    public URLContextResultDelta withSignature(@Nullable String signature) {
+    public RetrievalResultStep withSignature(@Nullable String signature) {
         this.signature = signature;
         return this;
     }
@@ -153,11 +148,10 @@ public class URLContextResultDelta implements StepDeltaData {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        URLContextResultDelta other = (URLContextResultDelta) o;
+        RetrievalResultStep other = (RetrievalResultStep) o;
         return 
             Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.isError, other.isError) &&
-            Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -165,16 +159,15 @@ public class URLContextResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            callId, isError, result,
-            signature, type);
+            callId, isError, signature,
+            type);
     }
     
     @Override
     public String toString() {
-        return Utils.toString(URLContextResultDelta.class,
+        return Utils.toString(RetrievalResultStep.class,
                 "callId", callId,
                 "isError", isError,
-                "result", result,
                 "signature", signature,
                 "type", type);
     }
@@ -186,8 +179,6 @@ public class URLContextResultDelta implements StepDeltaData {
 
         private Boolean isError;
 
-        private List<URLContextResult> result;
-
         private String signature;
 
         private Builder() {
@@ -197,18 +188,16 @@ public class URLContextResultDelta implements StepDeltaData {
         /**
          * Required. ID to match the ID from the function call block.
          */
-        public Builder callId(@Nullable String callId) {
-            this.callId = callId;
+        public Builder callId(@Nonnull String callId) {
+            this.callId = Utils.checkNotNull(callId, "callId");
             return this;
         }
 
+        /**
+         * Whether the retrieval resulted in an error.
+         */
         public Builder isError(@Nullable Boolean isError) {
             this.isError = isError;
-            return this;
-        }
-
-        public Builder result(@Nonnull List<URLContextResult> result) {
-            this.result = Utils.checkNotNull(result, "result");
             return this;
         }
 
@@ -220,17 +209,16 @@ public class URLContextResultDelta implements StepDeltaData {
             return this;
         }
 
-        public URLContextResultDelta build() {
-            return new URLContextResultDelta(
-                callId, isError, result,
-                signature);
+        public RetrievalResultStep build() {
+            return new RetrievalResultStep(
+                callId, isError, signature);
         }
 
 
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
                 new LazySingletonValue<>(
                         "type",
-                        "\"url_context_result\"",
+                        "\"retrieval_result\"",
                         new TypeReference<String>() {});
     }
 }

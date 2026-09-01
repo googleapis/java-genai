@@ -52,6 +52,13 @@ public class StepStart implements InteractionSSEEvent {
     private int index;
 
     /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("metadata")
+    private StreamMetadata metadata;
+
+    /**
      * A step in the interaction.
      */
     @JsonProperty("step")
@@ -61,10 +68,12 @@ public class StepStart implements InteractionSSEEvent {
     public StepStart(
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("index") int index,
+            @JsonProperty("metadata") @Nullable StreamMetadata metadata,
             @JsonProperty("step") @Nonnull Step step) {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.index = index;
+        this.metadata = metadata;
         this.step = Optional.ofNullable(step)
             .orElseThrow(() -> new IllegalArgumentException("step cannot be null"));
     }
@@ -72,7 +81,8 @@ public class StepStart implements InteractionSSEEvent {
     public StepStart(
             int index,
             @Nonnull Step step) {
-        this(null, index, step);
+        this(null, index, null,
+            step);
     }
 
     /**
@@ -90,6 +100,13 @@ public class StepStart implements InteractionSSEEvent {
 
     public Optional<Integer> index() {
         return Optional.ofNullable(this.index);
+    }
+
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public Optional<StreamMetadata> metadata() {
+        return Optional.ofNullable(this.metadata);
     }
 
     /**
@@ -121,6 +138,15 @@ public class StepStart implements InteractionSSEEvent {
 
 
     /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public StepStart withMetadata(@Nullable StreamMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+
+    /**
      * A step in the interaction.
      */
     public StepStart withStep(@Nonnull Step step) {
@@ -142,6 +168,7 @@ public class StepStart implements InteractionSSEEvent {
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.index, other.index) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata) &&
             Utils.enhancedDeepEquals(this.step, other.step);
     }
     
@@ -149,7 +176,7 @@ public class StepStart implements InteractionSSEEvent {
     public int hashCode() {
         return Utils.enhancedHash(
             eventId, eventType, index,
-            step);
+            metadata, step);
     }
     
     @Override
@@ -158,6 +185,7 @@ public class StepStart implements InteractionSSEEvent {
                 "eventId", eventId,
                 "eventType", eventType,
                 "index", index,
+                "metadata", metadata,
                 "step", step);
     }
 
@@ -167,6 +195,8 @@ public class StepStart implements InteractionSSEEvent {
         private String eventId;
 
         private int index;
+
+        private StreamMetadata metadata;
 
         private Step step;
 
@@ -189,6 +219,14 @@ public class StepStart implements InteractionSSEEvent {
         }
 
         /**
+         * Optional metadata accompanying ANY streamed event.
+         */
+        public Builder metadata(@Nullable StreamMetadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        /**
          * A step in the interaction.
          */
         public Builder step(@Nonnull Step step) {
@@ -198,7 +236,8 @@ public class StepStart implements InteractionSSEEvent {
 
         public StepStart build() {
             return new StepStart(
-                eventId, index, step);
+                eventId, index, metadata,
+                step);
         }
 
 

@@ -34,6 +34,13 @@ import java.util.Optional;
 
 public class FileSearchCallDelta implements StepDeltaData {
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
+    /**
      * A signature hash for backend validation.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -46,13 +53,22 @@ public class FileSearchCallDelta implements StepDeltaData {
 
     @JsonCreator
     public FileSearchCallDelta(
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("signature") @Nullable String signature) {
+        this.id = id;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public FileSearchCallDelta() {
-        this(null);
+        this(null, null);
+    }
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
     }
 
     /**
@@ -69,6 +85,15 @@ public class FileSearchCallDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public FileSearchCallDelta withId(@Nullable String id) {
+        this.id = id;
+        return this;
     }
 
 
@@ -91,6 +116,7 @@ public class FileSearchCallDelta implements StepDeltaData {
         }
         FileSearchCallDelta other = (FileSearchCallDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -98,12 +124,13 @@ public class FileSearchCallDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            signature, type);
+            id, signature, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(FileSearchCallDelta.class,
+                "id", id,
                 "signature", signature,
                 "type", type);
     }
@@ -111,10 +138,20 @@ public class FileSearchCallDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String id;
+
         private String signature;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. A unique ID for this specific tool call.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
+            return this;
         }
 
         /**
@@ -127,7 +164,7 @@ public class FileSearchCallDelta implements StepDeltaData {
 
         public FileSearchCallDelta build() {
             return new FileSearchCallDelta(
-                signature);
+                id, signature);
         }
 
 

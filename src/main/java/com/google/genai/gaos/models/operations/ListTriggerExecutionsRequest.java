@@ -24,7 +24,7 @@ import com.google.genai.gaos.utils.SpeakeasyMetadata;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -32,74 +32,74 @@ import java.util.Optional;
 
 public class ListTriggerExecutionsRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource name of the trigger.
-     */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=trigger_id")
-    private String triggerId;
-
-    /**
-     * Optional. The maximum number of executions to return per page.
+     * The maximum number of executions to return per page.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_size")
-    private Long pageSize;
+    private Integer pageSize;
 
     /**
-     * Optional. A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous ListTriggerExecutions call.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=page_token")
     private String pageToken;
 
+    /**
+     * Required. The trigger ID to list executions from.
+     */
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=triggerId")
+    private String triggerId;
+
     @JsonCreator
     public ListTriggerExecutionsRequest(
             @Nullable String apiVersion,
-            @Nonnull String triggerId,
-            @Nullable Long pageSize,
-            @Nullable String pageToken) {
+            @Nullable Integer pageSize,
+            @Nullable String pageToken,
+            @Nonnull String triggerId) {
         this.apiVersion = apiVersion;
-        this.triggerId = Optional.ofNullable(triggerId)
-            .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
         this.pageSize = pageSize;
         this.pageToken = pageToken;
+        this.triggerId = Optional.ofNullable(triggerId)
+            .orElseThrow(() -> new IllegalArgumentException("triggerId cannot be null"));
     }
     
     public ListTriggerExecutionsRequest(
             @Nonnull String triggerId) {
-        this(null, triggerId, null,
-            null);
+        this(null, null, null,
+            triggerId);
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource name of the trigger.
+     * The maximum number of executions to return per page.
      */
-    public Optional<String> triggerId() {
-        return Optional.ofNullable(this.triggerId);
-    }
-
-    /**
-     * Optional. The maximum number of executions to return per page.
-     */
-    public Optional<Long> pageSize() {
+    public Optional<Integer> pageSize() {
         return Optional.ofNullable(this.pageSize);
     }
 
     /**
-     * Optional. A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous ListTriggerExecutions call.
      */
     public Optional<String> pageToken() {
         return Optional.ofNullable(this.pageToken);
+    }
+
+    /**
+     * Required. The trigger ID to list executions from.
+     */
+    public Optional<String> triggerId() {
+        return Optional.ofNullable(this.triggerId);
     }
 
     public static Builder builder() {
@@ -108,7 +108,7 @@ public class ListTriggerExecutionsRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public ListTriggerExecutionsRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -117,28 +117,28 @@ public class ListTriggerExecutionsRequest {
 
 
     /**
-     * Resource name of the trigger.
+     * The maximum number of executions to return per page.
      */
-    public ListTriggerExecutionsRequest withTriggerId(@Nonnull String triggerId) {
-        this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
-        return this;
-    }
-
-
-    /**
-     * Optional. The maximum number of executions to return per page.
-     */
-    public ListTriggerExecutionsRequest withPageSize(@Nullable Long pageSize) {
+    public ListTriggerExecutionsRequest withPageSize(@Nullable Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
 
 
     /**
-     * Optional. A page token from a previous ListTriggerExecutions call.
+     * A page token from a previous ListTriggerExecutions call.
      */
     public ListTriggerExecutionsRequest withPageToken(@Nullable String pageToken) {
         this.pageToken = pageToken;
+        return this;
+    }
+
+
+    /**
+     * Required. The trigger ID to list executions from.
+     */
+    public ListTriggerExecutionsRequest withTriggerId(@Nonnull String triggerId) {
+        this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
         return this;
     }
 
@@ -154,25 +154,25 @@ public class ListTriggerExecutionsRequest {
         ListTriggerExecutionsRequest other = (ListTriggerExecutionsRequest) o;
         return 
             Utils.enhancedDeepEquals(this.apiVersion, other.apiVersion) &&
-            Utils.enhancedDeepEquals(this.triggerId, other.triggerId) &&
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageToken, other.pageToken);
+            Utils.enhancedDeepEquals(this.pageToken, other.pageToken) &&
+            Utils.enhancedDeepEquals(this.triggerId, other.triggerId);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            apiVersion, triggerId, pageSize,
-            pageToken);
+            apiVersion, pageSize, pageToken,
+            triggerId);
     }
     
     @Override
     public String toString() {
         return Utils.toString(ListTriggerExecutionsRequest.class,
                 "apiVersion", apiVersion,
-                "triggerId", triggerId,
                 "pageSize", pageSize,
-                "pageToken", pageToken);
+                "pageToken", pageToken,
+                "triggerId", triggerId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -180,18 +180,18 @@ public class ListTriggerExecutionsRequest {
 
         private String apiVersion;
 
-        private String triggerId;
-
-        private Long pageSize;
+        private Integer pageSize;
 
         private String pageToken;
+
+        private String triggerId;
 
         private Builder() {
           // force use of static builder() method
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -199,33 +199,33 @@ public class ListTriggerExecutionsRequest {
         }
 
         /**
-         * Resource name of the trigger.
+         * The maximum number of executions to return per page.
          */
-        public Builder triggerId(@Nonnull String triggerId) {
-            this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
-            return this;
-        }
-
-        /**
-         * Optional. The maximum number of executions to return per page.
-         */
-        public Builder pageSize(@Nullable Long pageSize) {
+        public Builder pageSize(@Nullable Integer pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
         /**
-         * Optional. A page token from a previous ListTriggerExecutions call.
+         * A page token from a previous ListTriggerExecutions call.
          */
         public Builder pageToken(@Nullable String pageToken) {
             this.pageToken = pageToken;
             return this;
         }
 
+        /**
+         * Required. The trigger ID to list executions from.
+         */
+        public Builder triggerId(@Nonnull String triggerId) {
+            this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
+            return this;
+        }
+
         public ListTriggerExecutionsRequest build() {
             return new ListTriggerExecutionsRequest(
-                apiVersion, triggerId, pageSize,
-                pageToken);
+                apiVersion, pageSize, pageToken,
+                triggerId);
         }
 
     }

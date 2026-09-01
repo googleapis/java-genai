@@ -65,9 +65,7 @@ public class Interactions {
     }
 
     /**
-     * Creating an interaction
-     * 
-     * <p>Creates a new interaction.
+     * Generates a set of responses from the model.
      * 
      * @return The call builder
      */
@@ -76,9 +74,7 @@ public class Interactions {
     }
 
     /**
-     * Creating an interaction
-     * 
-     * <p>Creates a new interaction.
+     * Generates a set of responses from the model.
      * 
      * @param body The request body.
      * @return The response from the API call
@@ -89,11 +85,9 @@ public class Interactions {
     }
 
     /**
-     * Creating an interaction
+     * Generates a set of responses from the model.
      * 
-     * <p>Creates a new interaction.
-     * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body The request body.
      * @param options additional options
      * @return The response from the API call
@@ -109,9 +103,7 @@ public class Interactions {
     }
 
     /**
-     * Deleting an interaction
-     * 
-     * <p>Deletes the interaction by id.
+     * Deletes an interaction.
      * 
      * @return The call builder
      */
@@ -120,11 +112,10 @@ public class Interactions {
     }
 
     /**
-     * Deleting an interaction
+     * Deletes an interaction.
      * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param id The unique identifier of the interaction to delete.
+     * @param id Part of `name`. Required. The name of the interaction to delete.
+     *         Format: interactions/{interaction}
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -133,12 +124,11 @@ public class Interactions {
     }
 
     /**
-     * Deleting an interaction
+     * Deletes an interaction.
      * 
-     * <p>Deletes the interaction by id.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id The unique identifier of the interaction to delete.
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. Required. The name of the interaction to delete.
+     *         Format: interactions/{interaction}
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -153,9 +143,7 @@ public class Interactions {
     }
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Gets an interaction.
      * 
      * @return The call builder
      */
@@ -164,9 +152,7 @@ public class Interactions {
     }
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Gets an interaction.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -177,9 +163,7 @@ public class Interactions {
     }
 
     /**
-     * Retrieving an interaction
-     * 
-     * <p>Retrieves the full details of a single interaction based on its `Interaction.id`.
+     * Gets an interaction.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options
@@ -193,9 +177,7 @@ public class Interactions {
     }
 
     /**
-     * Canceling an interaction
-     * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
+     * Cancels an interaction.
      * 
      * @return The call builder
      */
@@ -204,11 +186,10 @@ public class Interactions {
     }
 
     /**
-     * Canceling an interaction
+     * Cancels an interaction.
      * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
-     * @param id The unique identifier of the interaction to cancel.
+     * @param id Part of `name`. Required. The name of the interaction to cancel.
+     *         Format: `interactions/{interaction}`.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
@@ -217,12 +198,11 @@ public class Interactions {
     }
 
     /**
-     * Canceling an interaction
+     * Cancels an interaction.
      * 
-     * <p>Cancels an interaction by id. This only applies to background interactions that are still running.
-     * 
-     * @param apiVersion Which version of the API to use.
-     * @param id The unique identifier of the interaction to cancel.
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. Required. The name of the interaction to cancel.
+     *         Format: `interactions/{interaction}`.
      * @param options additional options
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails

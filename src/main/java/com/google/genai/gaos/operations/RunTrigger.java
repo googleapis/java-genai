@@ -133,7 +133,7 @@ public class RunTrigger {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/triggers/{trigger_id}/executions",
+                    "/{api_version}/triggers/{triggerId}/executions",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "POST");
             req.addHeader("Accept", "application/json")
@@ -212,13 +212,6 @@ public class RunTrigger {
 
             RunTriggerResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withTriggerExecution(Utils.unmarshal(response, new TypeReference<TriggerExecution>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -226,6 +219,13 @@ public class RunTrigger {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withTriggerExecution(Utils.unmarshal(response, new TypeReference<TriggerExecution>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
@@ -299,13 +299,6 @@ public class RunTrigger {
 
             com.google.genai.gaos.models.operations.async.RunTriggerResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withTriggerExecution(Utils.unmarshal(response, new TypeReference<TriggerExecution>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -313,6 +306,13 @@ public class RunTrigger {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withTriggerExecution(Utils.unmarshal(response, new TypeReference<TriggerExecution>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }

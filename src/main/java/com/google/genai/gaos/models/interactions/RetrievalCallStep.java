@@ -32,20 +32,32 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
 
-
-public class GoogleSearchCallDelta implements StepDeltaData {
+/**
+ * RetrievalCallStep
+ * 
+ * <p>Retrieval call step.
+ * Used by Vertex Retrieval tools such as Parallel AI, Exa AI, Vertex AI Search,
+ * etc. RetrievalType decides which tool is used.
+ */
+public class RetrievalCallStep implements Step {
     /**
-     * The arguments to pass to Google Search.
+     * The arguments to pass to Retrieval tools.
      */
     @JsonProperty("arguments")
-    private GoogleSearchCallArguments arguments;
+    private RetrievalCallArguments arguments;
 
     /**
      * Required. A unique ID for this specific tool call.
      */
-    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("id")
     private String id;
+
+    /**
+     * The type of retrieval tools.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("retrieval_type")
+    private RetrievalCallStepRetrievalType retrievalType;
 
     /**
      * A signature hash for backend validation.
@@ -59,26 +71,31 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     private String type;
 
     @JsonCreator
-    public GoogleSearchCallDelta(
-            @JsonProperty("arguments") @Nonnull GoogleSearchCallArguments arguments,
-            @JsonProperty("id") @Nullable String id,
+    public RetrievalCallStep(
+            @JsonProperty("arguments") @Nonnull RetrievalCallArguments arguments,
+            @JsonProperty("id") @Nonnull String id,
+            @JsonProperty("retrieval_type") @Nullable RetrievalCallStepRetrievalType retrievalType,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
-        this.id = id;
+        this.id = Optional.ofNullable(id)
+            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.retrievalType = retrievalType;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
-    public GoogleSearchCallDelta(
-            @Nonnull GoogleSearchCallArguments arguments) {
-        this(arguments, null, null);
+    public RetrievalCallStep(
+            @Nonnull RetrievalCallArguments arguments,
+            @Nonnull String id) {
+        this(arguments, id, null,
+            null);
     }
 
     /**
-     * The arguments to pass to Google Search.
+     * The arguments to pass to Retrieval tools.
      */
-    public Optional<GoogleSearchCallArguments> arguments() {
+    public Optional<RetrievalCallArguments> arguments() {
         return Optional.ofNullable(this.arguments);
     }
 
@@ -87,6 +104,13 @@ public class GoogleSearchCallDelta implements StepDeltaData {
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
+    }
+
+    /**
+     * The type of retrieval tools.
+     */
+    public Optional<RetrievalCallStepRetrievalType> retrievalType() {
+        return Optional.ofNullable(this.retrievalType);
     }
 
     /**
@@ -107,9 +131,9 @@ public class GoogleSearchCallDelta implements StepDeltaData {
 
 
     /**
-     * The arguments to pass to Google Search.
+     * The arguments to pass to Retrieval tools.
      */
-    public GoogleSearchCallDelta withArguments(@Nonnull GoogleSearchCallArguments arguments) {
+    public RetrievalCallStep withArguments(@Nonnull RetrievalCallArguments arguments) {
         this.arguments = Utils.checkNotNull(arguments, "arguments");
         return this;
     }
@@ -118,8 +142,17 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     /**
      * Required. A unique ID for this specific tool call.
      */
-    public GoogleSearchCallDelta withId(@Nullable String id) {
-        this.id = id;
+    public RetrievalCallStep withId(@Nonnull String id) {
+        this.id = Utils.checkNotNull(id, "id");
+        return this;
+    }
+
+
+    /**
+     * The type of retrieval tools.
+     */
+    public RetrievalCallStep withRetrievalType(@Nullable RetrievalCallStepRetrievalType retrievalType) {
+        this.retrievalType = retrievalType;
         return this;
     }
 
@@ -127,7 +160,7 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     /**
      * A signature hash for backend validation.
      */
-    public GoogleSearchCallDelta withSignature(@Nullable String signature) {
+    public RetrievalCallStep withSignature(@Nullable String signature) {
         this.signature = signature;
         return this;
     }
@@ -141,10 +174,11 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        GoogleSearchCallDelta other = (GoogleSearchCallDelta) o;
+        RetrievalCallStep other = (RetrievalCallStep) o;
         return 
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.retrievalType, other.retrievalType) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -152,15 +186,16 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            arguments, id, signature,
-            type);
+            arguments, id, retrievalType,
+            signature, type);
     }
     
     @Override
     public String toString() {
-        return Utils.toString(GoogleSearchCallDelta.class,
+        return Utils.toString(RetrievalCallStep.class,
                 "arguments", arguments,
                 "id", id,
+                "retrievalType", retrievalType,
                 "signature", signature,
                 "type", type);
     }
@@ -168,9 +203,11 @@ public class GoogleSearchCallDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private GoogleSearchCallArguments arguments;
+        private RetrievalCallArguments arguments;
 
         private String id;
+
+        private RetrievalCallStepRetrievalType retrievalType;
 
         private String signature;
 
@@ -179,9 +216,9 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         }
 
         /**
-         * The arguments to pass to Google Search.
+         * The arguments to pass to Retrieval tools.
          */
-        public Builder arguments(@Nonnull GoogleSearchCallArguments arguments) {
+        public Builder arguments(@Nonnull RetrievalCallArguments arguments) {
             this.arguments = Utils.checkNotNull(arguments, "arguments");
             return this;
         }
@@ -189,8 +226,16 @@ public class GoogleSearchCallDelta implements StepDeltaData {
         /**
          * Required. A unique ID for this specific tool call.
          */
-        public Builder id(@Nullable String id) {
-            this.id = id;
+        public Builder id(@Nonnull String id) {
+            this.id = Utils.checkNotNull(id, "id");
+            return this;
+        }
+
+        /**
+         * The type of retrieval tools.
+         */
+        public Builder retrievalType(@Nullable RetrievalCallStepRetrievalType retrievalType) {
+            this.retrievalType = retrievalType;
             return this;
         }
 
@@ -202,16 +247,17 @@ public class GoogleSearchCallDelta implements StepDeltaData {
             return this;
         }
 
-        public GoogleSearchCallDelta build() {
-            return new GoogleSearchCallDelta(
-                arguments, id, signature);
+        public RetrievalCallStep build() {
+            return new RetrievalCallStep(
+                arguments, id, retrievalType,
+                signature);
         }
 
 
         private static final LazySingletonValue<String> _SINGLETON_VALUE_Type =
                 new LazySingletonValue<>(
                         "type",
-                        "\"google_search_call\"",
+                        "\"retrieval_call\"",
                         new TypeReference<String>() {});
     }
 }

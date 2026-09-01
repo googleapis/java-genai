@@ -133,7 +133,7 @@ public class DeleteInteraction {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/interactions/{id}",
+                    "/{api_version}/interactions/{interactionsId}",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "DELETE");
             req.addHeader("Accept", "application/json")

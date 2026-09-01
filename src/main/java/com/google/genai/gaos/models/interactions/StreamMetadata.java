@@ -23,8 +23,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
 import java.lang.Override;
@@ -32,42 +30,33 @@ import java.lang.String;
 import java.util.Optional;
 
 /**
- * Ranking
+ * StreamMetadata
  * 
- * <p>Config for ranking and reranking.
+ * <p>Optional metadata accompanying ANY streamed event.
  */
-public class Ranking {
+public class StreamMetadata {
     /**
-     * Optional. The model name of the rank service.
+     * Statistics on the interaction request's token usage.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("model_name")
-    private String modelName;
-
-
-    @JsonProperty("ranking_config")
-    private String rankingConfig;
+    @JsonProperty("total_usage")
+    private Usage totalUsage;
 
     @JsonCreator
-    public Ranking(
-            @JsonProperty("model_name") @Nullable String modelName) {
-        this.modelName = modelName;
-        this.rankingConfig = Builder._SINGLETON_VALUE_RankingConfig.value();
+    public StreamMetadata(
+            @JsonProperty("total_usage") @Nullable Usage totalUsage) {
+        this.totalUsage = totalUsage;
     }
     
-    public Ranking() {
+    public StreamMetadata() {
         this(null);
     }
 
     /**
-     * Optional. The model name of the rank service.
+     * Statistics on the interaction request's token usage.
      */
-    public Optional<String> modelName() {
-        return Optional.ofNullable(this.modelName);
-    }
-
-    public Optional<String> rankingConfig() {
-        return Optional.ofNullable(this.rankingConfig);
+    public Optional<Usage> totalUsage() {
+        return Optional.ofNullable(this.totalUsage);
     }
 
     public static Builder builder() {
@@ -76,10 +65,10 @@ public class Ranking {
 
 
     /**
-     * Optional. The model name of the rank service.
+     * Statistics on the interaction request's token usage.
      */
-    public Ranking withModelName(@Nullable String modelName) {
-        this.modelName = modelName;
+    public StreamMetadata withTotalUsage(@Nullable Usage totalUsage) {
+        this.totalUsage = totalUsage;
         return this;
     }
 
@@ -92,52 +81,44 @@ public class Ranking {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Ranking other = (Ranking) o;
+        StreamMetadata other = (StreamMetadata) o;
         return 
-            Utils.enhancedDeepEquals(this.modelName, other.modelName) &&
-            Utils.enhancedDeepEquals(this.rankingConfig, other.rankingConfig);
+            Utils.enhancedDeepEquals(this.totalUsage, other.totalUsage);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            modelName, rankingConfig);
+            totalUsage);
     }
     
     @Override
     public String toString() {
-        return Utils.toString(Ranking.class,
-                "modelName", modelName,
-                "rankingConfig", rankingConfig);
+        return Utils.toString(StreamMetadata.class,
+                "totalUsage", totalUsage);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String modelName;
+        private Usage totalUsage;
 
         private Builder() {
           // force use of static builder() method
         }
 
         /**
-         * Optional. The model name of the rank service.
+         * Statistics on the interaction request's token usage.
          */
-        public Builder modelName(@Nullable String modelName) {
-            this.modelName = modelName;
+        public Builder totalUsage(@Nullable Usage totalUsage) {
+            this.totalUsage = totalUsage;
             return this;
         }
 
-        public Ranking build() {
-            return new Ranking(
-                modelName);
+        public StreamMetadata build() {
+            return new StreamMetadata(
+                totalUsage);
         }
 
-
-        private static final LazySingletonValue<String> _SINGLETON_VALUE_RankingConfig =
-                new LazySingletonValue<>(
-                        "ranking_config",
-                        "\"rank_service\"",
-                        new TypeReference<String>() {});
     }
 }

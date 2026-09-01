@@ -56,7 +56,7 @@ import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
@@ -104,16 +104,17 @@ public class AsyncTriggers {
     /**
      * Lists triggers for a project.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param filter Optional. Filter expression (e.g., by state).
-     * @param pageSize Optional. The maximum number of triggers to return per page.
-     * @param pageToken Optional. A page token from a previous ListTriggers call.
+     * @param apiVersion API version for request routing.
+     * @param filter Optional. Filter expression (e.g. `agent="agents/my-agent-id"`). Only
+     *         equality filtering on the `agent` field is currently supported.
+     * @param pageSize The maximum number of triggers to return per page.
+     * @param pageToken A page token from a previous ListTriggers call.
      * @param options additional options
      * @return {@code CompletableFuture<ListTriggersResponse>} - The async response
      */
     public CompletableFuture<ListTriggersResponse> list(
             @Nullable String apiVersion, @Nullable String filter,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable Integer pageSize, @Nullable String pageToken,
             @Nullable Options options) {
         ListTriggersRequest request = new ListTriggersRequest(
                 apiVersion, filter, pageSize,
@@ -128,7 +129,8 @@ public class AsyncTriggers {
 
 
     /**
-     * Creates a new trigger that will invoke the specified agent on the given cron schedule.
+     * Creates a new trigger that will invoke the specified agent
+     * on the given cron schedule.
      * 
      * @return The async call builder
      */
@@ -137,7 +139,8 @@ public class AsyncTriggers {
     }
 
     /**
-     * Creates a new trigger that will invoke the specified agent on the given cron schedule.
+     * Creates a new trigger that will invoke the specified agent
+     * on the given cron schedule.
      * 
      * @param body Parameters for creating a trigger.
      * @return {@code CompletableFuture<CreateTriggerResponse>} - The async response
@@ -147,9 +150,10 @@ public class AsyncTriggers {
     }
 
     /**
-     * Creates a new trigger that will invoke the specified agent on the given cron schedule.
+     * Creates a new trigger that will invoke the specified agent
+     * on the given cron schedule.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Parameters for creating a trigger.
      * @param options additional options
      * @return {@code CompletableFuture<CreateTriggerResponse>} - The async response
@@ -168,7 +172,8 @@ public class AsyncTriggers {
 
 
     /**
-     * Deletes a trigger.
+     * Deletes a trigger. Does not delete past interaction histories
+     * or environments created by past executions.
      * 
      * @return The async call builder
      */
@@ -177,9 +182,10 @@ public class AsyncTriggers {
     }
 
     /**
-     * Deletes a trigger.
+     * Deletes a trigger. Does not delete past interaction histories
+     * or environments created by past executions.
      * 
-     * @param id Resource name of the trigger.
+     * @param id Required. The ID of the trigger to delete.
      * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
     public CompletableFuture<DeleteTriggerResponse> delete(@Nonnull String id) {
@@ -187,10 +193,11 @@ public class AsyncTriggers {
     }
 
     /**
-     * Deletes a trigger.
+     * Deletes a trigger. Does not delete past interaction histories
+     * or environments created by past executions.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource name of the trigger.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The ID of the trigger to delete.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteTriggerResponse>} - The async response
      */
@@ -208,7 +215,7 @@ public class AsyncTriggers {
 
 
     /**
-     * Gets details of a single trigger.
+     * Gets a trigger, including recent execution history.
      * 
      * @return The async call builder
      */
@@ -217,9 +224,9 @@ public class AsyncTriggers {
     }
 
     /**
-     * Gets details of a single trigger.
+     * Gets a trigger, including recent execution history.
      * 
-     * @param id Resource name of the trigger.
+     * @param id Required. The ID of the trigger to retrieve.
      * @return {@code CompletableFuture<GetTriggerResponse>} - The async response
      */
     public CompletableFuture<GetTriggerResponse> get(@Nonnull String id) {
@@ -227,10 +234,10 @@ public class AsyncTriggers {
     }
 
     /**
-     * Gets details of a single trigger.
+     * Gets a trigger, including recent execution history.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource name of the trigger.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The ID of the trigger to retrieve.
      * @param options additional options
      * @return {@code CompletableFuture<GetTriggerResponse>} - The async response
      */
@@ -248,7 +255,7 @@ public class AsyncTriggers {
 
 
     /**
-     * Updates a trigger.
+     * Updates a trigger. Supports partial updates via field_mask.
      * 
      * @return The async call builder
      */
@@ -257,9 +264,9 @@ public class AsyncTriggers {
     }
 
     /**
-     * Updates a trigger.
+     * Updates a trigger. Supports partial updates via field_mask.
      * 
-     * @param id Resource name of the trigger.
+     * @param id Required. The ID of the trigger to update.
      * @param body Represents the fields of a Trigger that can be updated.
      * @return {@code CompletableFuture<UpdateTriggerResponse>} - The async response
      */
@@ -270,10 +277,10 @@ public class AsyncTriggers {
     }
 
     /**
-     * Updates a trigger.
+     * Updates a trigger. Supports partial updates via field_mask.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource name of the trigger.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The ID of the trigger to update.
      * @param body Represents the fields of a Trigger that can be updated.
      * @param options additional options
      * @return {@code CompletableFuture<UpdateTriggerResponse>} - The async response
@@ -303,32 +310,32 @@ public class AsyncTriggers {
     /**
      * Lists executions for a trigger.
      * 
-     * @param triggerId Resource name of the trigger.
+     * @param triggerId Required. The trigger ID to list executions from.
      * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
     public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(@Nonnull String triggerId) {
         return listExecutions(
-                null, triggerId, null,
-                null, null);
+                null, null, null,
+                triggerId, null);
     }
 
     /**
      * Lists executions for a trigger.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param triggerId Resource name of the trigger.
-     * @param pageSize Optional. The maximum number of executions to return per page.
-     * @param pageToken Optional. A page token from a previous ListTriggerExecutions call.
+     * @param apiVersion API version for request routing.
+     * @param pageSize The maximum number of executions to return per page.
+     * @param pageToken A page token from a previous ListTriggerExecutions call.
+     * @param triggerId Required. The trigger ID to list executions from.
      * @param options additional options
      * @return {@code CompletableFuture<ListTriggerExecutionsResponse>} - The async response
      */
     public CompletableFuture<ListTriggerExecutionsResponse> listExecutions(
-            @Nullable String apiVersion, @Nonnull String triggerId,
-            @Nullable Long pageSize, @Nullable String pageToken,
+            @Nullable String apiVersion, @Nullable Integer pageSize,
+            @Nullable String pageToken, @Nonnull String triggerId,
             @Nullable Options options) {
         ListTriggerExecutionsRequest request = new ListTriggerExecutionsRequest(
-                apiVersion, triggerId, pageSize,
-                pageToken);
+                apiVersion, pageSize, pageToken,
+                triggerId);
         AsyncRequestOperation<ListTriggerExecutionsRequest, ListTriggerExecutionsResponse> operation
               = new ListTriggerExecutions.Async(
                                     sdkConfiguration, options, sdkConfiguration.retryScheduler(),
@@ -339,7 +346,8 @@ public class AsyncTriggers {
 
 
     /**
-     * Runs a trigger immediately.
+     * Immediately fires a trigger, bypassing the cron schedule.
+     * Useful for testing and manual runs.
      * 
      * @return The async call builder
      */
@@ -348,9 +356,10 @@ public class AsyncTriggers {
     }
 
     /**
-     * Runs a trigger immediately.
+     * Immediately fires a trigger, bypassing the cron schedule.
+     * Useful for testing and manual runs.
      * 
-     * @param triggerId Resource name of the trigger.
+     * @param triggerId Required. The ID of the trigger to run immediately.
      * @return {@code CompletableFuture<RunTriggerResponse>} - The async response
      */
     public CompletableFuture<RunTriggerResponse> run(@Nonnull String triggerId) {
@@ -358,10 +367,11 @@ public class AsyncTriggers {
     }
 
     /**
-     * Runs a trigger immediately.
+     * Immediately fires a trigger, bypassing the cron schedule.
+     * Useful for testing and manual runs.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param triggerId Resource name of the trigger.
+     * @param apiVersion API version for request routing.
+     * @param triggerId Required. The ID of the trigger to run immediately.
      * @param options additional options
      * @return {@code CompletableFuture<RunTriggerResponse>} - The async response
      */

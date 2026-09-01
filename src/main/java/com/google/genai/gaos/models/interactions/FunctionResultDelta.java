@@ -55,6 +55,13 @@ public class FunctionResultDelta implements StepDeltaData {
     @JsonProperty("result")
     private FunctionResultDeltaResultUnion result;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
@@ -64,13 +71,15 @@ public class FunctionResultDelta implements StepDeltaData {
             @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("name") @Nullable String name,
-            @JsonProperty("result") @Nonnull FunctionResultDeltaResultUnion result) {
+            @JsonProperty("result") @Nonnull FunctionResultDeltaResultUnion result,
+            @JsonProperty("signature") @Nullable String signature) {
         this.callId = Optional.ofNullable(callId)
             .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.isError = isError;
         this.name = name;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
@@ -78,7 +87,7 @@ public class FunctionResultDelta implements StepDeltaData {
             @Nonnull String callId,
             @Nonnull FunctionResultDeltaResultUnion result) {
         this(callId, null, null,
-            result);
+            result, null);
     }
 
     /**
@@ -98,6 +107,13 @@ public class FunctionResultDelta implements StepDeltaData {
 
     public Optional<FunctionResultDeltaResultUnion> result() {
         return Optional.ofNullable(this.result);
+    }
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
     }
 
     @Override
@@ -137,6 +153,15 @@ public class FunctionResultDelta implements StepDeltaData {
     }
 
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public FunctionResultDelta withSignature(@Nullable String signature) {
+        this.signature = signature;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -151,6 +176,7 @@ public class FunctionResultDelta implements StepDeltaData {
             Utils.enhancedDeepEquals(this.isError, other.isError) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
@@ -158,7 +184,7 @@ public class FunctionResultDelta implements StepDeltaData {
     public int hashCode() {
         return Utils.enhancedHash(
             callId, isError, name,
-            result, type);
+            result, signature, type);
     }
     
     @Override
@@ -168,6 +194,7 @@ public class FunctionResultDelta implements StepDeltaData {
                 "isError", isError,
                 "name", name,
                 "result", result,
+                "signature", signature,
                 "type", type);
     }
 
@@ -181,6 +208,8 @@ public class FunctionResultDelta implements StepDeltaData {
         private String name;
 
         private FunctionResultDeltaResultUnion result;
+
+        private String signature;
 
         private Builder() {
           // force use of static builder() method
@@ -209,10 +238,18 @@ public class FunctionResultDelta implements StepDeltaData {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public FunctionResultDelta build() {
             return new FunctionResultDelta(
                 callId, isError, name,
-                result);
+                result, signature);
         }
 
 
