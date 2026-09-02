@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.70.0](https://github.com/googleapis/java-genai/compare/v1.69.0...v1.70.0) (2026-09-02)
+
+
+### Features
+
+* Add Gemini 3.8 Flash model to SDKs and update Flash model descriptions ([b5d21c9](https://github.com/googleapis/java-genai/commit/b5d21c90c3dd5e7b08c867ae48e4ae70d29b923f))
+
 ## [1.69.0](https://github.com/googleapis/java-genai/compare/v1.68.0...v1.69.0) (2026-08-31)
 
 
