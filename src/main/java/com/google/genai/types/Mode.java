@@ -23,49 +23,47 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Ascii;
 import java.util.Objects;
 
-/** Output only. The traffic type for this request. This enum is not supported in Gemini API. */
-public class TrafficType {
+/**
+ * Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If unspecified, defaults to
+ * `VERBATIM` transcription. In `SMART` mode, the model performs disfluency removal (eliminating
+ * filler words, repetitions, and false starts), light grammatical cleanup, automatic formatting
+ * (paragraphs, bullet points, numbered lists), and minor user edits (inline self-corrections).
+ * Timestamps and diarization are incompatible with mode `SMART`. This enum is not supported in
+ * Vertex AI.
+ */
+public class Mode {
 
-  /** Enum representing the known values for TrafficType. */
+  /** Enum representing the known values for Mode. */
   public enum Known {
-    /** Unspecified request traffic type. */
-    TRAFFIC_TYPE_UNSPECIFIED,
+    /** Unspecified transcription mode. */
+    MODE_UNSPECIFIED,
 
-    /** The request was processed using Pay-As-You-Go quota. */
-    ON_DEMAND,
+    /** Verbatim transcription mode. */
+    VERBATIM,
 
-    /** Type for Priority Pay-As-You-Go traffic. */
-    ON_DEMAND_PRIORITY,
-
-    /** Type for Flex traffic. */
-    ON_DEMAND_FLEX,
-
-    /** Type for Off-Peak Pay-As-You-Go traffic. */
-    ON_DEMAND_OFFPEAK,
-
-    /** Type for Provisioned Throughput traffic. */
-    PROVISIONED_THROUGHPUT
+    /** Smart transcription mode. */
+    SMART
   }
 
-  private Known trafficTypeEnum;
+  private Known modeEnum;
   private final String value;
 
   @JsonCreator
-  public TrafficType(String value) {
+  public Mode(String value) {
     this.value = value;
-    for (Known trafficTypeEnum : Known.values()) {
-      if (Ascii.equalsIgnoreCase(trafficTypeEnum.toString(), value)) {
-        this.trafficTypeEnum = trafficTypeEnum;
+    for (Known modeEnum : Known.values()) {
+      if (Ascii.equalsIgnoreCase(modeEnum.toString(), value)) {
+        this.modeEnum = modeEnum;
         break;
       }
     }
-    if (this.trafficTypeEnum == null) {
-      this.trafficTypeEnum = Known.TRAFFIC_TYPE_UNSPECIFIED;
+    if (this.modeEnum == null) {
+      this.modeEnum = Known.MODE_UNSPECIFIED;
     }
   }
 
-  public TrafficType(Known knownValue) {
-    this.trafficTypeEnum = knownValue;
+  public Mode(Known knownValue) {
+    this.modeEnum = knownValue;
     this.value = knownValue.toString();
   }
 
@@ -87,17 +85,16 @@ public class TrafficType {
       return false;
     }
 
-    if (!(o instanceof TrafficType)) {
+    if (!(o instanceof Mode)) {
       return false;
     }
 
-    TrafficType other = (TrafficType) o;
+    Mode other = (Mode) o;
 
-    if (this.trafficTypeEnum != Known.TRAFFIC_TYPE_UNSPECIFIED
-        && other.trafficTypeEnum != Known.TRAFFIC_TYPE_UNSPECIFIED) {
-      return this.trafficTypeEnum == other.trafficTypeEnum;
-    } else if (this.trafficTypeEnum == Known.TRAFFIC_TYPE_UNSPECIFIED
-        && other.trafficTypeEnum == Known.TRAFFIC_TYPE_UNSPECIFIED) {
+    if (this.modeEnum != Known.MODE_UNSPECIFIED && other.modeEnum != Known.MODE_UNSPECIFIED) {
+      return this.modeEnum == other.modeEnum;
+    } else if (this.modeEnum == Known.MODE_UNSPECIFIED
+        && other.modeEnum == Known.MODE_UNSPECIFIED) {
       return this.value.equals(other.value);
     }
     return false;
@@ -106,8 +103,8 @@ public class TrafficType {
   @ExcludeFromGeneratedCoverageReport
   @Override
   public int hashCode() {
-    if (this.trafficTypeEnum != Known.TRAFFIC_TYPE_UNSPECIFIED) {
-      return this.trafficTypeEnum.hashCode();
+    if (this.modeEnum != Known.MODE_UNSPECIFIED) {
+      return this.modeEnum.hashCode();
     } else {
       return Objects.hashCode(this.value);
     }
@@ -115,6 +112,6 @@ public class TrafficType {
 
   @ExcludeFromGeneratedCoverageReport
   public Known knownEnum() {
-    return this.trafficTypeEnum;
+    return this.modeEnum;
   }
 }
