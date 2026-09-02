@@ -47,6 +47,7 @@ import com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse;
 import com.google.genai.gaos.models.interactions.Source;
 import com.google.genai.gaos.models.interactions.SourceType;
 import com.google.genai.gaos.models.operations.CreateEnvironmentResponse;
+import com.google.genai.gaos.models.operations.DeleteEnvironmentResponse;
 import com.google.genai.gaos.models.operations.GetEnvironmentFilesRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +58,9 @@ public final class EnvironmentFiles {
     Client client = new Client();
 
     if (client.vertexAI()) {
-      System.out.println("Environment Files API is currently supported on Gemini API (MLDev). Skipping on Vertex.");
+      System.out.println(
+          "Environment Files API is currently supported on Gemini API (MLDev). Skipping on"
+              + " Vertex.");
       return;
     }
 
@@ -156,7 +159,7 @@ public final class EnvironmentFiles {
               });
     } finally {
       System.out.println("\n--- 5. Cleaning up Environment ID: " + envId + " ---");
-      var deleteRes = client.environments.deleteEnvironment(envId);
+      DeleteEnvironmentResponse deleteRes = client.environments.deleteEnvironment(envId);
       System.out.println("Environment deleted successfully: " + deleteRes.statusCode());
     }
   }
