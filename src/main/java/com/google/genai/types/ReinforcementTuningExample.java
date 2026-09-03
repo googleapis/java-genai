@@ -61,6 +61,10 @@ public abstract class ReinforcementTuningExample extends JsonSerializable {
   @JsonProperty("systemInstruction")
   public abstract Optional<Content> systemInstruction();
 
+  /** Optional. Corresponds to tools in user-facing GenerateContentRequest. */
+  @JsonProperty("tools")
+  public abstract Optional<List<Tool>> tools();
+
   /** Instantiates a builder for ReinforcementTuningExample. */
   @ExcludeFromGeneratedCoverageReport
   public static Builder builder() {
@@ -175,6 +179,47 @@ public abstract class ReinforcementTuningExample extends JsonSerializable {
     @CanIgnoreReturnValue
     public Builder clearSystemInstruction() {
       return systemInstruction(Optional.empty());
+    }
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: Optional. Corresponds to tools in user-facing GenerateContentRequest.
+     */
+    @JsonProperty("tools")
+    public abstract Builder tools(List<Tool> tools);
+
+    /**
+     * Setter for tools.
+     *
+     * <p>tools: Optional. Corresponds to tools in user-facing GenerateContentRequest.
+     */
+    @CanIgnoreReturnValue
+    public Builder tools(Tool... tools) {
+      return tools(Arrays.asList(tools));
+    }
+
+    /**
+     * Setter for tools builder.
+     *
+     * <p>tools: Optional. Corresponds to tools in user-facing GenerateContentRequest.
+     */
+    @CanIgnoreReturnValue
+    public Builder tools(Tool.Builder... toolsBuilders) {
+      return tools(
+          Arrays.asList(toolsBuilders).stream()
+              .map(Tool.Builder::build)
+              .collect(toImmutableList()));
+    }
+
+    @ExcludeFromGeneratedCoverageReport
+    abstract Builder tools(Optional<List<Tool>> tools);
+
+    /** Clears the value of tools field. */
+    @ExcludeFromGeneratedCoverageReport
+    @CanIgnoreReturnValue
+    public Builder clearTools() {
+      return tools(Optional.empty());
     }
 
     public abstract ReinforcementTuningExample build();
