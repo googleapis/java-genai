@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.genai.types.File;
 import com.google.genai.types.FunctionDeclaration;
@@ -124,6 +125,43 @@ public class TransformersTest {
             .build();
     Schema transformedSchema = Transformers.tSchema(schema);
     assertEquals(schema, transformedSchema);
+  }
+
+  @Test
+  public void testTSchema_PropertyOrdering_autoPopulated() {
+    Schema schema =
+        Schema.builder()
+            .type("OBJECT")
+            .properties(
+                ImmutableMap.of(
+                    "name", Schema.builder().type("STRING").build(),
+                    "age", Schema.builder().type("INTEGER").build()))
+            .build();
+
+    Schema transformedSchema = Transformers.tSchema(schema);
+    assertTrue(transformedSchema.propertyOrdering().isPresent());
+    assertEquals(
+        ImmutableList.of("name", "age"),
+        transformedSchema.propertyOrdering().get());
+  }
+
+  @Test
+  public void testTSchema_PropertyOrdering_preservedIfExplicit() {
+    Schema schema =
+        Schema.builder()
+            .type("OBJECT")
+            .properties(
+                ImmutableMap.of(
+                    "name", Schema.builder().type("STRING").build(),
+                    "age", Schema.builder().type("INTEGER").build()))
+            .propertyOrdering("age", "name")
+            .build();
+
+    Schema transformedSchema = Transformers.tSchema(schema);
+    assertTrue(transformedSchema.propertyOrdering().isPresent());
+    assertEquals(
+        ImmutableList.of("age", "name"),
+        transformedSchema.propertyOrdering().get());
   }
 
   @Test
