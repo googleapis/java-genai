@@ -31,14 +31,13 @@ import java.util.Optional;
 
 public class GetEnvironmentRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. The identifier of the environment to retrieve.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
@@ -58,15 +57,14 @@ public class GetEnvironmentRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. The identifier of the environment to retrieve.
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
@@ -78,7 +76,7 @@ public class GetEnvironmentRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public GetEnvironmentRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -87,8 +85,7 @@ public class GetEnvironmentRequest {
 
 
     /**
-     * Resource ID segment making up resource `name`. It identifies the resource within its parent
-     * collection as described in https://google.aip.dev/122.
+     * Required. The identifier of the environment to retrieve.
      */
     public GetEnvironmentRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -135,7 +132,7 @@ public class GetEnvironmentRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -143,8 +140,7 @@ public class GetEnvironmentRequest {
         }
 
         /**
-         * Resource ID segment making up resource `name`. It identifies the resource within its parent
-         * collection as described in https://google.aip.dev/122.
+         * Required. The identifier of the environment to retrieve.
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");

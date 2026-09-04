@@ -74,7 +74,7 @@ public class AsyncEnvironments {
 
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
      * @return The async call builder
      */
@@ -83,7 +83,7 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
      * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
      */
@@ -94,11 +94,12 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Lists environments.
+     * Lists environments (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param pageSize Optional. Maximum number of environments to return.\nIf unspecified, defaults to 50. Maximum is 1000.
-     * @param pageToken Optional. Pagination token.
+     * @param apiVersion API version for request routing.
+     * @param pageSize Maximum number of environments to return.
+     *         If unspecified, defaults to 50. Maximum is 1000.
+     * @param pageToken Pagination token.
      * @param options additional options
      * @return {@code CompletableFuture<ListEnvironmentsResponse>} - The async response
      */
@@ -116,7 +117,7 @@ public class AsyncEnvironments {
 
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
      * @return The async call builder
      */
@@ -125,7 +126,7 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
      * @param body Request for `CreateEnvironment`.
      * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
@@ -135,9 +136,9 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Creates an environment.
+     * Creates an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body Request for `CreateEnvironment`.
      * @param options additional options
      * @return {@code CompletableFuture<CreateEnvironmentResponse>} - The async response
@@ -156,7 +157,7 @@ public class AsyncEnvironments {
 
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
      * @return The async call builder
      */
@@ -165,9 +166,9 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. The identifier of the environment to delete.
      * @return {@code CompletableFuture<DeleteEnvironmentResponse>} - The async response
      */
     public CompletableFuture<DeleteEnvironmentResponse> deleteEnvironment(@Nonnull String id) {
@@ -175,10 +176,10 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Deletes an environment.
+     * Deletes an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The identifier of the environment to delete.
      * @param options additional options
      * @return {@code CompletableFuture<DeleteEnvironmentResponse>} - The async response
      */
@@ -196,7 +197,7 @@ public class AsyncEnvironments {
 
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
      * @return The async call builder
      */
@@ -205,9 +206,9 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param id Required. The identifier of the environment to retrieve.
      * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
      */
     public CompletableFuture<GetEnvironmentResponse> getEnvironment(@Nonnull String id) {
@@ -215,10 +216,10 @@ public class AsyncEnvironments {
     }
 
     /**
-     * Gets an environment.
+     * Gets an environment (HTTP endpoint).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Resource ID segment making up resource `name`. It identifies the resource within its parent collection as described in https://google.aip.dev/122.
+     * @param apiVersion API version for request routing.
+     * @param id Required. The identifier of the environment to retrieve.
      * @param options additional options
      * @return {@code CompletableFuture<GetEnvironmentResponse>} - The async response
      */

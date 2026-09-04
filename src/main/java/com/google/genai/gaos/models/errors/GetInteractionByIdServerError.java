@@ -89,7 +89,7 @@ public class GetInteractionByIdServerError extends GaosServerException {
     /**
      * Data
      * 
-     * <p>Error getting interaction
+     * <p>Server Error
      */
     public static class Data {
         /**

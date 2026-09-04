@@ -31,13 +31,13 @@ import java.util.Optional;
 
 public class DeleteTriggerRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to delete.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=id")
     private String id;
@@ -57,14 +57,14 @@ public class DeleteTriggerRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to delete.
      */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
@@ -76,7 +76,7 @@ public class DeleteTriggerRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public DeleteTriggerRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -85,7 +85,7 @@ public class DeleteTriggerRequest {
 
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to delete.
      */
     public DeleteTriggerRequest withId(@Nonnull String id) {
         this.id = Utils.checkNotNull(id, "id");
@@ -132,7 +132,7 @@ public class DeleteTriggerRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -140,7 +140,7 @@ public class DeleteTriggerRequest {
         }
 
         /**
-         * Resource name of the trigger.
+         * Required. The ID of the trigger to delete.
          */
         public Builder id(@Nonnull String id) {
             this.id = Utils.checkNotNull(id, "id");

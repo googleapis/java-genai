@@ -36,6 +36,13 @@ import java.util.Optional;
 
 
 public class GoogleSearchResultDelta implements StepDeltaData {
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("call_id")
+    private String callId;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("is_error")
@@ -58,9 +65,11 @@ public class GoogleSearchResultDelta implements StepDeltaData {
 
     @JsonCreator
     public GoogleSearchResultDelta(
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("is_error") @Nullable Boolean isError,
             @JsonProperty("result") @Nonnull List<GoogleSearchResult> result,
             @JsonProperty("signature") @Nullable String signature) {
+        this.callId = callId;
         this.isError = isError;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
@@ -70,7 +79,15 @@ public class GoogleSearchResultDelta implements StepDeltaData {
     
     public GoogleSearchResultDelta(
             @Nonnull List<GoogleSearchResult> result) {
-        this(null, result, null);
+        this(null, null, result,
+            null);
+    }
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public Optional<String> callId() {
+        return Optional.ofNullable(this.callId);
     }
 
     public Optional<Boolean> isError() {
@@ -95,6 +112,15 @@ public class GoogleSearchResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public GoogleSearchResultDelta withCallId(@Nullable String callId) {
+        this.callId = callId;
+        return this;
     }
 
 
@@ -129,6 +155,7 @@ public class GoogleSearchResultDelta implements StepDeltaData {
         }
         GoogleSearchResultDelta other = (GoogleSearchResultDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.isError, other.isError) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
@@ -138,13 +165,14 @@ public class GoogleSearchResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            isError, result, signature,
-            type);
+            callId, isError, result,
+            signature, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GoogleSearchResultDelta.class,
+                "callId", callId,
                 "isError", isError,
                 "result", result,
                 "signature", signature,
@@ -154,6 +182,8 @@ public class GoogleSearchResultDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String callId;
+
         private Boolean isError;
 
         private List<GoogleSearchResult> result;
@@ -162,6 +192,14 @@ public class GoogleSearchResultDelta implements StepDeltaData {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. ID to match the ID from the function call block.
+         */
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
+            return this;
         }
 
         public Builder isError(@Nullable Boolean isError) {
@@ -184,7 +222,8 @@ public class GoogleSearchResultDelta implements StepDeltaData {
 
         public GoogleSearchResultDelta build() {
             return new GoogleSearchResultDelta(
-                isError, result, signature);
+                callId, isError, result,
+                signature);
         }
 
 

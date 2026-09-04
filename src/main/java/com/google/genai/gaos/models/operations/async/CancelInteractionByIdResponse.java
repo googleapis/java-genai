@@ -49,7 +49,7 @@ public class CancelInteractionByIdResponse implements AsyncResponse {
     private HttpResponse<InputStream> rawResponse;
 
     /**
-     * Successful cancellation of the interaction.
+     * Successful operation
      */
     private Interaction interaction;
 
@@ -100,7 +100,7 @@ public class CancelInteractionByIdResponse implements AsyncResponse {
     }
 
     /**
-     * Successful cancellation of the interaction.
+     * Successful operation
      */
     public Optional<Interaction> interaction() {
         return Optional.ofNullable(this.interaction);
@@ -139,7 +139,7 @@ public class CancelInteractionByIdResponse implements AsyncResponse {
 
 
     /**
-     * Successful cancellation of the interaction.
+     * Successful operation
      */
     public CancelInteractionByIdResponse withInteraction(@Nullable Interaction interaction) {
         this.interaction = interaction;
@@ -219,7 +219,7 @@ public class CancelInteractionByIdResponse implements AsyncResponse {
         }
 
         /**
-         * Successful cancellation of the interaction.
+         * Successful operation
          */
         public Builder interaction(@Nullable Interaction interaction) {
             this.interaction = interaction;

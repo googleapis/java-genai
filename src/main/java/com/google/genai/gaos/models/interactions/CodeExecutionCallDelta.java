@@ -41,6 +41,13 @@ public class CodeExecutionCallDelta implements StepDeltaData {
     private CodeExecutionCallArguments arguments;
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
+    /**
      * A signature hash for backend validation.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -54,16 +61,18 @@ public class CodeExecutionCallDelta implements StepDeltaData {
     @JsonCreator
     public CodeExecutionCallDelta(
             @JsonProperty("arguments") @Nonnull CodeExecutionCallArguments arguments,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = id;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public CodeExecutionCallDelta(
             @Nonnull CodeExecutionCallArguments arguments) {
-        this(arguments, null);
+        this(arguments, null, null);
     }
 
     /**
@@ -71,6 +80,13 @@ public class CodeExecutionCallDelta implements StepDeltaData {
      */
     public Optional<CodeExecutionCallArguments> arguments() {
         return Optional.ofNullable(this.arguments);
+    }
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
     }
 
     /**
@@ -100,6 +116,15 @@ public class CodeExecutionCallDelta implements StepDeltaData {
 
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public CodeExecutionCallDelta withId(@Nullable String id) {
+        this.id = id;
+        return this;
+    }
+
+
+    /**
      * A signature hash for backend validation.
      */
     public CodeExecutionCallDelta withSignature(@Nullable String signature) {
@@ -119,6 +144,7 @@ public class CodeExecutionCallDelta implements StepDeltaData {
         CodeExecutionCallDelta other = (CodeExecutionCallDelta) o;
         return 
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -126,13 +152,15 @@ public class CodeExecutionCallDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            arguments, signature, type);
+            arguments, id, signature,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CodeExecutionCallDelta.class,
                 "arguments", arguments,
+                "id", id,
                 "signature", signature,
                 "type", type);
     }
@@ -141,6 +169,8 @@ public class CodeExecutionCallDelta implements StepDeltaData {
     public final static class Builder {
 
         private CodeExecutionCallArguments arguments;
+
+        private String id;
 
         private String signature;
 
@@ -157,6 +187,14 @@ public class CodeExecutionCallDelta implements StepDeltaData {
         }
 
         /**
+         * Required. A unique ID for this specific tool call.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
          * A signature hash for backend validation.
          */
         public Builder signature(@Nullable String signature) {
@@ -166,7 +204,7 @@ public class CodeExecutionCallDelta implements StepDeltaData {
 
         public CodeExecutionCallDelta build() {
             return new CodeExecutionCallDelta(
-                arguments, signature);
+                arguments, id, signature);
         }
 
 

@@ -132,7 +132,7 @@ public class ListTriggerExecutions {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/triggers/{trigger_id}/executions",
+                    "/{api_version}/triggers/{triggerId}/executions",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "GET");
             req.addHeader("Accept", "application/json")
@@ -216,13 +216,6 @@ public class ListTriggerExecutions {
 
             ListTriggerExecutionsResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -230,6 +223,13 @@ public class ListTriggerExecutions {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }
@@ -303,13 +303,6 @@ public class ListTriggerExecutions {
 
             com.google.genai.gaos.models.operations.async.ListTriggerExecutionsResponse res = resBuilder.build();
             
-            if (Utils.statusCodeMatches(response.statusCode(), "200")) {
-                if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
-                } else {
-                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
-                }
-            }
             if (Utils.statusCodeMatches(response.statusCode(), "4XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
@@ -317,6 +310,13 @@ public class ListTriggerExecutions {
             if (Utils.statusCodeMatches(response.statusCode(), "5XX")) {
                 // no content
                 throw GaosApiException.from("API error occurred", response);
+            }
+            if (Utils.statusCodeMatches(response.statusCode(), "default")) {
+                if (Utils.contentTypeMatches(contentType, "application/json")) {
+                    return res.withListTriggerExecutionsResponse(Utils.unmarshal(response, new TypeReference<com.google.genai.gaos.models.triggers.ListTriggerExecutionsResponse>() {}));
+                } else {
+                    throw GaosApiException.from("Unexpected content-type received: " + contentType, response);
+                }
             }
             throw GaosApiException.from("Unexpected status code received: " + response.statusCode(), response);
         }

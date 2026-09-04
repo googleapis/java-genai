@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Optional;
@@ -34,17 +33,23 @@ import java.util.Optional;
  * ImageConfig
  * 
  * <p>The configuration for image interaction.
- * 
- * @deprecated class: This will be removed in a future release, please migrate away from it as soon as possible.
  */
-@Deprecated
 public class ImageConfig {
-
+    /**
+     * The aspect ratio of the image to generate. Supported aspect ratios: 1:1,
+     * 2:3, 3:2, 3:4, 4:3, 9:16, 16:9, 21:9.
+     * 
+     * <p>If not specified, the model will choose a default aspect ratio based on any
+     * reference images provided.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("aspect_ratio")
     private ImageConfigAspectRatio aspectRatio;
 
-
+    /**
+     * Specifies the size of generated images. Supported values are `1K`, `2K`,
+     * `4K`. If not specified, the model will use default value `1K`.
+     */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("image_size")
     private ImageConfigImageSize imageSize;
@@ -61,10 +66,21 @@ public class ImageConfig {
         this(null, null);
     }
 
+    /**
+     * The aspect ratio of the image to generate. Supported aspect ratios: 1:1,
+     * 2:3, 3:2, 3:4, 4:3, 9:16, 16:9, 21:9.
+     * 
+     * <p>If not specified, the model will choose a default aspect ratio based on any
+     * reference images provided.
+     */
     public Optional<ImageConfigAspectRatio> aspectRatio() {
         return Optional.ofNullable(this.aspectRatio);
     }
 
+    /**
+     * Specifies the size of generated images. Supported values are `1K`, `2K`,
+     * `4K`. If not specified, the model will use default value `1K`.
+     */
     public Optional<ImageConfigImageSize> imageSize() {
         return Optional.ofNullable(this.imageSize);
     }
@@ -74,12 +90,23 @@ public class ImageConfig {
     }
 
 
+    /**
+     * The aspect ratio of the image to generate. Supported aspect ratios: 1:1,
+     * 2:3, 3:2, 3:4, 4:3, 9:16, 16:9, 21:9.
+     * 
+     * <p>If not specified, the model will choose a default aspect ratio based on any
+     * reference images provided.
+     */
     public ImageConfig withAspectRatio(@Nullable ImageConfigAspectRatio aspectRatio) {
         this.aspectRatio = aspectRatio;
         return this;
     }
 
 
+    /**
+     * Specifies the size of generated images. Supported values are `1K`, `2K`,
+     * `4K`. If not specified, the model will use default value `1K`.
+     */
     public ImageConfig withImageSize(@Nullable ImageConfigImageSize imageSize) {
         this.imageSize = imageSize;
         return this;
@@ -124,11 +151,22 @@ public class ImageConfig {
           // force use of static builder() method
         }
 
+        /**
+         * The aspect ratio of the image to generate. Supported aspect ratios: 1:1,
+         * 2:3, 3:2, 3:4, 4:3, 9:16, 16:9, 21:9.
+         * 
+         * <p>If not specified, the model will choose a default aspect ratio based on any
+         * reference images provided.
+         */
         public Builder aspectRatio(@Nullable ImageConfigAspectRatio aspectRatio) {
             this.aspectRatio = aspectRatio;
             return this;
         }
 
+        /**
+         * Specifies the size of generated images. Supported values are `1K`, `2K`,
+         * `4K`. If not specified, the model will use default value `1K`.
+         */
         public Builder imageSize(@Nullable ImageConfigImageSize imageSize) {
             this.imageSize = imageSize;
             return this;

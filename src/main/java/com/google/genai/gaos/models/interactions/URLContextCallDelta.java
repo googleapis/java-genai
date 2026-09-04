@@ -41,6 +41,13 @@ public class URLContextCallDelta implements StepDeltaData {
     private URLContextCallArguments arguments;
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
+    /**
      * A signature hash for backend validation.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -54,16 +61,18 @@ public class URLContextCallDelta implements StepDeltaData {
     @JsonCreator
     public URLContextCallDelta(
             @JsonProperty("arguments") @Nonnull URLContextCallArguments arguments,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = id;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public URLContextCallDelta(
             @Nonnull URLContextCallArguments arguments) {
-        this(arguments, null);
+        this(arguments, null, null);
     }
 
     /**
@@ -71,6 +80,13 @@ public class URLContextCallDelta implements StepDeltaData {
      */
     public Optional<URLContextCallArguments> arguments() {
         return Optional.ofNullable(this.arguments);
+    }
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
     }
 
     /**
@@ -100,6 +116,15 @@ public class URLContextCallDelta implements StepDeltaData {
 
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public URLContextCallDelta withId(@Nullable String id) {
+        this.id = id;
+        return this;
+    }
+
+
+    /**
      * A signature hash for backend validation.
      */
     public URLContextCallDelta withSignature(@Nullable String signature) {
@@ -119,6 +144,7 @@ public class URLContextCallDelta implements StepDeltaData {
         URLContextCallDelta other = (URLContextCallDelta) o;
         return 
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -126,13 +152,15 @@ public class URLContextCallDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            arguments, signature, type);
+            arguments, id, signature,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(URLContextCallDelta.class,
                 "arguments", arguments,
+                "id", id,
                 "signature", signature,
                 "type", type);
     }
@@ -141,6 +169,8 @@ public class URLContextCallDelta implements StepDeltaData {
     public final static class Builder {
 
         private URLContextCallArguments arguments;
+
+        private String id;
 
         private String signature;
 
@@ -157,6 +187,14 @@ public class URLContextCallDelta implements StepDeltaData {
         }
 
         /**
+         * Required. A unique ID for this specific tool call.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
          * A signature hash for backend validation.
          */
         public Builder signature(@Nullable String signature) {
@@ -166,7 +204,7 @@ public class URLContextCallDelta implements StepDeltaData {
 
         public URLContextCallDelta build() {
             return new URLContextCallDelta(
-                arguments, signature);
+                arguments, id, signature);
         }
 
 

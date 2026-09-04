@@ -54,8 +54,7 @@ public class AsyncFiles {
 
 
     /**
-     * Retrieves file metadata or directory contents from an environment's snapshot. To download file
-     * contents directly, pass ?alt=media or use the files.download helper.
+     * Retrieves a file or directory from an environment's snapshot.
      * 
      * @return The async call builder
      */
@@ -64,8 +63,7 @@ public class AsyncFiles {
     }
 
     /**
-     * Retrieves file metadata or directory contents from an environment's snapshot. To download file
-     * contents directly, pass ?alt=media or use the files.download helper.
+     * Retrieves a file or directory from an environment's snapshot.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<GetEnvironmentFilesResponse>} - The async response
@@ -75,8 +73,7 @@ public class AsyncFiles {
     }
 
     /**
-     * Retrieves file metadata or directory contents from an environment's snapshot. To download file
-     * contents directly, pass ?alt=media or use the files.download helper.
+     * Retrieves a file or directory from an environment's snapshot.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @param options additional options

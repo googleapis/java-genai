@@ -89,7 +89,7 @@ public class CancelInteractionByIdClientError extends GaosClientException {
     /**
      * Data
      * 
-     * <p>Error cancelling interaction
+     * <p>Client Error
      */
     public static class Data {
         /**

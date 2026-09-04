@@ -104,11 +104,11 @@ public class AsyncWebhooks {
     /**
      * Lists all Webhooks.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param pageSize Optional. The maximum number of webhooks to return. The service may return fewer than
+     * @param apiVersion API version for request routing.
+     * @param pageSize The maximum number of webhooks to return. The service may return fewer than
      *         this value. If unspecified, at most 50 webhooks will be returned.
      *         The maximum value is 1000.
-     * @param pageToken Optional. A page token, received from a previous `ListWebhooks` call.
+     * @param pageToken A page token, received from a previous `ListWebhooks` call.
      *         Provide this to retrieve the subsequent page.
      * @param options additional options
      * @return {@code CompletableFuture<ListWebhooksResponse>} - The async response
@@ -148,7 +148,7 @@ public class AsyncWebhooks {
     /**
      * Creates a new Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body A Webhook resource.
      * @param options additional options
      * @return {@code CompletableFuture<CreateWebhookResponse>} - The async response
@@ -189,7 +189,7 @@ public class AsyncWebhooks {
     /**
      * Deletes a Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook to delete.
      *         Format: `{webhook_id}`
      * @param options additional options
@@ -230,7 +230,7 @@ public class AsyncWebhooks {
     /**
      * Gets a specific Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook to retrieve.
      * @param options additional options
      * @return {@code CompletableFuture<GetWebhookResponse>} - The async response
@@ -272,9 +272,9 @@ public class AsyncWebhooks {
     /**
      * Updates an existing Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook to update.
-     * @param updateMask Optional. The list of fields to update.
+     * @param updateMask Optional list of fields to update.
      * @param body 
      * @param options additional options
      * @return {@code CompletableFuture<UpdateWebhookResponse>} - The async response
@@ -308,7 +308,6 @@ public class AsyncWebhooks {
      * Sends a ping event to a Webhook.
      * 
      * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
      */
     public CompletableFuture<PingWebhookResponse> ping(@Nonnull String id) {
@@ -320,9 +319,8 @@ public class AsyncWebhooks {
     /**
      * Sends a ping event to a Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param id Required. The ID of the webhook to ping.
-     *         Format: `{webhook_id}`
      * @param body Request message for WebhookService.PingWebhook.
      * @param options additional options
      * @return {@code CompletableFuture<PingWebhookResponse>} - The async response
@@ -352,8 +350,7 @@ public class AsyncWebhooks {
     /**
      * Generates a new signing secret for a Webhook.
      * 
-     * @param id Required. The ID of the webhook for which to generate a signing secret.
-     *         Format: `{webhook_id}`
+     * @param id Required. The ID of the webhook for which to rotate the signing secret.
      * @return {@code CompletableFuture<RotateSigningSecretResponse>} - The async response
      */
     public CompletableFuture<RotateSigningSecretResponse> rotateSigningSecret(@Nonnull String id) {
@@ -365,9 +362,8 @@ public class AsyncWebhooks {
     /**
      * Generates a new signing secret for a Webhook.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id Required. The ID of the webhook for which to generate a signing secret.
-     *         Format: `{webhook_id}`
+     * @param apiVersion API version for request routing.
+     * @param id Required. The ID of the webhook for which to rotate the signing secret.
      * @param body Request message for WebhookService.RotateSigningSecret.
      * @param options additional options
      * @return {@code CompletableFuture<RotateSigningSecretResponse>} - The async response

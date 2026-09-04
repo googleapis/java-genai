@@ -89,7 +89,7 @@ public class DeleteInteractionServerError extends GaosServerException {
     /**
      * Data
      * 
-     * <p>Error deleting interaction
+     * <p>Server Error
      */
     public static class Data {
         /**
