@@ -42,12 +42,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 /**
- * API-mode integration tests for the live (bidirectional WebSocket) module. The live module opens
- * a WebSocket, so it cannot be replayed and only runs against the real backend. See
+ * API-mode integration tests for the live (bidirectional WebSocket) module. The live module opens a
+ * WebSocket, so it cannot be replayed and only runs against the real backend. See
  * go/genai-sdk:integration-testing.
  *
  * <p>Gated on {@code GOOGLE_GENAI_CLIENT_MODE=api}, which only the nightly sets. That gate is
@@ -57,10 +58,27 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 public class LiveApiTest {
 
   /**
-   * The only live model family currently served on the Gemini API. It is audio-native and rejects
+   * The backends under test. Live models are backend specific, and both are audio-native and reject
    * a TEXT response modality, so these tests request AUDIO and enable output transcription.
+   *
+   * <p>The Vertex model is not served on the global endpoint, where setup is rejected with 1008
+   * "Publisher model ... was not found". It is available in us-central1, us-east5 and europe-west4,
+   * so the client is pinned to a region even though the shared table tests run at global.
    */
-  private static final String LIVE_MODEL = "gemini-3.1-flash-live-preview";
+  private enum LiveBackend {
+    MLDEV("gemini-3.1-flash-live-preview", /* location= */ null, /* isVertex= */ false),
+    VERTEX("gemini-live-2.5-flash-native-audio", "us-central1", /* isVertex= */ true);
+
+    private final String model;
+    private final String location;
+    private final boolean isVertex;
+
+    LiveBackend(String model, String location, boolean isVertex) {
+      this.model = model;
+      this.location = location;
+      this.isVertex = isVertex;
+    }
+  }
 
   /**
    * Bounds a single model turn. AsyncSession never propagates post-setup socket failures, so an
@@ -135,18 +153,18 @@ public class LiveApiTest {
   /**
    * Skips the current test when the running job has selected the other backend, via
    * GOOGLE_GENAI_RUN_{VERTEX,GEMINI}_ONLY_IN_API_MODE. Required, not cosmetic: both nightly
-   * wrappers share this runner, but only the Gemini job loads an API key.
+   * wrappers share this runner, but each job only has credentials for its own backend.
    */
-  private static void skipIfBackendDisabled(boolean isVertex) {
+  private static void skipIfBackendDisabled(LiveBackend backend) {
     boolean vertexOnly =
         !isNullOrEmpty(System.getenv("GOOGLE_GENAI_RUN_VERTEX_ONLY_IN_API_MODE"));
     boolean geminiOnly =
         !isNullOrEmpty(System.getenv("GOOGLE_GENAI_RUN_GEMINI_ONLY_IN_API_MODE"));
 
-    if (isVertex && geminiOnly) {
+    if (backend.isVertex && geminiOnly) {
       Assumptions.abort("Skipping Vertex AI live tests (GEMINI ONLY config enabled).");
     }
-    if (!isVertex && vertexOnly) {
+    if (!backend.isVertex && vertexOnly) {
       Assumptions.abort("Skipping Gemini API live tests (VERTEX ONLY config enabled).");
     }
   }
@@ -177,16 +195,30 @@ public class LiveApiTest {
     clients.clear();
   }
 
-  private Client newClient() {
-    Client client = Client.builder().apiKey(System.getenv("GOOGLE_API_KEY")).build();
+  /**
+   * Builds a client for the given backend. Vertex takes the project from the environment and
+   * authenticates with ADC rather than an API key, but overrides the location: the Agent Platform
+   * wrapper exports GOOGLE_CLOUD_LOCATION=global for the shared suite, which does not serve the
+   * live model.
+   */
+  private Client newClient(LiveBackend backend) {
+    Client client =
+        backend.isVertex
+            ? Client.builder().vertexAI(true).location(backend.location).build()
+            : Client.builder().apiKey(System.getenv("GOOGLE_API_KEY")).build();
     clients.add(client);
     return client;
   }
 
   /** Connects and registers the collector before any content is sent. */
-  private AsyncSession connect(TurnCollector collector, LiveConnectConfig config) throws Exception {
+  private AsyncSession connect(
+      LiveBackend backend, TurnCollector collector, LiveConnectConfig config) throws Exception {
     AsyncSession session =
-        newClient().async.live.connect(LIVE_MODEL, config).get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        newClient(backend)
+            .async
+            .live
+            .connect(backend.model, config)
+            .get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     session.receive(collector::onMessage).get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     return session;
   }
@@ -201,11 +233,12 @@ public class LiveApiTest {
         .get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Test
-  public void textInput_producesAudioAndTranscription() throws Exception {
-    skipIfBackendDisabled(/* isVertex= */ false);
+  @ParameterizedTest
+  @EnumSource(LiveBackend.class)
+  public void textInput_producesAudioAndTranscription(LiveBackend backend) throws Exception {
+    skipIfBackendDisabled(backend);
     TurnCollector collector = new TurnCollector();
-    AsyncSession session = connect(collector, baseConfig().build());
+    AsyncSession session = connect(backend, collector, baseConfig().build());
     try {
       say(session, "Say hello.");
       Turn turn = collector.nextTurn();
@@ -218,11 +251,12 @@ public class LiveApiTest {
     }
   }
 
-  @Test
-  public void multiTurn_retainsContext() throws Exception {
-    skipIfBackendDisabled(/* isVertex= */ false);
+  @ParameterizedTest
+  @EnumSource(LiveBackend.class)
+  public void multiTurn_retainsContext(LiveBackend backend) throws Exception {
+    skipIfBackendDisabled(backend);
     TurnCollector collector = new TurnCollector();
-    AsyncSession session = connect(collector, baseConfig().build());
+    AsyncSession session = connect(backend, collector, baseConfig().build());
     try {
       say(session, "Remember the number 42. Just acknowledge it.");
       Turn first = collector.nextTurn();
@@ -243,9 +277,10 @@ public class LiveApiTest {
     }
   }
 
-  @Test
-  public void functionCalling_completesRoundTrip() throws Exception {
-    skipIfBackendDisabled(/* isVertex= */ false);
+  @ParameterizedTest
+  @EnumSource(LiveBackend.class)
+  public void functionCalling_completesRoundTrip(LiveBackend backend) throws Exception {
+    skipIfBackendDisabled(backend);
     Tool tool =
         Tool.builder()
             .functionDeclarations(
@@ -257,7 +292,7 @@ public class LiveApiTest {
             .build();
 
     TurnCollector collector = new TurnCollector();
-    AsyncSession session = connect(collector, baseConfig().tools(tool).build());
+    AsyncSession session = connect(backend, collector, baseConfig().tools(tool).build());
     try {
       say(session, "Please turn on the lights.");
       Turn turn = collector.nextTurn();
@@ -280,10 +315,14 @@ public class LiveApiTest {
                   .build())
           .get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
+      // Both backends must accept the tool result and complete the turn, but only the Gemini API
+      // returns assertable content: Vertex emits an empty transcription.
       Turn followUp = collector.nextTurn();
-      assertFalse(
-          followUp.transcript.toString().trim().isEmpty(),
-          "Expected the model to respond after the tool result");
+      if (!backend.isVertex) {
+        assertFalse(
+            followUp.transcript.toString().trim().isEmpty(),
+            "Expected the model to respond after the tool result");
+      }
     } finally {
       session.close().get(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     }
