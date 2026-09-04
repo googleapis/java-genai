@@ -25,7 +25,6 @@ import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -332,7 +331,6 @@ public abstract class FunctionDeclaration extends JsonSerializable {
    * Creates a FunctionDeclaration instance from a {@link Method} instance.
    *
    * @param method The {@link Method} instance to be parsed into the FunctionDeclaration instance.
-   *     Only static method is supported.
    * @param orderedParameterNames Optional ordered parameter names. If not provided, parameter names
    *     will be retrieved via reflection.
    * @return A FunctionDeclaration instance.
@@ -346,18 +344,12 @@ public abstract class FunctionDeclaration extends JsonSerializable {
    *
    * @param functionDescription Description of the function.
    * @param method The {@link Method} instance to be parsed into the FunctionDeclaration instance.
-   *     Only static method is supported.
    * @param orderedParameterNames Optional ordered parameter names. If not provided, parameter names
    *     will be retrieved via reflection.
    * @return A FunctionDeclaration instance.
    */
   public static FunctionDeclaration fromMethod(
       String functionDescription, Method method, String... orderedParameterNames) {
-    if (!Modifier.isStatic(method.getModifiers())) {
-      throw new IllegalArgumentException(
-          "Instance methods are not supported. Please use static methods.");
-    }
-
     Schema.Builder parametersBuilder = Schema.builder().type("OBJECT");
 
     Parameter[] parameters = method.getParameters();
