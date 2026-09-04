@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.71.0](https://github.com/googleapis/java-genai/compare/v1.70.0...v1.71.0) (2026-09-04)
+
+
+### Bug Fixes
+
+* **examples:** declare the explicit response type instead of `var` ([ffd4500](https://github.com/googleapis/java-genai/commit/ffd450012742de21d9212ec667a21fc21043a8a5))
+
 ## [1.70.0](https://github.com/googleapis/java-genai/compare/v1.69.0...v1.70.0) (2026-09-02)
 
 
