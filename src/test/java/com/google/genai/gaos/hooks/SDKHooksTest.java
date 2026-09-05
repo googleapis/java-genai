@@ -53,7 +53,7 @@ public final class SDKHooksTest {
   private HttpRequest createBaseRequest() {
     return HttpRequest.builder()
         .method("POST")
-        .uri(URI.create("https://generativelanguage.googleapis.com/v1beta/interactions"))
+        .uri(URI.create("https://generativelanguage.googleapis.com/v1/interactions"))
         .build();
   }
 
