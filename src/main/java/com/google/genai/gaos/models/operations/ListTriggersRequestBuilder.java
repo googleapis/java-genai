@@ -28,7 +28,7 @@ import com.google.genai.gaos.utils.Options;
 import com.google.genai.gaos.utils.RetryConfig;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 
 public class ListTriggersRequestBuilder {
@@ -57,7 +57,7 @@ public class ListTriggersRequestBuilder {
         return this;
     }
 
-    public ListTriggersRequestBuilder pageSize(@Nullable Long pageSize) {
+    public ListTriggersRequestBuilder pageSize(@Nullable Integer pageSize) {
         this.pojoBuilder.pageSize(pageSize);
         this._setterCalled = true;
         return this;

@@ -37,7 +37,7 @@ import java.util.Optional;
 /**
  * CreateAgentInteraction
  * 
- * <p>Parameters for creating agent interactions
+ * <p>Interaction for generating the completion using agents.
  */
 public class CreateAgentInteraction {
     /**
@@ -47,7 +47,7 @@ public class CreateAgentInteraction {
     private AgentOption agent;
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("agent_config")
@@ -61,8 +61,7 @@ public class CreateAgentInteraction {
     private Boolean background;
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment")
@@ -71,11 +70,18 @@ public class CreateAgentInteraction {
     /**
      * The input for the interaction.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("input")
     private InteractionsInput input;
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("labels")
@@ -88,10 +94,7 @@ public class CreateAgentInteraction {
     @JsonProperty("previous_interaction_id")
     private String previousInteractionId;
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
+
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("response_format")
     private CreateAgentInteractionResponseFormat responseFormat;
@@ -169,7 +172,7 @@ public class CreateAgentInteraction {
             @JsonProperty("agent_config") @Nullable CreateAgentInteractionAgentConfig agentConfig,
             @JsonProperty("background") @Nullable Boolean background,
             @JsonProperty("environment") @Nullable CreateAgentInteractionEnvironment environment,
-            @JsonProperty("input") @Nonnull InteractionsInput input,
+            @JsonProperty("input") @Nullable InteractionsInput input,
             @JsonProperty("labels") @Nullable Map<String, String> labels,
             @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
             @JsonProperty("response_format") @Nullable CreateAgentInteractionResponseFormat responseFormat,
@@ -187,8 +190,7 @@ public class CreateAgentInteraction {
         this.agentConfig = agentConfig;
         this.background = background;
         this.environment = environment;
-        this.input = Optional.ofNullable(input)
-            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.input = input;
         this.labels = labels;
         this.previousInteractionId = previousInteractionId;
         this.responseFormat = responseFormat;
@@ -204,10 +206,9 @@ public class CreateAgentInteraction {
     }
     
     public CreateAgentInteraction(
-            @Nonnull AgentOption agent,
-            @Nonnull InteractionsInput input) {
+            @Nonnull AgentOption agent) {
         this(agent, null, null,
-            null, input, null,
+            null, null, null,
             null, null, null,
             null, null, null,
             null, null, null,
@@ -222,7 +223,7 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     public Optional<CreateAgentInteractionAgentConfig> agentConfig() {
         return Optional.ofNullable(this.agentConfig);
@@ -236,8 +237,7 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     public Optional<CreateAgentInteractionEnvironment> environment() {
         return Optional.ofNullable(this.environment);
@@ -251,7 +251,13 @@ public class CreateAgentInteraction {
     }
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public Optional<Map<String, String>> labels() {
         return Optional.ofNullable(this.labels);
@@ -264,10 +270,6 @@ public class CreateAgentInteraction {
         return Optional.ofNullable(this.previousInteractionId);
     }
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public Optional<CreateAgentInteractionResponseFormat> responseFormat() {
         return Optional.ofNullable(this.responseFormat);
     }
@@ -353,7 +355,7 @@ public class CreateAgentInteraction {
 
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     public CreateAgentInteraction withAgentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
         this.agentConfig = agentConfig;
@@ -371,8 +373,7 @@ public class CreateAgentInteraction {
 
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     public CreateAgentInteraction withEnvironment(@Nullable CreateAgentInteractionEnvironment environment) {
         this.environment = environment;
@@ -383,14 +384,20 @@ public class CreateAgentInteraction {
     /**
      * The input for the interaction.
      */
-    public CreateAgentInteraction withInput(@Nonnull InteractionsInput input) {
-        this.input = Utils.checkNotNull(input, "input");
+    public CreateAgentInteraction withInput(@Nullable InteractionsInput input) {
+        this.input = input;
         return this;
     }
 
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public CreateAgentInteraction withLabels(@Nullable Map<String, String> labels) {
         this.labels = labels;
@@ -407,10 +414,6 @@ public class CreateAgentInteraction {
     }
 
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public CreateAgentInteraction withResponseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
         this.responseFormat = responseFormat;
         return this;
@@ -615,7 +618,7 @@ public class CreateAgentInteraction {
         }
 
         /**
-         * Configuration parameters for the agent interaction.
+         * Parameters for the agent interaction.
          */
         public Builder agentConfig(@Nullable CreateAgentInteractionAgentConfig agentConfig) {
             this.agentConfig = agentConfig;
@@ -631,8 +634,7 @@ public class CreateAgentInteraction {
         }
 
         /**
-         * The environment configuration for the interaction. Can be an object specifying remote environment
-         * sources or a string referencing an existing environment ID.
+         * The environment configuration for the interaction.
          */
         public Builder environment(@Nullable CreateAgentInteractionEnvironment environment) {
             this.environment = environment;
@@ -642,13 +644,19 @@ public class CreateAgentInteraction {
         /**
          * The input for the interaction.
          */
-        public Builder input(@Nonnull InteractionsInput input) {
-            this.input = Utils.checkNotNull(input, "input");
+        public Builder input(@Nullable InteractionsInput input) {
+            this.input = input;
             return this;
         }
 
         /**
-         * The labels with user-defined metadata for the request.
+         * The labels with user-defined metadata for the request. It is used for
+         * billing and reporting only.
+         * 
+         * <p>Label keys and values can be no longer than 63 characters
+         * (Unicode codepoints) and can only contain lowercase letters, numeric
+         * characters, underscores, and dashes. International characters are allowed.
+         * Label values are optional. Label keys must start with a letter.
          */
         public Builder labels(@Nullable Map<String, String> labels) {
             this.labels = labels;
@@ -663,10 +671,6 @@ public class CreateAgentInteraction {
             return this;
         }
 
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
         public Builder responseFormat(@Nullable CreateAgentInteractionResponseFormat responseFormat) {
             this.responseFormat = responseFormat;
             return this;

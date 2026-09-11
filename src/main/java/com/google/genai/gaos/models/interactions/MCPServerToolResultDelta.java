@@ -34,6 +34,13 @@ import java.util.Optional;
 
 
 public class MCPServerToolResultDelta implements StepDeltaData {
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("call_id")
+    private String callId;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("name")
@@ -48,25 +55,44 @@ public class MCPServerToolResultDelta implements StepDeltaData {
     @JsonProperty("server_name")
     private String serverName;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
 
     @JsonCreator
     public MCPServerToolResultDelta(
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("result") @Nonnull MCPServerToolResultDeltaResultUnion result,
-            @JsonProperty("server_name") @Nullable String serverName) {
+            @JsonProperty("server_name") @Nullable String serverName,
+            @JsonProperty("signature") @Nullable String signature) {
+        this.callId = callId;
         this.name = name;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.serverName = serverName;
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public MCPServerToolResultDelta(
             @Nonnull MCPServerToolResultDeltaResultUnion result) {
-        this(null, result, null);
+        this(null, null, result,
+            null, null);
+    }
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public Optional<String> callId() {
+        return Optional.ofNullable(this.callId);
     }
 
     public Optional<String> name() {
@@ -81,6 +107,13 @@ public class MCPServerToolResultDelta implements StepDeltaData {
         return Optional.ofNullable(this.serverName);
     }
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
+    }
+
     @Override
     public String type() {
         return Utils.discriminatorToString(type);
@@ -88,6 +121,15 @@ public class MCPServerToolResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public MCPServerToolResultDelta withCallId(@Nullable String callId) {
+        this.callId = callId;
+        return this;
     }
 
 
@@ -109,6 +151,15 @@ public class MCPServerToolResultDelta implements StepDeltaData {
     }
 
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public MCPServerToolResultDelta withSignature(@Nullable String signature) {
+        this.signature = signature;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -119,30 +170,36 @@ public class MCPServerToolResultDelta implements StepDeltaData {
         }
         MCPServerToolResultDelta other = (MCPServerToolResultDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            name, result, serverName,
-            type);
+            callId, name, result,
+            serverName, signature, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(MCPServerToolResultDelta.class,
+                "callId", callId,
                 "name", name,
                 "result", result,
                 "serverName", serverName,
+                "signature", signature,
                 "type", type);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private String callId;
 
         private String name;
 
@@ -150,8 +207,18 @@ public class MCPServerToolResultDelta implements StepDeltaData {
 
         private String serverName;
 
+        private String signature;
+
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. ID to match the ID from the function call block.
+         */
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
+            return this;
         }
 
         public Builder name(@Nullable String name) {
@@ -169,9 +236,18 @@ public class MCPServerToolResultDelta implements StepDeltaData {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public MCPServerToolResultDelta build() {
             return new MCPServerToolResultDelta(
-                name, result, serverName);
+                callId, name, result,
+                serverName, signature);
         }
 
 

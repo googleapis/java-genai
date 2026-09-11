@@ -35,6 +35,13 @@ import java.util.Optional;
 
 public class GoogleMapsResultDelta implements StepDeltaData {
     /**
+     * Required. ID to match the ID from the function call block.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("call_id")
+    private String callId;
+
+    /**
      * The results of the Google Maps.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -54,15 +61,24 @@ public class GoogleMapsResultDelta implements StepDeltaData {
 
     @JsonCreator
     public GoogleMapsResultDelta(
+            @JsonProperty("call_id") @Nullable String callId,
             @JsonProperty("result") @Nullable List<GoogleMapsResult> result,
             @JsonProperty("signature") @Nullable String signature) {
+        this.callId = callId;
         this.result = result;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public GoogleMapsResultDelta() {
-        this(null, null);
+        this(null, null, null);
+    }
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public Optional<String> callId() {
+        return Optional.ofNullable(this.callId);
     }
 
     /**
@@ -86,6 +102,15 @@ public class GoogleMapsResultDelta implements StepDeltaData {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Required. ID to match the ID from the function call block.
+     */
+    public GoogleMapsResultDelta withCallId(@Nullable String callId) {
+        this.callId = callId;
+        return this;
     }
 
 
@@ -117,6 +142,7 @@ public class GoogleMapsResultDelta implements StepDeltaData {
         }
         GoogleMapsResultDelta other = (GoogleMapsResultDelta) o;
         return 
+            Utils.enhancedDeepEquals(this.callId, other.callId) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
@@ -125,12 +151,14 @@ public class GoogleMapsResultDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            result, signature, type);
+            callId, result, signature,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GoogleMapsResultDelta.class,
+                "callId", callId,
                 "result", result,
                 "signature", signature,
                 "type", type);
@@ -139,12 +167,22 @@ public class GoogleMapsResultDelta implements StepDeltaData {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String callId;
+
         private List<GoogleMapsResult> result;
 
         private String signature;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Required. ID to match the ID from the function call block.
+         */
+        public Builder callId(@Nullable String callId) {
+            this.callId = callId;
+            return this;
         }
 
         /**
@@ -165,7 +203,7 @@ public class GoogleMapsResultDelta implements StepDeltaData {
 
         public GoogleMapsResultDelta build() {
             return new GoogleMapsResultDelta(
-                result, signature);
+                callId, result, signature);
         }
 
 

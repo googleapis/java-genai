@@ -30,7 +30,7 @@ import java.lang.String;
 /**
  * InteractionAgentConfigTypeIdResolver
  * 
- * <p>Configuration parameters for the agent interaction.
+ * <p>Parameters for the agent interaction.
  */
 public class InteractionAgentConfigTypeIdResolver extends GenericTypeIdResolver<InteractionAgentConfig> {
 

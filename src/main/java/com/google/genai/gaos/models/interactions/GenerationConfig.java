@@ -26,6 +26,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nullable;
 import java.lang.Deprecated;
+import java.lang.Double;
+import java.lang.Float;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
@@ -39,13 +41,20 @@ import java.util.Optional;
  */
 public class GenerationConfig {
     /**
-     * The configuration for image interaction.
+     * Penalizes tokens based on their frequency so far.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("image_config")
+    @JsonProperty("frequency_penalty")
     @Deprecated
+    private Double frequencyPenalty;
+
+    /**
+     * The configuration for image interaction.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("image_config")
     private ImageConfig imageConfig;
 
     /**
@@ -54,6 +63,16 @@ public class GenerationConfig {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("max_output_tokens")
     private Integer maxOutputTokens;
+
+    /**
+     * Penalizes tokens that have already appeared.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("presence_penalty")
+    @Deprecated
+    private Double presencePenalty;
 
     /**
      * Seed used in decoding for reproducibility.
@@ -76,6 +95,13 @@ public class GenerationConfig {
     @JsonProperty("stop_sequences")
     private List<String> stopSequences;
 
+    /**
+     * Controls the randomness of the output.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("temperature")
+    private Float temperature;
+
 
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("thinking_level")
@@ -94,6 +120,13 @@ public class GenerationConfig {
     private ToolChoice toolChoice;
 
     /**
+     * The maximum cumulative probability of tokens to consider when sampling.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("top_p")
+    private Float topP;
+
+    /**
      * Configuration for speech recognition (transcription).
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -109,24 +142,32 @@ public class GenerationConfig {
 
     @JsonCreator
     public GenerationConfig(
+            @JsonProperty("frequency_penalty") @Nullable Double frequencyPenalty,
             @JsonProperty("image_config") @Nullable ImageConfig imageConfig,
             @JsonProperty("max_output_tokens") @Nullable Integer maxOutputTokens,
+            @JsonProperty("presence_penalty") @Nullable Double presencePenalty,
             @JsonProperty("seed") @Nullable Integer seed,
             @JsonProperty("speech_config") @Nullable SpeechConfigUnion speechConfig,
             @JsonProperty("stop_sequences") @Nullable List<String> stopSequences,
+            @JsonProperty("temperature") @Nullable Float temperature,
             @JsonProperty("thinking_level") @Nullable ThinkingLevel thinkingLevel,
             @JsonProperty("thinking_summaries") @Nullable ThinkingSummaries thinkingSummaries,
             @JsonProperty("tool_choice") @Nullable ToolChoice toolChoice,
+            @JsonProperty("top_p") @Nullable Float topP,
             @JsonProperty("transcription_config") @Nullable TranscriptionConfig transcriptionConfig,
             @JsonProperty("video_config") @Nullable VideoConfig videoConfig) {
+        this.frequencyPenalty = frequencyPenalty;
         this.imageConfig = imageConfig;
         this.maxOutputTokens = maxOutputTokens;
+        this.presencePenalty = presencePenalty;
         this.seed = seed;
         this.speechConfig = speechConfig;
         this.stopSequences = stopSequences;
+        this.temperature = temperature;
         this.thinkingLevel = thinkingLevel;
         this.thinkingSummaries = thinkingSummaries;
         this.toolChoice = toolChoice;
+        this.topP = topP;
         this.transcriptionConfig = transcriptionConfig;
         this.videoConfig = videoConfig;
     }
@@ -135,15 +176,23 @@ public class GenerationConfig {
         this(null, null, null,
             null, null, null,
             null, null, null,
-            null);
+            null, null, null,
+            null, null);
     }
 
     /**
-     * The configuration for image interaction.
+     * Penalizes tokens based on their frequency so far.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
+    public Optional<Double> frequencyPenalty() {
+        return Optional.ofNullable(this.frequencyPenalty);
+    }
+
+    /**
+     * The configuration for image interaction.
+     */
     public Optional<ImageConfig> imageConfig() {
         return Optional.ofNullable(this.imageConfig);
     }
@@ -153,6 +202,16 @@ public class GenerationConfig {
      */
     public Optional<Integer> maxOutputTokens() {
         return Optional.ofNullable(this.maxOutputTokens);
+    }
+
+    /**
+     * Penalizes tokens that have already appeared.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<Double> presencePenalty() {
+        return Optional.ofNullable(this.presencePenalty);
     }
 
     /**
@@ -176,6 +235,13 @@ public class GenerationConfig {
         return Optional.ofNullable(this.stopSequences);
     }
 
+    /**
+     * Controls the randomness of the output.
+     */
+    public Optional<Float> temperature() {
+        return Optional.ofNullable(this.temperature);
+    }
+
     public Optional<ThinkingLevel> thinkingLevel() {
         return Optional.ofNullable(this.thinkingLevel);
     }
@@ -189,6 +255,13 @@ public class GenerationConfig {
      */
     public Optional<ToolChoice> toolChoice() {
         return Optional.ofNullable(this.toolChoice);
+    }
+
+    /**
+     * The maximum cumulative probability of tokens to consider when sampling.
+     */
+    public Optional<Float> topP() {
+        return Optional.ofNullable(this.topP);
     }
 
     /**
@@ -211,11 +284,20 @@ public class GenerationConfig {
 
 
     /**
-     * The configuration for image interaction.
+     * Penalizes tokens based on their frequency so far.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @Deprecated
+    public GenerationConfig withFrequencyPenalty(@Nullable Double frequencyPenalty) {
+        this.frequencyPenalty = frequencyPenalty;
+        return this;
+    }
+
+
+    /**
+     * The configuration for image interaction.
+     */
     public GenerationConfig withImageConfig(@Nullable ImageConfig imageConfig) {
         this.imageConfig = imageConfig;
         return this;
@@ -227,6 +309,18 @@ public class GenerationConfig {
      */
     public GenerationConfig withMaxOutputTokens(@Nullable Integer maxOutputTokens) {
         this.maxOutputTokens = maxOutputTokens;
+        return this;
+    }
+
+
+    /**
+     * Penalizes tokens that have already appeared.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public GenerationConfig withPresencePenalty(@Nullable Double presencePenalty) {
+        this.presencePenalty = presencePenalty;
         return this;
     }
 
@@ -258,6 +352,15 @@ public class GenerationConfig {
     }
 
 
+    /**
+     * Controls the randomness of the output.
+     */
+    public GenerationConfig withTemperature(@Nullable Float temperature) {
+        this.temperature = temperature;
+        return this;
+    }
+
+
     public GenerationConfig withThinkingLevel(@Nullable ThinkingLevel thinkingLevel) {
         this.thinkingLevel = thinkingLevel;
         return this;
@@ -275,6 +378,15 @@ public class GenerationConfig {
      */
     public GenerationConfig withToolChoice(@Nullable ToolChoice toolChoice) {
         this.toolChoice = toolChoice;
+        return this;
+    }
+
+
+    /**
+     * The maximum cumulative probability of tokens to consider when sampling.
+     */
+    public GenerationConfig withTopP(@Nullable Float topP) {
+        this.topP = topP;
         return this;
     }
 
@@ -307,14 +419,18 @@ public class GenerationConfig {
         }
         GenerationConfig other = (GenerationConfig) o;
         return 
+            Utils.enhancedDeepEquals(this.frequencyPenalty, other.frequencyPenalty) &&
             Utils.enhancedDeepEquals(this.imageConfig, other.imageConfig) &&
             Utils.enhancedDeepEquals(this.maxOutputTokens, other.maxOutputTokens) &&
+            Utils.enhancedDeepEquals(this.presencePenalty, other.presencePenalty) &&
             Utils.enhancedDeepEquals(this.seed, other.seed) &&
             Utils.enhancedDeepEquals(this.speechConfig, other.speechConfig) &&
             Utils.enhancedDeepEquals(this.stopSequences, other.stopSequences) &&
+            Utils.enhancedDeepEquals(this.temperature, other.temperature) &&
             Utils.enhancedDeepEquals(this.thinkingLevel, other.thinkingLevel) &&
             Utils.enhancedDeepEquals(this.thinkingSummaries, other.thinkingSummaries) &&
             Utils.enhancedDeepEquals(this.toolChoice, other.toolChoice) &&
+            Utils.enhancedDeepEquals(this.topP, other.topP) &&
             Utils.enhancedDeepEquals(this.transcriptionConfig, other.transcriptionConfig) &&
             Utils.enhancedDeepEquals(this.videoConfig, other.videoConfig);
     }
@@ -322,23 +438,28 @@ public class GenerationConfig {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            imageConfig, maxOutputTokens, seed,
-            speechConfig, stopSequences, thinkingLevel,
-            thinkingSummaries, toolChoice, transcriptionConfig,
-            videoConfig);
+            frequencyPenalty, imageConfig, maxOutputTokens,
+            presencePenalty, seed, speechConfig,
+            stopSequences, temperature, thinkingLevel,
+            thinkingSummaries, toolChoice, topP,
+            transcriptionConfig, videoConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GenerationConfig.class,
+                "frequencyPenalty", frequencyPenalty,
                 "imageConfig", imageConfig,
                 "maxOutputTokens", maxOutputTokens,
+                "presencePenalty", presencePenalty,
                 "seed", seed,
                 "speechConfig", speechConfig,
                 "stopSequences", stopSequences,
+                "temperature", temperature,
                 "thinkingLevel", thinkingLevel,
                 "thinkingSummaries", thinkingSummaries,
                 "toolChoice", toolChoice,
+                "topP", topP,
                 "transcriptionConfig", transcriptionConfig,
                 "videoConfig", videoConfig);
     }
@@ -347,9 +468,14 @@ public class GenerationConfig {
     public final static class Builder {
 
         @Deprecated
+        private Double frequencyPenalty;
+
         private ImageConfig imageConfig;
 
         private Integer maxOutputTokens;
+
+        @Deprecated
+        private Double presencePenalty;
 
         private Integer seed;
 
@@ -357,11 +483,15 @@ public class GenerationConfig {
 
         private List<String> stopSequences;
 
+        private Float temperature;
+
         private ThinkingLevel thinkingLevel;
 
         private ThinkingSummaries thinkingSummaries;
 
         private ToolChoice toolChoice;
+
+        private Float topP;
 
         private TranscriptionConfig transcriptionConfig;
 
@@ -372,11 +502,19 @@ public class GenerationConfig {
         }
 
         /**
-         * The configuration for image interaction.
+         * Penalizes tokens based on their frequency so far.
          * 
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
         @Deprecated
+        public Builder frequencyPenalty(@Nullable Double frequencyPenalty) {
+            this.frequencyPenalty = frequencyPenalty;
+            return this;
+        }
+
+        /**
+         * The configuration for image interaction.
+         */
         public Builder imageConfig(@Nullable ImageConfig imageConfig) {
             this.imageConfig = imageConfig;
             return this;
@@ -387,6 +525,17 @@ public class GenerationConfig {
          */
         public Builder maxOutputTokens(@Nullable Integer maxOutputTokens) {
             this.maxOutputTokens = maxOutputTokens;
+            return this;
+        }
+
+        /**
+         * Penalizes tokens that have already appeared.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder presencePenalty(@Nullable Double presencePenalty) {
+            this.presencePenalty = presencePenalty;
             return this;
         }
 
@@ -414,6 +563,14 @@ public class GenerationConfig {
             return this;
         }
 
+        /**
+         * Controls the randomness of the output.
+         */
+        public Builder temperature(@Nullable Float temperature) {
+            this.temperature = temperature;
+            return this;
+        }
+
         public Builder thinkingLevel(@Nullable ThinkingLevel thinkingLevel) {
             this.thinkingLevel = thinkingLevel;
             return this;
@@ -429,6 +586,14 @@ public class GenerationConfig {
          */
         public Builder toolChoice(@Nullable ToolChoice toolChoice) {
             this.toolChoice = toolChoice;
+            return this;
+        }
+
+        /**
+         * The maximum cumulative probability of tokens to consider when sampling.
+         */
+        public Builder topP(@Nullable Float topP) {
+            this.topP = topP;
             return this;
         }
 
@@ -450,10 +615,11 @@ public class GenerationConfig {
 
         public GenerationConfig build() {
             return new GenerationConfig(
-                imageConfig, maxOutputTokens, seed,
-                speechConfig, stopSequences, thinkingLevel,
-                thinkingSummaries, toolChoice, transcriptionConfig,
-                videoConfig);
+                frequencyPenalty, imageConfig, maxOutputTokens,
+                presencePenalty, seed, speechConfig,
+                stopSequences, temperature, thinkingLevel,
+                thinkingSummaries, toolChoice, topP,
+                transcriptionConfig, videoConfig);
         }
 
     }

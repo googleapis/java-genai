@@ -51,6 +51,13 @@ public class StepStop implements InteractionSSEEvent {
     private int index;
 
     /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("metadata")
+    private StreamMetadata metadata;
+
+    /**
      * Statistics on the interaction request's token usage.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -68,11 +75,13 @@ public class StepStop implements InteractionSSEEvent {
     public StepStop(
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("index") int index,
+            @JsonProperty("metadata") @Nullable StreamMetadata metadata,
             @JsonProperty("step_usage") @Nullable Usage stepUsage,
             @JsonProperty("usage") @Nullable Usage usage) {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.index = index;
+        this.metadata = metadata;
         this.stepUsage = stepUsage;
         this.usage = usage;
     }
@@ -80,7 +89,7 @@ public class StepStop implements InteractionSSEEvent {
     public StepStop(
             int index) {
         this(null, index, null,
-            null);
+            null, null);
     }
 
     /**
@@ -98,6 +107,13 @@ public class StepStop implements InteractionSSEEvent {
 
     public Optional<Integer> index() {
         return Optional.ofNullable(this.index);
+    }
+
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public Optional<StreamMetadata> metadata() {
+        return Optional.ofNullable(this.metadata);
     }
 
     /**
@@ -136,6 +152,15 @@ public class StepStop implements InteractionSSEEvent {
 
 
     /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public StepStop withMetadata(@Nullable StreamMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+
+    /**
      * Statistics on the interaction request's token usage.
      */
     public StepStop withStepUsage(@Nullable Usage stepUsage) {
@@ -166,6 +191,7 @@ public class StepStop implements InteractionSSEEvent {
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.index, other.index) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata) &&
             Utils.enhancedDeepEquals(this.stepUsage, other.stepUsage) &&
             Utils.enhancedDeepEquals(this.usage, other.usage);
     }
@@ -174,7 +200,7 @@ public class StepStop implements InteractionSSEEvent {
     public int hashCode() {
         return Utils.enhancedHash(
             eventId, eventType, index,
-            stepUsage, usage);
+            metadata, stepUsage, usage);
     }
     
     @Override
@@ -183,6 +209,7 @@ public class StepStop implements InteractionSSEEvent {
                 "eventId", eventId,
                 "eventType", eventType,
                 "index", index,
+                "metadata", metadata,
                 "stepUsage", stepUsage,
                 "usage", usage);
     }
@@ -193,6 +220,8 @@ public class StepStop implements InteractionSSEEvent {
         private String eventId;
 
         private int index;
+
+        private StreamMetadata metadata;
 
         private Usage stepUsage;
 
@@ -217,6 +246,14 @@ public class StepStop implements InteractionSSEEvent {
         }
 
         /**
+         * Optional metadata accompanying ANY streamed event.
+         */
+        public Builder metadata(@Nullable StreamMetadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        /**
          * Statistics on the interaction request's token usage.
          */
         public Builder stepUsage(@Nullable Usage stepUsage) {
@@ -234,8 +271,8 @@ public class StepStop implements InteractionSSEEvent {
 
         public StepStop build() {
             return new StepStop(
-                eventId, index, stepUsage,
-                usage);
+                eventId, index, metadata,
+                stepUsage, usage);
         }
 
 

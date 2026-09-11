@@ -31,15 +31,15 @@ import java.util.Optional;
 
 public class RunTriggerRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to run immediately.
      */
-    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=trigger_id")
+    @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=triggerId")
     private String triggerId;
 
     @JsonCreator
@@ -57,14 +57,14 @@ public class RunTriggerRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to run immediately.
      */
     public Optional<String> triggerId() {
         return Optional.ofNullable(this.triggerId);
@@ -76,7 +76,7 @@ public class RunTriggerRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public RunTriggerRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -85,7 +85,7 @@ public class RunTriggerRequest {
 
 
     /**
-     * Resource name of the trigger.
+     * Required. The ID of the trigger to run immediately.
      */
     public RunTriggerRequest withTriggerId(@Nonnull String triggerId) {
         this.triggerId = Utils.checkNotNull(triggerId, "triggerId");
@@ -132,7 +132,7 @@ public class RunTriggerRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -140,7 +140,7 @@ public class RunTriggerRequest {
         }
 
         /**
-         * Resource name of the trigger.
+         * Required. The ID of the trigger to run immediately.
          */
         public Builder triggerId(@Nonnull String triggerId) {
             this.triggerId = Utils.checkNotNull(triggerId, "triggerId");

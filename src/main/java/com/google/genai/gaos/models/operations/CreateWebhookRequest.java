@@ -32,13 +32,13 @@ import java.util.Optional;
 
 public class CreateWebhookRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
 
     /**
-     * Required. The webhook to create.
+     * Required. The HTTP body of the payload.
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private WebhookInput body;
@@ -58,14 +58,14 @@ public class CreateWebhookRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
     }
 
     /**
-     * Required. The webhook to create.
+     * Required. The HTTP body of the payload.
      */
     public Optional<WebhookInput> body() {
         return Optional.ofNullable(this.body);
@@ -77,7 +77,7 @@ public class CreateWebhookRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public CreateWebhookRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -86,7 +86,7 @@ public class CreateWebhookRequest {
 
 
     /**
-     * Required. The webhook to create.
+     * Required. The HTTP body of the payload.
      */
     public CreateWebhookRequest withBody(@Nonnull WebhookInput body) {
         this.body = Utils.checkNotNull(body, "body");
@@ -133,7 +133,7 @@ public class CreateWebhookRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -141,7 +141,7 @@ public class CreateWebhookRequest {
         }
 
         /**
-         * Required. The webhook to create.
+         * Required. The HTTP body of the payload.
          */
         public Builder body(@Nonnull WebhookInput body) {
             this.body = Utils.checkNotNull(body, "body");

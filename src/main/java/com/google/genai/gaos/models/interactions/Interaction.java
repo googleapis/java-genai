@@ -49,14 +49,28 @@ public class Interaction {
     private AgentOption agent;
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("agent_config")
     private InteractionAgentConfig agentConfig;
 
     /**
-     * Output only. The time at which the response was created in ISO 8601 format
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("cached_content")
+    @Deprecated
+    private String cachedContent;
+
+    /**
+     * Required. Output only. The time at which the response was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -64,8 +78,7 @@ public class Interaction {
     private String created;
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment")
@@ -108,7 +121,13 @@ public class Interaction {
     private InteractionsInput input;
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("labels")
@@ -159,10 +178,7 @@ public class Interaction {
     @JsonProperty("previous_interaction_id")
     private String previousInteractionId;
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
+
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("response_format")
     private InteractionResponseFormat responseFormat;
@@ -206,7 +222,7 @@ public class Interaction {
     private InteractionStatus status;
 
     /**
-     * Output only. The steps that make up the interaction, when included in the response.
+     * Required. Output only. The steps that make up the interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("steps")
@@ -227,7 +243,7 @@ public class Interaction {
     private List<Tool> tools;
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
+     * Required. Output only. The time at which the response was last updated in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -252,6 +268,7 @@ public class Interaction {
     public Interaction(
             @JsonProperty("agent") @Nullable AgentOption agent,
             @JsonProperty("agent_config") @Nullable InteractionAgentConfig agentConfig,
+            @JsonProperty("cached_content") @Nullable String cachedContent,
             @JsonProperty("created") @Nullable String created,
             @JsonProperty("environment") @Nullable InteractionEnvironment environment,
             @JsonProperty("environment_id") @Nullable String environmentId,
@@ -280,6 +297,7 @@ public class Interaction {
             @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
         this.agent = agent;
         this.agentConfig = agentConfig;
+        this.cachedContent = cachedContent;
         this.created = created;
         this.environment = environment;
         this.environmentId = environmentId;
@@ -319,9 +337,9 @@ public class Interaction {
             null, null, null,
             null, null, null,
             null, null, null,
-            status, null, null,
+            null, status, null,
             null, null, null,
-            null);
+            null, null);
     }
 
     /**
@@ -332,14 +350,28 @@ public class Interaction {
     }
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     public Optional<InteractionAgentConfig> agentConfig() {
         return Optional.ofNullable(this.agentConfig);
     }
 
     /**
-     * Output only. The time at which the response was created in ISO 8601 format
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<String> cachedContent() {
+        return Optional.ofNullable(this.cachedContent);
+    }
+
+    /**
+     * Required. Output only. The time at which the response was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     public Optional<String> created() {
@@ -347,8 +379,7 @@ public class Interaction {
     }
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     public Optional<InteractionEnvironment> environment() {
         return Optional.ofNullable(this.environment);
@@ -391,7 +422,13 @@ public class Interaction {
     }
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public Optional<Map<String, String>> labels() {
         return Optional.ofNullable(this.labels);
@@ -442,10 +479,6 @@ public class Interaction {
         return Optional.ofNullable(this.previousInteractionId);
     }
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public Optional<InteractionResponseFormat> responseFormat() {
         return Optional.ofNullable(this.responseFormat);
     }
@@ -489,7 +522,7 @@ public class Interaction {
     }
 
     /**
-     * Output only. The steps that make up the interaction, when included in the response.
+     * Required. Output only. The steps that make up the interaction.
      */
     public Optional<List<Step>> steps() {
         return Optional.ofNullable(this.steps);
@@ -510,7 +543,7 @@ public class Interaction {
     }
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
+     * Required. Output only. The time at which the response was last updated in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     public Optional<String> updated() {
@@ -557,7 +590,7 @@ public class Interaction {
 
 
     /**
-     * Configuration parameters for the agent interaction.
+     * Parameters for the agent interaction.
      */
     public Interaction withAgentConfig(@Nullable InteractionAgentConfig agentConfig) {
         this.agentConfig = agentConfig;
@@ -566,7 +599,23 @@ public class Interaction {
 
 
     /**
-     * Output only. The time at which the response was created in ISO 8601 format
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Interaction withCachedContent(@Nullable String cachedContent) {
+        this.cachedContent = cachedContent;
+        return this;
+    }
+
+
+    /**
+     * Required. Output only. The time at which the response was created in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     public Interaction withCreated(@Nullable String created) {
@@ -576,8 +625,7 @@ public class Interaction {
 
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The environment configuration for the interaction.
      */
     public Interaction withEnvironment(@Nullable InteractionEnvironment environment) {
         this.environment = environment;
@@ -632,7 +680,13 @@ public class Interaction {
 
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public Interaction withLabels(@Nullable Map<String, String> labels) {
         this.labels = labels;
@@ -697,10 +751,6 @@ public class Interaction {
     }
 
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public Interaction withResponseFormat(@Nullable InteractionResponseFormat responseFormat) {
         this.responseFormat = responseFormat;
         return this;
@@ -756,7 +806,7 @@ public class Interaction {
 
 
     /**
-     * Output only. The steps that make up the interaction, when included in the response.
+     * Required. Output only. The steps that make up the interaction.
      */
     public Interaction withSteps(@Nullable List<Step> steps) {
         this.steps = steps;
@@ -783,7 +833,7 @@ public class Interaction {
 
 
     /**
-     * Output only. The time at which the response was last updated in ISO 8601 format
+     * Required. Output only. The time at which the response was last updated in ISO 8601 format
      * (YYYY-MM-DDThh:mm:ssZ).
      */
     public Interaction withUpdated(@Nullable String updated) {
@@ -822,6 +872,7 @@ public class Interaction {
         return 
             Utils.enhancedDeepEquals(this.agent, other.agent) &&
             Utils.enhancedDeepEquals(this.agentConfig, other.agentConfig) &&
+            Utils.enhancedDeepEquals(this.cachedContent, other.cachedContent) &&
             Utils.enhancedDeepEquals(this.created, other.created) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
             Utils.enhancedDeepEquals(this.environmentId, other.environmentId) &&
@@ -853,16 +904,16 @@ public class Interaction {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            agent, agentConfig, created,
-            environment, environmentId, errors,
-            generationConfig, id, input,
-            labels, model, outputAudio,
-            outputImage, outputText, outputVideo,
-            previousInteractionId, responseFormat, responseMimeType,
-            responseModalities, safetySettings, serviceTier,
-            status, steps, systemInstruction,
-            tools, updated, usage,
-            webhookConfig);
+            agent, agentConfig, cachedContent,
+            created, environment, environmentId,
+            errors, generationConfig, id,
+            input, labels, model,
+            outputAudio, outputImage, outputText,
+            outputVideo, previousInteractionId, responseFormat,
+            responseMimeType, responseModalities, safetySettings,
+            serviceTier, status, steps,
+            systemInstruction, tools, updated,
+            usage, webhookConfig);
     }
     
     @Override
@@ -870,6 +921,7 @@ public class Interaction {
         return Utils.toString(Interaction.class,
                 "agent", agent,
                 "agentConfig", agentConfig,
+                "cachedContent", cachedContent,
                 "created", created,
                 "environment", environment,
                 "environmentId", environmentId,
@@ -904,6 +956,9 @@ public class Interaction {
         private AgentOption agent;
 
         private InteractionAgentConfig agentConfig;
+
+        @Deprecated
+        private String cachedContent;
 
         private String created;
 
@@ -972,7 +1027,7 @@ public class Interaction {
         }
 
         /**
-         * Configuration parameters for the agent interaction.
+         * Parameters for the agent interaction.
          */
         public Builder agentConfig(@Nullable InteractionAgentConfig agentConfig) {
             this.agentConfig = agentConfig;
@@ -980,7 +1035,22 @@ public class Interaction {
         }
 
         /**
-         * Output only. The time at which the response was created in ISO 8601 format
+         * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+         * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+         * cost savings.
+         * 
+         * <p>Format: cachedContents/{cachedContent}
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder cachedContent(@Nullable String cachedContent) {
+            this.cachedContent = cachedContent;
+            return this;
+        }
+
+        /**
+         * Required. Output only. The time at which the response was created in ISO 8601 format
          * (YYYY-MM-DDThh:mm:ssZ).
          */
         public Builder created(@Nullable String created) {
@@ -989,8 +1059,7 @@ public class Interaction {
         }
 
         /**
-         * The environment configuration for the interaction. Can be an object specifying remote environment
-         * sources or a string referencing an existing environment ID.
+         * The environment configuration for the interaction.
          */
         public Builder environment(@Nullable InteractionEnvironment environment) {
             this.environment = environment;
@@ -1039,7 +1108,13 @@ public class Interaction {
         }
 
         /**
-         * The labels with user-defined metadata for the request.
+         * The labels with user-defined metadata for the request. It is used for
+         * billing and reporting only.
+         * 
+         * <p>Label keys and values can be no longer than 63 characters
+         * (Unicode codepoints) and can only contain lowercase letters, numeric
+         * characters, underscores, and dashes. International characters are allowed.
+         * Label values are optional. Label keys must start with a letter.
          */
         public Builder labels(@Nullable Map<String, String> labels) {
             this.labels = labels;
@@ -1097,10 +1172,6 @@ public class Interaction {
             return this;
         }
 
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
         public Builder responseFormat(@Nullable InteractionResponseFormat responseFormat) {
             this.responseFormat = responseFormat;
             return this;
@@ -1150,7 +1221,7 @@ public class Interaction {
         }
 
         /**
-         * Output only. The steps that make up the interaction, when included in the response.
+         * Required. Output only. The steps that make up the interaction.
          */
         public Builder steps(@Nullable List<Step> steps) {
             this.steps = steps;
@@ -1174,7 +1245,7 @@ public class Interaction {
         }
 
         /**
-         * Output only. The time at which the response was last updated in ISO 8601 format
+         * Required. Output only. The time at which the response was last updated in ISO 8601 format
          * (YYYY-MM-DDThh:mm:ssZ).
          */
         public Builder updated(@Nullable String updated) {
@@ -1200,16 +1271,16 @@ public class Interaction {
 
         public Interaction build() {
             return new Interaction(
-                agent, agentConfig, created,
-                environment, environmentId, errors,
-                generationConfig, id, input,
-                labels, model, outputAudio,
-                outputImage, outputText, outputVideo,
-                previousInteractionId, responseFormat, responseMimeType,
-                responseModalities, safetySettings, serviceTier,
-                status, steps, systemInstruction,
-                tools, updated, usage,
-                webhookConfig);
+                agent, agentConfig, cachedContent,
+                created, environment, environmentId,
+                errors, generationConfig, id,
+                input, labels, model,
+                outputAudio, outputImage, outputText,
+                outputVideo, previousInteractionId, responseFormat,
+                responseMimeType, responseModalities, safetySettings,
+                serviceTier, status, steps,
+                systemInstruction, tools, updated,
+                usage, webhookConfig);
         }
 
 

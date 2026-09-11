@@ -133,7 +133,7 @@ public class GetAgent {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/agents/{id}",
+                    "/{api_version}/agents/{agentsId}",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "GET");
             req.addHeader("Accept", "application/json")

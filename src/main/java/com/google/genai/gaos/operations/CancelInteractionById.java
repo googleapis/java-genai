@@ -135,7 +135,7 @@ public class CancelInteractionById {
             String url = Utils.generateURL(
                     klass,
                     this.baseUrl,
-                    "/{api_version}/interactions/{id}/cancel",
+                    "/{api_version}/interactions/{interactionsId}/cancel",
                     request, this.operationGlobals);
             HTTPRequest req = new HTTPRequest(url, "POST");
             req.addHeader("Accept", "application/json")

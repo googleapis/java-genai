@@ -52,17 +52,26 @@ public class ErrorEvent implements InteractionSSEEvent {
     @JsonProperty("event_type")
     private String eventType;
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("metadata")
+    private StreamMetadata metadata;
+
     @JsonCreator
     public ErrorEvent(
             @JsonProperty("error") @Nullable Error error,
-            @JsonProperty("event_id") @Nullable String eventId) {
+            @JsonProperty("event_id") @Nullable String eventId,
+            @JsonProperty("metadata") @Nullable StreamMetadata metadata) {
         this.error = error;
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
+        this.metadata = metadata;
     }
     
     public ErrorEvent() {
-        this(null, null);
+        this(null, null, null);
     }
 
     /**
@@ -83,6 +92,13 @@ public class ErrorEvent implements InteractionSSEEvent {
     @Override
     public String eventType() {
         return Utils.discriminatorToString(eventType);
+    }
+
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public Optional<StreamMetadata> metadata() {
+        return Optional.ofNullable(this.metadata);
     }
 
     public static Builder builder() {
@@ -109,6 +125,15 @@ public class ErrorEvent implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public ErrorEvent withMetadata(@Nullable StreamMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -121,13 +146,15 @@ public class ErrorEvent implements InteractionSSEEvent {
         return 
             Utils.enhancedDeepEquals(this.error, other.error) &&
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
-            Utils.enhancedDeepEquals(this.eventType, other.eventType);
+            Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            error, eventId, eventType);
+            error, eventId, eventType,
+            metadata);
     }
     
     @Override
@@ -135,7 +162,8 @@ public class ErrorEvent implements InteractionSSEEvent {
         return Utils.toString(ErrorEvent.class,
                 "error", error,
                 "eventId", eventId,
-                "eventType", eventType);
+                "eventType", eventType,
+                "metadata", metadata);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -144,6 +172,8 @@ public class ErrorEvent implements InteractionSSEEvent {
         private Error error;
 
         private String eventId;
+
+        private StreamMetadata metadata;
 
         private Builder() {
           // force use of static builder() method
@@ -166,9 +196,17 @@ public class ErrorEvent implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Optional metadata accompanying ANY streamed event.
+         */
+        public Builder metadata(@Nullable StreamMetadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
         public ErrorEvent build() {
             return new ErrorEvent(
-                error, eventId);
+                error, eventId, metadata);
         }
 
 

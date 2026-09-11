@@ -34,12 +34,6 @@ import java.lang.SuppressWarnings;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * CreateAgentInteractionResponseFormat
- * 
- * <p>Enforces that the generated response is a JSON object that complies with the JSON schema specified
- * in this field.
- */
 @JsonDeserialize(using = CreateAgentInteractionResponseFormat._Deserializer.class)
 public class CreateAgentInteractionResponseFormat {
 

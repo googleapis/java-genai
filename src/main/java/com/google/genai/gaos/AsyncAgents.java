@@ -69,7 +69,7 @@ public class AsyncAgents {
 
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
      * @return The async call builder
      */
@@ -78,7 +78,7 @@ public class AsyncAgents {
     }
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
      * @return {@code CompletableFuture<ListAgentsResponse>} - The async response
      */
@@ -89,9 +89,9 @@ public class AsyncAgents {
     }
 
     /**
-     * Lists all Agents.
+     * Lists agents.
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param pageSize 
      * @param pageToken 
      * @param parent 
@@ -115,7 +115,7 @@ public class AsyncAgents {
 
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
      * @return The async call builder
      */
@@ -124,7 +124,7 @@ public class AsyncAgents {
     }
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
@@ -143,9 +143,9 @@ public class AsyncAgents {
     }
 
     /**
-     * Creates a new Agent (Typed version for SDK).
+     * Creates or updates an agent (upsert by name).
      * 
-     * @param apiVersion Which version of the API to use.
+     * @param apiVersion API version for request routing.
      * @param body An agent definition for the CreateAgent API.
      *         This message is the target for annotation-parser-based JSON parsing.
      *         New format:
@@ -173,7 +173,7 @@ public class AsyncAgents {
 
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
      * @return The async call builder
      */
@@ -182,9 +182,9 @@ public class AsyncAgents {
     }
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
-     * @param id 
+     * @param id Part of `name`. 
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
     public CompletableFuture<DeleteAgentResponse> delete(@Nonnull String id) {
@@ -192,10 +192,10 @@ public class AsyncAgents {
     }
 
     /**
-     * Deletes an Agent.
+     * Deletes an agent and all its versions.
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. 
      * @param options additional options
      * @return {@code CompletableFuture<DeleteAgentResponse>} - The async response
      */
@@ -213,7 +213,7 @@ public class AsyncAgents {
 
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
      * @return The async call builder
      */
@@ -222,9 +222,9 @@ public class AsyncAgents {
     }
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
-     * @param id 
+     * @param id Part of `name`. 
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */
     public CompletableFuture<GetAgentResponse> get(@Nonnull String id) {
@@ -232,10 +232,10 @@ public class AsyncAgents {
     }
 
     /**
-     * Gets a specific Agent.
+     * Gets an agent (latest version).
      * 
-     * @param apiVersion Which version of the API to use.
-     * @param id 
+     * @param apiVersion API version for request routing.
+     * @param id Part of `name`. 
      * @param options additional options
      * @return {@code CompletableFuture<GetAgentResponse>} - The async response
      */

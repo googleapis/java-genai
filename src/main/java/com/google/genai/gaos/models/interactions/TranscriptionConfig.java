@@ -74,6 +74,17 @@ public class TranscriptionConfig {
     private List<String> languageCodes;
 
     /**
+     * Deprecated: use language_codes. BCP-47 language codes providing hints about the languages present in
+     * the audio.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("language_hints")
+    @Deprecated
+    private List<String> languageHints;
+
+    /**
      * Discriminated transcription mode options or enum.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -97,19 +108,22 @@ public class TranscriptionConfig {
             @JsonProperty("custom_vocabulary") @Nullable List<String> customVocabulary,
             @JsonProperty("diarization_mode") @Nullable String diarizationMode,
             @JsonProperty("language_codes") @Nullable List<String> languageCodes,
+            @JsonProperty("language_hints") @Nullable List<String> languageHints,
             @JsonProperty("mode") @Nullable TranscriptionConfigMode mode,
             @JsonProperty("timestamp_granularities") @Nullable List<String> timestampGranularities) {
         this.adaptationPhrases = adaptationPhrases;
         this.customVocabulary = customVocabulary;
         this.diarizationMode = diarizationMode;
         this.languageCodes = languageCodes;
+        this.languageHints = languageHints;
         this.mode = mode;
         this.timestampGranularities = timestampGranularities;
     }
     
     public TranscriptionConfig() {
         this(null, null, null,
-            null, null, null);
+            null, null, null,
+            null);
     }
 
     /**
@@ -146,6 +160,17 @@ public class TranscriptionConfig {
      */
     public Optional<List<String>> languageCodes() {
         return Optional.ofNullable(this.languageCodes);
+    }
+
+    /**
+     * Deprecated: use language_codes. BCP-47 language codes providing hints about the languages present in
+     * the audio.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<List<String>> languageHints() {
+        return Optional.ofNullable(this.languageHints);
     }
 
     /**
@@ -216,6 +241,19 @@ public class TranscriptionConfig {
 
 
     /**
+     * Deprecated: use language_codes. BCP-47 language codes providing hints about the languages present in
+     * the audio.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public TranscriptionConfig withLanguageHints(@Nullable List<String> languageHints) {
+        this.languageHints = languageHints;
+        return this;
+    }
+
+
+    /**
      * Discriminated transcription mode options or enum.
      */
     public TranscriptionConfig withMode(@Nullable TranscriptionConfigMode mode) {
@@ -251,6 +289,7 @@ public class TranscriptionConfig {
             Utils.enhancedDeepEquals(this.customVocabulary, other.customVocabulary) &&
             Utils.enhancedDeepEquals(this.diarizationMode, other.diarizationMode) &&
             Utils.enhancedDeepEquals(this.languageCodes, other.languageCodes) &&
+            Utils.enhancedDeepEquals(this.languageHints, other.languageHints) &&
             Utils.enhancedDeepEquals(this.mode, other.mode) &&
             Utils.enhancedDeepEquals(this.timestampGranularities, other.timestampGranularities);
     }
@@ -259,7 +298,8 @@ public class TranscriptionConfig {
     public int hashCode() {
         return Utils.enhancedHash(
             adaptationPhrases, customVocabulary, diarizationMode,
-            languageCodes, mode, timestampGranularities);
+            languageCodes, languageHints, mode,
+            timestampGranularities);
     }
     
     @Override
@@ -269,6 +309,7 @@ public class TranscriptionConfig {
                 "customVocabulary", customVocabulary,
                 "diarizationMode", diarizationMode,
                 "languageCodes", languageCodes,
+                "languageHints", languageHints,
                 "mode", mode,
                 "timestampGranularities", timestampGranularities);
     }
@@ -285,6 +326,9 @@ public class TranscriptionConfig {
         private String diarizationMode;
 
         private List<String> languageCodes;
+
+        @Deprecated
+        private List<String> languageHints;
 
         private TranscriptionConfigMode mode;
 
@@ -336,6 +380,18 @@ public class TranscriptionConfig {
         }
 
         /**
+         * Deprecated: use language_codes. BCP-47 language codes providing hints about the languages present in
+         * the audio.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder languageHints(@Nullable List<String> languageHints) {
+            this.languageHints = languageHints;
+            return this;
+        }
+
+        /**
          * Discriminated transcription mode options or enum.
          */
         public Builder mode(@Nullable TranscriptionConfigMode mode) {
@@ -358,7 +414,8 @@ public class TranscriptionConfig {
         public TranscriptionConfig build() {
             return new TranscriptionConfig(
                 adaptationPhrases, customVocabulary, diarizationMode,
-                languageCodes, mode, timestampGranularities);
+                languageCodes, languageHints, mode,
+                timestampGranularities);
         }
 
     }

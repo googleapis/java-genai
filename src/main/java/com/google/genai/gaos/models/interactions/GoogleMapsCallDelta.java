@@ -41,6 +41,13 @@ public class GoogleMapsCallDelta implements StepDeltaData {
     private GoogleMapsCallArguments arguments;
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
+    /**
      * A signature hash for backend validation.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -54,14 +61,16 @@ public class GoogleMapsCallDelta implements StepDeltaData {
     @JsonCreator
     public GoogleMapsCallDelta(
             @JsonProperty("arguments") @Nullable GoogleMapsCallArguments arguments,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("signature") @Nullable String signature) {
         this.arguments = arguments;
+        this.id = id;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
     public GoogleMapsCallDelta() {
-        this(null, null);
+        this(null, null, null);
     }
 
     /**
@@ -69,6 +78,13 @@ public class GoogleMapsCallDelta implements StepDeltaData {
      */
     public Optional<GoogleMapsCallArguments> arguments() {
         return Optional.ofNullable(this.arguments);
+    }
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
     }
 
     /**
@@ -98,6 +114,15 @@ public class GoogleMapsCallDelta implements StepDeltaData {
 
 
     /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public GoogleMapsCallDelta withId(@Nullable String id) {
+        this.id = id;
+        return this;
+    }
+
+
+    /**
      * A signature hash for backend validation.
      */
     public GoogleMapsCallDelta withSignature(@Nullable String signature) {
@@ -117,6 +142,7 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         GoogleMapsCallDelta other = (GoogleMapsCallDelta) o;
         return 
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
@@ -124,13 +150,15 @@ public class GoogleMapsCallDelta implements StepDeltaData {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            arguments, signature, type);
+            arguments, id, signature,
+            type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(GoogleMapsCallDelta.class,
                 "arguments", arguments,
+                "id", id,
                 "signature", signature,
                 "type", type);
     }
@@ -139,6 +167,8 @@ public class GoogleMapsCallDelta implements StepDeltaData {
     public final static class Builder {
 
         private GoogleMapsCallArguments arguments;
+
+        private String id;
 
         private String signature;
 
@@ -155,6 +185,14 @@ public class GoogleMapsCallDelta implements StepDeltaData {
         }
 
         /**
+         * Required. A unique ID for this specific tool call.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
          * A signature hash for backend validation.
          */
         public Builder signature(@Nullable String signature) {
@@ -164,7 +202,7 @@ public class GoogleMapsCallDelta implements StepDeltaData {
 
         public GoogleMapsCallDelta build() {
             return new GoogleMapsCallDelta(
-                arguments, signature);
+                arguments, id, signature);
         }
 
 

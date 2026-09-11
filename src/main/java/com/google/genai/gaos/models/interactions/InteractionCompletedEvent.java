@@ -54,19 +54,28 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
     @JsonProperty("interaction")
     private InteractionSseEventInteraction interaction;
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("metadata")
+    private StreamMetadata metadata;
+
     @JsonCreator
     public InteractionCompletedEvent(
             @JsonProperty("event_id") @Nullable String eventId,
-            @JsonProperty("interaction") @Nonnull InteractionSseEventInteraction interaction) {
+            @JsonProperty("interaction") @Nonnull InteractionSseEventInteraction interaction,
+            @JsonProperty("metadata") @Nullable StreamMetadata metadata) {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interaction = Optional.ofNullable(interaction)
             .orElseThrow(() -> new IllegalArgumentException("interaction cannot be null"));
+        this.metadata = metadata;
     }
     
     public InteractionCompletedEvent(
             @Nonnull InteractionSseEventInteraction interaction) {
-        this(null, interaction);
+        this(null, interaction, null);
     }
 
     /**
@@ -89,6 +98,13 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
      */
     public Optional<InteractionSseEventInteraction> interaction() {
         return Optional.ofNullable(this.interaction);
+    }
+
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public Optional<StreamMetadata> metadata() {
+        return Optional.ofNullable(this.metadata);
     }
 
     public static Builder builder() {
@@ -117,6 +133,15 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public InteractionCompletedEvent withMetadata(@Nullable StreamMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -129,13 +154,15 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         return 
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
-            Utils.enhancedDeepEquals(this.interaction, other.interaction);
+            Utils.enhancedDeepEquals(this.interaction, other.interaction) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            eventId, eventType, interaction);
+            eventId, eventType, interaction,
+            metadata);
     }
     
     @Override
@@ -143,7 +170,8 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         return Utils.toString(InteractionCompletedEvent.class,
                 "eventId", eventId,
                 "eventType", eventType,
-                "interaction", interaction);
+                "interaction", interaction,
+                "metadata", metadata);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -152,6 +180,8 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
         private String eventId;
 
         private InteractionSseEventInteraction interaction;
+
+        private StreamMetadata metadata;
 
         private Builder() {
           // force use of static builder() method
@@ -176,9 +206,17 @@ public class InteractionCompletedEvent implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Optional metadata accompanying ANY streamed event.
+         */
+        public Builder metadata(@Nullable StreamMetadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
         public InteractionCompletedEvent build() {
             return new InteractionCompletedEvent(
-                eventId, interaction);
+                eventId, interaction, metadata);
         }
 
 

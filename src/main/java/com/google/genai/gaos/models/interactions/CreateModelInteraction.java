@@ -37,7 +37,7 @@ import java.util.Optional;
 /**
  * CreateModelInteraction
  * 
- * <p>Parameters for creating model interactions
+ * <p>Interaction for generating the completion using models.
  */
 public class CreateModelInteraction {
     /**
@@ -48,8 +48,21 @@ public class CreateModelInteraction {
     private Boolean background;
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("cached_content")
+    @Deprecated
+    private String cachedContent;
+
+    /**
+     * The environment configuration for the interaction.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("environment")
@@ -65,11 +78,18 @@ public class CreateModelInteraction {
     /**
      * The input for the interaction.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("input")
     private InteractionsInput input;
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("labels")
@@ -89,10 +109,7 @@ public class CreateModelInteraction {
     @JsonProperty("previous_interaction_id")
     private String previousInteractionId;
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
+
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("response_format")
     private CreateModelInteractionResponseFormat responseFormat;
@@ -167,9 +184,10 @@ public class CreateModelInteraction {
     @JsonCreator
     public CreateModelInteraction(
             @JsonProperty("background") @Nullable Boolean background,
+            @JsonProperty("cached_content") @Nullable String cachedContent,
             @JsonProperty("environment") @Nullable CreateModelInteractionEnvironment environment,
             @JsonProperty("generation_config") @Nullable GenerationConfig generationConfig,
-            @JsonProperty("input") @Nonnull InteractionsInput input,
+            @JsonProperty("input") @Nullable InteractionsInput input,
             @JsonProperty("labels") @Nullable Map<String, String> labels,
             @JsonProperty("model") @Nonnull Model model,
             @JsonProperty("previous_interaction_id") @Nullable String previousInteractionId,
@@ -184,10 +202,10 @@ public class CreateModelInteraction {
             @JsonProperty("tools") @Nullable List<Tool> tools,
             @JsonProperty("webhook_config") @Nullable WebhookConfig webhookConfig) {
         this.background = background;
+        this.cachedContent = cachedContent;
         this.environment = environment;
         this.generationConfig = generationConfig;
-        this.input = Optional.ofNullable(input)
-            .orElseThrow(() -> new IllegalArgumentException("input cannot be null"));
+        this.input = input;
         this.labels = labels;
         this.model = Optional.ofNullable(model)
             .orElseThrow(() -> new IllegalArgumentException("model cannot be null"));
@@ -205,14 +223,13 @@ public class CreateModelInteraction {
     }
     
     public CreateModelInteraction(
-            @Nonnull InteractionsInput input,
             @Nonnull Model model) {
         this(null, null, null,
-            input, null, model,
+            null, null, null,
+            model, null, null,
             null, null, null,
             null, null, null,
-            null, null, null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -223,8 +240,21 @@ public class CreateModelInteraction {
     }
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public Optional<String> cachedContent() {
+        return Optional.ofNullable(this.cachedContent);
+    }
+
+    /**
+     * The environment configuration for the interaction.
      */
     public Optional<CreateModelInteractionEnvironment> environment() {
         return Optional.ofNullable(this.environment);
@@ -245,7 +275,13 @@ public class CreateModelInteraction {
     }
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public Optional<Map<String, String>> labels() {
         return Optional.ofNullable(this.labels);
@@ -266,10 +302,6 @@ public class CreateModelInteraction {
         return Optional.ofNullable(this.previousInteractionId);
     }
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public Optional<CreateModelInteractionResponseFormat> responseFormat() {
         return Optional.ofNullable(this.responseFormat);
     }
@@ -355,8 +387,23 @@ public class CreateModelInteraction {
 
 
     /**
-     * The environment configuration for the interaction. Can be an object specifying remote environment
-     * sources or a string referencing an existing environment ID.
+     * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+     * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+     * cost savings.
+     * 
+     * <p>Format: cachedContents/{cachedContent}
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CreateModelInteraction withCachedContent(@Nullable String cachedContent) {
+        this.cachedContent = cachedContent;
+        return this;
+    }
+
+
+    /**
+     * The environment configuration for the interaction.
      */
     public CreateModelInteraction withEnvironment(@Nullable CreateModelInteractionEnvironment environment) {
         this.environment = environment;
@@ -376,14 +423,20 @@ public class CreateModelInteraction {
     /**
      * The input for the interaction.
      */
-    public CreateModelInteraction withInput(@Nonnull InteractionsInput input) {
-        this.input = Utils.checkNotNull(input, "input");
+    public CreateModelInteraction withInput(@Nullable InteractionsInput input) {
+        this.input = input;
         return this;
     }
 
 
     /**
-     * The labels with user-defined metadata for the request.
+     * The labels with user-defined metadata for the request. It is used for
+     * billing and reporting only.
+     * 
+     * <p>Label keys and values can be no longer than 63 characters
+     * (Unicode codepoints) and can only contain lowercase letters, numeric
+     * characters, underscores, and dashes. International characters are allowed.
+     * Label values are optional. Label keys must start with a letter.
      */
     public CreateModelInteraction withLabels(@Nullable Map<String, String> labels) {
         this.labels = labels;
@@ -410,10 +463,6 @@ public class CreateModelInteraction {
     }
 
 
-    /**
-     * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-     * in this field.
-     */
     public CreateModelInteraction withResponseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
         this.responseFormat = responseFormat;
         return this;
@@ -515,6 +564,7 @@ public class CreateModelInteraction {
         CreateModelInteraction other = (CreateModelInteraction) o;
         return 
             Utils.enhancedDeepEquals(this.background, other.background) &&
+            Utils.enhancedDeepEquals(this.cachedContent, other.cachedContent) &&
             Utils.enhancedDeepEquals(this.environment, other.environment) &&
             Utils.enhancedDeepEquals(this.generationConfig, other.generationConfig) &&
             Utils.enhancedDeepEquals(this.input, other.input) &&
@@ -536,18 +586,19 @@ public class CreateModelInteraction {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            background, environment, generationConfig,
-            input, labels, model,
-            previousInteractionId, responseFormat, responseMimeType,
-            responseModalities, safetySettings, serviceTier,
-            store, stream, systemInstruction,
-            tools, webhookConfig);
+            background, cachedContent, environment,
+            generationConfig, input, labels,
+            model, previousInteractionId, responseFormat,
+            responseMimeType, responseModalities, safetySettings,
+            serviceTier, store, stream,
+            systemInstruction, tools, webhookConfig);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateModelInteraction.class,
                 "background", background,
+                "cachedContent", cachedContent,
                 "environment", environment,
                 "generationConfig", generationConfig,
                 "input", input,
@@ -570,6 +621,9 @@ public class CreateModelInteraction {
     public final static class Builder {
 
         private Boolean background;
+
+        @Deprecated
+        private String cachedContent;
 
         private CreateModelInteractionEnvironment environment;
 
@@ -618,8 +672,22 @@ public class CreateModelInteraction {
         }
 
         /**
-         * The environment configuration for the interaction. Can be an object specifying remote environment
-         * sources or a string referencing an existing environment ID.
+         * The name of the cached content used as context to serve the prediction. Note: only used in explicit
+         * caching, where users can have control over caching (e.g. what content to cache) and enjoy guaranteed
+         * cost savings.
+         * 
+         * <p>Format: cachedContents/{cachedContent}
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
+        public Builder cachedContent(@Nullable String cachedContent) {
+            this.cachedContent = cachedContent;
+            return this;
+        }
+
+        /**
+         * The environment configuration for the interaction.
          */
         public Builder environment(@Nullable CreateModelInteractionEnvironment environment) {
             this.environment = environment;
@@ -637,13 +705,19 @@ public class CreateModelInteraction {
         /**
          * The input for the interaction.
          */
-        public Builder input(@Nonnull InteractionsInput input) {
-            this.input = Utils.checkNotNull(input, "input");
+        public Builder input(@Nullable InteractionsInput input) {
+            this.input = input;
             return this;
         }
 
         /**
-         * The labels with user-defined metadata for the request.
+         * The labels with user-defined metadata for the request. It is used for
+         * billing and reporting only.
+         * 
+         * <p>Label keys and values can be no longer than 63 characters
+         * (Unicode codepoints) and can only contain lowercase letters, numeric
+         * characters, underscores, and dashes. International characters are allowed.
+         * Label values are optional. Label keys must start with a letter.
          */
         public Builder labels(@Nullable Map<String, String> labels) {
             this.labels = labels;
@@ -667,10 +741,6 @@ public class CreateModelInteraction {
             return this;
         }
 
-        /**
-         * Enforces that the generated response is a JSON object that complies with the JSON schema specified
-         * in this field.
-         */
         public Builder responseFormat(@Nullable CreateModelInteractionResponseFormat responseFormat) {
             this.responseFormat = responseFormat;
             return this;
@@ -758,12 +828,12 @@ public class CreateModelInteraction {
 
         public CreateModelInteraction build() {
             return new CreateModelInteraction(
-                background, environment, generationConfig,
-                input, labels, model,
-                previousInteractionId, responseFormat, responseMimeType,
-                responseModalities, safetySettings, serviceTier,
-                store, stream, systemInstruction,
-                tools, webhookConfig);
+                background, cachedContent, environment,
+                generationConfig, input, labels,
+                model, previousInteractionId, responseFormat,
+                responseMimeType, responseModalities, safetySettings,
+                serviceTier, store, stream,
+                systemInstruction, tools, webhookConfig);
         }
 
     }

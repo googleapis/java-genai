@@ -34,6 +34,12 @@ import java.util.Optional;
  * without runtime errors. Instances are immutable singletons with reference equality.
  * Use {@code asEnum()} for switch expressions.
  */
+/**
+ * ImageConfigImageSize
+ * 
+ * <p>Specifies the size of generated images. Supported values are `1K`, `2K`,
+ * `4K`. If not specified, the model will use default value `1K`.
+ */
 public class ImageConfigImageSize {
 
     public static final ImageConfigImageSize ONE_K = new ImageConfigImageSize("1K");

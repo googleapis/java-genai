@@ -28,7 +28,7 @@ import java.lang.String;
 /**
  * CreateAgentInteractionAgentConfig
  * 
- * <p>Configuration parameters for the agent interaction.
+ * <p>Parameters for the agent interaction.
  */
 @JsonTypeInfo(
         use = Id.CUSTOM,

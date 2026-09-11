@@ -64,6 +64,13 @@ public class MCPServerToolResultStep implements Step {
     @JsonProperty("server_name")
     private String serverName;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
@@ -73,13 +80,15 @@ public class MCPServerToolResultStep implements Step {
             @JsonProperty("call_id") @Nonnull String callId,
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("result") @Nonnull MCPServerToolResultStepResultUnion result,
-            @JsonProperty("server_name") @Nullable String serverName) {
+            @JsonProperty("server_name") @Nullable String serverName,
+            @JsonProperty("signature") @Nullable String signature) {
         this.callId = Optional.ofNullable(callId)
             .orElseThrow(() -> new IllegalArgumentException("callId cannot be null"));
         this.name = name;
         this.result = Optional.ofNullable(result)
             .orElseThrow(() -> new IllegalArgumentException("result cannot be null"));
         this.serverName = serverName;
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
@@ -87,7 +96,7 @@ public class MCPServerToolResultStep implements Step {
             @Nonnull String callId,
             @Nonnull MCPServerToolResultStepResultUnion result) {
         this(callId, null, result,
-            null);
+            null, null);
     }
 
     /**
@@ -116,6 +125,13 @@ public class MCPServerToolResultStep implements Step {
      */
     public Optional<String> serverName() {
         return Optional.ofNullable(this.serverName);
+    }
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
     }
 
     @Override
@@ -164,6 +180,15 @@ public class MCPServerToolResultStep implements Step {
     }
 
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public MCPServerToolResultStep withSignature(@Nullable String signature) {
+        this.signature = signature;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -178,6 +203,7 @@ public class MCPServerToolResultStep implements Step {
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.result, other.result) &&
             Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
@@ -185,7 +211,7 @@ public class MCPServerToolResultStep implements Step {
     public int hashCode() {
         return Utils.enhancedHash(
             callId, name, result,
-            serverName, type);
+            serverName, signature, type);
     }
     
     @Override
@@ -195,6 +221,7 @@ public class MCPServerToolResultStep implements Step {
                 "name", name,
                 "result", result,
                 "serverName", serverName,
+                "signature", signature,
                 "type", type);
     }
 
@@ -208,6 +235,8 @@ public class MCPServerToolResultStep implements Step {
         private MCPServerToolResultStepResultUnion result;
 
         private String serverName;
+
+        private String signature;
 
         private Builder() {
           // force use of static builder() method
@@ -245,10 +274,18 @@ public class MCPServerToolResultStep implements Step {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public MCPServerToolResultStep build() {
             return new MCPServerToolResultStep(
                 callId, name, result,
-                serverName);
+                serverName, signature);
         }
 
 

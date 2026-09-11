@@ -20,11 +20,14 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -55,6 +58,13 @@ public class FunctionCallStep implements Step {
     @JsonProperty("name")
     private String name;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
@@ -63,7 +73,8 @@ public class FunctionCallStep implements Step {
     public FunctionCallStep(
             @JsonProperty("arguments") @Nonnull Map<String, Object> arguments,
             @JsonProperty("id") @Nonnull String id,
-            @JsonProperty("name") @Nonnull String name) {
+            @JsonProperty("name") @Nonnull String name,
+            @JsonProperty("signature") @Nullable String signature) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
@@ -71,7 +82,16 @@ public class FunctionCallStep implements Step {
             .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
         this.name = Optional.ofNullable(name)
             .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
+    }
+    
+    public FunctionCallStep(
+            @Nonnull Map<String, Object> arguments,
+            @Nonnull String id,
+            @Nonnull String name) {
+        this(arguments, id, name,
+            null);
     }
 
     /**
@@ -93,6 +113,13 @@ public class FunctionCallStep implements Step {
      */
     public Optional<String> name() {
         return Optional.ofNullable(this.name);
+    }
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
     }
 
     @Override
@@ -132,6 +159,15 @@ public class FunctionCallStep implements Step {
     }
 
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public FunctionCallStep withSignature(@Nullable String signature) {
+        this.signature = signature;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -145,6 +181,7 @@ public class FunctionCallStep implements Step {
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
@@ -152,7 +189,7 @@ public class FunctionCallStep implements Step {
     public int hashCode() {
         return Utils.enhancedHash(
             arguments, id, name,
-            type);
+            signature, type);
     }
     
     @Override
@@ -161,6 +198,7 @@ public class FunctionCallStep implements Step {
                 "arguments", arguments,
                 "id", id,
                 "name", name,
+                "signature", signature,
                 "type", type);
     }
 
@@ -172,6 +210,8 @@ public class FunctionCallStep implements Step {
         private String id;
 
         private String name;
+
+        private String signature;
 
         private Builder() {
           // force use of static builder() method
@@ -201,9 +241,18 @@ public class FunctionCallStep implements Step {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public FunctionCallStep build() {
             return new FunctionCallStep(
-                arguments, id, name);
+                arguments, id, name,
+                signature);
         }
 
 

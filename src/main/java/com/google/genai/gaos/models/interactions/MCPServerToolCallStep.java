@@ -20,11 +20,14 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -61,6 +64,13 @@ public class MCPServerToolCallStep implements Step {
     @JsonProperty("server_name")
     private String serverName;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
@@ -70,7 +80,8 @@ public class MCPServerToolCallStep implements Step {
             @JsonProperty("arguments") @Nonnull Map<String, Object> arguments,
             @JsonProperty("id") @Nonnull String id,
             @JsonProperty("name") @Nonnull String name,
-            @JsonProperty("server_name") @Nonnull String serverName) {
+            @JsonProperty("server_name") @Nonnull String serverName,
+            @JsonProperty("signature") @Nullable String signature) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
@@ -80,7 +91,17 @@ public class MCPServerToolCallStep implements Step {
             .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
         this.serverName = Optional.ofNullable(serverName)
             .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
+    }
+    
+    public MCPServerToolCallStep(
+            @Nonnull Map<String, Object> arguments,
+            @Nonnull String id,
+            @Nonnull String name,
+            @Nonnull String serverName) {
+        this(arguments, id, name,
+            serverName, null);
     }
 
     /**
@@ -109,6 +130,13 @@ public class MCPServerToolCallStep implements Step {
      */
     public Optional<String> serverName() {
         return Optional.ofNullable(this.serverName);
+    }
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
     }
 
     @Override
@@ -157,6 +185,15 @@ public class MCPServerToolCallStep implements Step {
     }
 
 
+    /**
+     * A signature hash for backend validation.
+     */
+    public MCPServerToolCallStep withSignature(@Nullable String signature) {
+        this.signature = signature;
+        return this;
+    }
+
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -171,6 +208,7 @@ public class MCPServerToolCallStep implements Step {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
@@ -178,7 +216,7 @@ public class MCPServerToolCallStep implements Step {
     public int hashCode() {
         return Utils.enhancedHash(
             arguments, id, name,
-            serverName, type);
+            serverName, signature, type);
     }
     
     @Override
@@ -188,6 +226,7 @@ public class MCPServerToolCallStep implements Step {
                 "id", id,
                 "name", name,
                 "serverName", serverName,
+                "signature", signature,
                 "type", type);
     }
 
@@ -201,6 +240,8 @@ public class MCPServerToolCallStep implements Step {
         private String name;
 
         private String serverName;
+
+        private String signature;
 
         private Builder() {
           // force use of static builder() method
@@ -238,10 +279,18 @@ public class MCPServerToolCallStep implements Step {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public MCPServerToolCallStep build() {
             return new MCPServerToolCallStep(
                 arguments, id, name,
-                serverName);
+                serverName, signature);
         }
 
 

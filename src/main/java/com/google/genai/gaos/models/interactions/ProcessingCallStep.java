@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.lang.Override;
 import java.lang.String;
@@ -42,6 +41,7 @@ public class ProcessingCallStep implements Step {
     /**
      * Required. A unique ID for this specific tool call.
      */
+    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("id")
     private String id;
 
@@ -58,17 +58,15 @@ public class ProcessingCallStep implements Step {
 
     @JsonCreator
     public ProcessingCallStep(
-            @JsonProperty("id") @Nonnull String id,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("signature") @Nullable String signature) {
-        this.id = Optional.ofNullable(id)
-            .orElseThrow(() -> new IllegalArgumentException("id cannot be null"));
+        this.id = id;
         this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
     }
     
-    public ProcessingCallStep(
-            @Nonnull String id) {
-        this(id, null);
+    public ProcessingCallStep() {
+        this(null, null);
     }
 
     /**
@@ -98,8 +96,8 @@ public class ProcessingCallStep implements Step {
     /**
      * Required. A unique ID for this specific tool call.
      */
-    public ProcessingCallStep withId(@Nonnull String id) {
-        this.id = Utils.checkNotNull(id, "id");
+    public ProcessingCallStep withId(@Nullable String id) {
+        this.id = id;
         return this;
     }
 
@@ -156,8 +154,8 @@ public class ProcessingCallStep implements Step {
         /**
          * Required. A unique ID for this specific tool call.
          */
-        public Builder id(@Nonnull String id) {
-            this.id = Utils.checkNotNull(id, "id");
+        public Builder id(@Nullable String id) {
+            this.id = id;
             return this;
         }
 

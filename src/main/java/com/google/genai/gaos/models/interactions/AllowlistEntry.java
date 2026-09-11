@@ -33,13 +33,16 @@ import java.util.Optional;
 /**
  * AllowlistEntry
  * 
- * <p>A single domain allowlist rule with optional header injection.
+ * <p>A network egress rule that controls which external domains the
+ * environment is allowed to reach. Each rule identifies a target domain
+ * and, optionally, a set of HTTP headers to inject into every matching
+ * outbound request.
  */
 public class AllowlistEntry {
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * The domain pattern to match for this rule.
+     * Use an exact hostname (e.g., `github.com`), a wildcard prefix
+     * (e.g., `*.googleapis.com`), or `*` to match all domains.
      */
     @JsonProperty("domain")
     private String domain;
@@ -67,9 +70,9 @@ public class AllowlistEntry {
     }
 
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * The domain pattern to match for this rule.
+     * Use an exact hostname (e.g., `github.com`), a wildcard prefix
+     * (e.g., `*.googleapis.com`), or `*` to match all domains.
      */
     public Optional<String> domain() {
         return Optional.ofNullable(this.domain);
@@ -89,9 +92,9 @@ public class AllowlistEntry {
 
 
     /**
-     * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-     * 
-     * <p>Use '*' to allow all domains.
+     * The domain pattern to match for this rule.
+     * Use an exact hostname (e.g., `github.com`), a wildcard prefix
+     * (e.g., `*.googleapis.com`), or `*` to match all domains.
      */
     public AllowlistEntry withDomain(@Nonnull String domain) {
         this.domain = Utils.checkNotNull(domain, "domain");
@@ -148,9 +151,9 @@ public class AllowlistEntry {
         }
 
         /**
-         * Domain to allow outbound requests to. Supports wildcards (e.g. '*.googleapis.com').
-         * 
-         * <p>Use '*' to allow all domains.
+         * The domain pattern to match for this rule.
+         * Use an exact hostname (e.g., `github.com`), a wildcard prefix
+         * (e.g., `*.googleapis.com`), or `*` to match all domains.
          */
         public Builder domain(@Nonnull String domain) {
             this.domain = Utils.checkNotNull(domain, "domain");

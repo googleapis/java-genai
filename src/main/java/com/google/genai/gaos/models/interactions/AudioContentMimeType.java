@@ -53,7 +53,6 @@ public class AudioContentMimeType {
     public static final AudioContentMimeType AUDIO_OPUS = new AudioContentMimeType("audio/opus");
     public static final AudioContentMimeType AUDIO_ALAW = new AudioContentMimeType("audio/alaw");
     public static final AudioContentMimeType AUDIO_MULAW = new AudioContentMimeType("audio/mulaw");
-    public static final AudioContentMimeType AUDIO_WEBM = new AudioContentMimeType("audio/webm");
 
     // This map will grow whenever a Color gets created with a new
     // unrecognized value (a potential memory leak if the user is not
@@ -139,7 +138,6 @@ public class AudioContentMimeType {
         map.put("audio/opus", AUDIO_OPUS);
         map.put("audio/alaw", AUDIO_ALAW);
         map.put("audio/mulaw", AUDIO_MULAW);
-        map.put("audio/webm", AUDIO_WEBM);
         return map;
     }
 
@@ -157,7 +155,6 @@ public class AudioContentMimeType {
         map.put("audio/opus", AudioContentMimeTypeEnum.AUDIO_OPUS);
         map.put("audio/alaw", AudioContentMimeTypeEnum.AUDIO_ALAW);
         map.put("audio/mulaw", AudioContentMimeTypeEnum.AUDIO_MULAW);
-        map.put("audio/webm", AudioContentMimeTypeEnum.AUDIO_WEBM);
         return map;
     }
     
@@ -175,8 +172,7 @@ public class AudioContentMimeType {
         AUDIO_L16("audio/l16"),
         AUDIO_OPUS("audio/opus"),
         AUDIO_ALAW("audio/alaw"),
-        AUDIO_MULAW("audio/mulaw"),
-        AUDIO_WEBM("audio/webm"),;
+        AUDIO_MULAW("audio/mulaw"),;
 
         private final String value;
 

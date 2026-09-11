@@ -50,6 +50,13 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     @JsonProperty("interaction_id")
     private String interactionId;
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("metadata")
+    private StreamMetadata metadata;
+
 
     @JsonProperty("status")
     private InteractionStatusUpdateStatus status;
@@ -58,11 +65,13 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     public InteractionStatusUpdate(
             @JsonProperty("event_id") @Nullable String eventId,
             @JsonProperty("interaction_id") @Nonnull String interactionId,
+            @JsonProperty("metadata") @Nullable StreamMetadata metadata,
             @JsonProperty("status") @Nonnull InteractionStatusUpdateStatus status) {
         this.eventId = eventId;
         this.eventType = Builder._SINGLETON_VALUE_EventType.value();
         this.interactionId = Optional.ofNullable(interactionId)
             .orElseThrow(() -> new IllegalArgumentException("interactionId cannot be null"));
+        this.metadata = metadata;
         this.status = Optional.ofNullable(status)
             .orElseThrow(() -> new IllegalArgumentException("status cannot be null"));
     }
@@ -70,7 +79,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     public InteractionStatusUpdate(
             @Nonnull String interactionId,
             @Nonnull InteractionStatusUpdateStatus status) {
-        this(null, interactionId, status);
+        this(null, interactionId, null,
+            status);
     }
 
     /**
@@ -88,6 +98,13 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
     public Optional<String> interactionId() {
         return Optional.ofNullable(this.interactionId);
+    }
+
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public Optional<StreamMetadata> metadata() {
+        return Optional.ofNullable(this.metadata);
     }
 
     public Optional<InteractionStatusUpdateStatus> status() {
@@ -115,6 +132,15 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     }
 
 
+    /**
+     * Optional metadata accompanying ANY streamed event.
+     */
+    public InteractionStatusUpdate withMetadata(@Nullable StreamMetadata metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+
     public InteractionStatusUpdate withStatus(@Nonnull InteractionStatusUpdateStatus status) {
         this.status = Utils.checkNotNull(status, "status");
         return this;
@@ -134,6 +160,7 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
             Utils.enhancedDeepEquals(this.eventId, other.eventId) &&
             Utils.enhancedDeepEquals(this.eventType, other.eventType) &&
             Utils.enhancedDeepEquals(this.interactionId, other.interactionId) &&
+            Utils.enhancedDeepEquals(this.metadata, other.metadata) &&
             Utils.enhancedDeepEquals(this.status, other.status);
     }
     
@@ -141,7 +168,7 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
     public int hashCode() {
         return Utils.enhancedHash(
             eventId, eventType, interactionId,
-            status);
+            metadata, status);
     }
     
     @Override
@@ -150,6 +177,7 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
                 "eventId", eventId,
                 "eventType", eventType,
                 "interactionId", interactionId,
+                "metadata", metadata,
                 "status", status);
     }
 
@@ -159,6 +187,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
         private String eventId;
 
         private String interactionId;
+
+        private StreamMetadata metadata;
 
         private InteractionStatusUpdateStatus status;
 
@@ -180,6 +210,14 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
             return this;
         }
 
+        /**
+         * Optional metadata accompanying ANY streamed event.
+         */
+        public Builder metadata(@Nullable StreamMetadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
         public Builder status(@Nonnull InteractionStatusUpdateStatus status) {
             this.status = Utils.checkNotNull(status, "status");
             return this;
@@ -187,7 +225,8 @@ public class InteractionStatusUpdate implements InteractionSSEEvent {
 
         public InteractionStatusUpdate build() {
             return new InteractionStatusUpdate(
-                eventId, interactionId, status);
+                eventId, interactionId, metadata,
+                status);
         }
 
 

@@ -20,11 +20,14 @@
 package com.google.genai.gaos.models.interactions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.genai.gaos.utils.LazySingletonValue;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -37,6 +40,13 @@ public class MCPServerToolCallDelta implements StepDeltaData {
     @JsonProperty("arguments")
     private Map<String, Object> arguments;
 
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("id")
+    private String id;
+
 
     @JsonProperty("name")
     private String name;
@@ -45,6 +55,13 @@ public class MCPServerToolCallDelta implements StepDeltaData {
     @JsonProperty("server_name")
     private String serverName;
 
+    /**
+     * A signature hash for backend validation.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("signature")
+    private String signature;
+
 
     @JsonProperty("type")
     private String type;
@@ -52,20 +69,39 @@ public class MCPServerToolCallDelta implements StepDeltaData {
     @JsonCreator
     public MCPServerToolCallDelta(
             @JsonProperty("arguments") @Nonnull Map<String, Object> arguments,
+            @JsonProperty("id") @Nullable String id,
             @JsonProperty("name") @Nonnull String name,
-            @JsonProperty("server_name") @Nonnull String serverName) {
+            @JsonProperty("server_name") @Nonnull String serverName,
+            @JsonProperty("signature") @Nullable String signature) {
         arguments = Utils.emptyMapIfNull(arguments);
         this.arguments = Optional.ofNullable(arguments)
             .orElseThrow(() -> new IllegalArgumentException("arguments cannot be null"));
+        this.id = id;
         this.name = Optional.ofNullable(name)
             .orElseThrow(() -> new IllegalArgumentException("name cannot be null"));
         this.serverName = Optional.ofNullable(serverName)
             .orElseThrow(() -> new IllegalArgumentException("serverName cannot be null"));
+        this.signature = signature;
         this.type = Builder._SINGLETON_VALUE_Type.value();
+    }
+    
+    public MCPServerToolCallDelta(
+            @Nonnull Map<String, Object> arguments,
+            @Nonnull String name,
+            @Nonnull String serverName) {
+        this(arguments, null, name,
+            serverName, null);
     }
 
     public Optional<Map<String, Object>> arguments() {
         return Optional.ofNullable(this.arguments);
+    }
+
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public Optional<String> id() {
+        return Optional.ofNullable(this.id);
     }
 
     public Optional<String> name() {
@@ -74,6 +110,13 @@ public class MCPServerToolCallDelta implements StepDeltaData {
 
     public Optional<String> serverName() {
         return Optional.ofNullable(this.serverName);
+    }
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public Optional<String> signature() {
+        return Optional.ofNullable(this.signature);
     }
 
     @Override
@@ -92,6 +135,15 @@ public class MCPServerToolCallDelta implements StepDeltaData {
     }
 
 
+    /**
+     * Required. A unique ID for this specific tool call.
+     */
+    public MCPServerToolCallDelta withId(@Nullable String id) {
+        this.id = id;
+        return this;
+    }
+
+
     public MCPServerToolCallDelta withName(@Nonnull String name) {
         this.name = Utils.checkNotNull(name, "name");
         return this;
@@ -100,6 +152,15 @@ public class MCPServerToolCallDelta implements StepDeltaData {
 
     public MCPServerToolCallDelta withServerName(@Nonnull String serverName) {
         this.serverName = Utils.checkNotNull(serverName, "serverName");
+        return this;
+    }
+
+
+    /**
+     * A signature hash for backend validation.
+     */
+    public MCPServerToolCallDelta withSignature(@Nullable String signature) {
+        this.signature = signature;
         return this;
     }
 
@@ -115,24 +176,28 @@ public class MCPServerToolCallDelta implements StepDeltaData {
         MCPServerToolCallDelta other = (MCPServerToolCallDelta) o;
         return 
             Utils.enhancedDeepEquals(this.arguments, other.arguments) &&
+            Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.serverName, other.serverName) &&
+            Utils.enhancedDeepEquals(this.signature, other.signature) &&
             Utils.enhancedDeepEquals(this.type, other.type);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            arguments, name, serverName,
-            type);
+            arguments, id, name,
+            serverName, signature, type);
     }
     
     @Override
     public String toString() {
         return Utils.toString(MCPServerToolCallDelta.class,
                 "arguments", arguments,
+                "id", id,
                 "name", name,
                 "serverName", serverName,
+                "signature", signature,
                 "type", type);
     }
 
@@ -141,9 +206,13 @@ public class MCPServerToolCallDelta implements StepDeltaData {
 
         private Map<String, Object> arguments;
 
+        private String id;
+
         private String name;
 
         private String serverName;
+
+        private String signature;
 
         private Builder() {
           // force use of static builder() method
@@ -151,6 +220,14 @@ public class MCPServerToolCallDelta implements StepDeltaData {
 
         public Builder arguments(@Nonnull Map<String, Object> arguments) {
             this.arguments = Utils.checkNotNull(arguments, "arguments");
+            return this;
+        }
+
+        /**
+         * Required. A unique ID for this specific tool call.
+         */
+        public Builder id(@Nullable String id) {
+            this.id = id;
             return this;
         }
 
@@ -164,9 +241,18 @@ public class MCPServerToolCallDelta implements StepDeltaData {
             return this;
         }
 
+        /**
+         * A signature hash for backend validation.
+         */
+        public Builder signature(@Nullable String signature) {
+            this.signature = signature;
+            return this;
+        }
+
         public MCPServerToolCallDelta build() {
             return new MCPServerToolCallDelta(
-                arguments, name, serverName);
+                arguments, id, name,
+                serverName, signature);
         }
 
 

@@ -32,7 +32,7 @@ import java.util.Optional;
 
 public class UpdateWebhookRequest {
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=api_version")
     private String apiVersion;
@@ -44,13 +44,13 @@ public class UpdateWebhookRequest {
     private String id;
 
     /**
-     * Optional. The list of fields to update.
+     * Optional list of fields to update.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=update_mask")
     private String updateMask;
 
     /**
-     * Required. The webhook to update.
+     * Required. The HTTP body of the payload.
      */
     @SpeakeasyMetadata("request:mediaType=application/json")
     private WebhookUpdate body;
@@ -75,7 +75,7 @@ public class UpdateWebhookRequest {
     }
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public Optional<String> apiVersion() {
         return Optional.ofNullable(this.apiVersion);
@@ -89,14 +89,14 @@ public class UpdateWebhookRequest {
     }
 
     /**
-     * Optional. The list of fields to update.
+     * Optional list of fields to update.
      */
     public Optional<String> updateMask() {
         return Optional.ofNullable(this.updateMask);
     }
 
     /**
-     * Required. The webhook to update.
+     * Required. The HTTP body of the payload.
      */
     public Optional<WebhookUpdate> body() {
         return Optional.ofNullable(this.body);
@@ -108,7 +108,7 @@ public class UpdateWebhookRequest {
 
 
     /**
-     * Which version of the API to use.
+     * API version for request routing.
      */
     public UpdateWebhookRequest withApiVersion(@Nullable String apiVersion) {
         this.apiVersion = apiVersion;
@@ -126,7 +126,7 @@ public class UpdateWebhookRequest {
 
 
     /**
-     * Optional. The list of fields to update.
+     * Optional list of fields to update.
      */
     public UpdateWebhookRequest withUpdateMask(@Nullable String updateMask) {
         this.updateMask = updateMask;
@@ -135,7 +135,7 @@ public class UpdateWebhookRequest {
 
 
     /**
-     * Required. The webhook to update.
+     * Required. The HTTP body of the payload.
      */
     public UpdateWebhookRequest withBody(@Nullable WebhookUpdate body) {
         this.body = body;
@@ -191,7 +191,7 @@ public class UpdateWebhookRequest {
         }
 
         /**
-         * Which version of the API to use.
+         * API version for request routing.
          */
         public Builder apiVersion(@Nullable String apiVersion) {
             this.apiVersion = apiVersion;
@@ -207,7 +207,7 @@ public class UpdateWebhookRequest {
         }
 
         /**
-         * Optional. The list of fields to update.
+         * Optional list of fields to update.
          */
         public Builder updateMask(@Nullable String updateMask) {
             this.updateMask = updateMask;
@@ -215,7 +215,7 @@ public class UpdateWebhookRequest {
         }
 
         /**
-         * Required. The webhook to update.
+         * Required. The HTTP body of the payload.
          */
         public Builder body(@Nullable WebhookUpdate body) {
             this.body = body;

@@ -29,7 +29,7 @@ import com.google.genai.gaos.utils.RetryConfig;
 import com.google.genai.gaos.utils.Utils;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 
 public class ListTriggerExecutionsRequestBuilder {
@@ -52,13 +52,7 @@ public class ListTriggerExecutionsRequestBuilder {
         return this;
     }
 
-    public ListTriggerExecutionsRequestBuilder triggerId(@Nonnull String triggerId) {
-        this.pojoBuilder.triggerId(triggerId);
-        this._setterCalled = true;
-        return this;
-    }
-
-    public ListTriggerExecutionsRequestBuilder pageSize(@Nullable Long pageSize) {
+    public ListTriggerExecutionsRequestBuilder pageSize(@Nullable Integer pageSize) {
         this.pojoBuilder.pageSize(pageSize);
         this._setterCalled = true;
         return this;
@@ -66,6 +60,12 @@ public class ListTriggerExecutionsRequestBuilder {
 
     public ListTriggerExecutionsRequestBuilder pageToken(@Nullable String pageToken) {
         this.pojoBuilder.pageToken(pageToken);
+        this._setterCalled = true;
+        return this;
+    }
+
+    public ListTriggerExecutionsRequestBuilder triggerId(@Nonnull String triggerId) {
+        this.pojoBuilder.triggerId(triggerId);
         this._setterCalled = true;
         return this;
     }

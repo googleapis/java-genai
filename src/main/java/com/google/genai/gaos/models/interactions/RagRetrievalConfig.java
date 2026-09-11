@@ -51,7 +51,7 @@ public class RagRetrievalConfig {
     private HybridSearch hybridSearch;
 
     /**
-     * Config for Rank Service.
+     * Config for ranking and reranking.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("ranking")
@@ -96,7 +96,7 @@ public class RagRetrievalConfig {
     }
 
     /**
-     * Config for Rank Service.
+     * Config for ranking and reranking.
      */
     public Optional<Ranking> ranking() {
         return Optional.ofNullable(this.ranking);
@@ -133,7 +133,7 @@ public class RagRetrievalConfig {
 
 
     /**
-     * Config for Rank Service.
+     * Config for ranking and reranking.
      */
     public RagRetrievalConfig withRanking(@Nullable Ranking ranking) {
         this.ranking = ranking;
@@ -214,7 +214,7 @@ public class RagRetrievalConfig {
         }
 
         /**
-         * Config for Rank Service.
+         * Config for ranking and reranking.
          */
         public Builder ranking(@Nullable Ranking ranking) {
             this.ranking = ranking;

@@ -36,8 +36,7 @@ import java.util.Optional;
 /**
  * CreateAgentInteractionEnvironment
  * 
- * <p>The environment configuration for the interaction. Can be an object specifying remote environment
- * sources or a string referencing an existing environment ID.
+ * <p>The environment configuration for the interaction.
  */
 @JsonDeserialize(using = CreateAgentInteractionEnvironment._Deserializer.class)
 public class CreateAgentInteractionEnvironment {
@@ -54,6 +53,11 @@ public class CreateAgentInteractionEnvironment {
         return new CreateAgentInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<Environment>(){}));
     }
 
+    public static CreateAgentInteractionEnvironment of(LocalEnvironmentConfig value) {
+        Utils.checkNotNull(value, "value");
+        return new CreateAgentInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<LocalEnvironmentConfig>(){}));
+    }
+
     public static CreateAgentInteractionEnvironment of(String value) {
         Utils.checkNotNull(value, "value");
         return new CreateAgentInteractionEnvironment(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
@@ -68,6 +72,19 @@ public class CreateAgentInteractionEnvironment {
     public Optional<Environment> environment() {
         if (value.value() instanceof Environment) {
             return Optional.of((Environment) value.value());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Returns an {@link Optional} containing the value if it is of type {@code LocalEnvironmentConfig},
+     * otherwise returns an empty {@link Optional}.
+     *
+     * @return an {@link Optional} containing the {@code LocalEnvironmentConfig} value, or empty if not of this type
+     */
+    public Optional<LocalEnvironmentConfig> localEnvironmentConfig() {
+        if (value.value() instanceof LocalEnvironmentConfig) {
+            return Optional.of((LocalEnvironmentConfig) value.value());
         }
         return Optional.empty();
     }
@@ -120,6 +137,7 @@ public class CreateAgentInteractionEnvironment {
         public _Deserializer() {
             super(CreateAgentInteractionEnvironment.class, false,
                   TypeReferenceWithShape.of(new TypeReference<Environment>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<LocalEnvironmentConfig>() {}, JsonShape.DEFAULT),
                   TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }

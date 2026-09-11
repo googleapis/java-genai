@@ -65,15 +65,16 @@ public class TriggerCreateParams {
     private Interaction interaction;
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
+     * Optional. The maximum number of consecutive failures allowed before
+     * the trigger is automatically paused (status becomes ERROR).
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("max_consecutive_failures")
     private Integer maxConsecutiveFailures;
 
     /**
-     * Required. The cron schedule on which the trigger should run. Standard cron format.
+     * Required. The cron schedule on which the trigger should run.
+     * Standard cron format.
      */
     @JsonProperty("schedule")
     private String schedule;
@@ -143,15 +144,16 @@ public class TriggerCreateParams {
     }
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
+     * Optional. The maximum number of consecutive failures allowed before
+     * the trigger is automatically paused (status becomes ERROR).
      */
     public Optional<Integer> maxConsecutiveFailures() {
         return Optional.ofNullable(this.maxConsecutiveFailures);
     }
 
     /**
-     * Required. The cron schedule on which the trigger should run. Standard cron format.
+     * Required. The cron schedule on which the trigger should run.
+     * Standard cron format.
      */
     public Optional<String> schedule() {
         return Optional.ofNullable(this.schedule);
@@ -206,8 +208,8 @@ public class TriggerCreateParams {
 
 
     /**
-     * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-     * paused (status becomes ERROR).
+     * Optional. The maximum number of consecutive failures allowed before
+     * the trigger is automatically paused (status becomes ERROR).
      */
     public TriggerCreateParams withMaxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
         this.maxConsecutiveFailures = maxConsecutiveFailures;
@@ -216,7 +218,8 @@ public class TriggerCreateParams {
 
 
     /**
-     * Required. The cron schedule on which the trigger should run. Standard cron format.
+     * Required. The cron schedule on which the trigger should run.
+     * Standard cron format.
      */
     public TriggerCreateParams withSchedule(@Nonnull String schedule) {
         this.schedule = Utils.checkNotNull(schedule, "schedule");
@@ -326,8 +329,8 @@ public class TriggerCreateParams {
         }
 
         /**
-         * Optional. The maximum number of consecutive failures allowed before the trigger is automatically
-         * paused (status becomes ERROR).
+         * Optional. The maximum number of consecutive failures allowed before
+         * the trigger is automatically paused (status becomes ERROR).
          */
         public Builder maxConsecutiveFailures(@Nullable Integer maxConsecutiveFailures) {
             this.maxConsecutiveFailures = maxConsecutiveFailures;
@@ -335,7 +338,8 @@ public class TriggerCreateParams {
         }
 
         /**
-         * Required. The cron schedule on which the trigger should run. Standard cron format.
+         * Required. The cron schedule on which the trigger should run.
+         * Standard cron format.
          */
         public Builder schedule(@Nonnull String schedule) {
             this.schedule = Utils.checkNotNull(schedule, "schedule");
