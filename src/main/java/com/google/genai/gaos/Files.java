@@ -21,15 +21,36 @@ package com.google.genai.gaos;
 
 import static com.google.genai.gaos.operations.Operations.RequestOperation;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.genai.gaos.models.environments.EnvironmentFile;
+import com.google.genai.gaos.models.environments.GetEnvironmentFilesResponse;
+import com.google.genai.gaos.models.errors.GaosApiException;
 import com.google.genai.gaos.models.operations.GetEnvironmentFilesRequest;
 import com.google.genai.gaos.models.operations.GetEnvironmentFilesRequestBuilder;
-import com.google.genai.gaos.models.operations.GetEnvironmentFilesResponse;
+import com.google.genai.gaos.models.operations.UploadEnvironmentFileRequest;
+import com.google.genai.gaos.models.operations.UploadEnvironmentFileResponse;
 import com.google.genai.gaos.operations.GetEnvironmentFiles;
 import com.google.genai.gaos.utils.Headers;
 import com.google.genai.gaos.utils.Options;
+import com.google.genai.gaos.utils.Utils;
+import com.google.genai.gaos.utils.transport.HttpBody;
+import com.google.genai.gaos.utils.transport.HttpRequest;
+import com.google.genai.gaos.utils.transport.HttpResponse;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Locale;
 
 public class Files {
     private static final Headers _headers = Headers.EMPTY;
@@ -68,7 +89,7 @@ public class Files {
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetEnvironmentFilesResponse list(@Nonnull GetEnvironmentFilesRequest request) {
+    public com.google.genai.gaos.models.operations.GetEnvironmentFilesResponse list(@Nonnull GetEnvironmentFilesRequest request) {
         return list(request, null);
     }
 
@@ -81,10 +102,461 @@ public class Files {
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public GetEnvironmentFilesResponse list(@Nonnull GetEnvironmentFilesRequest request, @Nullable Options options) {
-        RequestOperation<GetEnvironmentFilesRequest, GetEnvironmentFilesResponse> operation
+    public com.google.genai.gaos.models.operations.GetEnvironmentFilesResponse list(@Nonnull GetEnvironmentFilesRequest request, @Nullable Options options) {
+        RequestOperation<GetEnvironmentFilesRequest, com.google.genai.gaos.models.operations.GetEnvironmentFilesResponse> operation
               = new GetEnvironmentFiles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Downloads binary file content from an environment workspace.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @return The binary file content as a byte array.
+     */
+    public byte[] download(@Nonnull String environment, @Nonnull String path) {
+        return download(environment, path, null);
+    }
+
+    /**
+     * Downloads binary file content from an environment workspace with custom options.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param options Additional request options.
+     * @return The binary file content as a byte array.
+     */
+    public byte[] download(@Nonnull String environment, @Nonnull String path, @Nullable Options options) {
+        String url = buildDownloadUrl(environment, path, options);
+        HttpRequest.Builder requestBuilder = HttpRequest.builder()
+                .method("GET")
+                .uri(URI.create(url))
+                .setHeader("Accept", "application/octet-stream")
+                .setHeader("user-agent", SDKConfiguration.USER_AGENT);
+        _headers.forEach((k, list) -> list.forEach(v -> requestBuilder.header(k, v)));
+        try {
+            HttpResponse<InputStream> response = this.sdkConfiguration.client().send(requestBuilder.build());
+            if (response.statusCode() >= 400) {
+                throw GaosApiException.from("Download failed with status: " + response.statusCode(), response);
+            }
+            try (InputStream in = response.body()) {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                byte[] buf = new byte[4096];
+                int r;
+                while ((r = in.read(buf)) != -1) {
+                    out.write(buf, 0, r);
+                }
+                return out.toByteArray();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to download file", e);
+        }
+    }
+
+    /**
+     * Downloads binary file content as an InputStream.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @return An InputStream of the downloaded file content.
+     */
+    public InputStream downloadStream(@Nonnull String environment, @Nonnull String path) {
+        return new ByteArrayInputStream(download(environment, path));
+    }
+
+    /**
+     * Downloads a file from an environment workspace and saves it to a local destination file.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param destination The local File to write to.
+     */
+    public void downloadToFile(@Nonnull String environment, @Nonnull String path, @Nonnull File destination) {
+        byte[] data = download(environment, path);
+        try {
+            if (destination.getParentFile() != null) {
+                destination.getParentFile().mkdirs();
+            }
+            java.nio.file.Files.write(destination.toPath(), data);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write downloaded file to " + destination.getAbsolutePath(), e);
+        }
+    }
+
+    /**
+     * Downloads a file from an environment workspace and saves it to a local destination Path.
+     *
+     * @param environment The environment ID or resource name.
+     * @param path The relative file path to download.
+     * @param destination The local Path to write to.
+     */
+    public void downloadToFile(@Nonnull String environment, @Nonnull String path, @Nonnull Path destination) {
+        downloadToFile(environment, path, destination.toFile());
+    }
+
+    /**
+     * Uploads a file or extracts an archive inside an environment workspace.
+     *
+     * @param request The upload request containing environment, path, content, and options.
+     * @return The response containing the uploaded file metadata or extracted files.
+     */
+    public UploadEnvironmentFileResponse upload(@Nonnull UploadEnvironmentFileRequest request) {
+        return upload(request, null);
+    }
+
+    /**
+     * Uploads a file or extracts an archive inside an environment workspace with custom options.
+     *
+     * @param request The upload request.
+     * @param options Additional request options.
+     * @return The response containing the uploaded file metadata or extracted files.
+     */
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull UploadEnvironmentFileRequest request,
+            @Nullable Options options) {
+        String envId = request.environment().startsWith("environments/")
+                ? request.environment().substring("environments/".length())
+                : request.environment();
+        String cleanPath = request.path().replaceAll("^/+", "");
+
+        String baseUrl = this.sdkConfiguration.serverUrl();
+        String apiVersion = request.apiVersion().orElseGet(() ->
+                (String) this.sdkConfiguration.globals.getParam("pathParam", "api_version")
+                        .map(Object::toString)
+                        .orElse(SDKConfiguration.OPENAPI_DOC_VERSION));
+
+        byte[] inMemoryBytes = null;
+        File file = request.file().orElse(null);
+        long sizeBytes;
+        if (request.bytes().isPresent()) {
+            inMemoryBytes = request.bytes().get();
+            sizeBytes = inMemoryBytes.length;
+        } else if (file != null) {
+            sizeBytes = file.length();
+        } else if (request.sizeBytes().isPresent()) {
+            sizeBytes = request.sizeBytes().get();
+        } else {
+            throw new IllegalArgumentException("One of file, bytes, or stream with sizeBytes must be provided for upload.");
+        }
+
+        String mimeType = request.mimeType().orElseGet(() -> inferMimeType(request.path()));
+
+        StringBuilder urlBuilder = new StringBuilder();
+        if (baseUrl.endsWith("/")) {
+            urlBuilder.append(baseUrl.substring(0, baseUrl.length() - 1));
+        } else {
+            urlBuilder.append(baseUrl);
+        }
+        urlBuilder.append("/").append(apiVersion);
+        urlBuilder.append("/environments/").append(envId);
+        urlBuilder.append("/files/").append(cleanPath);
+
+        StringBuilder query = new StringBuilder();
+        if (request.overwrite().isPresent()) {
+            query.append("overwrite=").append(request.overwrite().get() ? "true" : "false");
+        }
+        if (request.extract().isPresent()) {
+            if (query.length() > 0) {
+                query.append("&");
+            }
+            query.append("extract=").append(request.extract().get() ? "true" : "false");
+        }
+        if (query.length() > 0) {
+            urlBuilder.append("?").append(query.toString());
+        }
+
+        HttpRequest.Builder handshakeBuilder = HttpRequest.builder()
+                .method("PUT")
+                .uri(URI.create(urlBuilder.toString()))
+                .setHeader("X-Goog-Upload-Protocol", "resumable")
+                .setHeader("X-Goog-Upload-Command", "start")
+                .setHeader("X-Goog-Upload-Header-Content-Length", String.valueOf(sizeBytes))
+                .setHeader("X-Goog-Upload-Header-Content-Type", mimeType)
+                .setHeader("user-agent", SDKConfiguration.USER_AGENT)
+                .setHeader("Accept", "application/json")
+                .body(HttpBody.empty());
+
+        _headers.forEach((k, list) -> list.forEach(v -> handshakeBuilder.header(k, v)));
+
+        HttpResponse<InputStream> handshakeResponse;
+        try {
+            handshakeResponse = this.sdkConfiguration.client().send(handshakeBuilder.build());
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to send upload handshake request", e);
+        }
+
+        if (handshakeResponse.statusCode() >= 400) {
+            throw GaosApiException.from("Upload handshake failed with status: " + handshakeResponse.statusCode(), handshakeResponse);
+        }
+
+        String uploadUrl = handshakeResponse.headers().first("x-goog-upload-url")
+                .orElseGet(() -> handshakeResponse.headers().first("X-Goog-Upload-URL")
+                        .orElseThrow(() -> new IllegalStateException("Failed to get upload URL from upload handshake response.")));
+
+        final int CHUNK_SIZE = 8 * 1024 * 1024;
+        HttpResponse<InputStream> uploadResponse = null;
+
+        try {
+            if (sizeBytes == 0) {
+                HttpRequest uploadReq = HttpRequest.builder()
+                        .method("POST")
+                        .uri(URI.create(uploadUrl))
+                        .setHeader("X-Goog-Upload-Command", "upload, finalize")
+                        .setHeader("X-Goog-Upload-Offset", "0")
+                        .setHeader("user-agent", SDKConfiguration.USER_AGENT)
+                        .body(HttpBody.empty())
+                        .build();
+                uploadResponse = this.sdkConfiguration.client().send(uploadReq);
+                if (uploadResponse.statusCode() >= 400) {
+                    throw GaosApiException.from("Upload chunk failed with status: " + uploadResponse.statusCode(), uploadResponse);
+                }
+            } else {
+                InputStream inputStream = null;
+                try {
+                    if (inMemoryBytes != null) {
+                        inputStream = new ByteArrayInputStream(inMemoryBytes);
+                    } else if (file != null) {
+                        inputStream = new FileInputStream(file);
+                    } else if (request.stream().isPresent()) {
+                        inputStream = request.stream().get();
+                    }
+
+                    long offset = 0;
+                    byte[] buffer = new byte[CHUNK_SIZE];
+                    while (offset < sizeBytes) {
+                        int toRead = (int) Math.min(CHUNK_SIZE, sizeBytes - offset);
+                        int bytesRead = 0;
+                        while (bytesRead < toRead) {
+                            int r = inputStream.read(buffer, bytesRead, toRead - bytesRead);
+                            if (r == -1) {
+                                break;
+                            }
+                            bytesRead += r;
+                        }
+                        if (bytesRead == 0) {
+                            break;
+                        }
+                        long nextOffset = offset + bytesRead;
+                        boolean isFinal = nextOffset >= sizeBytes;
+                        String uploadCommand = isFinal ? "upload, finalize" : "upload";
+
+                        byte[] chunk = bytesRead == buffer.length ? buffer : Arrays.copyOf(buffer, bytesRead);
+                        HttpRequest uploadReq = HttpRequest.builder()
+                                .method("POST")
+                                .uri(URI.create(uploadUrl))
+                                .setHeader("X-Goog-Upload-Command", uploadCommand)
+                                .setHeader("X-Goog-Upload-Offset", String.valueOf(offset))
+                                .setHeader("user-agent", SDKConfiguration.USER_AGENT)
+                                .body(HttpBody.of(chunk))
+                                .build();
+
+                        uploadResponse = this.sdkConfiguration.client().send(uploadReq);
+                        if (uploadResponse.statusCode() >= 400) {
+                            throw GaosApiException.from("Upload chunk failed with status: " + uploadResponse.statusCode(), uploadResponse);
+                        }
+                        offset = nextOffset;
+                    }
+                } finally {
+                    if (file != null && inputStream != null) {
+                        inputStream.close();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed during chunk upload", e);
+        }
+
+        if (uploadResponse == null) {
+            throw new IllegalStateException("No upload response received.");
+        }
+
+        return parseUploadResponse(uploadResponse);
+    }
+
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull File file) {
+        return upload(environment, path, file, null, null, null);
+    }
+
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull File file,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .file(file)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
+    }
+
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull byte[] bytes) {
+        return upload(environment, path, bytes, null, null, null);
+    }
+
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull byte[] bytes,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .bytes(bytes)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
+    }
+
+    public UploadEnvironmentFileResponse upload(
+            @Nonnull String environment,
+            @Nonnull String path,
+            @Nonnull InputStream stream,
+            long sizeBytes,
+            @Nullable String mimeType,
+            @Nullable Boolean overwrite,
+            @Nullable Boolean extract) {
+        return upload(
+                UploadEnvironmentFileRequest.builder()
+                        .environment(environment)
+                        .path(path)
+                        .stream(stream, sizeBytes)
+                        .mimeType(mimeType)
+                        .overwrite(overwrite)
+                        .extract(extract)
+                        .build());
+    }
+
+    String buildDownloadUrl(String environment, String path, Options options) {
+        String envId = environment.startsWith("environments/")
+                ? environment.substring("environments/".length())
+                : environment;
+        String cleanPath = path.replaceAll("^/+", "");
+        String baseUrl = this.sdkConfiguration.serverUrl();
+        String apiVersion = (String) this.sdkConfiguration.globals.getParam("pathParam", "api_version")
+                .map(Object::toString)
+                .orElse(SDKConfiguration.OPENAPI_DOC_VERSION);
+        StringBuilder urlBuilder = new StringBuilder();
+        if (baseUrl.endsWith("/")) {
+            urlBuilder.append(baseUrl.substring(0, baseUrl.length() - 1));
+        } else {
+            urlBuilder.append(baseUrl);
+        }
+        urlBuilder.append("/").append(apiVersion);
+        urlBuilder.append("/environments/").append(envId);
+        urlBuilder.append("/files/").append(cleanPath);
+        urlBuilder.append("?alt=media");
+        return urlBuilder.toString();
+    }
+
+    static UploadEnvironmentFileResponse parseUploadResponse(HttpResponse<InputStream> uploadResponse) {
+        String responseBodyString;
+        try (InputStream in = uploadResponse.body()) {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] b = new byte[4096];
+            int r;
+            while ((r = in.read(b)) != -1) {
+                out.write(b, 0, r);
+            }
+            responseBodyString = out.toString(StandardCharsets.UTF_8.name());
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read upload response body", e);
+        }
+
+        EnvironmentFile file = null;
+        GetEnvironmentFilesResponse files = null;
+
+        try {
+            ObjectMapper mapper = Utils.mapper();
+            JsonNode node = mapper.readTree(responseBodyString);
+            if (node != null && node.isObject()) {
+                if (node.has("file")) {
+                    JsonNode fileNode = node.get("file");
+                    if (fileNode instanceof ObjectNode) {
+                        ObjectNode obj = (ObjectNode) fileNode;
+                        if (obj.has("size_bytes") && obj.get("size_bytes").isNumber()) {
+                            obj.put("size_bytes", obj.get("size_bytes").asText());
+                        }
+                    }
+                    file = mapper.treeToValue(fileNode, EnvironmentFile.class);
+                } else if (node.has("files")) {
+                    JsonNode filesNode = node.get("files");
+                    if (filesNode.isArray()) {
+                        for (JsonNode item : filesNode) {
+                            if (item instanceof ObjectNode) {
+                                ObjectNode obj = (ObjectNode) item;
+                                if (obj.has("size_bytes") && obj.get("size_bytes").isNumber()) {
+                                    obj.put("size_bytes", obj.get("size_bytes").asText());
+                                }
+                            }
+                        }
+                    }
+                    files = mapper.treeToValue(node, GetEnvironmentFilesResponse.class);
+                } else if (node.has("name") || node.has("path") || node.has("mime_type")) {
+                    if (node instanceof ObjectNode) {
+                        ObjectNode obj = (ObjectNode) node;
+                        if (obj.has("size_bytes") && obj.get("size_bytes").isNumber()) {
+                            obj.put("size_bytes", obj.get("size_bytes").asText());
+                        }
+                    }
+                    file = mapper.treeToValue(node, EnvironmentFile.class);
+                }
+            }
+        } catch (Exception ignored) {}
+
+        return new UploadEnvironmentFileResponse(
+                uploadResponse.statusCode(),
+                uploadResponse.contentType().orElse("application/json"),
+                uploadResponse,
+                file,
+                files);
+    }
+
+    static String inferMimeType(String path) {
+        if (path == null) {
+            return "application/octet-stream";
+        }
+        try {
+            String probed = java.nio.file.Files.probeContentType(java.nio.file.Paths.get(path));
+            if (probed != null && !probed.isEmpty()) {
+                return probed;
+            }
+        } catch (Exception ignored) {}
+        String lower = path.toLowerCase(Locale.ENGLISH);
+        if (lower.endsWith(".txt")) return "text/plain";
+        if (lower.endsWith(".json")) return "application/json";
+        if (lower.endsWith(".py")) return "text/x-python";
+        if (lower.endsWith(".js") || lower.endsWith(".mjs")) return "application/javascript";
+        if (lower.endsWith(".ts")) return "application/typescript";
+        if (lower.endsWith(".html") || lower.endsWith(".htm")) return "text/html";
+        if (lower.endsWith(".css")) return "text/css";
+        if (lower.endsWith(".csv")) return "text/csv";
+        if (lower.endsWith(".png")) return "image/png";
+        if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
+        if (lower.endsWith(".gif")) return "image/gif";
+        if (lower.endsWith(".webp")) return "image/webp";
+        if (lower.endsWith(".svg")) return "image/svg+xml";
+        if (lower.endsWith(".pdf")) return "application/pdf";
+        if (lower.endsWith(".zip")) return "application/zip";
+        if (lower.endsWith(".tar")) return "application/x-tar";
+        if (lower.endsWith(".gz") || lower.endsWith(".tar.gz") || lower.endsWith(".tgz")) return "application/gzip";
+        return "application/octet-stream";
     }
 
 }
