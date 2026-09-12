@@ -43,6 +43,8 @@ import com.google.genai.types.Video;
 import com.google.genai.types.VoiceConfig;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -221,14 +223,58 @@ public final class Transformers {
 
   /** Transforms an object to a Schema for the API. */
   public static Schema tSchema(Object origin) {
+    Schema schema = null;
     if (origin == null) {
       return null;
     } else if (origin instanceof Schema) {
-      return (Schema) origin;
+      schema = (Schema) origin;
     } else if (origin instanceof JsonNode) {
-      return JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class);
+      schema = JsonSerializable.fromJsonNode((JsonNode) origin, Schema.class);
+    } else {
+      throw new IllegalArgumentException("Unsupported schema type: " + origin.getClass());
     }
-    throw new IllegalArgumentException("Unsupported schema type: " + origin.getClass());
+    return populatePropertyOrdering(schema);
+  }
+
+  private static Schema populatePropertyOrdering(Schema schema) {
+    if (schema == null) {
+      return null;
+    }
+    Schema.Builder builder = schema.toBuilder();
+    boolean modified = false;
+
+    if (schema.properties().isPresent() && !schema.properties().get().isEmpty()) {
+      Map<String, Schema> updatedProperties = new LinkedHashMap<>();
+      boolean childModified = false;
+      for (Map.Entry<String, Schema> entry : schema.properties().get().entrySet()) {
+        Schema originalChild = entry.getValue();
+        Schema populatedChild = populatePropertyOrdering(originalChild);
+        if (populatedChild != originalChild) {
+          childModified = true;
+        }
+        updatedProperties.put(entry.getKey(), populatedChild);
+      }
+      if (childModified) {
+        builder.properties(updatedProperties);
+        modified = true;
+      }
+
+      if (!schema.propertyOrdering().isPresent() && schema.properties().get().size() > 1) {
+        builder.propertyOrdering(new ArrayList<>(schema.properties().get().keySet()));
+        modified = true;
+      }
+    }
+
+    if (schema.items().isPresent()) {
+      Schema originalItems = schema.items().get();
+      Schema populatedItems = populatePropertyOrdering(originalItems);
+      if (populatedItems != originalItems) {
+        builder.items(populatedItems);
+        modified = true;
+      }
+    }
+
+    return modified ? builder.build() : schema;
   }
 
   public static SpeechConfig tSpeechConfig(Object speechConfig) {

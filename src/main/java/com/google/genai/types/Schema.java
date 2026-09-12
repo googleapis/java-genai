@@ -26,10 +26,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.genai.JsonSerializable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 
 /**
  * Schema is used to define the format of input/output data.
@@ -698,7 +696,18 @@ public abstract class Schema extends JsonSerializable {
       return type(new Type(type));
     }
 
-    public abstract Schema build();
+    abstract Schema autoBuild();
+
+    abstract Optional<Map<String, Schema>> properties();
+
+    abstract Optional<List<String>> propertyOrdering();
+
+    public Schema build() {
+      if (!propertyOrdering().isPresent() && properties().isPresent() && properties().get().size() > 1) {
+        propertyOrdering(new ArrayList<>(properties().get().keySet()));
+      }
+      return autoBuild();
+    }
   }
 
   /** Deserializes a JSON string to a Schema object. */
