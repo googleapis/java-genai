@@ -7227,6 +7227,7 @@ public final class Models {
       return privateGenerateContent(model, contents, transformedConfig);
     }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
+    ImmutableMap<String, Object> functionInstanceMap = AfcUtil.getFunctionInstanceMap(config);
     if (functionMap.isEmpty()) {
       return privateGenerateContent(model, contents, transformedConfig);
     }
@@ -7254,7 +7255,7 @@ public final class Models {
         break;
       }
       ImmutableList<Part> functionResponseParts =
-          AfcUtil.getFunctionResponseParts(response, functionMap);
+          AfcUtil.getFunctionResponseParts(response, functionMap, functionInstanceMap);
       if (functionResponseParts.isEmpty()) {
         break;
       }

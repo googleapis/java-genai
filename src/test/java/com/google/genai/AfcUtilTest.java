@@ -17,6 +17,8 @@
 package com.google.genai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -42,6 +44,7 @@ import com.google.genai.types.Type;
 import com.google.genai.types.UrlContext;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -50,8 +53,20 @@ public final class AfcUtilTest {
     return input + "testFunction1";
   }
 
+  public String instanceFunction1(String input) {
+    return input + "instanceFunction1";
+  }
+
   public static Integer testFunction2(Integer a, Integer b) {
     return a / b;
+  }
+
+  public static String testFunctionNoArgs() {
+    return "noArgs";
+  }
+
+  public static int testFunctionPrimitive(int a) {
+    return a * 2;
   }
 
   public static String testFunctionJoinListOfStrings(List<String> items) {
@@ -162,6 +177,71 @@ public final class AfcUtilTest {
     GenerateContentConfig config = GenerateContentConfig.builder().build();
     ImmutableMap<String, Method> actualFunctionMap = AfcUtil.getFunctionMap(config);
     assertEquals(ImmutableMap.of(), actualFunctionMap);
+  }
+
+  @Test
+  public void getFunctionInstanceMap_withInstance_returnsFunctionInstanceMap()
+      throws NoSuchMethodException {
+    Method instanceMethod = AfcUtilTest.class.getMethod("instanceFunction1", String.class);
+    AfcUtilTest instance = new AfcUtilTest();
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder()
+                    .functions(instanceMethod)
+                    .functionInstances(ImmutableMap.of(instanceMethod, instance))
+                    .build())
+            .build();
+    ImmutableMap<String, Object> actualInstanceMap = AfcUtil.getFunctionInstanceMap(config);
+    ImmutableMap<String, Object> expectedInstanceMap =
+        ImmutableMap.of("instanceFunction1", instance);
+    assertEquals(expectedInstanceMap, actualInstanceMap);
+  }
+
+  @Test
+  public void getFunctionInstanceMap_withStaticMethod_returnsEmptyInstanceMap()
+      throws NoSuchMethodException {
+    Method staticMethod = AfcUtilTest.class.getMethod("testFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(Tool.builder().functions(staticMethod).build())
+            .build();
+    ImmutableMap<String, Object> actualInstanceMap = AfcUtil.getFunctionInstanceMap(config);
+    assertEquals(ImmutableMap.of(), actualInstanceMap);
+  }
+
+  @Test
+  public void getFunctionMap_withInstanceMethodAndInstance_succeeds() throws NoSuchMethodException {
+    Method instanceMethod = AfcUtilTest.class.getMethod("instanceFunction1", String.class);
+    AfcUtilTest instance = new AfcUtilTest();
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(
+                Tool.builder()
+                    .functions(instanceMethod)
+                    .functionInstances(ImmutableMap.of(instanceMethod, instance))
+                    .build())
+            .build();
+    ImmutableMap<String, Method> actualFunctionMap = AfcUtil.getFunctionMap(config);
+    assertEquals(ImmutableMap.of("instanceFunction1", instanceMethod), actualFunctionMap);
+  }
+
+  @Test
+  public void getFunctionMap_withInstanceMethodWithoutInstance_throwsIllegalArgumentException()
+      throws NoSuchMethodException {
+    Method instanceMethod = AfcUtilTest.class.getMethod("instanceFunction1", String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(Tool.builder().functions(instanceMethod).build())
+            .build();
+    IllegalArgumentException thrown =
+        assertThrows(IllegalArgumentException.class, () -> AfcUtil.getFunctionMap(config));
+    assertTrue(
+        thrown
+            .getMessage()
+            .contains(
+                "Instance methods are not supported without an instance. Please provide an instance"
+                    + " for method: instanceFunction1"));
   }
 
   @Test
@@ -283,6 +363,117 @@ public final class AfcUtilTest {
         ImmutableList.of(
             Part.fromFunctionResponse(
                 "testFunction1", ImmutableMap.of("result", "testtestFunction1")));
+    assertEquals(1, functionResponseParts.size());
+    assertEquals(expectedFunctionResponseParts.toString(), functionResponseParts.toString());
+  }
+
+  @Test
+  public void getFunctionResponseParts_missingName_skipsGracefully() throws NoSuchMethodException {
+    FunctionCall functionCall =
+        FunctionCall.builder().args(ImmutableMap.of("input", "test")).build();
+    ImmutableMap<String, Method> functionMap =
+        ImmutableMap.of(
+            "testFunction1", AfcUtilTest.class.getMethod("testFunction1", String.class));
+    Content content = Content.fromParts(Part.builder().functionCall(functionCall).build());
+    GenerateContentResponse response =
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
+    ImmutableList<Part> functionResponseParts =
+        AfcUtil.getFunctionResponseParts(response, functionMap);
+    assertEquals(0, functionResponseParts.size());
+  }
+
+  @Test
+  public void getFunctionResponseParts_missingArgs_invokesNoArgFunction()
+      throws NoSuchMethodException {
+    FunctionCall functionCall = FunctionCall.builder().name("testFunctionNoArgs").build();
+    ImmutableMap<String, Method> functionMap =
+        ImmutableMap.of("testFunctionNoArgs", AfcUtilTest.class.getMethod("testFunctionNoArgs"));
+    Content content = Content.fromParts(Part.builder().functionCall(functionCall).build());
+    GenerateContentResponse response =
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
+    ImmutableList<Part> functionResponseParts =
+        AfcUtil.getFunctionResponseParts(response, functionMap);
+    ImmutableList<Part> expected =
+        ImmutableList.of(
+            Part.fromFunctionResponse("testFunctionNoArgs", ImmutableMap.of("result", "noArgs")));
+    assertEquals(expected, functionResponseParts);
+  }
+
+  @Test
+  public void getFunctionResponseParts_nullArgForObjectParam_passesNullSuccessfully()
+      throws NoSuchMethodException {
+    FunctionCall functionCall =
+        FunctionCall.builder()
+            .name("testFunction1")
+            .args(Collections.singletonMap("input", null))
+            .build();
+    ImmutableMap<String, Method> functionMap =
+        ImmutableMap.of(
+            "testFunction1", AfcUtilTest.class.getMethod("testFunction1", String.class));
+    Content content = Content.fromParts(Part.builder().functionCall(functionCall).build());
+    GenerateContentResponse response =
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
+    ImmutableList<Part> functionResponseParts =
+        AfcUtil.getFunctionResponseParts(response, functionMap);
+    ImmutableList<Part> expected =
+        ImmutableList.of(
+            Part.fromFunctionResponse(
+                "testFunction1", ImmutableMap.of("result", "nulltestFunction1")));
+    assertEquals(expected, functionResponseParts);
+  }
+
+  @Test
+  public void getFunctionResponseParts_nullArgForPrimitiveParam_returnsErrorResponse()
+      throws NoSuchMethodException {
+    FunctionCall functionCall =
+        FunctionCall.builder()
+            .name("testFunctionPrimitive")
+            .args(Collections.singletonMap("a", null))
+            .build();
+    ImmutableMap<String, Method> functionMap =
+        ImmutableMap.of(
+            "testFunctionPrimitive",
+            AfcUtilTest.class.getMethod("testFunctionPrimitive", int.class));
+    Content content = Content.fromParts(Part.builder().functionCall(functionCall).build());
+    GenerateContentResponse response =
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
+    ImmutableList<Part> functionResponseParts =
+        AfcUtil.getFunctionResponseParts(response, functionMap);
+    assertEquals(1, functionResponseParts.size());
+    assertTrue(
+        functionResponseParts
+            .get(0)
+            .functionResponse()
+            .get()
+            .response()
+            .get()
+            .get("error")
+            .toString()
+            .contains("primitive type int but received null"));
+  }
+
+  @Test
+  public void getFunctionResponseParts_withInstanceMethod_returnsFunctionResponseParts()
+      throws NoSuchMethodException {
+    Method instanceMethod = AfcUtilTest.class.getMethod("instanceFunction1", String.class);
+    AfcUtilTest instance = new AfcUtilTest();
+    FunctionCall functionCall =
+        FunctionCall.builder()
+            .name("instanceFunction1")
+            .args(ImmutableMap.of("input", "test"))
+            .build();
+    ImmutableMap<String, Method> functionMap = ImmutableMap.of("instanceFunction1", instanceMethod);
+    ImmutableMap<String, Object> functionInstanceMap =
+        ImmutableMap.of("instanceFunction1", instance);
+    Content content = Content.builder().parts(Part.builder().functionCall(functionCall)).build();
+    GenerateContentResponse response =
+        GenerateContentResponse.builder().candidates(Candidate.builder().content(content)).build();
+    ImmutableList<Part> functionResponseParts =
+        AfcUtil.getFunctionResponseParts(response, functionMap, functionInstanceMap);
+    ImmutableList<Part> expectedFunctionResponseParts =
+        ImmutableList.of(
+            Part.fromFunctionResponse(
+                "instanceFunction1", ImmutableMap.of("result", "testinstanceFunction1")));
     assertEquals(1, functionResponseParts.size());
     assertEquals(expectedFunctionResponseParts.toString(), functionResponseParts.toString());
   }

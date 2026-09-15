@@ -624,6 +624,7 @@ public final class AsyncModels {
       List<Content> contents,
       GenerateContentConfig transformedConfig,
       ImmutableMap<String, Method> functionMap,
+      ImmutableMap<String, Object> functionInstanceMap,
       List<Content> automaticFunctionCallingHistory,
       int remainingRemoteCalls,
       int initialMaxCalls) {
@@ -652,7 +653,7 @@ public final class AsyncModels {
               }
 
               ImmutableList<Part> functionResponseParts =
-                  AfcUtil.getFunctionResponseParts(response, functionMap);
+                  AfcUtil.getFunctionResponseParts(response, functionMap, functionInstanceMap);
               if (functionResponseParts.isEmpty()) {
                 return CompletableFuture.completedFuture(
                     new AfcLoopResult(response, automaticFunctionCallingHistory));
@@ -671,6 +672,7 @@ public final class AsyncModels {
                   newHistory,
                   transformedConfig,
                   functionMap,
+                  functionInstanceMap,
                   newHistory,
                   remainingRemoteCalls - 1,
                   initialMaxCalls);
@@ -710,6 +712,7 @@ public final class AsyncModels {
       return privateGenerateContent(model, contents, transformedConfig);
     }
     ImmutableMap<String, Method> functionMap = AfcUtil.getFunctionMap(config);
+    ImmutableMap<String, Object> functionInstanceMap = AfcUtil.getFunctionInstanceMap(config);
     if (functionMap.isEmpty()) {
       return privateGenerateContent(model, contents, transformedConfig);
     }
@@ -725,6 +728,7 @@ public final class AsyncModels {
             contents,
             transformedConfig,
             functionMap,
+            functionInstanceMap,
             automaticFunctionCallingHistory,
             maxRemoteCalls,
             maxRemoteCalls)

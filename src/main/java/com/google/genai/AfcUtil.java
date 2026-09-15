@@ -17,7 +17,6 @@
 package com.google.genai;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static java.util.Arrays.stream;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
@@ -28,9 +27,12 @@ import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 import com.google.genai.types.Tool;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -95,6 +97,15 @@ final class AfcUtil {
       for (Tool tool : config.tools().get()) {
         if (tool.functions().isPresent() && !tool.functions().get().isEmpty()) {
           for (Method method : tool.functions().get()) {
+            if (!Modifier.isStatic(method.getModifiers())
+                && (!tool.functionInstances().isPresent()
+                    || !tool.functionInstances().get().containsKey(method)
+                    || tool.functionInstances().get().get(method) == null)) {
+              throw new IllegalArgumentException(
+                  "Instance methods are not supported without an instance. Please provide an"
+                      + " instance for method: "
+                      + method.getName());
+            }
             functionMapBuilder.put(method.getName(), method);
           }
         }
@@ -103,8 +114,26 @@ final class AfcUtil {
     return functionMapBuilder.buildOrThrow();
   }
 
+  static ImmutableMap<String, Object> getFunctionInstanceMap(GenerateContentConfig config) {
+    ImmutableMap.Builder<String, Object> functionInstanceMapBuilder = ImmutableMap.builder();
+    if (config != null && config.tools().isPresent() && !config.tools().get().isEmpty()) {
+      for (Tool tool : config.tools().get()) {
+        if (tool.functionInstances().isPresent() && !tool.functionInstances().get().isEmpty()) {
+          for (Map.Entry<Method, Object> entry : tool.functionInstances().get().entrySet()) {
+            if (entry.getValue() != null) {
+              functionInstanceMapBuilder.put(entry.getKey().getName(), entry.getValue());
+            }
+          }
+        }
+      }
+    }
+    return functionInstanceMapBuilder.buildOrThrow();
+  }
+
   static ImmutableList<Part> getFunctionResponseParts(
-      GenerateContentResponse response, ImmutableMap<String, Method> functionMap) {
+      GenerateContentResponse response,
+      ImmutableMap<String, Method> functionMap,
+      ImmutableMap<String, Object> functionInstanceMap) {
     ImmutableList.Builder<Part> functionResponsePartsBuilder = ImmutableList.builder();
     ImmutableList<Part> responseParts = response.parts();
     ImmutableList<FunctionCall> functionCalls = response.functionCalls();
@@ -115,14 +144,21 @@ final class AfcUtil {
       return functionResponsePartsBuilder.build();
     }
     for (FunctionCall functionCall : functionCalls) {
+      if (!functionCall.name().isPresent() || functionCall.name().get().isEmpty()) {
+        continue;
+      }
       String funcName = functionCall.name().get();
-      if (funcName == null || !functionMap.containsKey(funcName)) {
+      if (!functionMap.containsKey(funcName)) {
         continue;
       }
       Method method = functionMap.get(funcName);
-      ImmutableMap<String, Object> args = ImmutableMap.copyOf(functionCall.args().get());
+      Object instance = functionInstanceMap != null ? functionInstanceMap.get(funcName) : null;
+      Map<String, Object> args = functionCall.args().orElse(Collections.emptyMap());
+      if (args == null) {
+        args = Collections.emptyMap();
+      }
       try {
-        Object funcResponse = getFunctionResponse(method, args);
+        Object funcResponse = getFunctionResponse(method, args, instance);
         if (funcResponse == null) {
           functionResponsePartsBuilder.add(
               Part.fromFunctionResponse(funcName, ImmutableMap.of("result", "")));
@@ -136,6 +172,11 @@ final class AfcUtil {
       }
     }
     return functionResponsePartsBuilder.build();
+  }
+
+  static ImmutableList<Part> getFunctionResponseParts(
+      GenerateContentResponse response, ImmutableMap<String, Method> functionMap) {
+    return getFunctionResponseParts(response, functionMap, ImmutableMap.of());
   }
 
   static boolean shouldDisableAfc(GenerateContentConfig config) {
@@ -206,11 +247,10 @@ final class AfcUtil {
   }
 
   private static Object getFunctionResponse(
-      Method method, ImmutableMap<String, Object> argsFromModel) throws Exception {
+      Method method, Map<String, Object> argsFromModel, Object instance) throws Exception {
     List<Object> argsListFromModel = new ArrayList<>();
-    ImmutableList<String> methodParameterNames =
-        stream(method.getParameters()).map(Parameter::getName).collect(toImmutableList());
-    for (String parameterName : methodParameterNames) {
+    for (Parameter parameter : method.getParameters()) {
+      String parameterName = parameter.getName();
       if (!argsFromModel.containsKey(parameterName)) {
         throw new IllegalArgumentException(
             "The parameter \""
@@ -220,17 +260,25 @@ final class AfcUtil {
                 + argsFromModel);
       }
       Object argValueFromModel = argsFromModel.get(parameterName);
-      String className = argValueFromModel.getClass().getName();
-
-      if (className.equals("java.lang.String")) {
+      if (argValueFromModel == null) {
+        if (parameter.getType().isPrimitive()) {
+          throw new IllegalArgumentException(
+              "The parameter \""
+                  + parameterName
+                  + "\" is a primitive type "
+                  + parameter.getType().getName()
+                  + " but received null from the model.");
+        }
+        argsListFromModel.add(null);
+      } else if (argValueFromModel instanceof String) {
         argsListFromModel.add(argValueFromModel);
-      } else if (className.equals("java.lang.Integer")) {
+      } else if (argValueFromModel instanceof Integer) {
         argsListFromModel.add(Integer.parseInt(argValueFromModel.toString()));
-      } else if (className.equals("java.lang.Double")) {
+      } else if (argValueFromModel instanceof Double) {
         argsListFromModel.add(Double.parseDouble(argValueFromModel.toString()));
-      } else if (className.equals("java.lang.Float")) {
+      } else if (argValueFromModel instanceof Float) {
         argsListFromModel.add(Float.parseFloat(argValueFromModel.toString()));
-      } else if (className.equals("java.lang.Boolean")) {
+      } else if (argValueFromModel instanceof Boolean) {
         argsListFromModel.add(Boolean.parseBoolean(argValueFromModel.toString()));
       } else if (argValueFromModel instanceof List) {
         argsListFromModel.add(argValueFromModel);
@@ -243,7 +291,7 @@ final class AfcUtil {
       }
     }
 
-    return method.invoke(null, argsListFromModel.toArray());
+    return method.invoke(instance, argsListFromModel.toArray());
   }
 
   private AfcUtil() {}
