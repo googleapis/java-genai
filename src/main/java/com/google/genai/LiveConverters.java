@@ -82,32 +82,6 @@ final class LiveConverters {
   }
 
   @ExcludeFromGeneratedCoverageReport
-  ObjectNode blobToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"data"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"data"},
-          Common.getValueByPath(fromObject, new String[] {"data"}));
-    }
-
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
   ObjectNode computerUseToVertex(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"environment"}) != null) {
@@ -185,32 +159,6 @@ final class LiveConverters {
           toObject,
           new String[] {"role"},
           Common.getValueByPath(fromObject, new String[] {"role"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode fileDataToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"displayName"}))) {
-      throw new IllegalArgumentException(
-          "displayName parameter is only supported in Gemini Enterprise Agent Platform mode, not in"
-              + " Gemini Developer API mode.");
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"fileUri"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"fileUri"},
-          Common.getValueByPath(fromObject, new String[] {"fileUri"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"mimeType"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"mimeType"},
-          Common.getValueByPath(fromObject, new String[] {"mimeType"}));
     }
 
     return toObject;
@@ -428,10 +376,11 @@ final class LiveConverters {
           Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
-      throw new IllegalArgumentException(
-          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"translationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"translationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
@@ -580,10 +529,7 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"realtimeInput"},
-          liveClientRealtimeInputToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"realtimeInput"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"realtimeInput"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"realtimeInputParameters"}) != null) {
@@ -654,72 +600,6 @@ final class LiveConverters {
           toObject,
           new String[] {"toolResponse"},
           Common.getValueByPath(fromObject, new String[] {"toolResponse"}));
-    }
-
-    return toObject;
-  }
-
-  @ExcludeFromGeneratedCoverageReport
-  ObjectNode liveClientRealtimeInputToMldev(JsonNode fromObject, ObjectNode parentObject) {
-    ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
-    if (Common.getValueByPath(fromObject, new String[] {"mediaChunks"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode) Common.getValueByPath(fromObject, new String[] {"mediaChunks"});
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(blobToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audio"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"audio"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"audioStreamEnd"},
-          Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"video"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"video"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"video"})),
-              toObject));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"text"},
-          Common.getValueByPath(fromObject, new String[] {"text"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityStart"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityStart"},
-          Common.getValueByPath(fromObject, new String[] {"activityStart"}));
-    }
-
-    if (Common.getValueByPath(fromObject, new String[] {"activityEnd"}) != null) {
-      Common.setValueByPath(
-          toObject,
-          new String[] {"activityEnd"},
-          Common.getValueByPath(fromObject, new String[] {"activityEnd"}));
     }
 
     return toObject;
@@ -1425,27 +1305,17 @@ final class LiveConverters {
   ObjectNode liveSendRealtimeInputParametersToMldev(JsonNode fromObject, ObjectNode parentObject) {
     ObjectNode toObject = JsonSerializable.objectMapper().createObjectNode();
     if (Common.getValueByPath(fromObject, new String[] {"media"}) != null) {
-      ArrayNode keyArray =
-          (ArrayNode)
-              Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"}));
-      ObjectMapper objectMapper = new ObjectMapper();
-      ArrayNode result = objectMapper.createArrayNode();
-
-      for (JsonNode item : keyArray) {
-        result.add(blobToMldev(JsonSerializable.toJsonNode(item), toObject));
-      }
-      Common.setValueByPath(toObject, new String[] {"mediaChunks"}, result);
+      Common.setValueByPath(
+          toObject,
+          new String[] {"mediaChunks"},
+          Transformers.tBlobs(Common.getValueByPath(fromObject, new String[] {"media"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audio"}) != null) {
       Common.setValueByPath(
           toObject,
           new String[] {"audio"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tAudioBlob(
-                      Common.getValueByPath(fromObject, new String[] {"audio"}))),
-              toObject));
+          Transformers.tAudioBlob(Common.getValueByPath(fromObject, new String[] {"audio"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioStreamEnd"}) != null) {
@@ -1459,11 +1329,7 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"video"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Transformers.tImageBlob(
-                      Common.getValueByPath(fromObject, new String[] {"video"}))),
-              toObject));
+          Transformers.tImageBlob(Common.getValueByPath(fromObject, new String[] {"video"})));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {
@@ -1757,10 +1623,7 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"fileData"},
-          fileDataToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"fileData"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"fileData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"functionCall"}) != null) {
@@ -1784,10 +1647,7 @@ final class LiveConverters {
       Common.setValueByPath(
           toObject,
           new String[] {"inlineData"},
-          blobToMldev(
-              JsonSerializable.toJsonNode(
-                  Common.getValueByPath(fromObject, new String[] {"inlineData"})),
-              toObject));
+          Common.getValueByPath(fromObject, new String[] {"inlineData"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"text"}) != null) {

@@ -1227,6 +1227,13 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
+    if (Common.getValueByPath(fromObject, new String[] {"translationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"translationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
+    }
+
     if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
       Common.setValueByPath(
           toObject,
@@ -1414,10 +1421,11 @@ public final class Tunings {
           Common.getValueByPath(fromObject, new String[] {"responseFormat"}));
     }
 
-    if (!Common.isZero(Common.getValueByPath(fromObject, new String[] {"translationConfig"}))) {
-      throw new IllegalArgumentException(
-          "translationConfig parameter is only supported in Gemini Developer API mode, not in"
-              + " Gemini Enterprise Agent Platform mode.");
+    if (Common.getValueByPath(fromObject, new String[] {"translationConfig"}) != null) {
+      Common.setValueByPath(
+          toObject,
+          new String[] {"translationConfig"},
+          Common.getValueByPath(fromObject, new String[] {"translationConfig"}));
     }
 
     if (Common.getValueByPath(fromObject, new String[] {"audioTranscriptionConfig"}) != null) {
