@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.genai.types.AutomaticFunctionCallingConfig;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.Content;
 import com.google.genai.types.FinishReason;
@@ -61,7 +62,10 @@ public class ChatTest {
   private static final String STREAMING_RESPONSE_CHUNK_3 = " far, far away...";
   private static final String NON_STREAMING_RESPONSE = "This is a non-streaming response.";
 
+  static int findTheatersCallCount = 0;
+
   public static String findTheaters(String movie, String location, String time) {
+    findTheatersCallCount++;
     return "AMC Metreon 16, AMC Kabuki 8, AMC Theater 11";
   }
 
@@ -243,6 +247,56 @@ public class ChatTest {
     assert chatSession.getHistory(false).size()
         == 4; // user input, function call, function response, model response
     assert chatSession.getHistory(true).size() == 4;
+  }
+
+  @Test
+  public void testSpentAfcBudgetLeavesTheFunctionCallUnanswered() throws Exception {
+    findTheatersCallCount = 0;
+    String userMessage = "Find theaters for Oppenheimer.";
+    Content functionCallContent =
+        Content.fromParts(
+            Part.fromFunctionCall(
+                "findTheaters",
+                ImmutableMap.of(
+                    "movie", "Oppenheimer", "location", "New York, NY", "time", "10:00 PM")));
+
+    GenerateContentResponse functionResponse =
+        GenerateContentResponse.builder()
+            .candidates(
+                Candidate.builder()
+                    .content(functionCallContent)
+                    .finishReason(FinishReason.Known.STOP))
+            .build();
+
+    when(mockedClient.request(anyString(), anyString(), anyString(), any()))
+        .thenReturn(mockedResponse1);
+    ResponseBody functionResponseBody =
+        ResponseBody.create(functionResponse.toJson(), MediaType.get("application/json"));
+    when(mockedResponse1.getBody()).thenReturn(functionResponseBody);
+
+    Field apiClientField = Chats.class.getDeclaredField("apiClient");
+    apiClientField.setAccessible(true);
+    apiClientField.set(client.chats, mockedClient);
+    Method method =
+        ChatTest.class.getDeclaredMethod("findTheaters", String.class, String.class, String.class);
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .tools(Tool.builder().functions(method))
+            .automaticFunctionCalling(
+                AutomaticFunctionCallingConfig.builder().maximumRemoteCalls(1))
+            .build();
+    Chat chatSession = client.chats.create(MODEL_ID, config);
+
+    GenerateContentResponse response = chatSession.sendMessage(userMessage, null);
+
+    // The one request the budget allows is spent being asked, leaving nothing to send a result
+    // with, so the function is never called.
+    assert findTheatersCallCount == 0;
+    // The model's function call is recorded once, not twice, and the turn ends on it so the
+    // caller can answer it themselves.
+    assert chatSession.getHistory(false).size() == 2; // user input, function call
+    assertNotNull(response.functionCalls());
+    assert response.functionCalls().size() == 1;
   }
 
   @Test
