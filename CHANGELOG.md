@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.72.0](https://github.com/googleapis/java-genai/compare/v1.71.0...v1.72.0) (2026-09-15)
+
+
+### Features
+
+* Support instance methods for automatic function calling in Google GenAI Java SDK. ([a372539](https://github.com/googleapis/java-genai/commit/a37253910516da0ccd4073f3ff677c8eb2224eff))
+
 ## [1.71.0](https://github.com/googleapis/java-genai/compare/v1.70.0...v1.71.0) (2026-09-10)
 
 
