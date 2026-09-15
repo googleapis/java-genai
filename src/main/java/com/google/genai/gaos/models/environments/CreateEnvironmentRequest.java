@@ -38,6 +38,15 @@ import java.util.Optional;
  */
 public class CreateEnvironmentRequest {
     /**
+     * Optional. The source environment to copy/fork from.
+     * Format: `environments/{environment_id}` or `{environment_id}`.
+     * When specified, `sources` and `env` must be empty.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("from_environment")
+    private String fromEnvironment;
+
+    /**
      * Network configuration for the environment.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -53,14 +62,25 @@ public class CreateEnvironmentRequest {
 
     @JsonCreator
     public CreateEnvironmentRequest(
+            @JsonProperty("from_environment") @Nullable String fromEnvironment,
             @JsonProperty("network") @Nullable CreateEnvironmentRequestNetworkUnion network,
             @JsonProperty("sources") @Nullable List<Source> sources) {
+        this.fromEnvironment = fromEnvironment;
         this.network = network;
         this.sources = sources;
     }
     
     public CreateEnvironmentRequest() {
-        this(null, null);
+        this(null, null, null);
+    }
+
+    /**
+     * Optional. The source environment to copy/fork from.
+     * Format: `environments/{environment_id}` or `{environment_id}`.
+     * When specified, `sources` and `env` must be empty.
+     */
+    public Optional<String> fromEnvironment() {
+        return Optional.ofNullable(this.fromEnvironment);
     }
 
     /**
@@ -79,6 +99,17 @@ public class CreateEnvironmentRequest {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    /**
+     * Optional. The source environment to copy/fork from.
+     * Format: `environments/{environment_id}` or `{environment_id}`.
+     * When specified, `sources` and `env` must be empty.
+     */
+    public CreateEnvironmentRequest withFromEnvironment(@Nullable String fromEnvironment) {
+        this.fromEnvironment = fromEnvironment;
+        return this;
     }
 
 
@@ -110,6 +141,7 @@ public class CreateEnvironmentRequest {
         }
         CreateEnvironmentRequest other = (CreateEnvironmentRequest) o;
         return 
+            Utils.enhancedDeepEquals(this.fromEnvironment, other.fromEnvironment) &&
             Utils.enhancedDeepEquals(this.network, other.network) &&
             Utils.enhancedDeepEquals(this.sources, other.sources);
     }
@@ -117,12 +149,13 @@ public class CreateEnvironmentRequest {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            network, sources);
+            fromEnvironment, network, sources);
     }
     
     @Override
     public String toString() {
         return Utils.toString(CreateEnvironmentRequest.class,
+                "fromEnvironment", fromEnvironment,
                 "network", network,
                 "sources", sources);
     }
@@ -130,12 +163,24 @@ public class CreateEnvironmentRequest {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String fromEnvironment;
+
         private CreateEnvironmentRequestNetworkUnion network;
 
         private List<Source> sources;
 
         private Builder() {
           // force use of static builder() method
+        }
+
+        /**
+         * Optional. The source environment to copy/fork from.
+         * Format: `environments/{environment_id}` or `{environment_id}`.
+         * When specified, `sources` and `env` must be empty.
+         */
+        public Builder fromEnvironment(@Nullable String fromEnvironment) {
+            this.fromEnvironment = fromEnvironment;
+            return this;
         }
 
         /**
@@ -156,7 +201,7 @@ public class CreateEnvironmentRequest {
 
         public CreateEnvironmentRequest build() {
             return new CreateEnvironmentRequest(
-                network, sources);
+                fromEnvironment, network, sources);
         }
 
     }
