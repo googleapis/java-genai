@@ -51,11 +51,18 @@ import com.google.genai.gaos.models.operations.DeleteEnvironmentResponse;
 import com.google.genai.gaos.models.operations.GetEnvironmentFilesRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /** An example of using the Unified Gen AI Java SDK to create environments and query environment files. */
 public final class EnvironmentFiles {
   public static void main(String[] args) {
-    Client client = new Client();
+    com.google.genai.types.HttpOptions.Builder httpOptionsBuilder =
+        com.google.genai.types.HttpOptions.builder().apiVersion("v1alpha");
+    String baseUrl = System.getenv("GOOGLE_GENAI_BASE_URL");
+    if (baseUrl != null && !baseUrl.isEmpty()) {
+      httpOptionsBuilder.baseUrl(baseUrl);
+    }
+    Client client = Client.builder().httpOptions(httpOptionsBuilder.build()).build();
 
     if (client.vertexAI()) {
       System.out.println(
@@ -157,8 +164,32 @@ public final class EnvironmentFiles {
                   System.out.println("main.py file size: " + file.sizeBytes().orElse("0"));
                 }
               });
+
+      System.out.println("\n--- 5. Uploading a New File (path=\"uploaded.txt\") ---");
+      byte[] contentToUpload =
+          "Hello from Java Environment Files upload demo!\n".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+      com.google.genai.gaos.models.operations.UploadEnvironmentFileResponse uploadResponse =
+          client.environments.files().upload(
+              envId,
+              "uploaded.txt",
+              contentToUpload,
+              "text/plain",
+              true,
+              false);
+      System.out.println(
+          "Uploaded file name: "
+              + uploadResponse
+                  .files()
+                  .flatMap(f -> f.files().flatMap(list -> list.isEmpty() ? Optional.empty() : list.get(0).name()))
+                  .orElse("unknown"));
+
+      System.out.println("\n--- 6. Downloading File Content (path=\"uploaded.txt\") ---");
+      byte[] downloadedBytes = client.environments.files().download(envId, "uploaded.txt");
+      System.out.println(
+          "Downloaded uploaded.txt content: "
+              + new String(downloadedBytes, java.nio.charset.StandardCharsets.UTF_8).trim());
     } finally {
-      System.out.println("\n--- 5. Cleaning up Environment ID: " + envId + " ---");
+      System.out.println("\n--- 7. Cleaning up Environment ID: " + envId + " ---");
       DeleteEnvironmentResponse deleteRes = client.environments.deleteEnvironment(envId);
       System.out.println("Environment deleted successfully: " + deleteRes.statusCode());
     }
